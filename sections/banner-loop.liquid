@@ -1,0 +1,30 @@
+{% schema %}
+{
+  "name": "Product Banners",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Banners",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="product-banners-section" style="width: 100%; margin: 0 auto;">
+  {% if product.metafields.custom.banners_2!= blank %}
+    {% assign banners = product.metafields.custom.banners_2.value %}
+    <div class="banners-wrapper" style="width: 100%;">
+      {% for media in banners %}
+       
+          <img 
+            src="{{ media.src | img_url: '2048x' }}" 
+            alt="{{ media.alt | default: 'Banner ' | append: forloop.index }}" 
+            style="width: 100%; display: block; margin-bottom: 10px;" 
+          />
+    
+      {% endfor %}
+    </div>
+  
+ {% endif %}
+</section>

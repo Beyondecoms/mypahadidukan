@@ -1,0 +1,22 @@
+
+    .page-width.page-width,
+    .main-page-content.main-page-content {
+      /* Overrides max-width and internal padding of the theme's main container */
+      max-width: 100% !important; 
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    
+    .template-page.yt-bundle-builder-template {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      overflow: visible !important;
+    }
+    
+    .shopify-section--main-page-content { 
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  

@@ -1,0 +1,319 @@
+{% liquid
+  assign enable_rtl = settings.enable_rtl
+  assign language_support_rtl = settings.language_support_rtl
+  if enable_rtl and language_support_rtl != blank
+    assign shop_locale = localization.language.iso_code
+    assign language_support_rtl_list = language_support_rtl | split: ','
+    assign is_rtl = language_support_rtl_list | where: shop_locale
+    if is_rtl.size > 0
+      assign enable_rtl = true
+    else
+      assign enable_rtl = false
+    endif
+  endif
+
+  assign body_classes = 'template-' | append: template.name | append: ' ' | append: template.suffix | append: ' m-gradient m-color-' | append: settings.default_color_scheme
+  if settings.page_transition
+    assign body_classes = body_classes | append: ' m:overflow-hidden'
+  endif
+  if template.suffix == 'about-us'
+    assign body_classes = body_classes | append: ' sf__page-about'
+  endif
+%}
+<!doctype html>
+<html
+  class="no-js {% if settings.page_transition %} m:overflow-hidden{% endif %}"
+  lang="{{ request.locale.iso_code }}"
+  data-template="{{ template.name }}"
+  {% if enable_rtl %}
+    dir="rtl"
+  {% endif %}
+>
+  <head>
+ {%- render 'ecom_header' -%}
+      <!-- Gokwik theme code start -->
+  <link rel="dns-prefetch" href="https://pdp.gokwik.co/">
+  <link rel="dns-prefetch" href="https://api.gokwik.co">
+    {% render 'gokwik' %}
+ <!-- Gokwik theme code End -->
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.use_favicon == true and settings.favicon != blank -%}
+      <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{- page_title -}}
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {%- endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- if template == 'password' -%}
+        {{- shop.name -}}
+      {%- else -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- endif -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- liquid
+      render 'social-meta-tags'
+      render 'font-face'
+      render 'critical-css'
+
+      echo 'main.css' | asset_url | stylesheet_tag: preload: true
+
+      render 'style-tags'
+    -%}
+
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme-global.js' | asset_url }}" defer="defer"></script>
+    {%- if settings.animations != 'none' -%}
+      <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if request.design_mode -%}
+      <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {{ content_for_header }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+    {% render 'theme-data' %}
+    {% render 'custom-code-head' %}
+
+ 
+    <!-- clarity script ends -->
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10816225028"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-10816225028');
+</script>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NGNL84R');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NGNL84R"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <!-- Google tag (gtag.js) event -->
+<script>
+  gtag('event', 'conversion_event_purchase_1', {
+    // <event_parameters>
+  });
+</script>
+
+
+    <meta name="p:domain_verify" content="5241eab7e562f3791b0d507527505501"/>
+    <!-- clarity script begins -->
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8x9jole9hq");
+
+
+    const observer = new MutationObserver(() => {
+  document.body.style.overflow = "clip";
+});
+
+observer.observe(document.body, {
+  attributes: true,
+  attributeFilter: ["style"]
+});
+</script>
+
+{% style %}
+  body {
+  overflow: clip !important;
+}
+.m-product-card svg{
+  color: #c0503b;
+}
+.m-product-card__action-wrapper svg{
+  color: white;
+}
+.m-product-card__action svg{
+      width: 29px;
+    height: 15px;
+}
+{% endstyle %}
+
+
+{% if template == '404' %}
+  <script>
+    window.location.replace('/collections/all');
+  </script>
+{% endif %}
+
+
+  </head>
+
+  <body
+    id="m-theme"
+    class="{{ body_classes }}"
+    {% if template.name == 'product' %}
+      data-product-id="{{ product.id }}"
+    {% endif %}
+  >
+    {%- liquid
+      render 'page-transition'
+      render 'scroll-top-button'
+      sections 'header-group'
+    -%}
+
+    <main role="main" id="MainContent">
+      {{ content_for_layout }}
+    </main>
+
+    {%- liquid
+      sections 'footer-group'
+      render 'script-tags'
+      render 'cookie-banner'
+      render 'custom-code-body'
+    -%}
+
+    <script src="{{ 'product-quick-view.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'compare-product.js' | asset_url }}" defer="defer"></script>
+
+    {%- if settings.enable_predictive_search -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if linklists['gift-wrapping'].links != blank
+      and linklists['gift-wrapping'].links.first.type == 'product_link'
+    -%}
+      <script src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if settings.show_swatch_option -%}
+      <script src="{{ 'product-card-swatch.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if settings.enable_cart_drawer and template != 'cart' -%}
+      {% render 'cart-drawer' %}
+    {%- endif -%}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('a.mobile-menu.js-drawer-open-left-link').on('click', function(e) {
+      e.preventDefault(); // Optional: prevent default link behavior
+      $('.m-hamburger-box').trigger('click');
+    });
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    $('.accordion-header').on('click', function () {
+      const $header = $(this);
+      const $item = $header.closest('.accordion-item');
+      const $content = $item.find('.accordion-content');
+
+      if ($item.hasClass('active')) {
+        $item.removeClass('active');
+        $content.stop(true, true).slideUp(200);
+      } else {
+        $('.accordion-item.active')
+          .removeClass('active')
+          .find('.accordion-content')
+          .stop(true, true)
+          .slideUp(200);
+
+        $item.addClass('active');
+        $content.stop(true, true).slideDown(200);
+      }
+    });
+  });
+  $('.m-menu-mobile__toggle-button').on('click', function () {
+  // Remove 'active' from all toggle buttons and megamenus
+  
+  // Add 'active' to clicked toggle button
+  $(this).toggleClass('active');
+  
+  // Add 'active' to its sibling megamenu
+  $(this).siblings('.m-megamenu-mobile').toggleClass('active');
+});
+document.addEventListener('DOMContentLoaded', function () {
+  function updateBuyNowText() {
+    const buyNowButton = document.querySelector('.shopify-payment-button__button');
+    if (buyNowButton) {
+      buyNowButton.textContent = 'Buy Now'; // change to your desired text
+    } else {
+      // Retry in case the button hasn't rendered yet
+      setTimeout(updateBuyNowText, 300);
+    }
+  }
+
+  updateBuyNowText();
+});
+
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.metafield-rich_text_field');
+  if (!container) return;
+
+  const children = Array.from(container.children);
+
+  if (children.length > 3) {
+    // Hide elements beyond the first 3
+    children.slice(3).forEach(el => el.style.display = 'none');
+
+    // Create and insert the button
+    const button = document.createElement('button');
+    button.className = 'read-more-toggle';
+    button.textContent = 'Read More';
+    container.insertAdjacentElement('afterend', button);
+
+    // Add click event listener
+    button.addEventListener('click', function() {
+      if (button.textContent === 'Read More') {
+        children.forEach(el => el.style.display = '');
+        console.log(children); // Replaces your alert($children) with a log
+        button.textContent = 'Read Less';
+      } else {
+        children.slice(3).forEach(el => el.style.display = 'none');
+        window.scrollTo({
+          top: container.getBoundingClientRect().top + window.scrollY,
+          behavior: 'smooth'
+        });
+        button.textContent = 'Read More';
+      }
+    });
+  }
+});
+
+</script>
+
+  
+  {%- render "ecom_footer"-%}
+
+   {% section 'whatsapp-float' %}
+</body>
+</html>

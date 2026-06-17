@@ -1,0 +1,353 @@
+<section class="contact-faq-section">
+  <div class="container">
+    <div class="contact-faq-wrapper">
+      <!-- LEFT SIDE -->
+      <div class="contact-left">
+        <div class="contexxtbtn">
+          <h2>{{ section.settings.left_title }}</h2>
+          <p>{{ section.settings.left_text }}</p>
+          <a href="{{ section.settings.button_link }}" class="chat-btn">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/whatsapp-2.svg?v=1756193758"
+              alt="whatsapp icon"
+            >
+            {{- section.settings.button_text }}
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="faq-right">
+        <div class="faqheader">
+          <h2>{{ section.settings.right_title }}</h2>
+          <p>{{ section.settings.right_subtitle }}</p>
+        </div>
+        <!-- Tabs -->
+        <div class="faq-tabs">
+          {% assign first_tab = '' %}
+          {% for block in section.blocks %}
+            {% if block.type == 'tab' %}
+              {% if first_tab == '' %}{% assign first_tab = block.settings.tab_title %}{% endif %}
+              <button
+                class="tab-btn {% if block.settings.tab_title == first_tab %}active{% endif %}"
+                data-tab="{{ block.settings.tab_title | handleize }}"
+              >
+                {{ block.settings.tab_title }}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Tab Content -->
+        <div class="faq-contents">
+          {% for block in section.blocks %}
+            {% if block.type == 'tab' %}
+              <div
+                class="faq-tab-content {% if block.settings.tab_title == first_tab %}active{% endif %}"
+                id="{{ block.settings.tab_title | handleize }}"
+              >
+                {% assign i = 0 %}
+                {% for faq in section.blocks %}
+                  {% if faq.type == 'faq' and faq.settings.parent_tab == block.settings.tab_title %}
+                    {% assign i = i | plus: 1 %}
+                    <div class="accordion {% if i == 1 %}open{% endif %}">
+                      <button class="accordion-header">{{ faq.settings.question }}</button>
+                      <div
+                        class="accordion-body"
+                        {% if i == 1 %}
+                          style="display:block;"
+                        {% endif %}
+                      >
+                        {{ faq.settings.answer }}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="faqfooter">
+          <ul class="contact_contact-ul__2FGUL">
+            <li style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">
+              <div class="contact_pic__2q4Zs">
+                <svg
+                                 width="54"
+                                 height="42"
+                                 viewBox="0 0 54 42"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg"
+                               >
+                                 <path
+                                   d="M0.00256619 23.2956C0.00256619 18.496 -0.00529277 13.6984 0.00649567 8.89884C0.0123899 6.15058 0.851334 5.0568 3.49587 4.49214C9.12485 3.29373 14.7971 2.32631 20.5066 1.62345C29.8037 0.482286 39.1323 -0.108038 48.5022 0.0163446C48.8283 0.0202933 49.1564 0.00844733 49.4845 0.0202933C51.9169 0.0992664 53.2568 1.35889 53.3865 3.77546C53.7107 9.81493 53.8541 15.8603 53.9209 21.9077C53.9622 25.5878 54.0761 29.266 53.9209 32.9481C53.8089 35.6036 52.803 36.7467 50.1191 36.9955C46.4726 37.3331 42.8162 37.5681 39.1696 37.8958C31.2242 38.6105 23.2926 39.4575 15.3845 40.5295C11.8205 41.0113 8.2584 41.5049 4.69043 41.9451C1.85532 42.2966 0.322819 40.954 0.305136 38.0814C0.2737 33.1515 0.297277 28.2216 0.297277 23.2917C0.19904 23.2917 0.102768 23.2917 0.00453093 23.2917L0.00256619 23.2956ZM3.1933 7.09431C10.7183 14.3026 18.0389 21.0212 26.0845 26.8435C30.6466 23.6569 48.2035 5.39639 49.5219 2.44872C34.0102 2.29867 18.7128 3.72808 3.1933 7.09431ZM49.3038 34.3894C44.5629 30.2374 39.5901 26.4447 34.4503 22.8159C32.1378 24.9008 29.9255 26.9363 27.6681 28.9185C26.4873 29.957 26.2417 29.9531 24.941 29.037C23.3437 27.9116 21.7856 26.7329 20.2453 25.6036C15.2686 28.7073 5.90071 37.1001 4.78278 39.4812C19.5674 37.3489 34.3521 35.6964 49.3038 34.3894ZM51.5141 32.7329C51.5141 23.3865 51.5455 14.5119 50.9404 5.12788C46.003 10.7646 41.2365 15.9215 36.2186 21.0133C41.4193 24.7626 46.337 28.5197 51.5141 32.7329ZM18.0821 23.9649C14.6752 20.5908 3.50373 10.8297 2.70998 10.4605V37.0231C7.68077 32.2867 12.683 27.9057 18.0821 23.9649Z"
+                                   fill="black"
+                                 />
+                                 <path
+                                   d="M19.6067 6.80408C19.7855 7.39441 19.591 7.73597 19.0252 7.82284C16.0034 8.2947 12.9816 8.75867 9.95986 9.22264C9.56101 9.28384 9.1327 9.28976 9.00303 8.81C8.86943 8.31444 9.24666 8.08345 9.6455 8.02224C12.795 7.53656 15.9484 7.07062 19.1018 6.6185C19.2629 6.59481 19.4495 6.74485 19.6067 6.80606V6.80408Z"
+                                   fill="black"
+                                 />
+                                 <path
+                                   d="M23.1315 6.82581C22.825 7.03706 22.7307 7.13972 22.6128 7.17724C22.0627 7.349 21.4556 7.65897 21.1274 6.87122C21.0253 6.6264 21.1726 6.34802 21.4457 6.23548C22.1334 5.95118 22.8014 5.76164 23.1315 6.82581Z"
+                                   fill="black"
+                                 />
+                               </svg></div>
+              <div class="contact_details__1IFAQ">
+                <strong>Write to Us</strong
+                ><br><a href="mailto:{{section.settings.email}}" class="contact_mail-link__1ML5W"
+                  >{{section.settings.email}}</a
+                >
+              </div>
+            </li>
+            <li style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">
+              <div class="contact_pic__2q4Zs"><img src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/contact_mail.png?v=1756193998"></div>
+              <div class="contact_details__1IFAQ">
+                <div class="contact_address__1XL_T">
+                  <strong>Mailing Address</strong>
+                  {{section.settings.mailaddress}}
+                </div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Working Hours:</strong>
+                <p class="contact_contact-time-text__3EhVW">
+                  {{section.settings.workinghr}}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+      .contexxtbtn {
+          display: block;
+          padding-left: 0;
+          padding-right: 0;
+          width: 326px;
+          margin: 0 auto;
+      }
+      .contact-faq-wrapper {
+          align-items: flex-start;
+          max-width: 1140px !important;
+          margin: 0 auto !important;
+          display: -webkit-flex;
+          display: -moz-box;
+          display: flex;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          padding-left: 0;
+          padding-right: 0;
+      }
+    .contact-left {
+      display: block;
+      padding: 70px 15px 0;
+      -webkit-flex: 0 0 50%;
+      -moz-box-flex: 0;
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+  .faq-right:before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 75vw;
+      background: #f9f9f9;
+      z-index: -1;
+      border-left: 1px solid rgba(0, 0, 0, .2);
+  }
+    .contact-left h2{
+      font-size:28px;
+      margin-bottom:10px;
+      color: #c0503b;
+    }
+    .faqheader h2 {
+    
+    color: #c0503b;
+}
+    .contact-left p{margin-bottom:15px;}
+    .chat-btn{display:inline-flex;align-items:center;gap:8px;background:#ceae95;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;}
+    .chat-btn:hover{background:#ceae95;}
+
+    .faq-right {
+      -webkit-flex: 0 0 50%;
+      -moz-box-flex: 0;
+      flex: 0 0 50%;
+      max-width: 50%;
+      position: relative;
+      z-index: 1;
+      padding-left: 60px;
+      padding-bottom: 90px;
+      padding-top: 30px;
+      
+  }
+    .faq-tabs{display:flex;gap:10px;margin-bottom:15px;overflow-x:auto;}
+    .tab-btn {
+      padding: 5px 10px;
+      border: 1px solid #ceae95;
+      background: none;
+      border-radius: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 700;
+  }
+    .tab-btn.active{background:#ceae95;color:#fff;}
+    .faq-contents {
+      background: #FFF3F1;
+  }
+    .faq-tab-content{display:none;}
+    .faq-tab-content.active{display:block;}
+
+    .accordion {
+      border: 1px solid #ceae95;
+      border-radius: 0;
+      border-bottom: 0;
+  }
+  .accordion:last-child {
+      border: 1px solid #ceae95;
+  }
+    .accordion-header{width:100%;text-align:left;padding:10px;border:none;cursor:pointer;font-weight:bold;}
+    .accordion-body {
+      display: none;
+      padding: 10px;
+      color: #000;
+  }
+  button.accordion-header {
+      border: 0 !important;
+  }
+    .accordion.open .accordion-body{display:block;}
+    section.contact-faq-section {
+      background: #fcfbf9;
+  }
+  .faqheader {
+      text-align: center;
+      padding-bottom: 20px;
+  }
+  .faqheader h2 {
+      font-size: 28px;
+  }
+  ul.contact_contact-ul__2FGUL li {
+    padding: 40px 0;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-align-items: start;
+    -moz-box-align: start;
+    align-items: start;
+    gap: 10px;
+}
+.contact_pic__2q4Zs {
+    min-width: 80px;
+    text-align: center;
+}
+ul.contact_contact-ul__2FGUL strong {
+    font-weight: 600;
+    font-size: 20px;
+    color: #000;
+}
+@media (max-width: 767px) {
+    .contact_main-contact-section-details__-S7r- {
+        position: relative;
+    }
+}
+@media (max-width: 767px) {
+    .contact-left,
+    .faq-right {
+        -webkit-flex: 0 0 100%;
+        -moz-box-flex: 0;
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 30px 15px 30px;
+    }
+    .faq-right:before{
+        width: 100%;
+        border-left: 0;
+    }
+}
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Tab switch
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('.faq-tab-content').forEach((tc) => tc.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById(this.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Accordion toggle
+    document.querySelectorAll('.accordion-header').forEach((header) => {
+      header.addEventListener('click', function () {
+        let acc = this.parentElement;
+        acc.classList.toggle('open');
+        let body = acc.querySelector('.accordion-body');
+        body.style.display = acc.classList.contains('open') ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Contact & FAQ",
+  "settings": [
+    { "type": "text", "id": "left_title", "label": "Left Title", "default": "Contact Us" },
+    {
+      "type": "textarea",
+      "id": "left_text",
+      "label": "Left Description",
+      "default": "If you’re here, you either love us or we screwed up."
+    },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "Chat with Us" },
+    { "type": "url", "id": "button_link", "label": "Button Link" },
+    { "type": "text", "id": "right_title", "label": "Right Title", "default": "FAQs" },
+    {
+      "type": "text",
+      "id": "right_subtitle",
+      "label": "Right Subtitle",
+      "default": "Find answers to common questions."
+    },
+    {
+        "type": "text",
+        "id": "email",
+        "label": "Email"
+      },
+      {
+          "type": "richtext",
+          "id": "mailaddress",
+          "label": "Email Address"
+        },
+        {
+            "type": "text",
+            "id": "workinghr",
+            "label": "Working Hour"
+          }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "FAQ Tab",
+      "settings": [{ "type": "text", "id": "tab_title", "label": "Tab Title", "default": "Orders and Shipping" }]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "parent_tab", "label": "Parent Tab Title (Exactly same as Tab Title)" },
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "textarea", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Contact & FAQ", "category": "Custom" }]
+}
+{% endschema %}

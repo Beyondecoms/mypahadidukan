@@ -1,0 +1,83 @@
+{% style %}
+.product-meta-images-{{ section.id }} {
+  width: 90%;
+  margin: auto;
+}
+
+.product-meta-img-item {
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.product-meta-img-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+{% endstyle %}
+
+{%- assign desktop_icons = product.metafields.custom.product_a_content.value -%}
+{%- assign mobile_icons = product.metafields.custom.product_a_content_mobile.value -%}
+
+<div class="metafields_ups_icons">
+  <div class="product-meta-images-{{ section.id }}">
+
+    {%- if request.device_type == 'mobile' -%}
+
+      {%- if mobile_icons != blank and mobile_icons.size > 0 -%}
+        {%- for icon in mobile_icons -%}
+          {%- assign icon_w = 600 -%}
+          {%- assign icon_w2x = 1200 -%}
+
+          <div class="product-meta-img-item">
+            <img
+              src="{{ icon | image_url: width: icon_w }}"
+              srcset="{{ icon | image_url: width: icon_w }} 1x, {{ icon | image_url: width: icon_w2x }} 2x"
+              alt="{{ icon.alt | default: product.title | escape }}"
+              width="{{ icon_w }}"
+              height="{{ icon_w }}"
+              loading="lazy"
+              decoding="async"
+            >
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+
+    {%- else -%}
+
+      {%- if desktop_icons != blank and desktop_icons.size > 0 -%}
+        {%- for icon in desktop_icons -%}
+          {%- assign icon_w = 600 -%}
+          {%- assign icon_w2x = 1200 -%}
+
+          <div class="product-meta-img-item">
+            <img
+              src="{{ icon | image_url: width: icon_w }}"
+              srcset="{{ icon | image_url: width: icon_w }} 1x, {{ icon | image_url: width: icon_w2x }} 2x"
+              alt="{{ icon.alt | default: product.title | escape }}"
+              width="{{ icon_w }}"
+              height="{{ icon_w }}"
+              loading="lazy"
+              decoding="async"
+            >
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product meta image",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product meta image"
+    }
+  ]
+}
+{% endschema %}

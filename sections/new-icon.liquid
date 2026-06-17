@@ -1,0 +1,162 @@
+{% schema %}
+{
+  "name": "Image Grid / Slider",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_slider_desktop",
+      "label": "Enable Slider on Desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_mobile",
+      "label": "Enable Slider on Mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Images per Row (Desktop)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Images per Row (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap Between Images (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "desktop_height",
+      "label": "Desktop Image Height (e.g. 250px or auto)",
+      "default": "250px"
+    },
+    {
+      "type": "text",
+      "id": "mobile_height",
+      "label": "Mobile Image Height (e.g. 180px or auto)",
+      "default": "180px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Upload Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Image Link"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Text Below Image"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Image Grid / Slider",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="custom-image-grid" style="--gap: {{ section.settings.gap }}px;">
+  <div class="custom-grid {% if section.settings.enable_slider_desktop or section.settings.enable_slider_mobile %}with-slider{% endif %}"
+    data-desktop-slider="{{ section.settings.enable_slider_desktop }}"
+    data-mobile-slider="{{ section.settings.enable_slider_mobile }}"
+    style="grid-template-columns: repeat({{ section.settings.desktop_columns }}, 1fr); gap: {{ section.settings.gap }}px;">
+    
+    {% for block in section.blocks %}
+      <div class="image-item" style="height: {{ section.settings.desktop_height }};">
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+        {% endif %}
+        
+        {% if block.settings.image != blank %}
+          <img 
+            src="{{ block.settings.image | img_url: '600x' }}" 
+            alt="{{ block.settings.title | escape }}"
+            class="custom-image" 
+            style="height: {{ section.settings.desktop_height }};"
+          >
+        {% else %}
+          <div class="placeholder">No Image</div>
+        {% endif %}
+        
+        {% if block.settings.link != blank %}
+          </a>
+        {% endif %}
+        
+        {% if block.settings.title != blank %}
+          <p class="image-title">{{ block.settings.title }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+.custom-image-grid {
+  width: 100%;
+  padding: 20px 0;
+}
+.custom-grid {
+  display: grid;
+  justify-content: center;
+}
+.custom-image-grid .image-item {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.custom-image-grid .image-item:hover {
+  transform: translateY(-4px);
+}
+.custom-image-grid .custom-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.custom-image-grid .image-title {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Responsive Grid */
+@media screen and (max-width: 768px) {
+  .custom-grid {
+    grid-template-columns: repeat({{ section.settings.mobile_columns }}, 1fr);
+  }
+  .custom-image-grid .image-item img {
+    height: {{ section.settings.mobile_height }};
+  }
+}
+</style>

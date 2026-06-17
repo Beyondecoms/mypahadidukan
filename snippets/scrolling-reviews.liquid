@@ -1,0 +1,290 @@
+<style>
+/* ===== REVIEWS CAROUSEL — PREMIUM REDESIGN ===== */
+
+.carousel-container {
+  background: #f9f7f4;
+  overflow: hidden;
+}
+
+/* ── SECTION HEADER ── */
+.rv-section-header {
+  text-align: center;
+
+  padding: 0 16px;
+}
+.rv-section-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e8513f;
+  margin-bottom: 6px;
+}
+.rv-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 10px;
+}
+.rv-overall-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.rv-overall-stars .rv-stars-row {
+  color: #e8513f;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.rv-overall-stars span {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ── TRACK ── */
+.carousel {
+  display: flex !important;
+  gap: 16px !important;
+  padding: 8px 24px 12px !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+}
+.carousel::-webkit-scrollbar { display: none; }
+
+/* ── CARD BASE ── */
+.carousel .review-card {
+  all: unset;
+  box-sizing: border-box;
+  flex: 0 0 280px !important;
+  scroll-snap-align: start !important;
+  background: #fff !important;
+  border-radius: 20px !important;
+  padding: 10px 10px 10px !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  box-shadow: none !important;
+  position: relative !important;
+  display: block !important;
+  transition: box-shadow 0.25s ease, transform 0.25s ease !important;
+}
+.carousel .review-card:hover {
+  box-shadow: 0 16px 40px rgba(0,0,0,0.10) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── FEATURED (FIRST) CARD ── */
+.carousel .review-card:first-child {
+  background: #366864 !important;
+  border-color: #366864 !important;
+}
+.carousel .review-card:first-child .review-text {
+  color: rgba(255,255,255,0.88) !important;
+}
+.carousel .review-card:first-child .stars {
+  color: #ffd580 !important;
+}
+.carousel .review-card:first-child .rv-quote {
+  color: rgba(255,255,255,0.12) !important;
+}
+.carousel .review-card:first-child .reviewer strong,
+.carousel .review-card:first-child .reviewer span {
+  color: #fff !important;
+}
+.carousel .review-card:first-child .rv-divider {
+  background: rgba(255,255,255,0.15) !important;
+}
+.carousel .review-card:first-child .rv-avatar {
+  background: rgba(255,255,255,0.18) !important;
+  color: #fff !important;
+}
+.carousel .review-card:first-child .verified {
+  color: #a8f0cf !important;
+}
+.carousel .review-card:first-child .rv-date {
+  color: rgba(255,255,255,0.4) !important;
+}
+
+/* ── QUOTE MARK ── */
+.rv-quote {
+  display: block;
+  font-size: 56px;
+  line-height: 1;
+  color: rgba(54,104,100,0.10);
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: -8px;
+}
+
+/* ── STARS ── */
+.carousel .stars {
+  all: unset;
+  display: block !important;
+  color: #e8513f !important;
+  font-size: 14px !important;
+  letter-spacing: 2px !important;
+}
+
+/* ── REVIEW TEXT ── */
+.carousel .review-text {
+  all: unset;
+  display: block !important;
+  font-size: 14px !important;
+  line-height: 1.75 !important;
+  color: #444 !important;
+  min-height: 72px !important;
+}
+
+/* ── DIVIDER ── */
+.rv-divider {
+  height: 1px;
+  background: rgba(0,0,0,0.07);
+  margin-bottom: 16px;
+}
+
+/* ── REVIEWER ROW ── */
+.carousel .reviewer {
+  all: unset;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0 !important;
+}
+.rv-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f0edea;
+  color: #366864;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.rv-name-wrap {
+  margin-left: 10px;
+  flex: 1;
+}
+.carousel .reviewer strong {
+  all: unset;
+  display: block !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+}
+.carousel .reviewer span {
+  all: unset;
+  display: block !important;
+}
+.rv-date {
+  font-size: 11px;
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+/* ── VERIFIED ── */
+.carousel .verified {
+  all: unset;
+  display: flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  font-size: 11px !important;
+  color: #2e9e6b !important;
+  margin-top: 2px !important;
+}
+.carousel .verified::before {
+  content: "";
+}
+.rv-check {
+  width: 12px;
+  height: 12px;
+  background: rgba(46,158,107,0.18);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: #2e9e6b;
+}
+
+/* ── DOTS ── */
+.dots {
+  display: none !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin-top: 20px !important;
+}
+.dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 6px !important;
+  background: rgba(54,104,100,0.20) !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+.dot.active {
+  width: 22px !important;
+  background: #366864 !important;
+}
+
+/* ── RESPONSIVE ── */
+@media (min-width: 768px) {
+  .carousel .review-card { flex: 0 0 300px !important; }
+}
+@media (min-width: 1024px) {
+  .carousel .review-card { flex: 0 0 320px !important; }
+  .carousel { padding: 8px 40px 12px !important; gap: 20px !important; }
+}
+</style>
+
+{% if product.metafields.custom.reviews != blank %}
+<div class="carousel-container">
+
+  <div class="rv-section-header">
+    <p class="rv-section-title">What people are saying</p>
+    <div class="rv-overall-stars">
+      <span class="rv-stars-row">★★★★★</span>
+      <span>Verified Buyers</span>
+    </div>
+  </div>
+
+  <div class="carousel" id="carousel">
+    {{ product.metafields.custom.reviews }}
+  </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var carousel = document.getElementById('carousel');
+  var cards = carousel.querySelectorAll('.review-card');
+
+  if (cards.length <= 1) return;
+
+  cards.forEach(function(_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Review ' + (i + 1));
+    dot.addEventListener('click', function() {
+      carousel.scrollTo({ left: cards[i].offsetLeft - 24, behavior: 'smooth' });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  var dotEls = dotsContainer.querySelectorAll('.dot');
+
+  carousel.addEventListener('scroll', function() {
+    var idx = 0, closest = Infinity;
+    cards.forEach(function(c, i) {
+      var d = Math.abs(c.getBoundingClientRect().left - carousel.getBoundingClientRect().left);
+      if (d < closest) { closest = d; idx = i; }
+    });
+    dotEls.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  });
+});
+</script>
+{% endif %}

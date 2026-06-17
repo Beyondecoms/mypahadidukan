@@ -1,0 +1,808 @@
+<!-- sections/accordion.liquid -->
+{%- liquid
+  assign se_stts = section.settings
+  assign se_blocks = section.blocks
+
+  comment
+    Check if there is at least one non-blank accordion item
+  endcomment
+  assign has_any_item = false
+  for b in se_blocks
+    assign b_title = b.settings.title | strip
+    assign b_content = b.settings.content | strip
+    if b_title != blank or b_content != blank
+      assign has_any_item = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_any_item -%}
+
+{%- liquid
+  assign sid = section.id
+  assign stt_layout = se_stts.layout
+  assign stt_image_bg = se_stts.image_bg
+  if se_stts.layout == 't4s-cus-width'
+    assign html_layout = '<div class="t4s-container" style="--width:010693px">__</div>' | split:'__'
+  elsif stt_layout == 't4s-se-container'
+    assign html_layout = '<div class="t4s-container">__</div></div>' | split:'__'
+  elsif stt_layout == 't4s-container-wrap'
+    assign html_layout = '<div class="t4s-container">__</div>' | split:'__'
+  else
+    assign html_layout = '__' | split:'__'
+  endif
+-%}
+
+<div class="t4s-section-inner t4s_nt_se_{{ sid }} {{ stt_layout }} {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %} style="{% if se_stts.cl_bg != blank %}background-color: {{ se_stts.cl_bg }};{% endif %}{% if se_stts.cl_bg_gradient != blank %}background: {{ se_stts.cl_bg_gradient }};{% endif %}{% if se_stts.mg != blank %}margin: {{ se_stts.mg | replace: ',', ' ' }};{% endif %}{% if se_stts.pd != blank %}padding: {{ se_stts.pd | replace: ',', ' ' }};{% endif %}">
+  {{- html_layout[0] | replace:'010693', se_stts.custom_width -}}
+  {%- if stt_layout == 't4s-se-container' -%}
+    <div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="2" {% endif %}>
+  {%- endif -%}
+
+  <div class="t4s-accordion-style-{{se_stts.accor_des}}">
+    
+    {%- comment -%} Section heading {%- endcomment -%}
+    {%- if se_stts.top_heading != blank or se_stts.top_subheading != blank -%}
+    <div class="t4s-section-tophead t4s-design-{{ se_stts.design_heading }} {% if se_stts.heading_center %}t4s-text-center{% endif %}" style="margin-bottom: {{ se_stts.tophead_mb }}px;">
+      {%- if se_stts.top_heading != blank -%}
+        <h2 class="t4s-heading">
+          {%- if se_stts.design_heading == '6' and se_stts.icon_heading != blank -%}
+            <i class="{{ se_stts.icon_heading }}"></i>
+          {%- endif -%}
+          {{ se_stts.top_heading }}
+        </h2>
+      {%- endif -%}
+      {%- if se_stts.top_subheading != blank -%}
+        <div class="t4s-subheading">{{ se_stts.top_subheading }}</div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+    <div class="t4s-tabs t4s-type-accordion {{se_stts.content_align}}" data-t4s-tabs style="--title-cl: {{se_stts.title_cl}};--bg-title-cl: {{se_stts.bg_title_cl}};--title-active-cl: {{se_stts.title_active_cl}};--bg-title-active-cl: {{se_stts.bg_title_active_cl}};--content-cl: {{se_stts.content_cl}};--bg-content-cl: {{se_stts.bg_content_cl}};">
+      {%- for block in se_blocks -%}
+        {%- assign bk_stts = block.settings -%}
+        {%- assign bk_title_clean = bk_stts.title | strip -%}
+        {%- assign bk_content_clean = bk_stts.content | strip -%}
+        {%- assign show_block = false -%}
+        {%- if bk_title_clean != blank or bk_content_clean != blank -%}
+          {%- assign show_block = true -%}
+        {%- endif -%}
+        {%- if show_block -%}
+        <div class="t4s-tab-wrapper {% if forloop.first == true and se_stts.auto_active %} t4s-active {% endif %}" data-t4s-tab-wrapper {{ block.shopify_attributes }}>
+          <a id="b_{{block.id}}" class="t4s-accor-title" href="#t4s-{{block.id}}" rel="nofollow" data-t4s-tab-item data-no-instant>
+            <span class="t4s-accor-text">
+              <span class="t4s-accor-icon">
+                {%- case bk_stts.icon -%}
+                  {%- when 'box' -%}📦
+                  {%- when 'chat_bubble' -%}💬
+                  {%- when 'check_mark' -%}✓
+                  {%- when 'dryer' -%}🌀
+                  {%- when 'eye' -%}👁️
+                  {%- when 'heart' -%}❤️
+                  {%- when 'iron' -%}🔥
+                  {%- when 'leaf' -%}🍃
+                  {%- when 'leather' -%}🧳
+                  {%- when 'lock' -%}🔒
+                  {%- when 'map_pin' -%}📍
+                  {%- when 'pants' -%}👖
+                  {%- when 'plane' -%}✈️
+                  {%- when 'price_tag' -%}🏷️
+                  {%- when 'question_mark' -%}❓
+                  {%- when 'return' -%}↩️
+                  {%- when 'ruler' -%}📏
+                  {%- when 'shirt' -%}👕
+                  {%- when 'shoe' -%}👟
+                  {%- when 'silhouette' -%}👤
+                  {%- when 'star' -%}⭐
+                  {%- when 'truck' -%}🚚
+                  {%- when 'washing' -%}🧺
+                {%- endcase -%}
+              </span>
+              {{ bk_stts.title }}
+            </span>
+            <span class="t4s-accor-item-nav"></span>
+          </a>
+          <div id="t4s-{{block.id}}" class="t4s-tab-content t4s-rte" data-t4s-tab-content {% if se_stts.auto_active == false %} style="display:none;" {% endif %}>
+            {{ bk_stts.content }}
+          </div>
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {{- html_layout[1] -}}
+  {%- if stt_layout == 't4s-se-container' -%}</div>{%- endif -%}
+</div>
+
+<style>
+/* Container width control */
+.t4s-container {
+  max-width: var(--width, 1200px);
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Section heading styles */
+.t4s-section-tophead {
+  margin-bottom: 30px;
+}
+
+.t4s-section-tophead .t4s-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.t4s-section-tophead .t4s-subheading {
+  font-size: 1rem;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+.t4s-section-tophead.t4s-text-center {
+  text-align: center;
+}
+
+.t4s-section-tophead .t4s-heading i {
+  margin-right: 0.5rem;
+}
+
+/* Responsive heading spacing */
+@media (max-width: 768px) {
+  .t4s-section-tophead {
+    margin-bottom: 25px;
+  }
+  .t4s-section-tophead .t4s-heading {
+    font-size: 1.5rem;
+  }
+}
+
+/* Accordion styling - light theme with gaps */
+.t4s-tabs.t4s-type-accordion {
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.t4s-tabs.t4s-type-accordion .t4s-tab-wrapper {
+  border-bottom: none;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.t4s-tabs.t4s-type-accordion .t4s-tab-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.t4s-accor-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  text-decoration: none;
+  color: #333 !important;
+  background: #f8f8f8 !important;
+  padding: 18px 20px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  font-weight: 700 !important;
+  border-radius: 8px 8px 0 0;
+}
+
+.t4s-accor-title:hover {
+  background: #eeeeee !important;
+}
+
+.t4s-accor-title:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0,0,0,.1);
+  border-radius: 4px;
+}
+
+.t4s-accor-text {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: #333;
+}
+
+.t4s-accor-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+  font-size: 1.2em;
+}
+
+/* Dark square plus/minus buttons */
+.t4s-accor-item-nav {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: #333;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.t4s-accor-item-nav::before,
+.t4s-accor-item-nav::after {
+  content: "";
+  position: absolute;
+  background: #fff !important;
+  transition: transform .3s ease;
+  border-radius: 1px;
+}
+
+.t4s-accor-item-nav::before {
+  width: 12px;
+  height: 2px;
+  transform: rotate(0deg);
+}
+
+.t4s-accor-item-nav::after {
+  width: 2px;
+  height: 12px;
+  transform: rotate(0deg);
+}
+
+.t4s-tab-wrapper.t4s-active .t4s-accor-item-nav::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+/* Content panel styling */
+.t4s-tab-content {
+  color: #000 !important;
+  background: #fff !important;
+  overflow: hidden;
+  padding: 0 20px;
+  border-top: 1px solid #e5e5e5;
+  border-radius: 0 0 8px 8px;
+}
+
+.t4s-tab-content[hidden] {
+  display: block !important;
+  height: 0 !important;
+  padding-top: 0;
+  padding-bottom: 0;
+  visibility: hidden;
+}
+
+.t4s-tab-content._animating {
+  transition: height .28s ease, padding .28s ease;
+}
+
+.t4s-tab-content p {
+  color: #000 !important;
+  padding: 20px 0;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Active state styling */
+.t4s-tab-wrapper.t4s-active > .t4s-accor-title {
+  background: #eeeeee !important;
+  border-radius: 8px 8px 0 0;
+}
+
+.t4s-tab-wrapper.t4s-active .t4s-accor-item-nav {
+  background: #555;
+}
+
+/* Text alignment classes */
+.t4s-text-start { text-align: left; }
+.t4s-text-center { text-align: center; }
+.t4s-text-end { text-align: right; }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .t4s-section-inner {
+    margin: {{ se_stts.mg_tb | default: ',,50px,' | replace: ',', ' ' }} !important;
+    padding: {{ se_stts.pd_tb | default: '' | replace: ',', ' ' }} !important;
+  }
+  
+  .t4s-container {
+    padding: 0 10px;
+  }
+  
+  .t4s-accor-title {
+    padding: 16px 18px;
+  }
+  
+  .t4s-tab-content {
+    padding: 0 18px;
+  }
+  
+  .t4s-accor-item-nav {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .t4s-tabs.t4s-type-accordion .t4s-tab-wrapper {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .t4s-section-inner {
+    margin: {{ se_stts.mg_mb | default: ',,30px,' | replace: ',', ' ' }} !important;
+    padding: {{ se_stts.pd_mb | default: '' | replace: ',', ' ' }} !important;
+  }
+  
+  .t4s-tabs.t4s-type-accordion .t4s-tab-wrapper {
+    margin-bottom: 8px;
+  }
+}
+</style>
+
+
+<script>
+(function(){
+  // Configuration: set to true for one-open-at-a-time behavior
+  var oneOpenAtATime = true;
+
+  function initAccordion(root) {
+    var wrappers = Array.prototype.slice.call(root.querySelectorAll('.t4s-tab-wrapper'));
+    var triggers = [];
+
+    wrappers.forEach(function(wrap) {
+      var trigger = wrap.querySelector('.t4s-accor-title');
+      var panel = wrap.querySelector('.t4s-tab-content');
+      if (!trigger || !panel) return;
+
+      // Generate unique IDs for ARIA
+      var triggerId = trigger.id || ('t4s-accor-trigger-' + Math.random().toString(36).slice(2));
+      trigger.id = triggerId;
+      var panelId = panel.id || ('t4s-accor-panel-' + Math.random().toString(36).slice(2));
+      panel.id = panelId;
+
+      // ARIA accessibility attributes
+      trigger.setAttribute('role', 'button');
+      trigger.setAttribute('aria-controls', panelId);
+      trigger.setAttribute('aria-expanded', wrap.classList.contains('t4s-active') ? 'true' : 'false');
+      panel.setAttribute('role', 'region');
+      panel.setAttribute('aria-labelledby', triggerId);
+
+      // Set initial state
+      if (!wrap.classList.contains('t4s-active')) {
+        panel.setAttribute('hidden', '');
+      } else {
+        panel.removeAttribute('hidden');
+      }
+
+      // Click event
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleItem(wrap, !wrap.classList.contains('t4s-active'));
+      });
+
+      // Keyboard navigation
+      trigger.addEventListener('keydown', function(e) {
+        var code = e.key;
+        var i = triggers.indexOf(trigger);
+        
+        if (code === 'Enter' || code === ' ') {
+          e.preventDefault();
+          toggleItem(wrap, !wrap.classList.contains('t4s-active'));
+        } else if (code === 'ArrowDown' || code === 'ArrowRight') {
+          e.preventDefault();
+          var next = triggers[(i + 1) % triggers.length];
+          next && next.focus();
+        } else if (code === 'ArrowUp' || code === 'ArrowLeft') {
+          e.preventDefault();
+          var prev = triggers[(i - 1 + triggers.length) % triggers.length];
+          prev && prev.focus();
+        } else if (code === 'Home') {
+          e.preventDefault();
+          triggers[0] && triggers[0].focus();
+        } else if (code === 'End') {
+          e.preventDefault();
+          triggers[triggers.length - 1] && triggers[triggers.length - 1].focus();
+        }
+      });
+
+      triggers.push(trigger);
+    });
+
+    function toggleItem(wrap, toOpen) {
+      if (toOpen && oneOpenAtATime) {
+        // Close all other items
+        wrappers.forEach(function(w) {
+          if (w !== wrap && w.classList.contains('t4s-active')) {
+            setOpen(w, false);
+          }
+        });
+      }
+      setOpen(wrap, toOpen);
+    }
+
+    function setOpen(wrap, open) {
+      var trigger = wrap.querySelector('.t4s-accor-title');
+      var panel = wrap.querySelector('.t4s-tab-content');
+      if (!trigger || !panel) return;
+
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      wrap.classList.toggle('t4s-active', open);
+
+      // Animate height
+      panel.classList.add('_animating');
+      var startHeight = panel.getBoundingClientRect().height;
+
+      if (open) {
+        // Expand
+        panel.removeAttribute('hidden');
+        panel.style.height = 'auto';
+        var endHeight = panel.getBoundingClientRect().height;
+        panel.style.height = startHeight + 'px';
+        panel.offsetHeight; // Force reflow
+        panel.style.height = endHeight + 'px';
+        panel.style.paddingTop = '';
+        panel.style.paddingBottom = '';
+        
+        var onEndOpen = function(e) {
+          if (e.target !== panel || e.propertyName !== 'height') return;
+          panel.classList.remove('_animating');
+          panel.style.height = 'auto';
+          panel.removeEventListener('transitionend', onEndOpen);
+        };
+        panel.addEventListener('transitionend', onEndOpen);
+      } else {
+        // Collapse
+        var currentHeight = startHeight;
+        panel.style.height = currentHeight + 'px';
+        panel.offsetHeight; // Force reflow
+        panel.style.height = '0px';
+        panel.style.paddingTop = '0px';
+        panel.style.paddingBottom = '0px';
+        
+        var onEndClose = function(e) {
+          if (e.target !== panel || e.propertyName !== 'height') return;
+          panel.classList.remove('_animating');
+          panel.setAttribute('hidden', '');
+          panel.style.height = '';
+          panel.style.paddingTop = '';
+          panel.style.paddingBottom = '';
+          panel.removeEventListener('transitionend', onEndClose);
+        };
+        panel.addEventListener('transitionend', onEndClose);
+      }
+    }
+  }
+
+  // Initialize all accordions on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.t4s-tabs.t4s-type-accordion[data-t4s-tabs]').forEach(initAccordion);
+  });
+})();
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Accordion",
+  "tag": "section",
+  "class": "t4s-section t4s-section-all t4s_tp_cdt t4s-accordion t4s_tp_tab",
+  "settings": [
+    {
+      "type": "header",
+      "content": "1.Heading options"
+    },
+    {
+      "type": "select",
+      "id": "design_heading",
+      "label": "Heading design",
+      "default": "1",
+      "options": [
+        {"value": "1", "label": "Design 01"},
+        {"value": "2", "label": "Design 02"},
+        {"value": "3", "label": "Design 03"},
+        {"value": "4", "label": "Design 04"},
+        {"value": "5", "label": "Design 05"},
+        {"value": "6", "label": "Design 06 (width line-awesome)"},
+        {"value": "7", "label": "Design 07"},
+        {"value": "8", "label": "Design 08"},
+        {"value": "9", "label": "Design 09"},
+        {"value": "10", "label": "Design 10"},
+        {"value": "11", "label": "Design 11"},
+        {"value": "12", "label": "Design 12"},
+        {"value": "13", "label": "Design 13"},
+        {"value": "14", "label": "Design 14"},
+        {"value": "15", "label": "Design 15"}
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_center",
+      "label": "Center heading align",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_heading",
+      "label": "Heading",
+      "default": "Accordion"
+    },
+    {
+      "type": "text",
+      "id": "icon_heading",
+      "label": "Enter a name icon",
+      "info": "Only used for design 6 [LineAwesome](https://kalles.the4.co/font-lineawesome/)",
+      "default": "las la-gem"
+    },
+    {
+      "type": "richtext",
+      "id": "top_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb",
+      "label": "Bottom space (Desktop)(px)",
+      "info": "The vertical spacing between heading and content.",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_tb",
+      "label": "Bottom space (Tablet)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "tophead_mb_mb",
+      "label": "Bottom space (Mobile)(px)",
+      "info": "The spacing is between the heading and the content",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "2. General options"
+    },
+    {
+      "type": "select",
+      "id": "accor_des",
+      "options": [
+        {"value": "1", "label": "Design 1"},
+        {"value": "2", "label": "Design 2"}
+      ],
+      "label": "Accordion design",
+      "default": "1"
+    },
+    {
+      "type": "color",
+      "id": "title_cl",
+      "label": "Label color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "bg_title_cl",
+      "label": "Label background color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "title_active_cl",
+      "label": "Label active color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "bg_title_active_cl",
+      "label": "Label active background color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "color",
+      "id": "content_cl",
+      "label": "Content color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "bg_content_cl",
+      "label": "Content background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content align",
+      "default": "t4s-text-start",
+      "options": [
+        {"value": "t4s-text-start", "label": "Left"},
+        {"value": "t4s-text-center", "label": "Center"},
+        {"value": "t4s-text-end", "label": "Right"}
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_active",
+      "label": "Auto active 1 items",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "3. Design options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "default": "t4s-container-wrap",
+      "label": "Layout",
+      "options": [
+        {"value": "t4s-cus-width", "label": "Custom width"},
+        {"value": "t4s-se-container", "label": "Container"},
+        {"value": "t4s-container-wrap", "label": "Wrapped container"},
+        {"value": "t4s-container-fluid", "label": "Full width"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "Custom width for content",
+      "info": "Only working when use layout custom width",
+      "default": 1000,
+      "min": 500,
+      "max": 1400,
+      "step": 50,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "cl_bg",
+      "label": "Background"
+    },
+    {
+      "type": "color_background",
+      "id": "cl_bg_gradient",
+      "label": "Background gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "mg",
+      "label": "Margin",
+      "info": "Margin top, margin right, margin bottom, margin left. If you do not use it please blank.",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd",
+      "label": "Padding",
+      "info": "Padding top, padding right, padding bottom, padding left. If you do not use it please blank.",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design tablet options"
+    },
+    {
+      "type": "text",
+      "id": "mg_tb",
+      "label": "Margin",
+      "default": ",,50px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_tb",
+      "label": "Padding",
+      "placeholder": "50px,,50px,"
+    },
+    {
+      "type": "header",
+      "content": "+ Design mobile options"
+    },
+    {
+      "type": "text",
+      "id": "mg_mb",
+      "label": "Margin",
+      "default": ",,30px,",
+      "placeholder": ",,50px,"
+    },
+    {
+      "type": "text",
+      "id": "pd_mb",
+      "label": "Padding",
+      "placeholder": ",,50px,"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accor_item",
+      "name": "Accordion item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Accordion icon",
+          "default": "none",
+          "options": [
+            {"value": "none", "label": "None"},
+            {"value": "box", "label": "Box"},
+            {"value": "chat_bubble", "label": "Chat bubble"},
+            {"value": "check_mark", "label": "Check mark"},
+            {"value": "dryer", "label": "Dryer"},
+            {"value": "eye", "label": "Eye"},
+            {"value": "heart", "label": "Heart"},
+            {"value": "iron", "label": "Iron"},
+            {"value": "leaf", "label": "Leaf"},
+            {"value": "leather", "label": "Leather"},
+            {"value": "lock", "label": "Lock"},
+            {"value": "map_pin", "label": "Map pin"},
+            {"value": "pants", "label": "Pants"},
+            {"value": "plane", "label": "Plane"},
+            {"value": "price_tag", "label": "Price tag"},
+            {"value": "question_mark", "label": "Question mark"},
+            {"value": "return", "label": "Return"},
+            {"value": "ruler", "label": "Ruler"},
+            {"value": "shirt", "label": "Shirt"},
+            {"value": "shoe", "label": "Shoe"},
+            {"value": "silhouette", "label": "Silhouette"},
+            {"value": "star", "label": "Star"},
+            {"value": "truck", "label": "Truck"},
+            {"value": "washing", "label": "Washing"}
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion label",
+          "default": "Accordion item"
+        },
+        {
+          "id": "content",
+          "type": "richtext",
+          "label": "Accordion content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion",
+      "category": "group8",
+      "blocks": [
+        {
+          "type": "accor_item",
+          "settings": {
+            "title": "Tab 01",
+            "content": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated. Please complete the form below.</p>"
+          }
+        },
+        {
+          "type": "accor_item",
+          "settings": {
+            "title": "Tab 02",
+            "content": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated. Please complete the form below.</p>"
+          }
+        },
+        {
+          "type": "accor_item",
+          "settings": {
+            "title": "Tab 03",
+            "content": "<p>We love to hear from you on our customer service, merchandise, website or any topics you want to share with us. Your comments and suggestions will be appreciated. Please complete the form below.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

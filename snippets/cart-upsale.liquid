@@ -1,0 +1,182 @@
+<div id="mySection" class="drawer_slide cart-slides">
+  <div class="section__header flex justify-between items-end">
+          <h2 class="section__heading">
+            <a href="{{ current_collection.url }}">{{ settings.dcheadingupsell }}</a>
+          </h2>
+  </div>
+<div class="drwaer_slider">
+{% assign collection_handle = settings.drawercollupsell %}
+{% for product in collections[collection_handle].products limit: 6 %}
+<div class="drawer_item">
+      {% render 'product-card-4', product: product %}
+  </div>
+{% endfor %}
+</div>
+</div>
+
+<style>
+.cart-slides {
+    padding: 0;
+}
+.drwaer_slider {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    display: flex;
+    overflow-x: scroll;
+    column-gap: 20px;
+  padding: 0 15px;
+}
+.drawer_slider {
+  scrollbar-width: thin!important;
+  scrollbar-color: #000 #5bbc6d!important;
+}
+
+/* Customize Webkit-based scrollbars (Chrome, Edge, Safari) */
+#mySection  ::-webkit-scrollbar {
+  height: 4px!important;
+}
+
+#mySection  ::-webkit-scrollbar-thumb {
+  background: #000!important;
+}
+#mySection  ::-webkit-scrollbar-track {
+  background: #5bbc6d!important;
+}
+
+#mySection  ::-webkit-scrollbar-button {
+  display: none!important;
+}
+
+.drawer_item .pro_ctm_area pcard-swatch {
+    display: none;
+}
+.drawer_item .pro_title_area {
+    padding-right: 0px;
+    width: 100%;
+}
+  .drawer_item .pro_ctm_area {
+    text-align: left;
+    width: 100%;
+    padding-top: 15px;
+}
+.drawer_item .sf__pcard-content.text-left {
+    flex-direction: column;
+}
+.drawer_slide .section__header {
+    margin-bottom: 5px;
+    padding-top: 5px;
+}
+  .drawer_item .m-product-card__content .product-subheading {
+    display: none;
+}
+  .drawer_slide .section__header h2.section__heading {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+}
+.drawer_item .product-form__actions {
+    display: block;
+    margin: 0;
+}
+.drawer_item div#notifyf {
+    display: none;
+}
+.drawer_item h3.block.text-base {
+    height: 80px;
+} 
+p.new_heading {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+  margin: 0 -24px;
+}
+  .drawer_item h3.block.text-base {
+    height: 80px;
+    display: block;
+    white-space: normal;
+    font-size: 14px;
+}
+  .section__header.flex.justify-between.items-end {
+    position: relative;
+}
+  .upselltimer {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    text-align: center;
+}
+  div#mySection h2.section__heading {
+    text-align: left;
+}
+  span#timer {
+    display: block;
+    color: #000;
+    font-weight: 600;
+}
+.drawer_item .m-product-card__media {
+    overflow: hidden;
+    position: relative;
+    width: 30%;
+}
+.drawer_item .m-product-card__content {
+    padding: 0!important;
+    margin-top: 0!important;
+    max-width: 70%;
+    min-height: auto;
+    height: fit-content;
+}
+.drawer_item .m-product-card {
+    border-radius: 0 !important;
+    overflow: inherit !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    display: flex;
+    gap: 10px;
+    height: auto;
+}
+  .drawer_item .m-product-card__content .m-product-card__action-wrapper button.m-product-form.m\:w-full.m-product-quickview-button.m-spinner-button.m-button.m-button--secondary {
+    font-size: 10px;
+    padding: 3px 5px;
+}
+  .drawer_item {
+    max-width: 70%;
+}
+  .drawer_item .m-product-card__media .m-product-card__hover-image {
+    display: none !important;
+}
+  .drawer_item .m-product-card__media .m-product-card__tags,
+  .drawer_item .m-product-card__media .m-product-card__action.m-product-card__addons.m\:display-flex{
+    display: none !important;
+}
+.drawer_item .m-product-card__content .m-product-card__action-wrapper {
+    margin: 0;
+    margin-top: 10px;
+    max-width: 120px;
+}
+  .cart-slides .section__heading {
+    background: #000;
+    color: #fff!important;
+    padding: 12px!important;
+    margin-top: 5px!important;
+    font-size: 14px!important;
+}
+  .m-cart-drawer__footer--wrapper {
+    padding: 1px 15px 5px !important;
+    box-shadow: 0 4px 24px #0000001f;
+}
+  span.m-cart__subtotal--label.m\:font-medium {
+    display: none;
+}
+  a.m-cart-drawer__link-to-cart.m-button.m-button--link {
+    display: none;
+}
+  .m-cart-drawer__footer--wrapper.m\:block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  .m-cart-drawer__gift-wrapping {
+    display: none !important;
+}
+</style>

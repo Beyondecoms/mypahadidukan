@@ -1,0 +1,251 @@
+{% comment %}
+  WhatsApp Floating Button Section
+  Add to: Sections folder as whatsapp-float.liquid
+  Include in theme.liquid inside <body> tag:
+    {% section 'whatsapp-float' %}
+{% endcomment %}
+
+<style>
+  .wa-float-wrapper {
+    position: fixed;
+    bottom: 28px;
+    left: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* Tooltip bubble */
+  .wa-tooltip {
+    background: #fff;
+    color: #111;
+    padding: 10px 16px;
+    border-radius: 14px 14px 14px 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-12px) scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    line-height: 1.4;
+  }
+  .wa-tooltip span {
+    display: block;
+    font-size: 11.5px;
+    color: #555;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .wa-tooltip.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  /* Main button */
+  .wa-btn {
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    position: relative;
+    animation: wa-entrancePop 0.6s 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .wa-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 26px rgba(37, 211, 102, 0.6);
+  }
+  .wa-btn:active {
+    transform: scale(0.95);
+  }
+  .wa-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+
+  /* Pulse rings */
+  .wa-btn::before,
+  .wa-btn::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 2px solid #25D366;
+    opacity: 0;
+    animation: wa-pulse 2.4s ease-out infinite;
+  }
+  .wa-btn::after {
+    animation-delay: 1.2s;
+  }
+
+  /* Notification dot */
+  .wa-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 13px;
+    height: 13px;
+    background: #ff4757;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    animation: wa-dotBounce 1.8s ease-in-out infinite;
+  }
+
+  @keyframes wa-pulse {
+    0%   { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(1.9); }
+  }
+  @keyframes wa-entrancePop {
+    from { opacity: 0; transform: scale(0) rotate(-20deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  @keyframes wa-dotBounce {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.3); }
+  }
+
+  @media (max-width: 768px) {
+    .wa-float-wrapper {
+      bottom: 5rem;
+      left: 16px;
+    }
+    .wa-btn {
+      width: 54px;
+      height: 54px;
+    }
+    .wa-btn svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+</style>
+
+<div class="wa-float-wrapper" id="waFloat">
+  <div class="wa-tooltip" id="waTooltip">
+    {{ section.settings.tooltip_text }}
+    {% if section.settings.tooltip_subtext != blank %}
+      <span>{{ section.settings.tooltip_subtext }}</span>
+    {% endif %}
+  </div>
+
+  <a
+    class="wa-btn"
+    href="https://wa.me/{{ section.settings.whatsapp_number }}?text={{ section.settings.prefill_message | url_encode }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on WhatsApp"
+    id="waBtn"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    {% if section.settings.show_notification_dot %}
+      <div class="wa-dot"></div>
+    {% endif %}
+  </a>
+</div>
+
+<script>
+(function() {
+  var wrapper = document.getElementById('waFloat');
+  var tooltip = document.getElementById('waTooltip');
+  var btn = document.getElementById('waBtn');
+  if (!wrapper || !tooltip || !btn) return;
+
+  var tooltipDelay = {{ section.settings.tooltip_delay | times: 1000 }};
+  var autoTimer;
+
+  function showTooltip() {
+    clearTimeout(autoTimer);
+    tooltip.classList.add('visible');
+  }
+  function hideTooltip() {
+    clearTimeout(autoTimer);
+    tooltip.classList.remove('visible');
+  }
+
+  // Auto-show tooltip after delay
+  if (tooltipDelay > 0) {
+    autoTimer = setTimeout(function() {
+      showTooltip();
+      setTimeout(hideTooltip, 4000);
+    }, tooltipDelay);
+  }
+
+  btn.addEventListener('mouseenter', showTooltip);
+  btn.addEventListener('mouseleave', hideTooltip);
+  btn.addEventListener('touchstart', function(e) {
+    if (!tooltip.classList.contains('visible')) {
+      e.preventDefault();
+      showTooltip();
+      setTimeout(hideTooltip, 3000);
+    }
+  }, { passive: false });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "WhatsApp Float Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp Number",
+      "info": "Enter with country code, no + or spaces. E.g. 919876543210",
+      "default": "919876543210"
+    },
+    {
+      "type": "text",
+      "id": "prefill_message",
+      "label": "Pre-fill Message",
+      "default": "Hi! I have a question about your products."
+    },
+    {
+      "type": "text",
+      "id": "tooltip_text",
+      "label": "Tooltip Heading",
+      "default": "Need help? Chat with us!"
+    },
+    {
+      "type": "text",
+      "id": "tooltip_subtext",
+      "label": "Tooltip Subtext",
+      "default": "We usually reply in minutes"
+    },
+    {
+      "type": "range",
+      "id": "tooltip_delay",
+      "label": "Auto-show tooltip after (seconds)",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_notification_dot",
+      "label": "Show notification dot",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "WhatsApp Float Button"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,114 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+{{- 'search-engine.js' | asset_url | script_tag -}}
+
+{% liquid
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+%}
+
+<section class="facest-filters-section m-search" data-section-type="page-search" data-section-id="{{ section.id }}">
+  {% render 'customer-challenge-style' %}
+
+  <div class="{{ container }}">
+    <div class="m-page-header m:flex m:flex-col m:items-center">
+      <h1 class="m-page-header__title" id="custom-search-heading">
+        {%- if search.terms != blank -%}
+          Products matching "{{ search.terms | escape }}"
+        {%- else -%}
+          Search
+        {%- endif -%}
+      </h1>
+
+      <form action="/search" method="GET" novalidate class="m-search--form">
+        <input type="hidden" name="options[prefix]" value="last">
+        <input
+          type="text"
+          id="custom-search-input"
+          name="q"
+          autocomplete="off"
+          placeholder="Search products, blogs…"
+          value="{{ search.terms | escape }}"
+          class="form-field form-field--input m-search--form-input"
+        >
+        <button type="submit" class="m-search--form-button" aria-label="Submit">
+          <svg class="m-svg-icon--medium-small" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="{{ container }}" style="padding-top:20px; padding-bottom:60px;">
+
+    <p id="custom-search-count" style="margin-bottom:20px; color:#666; font-size:14px;"></p>
+
+    <!-- Loading -->
+    <div id="custom-search-loading" style="display:none; justify-content:center; align-items:center; padding:80px 0; gap:14px;">
+      <div class="custom-search-spinner"></div>
+      <span style="color:#888; font-size:15px;">Loading catalogue…</span>
+    </div>
+
+    <!-- Empty -->
+    <div id="custom-search-empty" style="display:none; padding:60px 0; text-align:center; font-size:1.1rem; color:#555;">
+      No results found for "<strong id="empty-term"></strong>". Try a different keyword.
+    </div>
+
+    <!-- Products -->
+    <h2 id="search-products-title" class="search-section-title" style="display:none; margin-bottom:20px; font-size:1.2rem; font-weight:600;">Products</h2>
+    <div id="custom-search-results" class="m:flex m:flex-wrap" style="gap:20px;"></div>
+
+    <!-- Blogs -->
+    <h2 id="search-blogs-title" class="search-section-title" style="display:none; margin-top:50px; margin-bottom:20px; font-size:1.2rem; font-weight:600;">Related Articles</h2>
+    <div id="custom-blog-results" class="m:flex m:flex-wrap" style="gap:20px;"></div>
+
+  </div>
+</section>
+
+<style>
+.custom-search-spinner {
+  width:28px; height:28px;
+  border:3px solid #e0e0e0;
+  border-top-color:#c85b43;
+  border-radius:50%;
+  animation:se-spin 0.7s linear infinite;
+}
+@keyframes se-spin { to { transform:rotate(360deg); } }
+
+.search-blog-card {
+  display:flex; flex-direction:column;
+  border:1px solid #d9d9d9; border-radius:20px;
+  overflow:hidden; background:#fff;
+  text-decoration:none; color:inherit;
+  height:100%; transition:box-shadow 0.2s;
+}
+.search-blog-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.10); }
+.search-blog-card__img-wrap { aspect-ratio:16/9; overflow:hidden; }
+.search-blog-card__img { width:100%; height:100%; object-fit:cover; display:block; }
+.search-blog-card__body { padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.search-blog-card__meta { font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.05em; }
+.search-blog-card__title { font-size:15px; font-weight:600; color:#222; line-height:1.4; margin:0; }
+.search-blog-card__excerpt { font-size:13px; color:#666; line-height:1.5; margin:0; }
+.search-blog-card__readmore { font-size:13px; font-weight:600; color:#c85b43; margin-top:auto; }
+</style>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container-fluid",
+      "options": [
+        { "value": "container-fluid", "label": "Default" },
+        { "value": "container-full", "label": "Full width" },
+        { "value": "container", "label": "Use container box" }
+      ]
+    }
+  ]
+}
+{% endschema %}

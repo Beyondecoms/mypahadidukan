@@ -1,0 +1,259 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "hero_banner": {
+      "type": "image-with-text",
+      "disabled": true,
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "container": "container-fluid",
+        "color_scheme": "",
+        "item_gap": 0,
+        "item_gap_mobile": 0,
+        "layout": "right",
+        "image_column_size": "6",
+        "image_overlap": false,
+        "show_image_reverse": false,
+        "hover_effect": false,
+        "image_animation": "fade-in",
+        "image": "shopify://shop_images/seabuckthorn-oil-vitamin-c_serum-skin_1.jpg",
+        "link": "",
+        "link_2": "",
+        "second_image_offset_top": 10,
+        "title": "Pure Himalayan Oils",
+        "sub_title": "Cold-Pressed. Wild-Harvested. Unrefined.",
+        "text": "<p>From the pristine valleys of the Himalayas, our range of cosmetic, essential and edible oils are sourced directly from nature — free from additives, preservatives, and compromise. Each bottle holds the essence of the mountains.</p>",
+        "text_size": "large",
+        "content_alignment": "left",
+        "button_label": "Shop All Oils",
+        "button_link": "#oils-catalogue",
+        "button_style": "m-button--primary",
+        "button_size": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "icon_box_benefits": {
+      "type": "icon-box",
+      "blocks": {
+        "iconbox_pure": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/3_6c400b46-552b-4f9f-8f92-6737d58131be.png",
+            "image_by_url": "",
+            "title": "100% Pure",
+            "description": "<p>No additives, no fillers. Just pure oil as nature intended.</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_sourced": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/2_9df353f4-71fb-4687-ae3e-05c94d98899d.png",
+            "image_by_url": "",
+            "title": "Himalayan Sourced",
+            "description": "<p>Directly harvested from high-altitude Himalayan regions.</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_coldpressed": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/1.png",
+            "image_by_url": "",
+            "title": "Cold-Pressed",
+            "description": "<p>Extracted without heat to preserve all active compounds.</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "iconbox_pure",
+        "iconbox_sourced",
+        "iconbox_coldpressed"
+      ],
+      "settings": {
+        "container": "container",
+        "color_scheme": "",
+        "heading": "Why Our Oils?",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "item_per_row": 3,
+        "item_gap": 30,
+        "item_gap_mobile": 16,
+        "card_style": "vertical",
+        "image_max_width": "80px",
+        "content_alignment": "center",
+        "hover_effect": "none",
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "use_scroll_mobile": true,
+        "use_grid_column_mb": true,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "custom_liquid_k43eiQ": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<a id=\"oils-catalogue\"></a>",
+        "custom_class": ""
+      }
+    },
+    "oils_catalogue": {
+      "type": "featured-collection",
+      "name": "Oils Catalogue",
+      "settings": {
+        "heading": "Our Oils Catalogue",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "color_scheme": "",
+        "container": "container-fluid",
+        "collection": "mpd-oils",
+        "enable_flashsale": false,
+        "show_countdown": false,
+        "product_to_show": 12,
+        "items_per_row": 4,
+        "item_gap": 30,
+        "pcard_layout": "",
+        "pcard_image_ratio": "",
+        "show_vendor": false,
+        "hide_title": false,
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "show_button_on_header": false,
+        "button_type": "load",
+        "button_text": "Load More",
+        "button_style": "m-button--primary",
+        "button_size": "",
+        "infinite_load": false,
+        "max_page_load": 3,
+        "mobile_disable_slider": false,
+        "use_scroll_mobile": false,
+        "item_gap_mobile": 16,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "custom_class": "oils-catalogue-section",
+        "animations": "inherit"
+      }
+    },
+    "rich_text_cta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_cta": {
+          "type": "heading",
+          "settings": {
+            "heading": "Rooted in Nature. Crafted for You.",
+            "heading_size": "h2"
+          }
+        },
+        "text_cta": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every oil in our catalogue is traceable back to its source. We work directly with small-scale farmers and harvesters across the Himalayas to bring you the most authentic botanical oils available.</p>"
+          }
+        },
+        "button_cta": {
+          "type": "button",
+          "settings": {
+            "button_label": "Our Story",
+            "button_link": "shopify://pages/about",
+            "button_style": "m-button--primary",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_cta",
+        "text_cta",
+        "button_cta"
+      ],
+      "settings": {
+        "container": "container",
+        "color_scheme": "",
+        "content_alignment": "center",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "recent_viewed": {
+      "type": "recent-viewed-products",
+      "settings": {
+        "container": "container-fluid",
+        "color_scheme": "",
+        "heading": "Recently Viewed",
+        "heading_size": "h3",
+        "text_align": "left",
+        "limit": 8,
+        "columns": 5,
+        "column_gap": 10,
+        "pcard_layout": "",
+        "pcard_image_ratio": "",
+        "show_vendor": false,
+        "hide_title": false,
+        "enable_slider": true,
+        "show_pagination": false,
+        "show_navigation": false,
+        "mobile_disable_slider": false,
+        "use_scroll_mobile": true,
+        "item_gap_mobile": 16,
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_banner",
+    "icon_box_benefits",
+    "custom_liquid_k43eiQ",
+    "oils_catalogue",
+    "rich_text_cta",
+    "recent_viewed"
+  ]
+}

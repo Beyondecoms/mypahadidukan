@@ -1,0 +1,366 @@
+{{ 'mobile-sticky-bar.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign should_show = section.settings.show_mobile_sticky
+  assign section_settings = section.settings
+  if section_settings.show_home_icon == false and section_settings.show_cart_icon == false and section_settings.show_wishlist_icon == false and section_settings.show_search_icon == false and section_settings.show_account_icon == false
+    assign should_show = false
+  endif
+%}
+
+{% if template.name != 'product' and should_show %}
+  <div class="m-mobile-sticky-bar md:m:hidden m:flex m:justify-between">
+
+    {% comment %} HOME {% endcomment %}
+    {% if section_settings.show_home_icon %}
+      <div class="m-mobile-sticky-bar--item{% if template.name == 'index' %} msb--active{% endif %}">
+        <a href="{{ routes.root_url }}" aria-label="Home">
+          {% comment %} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg> {% endcomment %}
+                   <img src="https://cdn.shopify.com/s/files/1/0718/1195/7046/files/home-removebg-preview.png?v=1757503243" alt="bottom home icon">
+
+          <span>Home</span>
+        </a>
+      </div>
+    {% endif %}
+
+    {% comment %} SEARCH — triggers the header's m-search-popup {% endcomment %}
+    <div class="m-mobile-sticky-bar--item" id="msb-search-btn">
+      <a href="javascript:void(0);" aria-label="Search" onclick="(function(){var el=document.querySelector('m-search-popup[data-open-search-popup]');if(el){el.click();}})()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 512 512"><title>ionicons-v5-f</title><path d="M221.09,64A157.09,157.09,0,1,0,378.18,221.09,157.1,157.1,0,0,0,221.09,64Z" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:32px"/><line x1="338.29" y1="338.29" x2="448" y2="448" style="fill:none;stroke:#000000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"/></svg>
+        <span>Search</span>
+      </a>
+    </div>
+
+    {% comment %} CART (mapped to Reorder visually) {% endcomment %}
+    {% if section_settings.show_cart_icon %}
+      <div class="m-mobile-sticky-bar--item{% if template.name == 'cart' %} msb--active{% endif %}">
+        <a href="{{ routes.cart_url }}" class="m-cart-icon-bubble msb--link" aria-label="{{ cart.item_count }} items in cart">
+          {% comment %} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM5.07 5H3V3H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 4.48 15.69 4.48 16c0 1.1.9 2 2 2h14v-2H6.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H19c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 23.46 5H5.07z"/>
+          </svg> {% endcomment %}
+             <img src="https://cdn.shopify.com/s/files/1/0718/1195/7046/files/cart-removebg-preview.png?v=1757503244" alt="bottom cart icon">
+
+          <m-cart-count class="msb--badge{% if cart == empty %} m:hidden{% endif %}">
+            {%- if cart.item_count < 100 -%}{{- cart.item_count -}}{%- else -%}99+{%- endif -%}
+          </m-cart-count>
+          <span>Cart</span>
+        </a>
+      </div>
+    {% endif %}
+
+    {% comment %} WISHLIST {% endcomment %}
+    {% if section_settings.show_wishlist_icon %}
+      {% if settings.wishlist_page != blank %}
+        {% assign url = pages[settings.wishlist_page].url %}
+      {% else %}
+        {% assign url = '/pages/wishlist' %}
+      {% endif %}
+      <div class="m-mobile-sticky-bar--item">
+        <a class="msb--link" href="{{ url }}" aria-label="Wishlist">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <sup class="m-wishlist-count m:hidden"></sup>
+          <span>Wishlist</span>
+        </a>
+      </div>
+    {% endif %}
+
+    {% comment %} WHATSAPP / CHAT (Support icon) {% endcomment %}
+    <div class="m-mobile-sticky-bar--item">
+      <a href="https://wa.me/918428611319" class="msb--link" aria-label="Chat on WhatsApp">
+        {% comment %} <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 1C6.477 1 2 5.477 2 11c0 1.89.525 3.66 1.438 5.168L2 22l6.01-1.418A9.94 9.94 0 0 0 12 21c5.523 0 10-4.477 10-10S17.523 1 12 1zm0 18a7.95 7.95 0 0 1-3.9-1.02l-.28-.16-3.57.84.86-3.5-.18-.28A7.96 7.96 0 0 1 4 11c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8zm4.406-5.846c-.242-.121-1.432-.707-1.654-.787-.22-.08-.381-.12-.542.12-.16.24-.622.787-.763.948-.14.16-.282.18-.523.06-.242-.12-.02-.08-1.462-.54a5.48 5.48 0 0 1-1.302-1.197c-.14-.18-.015-.28.103-.4.107-.108.242-.28.362-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.542-1.307-.742-1.788-.195-.47-.394-.406-.542-.414l-.461-.008c-.16 0-.42.06-.641.3s-.842.823-.842 2.006.862 2.327.982 2.487c.12.16 1.697 2.592 4.113 3.635.575.248 1.024.396 1.373.507.577.184 1.102.158 1.517.096.463-.069 1.432-.585 1.633-1.15.2-.564.2-1.047.14-1.148-.06-.1-.22-.16-.462-.28z"/>
+        </svg> {% endcomment %}
+        <img class="bt-icon" src="https://cdn.shopify.com/s/files/1/0355/1415/5141/files/Chat.png?v=1703160386">
+
+        <span>Chat</span>
+      </a>
+    </div>
+
+    {% comment %} ACCOUNT {% endcomment %}
+    {% if shop.customer_accounts_enabled or shop.customer_accounts_optional %}
+      {% if section_settings.show_account_icon %}
+        <div class="m-mobile-sticky-bar--item{% if template.name == 'customers/account' %} msb--active{% endif %}">
+          <a href="{{ routes.account_url }}" class="msb--link" aria-label="Account">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+            <span>Account</span>
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% comment %} MORE / MENU {% endcomment %}
+    <div class="m-mobile-sticky-bar--item">
+      <a href="javascript:void(0);" class="mobile-menu js-drawer-open-left-link msb--link" aria-label="More">
+  <svg version="1.1" x="0px" y="0px" viewBox="0 0 283.5 283.5" style="enable-background:new 0 0 283.5 283.5;" xml:space="preserve"><g>
+           <path d="M82.7,70.9h189c6.5,0,11.8-5.3,11.8-11.8s-5.3-11.8-11.8-11.8h-189c-6.5,0-11.8,5.3-11.8,11.8S76.2,70.9,82.7,70.9z"></path>
+           <path d="M271.7,129.9h-189c-6.5,0-11.8,5.3-11.8,11.8s5.3,11.8,11.8,11.8h189c6.5,0,11.8-5.3,11.8-11.8S278.2,129.9,271.7,129.9z"></path>
+           <path d="M271.7,212.6h-189c-6.5,0-11.8,5.3-11.8,11.8s5.3,11.8,11.8,11.8h189c6.5,0,11.8-5.3,11.8-11.8S278.2,212.6,271.7,212.6z"></path>
+           <circle cx="23.6" cy="59.1" r="23.6"></circle><circle cx="23.6" cy="141.7" r="23.6"></circle><circle cx="23.6" cy="224.4" r="23.6"></circle>
+         </g></svg>
+        <span>More</span>
+      </a>
+    </div>
+
+  </div>
+{% endif %}
+
+{% style %}
+/* ===================================================
+   MOBILE STICKY BAR
+   Design: white bg, orange icons, bold dark labels
+   =================================================== */
+
+
+
+
+
+
+.m-mobile-sticky-bar {
+  position: fixed;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  background: #ffffff !important;
+  border-top: 1.5px solid #ebebeb !important;
+  box-shadow: 0 -3px 16px rgba(0,0,0,0.07) !important;
+  padding: 10px 4px calc(10px + env(safe-area-inset-bottom)) !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+@media only screen and (min-width:750px){
+  .m-mobile-sticky-bar{
+    display: none !important;
+  }
+}
+
+/* ── Item wrapper ── */
+.m-mobile-sticky-bar--item {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  cursor: pointer !important;
+  min-width: 0 !important;
+}
+
+/* ── Anchor + search-popup inner span ── */
+.m-mobile-sticky-bar--item a,
+.m-mobile-sticky-bar--item .msb--link,
+m-search-popup.m-mobile-sticky-bar--item > .msb--link {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  text-decoration: none !important;
+  color: #1a1a1a !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* ── SVG icons — orange by default ── */
+.m-mobile-sticky-bar--item svg {
+  width: 28px !important;
+  height: 28px !important;
+
+  stroke: none !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.18s ease, opacity 0.18s ease !important;
+}
+
+/* ── Labels ── */
+.m-mobile-sticky-bar--item span:not(.msb--badge):not(.m-wishlist-count):not(.m-tooltip):not(.m-cart-count) {
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif !important;
+  white-space: nowrap !important;
+  display: block !important;
+}
+
+/* ── Active state — icon + label both orange ── */
+.m-mobile-sticky-bar--item.msb--active svg {
+  fill: #e8510a !important;
+  color: #e8510a !important;
+  transform: translateY(-1px) !important;
+}
+
+.m-mobile-sticky-bar--item.msb--active span:not(.msb--badge):not(.m-wishlist-count) {
+  color: #e8510a !important;
+  font-weight: 700 !important;
+}
+
+/* ── Tap feedback ── */
+.m-mobile-sticky-bar--item a:active svg,
+.m-mobile-sticky-bar--item .msb--link:active svg {
+  transform: scale(0.88) !important;
+  opacity: 0.75 !important;
+}
+
+/* ── Cart badge ── */
+.msb--badge {
+  position: absolute !important;
+  top: -4px !important;
+  left: calc(50% + 4px) !important;
+  background: #e8510a !important;
+  color: #fff !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 4px !important;
+  line-height: 1 !important;
+  border: 2px solid #fff !important;
+  pointer-events: none !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  z-index: 1 !important;
+}
+
+/* ── Wishlist badge ── */
+.m-wishlist-count {
+  position: absolute !important;
+  top: -4px !important;
+  left: calc(50% + 4px) !important;
+  background: #e8510a !important;
+  color: #fff !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 3px !important;
+  border: 2px solid #fff !important;
+  pointer-events: none !important;
+}
+
+/* ── Search popup element ── */
+m-search-popup.m-mobile-sticky-bar--item {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  cursor: pointer !important;
+}
+
+/* ── Hide Foxtheme tooltip shell ── */
+.m-tooltip {
+  display: contents !important;
+}
+
+/* ── Body padding so content never hides behind bar ── */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+  }
+}
+{% endstyle %}
+
+<script>
+(function() {
+  function initSearchBtn() {
+    var btn = document.getElementById('msb-search-btn');
+    if (!btn) return;
+    // Watch the FIRST m-search-popup (the header one) for open attribute changes
+    var headerSearch = document.querySelector('m-search-popup[data-open-search-popup]');
+    if (!headerSearch) return;
+    var observer = new MutationObserver(function() {
+      if (headerSearch.hasAttribute('open')) {
+        btn.classList.add('msb--active');
+      } else {
+        btn.classList.remove('msb--active');
+      }
+    });
+    observer.observe(headerSearch, { attributes: true, attributeFilter: ['open'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearchBtn);
+  } else {
+    initSearchBtn();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Mobile sticky bar",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://foxecom.link/NtGGOO)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_sticky",
+      "label": "Show sticky bar",
+      "default": true,
+      "info": "Show a sticky bar on mobile to let customers shopping easier. Switch to mobile view to see it."
+    },
+    {
+      "type": "header",
+      "content": "Addons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_home_icon",
+      "label": "Show home icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_icon",
+      "label": "Show products listing",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_icon",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_icon",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_icon",
+      "label": "Show account icon",
+      "default": false,
+      "info": "Customers account must be enabled. See [Enabling customer accounts](https://help.shopify.com/en/manual/checkout-settings/customer-accounts)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist_icon",
+      "label": "Show wishlist icon",
+      "default": false,
+      "info": "Wishlist page must be specified"
+    }
+  ]
+}
+{% endschema %}

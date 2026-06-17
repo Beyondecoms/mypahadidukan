@@ -1,0 +1,28 @@
+{%- liquid
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+  endif
+
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+-%}
+
+{% render 'page-title', title: page.title %}
+{% for product in collections.all.products %}
+  {% if product.tags contains 'black-friday' %}
+    <div class="product-card">
+      <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+        <h3>{{ product.title }}</h3>
+        <p class="price">{{ product.price | money }}</p>
+        {% if product.compare_at_price > product.price %}
+          <p class="sale">Was {{ product.compare_at_price | money }}</p>
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+{% endfor %}
