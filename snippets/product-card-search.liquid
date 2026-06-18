@@ -1,0 +1,76 @@
+{% comment %}
+  Accepts:
+  - product: {Object} Product (optional)
+  - template_mode: {Boolean} Render placeholder markup for JS templating (optional)
+
+  Usage:
+  {% render 'product-card-search', product: product %}
+  {% render 'product-card-search', template_mode: true %}
+{% endcomment %}
+
+{% liquid
+  assign is_template = false
+  if template_mode
+    assign is_template = true
+  endif
+
+  assign product_url = product.url
+  assign product_title = product.title
+  assign product_vendor = product.vendor
+  assign product_type = product.type
+  assign product_image = ''
+  assign product_image_alt = product.title | escape
+  assign product_price = product.price | money
+  assign product_compare_at_price = product.compare_at_price | money
+
+  if product.featured_image != blank
+    assign product_image = product.featured_image | image_url: width: 720
+    assign product_image_alt = product.featured_image.alt | default: product.title | escape
+  endif
+
+  if is_template
+    assign product_url = '__PRODUCT_URL__'
+    assign product_title = '__PRODUCT_TITLE__'
+    assign product_vendor = '__PRODUCT_VENDOR__'
+    assign product_type = '__PRODUCT_TYPE__'
+    assign product_image = '__PRODUCT_IMAGE__'
+    assign product_image_alt = '__PRODUCT_IMAGE_ALT__'
+    assign product_price = '__PRODUCT_PRICE__'
+    assign product_compare_at_price = '__PRODUCT_COMPARE_AT_PRICE__'
+  endif
+%}
+
+<article class="custom-search-card" data-search-card>
+  <a class="custom-search-card__media" href="{{ product_url }}" data-search-link aria-label="{{ product_title | escape }}">
+    <img
+      class="custom-search-card__image"
+      data-search-image
+      src="{{ product_image }}"
+      alt="{{ product_image_alt }}"
+      loading="lazy"
+      width="720"
+      height="720"
+    >
+  </a>
+
+  <div class="custom-search-card__content">
+    {% if settings.show_vendor %}
+      <p class="custom-search-card__vendor" data-search-vendor-wrap>
+        <span data-search-vendor>{{ product_vendor }}</span>
+      </p>
+    {% endif %}
+
+    <h3 class="custom-search-card__title">
+      <a href="{{ product_url }}" data-search-link data-search-title>{{ product_title }}</a>
+    </h3>
+
+    <p class="custom-search-card__type" data-search-type-wrap>
+      <span data-search-type>{{ product_type }}</span>
+    </p>
+
+    <div class="custom-search-card__price" data-search-price-wrap>
+      <span class="custom-search-card__price-current" data-search-price>{{ product_price }}</span>
+      <span class="custom-search-card__price-compare" data-search-compare-price>{{ product_compare_at_price }}</span>
+    </div>
+  </div>
+</article>

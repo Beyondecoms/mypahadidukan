@@ -1,5 +1,4 @@
 {{ 'collection.css' | asset_url | stylesheet_tag }}
-{{- 'search-engine.js' | asset_url | script_tag -}}
 
 {% liquid
   assign container = section.settings.container
@@ -8,20 +7,23 @@
   endif
 %}
 
-<section class="facest-filters-section m-search" data-section-type="page-search" data-section-id="{{ section.id }}">
+<section class="facest-filters-section m-search mpd-search-page" data-section-type="page-search" data-section-id="{{ section.id }}">
   {% render 'customer-challenge-style' %}
 
   <div class="{{ container }}">
-    <div class="m-page-header m:flex m:flex-col m:items-center">
-      <h1 class="m-page-header__title" id="custom-search-heading">
+    <div class="m-page-header m:flex m:flex-col m:items-center" style="text-align: center; margin-bottom: 40px;">
+      <h1 class="m-page-header__title" id="custom-search-heading" style="font-size: 2.2rem; font-weight: 700; margin-bottom: 12px; color: #222;">
         {%- if search.terms != blank -%}
           Products matching "{{ search.terms | escape }}"
         {%- else -%}
           Search
         {%- endif -%}
       </h1>
+      <p class="mpd-search-subtitle" style="color: #666; font-size: 14px; margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+        Find products by title, tags, type or vendor, and search related blog articles.
+      </p>
 
-      <form action="/search" method="GET" novalidate class="m-search--form">
+      <form action="/search" method="GET" class="m-search--form" style="display: flex; max-width: 600px; width: 100%; margin: 0 auto; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 999px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: border-color 0.2s;">
         <input type="hidden" name="options[prefix]" value="last">
         <input
           type="text"
@@ -31,9 +33,10 @@
           placeholder="Search products, blogs…"
           value="{{ search.terms | escape }}"
           class="form-field form-field--input m-search--form-input"
+          style="flex: 1; padding: 14px 24px; border: none; outline: none; font-size: 15px; background: transparent; box-shadow: none;"
         >
-        <button type="submit" class="m-search--form-button" aria-label="Submit">
-          <svg class="m-svg-icon--medium-small" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <button type="submit" class="m-search--form-button" aria-label="Submit" style="padding: 14px 24px; background: none; border: none; cursor: pointer; color: #c85b43; display: flex; align-items: center; justify-content: center; transition: color 0.15s;">
+          <svg class="m-svg-icon--medium-small" fill="currentColor" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 18px; height: 18px;">
             <path d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"/>
           </svg>
         </button>
@@ -41,57 +44,297 @@
     </div>
   </div>
 
-  <div class="{{ container }}" style="padding-top:20px; padding-bottom:60px;">
+  <div class="{{ container }}" style="padding-top: 20px; padding-bottom: 60px;">
+    
+    <p id="custom-search-count" style="margin-bottom: 30px; color: #555; font-size: 14px; font-weight: 500; min-height: 20px;"></p>
 
-    <p id="custom-search-count" style="margin-bottom:20px; color:#666; font-size:14px;"></p>
-
-    <!-- Loading -->
-    <div id="custom-search-loading" style="display:none; justify-content:center; align-items:center; padding:80px 0; gap:14px;">
+    <!-- Spinner Loading Element -->
+    <div id="custom-search-loading" style="display: none; flex-direction: column; justify-content: center; align-items: center; padding: 100px 0; gap: 16px;">
       <div class="custom-search-spinner"></div>
-      <span style="color:#888; font-size:15px;">Loading catalogue…</span>
+      <span style="color: #777; font-size: 15px; font-weight: 500; letter-spacing: 0.02em;">Loading catalog...</span>
     </div>
 
-    <!-- Empty -->
-    <div id="custom-search-empty" style="display:none; padding:60px 0; text-align:center; font-size:1.1rem; color:#555;">
-      No results found for "<strong id="empty-term"></strong>". Try a different keyword.
+    <!-- Empty Search Element -->
+    <div id="custom-search-empty" style="display: none; padding: 80px 20px; text-align: center; font-size: 1.15rem; color: #444; border: 1px dashed rgba(0,0,0,0.12); border-radius: 16px; background: #faf9f6;">
+      No results found for "<strong id="empty-term" style="color: #c85b43;"></strong>". Try searching with a different keyword.
     </div>
 
-    <!-- Products -->
-    <h2 id="search-products-title" class="search-section-title" style="display:none; margin-bottom:20px; font-size:1.2rem; font-weight:600;">Products</h2>
-    <div id="custom-search-results" class="m:flex m:flex-wrap" style="gap:20px;"></div>
+    <!-- Products grid -->
+    <div id="custom-products-section">
+      <h2 id="search-products-title" class="search-section-title" style="display: none; margin-bottom: 24px; font-size: 1.35rem; font-weight: 600; color: #222; border-bottom: 2px solid #f2efea; padding-bottom: 12px;">Products</h2>
+      <div id="custom-search-results" class="m:flex m:flex-wrap" style="--column-gap: 20px; --row-gap: 30px; margin-left: -10px; margin-right: -10px; row-gap: 30px;"></div>
+    </div>
 
-    <!-- Blogs -->
-    <h2 id="search-blogs-title" class="search-section-title" style="display:none; margin-top:50px; margin-bottom:20px; font-size:1.2rem; font-weight:600;">Related Articles</h2>
-    <div id="custom-blog-results" class="m:flex m:flex-wrap" style="gap:20px;"></div>
+    <!-- Blogs grid -->
+    <div id="custom-blogs-section">
+      <h2 id="search-blogs-title" class="search-section-title" style="display: none; margin-top: 60px; margin-bottom: 24px; font-size: 1.35rem; font-weight: 600; color: #222; border-bottom: 2px solid #f2efea; padding-bottom: 12px;">Related Articles</h2>
+      <div id="custom-blog-results" class="m:flex m:flex-wrap" style="--column-gap: 20px; --row-gap: 30px; margin-left: -10px; margin-right: -10px; row-gap: 30px;"></div>
+    </div>
 
   </div>
+
+  <!-- Inline rendering of blog articles data -->
+  <script id="mpd-blogs-data" type="application/json">
+    [
+      {%- assign first_article = true -%}
+      {%- assign blog_handles = "info,recipes,news" | split: "," -%}
+      {%- for handle in blog_handles -%}
+        {%- assign current_blog = blogs[handle] -%}
+        {%- if current_blog != blank and current_blog.articles.size > 0 -%}
+          {%- for article in current_blog.articles -%}
+            {%- unless first_article -%},{%- endunless -%}
+            {%- assign first_article = false -%}
+            {
+              "id": {{ article.id | json }},
+              "title": {{ article.title | json }},
+              "handle": {{ article.handle | json }},
+              "blog_handle": {{ handle | json }},
+              "blog_title": {{ current_blog.title | json }},
+              "image": {
+                "src": {%- if article.image != blank -%}{{ article.image | image_url: width: 600 | json }}{%- else -%}""{%- endif -%},
+                "alt": {{ article.image.alt | default: article.title | json }}
+              },
+              "summary_html": {{ article.excerpt_or_content | strip_html | truncate: 150 | json }},
+              "body_html": {{ article.content | strip_html | json }},
+              "published_at": "{{ article.published_at | date: "%d %b, %Y" }}",
+              "tags": {{ article.tags | json }}
+            }
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  </script>
+
+  <!-- Script placed at the bottom with defer to execute correctly on ready DOM -->
+  <script src="{{ 'search-engine.js' | asset_url }}" defer="defer"></script>
 </section>
 
 <style>
+/* Spinner styling */
 .custom-search-spinner {
-  width:28px; height:28px;
-  border:3px solid #e0e0e0;
-  border-top-color:#c85b43;
-  border-radius:50%;
-  animation:se-spin 0.7s linear infinite;
+  width: 34px;
+  height: 34px;
+  border: 3.5px solid #e0dcd3;
+  border-top-color: #c85b43;
+  border-radius: 50%;
+  animation: se-spin 0.75s linear infinite;
 }
-@keyframes se-spin { to { transform:rotate(360deg); } }
+@keyframes se-spin {
+  to { transform: rotate(360deg); }
+}
 
-.search-blog-card {
-  display:flex; flex-direction:column;
-  border:1px solid #d9d9d9; border-radius:20px;
-  overflow:hidden; background:#fff;
-  text-decoration:none; color:inherit;
-  height:100%; transition:box-shadow 0.2s;
+/* Premium Product Card Styling */
+.search-product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e3decb;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
-.search-blog-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.10); }
-.search-blog-card__img-wrap { aspect-ratio:16/9; overflow:hidden; }
-.search-blog-card__img { width:100%; height:100%; object-fit:cover; display:block; }
-.search-blog-card__body { padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
-.search-blog-card__meta { font-size:11px; color:#999; text-transform:uppercase; letter-spacing:0.05em; }
-.search-blog-card__title { font-size:15px; font-weight:600; color:#222; line-height:1.4; margin:0; }
-.search-blog-card__excerpt { font-size:13px; color:#666; line-height:1.5; margin:0; }
-.search-blog-card__readmore { font-size:13px; font-weight:600; color:#c85b43; margin-top:auto; }
+.search-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(122, 96, 64, 0.1);
+  border-color: #c8bda3;
+}
+.search-product-card__image-wrapper {
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: #faf9f6;
+  border-bottom: 1px solid #f2efea;
+}
+.search-product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.search-product-card:hover .search-product-card__image {
+  transform: scale(1.04);
+}
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #366864;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  z-index: 2;
+  letter-spacing: 0.02em;
+}
+.search-product-card__content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.search-product-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0;
+  color: #222222;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+}
+.search-product-card__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.search-product-card__title a:hover {
+  color: #c85b43;
+}
+.search-product-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: auto;
+}
+.sale-price {
+  font-size: 17px;
+  font-weight: 700;
+  color: #c85b43;
+}
+.compare-price {
+  font-size: 13px;
+  color: #a09a8e;
+  text-decoration: line-through;
+}
+.search-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #c0503b;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+  margin-top: 8px;
+  box-shadow: 0 2px 6px rgba(54, 104, 100, 0.12);
+}
+.search-card-btn:hover {
+  background: #284e4b;
+  transform: translateY(-1px);
+}
+.search-card-btn:active {
+  transform: translateY(0);
+}
+
+/* Premium Blog/Article Card Styling */
+.search-blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e3decb;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.search-blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(122, 96, 64, 0.1);
+  border-color: #c8bda3;
+}
+.search-blog-card__img-wrap {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #faf9f6;
+  border-bottom: 1px solid #f2efea;
+}
+.search-blog-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.search-blog-card:hover .search-blog-card__img {
+  transform: scale(1.03);
+}
+.search-blog-card__body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.search-blog-card__meta {
+  font-size: 10.5px;
+  color: #888275;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.search-blog-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  color: #222222;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.search-blog-card__excerpt {
+  font-size: 13px;
+  color: #55524a;
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.search-blog-card__readmore {
+  font-size: 13px;
+  font-weight: 700;
+  color: #c85b43;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+.search-blog-card:hover .search-blog-card__readmore {
+  color: #a8432b;
+}
+
+@media (max-width: 768px) {
+  .mpd-search-page {
+    padding: 30px 10px;
+  }
+  .search-card-btn{
+    font-size: 10px;
+  }
+  .m-page-header__title {
+    font-size: 1.6rem !important;
+  }
+}
 </style>
 
 {% schema %}
