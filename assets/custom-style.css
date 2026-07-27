@@ -82,3 +82,57 @@
     font-size: 9px;
   }
 }
+
+/* lab-report styling */
+.mpd-lab-reports {
+  margin-top: 20px;
+}
+
+.mpd-lab-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.mpd-lab-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto; /* mobile scroll */
+  padding-bottom: 5px;
+}
+
+.mpd-lab-item {
+  min-width: 80px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mpd-icon {
+  width: 70px;
+  height: 70px;
+  background: #f4f4f4;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 5px;
+  transition: all 0.2s ease;
+}
+
+.mpd-lab-item span {
+  font-size: 12px;
+}
+
+/* Hover (desktop enhancement) */
+.mpd-lab-item:hover .mpd-icon {
+  background: #eaeaea;
+}
+
+/* Desktop layout */
+@media(min-width: 768px) {
+  .mpd-lab-grid {
+    overflow: visible;
+  }
+}

@@ -389,9 +389,9 @@
           </a>
         </h3>
       {% endif %}
-      <div class="product-subheading">
+      {% comment %} <div class="product-subheading">
     {{ product.metafields.custom.one_liner }}
-  </div>
+  </div> {% endcomment %}
       {% if settings.show_review_badge %}
         <div class="m-product-card__reviews m:text-color-body">
           {% render 'product-reviews-app__badge', product: product %}
@@ -501,38 +501,47 @@
     </div>
 
 
-             {% if product.metafields.custom.offer_on_the_card != blank %}
-{% unless product.id == 8304817176882 %}
-  {% assign offer_text = product.metafields.custom.offer_on_the_card | strip %}
-  {% assign offer_parts = offer_text | split: ' ' %}
-  {% assign offer_code = offer_parts.first | upcase %}
-  {% assign offer_msg = offer_text | remove_first: offer_code | strip | downcase | capitalize %}
+{% if product.available %}
+  {% if product.metafields.custom.offer_on_the_card != blank %}
+    {% unless product.id == 8304817176882 %}
 
-  <div class="meta-offer-list" style="align-items:center; width: 100%;    border:1px solid #d7d7d7;border-radius:10px;overflow:hidden;background:#fff;max-width:100%;line-height:1;font-family:inherit;">
-    <span style="background:#ef5350; color:#fff;font-size:10px;font-weight:700;padding:10px 14px;display:flex;align-items:center;white-space:nowrap;text-transform:uppercase;">
-      {{ offer_code }}
-    </span>
+      {% assign offer_text = product.metafields.custom.offer_on_the_card | strip %}
+      {% assign offer_parts = offer_text | split: ' ' %}
+      {% assign offer_code = offer_parts.first | upcase %}
+      {% assign offer_msg = offer_text | remove_first: offer_code | strip | downcase | capitalize %}
 
-    <span style="background:#fff;color:#111; width: 100%;  justify-content: center;font-size:10px;font-weight:600;padding:10px 14px;display:flex;align-items:center;white-space:nowrap;">
-      {{ offer_msg }}
-    </span>
-  </div>
-{% endunless %}
+      {% assign is_pahari_haat = false %}
+      {% if product.title contains 'Pahari Haat' %}
+        {% assign is_pahari_haat = true %}
+      {% endif %}
 
-{% style %}
-.meta-offer-list{
-  display:inline-flex;
-}
-@media only screen and (max-width:749px){
- .meta-offer-list{
-  display: block;
-}
-.meta-offer-list span{
- justify-content: center;
-}
-}
-{% endstyle %}
+      {% if is_pahari_haat %}
 
+        <div class="meta-offer-list meta-offer-list--haat {% if product.title contains 'Pahari Haat' %}pahari-haat{% endif %}">
+          <span class="meta-offer-msg meta-offer-msg--haat">
+            {{ offer_text }}
+          </span>
+        </div>
+
+      {% else %}
+
+        <div class="meta-offer-list">
+          <span class="meta-offer-code">
+            {{ offer_code }}
+          </span>
+
+          <span class="meta-offer-msg">
+            {{ offer_msg }}
+          </span>
+        </div>
+
+      {% endif %}
+      
+
+    {% endunless %}
+  {% else %}
+      <div class="meta-offer-placeholder"></div>
+  {% endif %}
 {% endif %}
 
 

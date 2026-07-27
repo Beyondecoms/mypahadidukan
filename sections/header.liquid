@@ -103,7 +103,7 @@
    <span class="hamburger-sale-badge">Sale</span>
   </div>
 
-  {%- if template == 'product' -%}
+{%- if request.page_type == 'product' -%}
     <m-search-popup class="m:flex m:justify-center m:items-center" data-open-search-popup style="margin-left: 20px;">
       <button class="m-header__search-icon" aria-label="Search" style="background: none; border: none; padding: 0; color: inherit; display: flex; align-items: center; justify-content: center;">
         <svg

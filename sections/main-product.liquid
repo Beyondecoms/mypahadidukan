@@ -7,9 +7,9 @@
 
 {% style %}
 
-.desktop-pincode{
+/* .desktop-pincode{
   margin-left: 1rem;
-}
+} */
 
 /* @media only screen and (min-width: 768px){
 .desktop-hide{
@@ -18,11 +18,11 @@
 }
  */
 
-/* @media only screen and (max-width: 767px){
+@media only screen and (max-width: 767px){
   .desktop-pincode{
-   display: none;
+   margin-left: 1rem;
   }
-} */
+}
 
 {% endstyle %}
 
@@ -186,7 +186,7 @@
           {%- endif -%}
           
 
-          <div class="desktop-pincode">
+          <div class="desktop-pincode mobile-hide-reviews-hide">
                 {%- for block in section.blocks -%}
   {%- if block.type == '@app' -%}
     <div
