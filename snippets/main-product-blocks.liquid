@@ -47,9 +47,8 @@
 
       
     
-    {% comment %} {%- when '@app' -%}
+      {%- when '@app' -%}
         {% render block %}
-    {% endcomment %}
       {%- when 'badge' -%}
         {%- liquid
           assign has_tags = false
@@ -75,6 +74,7 @@
   
           {% else %}
             <h1 class="m-product-title">{{ product.title }}</h1>
+            {% comment %}
                       <div class="desktop-pincode below-product-title">
                 {%- for block in section.blocks -%}
   {%- if block.type == '@app' -%}
@@ -88,6 +88,7 @@
 {%- endfor -%}
 
 </div>
+            {% endcomment %}
             {% if product.metafields.custom.product_highlights != blank %}
   <div class="product-highlights">
     {% for highlight in product.metafields.custom.product_highlights.value %}
@@ -100,23 +101,34 @@
 
           {% endif %}
           {% if section.settings.show_atwl and section.settings.layout != 'layout-7' %}
-            <div class="m-product-wishlist m:hidden md:m:block">
-              {% if wishlist_app == 'growave' %}
-                {% comment %} theme-check-disable {% endcomment %}
-                {% liquid
-                  capture the_snippet_fave_icon
-                    render 'ssw-widget-faveicon' with product.id
-                  endcapture
-                %}
-                {% unless the_snippet_fave_icon contains 'Liquid error' %}
-                  {{ the_snippet_fave_icon }}
+            <div class="m-product-title-actions">
+              <div class="m-product-wishlist">
+                {% if wishlist_app == 'growave' %}
+                  {% comment %} theme-check-disable {% endcomment %}
+                  {% liquid
+                    capture the_snippet_fave_icon
+                      render 'ssw-widget-faveicon' with product.id
+                    endcapture
+                  %}
+                  {% unless the_snippet_fave_icon contains 'Liquid error' %}
+                    {{ the_snippet_fave_icon }}
+                  {% else %}
+                    {% render 'mm-ssw-widget-faveicon' with product.id %}
+                  {% endunless %}
+                  {% comment %} theme-check-enable {% endcomment %}
                 {% else %}
-                  {% render 'mm-ssw-widget-faveicon' with product.id %}
-                {% endunless %}
-                {% comment %} theme-check-enable {% endcomment %}
-              {% else %}
-                {% render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--left', style: style %}
-              {% endif %}
+                  {% render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--left', style: style %}
+                {% endif %}
+              </div>
+              <button class="m-product-share-btn" aria-label="Share this product" onclick="(function(){if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href).then(function(){var t=document.createElement('div');t.textContent='Link copied!';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:8px;z-index:99999;font-size:14px;';document.body.appendChild(t);setTimeout(function(){t.remove()},2000)})}}())">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           {% endif %}
         </div>
@@ -132,15 +144,16 @@
             price_text_size: 'm:text-xl md:m:text-2xl',
             sale_badge_type: block.settings.sale_badge_type
           %}
+                <p class="tax-c">MRP Inclusive of all taxes</p>
         </div>
         
 
-        <p class="tax-c">MRP Inclusive of all taxes</p>
-        {%- if shop.taxes_included -%}
+  
+        {% comment %} {%- if shop.taxes_included -%}
           <div class="m-product-tax">
             {{ 'products.product.include_taxes' | t }}
           </div>
-        {%- endif -%}
+        {%- endif -%} {% endcomment %}
         <div class="installment-shoppay">
           {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
           {%- form 'product', product, id: product_form_installment_id, class: 'installment' -%}
@@ -188,23 +201,123 @@
     </div>
   {% endif %}
 
-  <div class="product-warning-box">
-    <div class="warning-icon">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L4 5V11C4 16.55 7.84 21.74 12 23C16.16 21.74 20 16.55 20 11V5L12 2Z" stroke="#E57A00" stroke-width="1.8"/>
-        <path d="M12 7V12" stroke="#E57A00" stroke-width="1.8" stroke-linecap="round"/>
-        <circle cx="12" cy="16" r="1" fill="#E57A00"/>
+  <button type="button" class="important-info-trigger" aria-haspopup="dialog" aria-controls="important-info-modal">
+    <span class="warning-icon-wrapper">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
-    </div>
+    </span>
+    <span class="warning-text">Important Information</span>
+    <span class="chevron-wrapper">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </span>
+  </button>
 
-    <div class="warning-content">
-      <h4>Important Information</h4>
-      <p>Every Skin is Unique, please conduct a patch test before using.</p>
-      <p>Not recommended for individuals with Vitamin C allergy.</p>
+  <div id="important-info-modal" class="important-info-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="important-info-modal-title">
+    <div class="important-info-modal-container" role="document">
+      <button type="button" class="important-info-modal-close" aria-label="Close modal">&times;</button>
+      <div class="important-info-modal-content">
+        <h2 id="important-info-modal-title" class="important-info-modal-title">Important Information</h2>
+        <div class="important-info-modal-body">
+          Not recommended for pregnant or breastfeeding women, individuals with low blood pressure, or those with a vitamin C allergy or vitamin K deficiency.
+        </div>
+      </div>
     </div>
-
-    <div class="warning-leaf"></div>
   </div>
+
+  <script>
+    (function() {
+      var lastFocusedElement = null;
+
+      function getModal() {
+        return document.getElementById('important-info-modal');
+      }
+
+      function getFocusableElements(modal) {
+        var focusableString = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        return Array.prototype.slice.call(modal.querySelectorAll(focusableString));
+      }
+
+      function openModal() {
+        var modal = getModal();
+        if (!modal) return;
+        lastFocusedElement = document.activeElement;
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        
+        var focusable = getFocusableElements(modal);
+        if (focusable.length > 0) {
+          focusable[0].focus();
+        }
+        document.addEventListener('keydown', handleKeyDown);
+      }
+
+      function closeModal() {
+        var modal = getModal();
+        if (!modal) return;
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocusedElement) {
+          lastFocusedElement.focus();
+        }
+        document.removeEventListener('keydown', handleKeyDown);
+      }
+
+      function handleKeyDown(e) {
+        var modal = getModal();
+        if (!modal || modal.getAttribute('aria-hidden') === 'true') return;
+
+        if (e.key === 'Escape' || e.keyCode === 27) {
+          closeModal();
+          return;
+        }
+
+        if (e.key === 'Tab' || e.keyCode === 9) {
+          var focusable = getFocusableElements(modal);
+          if (focusable.length === 0) {
+            e.preventDefault();
+            return;
+          }
+          var first = focusable[0];
+          var last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              last.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === last) {
+              first.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.important-info-trigger')) {
+          e.preventDefault();
+          openModal();
+          return;
+        }
+
+        if (e.target.closest('.important-info-modal-close')) {
+          e.preventDefault();
+          closeModal();
+          return;
+        }
+
+        var modal = getModal();
+        if (modal && e.target === modal) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
 {% endif %}
 
 {% comment %} Disclaimer for SBT Oil {% endcomment %}
@@ -309,7 +422,6 @@
       {% if block.settings.offername != blank %}
         <div class="offer-coupon">
           <div class="offer-coupon__content">
-            <span class="offer-badge">Offer</span>
             <span class="offer-title">{{ block.settings.offername }}</span>
             {% if block.settings.offercontent != blank %}
               <span class="offer-desc">{{ block.settings.offercontent }}</span>
@@ -452,35 +564,226 @@
         </div>
 
       {% when 'Icons' %}
-        <div class="icon-group-block">
-          <div class="icon-group-block-item">
-            {% if block.settings.icon1 != blank %}
-              <img src="{{ block.settings.icon1 | img_url: '60x60' }}" alt="{{ block.settings.heading1 }}">
-            {% endif %}
-            <h4>{{ block.settings.heading1 }}</h4>
-          </div>
-          <div class="icon-group-block-item">
-            {% if block.settings.icon2 != blank %}
-              <img src="{{ block.settings.icon2 | img_url: '60x60' }}" alt="{{ block.settings.heading2 }}">
-            {% endif %}
-            <h4>{{ block.settings.heading2 }}</h4>
-          </div>
-          <div class="icon-group-block-item">
-            {% if block.settings.icon3 != blank %}
-              <img src="{{ block.settings.icon3 | img_url: '60x60' }}" alt="{{ block.settings.heading3 }}">
-            {% endif %}
-            <h4>{{ block.settings.heading3 }}</h4>
-          </div>
-          <div class="icon-group-block-item">
-            {% if block.settings.icon4 != blank %}
-              <img src="{{ block.settings.icon4 | img_url: '60x60' }}" alt="{{ block.settings.heading4 }}">
-            {% endif %}
-            <h4>{{ block.settings.heading4 }}</h4>
-          </div>
+        {%- liquid
+          assign default_icon1 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_2.png?v=1785339625'
+          assign default_icon2 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_3.png?v=1785339626'
+          assign default_icon3 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_4.png?v=1785339626'
+          assign default_icon4 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_6.png?v=1785339626'
+          assign default_icon5 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_6.png?v=1785339626'
+          
+          assign title1 = block.settings.heading1
+          if title1 == 'Inflammation' or title1 == 'Icon 1' or title1 == blank
+            assign title1 = 'Boosts Immunity Naturally'
+          endif
+
+          assign title2 = block.settings.heading2
+          if title2 == 'Skin Care' or title2 == 'Icon 2' or title2 == blank
+            assign title2 = 'Supports Digestive Health'
+          endif
+
+          assign title3 = block.settings.heading3
+          if title3 == 'Immunity' or title3 == 'Icon 3' or title3 == blank
+            assign title3 = 'Enhances Skin & Hair'
+          endif
+
+          assign title4 = block.settings.heading4
+          if title4 == 'Heart Health' or title4 == 'Icon 4' or title4 == blank
+            assign title4 = 'Rare Omega-7 Source'
+          endif
+
+          assign title5 = block.settings.heading5
+          if title5 == 'Icon 5' or title5 == blank
+            assign title5 = 'Daily Energy & Antioxidant'
+          endif
+
+          assign icon1_img = default_icon1
+          if block.settings.icon1 != blank
+            assign icon1_url = block.settings.icon1 | image_url: width: 96
+            unless icon1_url contains 'icon' or icon1_url contains 'green' or block.settings.heading1 == 'Inflammation'
+              assign icon1_img = icon1_url
+            endunless
+          endif
+
+          assign icon2_img = default_icon2
+          if block.settings.icon2 != blank
+            assign icon2_url = block.settings.icon2 | image_url: width: 96
+            unless icon2_url contains 'icon' or icon2_url contains 'green' or block.settings.heading2 == 'Skin Care'
+              assign icon2_img = icon2_url
+            endunless
+          endif
+
+          assign icon3_img = default_icon3
+          if block.settings.icon3 != blank
+            assign icon3_url = block.settings.icon3 | image_url: width: 96
+            unless icon3_url contains 'icon' or icon3_url contains 'green' or block.settings.heading3 == 'Immunity'
+              assign icon3_img = icon3_url
+            endunless
+          endif
+
+          assign icon4_img = default_icon4
+          if block.settings.icon4 != blank
+            assign icon4_url = block.settings.icon4 | image_url: width: 96
+            unless icon4_url contains 'icon' or icon4_url contains 'green' or block.settings.heading4 == 'Heart Health'
+              assign icon4_img = icon4_url
+            endunless
+          endif
+
+          assign icon5_img = default_icon5
+          if block.settings.icon5 != blank
+            assign icon5_url = block.settings.icon5 | image_url: width: 96
+            unless icon5_url contains 'icon' or icon5_url contains 'green' or block.settings.heading5 == 'Icon 5'
+              assign icon5_img = icon5_url
+            endunless
+          endif
+        -%}
+        <div class="product-benefits">
+          {% if title1 != blank %}
+            <div class="product-benefits__item">
+              <div class="product-benefits__icon-wrapper">
+                <img src="{{ icon1_img }}" alt="{{ title1 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
+              </div>
+              <span class="product-benefits__title">{{ title1 }}</span>
+            </div>
+          {% endif %}
+
+          {% if title2 != blank %}
+            <div class="product-benefits__item">
+              <div class="product-benefits__icon-wrapper">
+                <img src="{{ icon2_img }}" alt="{{ title2 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
+              </div>
+              <span class="product-benefits__title">{{ title2 }}</span>
+            </div>
+          {% endif %}
+
+          {% if title3 != blank %}
+            <div class="product-benefits__item">
+              <div class="product-benefits__icon-wrapper">
+                <img src="{{ icon3_img }}" alt="{{ title3 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
+              </div>
+              <span class="product-benefits__title">{{ title3 }}</span>
+            </div>
+          {% endif %}
+
+          {% if title4 != blank %}
+            <div class="product-benefits__item">
+              <div class="product-benefits__icon-wrapper">
+                <img src="{{ icon4_img }}" alt="{{ title4 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
+              </div>
+              <span class="product-benefits__title">{{ title4 }}</span>
+            </div>
+          {% endif %}
+
+          {% if title5 != blank %}
+            <div class="product-benefits__item">
+              <div class="product-benefits__icon-wrapper">
+                <img src="{{ icon5_img }}" alt="{{ title5 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
+              </div>
+              <span class="product-benefits__title">{{ title5 }}</span>
+            </div>
+          {% endif %}
         </div>
 
+        <style>
+          .product-benefits {
+            display: grid !important;
+            grid-template-columns: repeat(5, 1fr) !important;
+            gap: 24px !important;
+            padding: 16px 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+          }
 
-      {%- when 'visitors' -%}
+          .product-benefits__item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 12px !important;
+            text-align: center !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+          }
+
+          .product-benefits__icon-wrapper {
+            width: 48px !important;
+            height: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: transparent !important;
+            border-radius: 0 !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+
+          .product-benefits__icon {
+            width: 48px !important;
+            height: 48px !important;
+            object-fit: contain !important;
+          }
+
+          .product-benefits__title {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #222 !important;
+            line-height: 1.4 !important;
+            margin: 0 !important;
+            text-align: center !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+            height: 2.8em !important; /* Forces equal height for all titles */
+          }
+
+          @media screen and (max-width: 767px) {
+            .product-benefits {
+              display: flex !important;
+              flex-wrap: nowrap !important;
+              overflow-x: auto !important;
+              scroll-snap-type: x mandatory !important;
+              gap: 16px !important;
+              padding: 12px 4px !important;
+              width: auto !important;
+              -webkit-overflow-scrolling: touch !important;
+            }
+            
+            .product-benefits::-webkit-scrollbar {
+              display: none !important;
+            }
+
+            .product-benefits__item {
+              flex: 0 0 80px !important;
+              scroll-snap-align: start !important;
+            }
+
+            .product-benefits__title {
+              font-size: 10px !important;
+              height: 2.8em !important;
+            }
+
+            .product-benefits__icon-wrapper {
+              width: 40px !important;
+              height: 40px !important;
+            }
+
+            .product-benefits__icon {
+              width: 30px !important;
+              height: 40px !important;
+            }
+          }
+        </style>
+
+
+   
+   
+   
+        {%- when 'visitors' -%}
         {%- liquid
           assign live_views_min = block.settings.live_views_range | split: '-' | first
           assign live_views_max = block.settings.live_views_range | split: '-' | last
@@ -515,6 +818,7 @@
         {% render 'product-variant-picker',
           product: product,
           section: section,
+          block: block,
           size_title: size_title,
           product_form_id: product_form_id
         %}
@@ -1070,19 +1374,21 @@ el.textContent = current;
         {% endif %}
       {%- when 'text' -%}
         {% if block.settings.text != blank %}
-          {% liquid
-            assign text_style = block.settings.text_style
-            assign text_class = ''
-            case text_style
-              when 'subtitle'
-                assign text_class = 'm-product-text--subtitle'
-              when 'uppercase'
-                assign text_class = 'm-product-text--subtitle m-product-text--upercase'
-            endcase
-          %}
-          <div class="m-product-text {{ text_class }} aaaaaa" >
-            {{ block.settings.text }}
-          </div>
+          {% unless block.settings.text contains 'makes' or block.settings.text contains 'tbspn' %}
+            {% liquid
+              assign text_style = block.settings.text_style
+              assign text_class = ''
+              case text_style
+                when 'subtitle'
+                  assign text_class = 'm-product-text--subtitle'
+                when 'uppercase'
+                  assign text_class = 'm-product-text--subtitle m-product-text--upercase'
+              endcase
+            %}
+            <div class="m-product-text {{ text_class }} aaaaaa" >
+              {{ block.settings.text }}
+            </div>
+          {% endunless %}
         {% endif %}
 
 {%- when 'custom_text' -%}
@@ -1111,6 +1417,58 @@ el.textContent = current;
             {{ block.settings.custom_liquid }}
           </div>
         {% endif %}
+      {%- when 'vendor_badge' -%}
+        {%- if block.settings.show_badge and product.vendor != blank -%}
+          {%- liquid
+            assign vendor_url = block.settings.custom_link
+            if vendor_url == blank
+              assign vendor_url = '/collections/vendors?q=' | append: product.vendor | url_param_escape
+            endif
+            assign badge_style = block.settings.badge_style | default: 'minimal'
+          -%}
+          <a
+            href="{{ vendor_url }}"
+            class="mpd-vendor-badge mpd-vendor-badge--{{ badge_style }}"
+            aria-label="View all products by {{ product.vendor | escape }}"
+          >
+            {%- if badge_style == 'card' and block.settings.show_icon -%}
+              <span class="mpd-vendor-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </span>
+            {%- endif -%}
+
+            <span class="mpd-vendor-text">
+              {%- if block.settings.eyebrow_text != blank and badge_style == 'card' -%}
+                <span class="mpd-vendor-eyebrow">
+                  {{ block.settings.eyebrow_text }}
+                </span>
+              {%- endif -%}
+
+              <span class="mpd-vendor-name">
+                {{ product.vendor }}
+              </span>
+            </span>
+
+            {%- if block.settings.show_arrow -%}
+              <span class="mpd-vendor-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      {%- when 'lab_certificate' -%}
+        {% render 'product-lab-certificate', block: block, product: product %}
+      {%- when 'product_accordion' -%}
+        {% render 'product-information-accordion', block: block, product: product %}
+      {%- when 'ingredients_labels' -%}
+        {% render 'product-ingredients-labels', block: block, product: product %}
+      {%- when 'marketplace_buttons' -%}
+        {% render 'product-marketplace-buttons', block: block, product: product %}
       {%- when 'trust_badge' -%}
         {% if block.settings.trust_badges_image != blank %}
           {% assign position = block.settings.position %}
@@ -1466,6 +1824,215 @@ el.textContent = current;
             {%- endif -%}
           </div>
         </div>
+    {%- when 'ingredients_highlight' -%}
+      <div class="m-product-ingredients-block" id="IngredientsBlock-{{ block.id }}">
+        {% if block.settings.heading != blank %}
+          <h3 class="m-product-ingredients-block__title">{{ block.settings.heading }}</h3>
+        {% endif %}
+        
+        <div class="m-product-ingredients-block__container">
+          <!-- Left side: Image with interactive tag badges -->
+          <div class="m-product-ingredients-block__image-wrapper">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'm-product-ingredients-block__img' }}
+            {% else %}
+              <div class="m-product-ingredients-block__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {% endif %}
+
+            <!-- Tags overlay -->
+            <div class="m-product-ingredients-block__tags">
+              {% for i in (1..4) %}
+                {% liquid
+                  assign title_key = 'item_' | append: i | append: '_title'
+                  assign desc_key = 'item_' | append: i | append: '_desc'
+                  assign top_key = 'item_' | append: i | append: '_top'
+                  assign left_key = 'item_' | append: i | append: '_left'
+
+                  assign title_val = block.settings[title_key]
+                  assign desc_val = block.settings[desc_key]
+                  assign top_val = block.settings[top_key]
+                  assign left_val = block.settings[left_key]
+                %}
+
+                {% if title_val != blank %}
+                  <button 
+                    type="button" 
+                    class="m-product-ingredients-tag{% if forloop.first %} is-active{% endif %}"
+                    style="top: {{ top_val }}%; left: {{ left_val }}%;"
+                    data-target="item-{{ block.id }}-{{ i }}"
+                    data-title="{{ title_val | escape }}"
+                    data-desc="{{ desc_val | escape }}"
+                    aria-label="{{ title_val }}"
+                  >
+                    <span>{{ title_val }}</span>
+                    <span class="m-tag-arrow"></span>
+                  </button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Right side: Content details -->
+          <div class="m-product-ingredients-block__content">
+            {% for i in (1..4) %}
+              {% liquid
+                assign title_key = 'item_' | append: i | append: '_title'
+                assign desc_key = 'item_' | append: i | append: '_desc'
+                assign title_val = block.settings[title_key]
+                assign desc_val = block.settings[desc_key]
+              %}
+              {% if title_val != blank %}
+                <div class="m-product-ingredients-item{% if forloop.first %} is-active{% endif %}" id="item-{{ block.id }}-{{ i }}">
+                  <h4 class="m-product-ingredients-item__title">{{ title_val }}</h4>
+                  <div class="m-product-ingredients-item__desc">{{ desc_val }}</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <style>
+        .m-product-ingredients-block {
+          margin: 24px 0;
+          font-family: inherit;
+        }
+        .m-product-ingredients-block__title {
+          font-size: 22px;
+          font-weight: 600;
+          margin-bottom: 0px;
+          color: #222;
+        }
+        .m-product-ingredients-block__container {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+        @media (min-width: 640px) {
+          .m-product-ingredients-block__container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 32px;
+          }
+        }
+        .m-product-ingredients-block__image-wrapper {
+          position: relative;
+          width: 100%;
+          min-height: 150px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fbfbfb;
+          border-radius: 12px;
+        
+        }
+        .m-product-ingredients-block__img {
+          max-width: 100%;
+          max-height: 280px;
+          object-fit: contain;
+        }
+        .m-product-ingredients-block__tags {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
+        .m-product-ingredients-tag {
+          position: absolute;
+          pointer-events: auto;
+          transform: translate(-20%, -50%);
+          background: #ffffff;
+          color: #1a1a1a;
+          border: 1px solid #e2e2e2;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          transition: all 0.25s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          white-space: nowrap;
+          z-index: 2;
+        }
+        .m-product-ingredients-tag.is-active {
+          background: #222222;
+          color: #ffffff;
+          border-color: #222222;
+          box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+          transform: translate(-20%, -50%) scale(1.05);
+          z-index: 3;
+          opacity: 0;
+        }
+        .m-product-ingredients-tag .m-tag-arrow {
+          position: absolute;
+          bottom: -6px;
+          left: 20px;
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid #ffffff;
+          transition: border-top-color 0.25s ease;
+        }
+        .m-product-ingredients-tag.is-active .m-tag-arrow {
+          border-top-color: #222222;
+        }
+        .m-product-ingredients-block__content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .m-product-ingredients-item {
+          display: none;
+          animation: fadeIn 0.3s ease;
+        }
+        .m-product-ingredients-item.is-active {
+          display: block;
+        }
+        .m-product-ingredients-item__title {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          color: #1a1a1a;
+        }
+        .m-product-ingredients-item__desc {
+          font-size: 15px;
+          line-height: 1.6;
+          color: #555555;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      </style>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const container = document.getElementById('IngredientsBlock-{{ block.id }}');
+          if (!container) return;
+
+          const tags = container.querySelectorAll('.m-product-ingredients-tag');
+          const items = container.querySelectorAll('.m-product-ingredients-item');
+
+          tags.forEach(tag => {
+            tag.addEventListener('click', function() {
+              const targetId = this.getAttribute('data-target');
+
+              tags.forEach(t => t.classList.remove('is-active'));
+              items.forEach(i => i.classList.remove('is-active'));
+
+              this.classList.add('is-active');
+              const targetItem = container.querySelector('#' + targetId);
+              if (targetItem) targetItem.classList.add('is-active');
+            });
+          });
+        });
+      </script>
     {%- endcase -%}
   </div>
 {%- endfor -%}

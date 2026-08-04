@@ -75,6 +75,8 @@ class QuickView {
       })
       .catch((error) => {
         console.error("Error loading product quick view:", error);
+        this.toggleLoading(false);
+        this.isLoading = false;
       });
   }
 

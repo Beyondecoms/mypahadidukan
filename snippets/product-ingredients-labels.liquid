@@ -1,0 +1,148 @@
+{% comment %}
+  Render the Ingredients Labels product block
+{% endcomment %}
+<div class="product-ingredients-labels" {{ block.shopify_attributes }}>
+  {%- liquid
+    assign default_sugar_icon = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/image_34.png?v=1785342504'
+    assign default_color_icon = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/image_34_1.png?v=1785342504'
+  -%}
+
+  <!-- Label 1 -->
+  {%- if block.settings.enable_1 and block.settings.text_1 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_1 | default: '#4E8F8B' }}; color: {{ block.settings.color_1 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_1 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_1 != blank -%}
+          <img src="{{ block.settings.icon_1 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <img src="{{ default_sugar_icon }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+
+  <!-- Label 2 -->
+  {%- if block.settings.enable_2 and block.settings.text_2 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_2 | default: '#F28C28' }}; color: {{ block.settings.color_2 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_2 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_2 != blank -%}
+          <img src="{{ block.settings.icon_2 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <img src="{{ default_color_icon }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+
+  <!-- Label 3 -->
+  {%- if block.settings.enable_3 and block.settings.text_3 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_3 | default: '#4E8F8B' }}; color: {{ block.settings.color_3 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_3 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_3 != blank -%}
+          <img src="{{ block.settings.icon_3 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <span class="ingredients-label__emoji">🚫</span>
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+
+  <!-- Label 4 -->
+  {%- if block.settings.enable_4 and block.settings.text_4 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_4 | default: '#4E8F8B' }}; color: {{ block.settings.color_4 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_4 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_4 != blank -%}
+          <img src="{{ block.settings.icon_4 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <span class="ingredients-label__emoji">🚫</span>
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+
+  <!-- Label 5 -->
+  {%- if block.settings.enable_5 and block.settings.text_5 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_5 | default: '#4E8F8B' }}; color: {{ block.settings.color_5 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_5 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_5 != blank -%}
+          <img src="{{ block.settings.icon_5 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <span class="ingredients-label__emoji">🚫</span>
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+
+  <!-- Label 6 -->
+  {%- if block.settings.enable_6 and block.settings.text_6 != blank -%}
+    <span class="ingredients-label" style="background-color: {{ block.settings.bg_6 | default: '#4E8F8B' }}; color: {{ block.settings.color_6 | default: '#ffffff' }};">
+      <span class="ingredients-label__text">{{ block.settings.text_6 }}</span>
+      <span class="ingredients-label__icon-wrapper">
+        {%- if block.settings.icon_6 != blank -%}
+          <img src="{{ block.settings.icon_6 | image_url: width: 40 }}" alt="" class="ingredients-label__icon" width="20" height="20" loading="lazy">
+        {%- else -%}
+          <span class="ingredients-label__emoji">🚫</span>
+        {%- endif -%}
+      </span>
+    </span>
+  {%- endif -%}
+</div>
+
+<style>
+  .product-ingredients-labels {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 15px 0 !important;
+    width: 100% !important;
+  }
+
+  .ingredients-label {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 16px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    box-sizing: border-box !important;
+    vertical-align: middle !important;
+  }
+
+  .ingredients-label__icon-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .ingredients-label__icon {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain !important;
+  }
+
+  .ingredients-label__emoji {
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  @media screen and (max-width: 767px) {
+    .product-ingredients-labels {
+      justify-content: center !important;
+    }
+    .ingredients-label {
+      padding: 8px 12px !important;
+      font-size: 14px !important;
+    }
+  }
+</style>

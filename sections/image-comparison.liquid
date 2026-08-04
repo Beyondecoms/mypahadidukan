@@ -6,7 +6,8 @@
   assign custom_class = section.settings.custom_class
   assign layout = section.settings.layout
   assign image_height = section.settings.image_height
-
+   
+  
   if image_height == 'adapt'
     assign first_block = section.blocks.first
     assign aspect_ratio = first_block.settings.image.aspect_ratio | default: 2.333

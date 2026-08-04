@@ -26,12 +26,23 @@
           "type": "badge",
           "settings": {}
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
         "judge_me_reviews_preview_badge_KaNw4T": {
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "vendor_badge_XLbaw3": {
+          "type": "vendor_badge",
+          "settings": {
+            "show_badge": true,
+            "badge_style": "minimal",
+            "eyebrow_text": "Official Store",
+            "show_icon": true,
+            "show_arrow": true,
+            "custom_link": ""
+          }
+        },
+        "title": {
+          "type": "title",
           "settings": {}
         },
         "price": {
@@ -59,6 +70,7 @@
         "custom_liquid_TnPiqA": {
           "type": "custom_liquid",
           "name": "lab-report",
+          "disabled": true,
           "settings": {
             "custom_liquid": "<div class=\"mpd-lab-single\">\n  \n  <a href=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/sbt_report_22_may_2026.pdf?v=1779429459\" \n     target=\"_blank\" \n     class=\"mpd-lab-card\">\n\n    <div class=\"mpd-lab-left\">\n      <div class=\"mpd-lab-icon\">✔</div>\n    </div>\n\n    <div class=\"mpd-lab-content\">\n      <p class=\"mpd-lab-title\">View authenticity report</p>\n      <p class=\"mpd-lab-sub\">Lab Tested & Verified</p>\n    </div>\n\n    <div class=\"mpd-lab-arrow\">→</div>\n\n  </a>\n<p style=\"font-size:11px;color:#8a8a8a;margin-top:6px;\">\n  Each batch is independently tested for purity\n</p>\n\n</div>\n\n<style>\n.mpd-lab-single {\n  margin-top: 24px;\n}\n\n/* Card */\n.mpd-lab-card {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px;\n  border-radius: 14px;\n  background: #fafafa;\n  border: 1px solid #e6e6e6;\n  text-decoration: none;\n  color: inherit;\n  transition: all 0.25s ease;\n}\n\n/* Left icon circle */\n.mpd-lab-left {\n  flex-shrink: 0;\n}\n\n.mpd-lab-icon {\n  width: 42px;\n  height: 42px;\n  border-radius: 50%;\n  background: #e8f5e9;\n  color: #2e7d32;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 18px;\n}\n\n/* Content */\n.mpd-lab-content {\n  flex-grow: 1;\n}\n\n.mpd-lab-title {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n\n.mpd-lab-sub {\n  font-size: 12px;\n  color: #6b6b6b;\n  margin: 2px 0 0;\n}\n\n/* Arrow */\n.mpd-lab-arrow {\n  font-size: 16px;\n  color: #999;\n}\n\n/* Interaction */\n.mpd-lab-card:hover {\n  background: #f4f4f4;\n  border-color: #dddddd;\n}\n\n.mpd-lab-card:active {\n  transform: scale(0.98);\n}\n</style>"
           }
@@ -66,7 +78,18 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size"
+            "size_title": "Size",
+            "card_border_radius": 10,
+            "card_border_thickness": 1,
+            "card_selected_border_color": "#f58220",
+            "card_spacing": 12,
+            "card_image_size": 80,
+            "card_show_compare_price": true,
+            "card_show_discount": true,
+            "card_show_image": true,
+            "card_show_checkmark": true,
+            "card_desktop_cards_per_row": 3,
+            "card_mobile_width": 110
           }
         },
         "custom_liquid_CNzAAw": {
@@ -77,10 +100,6 @@
             "custom_liquid": "<!-- Shipping Notice: Fresh Batch -->\n<div class=\"mpd-shipping-notice\">\n  <p class=\"mpd-shipping-eyebrow\">Fresh batch under process</p>\n  <p class=\"mpd-shipping-text\">\n    Orders placed between Thursday, 23rd April and Wednesday, 29th April \n    <b>will be shipped 30th April onwards</b>\n  </p>\n</div>\n<style>\n/* Shipping notice block */\n.mpd-shipping-notice {\n  /* Brand background color (replace with exact hex from brand book) */\n  background: #FCEFD9;      /* example: warm, Himalayan, earthy tone */\n  border: 1px solid #E3A15A;/* example: deeper accent tone */\n  color: #2E2B26;           /* example: primary text color */\n  padding: 12px 16px;\n  border-radius: 8px;\n  font-family: \"Inter\", system-ui, -apple-system, BlinkMacSystemFont, sans-serif; /* replace with brand primary font */\n  max-width: 640px;\n  margin: 12px 0;\n}\n\n/* Small label-style eyebrow text */\n.mpd-shipping-eyebrow {\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n  font-size: 11px;\n  font-weight: 600;\n  margin: 0 0 4px 0;\n  color: #B2611D; /* accent text color from palette */\n}\n\n/* Main notice text */\n.mpd-shipping-text {\n  margin: 0;\n  font-size: 14px;\n  line-height: 1.5;\n}\n\n/* Optional: make it stand out slightly more on mobile */\n@media (max-width: 640px) {\n  .mpd-shipping-notice {\n    padding: 10px 12px;\n    border-radius: 6px;\n  }\n  \n  .mpd-shipping-text {\n    font-size: 13px;\n  }\n}\n\n</style>"
           }
         },
-        "shiprocket_promise_promise_widget_yVTddn": {
-          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
-          "settings": {}
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -90,10 +109,118 @@
             "show_gift_card_recipient": true
           }
         },
-        "custom_liquid_dx4gqg": {
-          "type": "custom_liquid",
+        "shiprocket_promise_promise_widget_yVTddn": {
+          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
+          "settings": {}
+        },
+        "offers_tpeHga": {
+          "type": "offers",
           "settings": {
-            "custom_liquid": "<a \n  href=\"/collections/vendors?q={{ product.vendor | url_param_escape }}\"\n  class=\"mpd-vendor-badge\"\n  aria-label=\"View all products by {{ product.vendor }}\"\n>\n  <span class=\"mpd-vendor-icon\">\n    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>\n      <polyline points=\"9 22 9 12 15 12 15 22\"/>\n    </svg>\n  </span>\n  <span class=\"mpd-vendor-text\">\n    <span class=\"mpd-vendor-eyebrow\">Official Store</span>\n    <span class=\"mpd-vendor-name\">{{ product.vendor }}</span>\n  </span>\n  <span class=\"mpd-vendor-arrow\">\n    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <polyline points=\"9 18 15 12 9 6\"/>\n    </svg>\n  </span>\n</a>\n\n<style>\n.mpd-vendor-badge {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  padding: 10px 14px 10px 10px;\n  border: 1.5px solid rgba(0,0,0,0.10);\n  border-radius: 12px;\n  text-decoration: none;\n  background: #fff;\n  margin: 4px 0 12px;\n  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;\n  max-width: 260px;\n}\n.mpd-vendor-badge:hover {\n  border-color: rgba(0,0,0,0.22);\n  box-shadow: 0 4px 14px rgba(0,0,0,0.08);\n  transform: translateY(-1px);\n}\n.mpd-vendor-icon {\n  width: 36px;\n  height: 36px;\n  background: #f4f0e8;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  color: #7a6040;\n}\n.mpd-vendor-icon svg {\n  width: 17px;\n  height: 17px;\n}\n.mpd-vendor-text {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  flex: 1;\n}\n.mpd-vendor-eyebrow {\n  font-size: 10px;\n  font-weight: 600;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: #999;\n}\n.mpd-vendor-name {\n  font-size: 14px;\n  font-weight: 600;\n  color: #222;\n  line-height: 1.2;\n}\n.mpd-vendor-arrow {\n  color: #bbb;\n  display: flex;\n  align-items: center;\n  flex-shrink: 0;\n  transition: color 0.18s ease, transform 0.18s ease;\n}\n.mpd-vendor-arrow svg {\n  width: 14px;\n  height: 14px;\n}\n.mpd-vendor-badge:hover .mpd-vendor-arrow {\n  color: #777;\n  transform: translateX(2px);\n}\n</style>"
+            "offername": "Offer",
+            "offercontent": "USE SUMMER10. GET EXTRA 10% OFF",
+            "offercode": "SUMMER10",
+            "offername2": "",
+            "offercontent2": "",
+            "offercode2": "",
+            "offername3": "",
+            "offercontent3": "",
+            "offercode3": "",
+            "offername4": "",
+            "offercontent4": "",
+            "offercode4": ""
+          }
+        },
+        "lab_certificate_QRHkGD": {
+          "type": "lab_certificate",
+          "settings": {
+            "heading": "Certificate",
+            "title": "View Authenticity Report",
+            "subtitle": "Lab Tested & Verified",
+            "pdf_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/sbt_report_22_may_2026.pdf?v=1779429459",
+            "bottom_text": "",
+            "icon": "shopify://shop_images/Group_8.png"
+          }
+        },
+        "custom_liquid_x8cdpA": {
+          "type": "custom_liquid",
+          "name": "amazon button",
+          "settings": {
+            "custom_liquid": "<style>\n        .button-amaz {\n            display: inline-flex;\n            align-items: center;\n            color: #000;\n            padding: 10px 0px;\n            border: none;\n            border-radius: 5px;\n            font-size: 16px;\n            text-decoration: none;\n            cursor: pointer;\n        }\n        .button-amaz img {\n            margin-left: 10px;\n            width: 150px; /* Adjust the size as needed */\n            height: 60px; /* Adjust the size as needed */\n            padding: 0 20px;\n            box-shadow:1px 1px 5px 1px rgba(0,0,0,0.45);\n            border-radius: 5px;\n        }\n    </style>\n<div class=\"sbt-label-container\">\n    <div class=\"cod-label\">No added sugar 🚫</div>\n    <div class=\"cod-label bg-color\">No added color 🚫</div>\n</div>\n\n    <a href=\"https://www.amazon.in/MY-PAHADI-DUKAN-MPD-Antioxidants/dp/B0D2B4VDP5/ref=sr_1_1_sspa?crid=2PN1SLW8ODTUL&dib=eyJ2IjoiMSJ9.b8FP9mp8pmtVPcUiOPRU12WR_viFX2jH67Zyr1ZTaWHag8n_UG5LW_mSZS-XaYONHx3JPDtJOiaP0TmaknrKkpBp4qVMCbgoyYrrqJWVxJ4hw4ioxTGnmBbiyklR4h6DJKV5ZpL0JuhseueP41MJO2U4KLFEeGnJ44PtkIe3NiBLGkiXBqYVGBFdYTnoIfHpyhczc_w_aSRY0lrrEMJfJ_jSENWmzZzTDAkWrwjJBXg5_tVyRp4hmvOWROOzBOoQ5FlYaJ2TFuJVNl6aVJ2J30g8dP5exVWvGbGv3TmY5Kg.tFQj5GGXnh2MzQQdrGI6QA9Qzfu52tfsEfWb325uRWU&dib_tag=se&keywords=sea%2Bbuckthorn&qid=1721195244&sprefix=sea%2Bbuckth%2Caps%2C308&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&utm_source=amazon&utm_medium=website&utm_campaign=COD&utm_id=2\" class=\"button-amaz\">\n        Also available on:\n        <img src=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703\" alt=\"Amazon\">\n    </a>\n<style>\n.t4s-swatch__item {\n    position: relative;\n    -ms-touch-action: manipulation;\n    touch-action: manipulation;\n    display: inline-block;\n    padding: 6px 16px 7px;\n    text-align: center;\n    border: 1px solid var(--border-sw-color);\n    color: var(--secondary-sw-color);\n    vertical-align: middle;\n    cursor: pointer;\n    margin: 5px;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    transition: color .25s ease, background-color .25s ease, border-color .15s ease, box-shadow .25s ease, opacity .25s ease;\n}\n.t4s-swatch__item[data-value=\"1200ml (4 X 300ml Bottles)\"]::before {\n    content: \"Value for Money\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n.t4s-swatch__item {\n    position: relative;\n    -ms-touch-action: manipulation;\n    touch-action: manipulation;\n    display: inline-block;\n    padding: 6px 16px 7px;\n    text-align: center;\n    border: 1px solid var(--border-sw-color);\n    color: var(--secondary-sw-color);\n    vertical-align: middle;\n    cursor: pointer;\n    margin: 5px;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    transition: color .25s ease, background-color .25s ease, border-color .15s ease, box-shadow .25s ease, opacity .25s ease;\n}\n.t4s-swatch__item[data-value=\"100ml\"]::before {\n    content: \"Trial Pack\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n.t4s-swatch__item[data-value=\"3600ml (12 X 300ml Bottles)\"]::before {\n    content: \"Steal Deal\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n</style>\n<style>\n    .sbt-label-container {\n        display: flex;\n        flex-wrap: wrap; /* Allows the elements to wrap if needed on smaller screens */\n        justify-content: flex-start; \n        gap: 5px; /* Adds spacing between labels */\nmargin:15px 0;\n    }\n\n    .cod-label {\n        background-color: #589997; \n        border-radius: 5px; \n        padding: 5px 15px; \n        font-size: 16px; \n        color: #ffffff; \n        display: inline-block;     }\n\n    .bg-color {\n        background-color: #F28C28;\n    }\n\n    /* Center the labels on mobile devices */\n    @media (max-width: 768px) {\n        .sbt-label-container {\n            justify-content: center; \n        }\n.cod-label{\npadding: 5px 10px;\n}\n    }\n</style>"
+          }
+        },
+        "icons_WMCNhw": {
+          "type": "Icons",
+          "settings": {
+            "heading1": "Inflammation",
+            "icon1": "shopify://shop_images/Red_and_Orange_Bold_Modern_iOS_Icon_5dbe7591-925e-4925-8d00-b278ab5763c0.svg",
+            "heading2": "Skin Care",
+            "icon2": "shopify://shop_images/skincare_icon_661bcda4-2940-4e70-b11a-e8f3902fd843.svg",
+            "heading3": "Immunity",
+            "icon3": "shopify://shop_images/immunity_icon_0673783f-b914-42aa-a26a-c6454a687b87.svg",
+            "heading4": "Heart Health",
+            "icon4": "shopify://shop_images/hearthealth_icon_128f3174-c184-4135-9ffa-5519ddd46893.svg",
+            "heading5": "Icon 5"
+          }
+        },
+        "ingredients_labels_Br8bBP": {
+          "type": "ingredients_labels",
+          "settings": {
+            "enable_1": true,
+            "text_1": "No Sugar",
+            "icon_1": "shopify://shop_images/image_34.png",
+            "bg_1": "rgba(0,0,0,0)",
+            "color_1": "#0e0e0e",
+            "enable_2": true,
+            "text_2": "No Color",
+            "icon_2": "shopify://shop_images/image_34_1.png",
+            "bg_2": "rgba(0,0,0,0)",
+            "color_2": "#0e0e0e",
+            "enable_3": false,
+            "text_3": "No Artificial Flavour",
+            "bg_3": "#4e8f8b",
+            "color_3": "#ffffff",
+            "enable_4": false,
+            "text_4": "",
+            "bg_4": "#4e8f8b",
+            "color_4": "#ffffff",
+            "enable_5": false,
+            "text_5": "",
+            "bg_5": "#4e8f8b",
+            "color_5": "#ffffff",
+            "enable_6": false,
+            "text_6": "",
+            "bg_6": "#4e8f8b",
+            "color_6": "#ffffff"
+          }
+        },
+        "ingredients_highlight_bJHD8t": {
+          "type": "ingredients_highlight",
+          "settings": {
+            "heading": "Ingredients",
+            "image": "shopify://shop_images/Frame_193.png",
+            "item_1_title": "Vitamin C",
+            "item_1_desc": "Rich in Vitamin C and antioxidants to strengthen your body's defences.",
+            "item_1_top": 35,
+            "item_1_left": 15,
+            "item_2_title": "",
+            "item_2_desc": "",
+            "item_2_top": 20,
+            "item_2_left": 65,
+            "item_3_title": "",
+            "item_3_desc": "",
+            "item_3_top": 75,
+            "item_3_left": 10,
+            "item_4_title": "",
+            "item_4_desc": "",
+            "item_4_top": 70,
+            "item_4_left": 55
+          }
+        },
+        "custom_liquid_dpyx8R": {
+          "type": "custom_liquid",
+          "name": "seeds image",
+          "settings": {
+            "custom_liquid": "<style>\n.sbt-img-container{\n   display:flex;\n  \n}\n  .sbt-bottom{\n    height:300px;\n    border-radius:15px;\n  }\n@media only screen and (max-width: 600px) {\n  .sbt-bottom{\nheight:auto;\n}\n.sbt-img-container{\n   \n  \n}\n}\n</style>\n<div class=\"sbt-img-container\"><img class=\"sbt-bottom\" src=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/seabuckthorn_bottom_bottle_seed_residue_1.jpg?v=1757094259\" /></div>"
           }
         },
         "custom_text_abR3zj": {
@@ -127,58 +254,15 @@
             "shipping_text": "<p><strong>Free Shipping & Returns: </strong>On all orders over ₹ 700</p>"
           }
         },
-        "offers_tpeHga": {
-          "type": "offers",
-          "settings": {
-            "offername": "Offer",
-            "offercontent": "USE SUMMER10. GET EXTRA 10% OFF",
-            "offercode": "SUMMER10",
-            "offername2": "",
-            "offercontent2": "",
-            "offercode2": "",
-            "offername3": "",
-            "offercontent3": "",
-            "offercode3": "",
-            "offername4": "",
-            "offercontent4": "",
-            "offercode4": ""
-          }
-        },
         "custom_liquid_U9yXz6": {
           "type": "custom_liquid",
           "settings": {
             "custom_liquid": "<div style=\"padding:5px;\"></div>"
           }
         },
-        "icons_WMCNhw": {
-          "type": "Icons",
-          "settings": {
-            "heading1": "Inflammation",
-            "icon1": "shopify://shop_images/Red_and_Orange_Bold_Modern_iOS_Icon_5dbe7591-925e-4925-8d00-b278ab5763c0.svg",
-            "heading2": "Skin Care",
-            "icon2": "shopify://shop_images/skincare_icon_661bcda4-2940-4e70-b11a-e8f3902fd843.svg",
-            "heading3": "Immunity",
-            "icon3": "shopify://shop_images/immunity_icon_0673783f-b914-42aa-a26a-c6454a687b87.svg",
-            "heading4": "Heart Health",
-            "icon4": "shopify://shop_images/hearthealth_icon_128f3174-c184-4135-9ffa-5519ddd46893.svg"
-          }
-        },
-        "custom_liquid_x8cdpA": {
-          "type": "custom_liquid",
-          "name": "amazon button",
-          "settings": {
-            "custom_liquid": "<style>\n        .button-amaz {\n            display: inline-flex;\n            align-items: center;\n            color: #000;\n            padding: 10px 0px;\n            border: none;\n            border-radius: 5px;\n            font-size: 16px;\n            text-decoration: none;\n            cursor: pointer;\n        }\n        .button-amaz img {\n            margin-left: 10px;\n            width: 150px; /* Adjust the size as needed */\n            height: 60px; /* Adjust the size as needed */\n            padding: 0 20px;\n            box-shadow:1px 1px 5px 1px rgba(0,0,0,0.45);\n            border-radius: 5px;\n        }\n    </style>\n<div class=\"sbt-label-container\">\n    <div class=\"cod-label\">No added sugar 🚫</div>\n    <div class=\"cod-label bg-color\">No added color 🚫</div>\n</div>\n\n    <a href=\"https://www.amazon.in/MY-PAHADI-DUKAN-MPD-Antioxidants/dp/B0D2B4VDP5/ref=sr_1_1_sspa?crid=2PN1SLW8ODTUL&dib=eyJ2IjoiMSJ9.b8FP9mp8pmtVPcUiOPRU12WR_viFX2jH67Zyr1ZTaWHag8n_UG5LW_mSZS-XaYONHx3JPDtJOiaP0TmaknrKkpBp4qVMCbgoyYrrqJWVxJ4hw4ioxTGnmBbiyklR4h6DJKV5ZpL0JuhseueP41MJO2U4KLFEeGnJ44PtkIe3NiBLGkiXBqYVGBFdYTnoIfHpyhczc_w_aSRY0lrrEMJfJ_jSENWmzZzTDAkWrwjJBXg5_tVyRp4hmvOWROOzBOoQ5FlYaJ2TFuJVNl6aVJ2J30g8dP5exVWvGbGv3TmY5Kg.tFQj5GGXnh2MzQQdrGI6QA9Qzfu52tfsEfWb325uRWU&dib_tag=se&keywords=sea%2Bbuckthorn&qid=1721195244&sprefix=sea%2Bbuckth%2Caps%2C308&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&utm_source=amazon&utm_medium=website&utm_campaign=COD&utm_id=2\" class=\"button-amaz\">\n        Also available on:\n        <img src=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703\" alt=\"Amazon\">\n    </a>\n<style>\n.t4s-swatch__item {\n    position: relative;\n    -ms-touch-action: manipulation;\n    touch-action: manipulation;\n    display: inline-block;\n    padding: 6px 16px 7px;\n    text-align: center;\n    border: 1px solid var(--border-sw-color);\n    color: var(--secondary-sw-color);\n    vertical-align: middle;\n    cursor: pointer;\n    margin: 5px;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    transition: color .25s ease, background-color .25s ease, border-color .15s ease, box-shadow .25s ease, opacity .25s ease;\n}\n.t4s-swatch__item[data-value=\"1200ml (4 X 300ml Bottles)\"]::before {\n    content: \"Value for Money\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n.t4s-swatch__item {\n    position: relative;\n    -ms-touch-action: manipulation;\n    touch-action: manipulation;\n    display: inline-block;\n    padding: 6px 16px 7px;\n    text-align: center;\n    border: 1px solid var(--border-sw-color);\n    color: var(--secondary-sw-color);\n    vertical-align: middle;\n    cursor: pointer;\n    margin: 5px;\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    transition: color .25s ease, background-color .25s ease, border-color .15s ease, box-shadow .25s ease, opacity .25s ease;\n}\n.t4s-swatch__item[data-value=\"100ml\"]::before {\n    content: \"Trial Pack\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n.t4s-swatch__item[data-value=\"3600ml (12 X 300ml Bottles)\"]::before {\n    content: \"Steal Deal\";\n    position: absolute;\n    top: -10px;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: 10px;\n    font-weight: bold;\n    color: white; /* Use a color or variable */\n    background: #E8513F; /* Optional background for label */\n    padding: 2px 8px;\n    border-radius: 3px;\n    white-space: nowrap;\n}\n</style>\n<style>\n    .sbt-label-container {\n        display: flex;\n        flex-wrap: wrap; /* Allows the elements to wrap if needed on smaller screens */\n        justify-content: flex-start; \n        gap: 5px; /* Adds spacing between labels */\nmargin:15px 0;\n    }\n\n    .cod-label {\n        background-color: #589997; \n        border-radius: 5px; \n        padding: 5px 15px; \n        font-size: 16px; \n        color: #ffffff; \n        display: inline-block;     }\n\n    .bg-color {\n        background-color: #F28C28;\n    }\n\n    /* Center the labels on mobile devices */\n    @media (max-width: 768px) {\n        .sbt-label-container {\n            justify-content: center; \n        }\n.cod-label{\npadding: 5px 10px;\n}\n    }\n</style>"
-          }
-        },
-        "custom_liquid_dpyx8R": {
-          "type": "custom_liquid",
-          "name": "seeds image",
-          "settings": {
-            "custom_liquid": "<style>\n.sbt-img-container{\n   display:flex;\n  \n}\n  .sbt-bottom{\n    height:300px;\n    border-radius:15px;\n  }\n@media only screen and (max-width: 600px) {\n  .sbt-bottom{\nheight:auto;\n}\n.sbt-img-container{\n   \n  \n}\n}\n</style>\n<div class=\"sbt-img-container\"><img class=\"sbt-bottom\" src=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/seabuckthorn_bottom_bottle_seed_residue_1.jpg?v=1757094259\" /></div>"
-          }
-        },
         "custom_liquid_UAfqy3": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "{% if url == blank %}\n  {% assign url = shop.url | append: product.url %}\n{% endif %}\n\n<div class=\"mpd-share-section\">\n  <p class=\"mpd-share-label\">Share this product</p>\n  <div class=\"mpd-share-buttons\">\n\n    <a href=\"https://www.facebook.com/sharer/sharer.php?u={{ url }}\" target=\"_blank\" rel=\"noopener\" aria-label=\"Share on Facebook\" class=\"mpd-share-btn mpd-fb\">\n      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path fill=\"currentColor\" d=\"M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z\"/></svg>\n      <span>Facebook</span>\n    </a>\n\n    <a href=\"https://twitter.com/intent/tweet?url={{ url }}\" target=\"_blank\" rel=\"noopener\" aria-label=\"Share on X\" class=\"mpd-share-btn mpd-x\">\n      <svg viewBox=\"0 0 16 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0.0385131 0L6.1373 8.15756L0 14.79H1.38126L6.75446 8.9832L11.0959 14.79H15.7963L9.3544 6.17359L15.067 0H13.6857L8.73725 5.34795L4.739 0H0.0385131ZM2.06976 1.0178H4.22917L13.7648 13.772H11.6054L2.06976 1.0178Z\" fill=\"currentColor\"/></svg>\n      <span>X / Twitter</span>\n    </a>\n\n    <a href=\"https://pinterest.com/pin/create/button/?url={{ url }}\" target=\"_blank\" rel=\"noopener\" aria-label=\"Share on Pinterest\" class=\"mpd-share-btn mpd-pin\">\n      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 384 512\"><path fill=\"currentColor\" d=\"M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z\"/></svg>\n      <span>Pinterest</span>\n    </a>\n\n    <a href=\"https://api.whatsapp.com/send?text={{ product.title | url_encode }}%20{{ url }}\" target=\"_blank\" rel=\"noopener\" aria-label=\"Share on WhatsApp\" class=\"mpd-share-btn mpd-wa\">\n      <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path fill=\"currentColor\" d=\"M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z\"/></svg>\n      <span>WhatsApp</span>\n    </a>\n\n  </div>\n</div>\n\n<style>\n.mpd-share-section {\n  margin: 20px 0 4px;\n  padding: 16px 0 0;\n  border-top: 1px solid rgba(0,0,0,0.08);\n}\n.mpd-share-label {\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 0.1em;\n  text-transform: uppercase;\n  color: #888;\n  margin: 0 0 10px;\n}\n.mpd-share-buttons {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n}\n.mpd-share-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  padding: 7px 14px;\n  border-radius: 100px;\n  font-size: 13px;\n  font-weight: 500;\n  text-decoration: none;\n  border: 1.5px solid transparent;\n  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;\n  cursor: pointer;\n  line-height: 1;\n}\n.mpd-share-btn svg {\n  width: 14px;\n  height: 14px;\n  flex-shrink: 0;\n}\n.mpd-share-btn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 4px 12px rgba(0,0,0,0.12);\n  opacity: 0.92;\n}\n.mpd-share-btn:active {\n  transform: translateY(0);\n  box-shadow: none;\n}\n\n/* Facebook */\n.mpd-fb {\n  background: #1877F2;\n  color: #fff;\n}\n/* X / Twitter */\n.mpd-x {\n  background: #000;\n  color: #fff;\n}\n/* Pinterest */\n.mpd-pin {\n  background: #E60023;\n  color: #fff;\n}\n/* WhatsApp */\n.mpd-wa {\n  background: #25D366;\n  color: #fff;\n}\n\n@media (max-width: 480px) {\n  .mpd-share-btn span {\n    display: none;\n  }\n  .mpd-share-btn {\n    padding: 10px 12px;\n    border-radius: 50%;\n  }\n  .mpd-share-btn svg {\n    width: 16px;\n    height: 16px;\n  }\n}\n</style>"
           }
@@ -227,26 +311,29 @@
       },
       "block_order": [
         "badge_ChqgGj",
-        "title",
         "judge_me_reviews_preview_badge_KaNw4T",
+        "vendor_badge_XLbaw3",
+        "title",
         "price",
         "custom_liquid_TFQmP9",
         "text_mW9REr",
         "custom_liquid_TnPiqA",
         "variant_picker",
         "custom_liquid_CNzAAw",
-        "shiprocket_promise_promise_widget_yVTddn",
         "buy_buttons",
-        "custom_liquid_dx4gqg",
+        "shiprocket_promise_promise_widget_yVTddn",
+        "offers_tpeHga",
+        "lab_certificate_QRHkGD",
+        "custom_liquid_x8cdpA",
+        "icons_WMCNhw",
+        "ingredients_labels_Br8bBP",
+        "ingredients_highlight_bJHD8t",
+        "custom_liquid_dpyx8R",
         "custom_text_abR3zj",
         "custom_liquid_Ai6YBM",
         "custom_liquid_3zNzzn",
         "shipping_VBJFtx",
-        "offers_tpeHga",
         "custom_liquid_U9yXz6",
-        "icons_WMCNhw",
-        "custom_liquid_x8cdpA",
-        "custom_liquid_dpyx8R",
         "custom_liquid_UAfqy3",
         "addons",
         "custom_liquid_R3CgQF",

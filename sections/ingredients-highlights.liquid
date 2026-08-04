@@ -1,0 +1,663 @@
+{% comment %}
+  Ingredients Highlights Section
+{% endcomment %}
+
+{%- style -%}
+  .ingredients-highlights-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 767px) {
+    .ingredients-highlights-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="ingredients-highlights ingredients-highlights-{{ section.id }}">
+  <div class="ingredients-highlights__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ingredients-highlights__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="ingredients-highlights__grid">
+      <!-- Left Column: Image with Floating Hotspot Tags -->
+      <div class="ingredients-highlights__image-col">
+        <div class="ingredients-highlights__image-wrapper" style="max-width: {{ section.settings.image_max_width }}px;">
+          {%- liquid
+            assign main_image = section.settings.image
+            assign fallback_image = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Frame_193.png?v=1785344188'
+          -%}
+          {%- if main_image != blank -%}
+            <img src="{{ main_image | image_url: width: 900 }}" 
+                 alt="{{ section.settings.title | escape }}" 
+                 class="ingredients-highlights__img" 
+                 width="{{ main_image.width }}" 
+                 height="{{ main_image.height }}" 
+                 loading="lazy">
+          {%- else -%}
+            <img src="{{ fallback_image }}" 
+                 alt="Ingredients Highlights" 
+                 class="ingredients-highlights__img" 
+                 width="450" 
+                 height="450" 
+                 loading="lazy">
+          {%- endif -%}
+
+          <!-- Floating Tags -->
+          {%- for i in (1..8) -%}
+            {%- liquid
+              assign tag_enable_key = 'tag_enable_' | append: i
+              assign tag_text_key = 'tag_text_' | append: i
+              assign tag_top_key = 'tag_top_' | append: i
+              assign tag_left_key = 'tag_left_' | append: i
+              assign tag_active_key = 'tag_active_' | append: i
+
+              assign tag_enable = section.settings[tag_enable_key]
+              assign tag_text = section.settings[tag_text_key]
+              assign tag_top = section.settings[tag_top_key]
+              assign tag_left = section.settings[tag_left_key]
+              assign tag_active = section.settings[tag_active_key]
+            -%}
+
+            {%- if tag_enable and tag_text != blank -%}
+              <div class="ingredient-tag{% if tag_active %} active{% endif %}" 
+                   style="top: {{ tag_top }}%; left: {{ tag_left }}%;"
+                   data-tag-index="{{ i }}">
+                <span>{{ tag_text }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Right Column: Content -->
+      <div class="ingredients-highlights__content-col">
+        {%- if section.settings.title != blank -%}
+          <h3 class="ingredients-highlights__title">{{ section.settings.title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="ingredients-highlights__description">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ingredients-highlights {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ingredients-highlights__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .ingredients-highlights__heading {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    color: #222 !important;
+    margin: 0 0 40px 0 !important;
+    text-align: left !important;
+  }
+
+  .ingredients-highlights__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 60px !important;
+    align-items: center !important;
+  }
+
+  .ingredients-highlights__image-col {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .ingredients-highlights__image-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .ingredients-highlights__img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  /* Hotspot Tags Positioning and Styling */
+  .ingredient-tag {
+    position: absolute !important;
+    transform: translate(-50%, -50%) !important;
+    padding: 12px 22px !important;
+    border-radius: 10px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    box-sizing: border-box !important;
+    z-index: 10 !important;
+  }
+
+  /* Active State (Dark) */
+  .ingredient-tag.active {
+    background-color: #222020 !important;
+    color: #ffffff !important;
+    border: none !important;
+  }
+
+  .ingredient-tag.active::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: -6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border-width: 6px 6px 0 !important;
+    border-style: solid !important;
+    border-color: #222020 transparent !important;
+    display: block !important;
+  }
+
+  /* Inactive State (White) */
+  .ingredient-tag:not(.active) {
+    background-color: #ffffff !important;
+    color: #222020 !important;
+    border: 1px solid #e5e5e3 !important;
+  }
+
+  .ingredient-tag:not(.active)::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: -6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border-width: 6px 6px 0 !important;
+    border-style: solid !important;
+    border-color: #ffffff transparent !important;
+    display: block !important;
+  }
+
+  /* Content Column Styles */
+  .ingredients-highlights__content-col {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: left !important;
+  }
+
+  .ingredients-highlights__title {
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    color: #222 !important;
+    margin: 0 0 20px 0 !important;
+  }
+
+  .ingredients-highlights__description {
+    font-size: 18px !important;
+    line-height: 1.8 !important;
+    color: #555 !important;
+  }
+
+  @media screen and (max-width: 991px) {
+    .ingredients-highlights__grid {
+      gap: 30px !important;
+    }
+    .ingredients-highlights__title {
+      font-size: 30px !important;
+    }
+    .ingredients-highlights__description {
+      font-size: 16px !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .ingredients-highlights__heading {
+      font-size: 26px !important;
+      margin-bottom: 24px !important;
+      text-align: center !important;
+    }
+    .ingredients-highlights__grid {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+    }
+    .ingredients-highlights__image-wrapper {
+      max-width: 320px !important;
+    }
+    .ingredients-highlights__content-col {
+      text-align: center !important;
+      align-items: center !important;
+    }
+    .ingredient-tag {
+      padding: 8px 14px !important;
+      font-size: 13px !important;
+      border-radius: 8px !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Ingredients Highlights",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Ingredients"
+    },
+    {
+      "type": "header",
+      "content": "Image Column"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Image"
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "min": 250,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Maximum Width",
+      "default": 450
+    },
+    {
+      "type": "header",
+      "content": "Content Column"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Ingredient Title",
+      "default": "Vitamin C"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Ingredient Description",
+      "default": "<p>Rich in Vitamin C and antioxidants to strengthen your body's defences.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Style & Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_1",
+      "label": "Enable Tag 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tag_text_1",
+      "label": "Tag 1 Text",
+      "default": "Vitamin C"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_1",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 1 Position (Top)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "tag_left_1",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 1 Position (Left)",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_1",
+      "label": "Tag 1 Active State",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_2",
+      "label": "Enable Tag 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tag_text_2",
+      "label": "Tag 2 Text",
+      "default": "Zinc"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_2",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 2 Position (Top)",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "tag_left_2",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 2 Position (Left)",
+      "default": 76
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_2",
+      "label": "Tag 2 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_3",
+      "label": "Enable Tag 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tag_text_3",
+      "label": "Tag 3 Text",
+      "default": "Antioxidants"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_3",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 3 Position (Top)",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "tag_left_3",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 3 Position (Left)",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_3",
+      "label": "Tag 3 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_4",
+      "label": "Enable Tag 4",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tag_text_4",
+      "label": "Tag 4 Text",
+      "default": "Omega 3,6,7 & 9"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_4",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 4 Position (Top)",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "tag_left_4",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 4 Position (Left)",
+      "default": 72
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_4",
+      "label": "Tag 4 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_5",
+      "label": "Enable Tag 5",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tag_text_5",
+      "label": "Tag 5 Text"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_5",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 5 Position (Top)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "tag_left_5",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 5 Position (Left)",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_5",
+      "label": "Tag 5 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_6",
+      "label": "Enable Tag 6",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tag_text_6",
+      "label": "Tag 6 Text"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_6",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 6 Position (Top)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "tag_left_6",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 6 Position (Left)",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_6",
+      "label": "Tag 6 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 7"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_7",
+      "label": "Enable Tag 7",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tag_text_7",
+      "label": "Tag 7 Text"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_7",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 7 Position (Top)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "tag_left_7",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 7 Position (Left)",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_7",
+      "label": "Tag 7 Active State",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hotspot Tag 8"
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_enable_8",
+      "label": "Enable Tag 8",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tag_text_8",
+      "label": "Tag 8 Text"
+    },
+    {
+      "type": "range",
+      "id": "tag_top_8",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 8 Position (Top)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "tag_left_8",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tag 8 Position (Left)",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "tag_active_8",
+      "label": "Tag 8 Active State",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients Highlights"
+    }
+  ]
+}
+{% endschema %}

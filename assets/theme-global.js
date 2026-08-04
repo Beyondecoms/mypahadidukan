@@ -553,7 +553,7 @@ function fetchSection(sectionId, options = {}) {
       if (cached) return resolve(cached);
     }
 
-    fetch(url, getRequestDefaultConfigs())
+    fetch(url.toString(), getRequestDefaultConfigs())
       .then((res) => {
         if (res.ok) return res.text();
         reject(`Failed to load section: ${sectionId}`);
@@ -1497,31 +1497,33 @@ if (!customElements.get("product-form")) {
         this.form = this.domNodes.form;
         this.productInfo = this.closest(".m-main-product--info");
         this.submitButton = this.domNodes.submitButton;
-        this.domNodes.inputId.disabled = false;
+        if (this.domNodes.inputId) this.domNodes.inputId.disabled = false;
         this.cart = document.querySelector("m-cart-drawer");
         this.cartPage = document.querySelector("m-cart");
         this.customFields = document.querySelectorAll(this.selectors.customFields);
         if (this.domNodes.dynamicCheckout) this.enable_dynamic_checkout = true;
-        this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
-        if (this.domNodes.dynamicCheckout && this.customFields) {
-          this.domNodes.dynamicCheckout.addEventListener(
-            "click",
-            (e) => {
-              const missing = validateForm(this.form.closest(".m-main-product--info"));
-              if (missing && missing.length > 0) {
-                e.stopPropagation();
-                window.MinimogTheme.Notification.show({
-                  target: this.domNodes.errorWrapper,
-                  method: "appendChild",
-                  type: "warning",
-                  message: window.MinimogStrings.requiredField,
-                  delay: 100,
-                });
-                console.warn("Missing field(s): ", missing);
-              }
-            },
-            true
-          );
+        if (this.form) {
+          this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
+          if (this.domNodes.dynamicCheckout && this.customFields) {
+            this.domNodes.dynamicCheckout.addEventListener(
+              "click",
+              (e) => {
+                const missing = validateForm(this.form.closest(".m-main-product--info"));
+                if (missing && missing.length > 0) {
+                  e.stopPropagation();
+                  window.MinimogTheme.Notification.show({
+                    target: this.domNodes.errorWrapper,
+                    method: "appendChild",
+                    type: "warning",
+                    message: window.MinimogStrings.requiredField,
+                    delay: 100,
+                  });
+                  console.warn("Missing field(s): ", missing);
+                }
+              },
+              true
+            );
+          }
         }
       }
       toggleSpinner(show) {

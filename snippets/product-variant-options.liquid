@@ -96,15 +96,74 @@
         %}
       </div>
     {%- when 'button' -%}
-   
+      {%- liquid
+        assign resolved_variant = null
+        for var in product.variants
+          assign matches = true
+          for opt in product.options_with_values
+            assign opt_idx = forloop.index0
+            if opt.name == option.name
+              if var.options[opt_idx] != value
+                assign matches = false
+                break
+              endif
+            else
+              if var.options[opt_idx] != opt.selected_value
+                assign matches = false
+                break
+              endif
+            endif
+          endfor
+          if matches
+            assign resolved_variant = var
+            break
+          endif
+        endfor
+
+        if resolved_variant == null
+          assign opt_idx = option.position | minus: 1
+          for var in product.variants
+            if var.options[opt_idx] == value
+              assign resolved_variant = var
+              break
+            endif
+          endfor
+        endif
+
+        if resolved_variant == null
+          assign resolved_variant = value.variant
+        endif
+
+        if card_show_image == null
+          assign card_show_image = true
+        endif
+        if card_show_discount == null
+          assign card_show_discount = true
+        endif
+        if card_show_compare_price == null
+          assign card_show_compare_price = true
+        endif
+        if card_show_checkmark == null
+          assign card_show_checkmark = true
+        endif
+        if card_image_size == null
+          assign card_image_size = 80
+        endif
+
+        assign variant_image = resolved_variant.image | default: resolved_variant.featured_media | default: resolved_variant.featured_image | default: product.featured_media | default: product.featured_image
+        assign has_discount = false
+        if resolved_variant.compare_at_price > resolved_variant.price
+          assign has_discount = true
+          assign discount_amount = resolved_variant.compare_at_price | minus: resolved_variant.price
+          assign discount_percent = discount_amount | times: 100 | divided_by: resolved_variant.compare_at_price | round
+        endif
+      -%}
       <div
-        class="m-product-option--node{% if option_disabled %} m-product-option--node__unavailable{% endif %}"
+        class="m-product-option--node{% if option_disabled %} m-product-option--node__unavailable{% endif %}{% if value.selected %} m-product-option--node__selected{% endif %}"
         data-option-type="{{ picker_type }}"
         data-option-position="{{ option.position }}"
         data-value="{{- value | escape -}}"
       >
-         <div class="variant-scroll-wrapper">
-   {% if value.variant.metafields.custom.tag != blank %} <span class="vertas">{{ value.variant.metafields.custom.tag }}</span>{% endif %}
         <input
           data-option-type="{{ picker_type }}"
           type="radio"
@@ -121,34 +180,48 @@
           {% endif %}
           {{ input_dataset }}
         >
-       <label for="{{ input_id }}" class="m-product-option--node__label" data-option-type="{{ picker_type }}">
-          <p>{{ value -}}</p>
-          {{ label_unavailable }}
-    {% if value.variant %}
-  <div class="m-product-option--node__pricing">
-    <span class="price">
-      ₹{{ value.variant.price | money_without_currency | replace: '.00', '' }}
-    </span>
-    {% if value.variant.compare_at_price > value.variant.price %}
-      <span class="compare-price" style="text-decoration: line-through; color: #999;">
-        ₹{{ value.variant.compare_at_price | money_without_currency | replace: '.00', '' }}
-      </span>
-      
-      {% assign discount = value.variant.compare_at_price | minus: value.variant.price %}
-      {% assign discount_percent = discount | times: 100 | divided_by: value.variant.compare_at_price %}
-      <span class="discount">Save {{ discount_percent | round }}% </span>
-    {% endif %}
-  </div>
- 
-{% endif %}
+        <label for="{{ input_id }}" class="rich-variant-card" data-option-type="{{ picker_type }}">
+          {%- if card_show_checkmark and value.selected -%}
+            <span class="rich-variant-card__checkmark">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <circle cx="12" cy="12" r="10" fill="var(--card-selected-border-color, #F58220)" />
+                <path d="M8.5 12.5l2 2 5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          {%- endif -%}
 
-           {% if value.variant.metafields.custom.tablet %}
-      <div class="variant-tablet">
-        {{ value.variant.metafields.custom.tablet }}
-      </div>
-    {% endif %}
+          {%- if card_show_image and variant_image != blank -%}
+            <div class="rich-variant-card__image-wrapper">
+              <img
+                src="{{ variant_image | image_url: width: card_image_size }}"
+                alt="{{ value | escape }}"
+                loading="lazy"
+                width="{{ card_image_size }}"
+                height="{{ card_image_size }}"
+                class="rich-variant-card__image"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="rich-variant-card__content">
+            <span class="rich-variant-card__title">{{ value }}</span>
+            
+            {%- if card_show_discount and has_discount -%}
+              <span class="rich-variant-card__discount">Save {{ discount_percent }}%</span>
+            {%- endif -%}
+
+            <div class="rich-variant-card__pricing">
+              <span class="rich-variant-card__price">
+                {{ resolved_variant.price | money | replace: '.00', '' }}
+              </span>
+              {%- if card_show_compare_price and has_discount -%}
+                <span class="rich-variant-card__compare-price">
+                  {{ resolved_variant.compare_at_price | money | replace: '.00', '' }}
+                </span>
+              {%- endif -%}
+            </div>
+          </div>
         </label>
-      </div>
       </div>
   
     {%- when 'color' -%}
@@ -340,21 +413,217 @@
 {%- endfor -%}
 
         <style>
-          .variant-scroll-wrapper {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 1rem;
-  margin: 0 -1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
+          .m-product-option--content {
+            display: grid !important;
+            grid-template-columns: repeat(var(--card-desktop-cards-per-row, 3), minmax(220px, 1fr)) !important;
+            gap: var(--card-spacing, 20px) !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
 
-.variant-scroll-wrapper .m-product-option--node {
-  scroll-snap-align: start;
-  flex: 0 0 auto;
-  min-width: 180px; /* adjust as needed */
-}
+          .m-product-option--node {
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            height: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            background: none !important;
+          }
 
+          /* Hide native radio button inputs */
+          .m-product-option__input[data-option-type="button"] {
+            position: absolute !important;
+            overflow: hidden !important;
+            clip: rect(0 0 0 0) !important;
+            height: 1px !important;
+            width: 1px !important;
+            margin: -1px !important;
+            padding: 0 !important;
+            border: 0 !important;
+          }
+
+          .rich-variant-card {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            border: var(--card-border-thickness, 1px) solid #e5e5e5 !important;
+            border-radius: var(--card-border-radius, 16px) !important;
+            padding: 20px !important;
+            background-color: #fff !important;
+            cursor: pointer !important;
+            position: relative !important;
+            transition: all 0.2s ease-in-out !important;
+            min-height: 194px !important;
+            height: auto !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+          }
+
+          /* Selected state border */
+          .m-product-option--node__selected .rich-variant-card,
+          .m-product-option__input:checked + .rich-variant-card {
+            border-color: var(--card-selected-border-color, #F58220) !important;
+            background-color: rgba(245, 130, 32, 0.03) !important; /* Subtle orange/primary highlight */
+            box-shadow: 0 4px 12px rgba(245, 130, 32, 0.08) !important;
+          }
+
+          /* Checkmark styling */
+          .rich-variant-card__checkmark {
+            position: absolute !important;
+            top: -8px !important;
+            right: -8px !important;
+            width: 22px !important;
+            height: 22px !important;
+            z-index: 2 !important;
+          }
+
+          /* Image wrapper */
+          .rich-variant-card__image-wrapper {
+            width: var(--card-image-size, 90px) !important;
+            height: var(--card-image-size, 90px) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 16px !important;
+          }
+
+          .rich-variant-card__image {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+          }
+
+          .rich-variant-card__content {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            width: 100% !important;
+          }
+
+          .rich-variant-card__title {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #333 !important;
+            margin-bottom: 8px !important;
+            line-height: 1.4 !important;
+          }
+
+          .rich-variant-card__discount {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: var(--card-selected-border-color, #F58220) !important;
+            margin-bottom: 10px !important;
+          }
+
+          .rich-variant-card__pricing {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            margin-top: auto !important; /* Push pricing to the bottom */
+          }
+
+          .rich-variant-card__price {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: #111 !important;
+          }
+
+          .rich-variant-card__compare-price {
+            font-size: 14px !important;
+            text-decoration: line-through !important;
+            color: #999 !important;
+          }
+
+          /* Mobile responsive rules */
+          @media screen and (max-width: 767px) {
+            .m-product-option--content {
+              display: flex !important;
+              flex-wrap: nowrap !important;
+              overflow-x: auto !important;
+              scroll-snap-type: x mandatory !important;
+              gap: 12px !important;
+              padding: 8px 4px !important;
+              margin: 0 !important;
+              width: auto !important;
+              -webkit-overflow-scrolling: touch !important;
+            }
+            
+            .m-product-option--content::-webkit-scrollbar {
+              display: none !important; /* Hide scrollbar for clean look */
+            }
+
+            .m-product-option--node {
+              flex: 0 0 125px !important;
+              scroll-snap-align: start !important;
+              height: auto !important;
+            }
+
+            .rich-variant-card {
+              padding: 12px !important;
+              border-radius: 16px !important;
+              min-height: 170px !important;
+              height: auto !important;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              justify-content: flex-start !important;
+            }
+
+            .rich-variant-card__image-wrapper {
+              width: 50px !important;
+              height: 50px !important;
+              margin-bottom: 8px !important;
+            }
+
+            .rich-variant-card__image {
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: contain !important;
+            }
+
+            .rich-variant-card__title {
+              font-size: 12px !important;
+              font-weight: 600 !important;
+              line-height: 1.2 !important;
+              text-align: center !important;
+              margin-bottom: 4px !important;
+              display: -webkit-box !important;
+              -webkit-line-clamp: 2 !important;
+              -webkit-box-orient: vertical !important;
+              overflow: hidden !important;
+            }
+
+            .rich-variant-card__discount {
+              font-size: 10px !important;
+              font-weight: 600 !important;
+              color: #F58220 !important;
+              margin: 4px 0 !important;
+            }
+
+            .rich-variant-card__pricing {
+              display: flex !important;
+              flex-direction: row !important;
+              align-items: center !important;
+              justify-content: center !important;
+              gap: 6px !important;
+              margin-top: auto !important;
+            }
+
+            .rich-variant-card__price {
+              font-size: 14px !important;
+              font-weight: 700 !important;
+            }
+
+            .rich-variant-card__compare-price {
+              font-size: 13px !important;
+              color: #999 !important;
+              text-decoration: line-through !important;
+            }
+          }
         </style>
