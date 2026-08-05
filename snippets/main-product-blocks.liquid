@@ -34,6 +34,11 @@
   if product.selected_or_first_available_variant.available == false or quantity_rule_soldout or product.selected_or_first_available_variant == null
     assign variant_available = false
   endif
+
+  assign is_mpd_vendor = false
+  if product.vendor == 'My Pahadi Dukan'
+    assign is_mpd_vendor = true
+  endif
 %}
 {% comment %} Fallback for case not show block price, buy buttons {% endcomment %}
 <input type="hidden" name="id" value="{{ variant_id }}" data-selected-variant="{{ selected_variant_id }}" disabled>
@@ -101,7 +106,37 @@
 
           {% endif %}
           {% if section.settings.show_atwl and section.settings.layout != 'layout-7' %}
-            <div class="m-product-title-actions">
+            {% if is_mpd_vendor %}
+              <div class="m-product-title-actions">
+                <div class="m-product-wishlist">
+                  {% if wishlist_app == 'growave' %}
+                    {% comment %} theme-check-disable {% endcomment %}
+                    {% liquid
+                      capture the_snippet_fave_icon
+                        render 'ssw-widget-faveicon' with product.id
+                      endcapture
+                    %}
+                    {% unless the_snippet_fave_icon contains 'Liquid error' %}
+                      {{ the_snippet_fave_icon }}
+                    {% else %}
+                      {% render 'mm-ssw-widget-faveicon' with product.id %}
+                    {% endunless %}
+                    {% comment %} theme-check-enable {% endcomment %}
+                  {% else %}
+                    {% render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--left', style: style %}
+                  {% endif %}
+                </div>
+                <button class="m-product-share-btn" aria-label="Share this product" onclick="(function(){if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href).then(function(){var t=document.createElement('div');t.textContent='Link copied!';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:8px;z-index:99999;font-size:14px;';document.body.appendChild(t);setTimeout(function(){t.remove()},2000)})}}())">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                </button>
+              </div>
+            {% else %}
               <div class="m-product-wishlist">
                 {% if wishlist_app == 'growave' %}
                   {% comment %} theme-check-disable {% endcomment %}
@@ -120,16 +155,7 @@
                   {% render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--left', style: style %}
                 {% endif %}
               </div>
-              <button class="m-product-share-btn" aria-label="Share this product" onclick="(function(){if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href).then(function(){var t=document.createElement('div');t.textContent='Link copied!';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:8px;z-index:99999;font-size:14px;';document.body.appendChild(t);setTimeout(function(){t.remove()},2000)})}}())">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-                  <circle cx="18" cy="5" r="3"></circle>
-                  <circle cx="6" cy="12" r="3"></circle>
-                  <circle cx="18" cy="19" r="3"></circle>
-                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                </svg>
-              </button>
-            </div>
+            {% endif %}
           {% endif %}
         </div>
         {% if settings.review_app == 'ali_reviews' %}
@@ -194,7 +220,7 @@
         {% comment %} Added on 23rd Jan 26 {% endcomment %}
   
 
-{% if product.tags contains 'sbt' %}
+{% if product.tags contains 'sbt' and is_mpd_vendor %}
   {% if product.id == 8304817176882 %}
     <div style="border-radius: 10px; margin: 0 0 15px 0; font-size:13px; font-weight:bold;">
       4,00,000+ bottles sold
@@ -1966,7 +1992,7 @@ el.textContent = current;
           box-shadow: 0 6px 16px rgba(0,0,0,0.18);
           transform: translate(-20%, -50%) scale(1.05);
           z-index: 3;
-          opacity: 0;
+       
         }
         .m-product-ingredients-tag .m-tag-arrow {
           position: absolute;

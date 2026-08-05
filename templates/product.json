@@ -27,12 +27,23 @@
           "type": "badge",
           "settings": {}
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
         "judge_me_reviews_preview_badge_KaNw4T": {
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "vendor_badge": {
+          "type": "vendor_badge",
+          "settings": {
+            "show_badge": true,
+            "badge_style": "minimal",
+            "eyebrow_text": "Official Store",
+            "show_icon": true,
+            "show_arrow": true,
+            "custom_link": ""
+          }
+        },
+        "title": {
+          "type": "title",
           "settings": {}
         },
         "price": {
@@ -52,7 +63,19 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size"
+            "size_title": "Size",
+            "tbspn_svg_icon": "",
+            "card_border_radius": 10,
+            "card_border_thickness": 1,
+            "card_selected_border_color": "#f58220",
+            "card_spacing": 12,
+            "card_image_size": 80,
+            "card_show_compare_price": true,
+            "card_show_discount": true,
+            "card_show_image": true,
+            "card_show_checkmark": true,
+            "card_desktop_cards_per_row": 3,
+            "card_mobile_width": 110
           }
         },
         "buy_buttons": {
@@ -63,6 +86,10 @@
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
+        },
+        "shiprocket_promise_promise_widget_wxfpQj": {
+          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
+          "settings": {}
         },
         "offers_DyUaHC": {
           "type": "offers",
@@ -88,18 +115,27 @@
             "custom_liquid": "<div style=\"margin-top:20px;\"></div>\n{{ product.metafields.custom.custom_code }}"
           }
         },
-        "shiprocket_promise_promise_widget_wxfpQj": {
-          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
-          "settings": {}
-        },
-        "vendor_badge": {
-          "type": "vendor_badge",
+        "ingredients_highlight_Jc8UhY": {
+          "type": "ingredients_highlight",
           "settings": {
-            "show_badge": true,
-            "badge_style": "minimal",
-            "eyebrow_text": "Official Store",
-            "show_icon": true,
-            "show_arrow": true
+            "heading": "Ingredients",
+            "image": "shopify://shop_images/image_30.png",
+            "item_1_title": "Vitamin C",
+            "item_1_desc": "Rich in Vitamin C and antioxidants to strengthen your body's defences.",
+            "item_1_top": 35,
+            "item_1_left": 15,
+            "item_2_title": "Zinc",
+            "item_2_desc": "Essential mineral that supports immune health.",
+            "item_2_top": 20,
+            "item_2_left": 65,
+            "item_3_title": "Antioxidants",
+            "item_3_desc": "Helps protect cells against free radicals.",
+            "item_3_top": 75,
+            "item_3_left": 10,
+            "item_4_title": "Omega 3,6,7 & 9",
+            "item_4_desc": "Vital fatty acids for heart and overall wellness.",
+            "item_4_top": 70,
+            "item_4_left": 55
           }
         },
         "custom_text_abR3zj": {
@@ -142,7 +178,8 @@
             "heading3": "Icon 3",
             "icon3": "shopify://shop_images/icon_weight__managem.svg",
             "heading4": "Icon 4",
-            "icon4": "shopify://shop_images/icon_hart__helth.svg"
+            "icon4": "shopify://shop_images/icon_hart__helth.svg",
+            "heading5": "Icon 5"
           }
         },
         "custom_liquid_UAfqy3": {
@@ -188,16 +225,17 @@
       },
       "block_order": [
         "badge_ChqgGj",
-        "title",
         "judge_me_reviews_preview_badge_KaNw4T",
+        "vendor_badge",
+        "title",
         "price",
         "custom_liquid_YwQ9iR",
         "variant_picker",
         "buy_buttons",
+        "shiprocket_promise_promise_widget_wxfpQj",
         "offers_DyUaHC",
         "custom_liquid_jpdXn4",
-        "shiprocket_promise_promise_widget_wxfpQj",
-        "vendor_badge",
+        "ingredients_highlight_Jc8UhY",
         "custom_text_abR3zj",
         "custom_liquid_3zNzzn",
         "shipping_VBJFtx",

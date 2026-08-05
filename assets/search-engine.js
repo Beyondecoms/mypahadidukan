@@ -148,13 +148,24 @@
     const haystack = `${titleNorm} ${tagsNorm} ${typeNorm} ${vendorNorm} ${handleNorm}`;
     const targetWords = haystack.split(" ").filter(Boolean);
 
-    // Verify all terms are present as startsWith/endsWith in target words (fuzzy/prefix/suffix matching)
-    const allMatched = queryWords.every(qWord =>
-      targetWords.some(tWord => tWord.startsWith(qWord) || tWord.endsWith(qWord))
+    // Verify at least one query word is present somewhere in the normalized target text (partial/substring match)
+    const matchesAny = queryWords.some(qWord =>
+      haystack.includes(qWord)
     );
-    if (!allMatched) return -1;
+    if (!matchesAny) return -1;
 
     let score = 0;
+
+    // Count how many query words matched to rank higher match counts
+    let matchCount = 0;
+    queryWords.forEach(qWord => {
+      if (haystack.includes(qWord)) {
+        matchCount++;
+      }
+    });
+
+    // Boost score significantly based on the number of matched query words
+    score += matchCount * 100;
 
     // Direct match boosts
     if (titleNorm === normQuery) {
@@ -189,14 +200,23 @@
     const blogTitleNorm = normalizeString(a.blog_title || a._blog_title);
 
     const haystack = `${titleNorm} ${tagsNorm} ${bodyNorm} ${blogTitleNorm}`;
-    const targetWords = haystack.split(" ").filter(Boolean);
 
-    const allMatched = queryWords.every(qWord =>
-      targetWords.some(tWord => tWord.startsWith(qWord) || tWord.endsWith(qWord))
+    // Verify at least one query word is present somewhere in the article data (partial/substring match)
+    const matchesAny = queryWords.some(qWord =>
+      haystack.includes(qWord)
     );
-    if (!allMatched) return -1;
+    if (!matchesAny) return -1;
 
     let score = 0;
+
+    // Count matched words
+    let matchCount = 0;
+    queryWords.forEach(qWord => {
+      if (haystack.includes(qWord)) {
+        matchCount++;
+      }
+    });
+    score += matchCount * 50;
 
     if (titleNorm === normQuery) {
       score += 500;
@@ -262,7 +282,12 @@
 
   // HTML Markup generator for blog cards
   function blogCardHTML(a) {
-    const url = `/blogs/${a._blog_handle}/${a.handle}`;
+    let handle = a.handle || "";
+    const blogPrefix = `${a._blog_handle}/`;
+    if (handle.startsWith(blogPrefix)) {
+      handle = handle.substring(blogPrefix.length);
+    }
+    const url = `/blogs/${a._blog_handle}/${handle}`;
     const img = a.image?.src
       ? resizeShopifyImage(a.image.src)
       : "";

@@ -113,7 +113,7 @@
                 {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
             {%- endcase -%}
           </div>
-          {% if is_size %}
+          {% if is_size and product.vendor == 'My Pahadi Dukan' %}
             {%- assign custom_svg = '' -%}
             {%- if block and block.settings.tbspn_svg_icon != blank -%}
               {%- assign custom_svg = block.settings.tbspn_svg_icon -%}
