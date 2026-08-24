@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/Ghee--desktop.jpg",
-            "mb_background": "shopify://shop_images/Ghee-mobile.jpg",
+            "mb_background": "shopify://shop_images/ghee-mobile-800x1000.jpg",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -45,8 +45,8 @@
         "slider_item_4PAGkD": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/Rhododendron-and-strawberry-Desktop.jpg",
-            "mb_background": "shopify://shop_images/Rhododendron-and-strawberry-mobile.jpg",
+            "background": "shopify://shop_images/1611x1052_resize_jpg.jpg",
+            "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
             "content_in_container": true,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -76,7 +76,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/oil-final.jpg",
-            "mb_background": "shopify://shop_images/oil-mobile1.jpg",
+            "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
             "content_in_container": true,
             "content_position": "right bottom",
             "text_alignment": "center",
@@ -104,10 +104,9 @@
         },
         "1621243260e1af0c20-1": {
           "type": "slider_item",
-          "disabled": true,
           "settings": {
-            "background": "shopify://shop_images/All_products.jpg",
-            "mb_background": "shopify://shop_images/All_products_banner.jpg",
+            "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
+            "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -116,7 +115,7 @@
             "subheading": "",
             "title": "",
             "description": "",
-            "image_link": "shopify://collections/best-selling",
+            "image_link": "https://mypahadidukan.com/products/afghani-pahadi-hing-my-pahadi-dukan",
             "button_text": "",
             "button_link": "",
             "button_style": "sf__btn-secondary",
@@ -1901,6 +1900,10 @@
         "animations": "inherit"
       }
     },
+    "178583660426bc155c": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "home_faq_3WNKjj": {
       "type": "home-faq",
       "blocks": {
@@ -2007,6 +2010,7 @@
     "custom_content_bbtDMb",
     "image_with_text_CJHAkB",
     "blog_posts_Q7EyFG",
+    "178583660426bc155c",
     "home_faq_3WNKjj"
   ]
 }

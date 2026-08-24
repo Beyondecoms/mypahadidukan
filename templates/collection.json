@@ -239,7 +239,7 @@
         "grid_layout": "grid",
         "grid_columns": "4",
         "show_columns_switcher": false,
-        "pagination_limit": 11,
+        "pagination_limit": 12,
         "paginate_type": "paginate",
         "show_sorting": true,
         "show_filter": true,
@@ -332,6 +332,35 @@
         "padding_bottom": 50,
         "custom_class": ""
       }
+    },
+    "1785836853122d4fc1": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_fe8ed5c_qyqa9r": {
+          "type": "ai_gen_block_fe8ed5c",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "heading_alignment": "left",
+            "allow_multiple_open": false,
+            "container_max_width": 900,
+            "background_color": "#FFFFFF",
+            "heading_color": "#222222",
+            "question_color": "#222222",
+            "question_hover_color": "#666666",
+            "answer_color": "#666666",
+            "border_color": "#EEEEEE",
+            "icon_color": "#222222",
+            "heading_size": 36,
+            "question_size": 18,
+            "answer_size": 16
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_fe8ed5c_qyqa9r"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -340,6 +369,7 @@
     "main",
     "recent-viewed",
     "custom_content_YPzFCa",
-    "empty_space_CWCDnV"
+    "empty_space_CWCDnV",
+    "1785836853122d4fc1"
   ]
 }

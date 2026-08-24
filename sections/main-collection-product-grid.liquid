@@ -10,7 +10,6 @@
   if section.settings.grid_layout == 'list'
     assign initial_column = 1
   endif
-  
 
   assign show_filter = section.settings.show_filter
   if section.settings.filters_type == 'storefront_filters' and collection.filters.size == 0
@@ -79,159 +78,48 @@
             {% assign in_stock_products = collection.products | where: "available", true %}
 {% assign out_of_stock_products = collection.products | where: "available", false %}
 
-<style>
-  @media screen and (max-width: 767px) {
-    .m-collection-products .m-product-item:not(.m-collection-inline-icon-box-row) {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 0 0 100% !important;
-      box-sizing: border-box !important;
-      min-width: 0 !important;
-    }
-    .m-collection-products .m-collection-inline-icon-box-row {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 0 0 100% !important;
-      box-sizing: border-box !important;
-      min-width: 0 !important;
-      grid-column: 1 / -1 !important;
-    }
-  }
-</style>
-
 <div
   class="m-collection-products m:flex m:flex-wrap m-cols-{{ initial_column }}"
   data-total-pages="{{ paginate.pages }}"
 >
-  {%- liquid
-    assign offer_image = collection.metafields.custom.collection_offer_image
-    assign total_products = in_stock_products.size | plus: out_of_stock_products.size
-    assign banner_inserted = false
-    assign icon_box_inserted = false
-    assign combined_index = 0
-  -%}
-
   {%- for product in in_stock_products -%}
-    {%- assign combined_index = combined_index | plus: 1 -%}
     <div class="m-product-item m:w-6/12 md:m:w-4/12">
       {% liquid
         case settings.pcard_layout
           when '1'
-            render 'product-card-1', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-1', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '2'
-            render 'product-card-2', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-2', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '3'
-            render 'product-card-3', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-3', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '4'
-            render 'product-card-4', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-4', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '5'
-            render 'product-card-5', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-5', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
         endcase
       %}
     </div>
-    {%- if combined_index == 7 and total_products >= 7 and banner_inserted == false -%}
-      {%- assign banner_inserted = true -%}
-      <div class="m-product-item m-collection-offer-banner m:w-6/12 md:m:w-4/12">
-        {%- if offer_image != blank -%}
-          <a href="{{ collection.url }}" class="m-collection-offer-banner__link">
-            <div class="m-collection-offer-banner__img-wrap">
-              {{
-                offer_image.value
-                | image_url: width: 800
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'm-collection-offer-banner__image',
-                  alt: collection.title,
-                  widths: '360, 535, 800'
-              }}
-            </div>
-          </a>
-        {%- else -%}
-          <a href="{{ collection.url }}" class="m-collection-offer-banner__link">
-            <div class="m-collection-offer-banner__fallback">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Frame_212.png?v=1787047712"
-                alt="{{ collection.title }} offer"
-                loading="lazy"
-                width="800"
-                height="800"
-                class="m:w-full m:h-full m-collection-offer-banner__fallback-img"
-              >
-            </div>
-          </a>
-        {%- endif -%}
-      </div>
-      {%- assign icon_box_inserted = false -%}
-    {%- endif -%}
-    {%- if icon_box_inserted == false and banner_inserted == true -%}
-      {%- assign icon_box_inserted = true -%}
-      <div class="m-collection-inline-icon-box-row m:w-full">
-        {%- render 'collection-inline-icon-box' -%}
-      </div>
-    {%- endif -%}
   {%- endfor -%}
 
   {%- for product in out_of_stock_products -%}
-    {%- assign combined_index = combined_index | plus: 1 -%}
     <div class="m-product-item m:w-6/12 md:m:w-4/12">
       {% liquid
         case settings.pcard_layout
           when '1'
-            render 'product-card-1', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-1', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '2'
-            render 'product-card-2', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-2', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '3'
-            render 'product-card-3', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-3', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '4'
-            render 'product-card-4', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-4', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
           when '5'
-            render 'product-card-5', product: product, section: section, index: combined_index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
+            render 'product-card-5', product: product, section: section, index: forloop.index, section_index: section.index, animated: animated, animation_effect: animation_effect, context: collection
         endcase
       %}
     </div>
-    {%- if combined_index == 7 and total_products >= 7 and banner_inserted == false -%}
-      {%- assign banner_inserted = true -%}
-      <div class="m-product-item m-collection-offer-banner m:w-6/12 md:m:w-4/12">
-        {%- if offer_image != blank -%}
-          <a href="{{ collection.url }}" class="m-collection-offer-banner__link">
-            <div class="m-collection-offer-banner__img-wrap">
-              {{
-                offer_image.value
-                | image_url: width: 800
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'm-collection-offer-banner__image',
-                  alt: collection.title,
-                  widths: '360, 535, 800'
-              }}
-            </div>
-          </a>
-        {%- else -%}
-          <a href="{{ collection.url }}" class="m-collection-offer-banner__link">
-            <div class="m-collection-offer-banner__fallback">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Frame_212.png?v=1787047712"
-                alt="{{ collection.title }} offer"
-                loading="lazy"
-                width="800"
-                height="800"
-                class="m:w-full m:h-full m-collection-offer-banner__fallback-img"
-              >
-            </div>
-          </a>
-        {%- endif -%}
-      </div>
-      {%- assign icon_box_inserted = false -%}
-    {%- endif -%}
-    {%- if icon_box_inserted == false and banner_inserted == true -%}
-      {%- assign icon_box_inserted = true -%}
-      <div class="m-collection-inline-icon-box-row m:w-full">
-        {%- render 'collection-inline-icon-box' -%}
-      </div>
-    {%- endif -%}
   {%- endfor -%}
 </div>
-
 
             {% if paginate.pages > 1 %}
               <div class="m-collection--pagination m:text-center{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">

@@ -76,6 +76,10 @@
           "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
           "settings": {}
         },
+        "stackback_subscriptions_more_react_purchase_options_test_WABLnD": {
+          "type": "shopify://apps/stackback-subscriptions-more/blocks/react-purchase-options-test/019b4b9b-83ea-7131-957e-bce5135363da",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -179,6 +183,7 @@
         "variant_picker",
         "shipping_VBJFtx",
         "shiprocket_promise_promise_widget_C9Nhn9",
+        "stackback_subscriptions_more_react_purchase_options_test_WABLnD",
         "buy_buttons",
         "custom_liquid_3zNzzn",
         "custom_liquid_yWHDWj",

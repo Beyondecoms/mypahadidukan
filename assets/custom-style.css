@@ -84,6 +84,7 @@
 }
 
 /* lab-report styling */
+/* Lab Report Styling */
 .mpd-lab-reports {
   margin-top: 20px;
 }
@@ -96,163 +97,336 @@
 
 .mpd-lab-grid {
   display: flex;
-  gap: 10px;
-  overflow-x: auto; /* mobile scroll */
-  padding-bottom: 5px;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scrollbar-width: thin;
 }
 
 .mpd-lab-item {
-  min-width: 80px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  max-width: 150px;
+}
+
+
+.mpd-lab-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  margin: -4px 0 10px;
+  background: linear-gradient(
+    90deg,
+    #c4553c 0%, #c4553c 40%,
+    #e8a892 50%,
+    #c4553c 60%, #c4553c 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: mpd-subtitle-shimmer 4s ease-out 2s 1;
+  animation-fill-mode: backwards;
+}
+
+@keyframes mpd-subtitle-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -50% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mpd-lab-subtitle {
+    animation: none;
+    background: none;
+    color: #c4553c;
+  }
 }
 
 .mpd-icon {
+  position: relative;
   width: 70px;
   height: 70px;
-  background: #f4f4f4;
-  border-radius: 50px;
+  background: #f5f5f5;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  margin: 0 auto 5px;
-  transition: all 0.2s ease;
+  margin: 0 auto 8px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mpd-icon img {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+/* Signature element: always-visible link badge, ties interactivity to brand color */
+.mpd-icon::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 20px;
+  height: 20px;
+  background-color: #c4553c;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><line x1='7' y1='17' x2='17' y2='7'/><polyline points='7 7 17 7 17 17'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  transition: transform 0.2s ease;
 }
 
 .mpd-lab-item span {
+  display: block;
+  max-width: 150px;
+  margin: 0 auto;
   font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
-/* Hover (desktop enhancement) */
 .mpd-lab-item:hover .mpd-icon {
-  background: #eaeaea;
+  background: #f5f5f5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(196, 85, 60, 0.18);
 }
 
-/* Desktop layout */
-@media(min-width: 768px) {
+.mpd-lab-item:hover .mpd-icon::after {
+  transform: scale(1.15);
+}
+
+.mpd-lab-item:hover span {
+  text-decoration: underline;
+  text-decoration-color: #c4553c;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 768px) {
   .mpd-lab-grid {
     overflow: visible;
   }
 }
+/* - */
 
-/* MPD Vendor Badge */
-.mpd-vendor-badge {
-  text-decoration: none;
+/* collection page faq styling */
+.faq-section {
+  padding: 4rem 0;
+  background-color: var(--color-background, #faf8f5);
 }
 
-/* Minimal Style (Matches image: Vendor Name >) */
-.mpd-vendor-badge--minimal {
-  display: inline-flex;
+.faq-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.faq-heading {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-foreground, #2c2c2c);
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border, #e0dbd3);
+}
+
+.faq-item:first-of-type {
+  border-top: 1px solid var(--color-border, #e0dbd3);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #c67d3b;
-  margin: 4px 0 8px;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  width: 100%;
+  padding: 1.25rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-foreground, #2c2c2c);
+  gap: 1rem;
+  transition: color 0.2s ease;
 }
-.mpd-vendor-badge--minimal .mpd-vendor-name {
-  color: #c67d3b;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
+
+.faq-question:hover {
+  color: var(--color-button, #5a7a5a);
 }
-.mpd-vendor-badge--minimal .mpd-vendor-arrow {
-  color: #c67d3b;
-  display: inline-flex;
+
+.faq-question[aria-expanded="true"] {
+  color: var(--color-button, #5a7a5a);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
   transition: transform 0.2s ease;
 }
-.mpd-vendor-badge--minimal .mpd-vendor-arrow svg {
-  width: 14px;
-  height: 14px;
-}
-.mpd-vendor-badge--minimal:hover {
-  opacity: 0.85;
-}
-.mpd-vendor-badge--minimal:hover .mpd-vendor-arrow {
-  transform: translateX(3px);
+
+/* Show + by default, hide - */
+.faq-icon-minus {
+  display: none;
 }
 
-/* Card Style (Box Card with Icon) */
-.mpd-vendor-badge--card {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px 10px 10px;
-  border: 1.5px solid rgba(0, 0, 0, 0.10);
-  border-radius: 12px;
-  background: #ffffff;
-  margin: 4px 0 12px;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-  max-width: 260px;
-  width: fit-content;
-}
-.mpd-vendor-badge--card:hover {
-  border-color: rgba(0, 0, 0, 0.22);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
-}
-.mpd-vendor-badge--card .mpd-vendor-icon {
-  width: 36px;
-  height: 36px;
-  background: #f4f0e8;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #7a6040;
-}
-.mpd-vendor-badge--card .mpd-vendor-icon svg {
-  width: 17px;
-  height: 17px;
-}
-.mpd-vendor-badge--card .mpd-vendor-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  flex: 1;
-}
-.mpd-vendor-badge--card .mpd-vendor-eyebrow {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #999999;
-}
-.mpd-vendor-badge--card .mpd-vendor-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #222222;
-  line-height: 1.2;
-}
-.mpd-vendor-badge--card .mpd-vendor-arrow {
-  color: #bbbbbb;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  transition: color 0.18s ease, transform 0.18s ease;
-}
-.mpd-vendor-badge--card .mpd-vendor-arrow svg {
-  width: 14px;
-  height: 14px;
-}
-.mpd-vendor-badge--card:hover .mpd-vendor-arrow {
-  color: #777777;
-  transform: translateX(2px);
+/* When open: hide +, show - */
+.faq-question[aria-expanded="true"] .faq-icon-plus {
+  display: none;
 }
 
-/* Universal fallback: always cap arrow and icon SVG sizes */
-.mpd-vendor-arrow svg {
-  width: 14px !important;
-  height: 14px !important;
+.faq-question[aria-expanded="true"] .faq-icon-minus {
   display: block;
 }
-.mpd-vendor-icon svg {
-  max-width: 17px !important;
-  max-height: 17px !important;
-  display: block;
+
+.faq-answer {
+  overflow: hidden;
 }
+
+.faq-answer[hidden] {
+  display: none;
+}
+
+.faq-answer-inner {
+  padding: 0 0 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-foreground-secondary, #5c5c5c);
+}
+
+.faq-answer-inner p {
+  margin: 0 0 0.75rem;
+}
+
+.faq-answer-inner p:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------- */
+/*  Snippflow Status Indicators with Pulsing Animation */
+/*  Mobile-first, boxed for visibility under Add to Cart */
+/* --------------------------------------------------- */
+
+.sf-indicator {
+  --sf-indicator-size: 8px;
+  --sf-indicator-green: #0bbf0b;
+  --sf-indicator-red: #c51b1b;
+  --sf-indicator-orange: #db8719;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #e9fbe9; /* fallback for browsers without color-mix() */
+  background: color-mix(in srgb, var(--sf-indicator-green) 10%, white);
+  border: 1.5px solid var(--sf-indicator-green);
+}
+
+.sf-indicator:has(.status-red) {
+  background: #fbe9e9;
+  background: color-mix(in srgb, var(--sf-indicator-red) 10%, white);
+  border-color: var(--sf-indicator-red);
+}
+
+.sf-indicator:has(.status-orange) {
+  background: #fdf1e2;
+  background: color-mix(in srgb, var(--sf-indicator-orange) 10%, white);
+  border-color: var(--sf-indicator-orange);
+}
+
+.sf-indicator .status-dot {
+  flex-shrink: 0;
+  width: var(--sf-indicator-size);
+  height: var(--sf-indicator-size);
+  border-radius: 50%;
+  position: relative;
+  margin-top: 5px;
+}
+
+.sf-indicator .status-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #231F20; /* brand Ink token, for contrast against any of the three tints */
+}
+
+.sf-indicator .status-dot::before,
+.sf-indicator .status-dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sf-indicator-pulse 2s infinite linear;
+  opacity: 0.3;
+}
+
+.sf-indicator .status-dot::after {
+  animation-delay: 1s;
+}
+
+@keyframes sf-indicator-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+.status-green { background-color: var(--sf-indicator-green); }
+.status-red { background-color: var(--sf-indicator-red); }
+.status-orange { background-color: var(--sf-indicator-orange); }
+
+@media (min-width: 750px) {
+  .sf-indicator {
+    --sf-indicator-size: 9px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sf-indicator .status-dot {
+    margin-top: 0;
+  }
+
+  .sf-indicator .status-text {
+    font-size: 14px;
+  }
+}
+/* shipping status end */
+
+/* sbt-consumption-message styling */
+.sbt-consumption-message {
+  margin-top: 20px;
+  display: inline-block;
+  font-size: 16px;
+  letter-spacing: 10%;
+  font-weight: 600;
+  color: #c4553c;
+  background: rgba(196, 85, 60, 0.1);
+  padding: 6px 16px;
+  border-radius: 10px;
+}
+
+/* sbt-consumption-message styling ends */
