@@ -33,21 +33,18 @@
   #m-section--{{ section.id }} .shop-region__column{
     flex:0 0 30%;
   }
-  .shop-region__card{
-    height: 50% !important;
-  padding: 0 !important;
+  #m-section--{{ section.id }} .shop-region__card{
+    height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
-  .shop-region__grid{
+  #m-section--{{ section.id }} .shop-region__grid{
     gap: 8px !important;
   }
-  .shop-region__card{
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  }
-  .m-icon-box__icon{
+  #m-section--{{ section.id }} .m-icon-box__icon{
     width: 120px !important;
-    
   }
 }
 {% endif %}

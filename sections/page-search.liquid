@@ -7,7 +7,14 @@
   endif
 %}
 
-<section class="facest-filters-section m-search mpd-search-page" data-section-type="page-search" data-section-id="{{ section.id }}">
+<section class="facest-filters-section m-search mpd-search-page" 
+  data-section-type="page-search" 
+  data-section-id="{{ section.id }}"
+  data-search-by-tag="{{ settings.search_by_tag }}"
+  data-search-by-body="{{ settings.search_by_body }}"
+  data-unavailable-products-option="{{ settings.search_unavailable_products | downcase }}"
+  data-predictive-search-url="{{ routes.predictive_search_url }}"
+>
   {% render 'customer-challenge-style' %}
 
   <div class="{{ container }}">

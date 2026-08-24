@@ -180,7 +180,7 @@
           {% endif %}
           {{ input_dataset }}
         >
-        <label for="{{ input_id }}" class="rich-variant-card" data-option-type="{{ picker_type }}">
+        <label for="{{ input_id }}" class="rich-variant-card{% if product.vendor != 'My Pahadi Dukan' %} rich-variant-card--simple{% endif %}" data-option-type="{{ picker_type }}">
           {%- if card_show_checkmark and value.selected -%}
             <span class="rich-variant-card__checkmark">
               <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
@@ -190,34 +190,40 @@
             </span>
           {%- endif -%}
 
-          {%- if card_show_image and variant_image != blank -%}
-            <div class="rich-variant-card__image-wrapper">
-              <img
-                src="{{ variant_image | image_url: width: card_image_size }}"
-                alt="{{ value | escape }}"
-                loading="lazy"
-                width="{{ card_image_size }}"
-                height="{{ card_image_size }}"
-                class="rich-variant-card__image"
-              >
-            </div>
+          {%- if product.vendor == 'My Pahadi Dukan' -%}
+            {%- if card_show_image and variant_image != blank -%}
+              <div class="rich-variant-card__image-wrapper">
+                <img
+                  src="{{ variant_image | image_url: width: card_image_size }}"
+                  alt="{{ value | escape }}"
+                  loading="lazy"
+                  width="{{ card_image_size }}"
+                  height="{{ card_image_size }}"
+                  class="rich-variant-card__image"
+                >
+              </div>
+            {%- endif -%}
           {%- endif -%}
 
           <div class="rich-variant-card__content">
             <span class="rich-variant-card__title">{{ value }}</span>
             
-            {%- if card_show_discount and has_discount -%}
-              <span class="rich-variant-card__discount">Save {{ discount_percent }}%</span>
+            {%- if product.vendor == 'My Pahadi Dukan' -%}
+              {%- if card_show_discount and has_discount -%}
+                <span class="rich-variant-card__discount">Save {{ discount_percent }}%</span>
+              {%- endif -%}
             {%- endif -%}
 
             <div class="rich-variant-card__pricing">
               <span class="rich-variant-card__price">
                 {{ resolved_variant.price | money | replace: '.00', '' }}
               </span>
-              {%- if card_show_compare_price and has_discount -%}
-                <span class="rich-variant-card__compare-price">
-                  {{ resolved_variant.compare_at_price | money | replace: '.00', '' }}
-                </span>
+              {%- if product.vendor == 'My Pahadi Dukan' -%}
+                {%- if card_show_compare_price and has_discount -%}
+                  <span class="rich-variant-card__compare-price">
+                    {{ resolved_variant.compare_at_price | money | replace: '.00', '' }}
+                  </span>
+                {%- endif -%}
               {%- endif -%}
             </div>
           </div>
@@ -463,6 +469,29 @@
             box-sizing: border-box !important;
           }
 
+          /* Simple Design for other vendors */
+          .rich-variant-card--simple {
+            min-height: 94px !important;
+            padding: 16px 20px !important;
+            align-items: flex-start !important;
+          }
+          .rich-variant-card--simple .rich-variant-card__content {
+            align-items: flex-start !important;
+            text-align: left !important;
+          }
+          .rich-variant-card--simple .rich-variant-card__title {
+            width: 100% !important;
+            border-bottom: 1px dotted #ccc !important;
+            padding-bottom: 6px !important;
+            margin-bottom: 6px !important;
+            text-align: left !important;
+          }
+          .rich-variant-card--simple .rich-variant-card__pricing {
+            justify-content: flex-start !important;
+            margin-top: 0 !important;
+            width: 100% !important;
+          }
+
           /* Selected state border */
           .m-product-option--node__selected .rich-variant-card,
           .m-product-option__input:checked + .rich-variant-card {
@@ -624,6 +653,31 @@
               font-size: 13px !important;
               color: #999 !important;
               text-decoration: line-through !important;
+            }
+
+            /* Mobile styles for Simple design */
+            .rich-variant-card--simple {
+              min-height: 80px !important;
+              padding: 12px !important;
+              align-items: flex-start !important;
+            }
+            .rich-variant-card--simple .rich-variant-card__content {
+              align-items: flex-start !important;
+              text-align: left !important;
+            }
+            .rich-variant-card--simple .rich-variant-card__title {
+              width: 100% !important;
+              border-bottom: 1px dotted #ccc !important;
+              padding-bottom: 4px !important;
+              margin-bottom: 4px !important;
+              text-align: left !important;
+              -webkit-line-clamp: unset !important;
+              display: block !important;
+            }
+            .rich-variant-card--simple .rich-variant-card__pricing {
+              justify-content: flex-start !important;
+              margin-top: 0 !important;
+              width: 100% !important;
             }
           }
         </style>

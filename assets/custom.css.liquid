@@ -150,7 +150,8 @@ h2.m-section__heading.h3.m-scroll-trigger.animate--fade-in-up{
 .m-header__mobile-right.m\:w-3\/12.m\:flex.m\:flex-1.m\:justify-end{
   justify-content: space-around;
 }
-body.template-product .m-price-item--sale{
+/* Scoped to main product block only — does NOT affect Recently Viewed / product-card-4 */
+body.template-product .main-product__block .m-price-item--sale{
   font-size: 24px !important;
 }
 span.m-product-card__tag-name.yfuykfkufyuk.m-product-tag.m-product-tag--sale.m-gradient.m-color-badge-sale{
@@ -1035,6 +1036,10 @@ a.m-menu__link.m-menu__link--main.m\:uppercase {
     box-shadow: none;
 }
 @media screen and (max-width: 767px) {
+  .m-collection-products{
+            display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
    .mobilw3 .m-mixed-layout--mobile-scroll .m-mixed-layout__inner {
         --slider-grid: auto / auto-flow var(--mobile-column-width, 33vw);
         display: grid;
@@ -1193,7 +1198,8 @@ shopify-accelerated-checkout {
 }
 
 /* 💰 SALE PRICE (Main Price) */
-.template-product .m-price-item--sale {
+/* Scoped to main product block only — does NOT affect Recently Viewed / product-card-4 */
+.template-product .main-product__block .m-price-item--sale {
   font-size: 28px !important;
   font-weight: 900;
   letter-spacing: 0.5px;
@@ -1240,7 +1246,8 @@ shopify-accelerated-checkout {
 
 /* 📱 Mobile Optimization */
 @media (max-width: 768px) {
-  .m-price-item--sale {
+  /* Scoped to main product block only — product cards keep their card-level font-size */
+  .main-product__block .m-price-item--sale {
     font-size: 22px !important;
   }
 
@@ -1507,6 +1514,14 @@ shopify-accelerated-checkout {
   color: var(--qv-primary) !important;
   letter-spacing: -0.03em;
 }
+
+a.m-product-card__link.m\:block.m\:w-full.restock-rocket-collection-rendered [style*='--aspect-ratio']:before{
+padding-top: calc(100% / (0.0001 + var(--aspect-ratio, 16 / 3)));
+}
+.template-collection a.m-product-card__link.m\:block.m\:w-full.restock-rocket-collection-rendered [style*='--aspect-ratio']:before{
+padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
+}
+
 
 .m-product-quickview--info .main-product__block+.main-product__block{
  margin-top: 20px !important; 
@@ -1947,33 +1962,83 @@ shopify-accelerated-checkout {
 }
 
 #MainProduct-quick-view__content .m-product-option--node,
-.m-product-option--node{
-      background: #fff;
-    border-radius: 5px;
-    padding: 0;
-    max-width: 26%;
-    width: 26%;
-    cursor: pointer;
-    position: relative;
-    transition: all .2s ease-in-out;
-    height: 100%;
-    height: 110px;
-            max-width: 35% !important;
-        width: 30% !important;
-       
-}
-#MainProduct-quick-view__content .m-product-option--content.m\:inline-flex.m\:flex-wrap{
- row-gap: 4.4rem !important;
- margin-left: 1rem;
- flex-wrap: nowrap;
+.m-product-option--node {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 8px !important;
+  max-width: 45% !important;
+  width: 42% !important;
+  min-width: 130px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: all 0.2s ease-in-out !important;
+  height: auto !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
 }
 
-.m-product-quickview--info .m-product-option--node__label{
-         min-height: 115px !important;
+#MainProduct-quick-view__content .m-product-option--node:hover,
+.m-product-option--node:hover {
+  border-color: var(--qv-primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
 
-.m-product-quickview--info h1.m-product-title{
-   font-size: 17px !important;
+#MainProduct-quick-view__content .m-product-option--node.m-product-option--node-active,
+.m-product-option--node.active,
+.m-product-option--node[data-selected="true"] {
+  border-color: var(--qv-accent) !important;
+  background-color: #fdf2f0 !important;
+}
+
+#MainProduct-quick-view__content .m-product-option--content.m\:inline-flex.m\:flex-wrap {
+  row-gap: 12px !important;
+  margin-left: 0 !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: flex-start !important;
+  display: flex !important;
+}
+
+.m-product-quickview--info .m-product-option--node__label {
+  min-height: auto !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 0 !important;
+}
+
+.m-product-quickview--info .m-product-option--node__pricing .price,
+.m-product-quickview--info .m-product-option--node__pricing .compare-price {
+  white-space: nowrap !important;
+  display: inline-block !important;
+}
+
+.m-product-quickview--info .m-product-option--node__pricing .price {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: var(--qv-primary) !important;
+}
+
+.m-product-quickview--info .m-product-option--node__pricing .compare-price {
+  font-size: 11px !important;
+  color: #999999 !important;
+  text-decoration: line-through !important;
+}
+
+.m-product-quickview--info .m-product-option--node__pricing .discount {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #e8513f !important;
+  background-color: #fde8e5 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  margin-top: 2px !important;
+}
+
+.m-product-quickview--info h1.m-product-title {
+  font-size: 17px !important;
 }
 
 
@@ -2639,6 +2704,54 @@ div#Inventory-product-quickview{
     min-height: 48px !important;
     margin: 0 !important;
   }
+
+  /* Scoped Quick View button alignment on desktop */
+  .m-product-quickview--info .m-product-form--wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .m-product-quickview--info .m-product-form--input {
+    flex: 0 0 90px !important;
+    width: 90px !important;
+    margin: 0 !important;
+  }
+
+  .m-product-quickview--info .m-quantity {
+    height: 48px !important;
+    margin: 0 !important;
+  }
+
+  .m-product-quickview--info .m-add-to-cart {
+    flex: 1 !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 16px !important;
+  }
+
+  .m-product-quickview--info .m-product-dynamic-checkout {
+    flex: 1 !important;
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+  .m-product-quickview--info .shopify-payment-button__button--unbranded,
+  .m-product-quickview--info #gokwik-buy-now {
+    height: 48px !important;
+    min-height: 48px !important;
+    margin-top: 0 !important; /* Remove top margin on desktop */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 16px !important;
+  }
 }
 
 /* Custom Product Page Important Information Link & Modal */
@@ -2782,12 +2895,17 @@ div#Inventory-product-quickview{
   order: 2 !important;
   width: 100% !important;
 }
+m-recently-viewed [style*='--aspect-ratio']:before,
+product-recommendations [style*='--aspect-ratio']:before{
+padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio, 6 / 5))));
+    
+}
 
 .tbspn-variant-text {
   order: 3 !important;
   font-size: 14px;
-  color: #666;
-  font-weight: normal;
+  color: #000000ff;
+  font-weight: 900;
   display: flex !important;
   align-items: center;
   justify-content: center !important;
@@ -2926,5 +3044,101 @@ div#Inventory-product-quickview{
     flex-basis: 100%;
     order: 10;
     margin-top: 8px;
+  }
+}
+
+/* Wishlist heart state styling */
+.m-wishlist-button .m-tooltip-icon--active {
+  display: none !important;
+}
+
+.m-wishlist-button.added-to-wishlist .m-tooltip-icon,
+.m-wishlist-button.active .m-tooltip-icon,
+.m-wishlist-button.is-active .m-tooltip-icon {
+  display: none !important;
+}
+
+.m-wishlist-button.added-to-wishlist .m-tooltip-icon--active,
+.m-wishlist-button.active .m-tooltip-icon--active,
+.m-wishlist-button.is-active .m-tooltip-icon--active {
+  display: inline-flex !important;
+}
+
+/* ============================================================
+   Collection Offer Banner — slots into the product grid
+   as a single card-sized item
+   ============================================================ */
+.m-collection-offer-banner {
+  /* inherits m:w-6/12 md:m:w-4/12 from m-product-item — no width override needed */
+}
+
+.m-collection-offer-banner__link {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  border-radius: 20px;       /* match product-card-4 border-radius */
+  overflow: hidden;
+  border: 1px solid #d1d1d1; /* match product-card-4 border */
+  box-shadow: 0 0 1px 1px #f3f3f3;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #ffffff;
+}
+
+.m-collection-offer-banner__link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Image wrapper — full width, natural height so image is never clipped */
+.m-collection-offer-banner__img-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+/* The actual <img> rendered by image_tag */
+.m-collection-offer-banner__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* show the entire image — no cropping */
+  display: block;
+}
+
+/* Fallback image (Frame_212.png) */
+.m-collection-offer-banner__fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.m-collection-offer-banner__fallback-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* show the entire image — no cropping */
+  display: block;
+}
+
+/* Mobile — match the 2-column card layout */
+@media screen and (max-width: 767px) {
+  .m-collection-offer-banner__link {
+    border-radius: 10px; /* match product-card-4 mobile border-radius */
+  }
+
+  .m-collection-products .m-product-item:not(.m-collection-inline-icon-box-row) {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .m-collection-products .m-collection-inline-icon-box-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box !important;
+    grid-column: 1 / -1 !important;
   }
 }

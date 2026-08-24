@@ -15,6 +15,7 @@
   let ALL_ARTICLES = [];
   let debounceTimer = null;
   let isCatalogLoaded = false;
+  let activeSearchId = 0;
 
   // Normalization helper (diacritics removal, lowercased, punctuation-free)
   function normalizeString(str) {
@@ -124,7 +125,7 @@
     });
   }
 
-  // Score product based on matching words (title, tags, product_type, vendor, handle)
+  // Score product based on matching words (title, tags, product_type, vendor, handle, description)
   function scoreProduct(p, term) {
     if (!isProductAvailable(p)) {
       return -1;
@@ -144,48 +145,58 @@
     const typeNorm = normalizeString(p.product_type);
     const vendorNorm = normalizeString(p.vendor);
     const handleNorm = normalizeString(p.handle);
+    const descNorm = normalizeString(p.body_html || p.description || "");
 
-    const haystack = `${titleNorm} ${tagsNorm} ${typeNorm} ${vendorNorm} ${handleNorm}`;
-    const targetWords = haystack.split(" ").filter(Boolean);
+    const haystack = `${titleNorm} ${tagsNorm} ${typeNorm} ${vendorNorm} ${handleNorm} ${descNorm}`;
 
-    // Verify at least one query word is present somewhere in the normalized target text (partial/substring match)
-    const matchesAny = queryWords.some(qWord =>
-      haystack.includes(qWord)
-    );
+    // Verify at least one query word is present somewhere in the normalized target text
+    const matchesAny = queryWords.some(qWord => haystack.includes(qWord));
     if (!matchesAny) return -1;
 
-    let score = 0;
-
-    // Count how many query words matched to rank higher match counts
-    let matchCount = 0;
-    queryWords.forEach(qWord => {
-      if (haystack.includes(qWord)) {
-        matchCount++;
-      }
-    });
-
-    // Boost score significantly based on the number of matched query words
-    score += matchCount * 100;
-
-    // Direct match boosts
+    // Priority 1: Exact title match or very strong title match (starts with)
     if (titleNorm === normQuery) {
-      score += 1000;
-    } else if (titleNorm.startsWith(normQuery)) {
-      score += 500;
-    } else if (titleNorm.includes(normQuery)) {
-      score += 300;
+      return 100000;
+    }
+    if (titleNorm.startsWith(normQuery)) {
+      return 50000 + (1000 - titleNorm.length);
     }
 
-    // Individual word matches weights
-    queryWords.forEach(word => {
-      if (titleNorm.includes(word)) score += 50;
-      if (tagsNorm.includes(word)) score += 30;
-      if (typeNorm.includes(word)) score += 20;
-      if (vendorNorm.includes(word)) score += 10;
-      if (handleNorm.includes(word)) score += 5;
-    });
+    // Priority 2: Title contains exact query string
+    if (titleNorm.includes(normQuery)) {
+      return 10000 + (1000 - titleNorm.length);
+    }
 
-    return score;
+    // Priority 3: Title contains individual/partial terms
+    let matchedTitleWords = 0;
+    queryWords.forEach(word => {
+      if (titleNorm.includes(word)) matchedTitleWords++;
+    });
+    if (matchedTitleWords > 0) {
+      return 1000 * matchedTitleWords + (100 - titleNorm.length);
+    }
+
+    // Priority 4: Matching through tags, vendor, product type, handle
+    let metadataScore = 0;
+    queryWords.forEach(word => {
+      if (tagsNorm.includes(word)) metadataScore += 50;
+      if (vendorNorm.includes(word)) metadataScore += 30;
+      if (typeNorm.includes(word)) metadataScore += 20;
+      if (handleNorm.includes(word)) metadataScore += 10;
+    });
+    if (metadataScore > 0) {
+      return 100 + metadataScore;
+    }
+
+    // Priority 5: Weak/related matches (e.g. only description)
+    let descScore = 0;
+    queryWords.forEach(word => {
+      if (descNorm.includes(word)) descScore += 5;
+    });
+    if (descScore > 0) {
+      return 10 + descScore;
+    }
+
+    return 1;
   }
 
   // Score articles based on matching words (title, tags, body_html, blog_title)
@@ -319,7 +330,7 @@
   }
 
   // Search execution pipeline
-  function runSearch(term) {
+  async function runSearch(term) {
     term = (term || "").trim();
 
     // Update main heading
@@ -348,11 +359,80 @@
       return;
     }
 
+    activeSearchId++;
+    const currentSearchId = activeSearchId;
+
+    let predictiveHandles = [];
+
+    // Fetch predictive search results to align relevance/ordering
+    const searchSection = document.querySelector('[data-section-type="page-search"]');
+    if (searchSection) {
+      const searchByTag = searchSection.dataset.searchByTag === "true";
+      const searchByBody = searchSection.dataset.searchByBody === "true";
+      const unavailableProductsOption = searchSection.dataset.unavailableProductsOption || "last";
+      const predictiveSearchUrl = searchSection.dataset.predictiveSearchUrl || "/search/suggest";
+
+      let searchFields = "title,product_type,vendor,variants.sku,variants.title";
+      if (searchByTag) searchFields += ",body";
+      if (searchByBody) searchFields += ",tag";
+
+      const searchURL = `${predictiveSearchUrl}?q=${encodeURIComponent(term)}&resources[options][unavailable_products]=${unavailableProductsOption}&resources[options][fields]=${searchFields}&section_id=predictive-search`;
+
+      try {
+        const response = await fetch(searchURL);
+        if (response.ok) {
+          const htmlText = await response.text();
+          // Check for race condition
+          if (currentSearchId !== activeSearchId) return;
+
+          const doc = new DOMParser().parseFromString(htmlText, "text/html");
+          const productLinks = doc.querySelectorAll(".m-search-result__products-list a");
+          productLinks.forEach(link => {
+            const href = link.getAttribute("href");
+            if (href) {
+              const handleMatch = href.match(/\/products\/([^\/\?]+)/);
+              if (handleMatch) {
+                predictiveHandles.push(handleMatch[1]);
+              }
+            }
+          });
+        }
+      } catch (err) {
+        console.warn("[SearchEngine] Failed to fetch predictive search results:", err);
+      }
+    }
+
     // Filter and score products
     const scoredProducts = ALL_PRODUCTS
-      .map(p => ({ p, score: scoreProduct(p, term) }))
-      .filter(x => x.score > 0)
-      .sort((a, b) => b.score - a.score);
+      .map(p => {
+        let score = scoreProduct(p, term);
+        // Force inclusion if product was returned in predictive search
+        if (predictiveHandles.includes(p.handle) && score <= 0) {
+          score = 1;
+        }
+        return { p, score };
+      })
+      .filter(x => x.score > 0);
+
+    // Sort products: prioritize predictive search order, fallback to score
+    scoredProducts.sort((a, b) => {
+      const indexA = predictiveHandles.indexOf(a.p.handle);
+      const indexB = predictiveHandles.indexOf(b.p.handle);
+
+      const inPredictiveA = indexA !== -1;
+      const inPredictiveB = indexB !== -1;
+
+      if (inPredictiveA && inPredictiveB) {
+        return indexA - indexB;
+      }
+      if (inPredictiveA) {
+        return -1;
+      }
+      if (inPredictiveB) {
+        return 1;
+      }
+      return b.score - a.score;
+    });
 
     // Filter and score articles
     const scoredArticles = ALL_ARTICLES

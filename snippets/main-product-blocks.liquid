@@ -189,7 +189,7 @@
         </div>
 
 {% comment %} Lab-report rendering logic {% endcomment %}
-        {% if product.metafields.custom.lab_report_link.value.size > 0 %}
+        {% comment %} {% if product.metafields.custom.lab_report_link.value.size > 0 %}
           <div class="mpd-lab-reports">
             <p class="mpd-lab-title">Lab Report(s)</p>
             <div class="mpd-lab-grid">
@@ -203,7 +203,7 @@
               {% endfor %}
             </div>
           </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
 {% comment %} Lab-report rendering logic end {% endcomment %}
         
  
@@ -235,7 +235,7 @@
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
     </span>
-    <span class="warning-text">Important Information</span>
+    <span class="warning-text">Important Information Before You Buy</span>
     <span class="chevron-wrapper">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"></polyline>
@@ -247,9 +247,9 @@
     <div class="important-info-modal-container" role="document">
       <button type="button" class="important-info-modal-close" aria-label="Close modal">&times;</button>
       <div class="important-info-modal-content">
-        <h2 id="important-info-modal-title" class="important-info-modal-title">Important Information</h2>
+        <h2 id="important-info-modal-title" class="important-info-modal-title">Important Information Before You Buy</h2>
         <div class="important-info-modal-body">
-          Not recommended for pregnant or breastfeeding women, individuals with low blood pressure, or those with a vitamin C allergy or vitamin K deficiency.
+<p>{{ product.metafields.custom.important_information }}</p>
         </div>
       </div>
     </div>
@@ -591,123 +591,26 @@
 
       {% when 'Icons' %}
         {%- liquid
-          assign default_icon1 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_2.png?v=1785339625'
-          assign default_icon2 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_3.png?v=1785339626'
-          assign default_icon3 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_4.png?v=1785339626'
-          assign default_icon4 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_6.png?v=1785339626'
-          assign default_icon5 = 'https://cdn.shopify.com/s/files/1/0746/0952/5042/files/Mask_group_6.png?v=1785339626'
-          
-          assign title1 = block.settings.heading1
-          if title1 == 'Inflammation' or title1 == 'Icon 1' or title1 == blank
-            assign title1 = 'Boosts Immunity Naturally'
-          endif
-
-          assign title2 = block.settings.heading2
-          if title2 == 'Skin Care' or title2 == 'Icon 2' or title2 == blank
-            assign title2 = 'Supports Digestive Health'
-          endif
-
-          assign title3 = block.settings.heading3
-          if title3 == 'Immunity' or title3 == 'Icon 3' or title3 == blank
-            assign title3 = 'Enhances Skin & Hair'
-          endif
-
-          assign title4 = block.settings.heading4
-          if title4 == 'Heart Health' or title4 == 'Icon 4' or title4 == blank
-            assign title4 = 'Rare Omega-7 Source'
-          endif
-
-          assign title5 = block.settings.heading5
-          if title5 == 'Icon 5' or title5 == blank
-            assign title5 = 'Daily Energy & Antioxidant'
-          endif
-
-          assign icon1_img = default_icon1
-          if block.settings.icon1 != blank
-            assign icon1_url = block.settings.icon1 | image_url: width: 96
-            unless icon1_url contains 'icon' or icon1_url contains 'green' or block.settings.heading1 == 'Inflammation'
-              assign icon1_img = icon1_url
-            endunless
-          endif
-
-          assign icon2_img = default_icon2
-          if block.settings.icon2 != blank
-            assign icon2_url = block.settings.icon2 | image_url: width: 96
-            unless icon2_url contains 'icon' or icon2_url contains 'green' or block.settings.heading2 == 'Skin Care'
-              assign icon2_img = icon2_url
-            endunless
-          endif
-
-          assign icon3_img = default_icon3
-          if block.settings.icon3 != blank
-            assign icon3_url = block.settings.icon3 | image_url: width: 96
-            unless icon3_url contains 'icon' or icon3_url contains 'green' or block.settings.heading3 == 'Immunity'
-              assign icon3_img = icon3_url
-            endunless
-          endif
-
-          assign icon4_img = default_icon4
-          if block.settings.icon4 != blank
-            assign icon4_url = block.settings.icon4 | image_url: width: 96
-            unless icon4_url contains 'icon' or icon4_url contains 'green' or block.settings.heading4 == 'Heart Health'
-              assign icon4_img = icon4_url
-            endunless
-          endif
-
-          assign icon5_img = default_icon5
-          if block.settings.icon5 != blank
-            assign icon5_url = block.settings.icon5 | image_url: width: 96
-            unless icon5_url contains 'icon' or icon5_url contains 'green' or block.settings.heading5 == 'Icon 5'
-              assign icon5_img = icon5_url
-            endunless
-          endif
+          assign feature_icons = product.metafields.custom.product_feature_icons.value
+          assign feature_texts = product.metafields.custom.product_feature_icons_text.value
         -%}
-        <div class="product-benefits">
-          {% if title1 != blank %}
-            <div class="product-benefits__item">
-              <div class="product-benefits__icon-wrapper">
-                <img src="{{ icon1_img }}" alt="{{ title1 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
-              </div>
-              <span class="product-benefits__title">{{ title1 }}</span>
-            </div>
-          {% endif %}
-
-          {% if title2 != blank %}
-            <div class="product-benefits__item">
-              <div class="product-benefits__icon-wrapper">
-                <img src="{{ icon2_img }}" alt="{{ title2 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
-              </div>
-              <span class="product-benefits__title">{{ title2 }}</span>
-            </div>
-          {% endif %}
-
-          {% if title3 != blank %}
-            <div class="product-benefits__item">
-              <div class="product-benefits__icon-wrapper">
-                <img src="{{ icon3_img }}" alt="{{ title3 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
-              </div>
-              <span class="product-benefits__title">{{ title3 }}</span>
-            </div>
-          {% endif %}
-
-          {% if title4 != blank %}
-            <div class="product-benefits__item">
-              <div class="product-benefits__icon-wrapper">
-                <img src="{{ icon4_img }}" alt="{{ title4 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
-              </div>
-              <span class="product-benefits__title">{{ title4 }}</span>
-            </div>
-          {% endif %}
-
-          {% if title5 != blank %}
-            <div class="product-benefits__item">
-              <div class="product-benefits__icon-wrapper">
-                <img src="{{ icon5_img }}" alt="{{ title5 | escape }}" class="product-benefits__icon" width="48" height="48" loading="lazy">
-              </div>
-              <span class="product-benefits__title">{{ title5 }}</span>
-            </div>
-          {% endif %}
-        </div>
+        {% if feature_icons != blank and feature_texts != blank %}
+          <div class="product-benefits">
+            {% for icon in feature_icons %}
+              {% liquid
+                assign feature_text = feature_texts[forloop.index0]
+              %}
+              {% if icon != blank and feature_text != blank %}
+                <div class="product-benefits__item">
+                  <div class="product-benefits__icon-wrapper">
+                    {{ icon | image_url: width: 96 | image_tag: class: 'product-benefits__icon', width: 48, height: 48, loading: 'lazy', alt: feature_text }}
+                  </div>
+                  <span class="product-benefits__title">{{ feature_text }}</span>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
 
         <style>
           .product-benefits {
@@ -840,7 +743,12 @@
           </div>
         </m-visitiors-counter>
         <script src="{{ 'visitors-counter.js' | asset_url }}" defer="defer"></script>
-      {%- when 'variant_picker' -%}
+     
+     
+     
+     
+     
+        {%- when 'variant_picker' -%}
         {% render 'product-variant-picker',
           product: product,
           section: section,
@@ -1489,6 +1397,11 @@ el.textContent = current;
         {%- endif -%}
       {%- when 'lab_certificate' -%}
         {% render 'product-lab-certificate', block: block, product: product %}
+      {%- when 'certificate' -%}
+        {% render 'product-certificate',
+          product: product,
+          block: block
+        %}
       {%- when 'product_accordion' -%}
         {% render 'product-information-accordion', block: block, product: product %}
       {%- when 'ingredients_labels' -%}
@@ -1851,74 +1764,76 @@ el.textContent = current;
           </div>
         </div>
     {%- when 'ingredients_highlight' -%}
-      <div class="m-product-ingredients-block" id="IngredientsBlock-{{ block.id }}">
-        {% if block.settings.heading != blank %}
-          <h3 class="m-product-ingredients-block__title">{{ block.settings.heading }}</h3>
-        {% endif %}
-        
-        <div class="m-product-ingredients-block__container">
-          <!-- Left side: Image with interactive tag badges -->
-          <div class="m-product-ingredients-block__image-wrapper">
-            {% if block.settings.image != blank %}
-              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'm-product-ingredients-block__img' }}
-            {% else %}
-              <div class="m-product-ingredients-block__placeholder">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% liquid
+        assign ingredients_image = product.metafields.custom.ingredients_image.value
+        assign ingredients_headings = product.metafields.custom.ingredients_headings.value
+        assign ingredients_descriptions = product.metafields.custom.ingredients_description.value
+
+        assign top_positions = "35,20,75,70" | split: ","
+        assign left_positions = "15,65,10,75" | split: ","
+      %}
+      {% if ingredients_headings != blank and ingredients_headings.size > 0 %}
+        <div class="m-product-ingredients-block" id="IngredientsBlock-{{ block.id }}">
+          {% if block.settings.heading != blank %}
+            <h3 class="m-product-ingredients-block__title">{{ block.settings.heading }}</h3>
+          {% endif %}
+          
+          <div class="m-product-ingredients-block__container">
+            <!-- Left side: Image with interactive tag badges -->
+            <div class="m-product-ingredients-block__image-wrapper">
+              {% if ingredients_image != blank %}
+                {{ ingredients_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'm-product-ingredients-block__img' }}
+              {% endif %}
+
+              <!-- Tags overlay -->
+              <div class="m-product-ingredients-block__tags">
+                {% assign tag_index = 0 %}
+                {% for heading in ingredients_headings %}
+                  {% if heading != blank %}
+                    {% liquid
+                      assign top_val = top_positions[tag_index] | default: 50
+                      assign left_val = left_positions[tag_index] | default: 50
+                      assign desc_val = ingredients_descriptions[forloop.index0]
+                      assign tag_index = tag_index | plus: 1
+                    %}
+                    <button 
+                      type="button" 
+                      class="m-product-ingredients-tag{% if tag_index == 1 %} is-active{% endif %}"
+                      style="top: {{ top_val }}%; left: {{ left_val }}%;"
+                      data-target="item-{{ block.id }}-{{ forloop.index }}"
+                      data-title="{{ heading | escape }}"
+                      data-desc="{{ desc_val | escape }}"
+                      aria-label="{{ heading }}"
+                    >
+                      <span>{{ heading }}</span>
+                      <span class="m-tag-arrow"></span>
+                    </button>
+                  {% endif %}
+                {% endfor %}
               </div>
-            {% endif %}
+            </div>
 
-            <!-- Tags overlay -->
-            <div class="m-product-ingredients-block__tags">
-              {% for i in (1..4) %}
-                {% liquid
-                  assign title_key = 'item_' | append: i | append: '_title'
-                  assign desc_key = 'item_' | append: i | append: '_desc'
-                  assign top_key = 'item_' | append: i | append: '_top'
-                  assign left_key = 'item_' | append: i | append: '_left'
-
-                  assign title_val = block.settings[title_key]
-                  assign desc_val = block.settings[desc_key]
-                  assign top_val = block.settings[top_key]
-                  assign left_val = block.settings[left_key]
-                %}
-
-                {% if title_val != blank %}
-                  <button 
-                    type="button" 
-                    class="m-product-ingredients-tag{% if forloop.first %} is-active{% endif %}"
-                    style="top: {{ top_val }}%; left: {{ left_val }}%;"
-                    data-target="item-{{ block.id }}-{{ i }}"
-                    data-title="{{ title_val | escape }}"
-                    data-desc="{{ desc_val | escape }}"
-                    aria-label="{{ title_val }}"
-                  >
-                    <span>{{ title_val }}</span>
-                    <span class="m-tag-arrow"></span>
-                  </button>
+            <!-- Right side: Content details -->
+            <div class="m-product-ingredients-block__content">
+              {% assign content_index = 0 %}
+              {% for heading in ingredients_headings %}
+                {% if heading != blank %}
+                  {% liquid
+                    assign desc_val = ingredients_descriptions[forloop.index0]
+                    assign content_index = content_index | plus: 1
+                  %}
+                  <div class="m-product-ingredients-item{% if content_index == 1 %} is-active{% endif %}" id="item-{{ block.id }}-{{ forloop.index }}">
+                    <h4 class="m-product-ingredients-item__title">{{ heading }}</h4>
+                    {% if desc_val != blank %}
+                      <div class="m-product-ingredients-item__desc">{{ desc_val }}</div>
+                    {% endif %}
+                  </div>
                 {% endif %}
               {% endfor %}
             </div>
           </div>
-
-          <!-- Right side: Content details -->
-          <div class="m-product-ingredients-block__content">
-            {% for i in (1..4) %}
-              {% liquid
-                assign title_key = 'item_' | append: i | append: '_title'
-                assign desc_key = 'item_' | append: i | append: '_desc'
-                assign title_val = block.settings[title_key]
-                assign desc_val = block.settings[desc_key]
-              %}
-              {% if title_val != blank %}
-                <div class="m-product-ingredients-item{% if forloop.first %} is-active{% endif %}" id="item-{{ block.id }}-{{ i }}">
-                  <h4 class="m-product-ingredients-item__title">{{ title_val }}</h4>
-                  <div class="m-product-ingredients-item__desc">{{ desc_val }}</div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
         </div>
-      </div>
+      {% endif %}
 
       <style>
         .m-product-ingredients-block {

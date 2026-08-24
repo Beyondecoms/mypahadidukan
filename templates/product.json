@@ -53,6 +53,21 @@
             "sale_badge_type": "percentage"
           }
         },
+        "lab_certificate_kPUdYq": {
+          "type": "lab_certificate",
+          "disabled": true,
+          "settings": {
+            "heading": "Certificate",
+            "title": "View Authenticity Report",
+            "subtitle": "Lab Tested & Verified",
+            "pdf_url": "",
+            "bottom_text": "Each batch is independently tested for purity."
+          }
+        },
+        "certificate_JTkGnX": {
+          "type": "certificate",
+          "settings": {}
+        },
         "custom_liquid_YwQ9iR": {
           "type": "custom_liquid",
           "name": "added shipping",
@@ -229,6 +244,8 @@
         "vendor_badge",
         "title",
         "price",
+        "lab_certificate_kPUdYq",
+        "certificate_JTkGnX",
         "custom_liquid_YwQ9iR",
         "variant_picker",
         "buy_buttons",

@@ -54,12 +54,25 @@ class Wishlist {
     const buttons = document.querySelectorAll(this.selectors.wishlistButton)
     buttons.forEach(btn => {
       const prodHandle = btn && btn.dataset.productHandle
-      if (this.products.indexOf(prodHandle) >= 0 && btn && !btn.classList.contains(this.addedClass)) {
-        this.toggleButtonState(btn, true)
+      if (this.products.indexOf(prodHandle) >= 0) {
+        if (btn && !btn.classList.contains(this.addedClass)) {
+          this.toggleButtonState(btn, true)
+        } else if (btn) {
+          btn.classList.add('active')
+          btn.classList.add('is-active')
+          btn.setAttribute('aria-pressed', 'true')
+        }
 
-        if (this.isWishlistPage) {
+        if (this.isWishlistPage && btn) {
           btn.classList.remove(this.selectors.wishlistButton.replace('.', ''))
           btn.classList.add(this.selectors.removeButton.replace('.', ''))
+        }
+      } else {
+        if (btn) {
+          btn.classList.remove(this.addedClass)
+          btn.classList.remove('active')
+          btn.classList.remove('is-active')
+          btn.setAttribute('aria-pressed', 'false')
         }
       }
     })
@@ -109,9 +122,15 @@ class Wishlist {
     if (active) {
       this.addToWishlist(productHandle)
       btn.classList.add(this.addedClass)
+      btn.classList.add('active')
+      btn.classList.add('is-active')
+      btn.setAttribute('aria-pressed', 'true')
     } else {
       this.removeFromWishlist(productHandle)
       btn.classList.remove(this.addedClass)
+      btn.classList.remove('active')
+      btn.classList.remove('is-active')
+      btn.setAttribute('aria-pressed', 'false')
     }
 
     if (wishlistText) {

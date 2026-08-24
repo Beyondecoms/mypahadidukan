@@ -1,0 +1,362 @@
+{% comment %}
+  collection-inline-icon-box.liquid
+  -----------------------------------
+  Renders the region-selector icon-box inline inside the collection product grid.
+  This is the single source of truth for the block DATA — mirrors the settings
+  
+  from the "icon_box_8ndJdD" section in collection.json.  The styling reuses the same classes from icon-box.liquid / icon-box.css so
+
+  there is NO duplicated CSS. Only the section-ID-scoped inline <style> block
+  uses a stable class selector instead of #m-section--{{ section.id }}.
+
+  This snippet accepts no parameters — it is self-contained.
+{% endcomment %}
+
+{% liquid
+  assign ib_image_max_width = '140px'
+  assign ib_item_per_row    = 9
+  assign ib_item_gap        = 2
+  assign ib_container       = 'container'
+%}
+
+<style>
+  .m-collection-inline-icon-box-row {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 24px 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .m-collection-inline-icon-box {
+    --section-padding-top: 20px;
+    --section-padding-bottom: 20px;
+    --column-gap: 2px;
+    --column-gap-mobile: 2px;
+    --row-gap: 12px;
+    --row-gap-mobile: 22px;
+    --items: 9;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .m-collection-inline-icon-box .shop-region__shell {
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .m-collection-inline-icon-box .shop-region__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 0px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  @media only screen and (max-width: 769px){
+    .m-collection-inline-icon-box .shop-region__grid{
+      }
+      display: grid;
+  }
+
+  .m-collection-inline-icon-box .shop-region__grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .m-collection-inline-icon-box .shop-region__grid::-webkit-scrollbar-thumb {
+    background: #c7b299;
+    border-radius: 20px;
+  }
+
+  .m-collection-inline-icon-box .shop-region__column {
+    flex: 0 0 16%;
+    scroll-snap-align: start;
+  }
+  height: auto;
+
+  .m-collection-inline-icon-box .shop-region__card {
+    height: 100%;
+    border-radius: 26px;
+    padding: 0px;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  .m-collection-inline-icon-box .shop-region__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 42px rgba(81, 52, 23, 0.14);
+    border-color: rgba(135, 95, 56, 0.22);
+  }
+
+  .m-collection-inline-icon-box .shop-region__card-inner {
+    gap: 14px;
+    align-items: center;
+  }
+
+  .m-collection-inline-icon-box .shop-region__media-wrap {
+    width: 100%;
+    max-width: 140px;
+    margin-inline: auto;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255,255,255,0.36), rgba(255,255,255,0.08));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+
+  .m-collection-inline-icon-box .shop-region__media-wrap img,
+  .m-collection-inline-icon-box .shop-region__media-wrap .m-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    transform: scale(1);
+    transition: transform 0.35s ease;
+  }
+
+  .m-collection-inline-icon-box .shop-region__card:hover .shop-region__media-wrap img,
+  .m-collection-inline-icon-box .shop-region__card:hover .shop-region__media-wrap .m-image {
+    transform: scale(1.05);
+  }
+
+  .m-collection-inline-icon-box .shop-region__content {
+    padding: 4px 4px 2px;
+  }
+
+  .m-collection-inline-icon-box .shop-region__title {
+    margin: 0 0 8px;
+    font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: rgba(67, 39, 16, 0.96);
+  }
+
+  @media (max-width: 768px) {
+    .m-collection-inline-icon-box .shop-region__column {
+      flex: 0 0 30%;
+    }
+    .m-collection-inline-icon-box .shop-region__card {
+      height: auto !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .m-collection-inline-icon-box .shop-region__grid {
+      gap: 8px !important;
+    }
+    .m-collection-inline-icon-box .m-icon-box__icon {
+      width: 120px !important;
+    }
+    .m-collection-inline-icon-box .shop-region__card-inner {
+      gap: 10px;
+    }
+    .m-collection-inline-icon-box .shop-region__content {
+      padding: 2px 2px 0;
+    }
+    .m-collection-inline-icon-box .shop-region__title {
+      font-size: 0.98rem;
+    }
+  }
+</style>
+
+<div class="m-section m-icon-box-section shop-region m-gradient m-color-default m-collection-inline-icon-box">
+  <div class="m-section-my m-section-py shop-region__shell" style="width: 100%; padding-left: 16px; padding-right: 16px;">
+
+    <div class="shop-region-slider m-swiper-overflow m:block">
+      <div class="shop-region__grid shop-region__grid--scroll m:grid m:grid-2-cols md:m:grid-2-cols lg:m:grid-{{ ib_item_per_row }}-cols">
+
+        {% comment %} ── Ladakh ──────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/ladakh"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'Ladakh_Region_buy_ladakhi_products_online_46861caa-7b92-427b-8c7b-85de3f6d8ca3.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Ladakh"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Ladakh</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Kashmir ─────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/kashmir"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'kashmir_region_buy_kashmiri_products_online_86122cd8-ca98-4a0c-9b2c-2e9f0a215590.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Kashmir"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Kashmir</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Himachal ────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/himachal-pradesh"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'himachal_pradesh_region_buy_himachal_products_online_9fccfd20-8ad5-490d-b55b-8ad609f92123.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Himachal"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Himachal</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Uttarakhand ──────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/uttarakhand"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'uttarakhand_region_buy_uttarakhandi_products_online_39f47326-f89a-40b8-a34b-8a77afc40167.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Uttarakhand"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Uttarakhand</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Sikkim ──────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/sikkim"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'sikkm_region_buy_sikkamese_products_online.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Sikkim"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Sikkim</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Meghalaya ───────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/meghalaya"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'meghalaya_region_buy_meghalayan_products_online.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Meghalaya"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Meghalaya</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Nagaland ────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/nagaland"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'nagaland_region_buy_naga_products_online.png' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Nagaland"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Nagaland</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Bhutan ──────────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/bhutan"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'bhutan_region_stamp_bhutani_buy_products_online.jpg' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Bhutan"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Bhutan</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} ── Darjeeling ──────────────────────────────────────── {% endcomment %}
+        <div class="m:column shop-region__column">
+          <div class="m-icon-box m-icon-box--vertical shop-region__card m-gradient m-color-default color-scheme-inherit">
+            <div class="m-icon-box__inner m:flex-col shop-region__card-inner m:items-center">
+              <a href="/collections/darjeeling"
+                 class="m-icon-box__icon shop-region__media-wrap m:items-center"
+                 style="width: {{ ib_image_max_width }};">
+                <div class="m-hover-box__wrapper m:w-full">
+                  <img src="{{ 'Darjeeling_3.jpg' | file_img_url: '300x' }}"
+                       width="140" height="140" loading="lazy" alt="Darjeeling"
+                       class="m-icon-box__external-image m-image m:w-full">
+                </div>
+              </a>
+              <div class="m-icon-box__content shop-region__content m:flex-1 m:text-center">
+                <h3 class="m-icon-box__heading shop-region__title h4">Darjeeling</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>{% comment %} /.shop-region__grid {% endcomment %}
+    </div>{% comment %} /.shop-region-slider {% endcomment %}
+
+  </div>{% comment %} /.container {% endcomment %}
+</div>{% comment %} /.m-collection-inline-icon-box {% endcomment %}

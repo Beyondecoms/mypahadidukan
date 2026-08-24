@@ -49,10 +49,32 @@
             "custom_liquid": "<p class=\"tax-c\">MRP Iclusive of alll taxes</p>"
           }
         },
+        "lab_certificate_W63qgn": {
+          "type": "lab_certificate",
+          "settings": {
+            "heading": "Certificate",
+            "title": "View Authenticity Report",
+            "subtitle": "Lab Tested & Verified",
+            "pdf_url": "",
+            "bottom_text": "Each batch is independently tested for purity."
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size"
+            "size_title": "Size",
+            "tbspn_svg_icon": "",
+            "card_border_radius": 10,
+            "card_border_thickness": 1,
+            "card_selected_border_color": "#f58220",
+            "card_spacing": 12,
+            "card_image_size": 80,
+            "card_show_compare_price": true,
+            "card_show_discount": true,
+            "card_show_image": true,
+            "card_show_checkmark": true,
+            "card_desktop_cards_per_row": 3,
+            "card_mobile_width": 110
           }
         },
         "buy_buttons": {
@@ -141,7 +163,8 @@
             "heading3": "Icon 3",
             "icon3": "shopify://shop_images/icon_weight__managem.svg",
             "heading4": "Icon 4",
-            "icon4": "shopify://shop_images/icon_hart__helth.svg"
+            "icon4": "shopify://shop_images/icon_hart__helth.svg",
+            "heading5": "Icon 5"
           }
         },
         "custom_liquid_UAfqy3": {
@@ -191,6 +214,7 @@
         "judge_me_reviews_preview_badge_KaNw4T",
         "price",
         "custom_liquid_a9rVy7",
+        "lab_certificate_W63qgn",
         "variant_picker",
         "buy_buttons",
         "custom_liquid_3zNzzn",
