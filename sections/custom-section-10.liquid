@@ -1,0 +1,386 @@
+{%- liquid
+  assign image = section.settings.image
+  assign image_by_url = section.settings.image_by_url
+  assign heading = section.settings.heading
+  assign text = section.settings.text
+  assign button_text = section.settings.button_text
+  assign button_link = section.settings.button_link
+
+  assign banner_radius = section.settings.banner_radius | default: 22
+  assign overlay_opacity = section.settings.overlay_opacity | default: 30 | divided_by: 100.0
+  assign desktop_height = section.settings.desktop_height | default: 480
+  assign mobile_height = section.settings.mobile_height | default: 380
+  assign padding_top = section.settings.padding_top | default: 40
+  assign padding_bottom = section.settings.padding_bottom | default: 40
+  assign bg_color = section.settings.bg_color | default: '#FFFFFF'
+-%}
+
+<div
+  id="custom-section-10-{{ section.id }}"
+  class="custom-section-10"
+  style="
+    --cs10-bg: {{ bg_color }};
+    --cs10-radius: {{ banner_radius }}px;
+    --cs10-overlay-opacity: {{ overlay_opacity }};
+    --cs10-h-desktop: {{ desktop_height }}px;
+    --cs10-h-mobile: {{ mobile_height }}px;
+    --cs10-pt: {{ padding_top }}px;
+    --cs10-pb: {{ padding_bottom }}px;
+  "
+>
+  <div class="custom-section-10__container">
+    <div class="custom-section-10__banner">
+      {%- if image_by_url != blank -%}
+        <img
+          src="{{ image_by_url }}"
+          loading="lazy"
+          class="custom-section-10__bg-img"
+          alt="{{ heading | default: 'The Philosophy rooted in the Mountains' | escape }}"
+          width="1600"
+          height="900"
+        >
+      {%- elsif image != blank -%}
+        {{
+          image
+          | image_url: width: 2000
+          | image_tag:
+            loading: 'lazy',
+            class: 'custom-section-10__bg-img',
+            widths: '600, 900, 1200, 1600, 2000',
+            alt: heading | default: image.alt | default: 'The Philosophy rooted in the Mountains'
+        }}
+      {%- else -%}
+        <div class="custom-section-10__placeholder-wrap">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'custom-section-10__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      <div class="custom-section-10__overlay"></div>
+
+      <div class="custom-section-10__content">
+        {%- if heading != blank -%}
+          <h2 class="custom-section-10__heading">{{ heading }}</h2>
+        {%- endif -%}
+
+        {%- if text != blank -%}
+          <div class="custom-section-10__text">
+            {{ text }}
+          </div>
+        {%- endif -%}
+
+        {%- if button_text != blank -%}
+          <a
+            href="{{ button_link | default: '#' }}"
+            class="custom-section-10__btn"
+            aria-label="{{ button_text | escape }}"
+          >
+            <span>{{ button_text }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #custom-section-10-{{ section.id }} {
+    background-color: var(--cs10-bg);
+    padding-top: var(--cs10-pt);
+    padding-bottom: var(--cs10-pb);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  #custom-section-10-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__container {
+    width: 100%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__banner {
+    position: relative;
+    width: 100%;
+    min-height: var(--cs10-h-desktop);
+    border-radius: var(--cs10-radius);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    background-color: #334155;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__banner:hover .custom-section-10__bg-img {
+    transform: scale(1.03);
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__placeholder-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #475569;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.25) 0%, rgba(15, 23, 42, 0.2) 50%, rgba(15, 23, 42, 0.45) 100%);
+    opacity: 1;
+    z-index: 2;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__content {
+    position: relative;
+    z-index: 3;
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #FFFFFF;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__heading {
+    margin: 0 0 14px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__text {
+    margin: 0 0 26px 0;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.94);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    max-width: 620px;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__text p {
+    margin: 0;
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 34px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  #custom-section-10-{{ section.id }} .custom-section-10__btn:hover {
+    background-color: #FFFFFF;
+    color: #1F2937;
+    border-color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 991px) {
+    #custom-section-10-{{ section.id }} .custom-section-10__container {
+      padding: 0 16px;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__banner {
+      min-height: 420px;
+      padding: 40px 20px;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__heading {
+      font-size: 24px;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__text {
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #custom-section-10-{{ section.id }} .custom-section-10__container {
+      padding: 0 12px;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__banner {
+      min-height: var(--cs10-h-mobile);
+      padding: 32px 16px;
+      border-radius: calc(var(--cs10-radius) * 0.8);
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__heading {
+      font-size: 20px;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__text {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #custom-section-10-{{ section.id }} .custom-section-10__btn {
+      padding: 9px 26px;
+      font-size: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Philosophy (Section 10)",
+  "tag": "section",
+  "class": "custom-section-10-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Background Image"
+    },
+    {
+      "type": "text",
+      "id": "image_by_url",
+      "label": "Background Image URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "The Philosophy rooted in the Mountains"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Subtext / Description",
+      "default": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "ABOUT US"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Outer Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Banner Border Radius",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "label": "Banner Height on Desktop",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 260,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Banner Height on Mobile",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy Banner (Section 10)",
+      "settings": {
+        "heading": "The Philosophy rooted in the Mountains",
+        "text": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.",
+        "button_text": "ABOUT US"
+      }
+    }
+  ]
+}
+{% endschema %}

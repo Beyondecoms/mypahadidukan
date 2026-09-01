@@ -1,0 +1,1366 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign heading_color = section.settings.heading_color | default: '#1F2937'
+  assign bg_color = section.settings.bg_color | default: '#FAF7EE'
+  assign tab_active_color = section.settings.tab_active_color | default: '#BA5D37'
+  assign tab_border_color = section.settings.tab_border_color | default: '#E5E7EB'
+  assign tab_text_color = section.settings.tab_text_color | default: '#4B5563'
+
+  assign default_collection = collections[section.settings.collection]
+  assign default_product_list = section.settings.product_list
+  assign products_to_show = section.settings.products_to_show | default: 10
+
+  assign desktop_products = section.settings.desktop_products | default: 5
+  assign mobile_products = section.settings.mobile_products | default: 1.8
+  assign card_gap = section.settings.card_gap | default: 14
+  assign padding_top = section.settings.padding_top | default: 48
+  assign padding_bottom = section.settings.padding_bottom | default: 48
+
+  assign show_discount_badge = section.settings.show_discount_badge
+  assign show_wishlist = section.settings.show_wishlist
+  assign show_quickview = section.settings.show_quickview
+  assign show_rating = section.settings.show_rating
+  assign show_vendor = section.settings.show_vendor
+  assign show_promo_badge = section.settings.show_promo_badge
+
+  assign promo_discount_text = section.settings.promo_discount_text | default: 'Extra 10% off'
+  assign promo_coupon_code = section.settings.promo_coupon_code | default: 'SUMMER10'
+  assign vendor_text = section.settings.vendor_text | default: 'My Pahadi Dukan'
+  assign default_rating = section.settings.default_rating | default: '4.5'
+  assign default_reviews = section.settings.default_reviews | default: '1745'
+  assign default_subtitle = section.settings.default_subtitle | default: 'Vitamin C, Omega 3,6,7 and 9 and Antioxidants'
+  assign default_quantity = section.settings.default_quantity | default: '300 ml'
+
+  assign atc_bg_color = section.settings.atc_bg_color | default: '#BA5D37'
+  assign price_color = section.settings.price_color | default: '#1B4D3E'
+  assign vendor_color = section.settings.vendor_color | default: '#BA5D37'
+-%}
+
+<div
+  id="custom-section-7-{{ section.id }}"
+  class="custom-section-7"
+  style="
+    --cs7-bg: {{ bg_color }};
+    --cs7-heading-color: {{ heading_color }};
+    --cs7-tab-active: {{ tab_active_color }};
+    --cs7-tab-border: {{ tab_border_color }};
+    --cs7-tab-text: {{ tab_text_color }};
+    --cs7-pt: {{ padding_top }}px;
+    --cs7-pb: {{ padding_bottom }}px;
+    --cs7-desktop-products: {{ desktop_products }};
+    --cs7-mobile-products: {{ mobile_products }};
+    --cs7-gap: {{ card_gap }}px;
+    --cs7-atc-bg: {{ atc_bg_color }};
+    --cs7-price-color: {{ price_color }};
+    --cs7-vendor-color: {{ vendor_color }};
+  "
+>
+  <div class="custom-section-7__container">
+    {%- if heading != blank -%}
+      <div class="custom-section-7__header">
+        <h2 class="custom-section-7__heading">{{ heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="custom-section-7__tabs-wrap" data-category-tabs>
+        <div class="custom-section-7__tabs-track">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign tab_title = block.settings.title
+              assign is_first = forloop.first
+            -%}
+            <button
+              type="button"
+              class="custom-section-7__tab-pill{% if is_first %} is-active{% endif %}"
+              data-tab-index="{{ forloop.index0 }}"
+              data-block-id="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ tab_title | default: 'Category' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="custom-section-7__carousel-wrap" data-carousel-wrap>
+      <button
+        type="button"
+        class="custom-section-7__arrow custom-section-7__arrow--prev"
+        aria-label="Previous products"
+        data-arrow="prev"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="custom-section-7__panels-container">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign tab_products = blank
+              assign tab_collection = collections[block.settings.collection]
+              assign tab_product_list = block.settings.product_list
+
+              if tab_product_list != blank and tab_product_list.count > 0
+                assign tab_products = tab_product_list
+              elsif tab_collection != blank and tab_collection.products.size > 0
+                assign tab_products = tab_collection.products
+              elsif default_product_list != blank and default_product_list.count > 0
+                assign tab_products = default_product_list
+              elsif default_collection != blank and default_collection.products.size > 0
+                assign tab_products = default_collection.products
+              endif
+
+              assign is_panel_active = forloop.first
+            -%}
+            <div
+              class="custom-section-7__tab-panel{% if is_panel_active %} is-active{% endif %}"
+              data-tab-panel="{{ forloop.index0 }}"
+              data-block-id="{{ block.id }}"
+            >
+              <div class="custom-section-7__track" data-carousel-track>
+                {%- if tab_products != blank and tab_products.size > 0 -%}
+                  {%- for product in tab_products limit: products_to_show -%}
+                    {%- liquid
+                      assign current_variant = product.selected_or_first_available_variant
+                      assign on_sale = false
+                      assign discount_percentage = 0
+                      if current_variant.compare_at_price > current_variant.price
+                        assign on_sale = true
+                        assign discount_percentage = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round
+                      endif
+
+                      assign variant_weight_or_title = current_variant.title
+                      if product.has_only_default_variant
+                        assign variant_weight_or_title = default_quantity
+                        if current_variant.weight > 0
+                          assign variant_weight_or_title = current_variant.weight | weight_with_unit
+                        endif
+                      endif
+                    -%}
+                    <div class="custom-section-7__slide">
+                      <div class="custom-section-7__card" data-product-id="{{ product.id }}">
+                        <div class="custom-section-7__media-wrap">
+                          {%- if show_discount_badge and on_sale and discount_percentage > 0 -%}
+                            <span class="custom-section-7__badge-save">SAVE {{ discount_percentage }}%</span>
+                          {%- elsif show_discount_badge and section.settings.always_show_badge -%}
+                            <span class="custom-section-7__badge-save">{{ section.settings.badge_fallback_text | default: 'SAVE 14%' }}</span>
+                          {%- endif -%}
+
+                          {%- if show_wishlist -%}
+                            <button
+                              type="button"
+                              class="custom-section-7__action-btn custom-section-7__wishlist-btn m-wishlist-button"
+                              data-product-id="{{ product.id }}"
+                              data-product-handle="{{ product.handle }}"
+                              aria-label="Add to wishlist"
+                            >
+                              <svg class="custom-section-7__icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                              </svg>
+                            </button>
+                          {%- endif -%}
+
+                          <a href="{{ product.url }}" class="custom-section-7__image-link" aria-label="{{ product.title }}">
+                            {%- if product.featured_media != blank -%}
+                              {{
+                                product.featured_media
+                                | image_url: width: 600
+                                | image_tag:
+                                  loading: 'lazy',
+                                  class: 'custom-section-7__img',
+                                  widths: '240, 360, 480, 600',
+                                  alt: product.title
+                              }}
+                            {%- else -%}
+                              <div class="custom-section-7__img-placeholder">
+                                {{ 'product-1' | placeholder_svg_tag }}
+                              </div>
+                            {%- endif -%}
+                          </a>
+
+                          {%- if show_quickview -%}
+                            <button
+                              type="button"
+                              class="custom-section-7__action-btn custom-section-7__quickview-btn m-product-quickview-button"
+                              data-product-id="{{ product.id }}"
+                              data-product-handle="{{ product.handle }}"
+                              data-product-url="{{ product.url }}"
+                              aria-label="Quick view"
+                            >
+                              <svg class="custom-section-7__icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                              </svg>
+                            </button>
+                          {%- endif -%}
+                        </div>
+
+                        <div class="custom-section-7__card-body">
+                          {%- if show_rating -%}
+                            <div class="custom-section-7__rating-row">
+                              <div class="custom-section-7__stars">
+                                {%- for s in (1..5) -%}
+                                  <svg class="custom-section-7__star" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                  </svg>
+                                {%- endfor -%}
+                              </div>
+                              <span class="custom-section-7__rating-score">{{ default_rating }}</span>
+                              <span class="custom-section-7__reviews-count">| {{ default_reviews }} Reviews</span>
+                            </div>
+                          {%- endif -%}
+
+                          {%- if show_vendor -%}
+                            <div class="custom-section-7__vendor">{{ product.vendor | default: vendor_text }}</div>
+                          {%- endif -%}
+
+                          <h3 class="custom-section-7__title">
+                            <a href="{{ product.url }}">{{ product.title }}</a>
+                          </h3>
+
+                          <div class="custom-section-7__desc">
+                            {%- if product.metafields.descriptors.subtitle != blank -%}
+                              {{ product.metafields.descriptors.subtitle }}
+                            {%- elsif product.description != blank -%}
+                              {{ product.description | strip_html | truncatewords: 8 }}
+                            {%- else -%}
+                              {{ default_subtitle }}
+                            {%- endif -%}
+                          </div>
+
+                          <div class="custom-section-7__meta-row">
+                            <span class="custom-section-7__quantity">{{ variant_weight_or_title }}</span>
+                            {%- if show_promo_badge -%}
+                              <div class="custom-section-7__promo-badge">
+                                <span class="custom-section-7__promo-text">{{ promo_discount_text }}</span>
+                                <span class="custom-section-7__promo-code">{{ promo_coupon_code }}</span>
+                              </div>
+                            {%- endif -%}
+                          </div>
+
+                          <div class="custom-section-7__price-row">
+                            <span class="custom-section-7__price-current">{{ current_variant.price | money }}</span>
+                            {%- if current_variant.compare_at_price > current_variant.price -%}
+                              <span class="custom-section-7__price-compare">{{ current_variant.compare_at_price | money }}</span>
+                            {%- elsif section.settings.always_show_compare_price -%}
+                              <span class="custom-section-7__price-compare">{{ current_variant.price | times: 1.15 | money }}</span>
+                            {%- endif -%}
+                          </div>
+
+                          <div class="custom-section-7__atc-wrap">
+                            {%- if product.has_only_default_variant -%}
+                              <button
+                                type="button"
+                                class="custom-section-7__atc-btn"
+                                data-add-to-cart="{{ current_variant.id }}"
+                                aria-label="Add {{ product.title }} to cart"
+                              >
+                                <span>Add to cart</span>
+                              </button>
+                            {%- else -%}
+                              <div class="custom-section-7__variant-dropdown-wrap">
+                                <button
+                                  type="button"
+                                  class="custom-section-7__atc-btn custom-section-7__atc-btn--dropdown"
+                                  data-dropdown-toggle
+                                  aria-expanded="false"
+                                >
+                                  <span>Add to cart</span>
+                                  <svg class="custom-section-7__chevron" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
+                                <div class="custom-section-7__variant-menu" data-variant-menu>
+                                  {%- for v in product.variants -%}
+                                    <button
+                                      type="button"
+                                      class="custom-section-7__variant-option"
+                                      data-variant-id="{{ v.id }}"
+                                      {% unless v.available %}disabled{% endunless %}
+                                    >
+                                      <span>{{ v.title }}</span>
+                                      <span class="custom-section-7__variant-price">{{ v.price | money }}</span>
+                                    </button>
+                                  {%- endfor -%}
+                                </div>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for i in (1..5) -%}
+                    <div class="custom-section-7__slide">
+                      <div class="custom-section-7__card">
+                        <div class="custom-section-7__media-wrap">
+                          <span class="custom-section-7__badge-save">SAVE 14%</span>
+                          <div class="custom-section-7__img-placeholder">
+                            {{ 'product-1' | placeholder_svg_tag }}
+                          </div>
+                        </div>
+                        <div class="custom-section-7__card-body">
+                          <div class="custom-section-7__rating-row">
+                            <div class="custom-section-7__stars">
+                              {%- for s in (1..5) -%}
+                                <svg class="custom-section-7__star" viewBox="0 0 20 20" fill="currentColor">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              {%- endfor -%}
+                            </div>
+                            <span class="custom-section-7__rating-score">4.5</span>
+                            <span class="custom-section-7__reviews-count">| 1745 Reviews</span>
+                          </div>
+                          <div class="custom-section-7__vendor">My Pahadi Dukan</div>
+                          <h3 class="custom-section-7__title"><a href="#">Sea Buckthorn Pulp (Juice)</a></h3>
+                          <div class="custom-section-7__desc">Vitamin C, Omega 3,6,7 and 9 and Antioxidants</div>
+                          <div class="custom-section-7__meta-row">
+                            <span class="custom-section-7__quantity">300 ml</span>
+                            <div class="custom-section-7__promo-badge">
+                              <span class="custom-section-7__promo-text">Extra 10% off</span>
+                              <span class="custom-section-7__promo-code">SUMMER10</span>
+                            </div>
+                          </div>
+                          <div class="custom-section-7__price-row">
+                            <span class="custom-section-7__price-current">Rs. 775</span>
+                            <span class="custom-section-7__price-compare">Rs. 899</span>
+                          </div>
+                          <div class="custom-section-7__atc-wrap">
+                            <button type="button" class="custom-section-7__atc-btn">
+                              <span>Add to cart</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <button
+        type="button"
+        class="custom-section-7__arrow custom-section-7__arrow--next"
+        aria-label="Next products"
+        data-arrow="next"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #custom-section-7-{{ section.id }} {
+    background-color: var(--cs7-bg);
+    padding-top: var(--cs7-pt);
+    padding-bottom: var(--cs7-pb);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  #custom-section-7-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__container {
+    width: 100%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__heading {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cs7-heading-color);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  /* Pill Tabs */
+  #custom-section-7-{{ section.id }} .custom-section-7__tabs-wrap {
+    width: 100%;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: center;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tabs-track {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tab-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cs7-tab-text);
+    background-color: transparent;
+    border: 1px solid var(--cs7-tab-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tab-pill:hover {
+    border-color: var(--cs7-tab-active);
+    color: var(--cs7-tab-active);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tab-pill.is-active {
+    border: 1.5px solid var(--cs7-tab-active);
+    color: var(--cs7-tab-active);
+    font-weight: 600;
+    background-color: transparent;
+  }
+
+  /* Carousel */
+  #custom-section-7-{{ section.id }} .custom-section-7__carousel-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__panels-container {
+    width: 100%;
+    position: relative;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tab-panel {
+    display: none;
+    width: 100%;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__tab-panel.is-active {
+    display: block;
+    animation: cs7FadeIn 0.25s ease forwards;
+  }
+
+  @keyframes cs7FadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--cs7-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 6px 2px 14px 2px;
+    width: 100%;
+    scroll-behavior: smooth;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__slide {
+    flex: 0 0 calc((100% - (var(--cs7-desktop-products) - 1) * var(--cs7-gap)) / var(--cs7-desktop-products));
+    min-width: 0;
+    scroll-snap-align: start;
+    display: flex;
+  }
+
+  /* Product Card */
+  #custom-section-7-{{ section.id }} .custom-section-7__card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__media-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #FAFAFA;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__image-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__card:hover .custom-section-7__img {
+    transform: scale(1.04);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__badge-save {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #C0503B;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    z-index: 2;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__action-btn {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C0503B;
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__action-btn:hover {
+    transform: scale(1.1);
+    background-color: #FFFFFF;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__wishlist-btn {
+    top: 10px;
+    right: 10px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__quickview-btn {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__icon-heart,
+  #custom-section-7-{{ section.id }} .custom-section-7__icon-eye {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Card Body */
+  #custom-section-7-{{ section.id }} .custom-section-7__card-body {
+    padding: 12px 14px 16px 14px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__rating-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__stars {
+    display: flex;
+    gap: 1px;
+    color: #F59E0B;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__star {
+    width: 13px;
+    height: 13px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__rating-score,
+  #custom-section-7-{{ section.id }} .custom-section-7__reviews-count {
+    font-size: 11px;
+    color: #4B5563;
+    font-weight: 500;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__vendor {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cs7-vendor-color);
+    margin-bottom: 4px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__title {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 36px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__title a {
+    color: #111827;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__title a:hover {
+    color: var(--cs7-tab-active);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__desc {
+    font-size: 11px;
+    color: #6B7280;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 30px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 6px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__quantity {
+    font-size: 12px;
+    color: #6B7280;
+    font-weight: 500;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__promo-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: #FFF2EB;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px dashed rgba(186, 93, 55, 0.35);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__promo-text {
+    font-size: 9px;
+    font-weight: 700;
+    color: #BA5D37;
+    line-height: 1.1;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__promo-code {
+    font-size: 8px;
+    font-weight: 600;
+    color: #6B7280;
+    line-height: 1.1;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+    margin-top: auto;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__price-current {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cs7-price-color);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__price-compare {
+    font-size: 12px;
+    color: #9CA3AF;
+    text-decoration: line-through;
+  }
+
+  /* Add to Cart Button */
+  #custom-section-7-{{ section.id }} .custom-section-7__atc-wrap {
+    width: 100%;
+    position: relative;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__atc-btn {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background-color: var(--cs7-atc-bg);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__atc-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__chevron {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Variant Dropdown */
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-dropdown-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-menu {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border: 1px solid #E5E7EB;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-menu.is-open {
+    display: flex;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: #1F2937;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-option:hover:not(:disabled) {
+    background-color: #F3F4F6;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__variant-option:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Arrows */
+  #custom-section-7-{{ section.id }} .custom-section-7__arrow {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    border: none;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1F2937;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__arrow:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__arrow:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__arrow--prev {
+    left: -8px;
+  }
+
+  #custom-section-7-{{ section.id }} .custom-section-7__arrow--next {
+    right: -8px;
+  }
+
+  @media (max-width: 1200px) {
+    #custom-section-7-{{ section.id }} .custom-section-7__slide {
+      flex: 0 0 calc((100% - 3 * var(--cs7-gap)) / 4);
+    }
+  }
+
+  @media (max-width: 991px) {
+    #custom-section-7-{{ section.id }} .custom-section-7__container {
+      padding: 0 16px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__slide {
+      flex: 0 0 calc((100% - 2 * var(--cs7-gap)) / 2.8);
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__heading {
+      font-size: 21px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__tabs-wrap {
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding-bottom: 4px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__tabs-track {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #custom-section-7-{{ section.id }} .custom-section-7__container {
+      padding: 0 12px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__header {
+      margin-bottom: 16px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__heading {
+      font-size: 18px;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__slide {
+      flex: 0 0 calc((100% - (var(--cs7-mobile-products) - 0.2) * var(--cs7-gap)) / var(--cs7-mobile-products));
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__arrow {
+      display: none;
+    }
+    #custom-section-7-{{ section.id }} .custom-section-7__title {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initSection7() {
+      var section = document.getElementById('custom-section-7-{{ section.id }}');
+      if (!section) return;
+
+      var tabButtons = section.querySelectorAll('[data-tab-index]');
+      var tabPanels = section.querySelectorAll('[data-tab-panel]');
+      var prevBtn = section.querySelector('[data-arrow="prev"]');
+      var nextBtn = section.querySelector('[data-arrow="next"]');
+
+      function getActiveTrack() {
+        var activePanel = section.querySelector('.custom-section-7__tab-panel.is-active');
+        return activePanel ? activePanel.querySelector('[data-carousel-track]') : null;
+      }
+
+      function updateArrows() {
+        var track = getActiveTrack();
+        if (!track || !prevBtn || !nextBtn) return;
+        var maxScrollLeft = track.scrollWidth - track.clientWidth;
+        prevBtn.disabled = track.scrollLeft <= 4;
+        nextBtn.disabled = track.scrollLeft >= maxScrollLeft - 4;
+      }
+
+      function scrollTrack(direction) {
+        var track = getActiveTrack();
+        if (!track) return;
+        var slide = track.querySelector('.custom-section-7__slide');
+        if (!slide) return;
+        var slideWidth = slide.getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(track).gap) || 14;
+        var scrollAmount = (slideWidth + gap) * 2;
+        if (direction === 'prev') {
+          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      }
+
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var index = this.dataset.tabIndex;
+          tabButtons.forEach(function (b) { b.classList.remove('is-active'); });
+          tabPanels.forEach(function (p) { p.classList.remove('is-active'); });
+
+          this.classList.add('is-active');
+          var targetPanel = section.querySelector('[data-tab-panel="' + index + '"]');
+          if (targetPanel) {
+            targetPanel.classList.add('is-active');
+            var track = targetPanel.querySelector('[data-carousel-track]');
+            if (track) track.scrollLeft = 0;
+            setTimeout(updateArrows, 60);
+          }
+        });
+      });
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          scrollTrack('prev');
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          scrollTrack('next');
+        });
+      }
+
+      tabPanels.forEach(function (panel) {
+        var track = panel.querySelector('[data-carousel-track]');
+        if (track) {
+          track.addEventListener('scroll', updateArrows, { passive: true });
+        }
+      });
+
+      window.addEventListener('resize', updateArrows, { passive: true });
+
+      // Add to Cart handling
+      section.addEventListener('click', function (e) {
+        // Variant dropdown toggle
+        var toggleBtn = e.target.closest('[data-dropdown-toggle]');
+        if (toggleBtn) {
+          e.preventDefault();
+          var wrap = toggleBtn.closest('.custom-section-7__variant-dropdown-wrap');
+          var menu = wrap ? wrap.querySelector('[data-variant-menu]') : null;
+          if (menu) {
+            menu.classList.toggle('is-open');
+          }
+          return;
+        }
+
+        // Close dropdown if clicked outside
+        if (!e.target.closest('.custom-section-7__variant-dropdown-wrap')) {
+          section.querySelectorAll('.custom-section-7__variant-menu.is-open').forEach(function (m) {
+            m.classList.remove('is-open');
+          });
+        }
+
+        // Add to cart click
+        var atcBtn = e.target.closest('[data-add-to-cart]');
+        var variantOption = e.target.closest('[data-variant-id]');
+        var variantId = null;
+
+        if (atcBtn) {
+          variantId = atcBtn.dataset.addToCart;
+        } else if (variantOption) {
+          variantId = variantOption.dataset.variantId;
+          var menu = variantOption.closest('.custom-section-7__variant-menu');
+          if (menu) menu.classList.remove('is-open');
+        }
+
+        if (variantId) {
+          e.preventDefault();
+          var btn = atcBtn || variantOption;
+          var originalText = btn.innerHTML;
+          btn.style.opacity = '0.7';
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+          })
+          .then(function (res) { return res.json(); })
+          .then(function (cartItem) {
+            btn.style.opacity = '1';
+            // Trigger cart drawer if available
+            document.documentElement.dispatchEvent(new CustomEvent('cart:item-added', { bubbles: true, detail: { item: cartItem } }));
+            document.dispatchEvent(new CustomEvent('cart:updated'));
+            if (window.MinimogTheme && window.MinimogTheme.Cart) {
+              window.MinimogTheme.Cart.getCart();
+            }
+          })
+          .catch(function (err) {
+            console.error('Cart add error:', err);
+            btn.style.opacity = '1';
+          });
+        }
+      });
+
+      setTimeout(updateArrows, 100);
+      updateArrows();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSection7);
+    } else {
+      initSection7();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}' || e.target.querySelector('#custom-section-7-{{ section.id }}')) {
+        initSection7();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Featured (Sec 7)",
+  "tag": "section",
+  "class": "custom-section-7-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Featured Categories"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F2937"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#FAF7EE"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_color",
+      "label": "Active tab outline & text color",
+      "default": "#BA5D37"
+    },
+    {
+      "type": "color",
+      "id": "tab_border_color",
+      "label": "Inactive tab border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "color",
+      "id": "tab_text_color",
+      "label": "Inactive tab text color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "header",
+      "content": "Global Products Fallback"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Fallback Collection"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Fallback Product list"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "label": "Max products to show per tab",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "desktop_products",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Products visible on desktop",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "mobile_products",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Products visible on mobile",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Card gap",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Card Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Show SAVE discount badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "always_show_badge",
+      "label": "Always show discount badge even without compare price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_fallback_text",
+      "label": "Discount badge text",
+      "default": "SAVE 14%"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist heart icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quickview",
+      "label": "Show quick view eye icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating and reviews count",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "default_rating",
+      "label": "Default rating score",
+      "default": "4.5"
+    },
+    {
+      "type": "text",
+      "id": "default_reviews",
+      "label": "Default reviews count",
+      "default": "1745"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor name",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "vendor_text",
+      "label": "Default vendor text",
+      "default": "My Pahadi Dukan"
+    },
+    {
+      "type": "text",
+      "id": "default_subtitle",
+      "label": "Default subtitle / benefits",
+      "default": "Vitamin C, Omega 3,6,7 and 9 and Antioxidants"
+    },
+    {
+      "type": "text",
+      "id": "default_quantity",
+      "label": "Default quantity / size text",
+      "default": "300 ml"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_promo_badge",
+      "label": "Show promo coupon badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "promo_discount_text",
+      "label": "Promo discount text",
+      "default": "Extra 10% off"
+    },
+    {
+      "type": "text",
+      "id": "promo_coupon_code",
+      "label": "Promo coupon code",
+      "default": "SUMMER10"
+    },
+    {
+      "type": "checkbox",
+      "id": "always_show_compare_price",
+      "label": "Always show strikethrough compare price",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "atc_bg_color",
+      "label": "Add to cart button color",
+      "default": "#BA5D37"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#1B4D3E"
+    },
+    {
+      "type": "color",
+      "id": "vendor_color",
+      "label": "Vendor color",
+      "default": "#BA5D37"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_tab",
+      "name": "Category Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category / Tab Name",
+          "default": "Seabuckthorn"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Custom Product List (optional override)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Categories (Section 7)",
+      "blocks": [
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Seabuckthorn"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Saffron"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Curcumin"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Ashwagandha"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

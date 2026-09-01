@@ -218,98 +218,298 @@
         "animations": "inherit"
       }
     },
-    "image_with_text_2_wFUM7y": {
-      "type": "image-with-text-2",
-      "disabled": true,
-      "name": "Image with text overlay",
-      "settings": {
-        "color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "container": "w-full",
-        "hero_size": "adapt",
-        "show_overlay": false,
-        "image": "shopify://shop_images/mypahadi_story_copy_1.png",
-        "image_link": "",
-        "parallax": false,
-        "parallax_direction": "vertical",
-        "content_in_container": false,
-        "content_position": "left top",
-        "text_alignment": "left",
-        "text_size": "medium",
-        "text_color": "black",
-        "title": "Born in the Heart of the Himalayas",
-        "subtitle": "",
-        "text": "<p>When you shop with us, you're supporting <strong>rural<br/>communities, sustainable practices, and the timeless<br/>beauty of Himalayan living.</strong></p>",
-        "button_label": "",
-        "button_link": "",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "text_alignment_mobile": "center",
-        "use_content_above": true,
-        "custom_class": "newoverlaysection",
-        "animations": "inherit",
-        "enable_bg_zoom_effect": true,
-        "enable_preload_image": false
-      }
-    },
-    "scrolling_promotion_Yyghrq": {
-      "type": "scrolling-promotion",
+    "custom_section_1": {
+      "type": "custom-section-1",
       "blocks": {
-        "announcement_UDKLHn": {
-          "type": "announcement",
+        "category_1": {
+          "type": "category",
           "settings": {
-            "custom_svg": "",
-            "icon_size": "medium",
-            "text": "USE <span class=\"coupon\"><b>SUMMER10</b></span> TO GET EXTRA 10% OFF • SUMMER SALE",
-            "text_size": 30,
-            "text_link": ""
+            "title": "",
+            "image": "shopify://shop_images/festivities_card.jpg",
+            "image_by_url": "",
+            "link": "https://mypahadidukan.com/collections/all-products/gifting"
+          }
+        },
+        "category_2": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/SBT_card.png",
+            "image_by_url": "",
+            "link": "shopify://collections/pure-seabuckthorn"
+          }
+        },
+        "category_3": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_pahadi_wellness_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/pahadi-wellness"
+          }
+        },
+        "category_4": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Categories_Jams_and_spreads_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/jams-spreads-preserves"
+          }
+        },
+        "category_5": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_dry_fruits_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/dry-fruits"
+          }
+        },
+        "category_6": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_natural_beverages_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/natural-beverages"
+          }
+        },
+        "category_7": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_pure_honey_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/pure-honey"
+          }
+        },
+        "category_8": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_pure_ghee_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/pahadi-ghee"
+          }
+        },
+        "category_9": {
+          "type": "category",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/Category_pure_spices_my_pahadi_dukan.png",
+            "image_by_url": "",
+            "link": "shopify://collections/spices-herbs"
           }
         }
       },
       "block_order": [
-        "announcement_UDKLHn"
+        "category_1",
+        "category_2",
+        "category_3",
+        "category_4",
+        "category_5",
+        "category_6",
+        "category_7",
+        "category_8",
+        "category_9"
       ],
-      "disabled": true,
-      "name": "Scrolling promotion",
       "settings": {
-        "container": "w-full",
-        "direction": "left",
-        "speed": 30,
-        "item_gap": 50,
-        "item_gap_mobile": 30,
-        "color_scheme": "scheme-09e5b5b4-774c-4b6c-8025-416ced49cc74",
-        "padding_top": 18,
-        "padding_bottom": 20,
-        "custom_class": ""
+        "heading": "SHOP BY CATEGORY",
+        "bg_color": "#faf3e8",
+        "heading_color": "#ba5d37",
+        "show_scrollbar": true,
+        "scrollbar_track_color": "#e5d9c8",
+        "scrollbar_thumb_color": "#ba5d37",
+        "show_arrows": true,
+        "desktop_cards": 5,
+        "mobile_cards": 2,
+        "card_gap": 12,
+        "card_radius": 16,
+        "padding_top": 44,
+        "padding_bottom": 44
       }
     },
-    "slider_PCXTWB": {
+    "slider_JiBK7r": {
       "type": "slider",
       "blocks": {
-        "slider_item_6YHVMf": {
+        "slider_item_eKW7Yg": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/valentines_banner_1.jpg",
-            "mb_background": "shopify://shop_images/valentines_banner_1.jpg",
+            "background": "shopify://shop_images/Ghee--desktop.jpg",
+            "mb_background": "shopify://shop_images/ghee-mobile-800x1000.jpg",
             "content_in_container": false,
-            "content_position": "right middle",
-            "text_alignment": "right",
+            "content_position": "left middle",
+            "text_alignment": "left",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "https://mypahadidukan.com/products/pahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "sf__btn-secondary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": true
+          }
+        },
+        "slider_item_VYNjw6": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/1611x1052_resize_jpg.jpg",
+            "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
+            "content_in_container": true,
+            "content_position": "left middle",
+            "text_alignment": "left",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "https://mypahadidukan.com/collections/natural-beverages",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "sf__btn-secondary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
+        "slider_item_pXqeWJ": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/oil-final.jpg",
+            "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
+            "content_in_container": true,
+            "content_position": "right bottom",
+            "text_alignment": "center",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "https://mypahadidukan.com/products/combo-lavender-oil-rosemary-oil-lemongrass-oil",
+            "button_text": "",
+            "button_link": "shopify://pages/special-sale",
+            "button_style": "m-button--white",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": true
+          }
+        },
+        "slider_item_9BfAWf": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
+            "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
+            "content_in_container": false,
+            "content_position": "left middle",
+            "text_alignment": "left",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "https://mypahadidukan.com/products/afghani-pahadi-hing-my-pahadi-dukan",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "sf__btn-secondary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": true
+          }
+        },
+        "slider_item_YFBBeX": {
+          "type": "slider_item",
+          "disabled": true,
+          "settings": {
+            "background": "shopify://shop_images/3_PRODUCTS.jpg",
+            "mb_background": "shopify://shop_images/Seabuckthorn_pulp_banner.jpg",
+            "content_in_container": false,
+            "content_position": "center middle",
+            "text_alignment": "center",
             "text_size": "medium",
             "text_color": "black",
             "subheading": "",
             "title": "",
             "description": "",
-            "image_link": "",
-            "button_text": "Shop Now!",
-            "button_link": "https://mypahadidukan.com/pages/valentine-bundle",
+            "image_link": "shopify://collections/best-selling",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "New Collection",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
+        "slider_item_yGfpHw": {
+          "type": "slider_item",
+          "disabled": true,
+          "settings": {
+            "background": "shopify://shop_images/2_7a9ad04d-f214-4e64-8cdf-5d6ac3d3a232.jpg",
+            "mb_background": "shopify://shop_images/buransh_mobile_version_2.jpg",
+            "content_in_container": true,
+            "content_position": "right bottom",
+            "text_alignment": "center",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "shopify://products/buy-buransh-squash-online",
+            "button_text": "",
+            "button_link": "shopify://products/buy-buransh-squash-online",
             "button_style": "m-button--white",
             "button_size": "",
             "second_button_text": "",
             "second_button_link": "",
-            "second_button_style": "m-button--white",
-            "second_button_size": "m-button--large",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
             "show_footer": false,
             "footer_alignment": "end",
-            "footer_text": "New Collection",
+            "footer_text": "The ReCotton Tee",
             "footer_button": "Shop Now",
             "footer_link": "",
             "enable_preload_image": true
@@ -317,23 +517,284 @@
         }
       },
       "block_order": [
-        "slider_item_6YHVMf"
+        "slider_item_eKW7Yg",
+        "slider_item_VYNjw6",
+        "slider_item_pXqeWJ",
+        "slider_item_9BfAWf",
+        "slider_item_YFBBeX",
+        "slider_item_yGfpHw"
       ],
-      "disabled": true,
-      "name": "Slideshow",
       "settings": {
         "container": "w-full",
-        "slideshow_height": "adapt",
+        "slideshow_height": "fullscreen",
         "show_overlay": false,
-        "dots_position": "bottom",
-        "dots_color": "dark",
+        "dots_position": "right",
+        "dots_color": "light",
         "show_dots": true,
         "show_arrows": false,
-        "autorotate": false,
-        "autorotate_speed": 5,
-        "use_content_above": true,
-        "custom_class": "",
+        "autorotate": true,
+        "autorotate_speed": 4,
+        "use_content_above": false,
+        "custom_class": "sf-home__slideshow",
         "animations": "inherit"
+      }
+    },
+    "custom_section_3": {
+      "type": "custom-section-3",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "title": "Juices",
+            "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
+            "collection": "pure-seabuckthorn",
+            "product_list": []
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "title": "Oils",
+            "image": "shopify://shop_images/oil-final.jpg",
+            "collection": "all-products",
+            "product_list": []
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "Ghee",
+            "image": "shopify://shop_images/pure_ghee_card.jpg",
+            "collection": "pahadi-ghee",
+            "product_list": []
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "Root Powders",
+            "image": "shopify://shop_images/dry_fruits_card.jpg",
+            "collection": "dry-fruits",
+            "product_list": []
+          }
+        },
+        "cat_5": {
+          "type": "category",
+          "settings": {
+            "title": "Oils",
+            "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
+            "collection": "pahadi-wellness",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5"
+      ],
+      "settings": {
+        "heading": "Fastest Selling",
+        "collection": "by-my-pahadi-dukan",
+        "product_list": [],
+        "products_to_show": 10,
+        "desktop_products": 5,
+        "mobile_products": 2,
+        "card_gap": 14,
+        "show_category_nav": true,
+        "show_discount_badge": true,
+        "always_show_badge": true,
+        "badge_fallback_text": "SAVE 14%",
+        "show_wishlist": true,
+        "show_quickview": true,
+        "show_rating": true,
+        "default_rating": "4.5",
+        "default_reviews": "1745",
+        "show_vendor": true,
+        "vendor_text": "My Pahadi Dukan",
+        "default_subtitle": "Vitamin C, Omega 3,6,7 and 9 and Antioxidants",
+        "default_quantity": "300 ml",
+        "show_promo_badge": true,
+        "promo_discount_text": "Extra 10% off",
+        "promo_coupon_code": "SUMMER10",
+        "always_show_compare_price": true,
+        "atc_bg_color": "#ba5d37",
+        "price_color": "#1b4d3e",
+        "vendor_color": "#ba5d37",
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_4_Gy6H39": {
+      "type": "custom-section-4",
+      "blocks": {
+        "item_njRFmG": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_8PEYzG": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_q6dWkc": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_eUB3Xa": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_GjadqL": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_CarCj3": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_DzLwcr": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_njRFmG",
+        "item_8PEYzG",
+        "item_q6dWkc",
+        "item_eUB3Xa",
+        "item_GjadqL",
+        "item_CarCj3",
+        "item_DzLwcr"
+      ],
+      "name": "New to My Pahadi Dukan? Start Here",
+      "settings": {
+        "heading": "New to My Pahadi Dukan? Start Here",
+        "subheading": "Vitamin Rich",
+        "bg_color": "#ffffff",
+        "heading_color": "#1f2937",
+        "label_color": "#111827",
+        "card_bg_color": "#f0f2f5",
+        "card_radius": 4,
+        "card_gap": 8,
+        "desktop_items": 6,
+        "mobile_card_width": 110,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_4_9W6QM6": {
+      "type": "custom-section-4",
+      "blocks": {
+        "item_3rdTCJ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_Afra3H": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_7njLa6": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_fwTJBQ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_CkDKca": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_436WtQ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        },
+        "item_bM78tH": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "title": "Lorem",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_3rdTCJ",
+        "item_Afra3H",
+        "item_7njLa6",
+        "item_fwTJBQ",
+        "item_CkDKca",
+        "item_436WtQ",
+        "item_bM78tH"
+      ],
+      "name": "New to My Pahadi Dukan? Start Here",
+      "settings": {
+        "heading": "",
+        "subheading": "Rich in Omega 3, 6, 12",
+        "bg_color": "#ffffff",
+        "heading_color": "#1f2937",
+        "label_color": "#111827",
+        "card_bg_color": "#f0f2f5",
+        "card_radius": 4,
+        "card_gap": 8,
+        "desktop_items": 6,
+        "mobile_card_width": 110,
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "16225125199f82d8fe": {
@@ -534,161 +995,232 @@
         "animations": "inherit"
       }
     },
-    "custom_section_1": {
-      "type": "custom-section-1",
+    "custom_section_5_tRjnLc": {
+      "type": "custom-section-5",
       "blocks": {
-        "category_1": {
-          "type": "category",
+        "brand_card_HX6ii9": {
+          "type": "brand_card",
           "settings": {
-            "title": "",
-            "image": "shopify://shop_images/festivities_card.jpg",
-            "link": "https://mypahadidukan.com/collections/all-products/gifting"
+            "badge_text": "Daily Nutrition",
+            "badge_bg": "#ffffff6b",
+            "badge_color": "#1f2937",
+            "title": "My Pahadi Dukan",
+            "title_color": "#1f2937",
+            "card_bg": "#f59e0b",
+            "image": "shopify://shop_images/3f9efea017f44d2c2748aa26d46913ba57eccce8.png",
+            "image_by_url": "",
+            "thumbnail": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
+            "thumbnail_by_url": "",
+            "products_text": "100 Products",
+            "button_text": "Shop Now",
+            "link": ""
           }
         },
-        "category_2": {
-          "type": "category",
+        "brand_card_9pRtYw": {
+          "type": "brand_card",
           "settings": {
-            "title": "",
-            "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
-            "link": "shopify://collections/pure-seabuckthorn"
+            "badge_text": "Immunity Boost",
+            "badge_bg": "#ffffff6b",
+            "badge_color": "#1f2937",
+            "title": "Planet Mushroom",
+            "title_color": "#1f2937",
+            "card_bg": "#82c4eb",
+            "image": "shopify://shop_images/1398ea2cb459faf697e23850ec99ed39936adde5.png",
+            "image_by_url": "",
+            "thumbnail": "shopify://shop_images/695768f470d2dfe7d3eba3c65a5874112904e5fc.png",
+            "thumbnail_by_url": "",
+            "products_text": "100 Products",
+            "button_text": "Shop Now",
+            "link": ""
           }
         },
-        "category_3": {
-          "type": "category",
+        "brand_card_xaXiJW": {
+          "type": "brand_card",
           "settings": {
-            "title": "",
-            "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
-            "link": "shopify://collections/pahadi-wellness"
-          }
-        },
-        "category_4": {
-          "type": "category",
-          "settings": {
-            "title": "",
-            "image": "shopify://shop_images/jams_spreads_card.jpg",
-            "link": "shopify://collections/jams-spreads-preserves"
-          }
-        },
-        "category_5": {
-          "type": "category",
-          "settings": {
-            "title": "",
-            "image": "shopify://shop_images/dry_fruits_card.jpg",
-            "link": "shopify://collections/dry-fruits"
-          }
-        },
-        "category_6": {
-          "type": "category",
-          "settings": {
-            "title": "",
-            "image": "shopify://shop_images/natural_beverages_card.jpg",
-            "link": "shopify://collections/natural-beverages"
-          }
-        },
-        "category_7": {
-          "type": "category",
-          "settings": {
-            "title": "",
-            "image": "shopify://shop_images/pure_honey_card.jpg",
-            "link": "shopify://collections/pure-honey"
-          }
-        },
-        "category_8": {
-          "type": "category",
-          "settings": {
-            "title": "",
-            "image": "shopify://shop_images/pure_ghee_card.jpg",
-            "link": "shopify://collections/pahadi-ghee"
+            "badge_text": "Daily Nutrition",
+            "badge_bg": "#ffffff6b",
+            "badge_color": "#1f2937",
+            "title": "Bilona",
+            "title_color": "#1f2937",
+            "card_bg": "#fee79a",
+            "image": "shopify://shop_images/f4e498cf5c896c2014f5ca9d152b3bf26ea1972d.png",
+            "image_by_url": "",
+            "thumbnail": "shopify://shop_images/b93e4ea0e5c5c43e26802801f8ba2a0f6d112611.png",
+            "thumbnail_by_url": "",
+            "products_text": "100 Products",
+            "button_text": "Shop Now",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "category_1",
-        "category_2",
-        "category_3",
-        "category_4",
-        "category_5",
-        "category_6",
-        "category_7",
-        "category_8"
+        "brand_card_HX6ii9",
+        "brand_card_9pRtYw",
+        "brand_card_xaXiJW"
       ],
+      "name": "Shop by Brand (Section 5)",
       "settings": {
-        "heading": "SHOP BY CATEGORY",
-        "bg_color": "#FAF3E8",
-        "heading_color": "#BA5D37",
-        "card_bg_color": "#FFF5EA",
-        "card_title_color": "#BA5D37",
-        "dash_color": "#F26522",
-        "show_card_title": true,
-        "show_card_dash": true,
-        "show_arrows": true,
-        "desktop_cards": 8,
-        "mobile_cards": 2,
-        "card_gap": 12,
-        "card_radius": 14,
+        "heading": "Shop by Brand",
+        "heading_color": "#1f2937",
+        "bg_color": "#ffffff",
+        "card_radius": 28,
+        "card_gap": 24,
         "padding_top": 48,
         "padding_bottom": 48
       }
     },
-    "custom_section_3": {
-      "type": "custom-section-3",
+    "custom_section_6_mQemMh": {
+      "type": "custom-section-6",
       "blocks": {
-        "cat_1": {
-          "type": "category",
+        "spotlight_item_AcXmyt": {
+          "type": "spotlight_item",
           "settings": {
-            "title": "Juices",
-            "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
-            "collection": "pure-seabuckthorn"
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
           }
         },
-        "cat_2": {
-          "type": "category",
+        "spotlight_item_KRcTkD": {
+          "type": "spotlight_item",
           "settings": {
-            "title": "Oils",
-            "image": "shopify://shop_images/oil-final.jpg",
-            "collection": "all-products"
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
           }
         },
-        "cat_3": {
-          "type": "category",
+        "spotlight_item_eMiWrF": {
+          "type": "spotlight_item",
           "settings": {
-            "title": "Ghee",
-            "image": "shopify://shop_images/pure_ghee_card.jpg",
-            "collection": "pahadi-ghee"
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
           }
         },
-        "cat_4": {
-          "type": "category",
+        "spotlight_item_F4L6Tf": {
+          "type": "spotlight_item",
           "settings": {
-            "title": "Root Powders",
-            "image": "shopify://shop_images/dry_fruits_card.jpg",
-            "collection": "dry-fruits"
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
           }
         },
-        "cat_5": {
-          "type": "category",
+        "spotlight_item_wJRMhi": {
+          "type": "spotlight_item",
           "settings": {
-            "title": "Oils",
-            "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
-            "collection": "pahadi-wellness"
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
+          }
+        },
+        "spotlight_item_XcM9zy": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
+          }
+        },
+        "spotlight_item_3EyC3f": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "cat_1",
-        "cat_2",
-        "cat_3",
-        "cat_4",
-        "cat_5"
+        "spotlight_item_AcXmyt",
+        "spotlight_item_KRcTkD",
+        "spotlight_item_eMiWrF",
+        "spotlight_item_F4L6Tf",
+        "spotlight_item_wJRMhi",
+        "spotlight_item_XcM9zy",
+        "spotlight_item_3EyC3f"
       ],
+      "name": "This Season Spotlight (Section 6)",
       "settings": {
-        "heading": "Fastest Selling",
-        "collection": "by-my-pahadi-dukan",
+        "heading": "This Season Spotlight",
+        "heading_color": "#1f2937",
+        "bg_color": "#ffffff",
+        "card_bg": "#cfd8e2",
+        "label_color": "#111827",
+        "show_arrows": true,
+        "desktop_cards": 6,
+        "mobile_cards": 2,
+        "card_gap": 16,
+        "card_radius": 22,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_7_wTgxTr": {
+      "type": "custom-section-7",
+      "blocks": {
+        "category_tab_mbjGhd": {
+          "type": "category_tab",
+          "settings": {
+            "title": "Seabuckthorn",
+            "collection": "pure-seabuckthorn",
+            "product_list": []
+          }
+        },
+        "category_tab_WNUbTd": {
+          "type": "category_tab",
+          "settings": {
+            "title": "Saffron",
+            "collection": "",
+            "product_list": [
+              "combo-kashmiri-almonds-kashmiri-walnuts-saffron",
+              "himalayan-kahwa-premium-blend-pahari-haat",
+              "buy-pure-kashmiri-saffron-online"
+            ]
+          }
+        },
+        "category_tab_L3enYC": {
+          "type": "category_tab",
+          "settings": {
+            "title": "Curcumin",
+            "collection": "curated-basket",
+            "product_list": []
+          }
+        },
+        "category_tab_VAY9hR": {
+          "type": "category_tab",
+          "settings": {
+            "title": "Ashwagandha",
+            "collection": "all-products",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "category_tab_mbjGhd",
+        "category_tab_WNUbTd",
+        "category_tab_L3enYC",
+        "category_tab_VAY9hR"
+      ],
+      "name": "Featured (Section 7)",
+      "settings": {
+        "heading": "Featured Categories",
+        "heading_color": "#1F2937",
+        "bg_color": "#FAF7EE",
+        "tab_active_color": "#BA5D37",
+        "tab_border_color": "#E5E7EB",
+        "tab_text_color": "#4B5563",
+        "collection": "",
+        "product_list": [],
         "products_to_show": 10,
         "desktop_products": 5,
         "mobile_products": 2,
         "card_gap": 14,
-        "show_category_nav": true,
         "show_discount_badge": true,
         "always_show_badge": true,
         "badge_fallback_text": "SAVE 14%",
@@ -708,7 +1240,99 @@
         "atc_bg_color": "#BA5D37",
         "price_color": "#1B4D3E",
         "vendor_color": "#BA5D37",
-        "padding_top": 40,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_6_FRXrMV": {
+      "type": "custom-section-6",
+      "blocks": {
+        "spotlight_item_kaTUap": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Ellipse_51.png",
+            "image_by_url": "",
+            "title": "Saffron",
+            "link": ""
+          }
+        },
+        "spotlight_item_TJ8QGU": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Ellipse_54.png",
+            "image_by_url": "",
+            "title": "Chamomile",
+            "link": ""
+          }
+        },
+        "spotlight_item_AiMtWN": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Ellipse_55.png",
+            "image_by_url": "",
+            "title": "Shilajit",
+            "link": ""
+          }
+        },
+        "spotlight_item_gpbMEw": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/6b12922c86d1c4ae9f8ad54b51e38c4fcf325036.png",
+            "image_by_url": "",
+            "title": "Lavender",
+            "link": ""
+          }
+        },
+        "spotlight_item_MgBryF": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Ellipse_53.png",
+            "image_by_url": "",
+            "title": "Sea Buckthorn",
+            "link": ""
+          }
+        },
+        "spotlight_item_VcA48D": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Ellipse_56.png",
+            "image_by_url": "",
+            "title": "Honey",
+            "link": ""
+          }
+        },
+        "spotlight_item_Hc9GNT": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/Frame_322.png",
+            "image_by_url": "",
+            "title": "Juice",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "spotlight_item_kaTUap",
+        "spotlight_item_TJ8QGU",
+        "spotlight_item_AiMtWN",
+        "spotlight_item_gpbMEw",
+        "spotlight_item_MgBryF",
+        "spotlight_item_VcA48D",
+        "spotlight_item_Hc9GNT"
+      ],
+      "name": "This Season Spotlight (Section 6)",
+      "settings": {
+        "heading": "This Season Spotlight",
+        "heading_color": "#1f2937",
+        "bg_color": "#ffffff",
+        "card_bg": "#cfd8e2",
+        "label_color": "#111827",
+        "show_arrows": true,
+        "desktop_cards": 6,
+        "mobile_cards": 2,
+        "card_gap": 16,
+        "card_radius": 22,
+        "padding_top": 48,
         "padding_bottom": 48
       }
     },
@@ -961,110 +1585,6 @@
         "animations": "inherit"
       }
     },
-    "testimonials_LAggnW": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_dWLaVQ": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Love it",
-            "description": "<p>I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukaan. You can literally feel the energy kick in a few days. Love that it’s sourced straight from the mountains</p>",
-            "footer": "<p>Jayant</p>",
-            "image": "shopify://shop_images/ladakhi_shilajit_by_my_pahadi_dukan.jpg",
-            "image_text": "",
-            "image_link": "",
-            "product": "buy-shilajit-online"
-          }
-        },
-        "testimonial_zV8ARf": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Great Products",
-            "description": "<p>The Himalayan mushroom blend is now part of my daily routine. My focus and sleep have both improved. Plus, it’s comforting to know it’s 100% natural and traditionally sourced.</p>",
-            "footer": "<p>Rohit</p>",
-            "image": "shopify://shop_images/SBTBerries-6.png",
-            "image_text": "",
-            "image_link": "",
-            "product": "black-fungus-mushrooms-100gms-planet-mushroom"
-          }
-        },
-        "testimonial_8ycqFC": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Awesome",
-            "description": "<p>I started taking their Moringa capsules for general wellness and it’s made a noticeable difference in my energy levels and digestion. Super fresh and no aftertaste. Highly recommend!</p>",
-            "footer": "<p>Divya</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "himalayan-moringa-leaf-powder"
-          }
-        },
-        "testimonial_CakbYN": {
-          "type": "testimonial",
-          "settings": {
-            "title": "My fav Store",
-            "description": "<p>After a month of using My Pahadi Dukaan’s Ashwagandha, my stress is more manageable and I sleep deeper. The quality is top-notch — you can tell it's not mass-produced</p>",
-            "footer": "<p>Aditya</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "ashwagandha-root-powder-80gms-ayantara"
-          }
-        },
-        "testimonial_RPBkXY": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "title": "Love it so much",
-            "description": "<p>Always getting compliments from family, friends, and strangers. 🤗 🙌</p>",
-            "footer": "<p>John D.</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": ""
-          }
-        },
-        "testimonial_KGy66J": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "title": "Love it so much",
-            "description": "<p>Hands down one of the best shirts I’ve ever owned.  Fits great, feels amazing, seems to stay cool and is somewhat water resistant. </p>",
-            "footer": "<p>Dean J.</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_dWLaVQ",
-        "testimonial_zV8ARf",
-        "testimonial_8ycqFC",
-        "testimonial_CakbYN",
-        "testimonial_RPBkXY",
-        "testimonial_KGy66J"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "TESTIMONIALS",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "container": "container-fluid",
-        "color_scheme": "footer",
-        "design": "testimonials-2",
-        "show_stars": true,
-        "autorotate": false,
-        "show_navigation": true,
-        "show_pagination": false,
-        "star_color": "#d2861a",
-        "item_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "padding_top": 40,
-        "padding_bottom": 44,
-        "custom_class": "",
-        "animations": "inherit"
-      }
-    },
     "image_with_text_2_rkDDFX": {
       "type": "image-with-text-2",
       "name": "Image with text overlay",
@@ -1095,54 +1615,6 @@
         "animations": "inherit",
         "enable_bg_zoom_effect": true,
         "enable_preload_image": false
-      }
-    },
-    "promotion_countdown_timer_mtrC9A": {
-      "type": "promotion-countdown-timer",
-      "blocks": {
-        "text_7MhXrF": {
-          "type": "text",
-          "settings": {
-            "text_alignment": "left",
-            "subheading": "TO GET EXTRA 10% OFF • SPRING SALE",
-            "heading": "",
-            "heading_size": "h3",
-            "text": "<h5>USE <strong>SUMMER10</strong> TO GET EXTRA 10% OFF </h5>"
-          }
-        },
-        "countdown_aU3tRk": {
-          "type": "countdown",
-          "settings": {
-            "text_alignment": "center",
-            "time": "2025-07-26 23:00:00"
-          }
-        },
-        "button_G4ayHN": {
-          "type": "button",
-          "settings": {
-            "text_alignment": "center",
-            "button_label": "Shop Collection",
-            "button_link": "shopify://collections/all",
-            "button_style": "m-button--white",
-            "button_size": ""
-          }
-        }
-      },
-      "block_order": [
-        "text_7MhXrF",
-        "countdown_aU3tRk",
-        "button_G4ayHN"
-      ],
-      "disabled": true,
-      "name": "Promotion countdown timer",
-      "settings": {
-        "container": "container-fluid",
-        "color_scheme": "footer",
-        "background_in_container": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "custom_class": "",
-        "animations": "inherit"
       }
     },
     "product_tabs_3tpgpb": {
@@ -1309,208 +1781,6 @@
         "enable_scroller": false,
         "padding_top": 24,
         "padding_bottom": 36,
-        "custom_class": "",
-        "animations": "inherit"
-      }
-    },
-    "icon_box_zyGcbk": {
-      "type": "icon-box",
-      "blocks": {
-        "iconbox_dJndDV": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/SBT_card.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pure-seabuckthorn",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_b7xDhH": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_pahadi_wellness_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pahadi-wellness",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_yahnGB": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_dry_fruits_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/dry-fruits",
-            "button_label": "",
-            "button_link": "shopify://collections/dry-fruits",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_YqVDpW": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_pure_spices_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/spices-herbs",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_nLE3W7": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_pure_honey_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pure-honey",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_P3e6yU": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Categories_Jams_and_spreads_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/jams-spreads-preserves",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_LGJCFL": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_natural_beverages_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/natural-beverages",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        },
-        "iconbox_mzbhHT": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "default",
-            "image": "shopify://shop_images/Category_pure_ghee_my_pahadi_dukan.png",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pahadi-ghee",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
-          }
-        }
-      },
-      "block_order": [
-        "iconbox_dJndDV",
-        "iconbox_b7xDhH",
-        "iconbox_yahnGB",
-        "iconbox_YqVDpW",
-        "iconbox_nLE3W7",
-        "iconbox_P3e6yU",
-        "iconbox_LGJCFL",
-        "iconbox_mzbhHT"
-      ],
-      "disabled": true,
-      "settings": {
-        "container": "container-fluid",
-        "color_scheme": "default",
-        "heading": "Curated Picks",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "item_per_row": 5,
-        "item_gap": 8,
-        "item_gap_mobile": 2,
-        "card_style": "vertical",
-        "image_max_width": "170px",
-        "content_alignment": "center",
-        "hover_effect": "none",
-        "enable_slider": false,
-        "show_pagination": false,
-        "show_navigation": true,
-        "use_scroll_mobile": true,
-        "use_grid_column_mb": false,
-        "enable_scroller": false,
-        "padding_top": 26,
-        "padding_bottom": 26,
-        "custom_class": "m-icon-box--small",
-        "animations": "inherit"
-      }
-    },
-    "featured_collection_46Vgzq": {
-      "type": "featured-collection",
-      "disabled": true,
-      "settings": {
-        "heading": "Himalyan Herbs",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "color_scheme": "",
-        "container": "container-fluid",
-        "collection": "himalayan-herbs",
-        "enable_flashsale": false,
-        "show_countdown": false,
-        "product_to_show": 8,
-        "items_per_row": 4,
-        "item_gap": 30,
-        "pcard_layout": "",
-        "pcard_image_ratio": "1/1",
-        "show_vendor": false,
-        "hide_title": false,
-        "enable_slider": true,
-        "show_pagination": false,
-        "show_navigation": true,
-        "show_button_on_header": false,
-        "button_type": "link",
-        "button_text": "",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "infinite_load": false,
-        "max_page_load": 3,
-        "mobile_disable_slider": true,
-        "use_scroll_mobile": true,
-        "item_gap_mobile": 16,
-        "padding_top": 26,
-        "padding_bottom": 28,
         "custom_class": "",
         "animations": "inherit"
       }
@@ -1847,43 +2117,6 @@
         "custom_class": ""
       }
     },
-    "image_with_text_CJHAkB": {
-      "type": "image-with-text",
-      "disabled": true,
-      "name": "Image with text",
-      "settings": {
-        "heading": "",
-        "heading_size": "h3",
-        "subheading": "",
-        "container": "container-fluid",
-        "color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "item_gap": 100,
-        "item_gap_mobile": 30,
-        "layout": "left",
-        "image_column_size": "6",
-        "image_overlap": false,
-        "show_image_reverse": false,
-        "hover_effect": false,
-        "image_animation": "none",
-        "image": "shopify://shop_images/Harvesting_Sea_Buckthorn_in_Tranquil_Hills_1.png",
-        "link": "",
-        "link_2": "",
-        "second_image_offset_top": 10,
-        "title": "The Philosophy rooted in Mountains",
-        "sub_title": "",
-        "text": "<p>We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.</p>",
-        "text_size": "small",
-        "content_alignment": "left",
-        "button_label": "Know More",
-        "button_link": "shopify://pages/about",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "custom_class": "",
-        "animations": "inherit"
-      }
-    },
     "blog_posts_Q7EyFG": {
       "type": "blog-posts",
       "settings": {
@@ -2006,27 +2239,26 @@
   },
   "order": [
     "1621243260e1af0c20",
-    "image_with_text_2_wFUM7y",
-    "scrolling_promotion_Yyghrq",
-    "slider_PCXTWB",
-    "16225125199f82d8fe",
     "custom_section_1",
+    "slider_JiBK7r",
     "custom_section_3",
+    "custom_section_4_Gy6H39",
+    "custom_section_4_9W6QM6",
+    "16225125199f82d8fe",
+    "custom_section_5_tRjnLc",
+    "custom_section_6_mQemMh",
+    "custom_section_7_wTgxTr",
+    "custom_section_6_FRXrMV",
     "featured_collection_E3d77a",
     "featured_collection_7mBpkp",
     "1749283435cbe1d1db",
     "testimonials_pnyUnX",
-    "testimonials_LAggnW",
     "image_with_text_2_rkDDFX",
-    "promotion_countdown_timer_mtrC9A",
     "product_tabs_3tpgpb",
     "icon_box_xXQGRt",
-    "icon_box_zyGcbk",
-    "featured_collection_46Vgzq",
     "icon_box_XNYVdM",
     "icon_box_Ny6pxD",
     "custom_content_bbtDMb",
-    "image_with_text_CJHAkB",
     "blog_posts_Q7EyFG",
     "178583660426bc155c",
     "home_faq_3WNKjj"

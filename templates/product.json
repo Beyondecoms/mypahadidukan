@@ -27,23 +27,12 @@
           "type": "badge",
           "settings": {}
         },
-        "judge_me_reviews_preview_badge_KaNw4T": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
-        "vendor_badge": {
-          "type": "vendor_badge",
-          "settings": {
-            "show_badge": true,
-            "badge_style": "minimal",
-            "eyebrow_text": "Official Store",
-            "show_icon": true,
-            "show_arrow": true,
-            "custom_link": ""
-          }
-        },
         "title": {
           "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_KaNw4T": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
         "price": {
@@ -52,21 +41,6 @@
             "show_saving": true,
             "sale_badge_type": "percentage"
           }
-        },
-        "lab_certificate_kPUdYq": {
-          "type": "lab_certificate",
-          "disabled": true,
-          "settings": {
-            "heading": "Certificate",
-            "title": "View Authenticity Report",
-            "subtitle": "Lab Tested & Verified",
-            "pdf_url": "",
-            "bottom_text": "Each batch is independently tested for purity."
-          }
-        },
-        "certificate_JTkGnX": {
-          "type": "certificate",
-          "settings": {}
         },
         "custom_liquid_YwQ9iR": {
           "type": "custom_liquid",
@@ -78,20 +52,12 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size",
-            "tbspn_svg_icon": "",
-            "card_border_radius": 10,
-            "card_border_thickness": 1,
-            "card_selected_border_color": "#f58220",
-            "card_spacing": 12,
-            "card_image_size": 80,
-            "card_show_compare_price": true,
-            "card_show_discount": true,
-            "card_show_image": true,
-            "card_show_checkmark": true,
-            "card_desktop_cards_per_row": 3,
-            "card_mobile_width": 110
+            "size_title": "Size"
           }
+        },
+        "stackback_subscriptions_more_react_purchase_options_test_wtA9BD": {
+          "type": "shopify://apps/stackback-subscriptions-more/blocks/react-purchase-options-test/019b4b9b-83ea-7131-957e-bce5135363da",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -101,10 +67,6 @@
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
-        },
-        "shiprocket_promise_promise_widget_wxfpQj": {
-          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
-          "settings": {}
         },
         "offers_DyUaHC": {
           "type": "offers",
@@ -130,27 +92,15 @@
             "custom_liquid": "<div style=\"margin-top:20px;\"></div>\n{{ product.metafields.custom.custom_code }}"
           }
         },
-        "ingredients_highlight_Jc8UhY": {
-          "type": "ingredients_highlight",
+        "shiprocket_promise_promise_widget_wxfpQj": {
+          "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
+          "settings": {}
+        },
+        "custom_liquid_d9Wf67": {
+          "type": "custom_liquid",
+          "name": "Vendor",
           "settings": {
-            "heading": "Ingredients",
-            "image": "shopify://shop_images/image_30.png",
-            "item_1_title": "Vitamin C",
-            "item_1_desc": "Rich in Vitamin C and antioxidants to strengthen your body's defences.",
-            "item_1_top": 35,
-            "item_1_left": 15,
-            "item_2_title": "Zinc",
-            "item_2_desc": "Essential mineral that supports immune health.",
-            "item_2_top": 20,
-            "item_2_left": 65,
-            "item_3_title": "Antioxidants",
-            "item_3_desc": "Helps protect cells against free radicals.",
-            "item_3_top": 75,
-            "item_3_left": 10,
-            "item_4_title": "Omega 3,6,7 & 9",
-            "item_4_desc": "Vital fatty acids for heart and overall wellness.",
-            "item_4_top": 70,
-            "item_4_left": 55
+            "custom_liquid": "<a \n  href=\"/collections/vendors?q={{ product.vendor | url_param_escape }}\"\n  class=\"mpd-vendor-badge\"\n  aria-label=\"View all products by {{ product.vendor }}\"\n>\n  <span class=\"mpd-vendor-icon\">\n    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>\n      <polyline points=\"9 22 9 12 15 12 15 22\"/>\n    </svg>\n  </span>\n  <span class=\"mpd-vendor-text\">\n    <span class=\"mpd-vendor-eyebrow\">Official Store</span>\n    <span class=\"mpd-vendor-name\">{{ product.vendor }}</span>\n  </span>\n  <span class=\"mpd-vendor-arrow\">\n    <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n      <polyline points=\"9 18 15 12 9 6\"/>\n    </svg>\n  </span>\n</a>\n\n<style>\n.mpd-vendor-badge {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  padding: 10px 14px 10px 10px;\n  border: 1.5px solid rgba(0,0,0,0.10);\n  border-radius: 12px;\n  text-decoration: none;\n  background: #fff;\n  margin: 4px 0 12px;\n  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;\n  max-width: 260px;\n}\n.mpd-vendor-badge:hover {\n  border-color: rgba(0,0,0,0.22);\n  box-shadow: 0 4px 14px rgba(0,0,0,0.08);\n  transform: translateY(-1px);\n}\n.mpd-vendor-icon {\n  width: 36px;\n  height: 36px;\n  background: #f4f0e8;\n  border-radius: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  color: #7a6040;\n}\n.mpd-vendor-icon svg {\n  width: 17px;\n  height: 17px;\n}\n.mpd-vendor-text {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  flex: 1;\n}\n.mpd-vendor-eyebrow {\n  font-size: 10px;\n  font-weight: 600;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: #999;\n}\n.mpd-vendor-name {\n  font-size: 14px;\n  font-weight: 600;\n  color: #222;\n  line-height: 1.2;\n}\n.mpd-vendor-arrow {\n  color: #bbb;\n  display: flex;\n  align-items: center;\n  flex-shrink: 0;\n  transition: color 0.18s ease, transform 0.18s ease;\n}\n.mpd-vendor-arrow svg {\n  width: 14px;\n  height: 14px;\n}\n.mpd-vendor-badge:hover .mpd-vendor-arrow {\n  color: #777;\n  transform: translateX(2px);\n}\n</style>"
           }
         },
         "custom_text_abR3zj": {
@@ -193,8 +143,7 @@
             "heading3": "Icon 3",
             "icon3": "shopify://shop_images/icon_weight__managem.svg",
             "heading4": "Icon 4",
-            "icon4": "shopify://shop_images/icon_hart__helth.svg",
-            "heading5": "Icon 5"
+            "icon4": "shopify://shop_images/icon_hart__helth.svg"
           }
         },
         "custom_liquid_UAfqy3": {
@@ -240,19 +189,17 @@
       },
       "block_order": [
         "badge_ChqgGj",
-        "judge_me_reviews_preview_badge_KaNw4T",
-        "vendor_badge",
         "title",
+        "judge_me_reviews_preview_badge_KaNw4T",
         "price",
-        "lab_certificate_kPUdYq",
-        "certificate_JTkGnX",
         "custom_liquid_YwQ9iR",
         "variant_picker",
+        "stackback_subscriptions_more_react_purchase_options_test_wtA9BD",
         "buy_buttons",
-        "shiprocket_promise_promise_widget_wxfpQj",
         "offers_DyUaHC",
         "custom_liquid_jpdXn4",
-        "ingredients_highlight_Jc8UhY",
+        "shiprocket_promise_promise_widget_wxfpQj",
+        "custom_liquid_d9Wf67",
         "custom_text_abR3zj",
         "custom_liquid_3zNzzn",
         "shipping_VBJFtx",
@@ -318,6 +265,67 @@
         "custom_class": "",
         "animations": "inherit"
       }
+    },
+    "1762792955f29acaec": {
+      "type": "apps",
+      "blocks": {
+        "reelcart_video_carousel_ixHkkP": {
+          "type": "shopify://apps/reelcart/blocks/video-carousel/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
+          "disabled": true,
+          "settings": {
+            "selected_campaign_title": "",
+            "is_collection_carousel": false,
+            "section_bg": "rgba(0,0,0,0)",
+            "title_color": "#6c7278",
+            "title_bg": "rgba(0,0,0,0)",
+            "section_title": "",
+            "section_subtitle": "",
+            "horizontal_alignment": "center",
+            "card_details": "product-info",
+            "show_scroll_arrows": true,
+            "show_view_count": true,
+            "video_card_width": 280,
+            "video_card_width_mobile": 200,
+            "video_card_height": 460,
+            "video_card_height_mobile": 330,
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_show_price": true,
+            "phone_show_image": true,
+            "phone_show_title": false,
+            "phone_show_price": false,
+            "caption_text_alignment": "left",
+            "caption_fontsize": 12,
+            "caption_padding": 20,
+            "caption_color_background": "linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)",
+            "username_visibility": false
+          }
+        }
+      },
+      "block_order": [
+        "reelcart_video_carousel_ixHkkP"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "header_alignment": "center",
+        "container": "container",
+        "background_color": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": ""
+      }
+    },
+    "banner_loop_jNDNJU": {
+      "type": "banner-loop",
+      "name": "Product Banners",
+      "settings": {}
+    },
+    "product_a_content_zRJcFA": {
+      "type": "Product-A-content",
+      "name": "Product meta image",
+      "settings": {}
     },
     "icon_box_R6APwa": {
       "type": "icon-box",
@@ -389,6 +397,7 @@
         "iconbox_nExyMd",
         "iconbox_gzpe6V"
       ],
+      "name": "Why us",
       "settings": {
         "container": "container-fluid",
         "color_scheme": "default",
@@ -415,67 +424,6 @@
         "custom_class": "",
         "animations": "inherit"
       }
-    },
-    "1762792955f29acaec": {
-      "type": "apps",
-      "blocks": {
-        "reelcart_video_carousel_ixHkkP": {
-          "type": "shopify://apps/reelcart/blocks/video-carousel/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
-          "disabled": true,
-          "settings": {
-            "selected_campaign_title": "",
-            "is_collection_carousel": false,
-            "section_bg": "rgba(0,0,0,0)",
-            "title_color": "#6c7278",
-            "title_bg": "rgba(0,0,0,0)",
-            "section_title": "",
-            "section_subtitle": "",
-            "horizontal_alignment": "center",
-            "card_details": "product-info",
-            "show_scroll_arrows": true,
-            "show_view_count": true,
-            "video_card_width": 280,
-            "video_card_width_mobile": 200,
-            "video_card_height": 460,
-            "video_card_height_mobile": 330,
-            "desktop_show_image": true,
-            "desktop_show_title": true,
-            "desktop_show_price": true,
-            "phone_show_image": true,
-            "phone_show_title": false,
-            "phone_show_price": false,
-            "caption_text_alignment": "left",
-            "caption_fontsize": 12,
-            "caption_padding": 20,
-            "caption_color_background": "linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)",
-            "username_visibility": false
-          }
-        }
-      },
-      "block_order": [
-        "reelcart_video_carousel_ixHkkP"
-      ],
-      "settings": {
-        "heading": "",
-        "heading_size": "h3",
-        "subheading": "",
-        "header_alignment": "center",
-        "container": "container",
-        "background_color": "",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "custom_class": ""
-      }
-    },
-    "banner_loop_jNDNJU": {
-      "type": "banner-loop",
-      "name": "Product Banners",
-      "settings": {}
-    },
-    "product_a_content_zRJcFA": {
-      "type": "Product-A-content",
-      "name": "Product meta image",
-      "settings": {}
     },
     "1748679663eed56d3d": {
       "type": "apps",
@@ -885,10 +833,10 @@
     "breadcrumb",
     "main",
     "product-details-tabs",
-    "icon_box_R6APwa",
     "1762792955f29acaec",
     "banner_loop_jNDNJU",
     "product_a_content_zRJcFA",
+    "icon_box_R6APwa",
     "1748679663eed56d3d",
     "image_with_text_2_mytDBk",
     "icon_box_BPkYHz",
