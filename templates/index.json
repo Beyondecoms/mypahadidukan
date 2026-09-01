@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/Ghee--desktop.jpg",
-            "mb_background": "shopify://shop_images/Ghee-mobile.jpg",
+            "mb_background": "shopify://shop_images/ghee-mobile-800x1000.jpg",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -45,8 +45,8 @@
         "slider_item_4PAGkD": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/Rhododendron-and-strawberry-Desktop.jpg",
-            "mb_background": "shopify://shop_images/Rhododendron-and-strawberry-mobile.jpg",
+            "background": "shopify://shop_images/1611x1052_resize_jpg.jpg",
+            "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
             "content_in_container": true,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -76,7 +76,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/oil-final.jpg",
-            "mb_background": "shopify://shop_images/oil-mobile1.jpg",
+            "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
             "content_in_container": true,
             "content_position": "right bottom",
             "text_alignment": "center",
@@ -104,10 +104,9 @@
         },
         "1621243260e1af0c20-1": {
           "type": "slider_item",
-          "disabled": true,
           "settings": {
-            "background": "shopify://shop_images/All_products.jpg",
-            "mb_background": "shopify://shop_images/All_products_banner.jpg",
+            "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
+            "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -116,7 +115,7 @@
             "subheading": "",
             "title": "",
             "description": "",
-            "image_link": "shopify://collections/best-selling",
+            "image_link": "https://mypahadidukan.com/products/afghani-pahadi-hing-my-pahadi-dukan",
             "button_text": "",
             "button_link": "",
             "button_style": "sf__btn-secondary",
@@ -535,165 +534,182 @@
         "animations": "inherit"
       }
     },
-    "icon_box_nzwbPV": {
-      "type": "icon-box",
+    "custom_section_1": {
+      "type": "custom-section-1",
       "blocks": {
-        "iconbox_khji69": {
-          "type": "iconbox",
+        "category_1": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/festivities_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://mypahadidukan.com/collections/all-products/gifting",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "https://mypahadidukan.com/collections/all-products/gifting"
           }
         },
-        "iconbox_aCwkhp": {
-          "type": "iconbox",
+        "category_2": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pure-seabuckthorn",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/pure-seabuckthorn"
           }
         },
-        "iconbox_8eRmFp": {
-          "type": "iconbox",
+        "category_3": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pahadi-wellness",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/pahadi-wellness"
           }
         },
-        "iconbox_q8bjCn": {
-          "type": "iconbox",
+        "category_4": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/jams_spreads_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/jams-spreads-preserves",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/jams-spreads-preserves"
           }
         },
-        "iconbox_w7mxda": {
-          "type": "iconbox",
+        "category_5": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/dry_fruits_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/dry-fruits",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/dry-fruits"
           }
         },
-        "iconbox_EggYex": {
-          "type": "iconbox",
+        "category_6": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/natural_beverages_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/natural-beverages",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/natural-beverages"
           }
         },
-        "iconbox_kKzcKm": {
-          "type": "iconbox",
+        "category_7": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+            "title": "",
             "image": "shopify://shop_images/pure_honey_card.jpg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "shopify://collections/pure-honey",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "link": "shopify://collections/pure-honey"
           }
         },
-        "iconbox_FzBM9Q": {
-          "type": "iconbox",
+        "category_8": {
+          "type": "category",
           "settings": {
-            "card_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-            "image": "shopify://shop_images/pure_ghee_card.jpg",
-            "image_by_url": "",
             "title": "",
-            "description": "",
-            "link": "shopify://collections/pahadi-ghee",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "sf__btn-link",
-            "button_size": ""
+            "image": "shopify://shop_images/pure_ghee_card.jpg",
+            "link": "shopify://collections/pahadi-ghee"
           }
         }
       },
       "block_order": [
-        "iconbox_khji69",
-        "iconbox_aCwkhp",
-        "iconbox_8eRmFp",
-        "iconbox_q8bjCn",
-        "iconbox_w7mxda",
-        "iconbox_EggYex",
-        "iconbox_kKzcKm",
-        "iconbox_FzBM9Q"
+        "category_1",
+        "category_2",
+        "category_3",
+        "category_4",
+        "category_5",
+        "category_6",
+        "category_7",
+        "category_8"
       ],
       "settings": {
-        "container": "container-fluid",
-        "color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
         "heading": "SHOP BY CATEGORY",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "item_per_row": 8,
-        "item_gap": 8,
-        "item_gap_mobile": 2,
-        "card_style": "vertical",
-        "image_max_width": "170px",
-        "content_alignment": "center",
-        "hover_effect": "none",
-        "enable_slider": false,
-        "show_pagination": false,
-        "show_navigation": false,
-        "use_scroll_mobile": true,
-        "use_grid_column_mb": false,
-        "enable_scroller": true,
-        "padding_top": 60,
-        "padding_bottom": 62,
-        "custom_class": "m-icon-box--small",
-        "animations": "inherit"
+        "bg_color": "#FAF3E8",
+        "heading_color": "#BA5D37",
+        "card_bg_color": "#FFF5EA",
+        "card_title_color": "#BA5D37",
+        "dash_color": "#F26522",
+        "show_card_title": true,
+        "show_card_dash": true,
+        "show_arrows": true,
+        "desktop_cards": 8,
+        "mobile_cards": 2,
+        "card_gap": 12,
+        "card_radius": 14,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_3": {
+      "type": "custom-section-3",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "title": "Juices",
+            "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
+            "collection": "pure-seabuckthorn"
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "title": "Oils",
+            "image": "shopify://shop_images/oil-final.jpg",
+            "collection": "all-products"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "Ghee",
+            "image": "shopify://shop_images/pure_ghee_card.jpg",
+            "collection": "pahadi-ghee"
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "Root Powders",
+            "image": "shopify://shop_images/dry_fruits_card.jpg",
+            "collection": "dry-fruits"
+          }
+        },
+        "cat_5": {
+          "type": "category",
+          "settings": {
+            "title": "Oils",
+            "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
+            "collection": "pahadi-wellness"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5"
+      ],
+      "settings": {
+        "heading": "Fastest Selling",
+        "collection": "by-my-pahadi-dukan",
+        "products_to_show": 10,
+        "desktop_products": 5,
+        "mobile_products": 2,
+        "card_gap": 14,
+        "show_category_nav": true,
+        "show_discount_badge": true,
+        "always_show_badge": true,
+        "badge_fallback_text": "SAVE 14%",
+        "show_wishlist": true,
+        "show_quickview": true,
+        "show_rating": true,
+        "default_rating": "4.5",
+        "default_reviews": "1745",
+        "show_vendor": true,
+        "vendor_text": "My Pahadi Dukan",
+        "default_subtitle": "Vitamin C, Omega 3,6,7 and 9 and Antioxidants",
+        "default_quantity": "300 ml",
+        "show_promo_badge": true,
+        "promo_discount_text": "Extra 10% off",
+        "promo_coupon_code": "SUMMER10",
+        "always_show_compare_price": true,
+        "atc_bg_color": "#BA5D37",
+        "price_color": "#1B4D3E",
+        "vendor_color": "#BA5D37",
+        "padding_top": 40,
+        "padding_bottom": 48
       }
     },
     "featured_collection_E3d77a": {
@@ -1901,6 +1917,10 @@
         "animations": "inherit"
       }
     },
+    "178583660426bc155c": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "home_faq_3WNKjj": {
       "type": "home-faq",
       "blocks": {
@@ -1990,7 +2010,8 @@
     "scrolling_promotion_Yyghrq",
     "slider_PCXTWB",
     "16225125199f82d8fe",
-    "icon_box_nzwbPV",
+    "custom_section_1",
+    "custom_section_3",
     "featured_collection_E3d77a",
     "featured_collection_7mBpkp",
     "1749283435cbe1d1db",
@@ -2007,6 +2028,7 @@
     "custom_content_bbtDMb",
     "image_with_text_CJHAkB",
     "blog_posts_Q7EyFG",
+    "178583660426bc155c",
     "home_faq_3WNKjj"
   ]
 }
