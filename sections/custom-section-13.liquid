@@ -1,0 +1,686 @@
+{%- liquid
+  assign comp_heading = section.settings.comp_heading | default: 'Why choose us?'
+  assign comp_brand_name = section.settings.comp_brand_name | default: 'My Pahadi Dukan'
+  assign comp_others_name = section.settings.comp_others_name | default: 'Others'
+  assign comp_pill_bg = section.settings.comp_pill_bg | default: '#346357'
+  assign comp_pill_color = section.settings.comp_pill_color | default: '#FFFFFF'
+  
+  assign faq_heading = section.settings.faq_heading | default: 'Things People Ask Us'
+  assign faq_card_bg = section.settings.faq_card_bg | default: '#FFFDF0'
+  assign faq_button_text = section.settings.faq_button_text | default: 'Read More'
+  assign faq_button_link = section.settings.faq_button_link
+  
+  assign bg_color = section.settings.bg_color | default: '#FFFFFF'
+  assign padding_top = section.settings.padding_top | default: 48
+  assign padding_bottom = section.settings.padding_bottom | default: 48
+-%}
+
+<div
+  id="custom-section-13-{{ section.id }}"
+  class="custom-section-13"
+  style="
+    --cs13-bg: {{ bg_color }};
+    --cs13-pill-bg: {{ comp_pill_bg }};
+    --cs13-pill-color: {{ comp_pill_color }};
+    --cs13-faq-bg: {{ faq_card_bg }};
+    --cs13-pt: {{ padding_top }}px;
+    --cs13-pb: {{ padding_bottom }}px;
+  "
+>
+  <div class="custom-section-13__container">
+    <div class="custom-section-13__grid">
+      
+      <!-- LEFT COLUMN: Comparison Table -->
+      <div class="custom-section-13__comp-column">
+        {%- if comp_heading != blank -%}
+          <h2 class="custom-section-13__comp-heading">{{ comp_heading }}</h2>
+        {%- endif -%}
+
+        {%- assign comp_rows = section.blocks | where: 'type', 'comparison_row' -%}
+        <div class="custom-section-13__table-container">
+          
+          <!-- Background Horizontal Lines -->
+          <div class="custom-section-13__table-lines">
+            <div class="custom-section-13__line custom-section-13__line--head"></div>
+            {%- for block in comp_rows -%}
+              {%- unless forloop.last -%}
+                <div class="custom-section-13__line"></div>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+
+          <!-- Table Columns Layout -->
+          <div class="custom-section-13__table-content">
+            
+            <!-- Column 1: Feature Titles -->
+            <div class="custom-section-13__col custom-section-13__col--features">
+              <div class="custom-section-13__cell-head"></div>
+              {%- for block in comp_rows -%}
+                <div class="custom-section-13__cell-row" {{ block.shopify_attributes }}>
+                  <span>{{ block.settings.feature_text }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+
+            <!-- Column 2: Brand (Single Continuous Vertical Pill Card) -->
+            <div class="custom-section-13__col custom-section-13__col--brand">
+              <div class="custom-section-13__cell-head custom-section-13__cell-head--brand">
+                <span>{{ comp_brand_name }}</span>
+              </div>
+              {%- for block in comp_rows -%}
+                <div class="custom-section-13__cell-row custom-section-13__cell-row--brand">
+                  {%- if block.settings.brand_check -%}
+                    <span class="custom-section-13__icon custom-section-13__icon--check" aria-label="Yes">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+                        <polyline points="8.5 12.5 11 15 15.5 9.5"></polyline>
+                      </svg>
+                    </span>
+                  {%- else -%}
+                    <span class="custom-section-13__icon custom-section-13__icon--cross" aria-label="No">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+            <!-- Column 3: Competitors ("Others") -->
+            <div class="custom-section-13__col custom-section-13__col--others">
+              <div class="custom-section-13__cell-head">
+                <span>{{ comp_others_name }}</span>
+              </div>
+              {%- for block in comp_rows -%}
+                <div class="custom-section-13__cell-row custom-section-13__cell-row--others">
+                  {%- if block.settings.others_check -%}
+                    <span class="custom-section-13__icon custom-section-13__icon--check-dark" aria-label="Yes">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+                        <polyline points="8.5 12.5 11 15 15.5 9.5"></polyline>
+                      </svg>
+                    </span>
+                  {%- else -%}
+                    <span class="custom-section-13__icon custom-section-13__icon--cross-dark" aria-label="No">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: FAQ Accordion Card -->
+      <div class="custom-section-13__faq-column">
+        <div class="custom-section-13__faq-card">
+          {%- if faq_heading != blank -%}
+            <h2 class="custom-section-13__faq-heading">{{ faq_heading }}</h2>
+          {%- endif -%}
+
+          {%- assign faq_items = section.blocks | where: 'type', 'faq_item' -%}
+          {%- if faq_items.size > 0 -%}
+            <div class="custom-section-13__faq-list">
+              {%- for block in faq_items -%}
+                <details class="custom-section-13__faq-item" {{ block.shopify_attributes }}>
+                  <summary class="custom-section-13__faq-question">
+                    <span>{{ block.settings.question }}</span>
+                    <span class="custom-section-13__faq-chevron">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </span>
+                  </summary>
+                  {%- if block.settings.answer != blank -%}
+                    <div class="custom-section-13__faq-answer">
+                      <p>{{ block.settings.answer }}</p>
+                    </div>
+                  {%- endif -%}
+                </details>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if faq_button_text != blank -%}
+            <div class="custom-section-13__faq-footer">
+              <a href="{{ faq_button_link | default: '#' }}" class="custom-section-13__faq-btn">
+                {{ faq_button_text }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  #custom-section-13-{{ section.id }} {
+    background-color: var(--cs13-bg);
+    padding-top: var(--cs13-pt);
+    padding-bottom: var(--cs13-pb);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  #custom-section-13-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* Left Column Styles */
+  #custom-section-13-{{ section.id }} .custom-section-13__comp-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__comp-heading {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 32px 0;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__table-container {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Horizontal Lines Background */
+  #custom-section-13-{{ section.id }} .custom-section-13__table-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__line {
+    flex: 1;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__line--head {
+    height: 58px;
+    flex: none;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  /* Table Content Layout */
+  #custom-section-13-{{ section.id }} .custom-section-13__table-content {
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__col--features {
+    flex: 1.8;
+    padding-right: 12px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__col--brand {
+    flex: 1.4;
+    background-color: var(--cs13-pill-bg);
+    color: var(--cs13-pill-color);
+    border-radius: 20px;
+    margin-top: -12px;
+    margin-bottom: -12px;
+    padding: 16px 8px 20px 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 3;
+    position: relative;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__col--others {
+    flex: 1;
+    padding-left: 12px;
+  }
+
+  /* Cell Row Heights & Alignments */
+  #custom-section-13-{{ section.id }} .custom-section-13__cell-head {
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F2937;
+    text-align: center;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__cell-head--brand {
+    color: var(--cs13-pill-color);
+    height: 48px;
+    margin-bottom: 10px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__cell-row {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2937;
+    line-height: 1.3;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__cell-row--brand {
+    justify-content: center;
+    color: var(--cs13-pill-color);
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__cell-row--others {
+    justify-content: center;
+  }
+
+  /* Icons */
+  #custom-section-13-{{ section.id }} .custom-section-13__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__icon--check svg {
+    stroke: #FFFFFF;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__icon--cross-dark svg {
+    stroke: #1F2937;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* FAQ Column Styles */
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-card {
+    background-color: var(--cs13-faq-bg);
+    border-radius: 24px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-heading {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 28px 0;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-item {
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px 0;
+    cursor: pointer;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-item:first-child {
+    border-top: 1px solid #E5E7EB;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2937;
+    gap: 16px;
+    list-style: none;
+    line-height: 1.4;
+    user-select: none;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-chevron {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease;
+    color: #4B5563;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-chevron svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-item[open] .custom-section-13__faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-answer {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4B5563;
+    padding-right: 24px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-answer p {
+    margin: 0;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-footer {
+    text-align: center;
+    margin-top: 28px;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-btn {
+    font-size: 15px;
+    font-weight: 600;
+    color: #D97706;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+  }
+
+  #custom-section-13-{{ section.id }} .custom-section-13__faq-btn:hover {
+    color: #B45309;
+  }
+
+  @media (max-width: 900px) {
+    #custom-section-13-{{ section.id }} .custom-section-13__grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+
+    #custom-section-13-{{ section.id }} .custom-section-13__faq-card {
+      padding: 28px 20px;
+    }
+
+    #custom-section-13-{{ section.id }} .custom-section-13__comp-heading,
+    #custom-section-13-{{ section.id }} .custom-section-13__faq-heading {
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom Section 13",
+  "tag": "section",
+  "class": "section-custom-13",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Comparison Table Settings"
+    },
+    {
+      "type": "text",
+      "id": "comp_heading",
+      "label": "Comparison Heading",
+      "default": "Why choose us?"
+    },
+    {
+      "type": "text",
+      "id": "comp_brand_name",
+      "label": "Your Brand Column Name",
+      "default": "My Pahadi Dukan"
+    },
+    {
+      "type": "text",
+      "id": "comp_others_name",
+      "label": "Competitors Column Name",
+      "default": "Others"
+    },
+    {
+      "type": "color",
+      "id": "comp_pill_bg",
+      "label": "Brand Column Highlight Background",
+      "default": "#346357"
+    },
+    {
+      "type": "color",
+      "id": "comp_pill_color",
+      "label": "Brand Column Highlight Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Settings"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ Heading",
+      "default": "Things People Ask Us"
+    },
+    {
+      "type": "color",
+      "id": "faq_card_bg",
+      "label": "FAQ Card Background",
+      "default": "#FFFDF0"
+    },
+    {
+      "type": "text",
+      "id": "faq_button_text",
+      "label": "Footer Button Text",
+      "default": "Read More"
+    },
+    {
+      "type": "url",
+      "id": "faq_button_link",
+      "label": "Footer Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Feature Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "Feature Title",
+          "default": "Fresh Ingredients"
+        },
+        {
+          "type": "checkbox",
+          "id": "brand_check",
+          "label": "Your Brand Has Feature?",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "others_check",
+          "label": "Others Have Feature?",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Are your products really sourced from the Himalayas?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes, all our products are directly sourced from local Himalayan farmers and wild crafters."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Section 13",
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Fresh Ingredients",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Evidence based formulation",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Lab Tested",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Loerm Ipsum",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Loerm Ipsum",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products really sourced from the Himalayas?",
+            "answer": "Yes, all our products are directly sourced from local Himalayan farmers and wild crafters."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do you verify purity and authenticity?",
+            "answer": "We conduct rigorous third-party lab testing and maintain full supply chain transparency."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is Kashmiri Saffron different from regular saffron?",
+            "answer": "Kashmiri saffron has higher crocin levels, distinct aroma, and deep red stigmas."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes your Shilajit different from other brands?",
+            "answer": "Our Shilajit is purified using traditional Ayurvedic methods and tested for heavy metals."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products organic and chemical-free?",
+            "answer": "Yes, 100% natural, organic, and free from any synthetic additives or preservatives."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

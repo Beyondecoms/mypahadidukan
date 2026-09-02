@@ -234,7 +234,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/SBT_card.png",
+            "image": "shopify://shop_images/Link_1.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-seabuckthorn"
           }
@@ -243,7 +243,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_pahadi_wellness_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_mask-group.png",
             "image_by_url": "",
             "link": "shopify://collections/pahadi-wellness"
           }
@@ -252,7 +252,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Categories_Jams_and_spreads_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_mask-group_1.png",
             "image_by_url": "",
             "link": "shopify://collections/jams-spreads-preserves"
           }
@@ -261,7 +261,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_dry_fruits_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_2.png",
             "image_by_url": "",
             "link": "shopify://collections/dry-fruits"
           }
@@ -270,7 +270,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_natural_beverages_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_mask-group_2.png",
             "image_by_url": "",
             "link": "shopify://collections/natural-beverages"
           }
@@ -279,7 +279,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_pure_honey_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_mask-group_3.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-honey"
           }
@@ -288,7 +288,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_pure_ghee_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_1.png",
             "image_by_url": "",
             "link": "shopify://collections/pahadi-ghee"
           }
@@ -297,7 +297,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Category_pure_spices_my_pahadi_dukan.png",
+            "image": "shopify://shop_images/Link_mask-group_1.png",
             "image_by_url": "",
             "link": "shopify://collections/spices-herbs"
           }
@@ -318,14 +318,15 @@
         "heading": "SHOP BY CATEGORY",
         "bg_color": "#faf3e8",
         "heading_color": "#ba5d37",
+        "card_bg": "#fdeedc",
+        "card_title_color": "#c0503b",
+        "desktop_cards": 5,
+        "mobile_cards": 2,
+        "card_gap": 12,
         "show_scrollbar": true,
         "scrollbar_track_color": "#e5d9c8",
         "scrollbar_thumb_color": "#ba5d37",
         "show_arrows": true,
-        "desktop_cards": 5,
-        "mobile_cards": 2,
-        "card_gap": 12,
-        "card_radius": 16,
         "padding_top": 44,
         "padding_bottom": 44
       }
@@ -524,8 +525,11 @@
         "slider_item_YFBBeX",
         "slider_item_yGfpHw"
       ],
+      "custom_css": [
+        ".m-section.m-slider.m-slideshow-section.m-slider--fullscreen.m-slider--content-stack.sf-home__slideshow{margin-top: 20px;}"
+      ],
       "settings": {
-        "container": "w-full",
+        "container": "container",
         "slideshow_height": "fullscreen",
         "show_overlay": false,
         "dots_position": "right",
@@ -599,8 +603,8 @@
         "heading": "Fastest Selling",
         "collection": "by-my-pahadi-dukan",
         "product_list": [],
-        "products_to_show": 10,
-        "desktop_products": 5,
+        "products_to_show": 4,
+        "desktop_products": 3,
         "mobile_products": 2,
         "card_gap": 14,
         "show_category_nav": true,
@@ -624,7 +628,7 @@
         "price_color": "#1b4d3e",
         "vendor_color": "#ba5d37",
         "padding_top": 40,
-        "padding_bottom": 48
+        "padding_bottom": 12
       }
     },
     "custom_section_4_Gy6H39": {
@@ -708,8 +712,8 @@
         "card_gap": 8,
         "desktop_items": 6,
         "mobile_card_width": 110,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "custom_section_4_9W6QM6": {
@@ -793,8 +797,8 @@
         "card_gap": 8,
         "desktop_items": 6,
         "mobile_card_width": 110,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "16225125199f82d8fe": {
@@ -1210,11 +1214,11 @@
       "name": "Featured (Section 7)",
       "settings": {
         "heading": "Featured Categories",
-        "heading_color": "#1F2937",
-        "bg_color": "#FAF7EE",
-        "tab_active_color": "#BA5D37",
-        "tab_border_color": "#E5E7EB",
-        "tab_text_color": "#4B5563",
+        "heading_color": "#1f2937",
+        "bg_color": "#faf7ee",
+        "tab_active_color": "#ba5d37",
+        "tab_border_color": "#e5e7eb",
+        "tab_text_color": "#4b5563",
         "collection": "",
         "product_list": [],
         "products_to_show": 10,
@@ -1237,9 +1241,9 @@
         "promo_discount_text": "Extra 10% off",
         "promo_coupon_code": "SUMMER10",
         "always_show_compare_price": true,
-        "atc_bg_color": "#BA5D37",
-        "price_color": "#1B4D3E",
-        "vendor_color": "#BA5D37",
+        "atc_bg_color": "#ba5d37",
+        "price_color": "#1b4d3e",
+        "vendor_color": "#ba5d37",
         "padding_top": 48,
         "padding_bottom": 48
       }
@@ -1336,353 +1340,146 @@
         "padding_bottom": 48
       }
     },
-    "featured_collection_E3d77a": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "By My Pahadi Dukan",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "color_scheme": "",
-        "container": "container-fluid",
-        "collection": "by-my-pahadi-dukan",
-        "enable_flashsale": false,
-        "show_countdown": false,
-        "product_to_show": 8,
-        "items_per_row": 4,
-        "item_gap": 30,
-        "pcard_layout": "",
-        "pcard_image_ratio": "1/1",
-        "show_vendor": false,
-        "hide_title": false,
-        "enable_slider": true,
-        "show_pagination": false,
-        "show_navigation": true,
-        "show_button_on_header": true,
-        "button_type": "link",
-        "button_text": "Show All",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "infinite_load": false,
-        "max_page_load": 3,
-        "mobile_disable_slider": true,
-        "use_scroll_mobile": true,
-        "item_gap_mobile": 16,
-        "padding_top": 44,
-        "padding_bottom": 30,
-        "custom_class": "",
-        "animations": "inherit"
-      }
-    },
-    "featured_collection_7mBpkp": {
-      "type": "featured-collection",
-      "name": "New Arrivals",
-      "settings": {
-        "heading": "New Arrivals",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "color_scheme": "",
-        "container": "container-fluid",
-        "collection": "new-arrivals-1",
-        "enable_flashsale": false,
-        "show_countdown": false,
-        "product_to_show": 8,
-        "items_per_row": 4,
-        "item_gap": 30,
-        "pcard_layout": "",
-        "pcard_image_ratio": "1/1",
-        "show_vendor": false,
-        "hide_title": false,
-        "enable_slider": true,
-        "show_pagination": false,
-        "show_navigation": true,
-        "show_button_on_header": true,
-        "button_type": "link",
-        "button_text": "Show All",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "infinite_load": false,
-        "max_page_load": 3,
-        "mobile_disable_slider": true,
-        "use_scroll_mobile": true,
-        "item_gap_mobile": 16,
-        "padding_top": 44,
-        "padding_bottom": 30,
-        "custom_class": "",
-        "animations": "inherit"
-      }
-    },
-    "1749283435cbe1d1db": {
-      "type": "apps",
+    "custom_section_8_AtY7dF": {
+      "type": "custom-section-8",
       "blocks": {
-        "judge_me_reviews_medals_YmbVgD": {
-          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
-        "judge_me_reviews_preview_badge_homepage_ndXdDV": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "marketplace_ERrqGn": {
+          "type": "marketplace",
           "settings": {
-            "product": ""
+            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703",
+            "alt_text": "Amazon",
+            "link": ""
           }
         },
-        "reelcart_video_carousel_UYeXXY": {
-          "type": "shopify://apps/reelcart/blocks/video-carousel/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
-          "disabled": true,
+        "marketplace_yaUGzH": {
+          "type": "marketplace",
           "settings": {
-            "selected_campaign_title": "Homepage MPD",
-            "is_collection_carousel": false,
-            "section_bg": "rgba(0,0,0,0)",
-            "title_color": "#6c7278",
-            "title_bg": "rgba(0,0,0,0)",
-            "section_title": "",
-            "section_subtitle": "",
-            "horizontal_alignment": "center",
-            "card_details": "product-info",
-            "show_scroll_arrows": true,
-            "show_view_count": true,
-            "video_card_width": 280,
-            "video_card_width_mobile": 200,
-            "video_card_height": 460,
-            "video_card_height_mobile": 330,
-            "desktop_show_image": true,
-            "desktop_show_title": true,
-            "desktop_show_price": true,
-            "phone_show_image": true,
-            "phone_show_title": false,
-            "phone_show_price": false,
-            "caption_text_alignment": "left",
-            "caption_fontsize": 12,
-            "caption_padding": 20,
-            "caption_color_background": "linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)",
-            "username_visibility": false
+            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/48c3a84cedd2cc03dda46fc273a18f395f24d959.png?v=1788241897",
+            "alt_text": "Flipkart",
+            "link": ""
+          }
+        },
+        "marketplace_XrhBw7": {
+          "type": "marketplace",
+          "settings": {
+            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703",
+            "alt_text": "Amazon",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_medals_YmbVgD",
-        "judge_me_reviews_preview_badge_homepage_ndXdDV",
-        "reelcart_video_carousel_UYeXXY"
+        "marketplace_ERrqGn",
+        "marketplace_yaUGzH",
+        "marketplace_XrhBw7"
       ],
+      "name": "Social Proof & Marketplaces (Section 8)",
       "settings": {
-        "heading": "",
-        "heading_size": "h3",
-        "subheading": "",
-        "header_alignment": "center",
-        "container": "container-fluid",
-        "background_color": "",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "custom_class": ""
-      }
-    },
-    "testimonials_pnyUnX": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_7bVRtk": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Love it",
-            "description": "<p>I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukaan. You can literally feel the energy kick in a few days. Love that it’s sourced straight from the mountains</p>",
-            "footer": "<p>Jayant</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "buy-shilajit-online"
-          }
-        },
-        "testimonial_BaC37W": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Great Products",
-            "description": "<p>The Himalayan mushroom blend is now part of my daily routine. My focus and sleep have both improved. Plus, it’s comforting to know it’s 100% natural and traditionally sourced.</p>",
-            "footer": "<p>Rohit</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "black-fungus-mushrooms-100gms-planet-mushroom"
-          }
-        },
-        "testimonial_X8q9A4": {
-          "type": "testimonial",
-          "settings": {
-            "title": "Awesome",
-            "description": "<p>I started taking their Moringa capsules for general wellness and it’s made a noticeable difference in my energy levels and digestion. Super fresh and no aftertaste. Highly recommend!</p>",
-            "footer": "<p>Divya</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "himalayan-moringa-leaf-powder"
-          }
-        },
-        "testimonial_ef4Etp": {
-          "type": "testimonial",
-          "settings": {
-            "title": "My fav Store",
-            "description": "<p>After a month of using My Pahadi Dukaan’s Ashwagandha, my stress is more manageable and I sleep deeper. The quality is top-notch — you can tell it's not mass-produced</p>",
-            "footer": "<p>Aditya</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": "ashwagandha-root-powder-80gms-ayantara"
-          }
-        },
-        "testimonial_bUi88K": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "title": "Love it so much",
-            "description": "<p>Always getting compliments from family, friends, and strangers. 🤗 🙌</p>",
-            "footer": "<p>John D.</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": ""
-          }
-        },
-        "testimonial_NMt6Em": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "title": "Love it so much",
-            "description": "<p>Hands down one of the best shirts I’ve ever owned.  Fits great, feels amazing, seems to stay cool and is somewhat water resistant. </p>",
-            "footer": "<p>Dean J.</p>",
-            "image_text": "",
-            "image_link": "",
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_7bVRtk",
-        "testimonial_BaC37W",
-        "testimonial_X8q9A4",
-        "testimonial_ef4Etp",
-        "testimonial_bUi88K",
-        "testimonial_NMt6Em"
-      ],
-      "custom_css": [
-        ".m-svg-icon {width: 12px; height: 12px;}",
-        ".m-stars {column-gap: 2px;}",
-        "@media (min-width: 1280px) {.m-testimonials__header {margin-bottom: 40px; }}",
-        "@media (max-width: 767px) {.m-testimonials__header {margin-bottom: 24px; } .m-section__header {text-align: center; }}"
-      ],
-      "settings": {
-        "heading": "TESTIMONIALS",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "container": "container-fluid",
-        "color_scheme": "footer",
-        "design": "testimonials-6",
         "show_stars": true,
-        "autorotate": false,
-        "show_navigation": true,
-        "show_pagination": false,
-        "star_color": "#d2861a",
-        "item_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
+        "reviews_text": "More than 1,00,00 5 star reviews",
+        "headline_text": "More than 10 Lakh products sold, and just as many lives changed.",
+        "banner_bg": "#b85338",
+        "banner_text_color": "#FFFFFF",
+        "banner_radius": 20,
+        "available_heading": "Also available on:",
+        "available_heading_color": "#1F2937",
+        "bg_color": "#FFFFFF",
         "padding_top": 40,
-        "padding_bottom": 44,
-        "custom_class": "",
-        "animations": "inherit"
+        "padding_bottom": 48
       }
     },
-    "image_with_text_2_rkDDFX": {
-      "type": "image-with-text-2",
-      "name": "Image with text overlay",
-      "settings": {
-        "color_scheme": "",
-        "container": "w-full",
-        "hero_size": "adapt",
-        "show_overlay": false,
-        "image": "shopify://shop_images/Story_banner_07ce4069-4b42-4467-a04c-bc58ed4b3993.jpg",
-        "image_link": "",
-        "parallax": false,
-        "parallax_direction": "vertical",
-        "content_in_container": false,
-        "content_position": "center middle",
-        "text_alignment": "center",
-        "text_size": "medium",
-        "text_color": "white",
-        "title": "",
-        "subtitle": "",
-        "text": "",
-        "button_label": "",
-        "button_link": "",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "text_alignment_mobile": "center",
-        "use_content_above": true,
-        "custom_class": "",
-        "animations": "inherit",
-        "enable_bg_zoom_effect": true,
-        "enable_preload_image": false
-      }
-    },
-    "product_tabs_3tpgpb": {
-      "type": "product-tabs",
+    "custom_section_9_KPmxyY": {
+      "type": "custom-section-9",
       "blocks": {
-        "tab_qqHqQT": {
-          "type": "tab",
+        "testimonial_YntE4U": {
+          "type": "testimonial",
           "settings": {
-            "title": "In Season",
-            "tab_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"40\" height=\"40\">\n  <g>\n    <!-- stem -->\n    <path d=\"M32 48 Q28 38 20 30\" stroke=\"#5a7a2e\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M32 48 Q34 36 42 28\" stroke=\"#5a7a2e\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/>\n    <!-- leaves -->\n    <ellipse cx=\"18\" cy=\"28\" rx=\"6\" ry=\"3\" fill=\"#6a9e3a\" transform=\"rotate(-40 18 28)\"/>\n    <ellipse cx=\"44\" cy=\"26\" rx=\"6\" ry=\"3\" fill=\"#6a9e3a\" transform=\"rotate(40 44 26)\"/>\n    <!-- berries cluster -->\n    <circle cx=\"24\" cy=\"22\" r=\"5.5\" fill=\"#e8641a\"/>\n    <circle cx=\"34\" cy=\"19\" r=\"5.5\" fill=\"#e07a1a\"/>\n    <circle cx=\"28\" cy=\"30\" r=\"5.5\" fill=\"#d95e10\"/>\n    <circle cx=\"38\" cy=\"28\" r=\"5\" fill=\"#e8721a\"/>\n    <circle cx=\"20\" cy=\"32\" r=\"4.5\" fill=\"#e06015\"/>\n    <!-- berry shine -->\n    <circle cx=\"22\" cy=\"20\" r=\"1.5\" fill=\"#f5a060\" opacity=\"0.6\"/>\n    <circle cx=\"32\" cy=\"17\" r=\"1.5\" fill=\"#f5a060\" opacity=\"0.6\"/>\n  </g>\n</svg>",
-            "tab_subtitle": "Fresh picks of the season",
-            "collection": "top-rated"
+            "quote": "I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukan. You can literally feel the energy kick in a few days. Love that it's sourced straight from the mountains.",
+            "image": "shopify://shop_images/06eda438c0c2a9e24dbe2a4680d4505bee235ecd.png",
+            "image_url": "",
+            "author_name": "Jayant",
+            "show_verified_badge": true,
+            "badge_text": "Verified Buyer",
+            "link": ""
           }
         },
-        "tab_BQMd3z": {
-          "type": "tab",
+        "testimonial_4fBLhK": {
+          "type": "testimonial",
           "settings": {
-            "title": "Immunity Booster",
-            "tab_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"40\" height=\"40\">\n  <!-- shield -->\n  <path d=\"M32 6 L52 14 L52 32 C52 44 32 58 32 58 C32 58 12 44 12 32 L12 14 Z\" fill=\"none\" stroke=\"#4a7a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/>\n  <!-- inner leaf -->\n  <path d=\"M32 42 C32 42 20 34 22 22 C26 24 30 28 32 32 C34 28 38 24 42 22 C44 34 32 42 32 42 Z\" fill=\"#5a9e5a\"/>\n  <!-- leaf stem -->\n  <line x1=\"32\" y1=\"42\" x2=\"32\" y2=\"48\" stroke=\"#4a7a4a\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n</svg>",
-            "tab_subtitle": "Strengthen naturally",
-            "collection": "immunity-boosters"
+            "quote": "I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukan. You can literally feel the energy kick in a few days. Love that it's sourced straight from the mountains.",
+            "image": "shopify://shop_images/06eda438c0c2a9e24dbe2a4680d4505bee235ecd.png",
+            "image_url": "",
+            "author_name": "Jayant",
+            "show_verified_badge": true,
+            "badge_text": "Verified Buyer",
+            "link": ""
           }
         },
-        "tab_j8WrjQ": {
-          "type": "tab",
+        "testimonial_e7H6ND": {
+          "type": "testimonial",
           "settings": {
-            "title": "Himalayan Herbs",
-            "tab_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"40\" height=\"40\">\n  <!-- mountains -->\n  <polygon points=\"10,52 28,22 46,52\" fill=\"none\" stroke=\"#8aabbf\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n  <polygon points=\"28,52 44,28 60,52\" fill=\"none\" stroke=\"#8aabbf\" stroke-width=\"2\" stroke-linejoin=\"round\"/>\n  <!-- snow caps -->\n  <polyline points=\"22,34 28,22 34,34\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n  <polyline points=\"38,38 44,28 50,38\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n  <!-- plant/herb at base -->\n  <line x1=\"20\" y1=\"52\" x2=\"20\" y2=\"42\" stroke=\"#5a7a2e\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>\n  <ellipse cx=\"17\" cy=\"40\" rx=\"4\" ry=\"2.5\" fill=\"#6a9e3a\" transform=\"rotate(-30 17 40)\"/>\n  <ellipse cx=\"23\" cy=\"39\" rx=\"4\" ry=\"2.5\" fill=\"#7ab040\" transform=\"rotate(30 23 39)\"/>\n  <ellipse cx=\"20\" cy=\"37\" rx=\"3.5\" ry=\"2\" fill=\"#6a9e3a\" transform=\"rotate(0 20 37)\"/>\n</svg>",
-            "tab_subtitle": "Rooted in Purity",
-            "collection": "himalayan-herbs"
+            "quote": "I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukan. You can literally feel the energy kick in a few days. Love that it's sourced straight from the mountains.",
+            "image": "shopify://shop_images/06eda438c0c2a9e24dbe2a4680d4505bee235ecd.png",
+            "image_url": "",
+            "author_name": "Jayant",
+            "show_verified_badge": true,
+            "badge_text": "Verified Buyer",
+            "link": ""
+          }
+        },
+        "testimonial_XYJJji": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukan. You can literally feel the energy kick in a few days. Love that it's sourced straight from the mountains.",
+            "image": "shopify://shop_images/06eda438c0c2a9e24dbe2a4680d4505bee235ecd.png",
+            "image_url": "",
+            "author_name": "Jayant",
+            "show_verified_badge": true,
+            "badge_text": "Verified Buyer",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "tab_qqHqQT",
-        "tab_BQMd3z",
-        "tab_j8WrjQ"
+        "testimonial_YntE4U",
+        "testimonial_4fBLhK",
+        "testimonial_e7H6ND",
+        "testimonial_XYJJji"
       ],
+      "name": "Customer Reviews (Section 9)",
       "settings": {
-        "heading": "",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "container": "container-fluid",
-        "color_scheme": "",
-        "tab_header": "horizontal",
-        "limit": 4,
-        "show_button": false,
-        "button_type": "link",
-        "button_label": "View all",
-        "button_style": "m-button--primary",
-        "button_size": "",
-        "pcard_layout": "",
-        "pcard_image_ratio": "",
-        "show_vendor": false,
-        "items_per_row": 4,
-        "item_gap": 30,
-        "enable_slider": false,
-        "show_navigation": true,
-        "show_pagination": false,
-        "mobile_disable_slider": false,
-        "use_scroll_mobile": true,
-        "item_gap_mobile": 16,
-        "padding_top": 20,
-        "padding_bottom": 50,
-        "custom_class": "",
-        "animations": "inherit"
+        "heading": "Don't just take our word for it",
+        "subheading": "We have you so we are blessed!",
+        "heading_color": "#1F2937",
+        "subheading_color": "#4B5563",
+        "bg_color": "#FFFFFF",
+        "card_bg": "#FFFFFF",
+        "card_border": "#EAD8C7",
+        "show_arrows": true,
+        "desktop_cards": 4,
+        "mobile_cards": 1,
+        "card_gap": 20,
+        "card_radius": 18,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "custom_section_10_BQ8drw": {
+      "type": "custom-section-10",
+      "name": "Philosophy Banner (Section 10)",
+      "settings": {
+        "image": "shopify://shop_images/dfb433064e16adc63307002b423910c6ee9123d7.png",
+        "image_by_url": "",
+        "heading": "The Philosophy rooted in the Mountains",
+        "text": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.",
+        "button_text": "ABOUT US",
+        "button_link": "",
+        "bg_color": "#FFFFFF",
+        "banner_radius": 22,
+        "desktop_height": 480,
+        "mobile_height": 380,
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "icon_box_xXQGRt": {
@@ -1785,133 +1582,104 @@
         "animations": "inherit"
       }
     },
-    "icon_box_XNYVdM": {
-      "type": "icon-box",
+    "custom_section_11_pKXFKg": {
+      "type": "custom-section-11",
       "blocks": {
-        "iconbox_YGPM6j": {
-          "type": "iconbox",
+        "press_item_airH4f": {
+          "type": "press_item",
           "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/5.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://www.thehindu.com/life-and-style/food/unboxing-cheer-diwali-hampers-2021-laduree-la-folie-bombay-sweet-shop-pumpkin-tales-royce-gift/article37263786.ece",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
+            "quote_text": "There's macaron towers and pesto babkas to treats from the mountains up North",
+            "outlet_name": "The Hindu",
+            "read_time": "2 min read",
+            "logo_url": "",
+            "link": ""
           }
         },
-        "iconbox_yJzVYw": {
-          "type": "iconbox",
+        "press_item_N9waCW": {
+          "type": "press_item",
           "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/20250528075003-Ent-Logo-India-Logo-Black-1.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://www.entrepreneur.com/en-in/news-and-trends/my-pahadi-dukan-and-iyaso-secure-early-stage-funding/488854",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
+            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
+            "outlet_name": "The Hindu",
+            "read_time": "2 min read",
+            "logo_url": "",
+            "link": ""
           }
         },
-        "iconbox_DXHnt3": {
-          "type": "iconbox",
+        "press_item_gBUJpw": {
+          "type": "press_item",
           "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/From_Himalayan_Heights_to_Your_Kitchen_Shelf_2.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
+            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
+            "outlet_name": "The Hindu",
+            "read_time": "2 min read",
+            "logo_url": "",
+            "link": ""
           }
         },
-        "iconbox_EiWy3J": {
-          "type": "iconbox",
+        "press_item_WBW79T": {
+          "type": "press_item",
           "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/6.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://homegrown.co.in/article/805869/from-kashmir-to-ladakh-4-startups-from-the-indian-mountains-supporting-local-communities",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
-          }
-        },
-        "iconbox_7Lq8PL": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/8.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://epaper.livehindustan.com/Home/ShareArticle?OrgId=32a5787ce4&imageview=1",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
-          }
-        },
-        "iconbox_iLemFV": {
-          "type": "iconbox",
-          "settings": {
-            "card_color_scheme": "",
-            "image": "shopify://shop_images/7.svg",
-            "image_by_url": "",
-            "title": "",
-            "description": "",
-            "link": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "m-button--link",
-            "button_size": ""
+            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
+            "outlet_name": "The Hindu",
+            "read_time": "2 min read",
+            "logo_url": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "iconbox_YGPM6j",
-        "iconbox_yJzVYw",
-        "iconbox_DXHnt3",
-        "iconbox_EiWy3J",
-        "iconbox_7Lq8PL",
-        "iconbox_iLemFV"
+        "press_item_airH4f",
+        "press_item_N9waCW",
+        "press_item_gBUJpw",
+        "press_item_WBW79T"
       ],
+      "name": "Custom Section 11",
       "settings": {
-        "container": "container-fluid",
-        "color_scheme": "",
-        "heading": "IN THE MEDIA",
-        "heading_size": "h3",
+        "heading": "In the Press",
         "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "item_per_row": 6,
-        "item_gap": 30,
-        "item_gap_mobile": 10,
-        "card_style": "vertical",
-        "image_max_width": "120px",
-        "content_alignment": "center",
-        "hover_effect": "scaling-up",
-        "enable_slider": false,
-        "show_pagination": false,
-        "show_navigation": true,
-        "use_scroll_mobile": true,
-        "use_grid_column_mb": true,
-        "enable_scroller": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "custom_class": "mobilw3",
-        "animations": "inherit"
+        "heading_color": "#000000",
+        "subheading_color": "#555555",
+        "card_bg": "#FFF6D6",
+        "card_text_color": "#2C221E",
+        "card_radius": 16,
+        "outlet_color": "#1F2937",
+        "read_time_color": "#6B7280",
+        "desktop_columns": 4,
+        "card_gap": 20,
+        "bg_color": "#FFFFFF",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "image_with_text_2_rkDDFX": {
+      "type": "image-with-text-2",
+      "name": "Image with text overlay",
+      "settings": {
+        "color_scheme": "",
+        "container": "w-full",
+        "hero_size": "adapt",
+        "show_overlay": false,
+        "image": "shopify://shop_images/Story_banner_07ce4069-4b42-4467-a04c-bc58ed4b3993.jpg",
+        "image_link": "",
+        "parallax": false,
+        "parallax_direction": "vertical",
+        "content_in_container": false,
+        "content_position": "center middle",
+        "text_alignment": "center",
+        "text_size": "medium",
+        "text_color": "white",
+        "title": "",
+        "subtitle": "",
+        "text": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "m-button--primary",
+        "button_size": "",
+        "text_alignment_mobile": "center",
+        "use_content_above": true,
+        "custom_class": "",
+        "animations": "inherit",
+        "enable_bg_zoom_effect": true,
+        "enable_preload_image": false
       }
     },
     "icon_box_Ny6pxD": {
@@ -2047,74 +1815,173 @@
         "animations": "inherit"
       }
     },
-    "custom_content_bbtDMb": {
-      "type": "custom-content",
+    "custom_section_12_9Vmrne": {
+      "type": "custom-section-12",
       "blocks": {
-        "video_FCbzBQ": {
-          "type": "video",
+        "recipe_item_YjgUmg": {
+          "type": "recipe_item",
           "settings": {
-            "video_type": "external",
-            "video_link": "https://youtu.be/UpPdA1aNJP4?si=E-eIDu56iSyxZUgC",
-            "ratio": "21:9",
-            "image": "shopify://shop_images/UpPdA1aNJP4-SD.jpg",
-            "video_title": "",
-            "text_size": "medium",
-            "text_color": "white",
-            "play_style": "solid",
-            "play_size": "medium",
-            "autoplay": false,
-            "loop": false,
-            "muted": false,
-            "show_controls": false,
-            "width": "50%",
-            "alignment": "start",
-            "block_custom_class": "",
-            "animations": "inherit"
+            "title": "Seabuckthorn lemonade",
+            "image": "shopify://shop_images/Rectangle_46.png",
+            "image_url": "",
+            "link": ""
           }
         },
-        "text_Uk3deL": {
-          "type": "text",
+        "recipe_item_FdxE3T": {
+          "type": "recipe_item",
           "settings": {
-            "title": "The Philosophy rooted in Mountains",
-            "subheading": "",
-            "text": "<p>We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.<br/></p>",
-            "width": "50%",
-            "alignment": "center",
-            "align_text": "left",
-            "text_size": "small",
-            "text_color": "inherit",
-            "button_label": "Know More",
-            "button_link": "shopify://pages/about",
-            "button_style": "m-button--primary",
-            "button_size": "",
-            "block_custom_class": "",
-            "animations": "inherit"
+            "title": "Dried Fruits Salad",
+            "image": "shopify://shop_images/Rectangle_46_1.png",
+            "image_url": "",
+            "link": ""
+          }
+        },
+        "recipe_item_pXK4gh": {
+          "type": "recipe_item",
+          "settings": {
+            "title": "Smoothie",
+            "image": "shopify://shop_images/Rectangle_46_2.png",
+            "image_url": "",
+            "link": ""
+          }
+        },
+        "recipe_item_KmmzXE": {
+          "type": "recipe_item",
+          "settings": {
+            "title": "Dried Fruits Salad",
+            "image": "shopify://shop_images/Rectangle_46_1.png",
+            "image_url": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "video_FCbzBQ",
-        "text_Uk3deL"
+        "recipe_item_YjgUmg",
+        "recipe_item_FdxE3T",
+        "recipe_item_pXK4gh",
+        "recipe_item_KmmzXE"
       ],
-      "name": "Custom content",
+      "name": "Custom Section 12",
       "settings": {
-        "heading": "",
-        "heading_size": "h3",
-        "subheading": "",
-        "description": "",
-        "header_alignment": "center",
-        "container": "container-fluid",
-        "color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "content_color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "enable_parallax": false,
-        "parallax_direction": "vertical",
-        "gap": 60,
-        "gap_mobile": 16,
-        "use_scroll_mobile": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "enable_preload_image": false,
-        "custom_class": ""
+        "heading": "Superfood Recipes",
+        "subheading": "Enjoy these recipes from our team and happy customers",
+        "heading_color": "#000000",
+        "subheading_color": "#4B5563",
+        "title_color": "#1F2937",
+        "aspect_ratio": "1/1",
+        "card_radius": 24,
+        "desktop_columns": 4,
+        "card_gap": 24,
+        "bg_color": "#FFFFFF",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "custom_section_13_eaPr9M": {
+      "type": "custom-section-13",
+      "blocks": {
+        "comparison_row_bertzD": {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Fresh Ingredients",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        "comparison_row_jnLMPE": {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Evidence based formulation",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        "comparison_row_CMj4NP": {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Lab Tested",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        "comparison_row_UjEA6d": {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Loerm Ipsum",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        "comparison_row_CEtrHN": {
+          "type": "comparison_row",
+          "settings": {
+            "feature_text": "Loerm Ipsum",
+            "brand_check": true,
+            "others_check": false
+          }
+        },
+        "faq_item_9A7kMF": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products really sourced from the Himalayas?",
+            "answer": "Yes, all our products are directly sourced from local Himalayan farmers and wild crafters."
+          }
+        },
+        "faq_item_8YnbDh": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do you verify purity and authenticity?",
+            "answer": "We conduct rigorous third-party lab testing and maintain full supply chain transparency."
+          }
+        },
+        "faq_item_ph3XB9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is Kashmiri Saffron different from regular saffron?",
+            "answer": "Kashmiri saffron has higher crocin levels, distinct aroma, and deep red stigmas."
+          }
+        },
+        "faq_item_bGjx6i": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes your Shilajit different from other brands?",
+            "answer": "Our Shilajit is purified using traditional Ayurvedic methods and tested for heavy metals."
+          }
+        },
+        "faq_item_cjx6ic": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products organic and chemical-free?",
+            "answer": "Yes, 100% natural, organic, and free from any synthetic additives or preservatives."
+          }
+        }
+      },
+      "block_order": [
+        "comparison_row_bertzD",
+        "comparison_row_jnLMPE",
+        "comparison_row_CMj4NP",
+        "comparison_row_UjEA6d",
+        "comparison_row_CEtrHN",
+        "faq_item_9A7kMF",
+        "faq_item_8YnbDh",
+        "faq_item_ph3XB9",
+        "faq_item_bGjx6i",
+        "faq_item_cjx6ic"
+      ],
+      "name": "Custom Section 13",
+      "settings": {
+        "comp_heading": "Why choose us?",
+        "comp_brand_name": "My Pahadi Dukan",
+        "comp_others_name": "Others",
+        "comp_pill_bg": "#346357",
+        "comp_pill_color": "#FFFFFF",
+        "faq_heading": "Things People Ask Us",
+        "faq_card_bg": "#FFFDF0",
+        "faq_button_text": "Read More",
+        "faq_button_link": "",
+        "bg_color": "#FFFFFF",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "blog_posts_Q7EyFG": {
@@ -2149,92 +2016,6 @@
         "custom_class": "",
         "animations": "inherit"
       }
-    },
-    "178583660426bc155c": {
-      "type": "_blocks",
-      "settings": {}
-    },
-    "home_faq_3WNKjj": {
-      "type": "home-faq",
-      "blocks": {
-        "question_t4wG7W": {
-          "type": "question",
-          "settings": {
-            "question": "Are your products really sourced from the Himalayas?",
-            "answer": "<p>Yes. Every product we sell is sourced directly from farmers, self-help groups, and cooperatives across nine Himalayan states — including Kashmir, Ladakh, Himachal Pradesh, Uttarakhand, Sikkim, and Meghalaya — as well as Bhutan. We work source-to-shelf, which means we know exactly where each batch comes from. No middlemen, no mystery sourcing.</p>"
-          }
-        },
-        "question_XNpbH7": {
-          "type": "question",
-          "settings": {
-            "question": "How do you verify purity and authenticity?",
-            "answer": "<p>Every batch goes through rigorous lab testing before it reaches you. We believe purity should be something you can verify, not just something we claim — so our products are tested for active compounds, contaminants, and adulteration depending on the category. We'd rather show you the process than ask you to take our word for it.</p>"
-          }
-        },
-        "question_NQGUcJ": {
-          "type": "question",
-          "settings": {
-            "question": "How is Kashmiri Saffron different from regular saffron?",
-            "answer": "<p>Real saffron has a distinct colour, aroma, and slightly bitter taste — qualities that cheap imitations (often mixed with dyed look-alikes like Gardenia flower) just can't replicate. To make sure you're getting the real thing, we send our saffron to an independent, government-accredited lab for testing before it's sold. Our latest batch passed all purity and quality checks under India's official food safety standards (FSSAI), confirming it's authentic, high-grade Kashmiri saffron — not a diluted substitute.</p>"
-          }
-        },
-        "question_App4QP": {
-          "type": "question",
-          "settings": {
-            "question": "What makes your Shilajit different from other brands?",
-            "answer": "<p>Most shilajit sold online isn't sourced from Ladakh at all, despite the label. Ours is — harvested from high-altitude rocks in the Ladakh region, then purified using traditional methods to remove impurities while preserving its mineral content. It's 100% pure resin, with no additives or fillers, which is why it's earned recognition as an Amazon's Choice product.</p>"
-          }
-        },
-        "question_fn9drt": {
-          "type": "question",
-          "settings": {
-            "question": "Are your products organic and chemical-free?",
-            "answer": "<p>Yes — our products are grown and processed without synthetic chemicals, following traditional Pahadi methods used by mountain communities for generations. We work directly with growers who avoid chemical fertilizers and pesticides, so what you're getting is as close to unprocessed and natural as it gets.</p>"
-          }
-        },
-        "question_pfzrbX": {
-          "type": "question",
-          "settings": {
-            "question": "Do you test for heavy metals and contaminants?",
-            "answer": "<p>Yes. Categories like Shilajit, A2 Ghee, and spices are particularly prone to contamination or adulteration, so we prioritize lab testing for heavy metals and other contaminants in these products specifically. This testing happens before a batch is approved for sale, not after complaints come in.</p>"
-          }
-        },
-        "question_9fkDXN": {
-          "type": "question",
-          "settings": {
-            "question": "Where can I see lab reports and quality certificates?",
-            "answer": "<p>We publish third-party lab test reports for key products like our Kashmiri Saffron, tested by independent, ISO-certified labs such as FARE Labs. We're adding more batch-wise reports as products are tested — you'll find these on the relevant product pages so you can verify for yourself.</p>"
-          }
-        },
-        "question_xyi4F3": {
-          "type": "question",
-          "settings": {
-            "question": "How do you support the farmers you source from?",
-            "answer": "<p>We work directly with farmers, women's collectives, and cooperatives across the Himalayan region, cutting out middlemen so producers earn a fairer share of what their goods sell for. We're also part of the Ministry of Commerce's One District One Product programme, working alongside institutions like IIM Kashipur and IIT Mandi to build a more sustainable supply chain for mountain communities.<br/><br/></p>"
-          }
-        }
-      },
-      "block_order": [
-        "question_t4wG7W",
-        "question_XNpbH7",
-        "question_NQGUcJ",
-        "question_App4QP",
-        "question_fn9drt",
-        "question_pfzrbX",
-        "question_9fkDXN",
-        "question_xyi4F3"
-      ],
-      "name": "FAQ Accordion",
-      "settings": {
-        "eyebrow_text": "Got Questions?",
-        "title": "Things People Ask Us",
-        "bg_color": "#fcfbf9",
-        "heading_color": "#c0503b",
-        "text_color": "#0a0a09",
-        "eyebrow_color": "#c0503b",
-        "icon_color": "#d38946",
-        "border_color": "#5a3d34"
-      }
     }
   },
   "order": [
@@ -2249,18 +2030,15 @@
     "custom_section_6_mQemMh",
     "custom_section_7_wTgxTr",
     "custom_section_6_FRXrMV",
-    "featured_collection_E3d77a",
-    "featured_collection_7mBpkp",
-    "1749283435cbe1d1db",
-    "testimonials_pnyUnX",
-    "image_with_text_2_rkDDFX",
-    "product_tabs_3tpgpb",
+    "custom_section_8_AtY7dF",
+    "custom_section_9_KPmxyY",
+    "custom_section_10_BQ8drw",
     "icon_box_xXQGRt",
-    "icon_box_XNYVdM",
+    "custom_section_11_pKXFKg",
+    "image_with_text_2_rkDDFX",
     "icon_box_Ny6pxD",
-    "custom_content_bbtDMb",
-    "blog_posts_Q7EyFG",
-    "178583660426bc155c",
-    "home_faq_3WNKjj"
+    "custom_section_12_9Vmrne",
+    "custom_section_13_eaPr9M",
+    "blog_posts_Q7EyFG"
   ]
 }

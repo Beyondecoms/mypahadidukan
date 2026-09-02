@@ -35,6 +35,122 @@
     --column-gap-mobile: {{ section.settings.mobile_gap }}px;
     --row-gap: {{ section.settings.column_gap | plus: 10 }}px;
   }
+
+  #m-blog-grid-{{ section.id }} .m-section__header {
+    text-align: center !important;
+    margin-bottom: 32px !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-section__heading {
+    color: #111827 !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.25 !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-section__subheading {
+    color: #4B5563 !important;
+    font-size: 15px !important;
+    text-transform: none !important;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__image {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    margin-bottom: 16px !important;
+    background-color: #F3F4F6 !important;
+    display: block !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__image img,
+  #m-blog-grid-{{ section.id }} .m-article-card__image svg,
+  #m-blog-grid-{{ section.id }} .m-article-card__image .m-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card:hover .m-article-card__image img,
+  #m-blog-grid-{{ section.id }} .m-article-card:hover .m-article-card__image .m-image {
+    transform: scale(1.06) !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__content {
+    padding: 0 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__title {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    margin: 0 0 8px 0 !important;
+    text-align: center !important;
+    color: #1F2937 !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__title a {
+    color: #1F2937 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__title a:hover {
+    color: #D97706 !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__excerpt,
+  #m-blog-grid-{{ section.id }} .m-article-card__tags,
+  #m-blog-grid-{{ section.id }} .m-article-card__date {
+    display: none !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__readmore {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #D97706 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 4px !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    display: inline-block !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-article-card__readmore svg {
+    display: none !important;
+  }
+
+  #m-blog-grid-{{ section.id }} .m-blog-grid__button {
+    display: none !important;
+  }
 </style>
 <section
   id="m-blog-grid-{{ section.id }}"
@@ -123,7 +239,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Blog posts"
+      "default": "Latest Blog"
     },
     {
       "type": "select",
@@ -144,7 +260,8 @@
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subheading"
+      "label": "Subheading",
+      "default": "Enjoy these recipes from our team and happy customers"
     },
     {
       "type": "textarea",
