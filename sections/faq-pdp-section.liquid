@@ -1,0 +1,126 @@
+{{ 'section-faq-pdp.css' | asset_url | stylesheet_tag }}
+
+{% if product.metafields.custom.product_faq.value!=blank %}
+  <div class="pdp-section" style="background: {{ section.settings.bg_color }};">
+    <div class="pdp-wrapper">
+
+      <!-- Title -->
+      <h2 class="pdp-title-faq">{{ section.settings.title }}</h2>
+
+      <div class="pdp-inner">
+
+        <!-- Left Image -->
+        <div class="pdp-image-faq-col">
+          {%- if section.settings.image != blank -%}
+            <img
+              src="{%- if product.metafields.custom.product_faq_image != blank -%}
+                    {{ product.metafields.custom.product_faq_image  }}
+                  {%- else -%}
+                    {{ section.settings.image | asset_url }}
+                  {%- endif -%}"
+              alt="{{ section.settings.title | default: 'FAQ' }}"
+              class="pdp-image-faq"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'pdp-image-faq-placeholder' }}
+          {%- endif -%}
+        </div>
+
+        <!-- Right FAQ -->
+        <div class="pdp-faq-col">
+          {%- for faq in product.metafields.custom.product_faq.value -%}
+            {%- assign parts = faq | split: '|' -%}
+            <div class="pdp-faq-item">
+              <button
+                class="pdp-faq-question"
+                aria-expanded="false"
+                data-faq-index="{{ forloop.index0 }}"
+              >
+                <span class="pdp-faq-text">{{ parts | first }}</span>
+                <span class="pdp-faq-icon">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 0C10.3009 0.0448832 6.76597 1.53429 4.15013 4.15013C1.53429 6.76597 0.0448832 10.3009 0 14C0.0448832 17.6991 1.53429 21.234 4.15013 23.8499C6.76597 26.4657 10.3009 27.9551 14 28C17.6991 27.9551 21.234 26.4657 23.8499 23.8499C26.4657 21.234 27.9551 17.6991 28 14C27.9551 10.3009 26.4657 6.76597 23.8499 4.15013C21.234 1.53429 17.6991 0.0448832 14 0ZM22 15H15V22H13V15H6V13H13V6H15V13H22V15Z" fill="#048E79"/>
+                  </svg>
+                  <svg class="pdp-icon-minus" width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="11" fill="#048E79"/>
+                    <line x1="7" y1="12" x2="17" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="pdp-faq-answer">
+                <p class="pdp-faq-answer-text">{{ parts | last }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+<script>
+(function () {
+  var section = document.currentScript.previousElementSibling;
+  var items = document.querySelectorAll('.pdp-faq-item');
+
+  items.forEach(function(item) {
+    var btn = item.querySelector('.pdp-faq-question');
+    var answer = item.querySelector('.pdp-faq-answer');
+
+    btn.addEventListener('click', function() {
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+      // Close all
+      items.forEach(function(otherItem) {
+        var otherBtn = otherItem.querySelector('.pdp-faq-question');
+        var otherAnswer = otherItem.querySelector('.pdp-faq-answer');
+        otherBtn.setAttribute('aria-expanded', 'false');
+        otherItem.classList.remove('pdp-faq-item--open');
+        otherAnswer.style.maxHeight = null;
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        item.classList.add('pdp-faq-item--open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "section",
+  "class": "pdp-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Any Last Questions ?"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "settings": {
+        "title": "Any Last Questions ?"
+      }
+    }
+  ]
+}
+{% endschema %}

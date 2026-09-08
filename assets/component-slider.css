@@ -1,0 +1,248 @@
+.bwp-header-topbar {
+  position: fixed;
+  width: 100%;
+}
+
+.bwp-header-topbar.active-index {
+  z-index: -1 !important;
+}
+
+.bwp-header-topbar .topbar-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.bwp-header-topbar .topbar-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.bwp-header-topbar .topbar-center {
+  flex: 1;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  min-width: 0;
+  /* overflow: hidden; */
+  margin-top:10px;
+  gap:20px;
+}
+
+.bwp-header-topbar .topbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* ── NOTIFICATION ITEMS ── */
+.bwp-header-topbar .notification-item {
+  display: none;
+  width: 100%;
+  text-align: center;
+}
+
+.bwp-header-topbar .notification-item.active {
+  display: block;
+}
+
+/* Notification text */
+.bwp-header-topbar .notification-text {
+  font-family: var(--font-family-normal);
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -3%;
+  font-size: 16px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Underline on hover only when it's a link */
+.bwp-header-topbar a.notification-text:hover {
+  cursor: pointer;
+}
+
+.bwp-header-topbar .notification-text:hover {
+  cursor: pointer;
+}
+
+/* ── TRACK ORDER ── */
+.bwp-header-topbar .content-item-track-order {
+  display: flex;
+  align-items: center;
+}
+
+.bwp-header-topbar .content-item-track-order .track-order-text {
+      display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #1a2e1a;
+    background-color: #f5f0c0;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0px 11px;
+    border-radius: 999px;
+    margin-right: 14px;
+    transition: background-color .3s ease, color .3s ease;
+}
+
+.bwp-header-topbar .content-item-track-order .track-order-text:hover {
+  background-color: #ede8b0;
+  color: #1a2e1a;
+}
+
+.bwp-header-topbar .content-item-track-order .track-order-text svg {
+  flex-shrink: 0;
+}
+
+/* ── SOCIAL ── */
+.bwp-header-topbar .social-icons li {
+  margin-right: 10px;
+}
+
+.bwp-header-topbar .social-icons li:last-child {
+  margin: 0;
+}
+
+.bwp-header-topbar .social-icons a {
+  color: var(--text-color);
+  fill: var(--text-color);
+}
+
+.bwp-header-topbar .social-icons a:hover {
+  color: var(--theme-color);
+  fill: var(--theme-color);
+}
+
+/* ── LANGUAGE / CURRENCY ── */
+.bwp-header-topbar .language-currency {
+  display: flex;
+  align-items: center;
+}
+
+.bwp-header-topbar .language-currency > * {
+  display: flex;
+}
+
+.bwp-header-topbar .language-currency > *:before {
+  content: "";
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 15px;
+  display: inline-block;
+}
+
+.bwp-header-topbar .language-currency > *:first-child:before {
+  display: none;
+}
+
+/* ── CUSTOM TEXT / LINKS ── */
+.bwp-header-topbar .content-item-custom-text a {
+  display: initial;
+}
+
+/* ── TEXT WITH ICON ── */
+.bwp-header-topbar .content-item-text-with-icon .custom-text {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text i {
+  margin-right: 5px;
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text > * {
+  display: flex;
+  align-items: center;
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text > *:before {
+  content: "";
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.05);
+  margin: 0 15px;
+  display: inline-block;
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text > *:first-child:before {
+  display: none;
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text .text-icon1 {
+  color: var(--color1);
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text .text-icon1 a {
+  color: var(--color1);
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text .text-icon2 {
+  color: var(--color2);
+}
+
+.bwp-header-topbar .content-item-text-with-icon .custom-text .text-icon2 a {
+  color: var(--color2);
+}
+
+/* ── MOBILE (max 991px) ── */
+@media (max-width: 991px) {
+  .bwp-header-topbar .topbar-row {
+    flex-wrap: nowrap;
+  }
+
+  .bwp-header-topbar .topbar-left {
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+
+  .bwp-header-topbar .topbar-center {
+    flex: 1;
+  }
+
+  .bwp-header-topbar .topbar-right {
+    flex: 0 0 auto;
+  }
+
+  .bwp-header-topbar {
+    padding: 0px !important;
+  }
+
+  /* Hide track order on mobile */
+  .bwp-header-topbar .content-item-track-order {
+    display: none;
+  }
+}
+
+/* ── VERY SMALL (max 480px) ── */
+@media (max-width: 480px) {
+  .bwp-header-topbar .topbar-left {
+    display: none;
+  }
+
+  .bwp-header-topbar .topbar-center {
+    justify-content: center;
+    margin: 6px 2px 2px 2px;
+  }
+  .bwp-header-topbar .notification-text{
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .bwp-header-topbar .notification-item {
+    overflow: hidden;
+    }
+}

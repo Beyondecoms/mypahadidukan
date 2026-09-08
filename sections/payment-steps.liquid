@@ -1,0 +1,211 @@
+{{ 'section-payment-steps.css' | asset_url | stylesheet_tag }}
+
+<div class="ps2-section" style="background: {{ section.settings.bg_color }};">
+  <div class="ps2-wrapper">
+
+    {%- for block in section.blocks -%}
+
+      {%- case block.type -%}
+
+        {%- when 'heading' -%}
+          <div class="ps2-heading-block" {{ block.shopify_attributes }}>
+            <h2 class="ps2-heading" style="color: {{ block.settings.text_color }};">
+              {{ block.settings.heading_text }}
+            </h2>
+          </div>
+
+        {%- when 'steps_text' -%}
+          <div class="ps2-steps-block" {{ block.shopify_attributes }}>
+            {%- assign steps = block.settings.steps | split: '|' -%}
+            {%- for step in steps -%}
+              {%- if step != blank -%}
+                <p class="ps2-step">{{ step | strip }}</p>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+        {%- when 'image_row' -%}
+          <div class="ps2-image-row" {{ block.shopify_attributes }}>
+            {%- if block.settings.image_1 != blank -%}
+              <div class="ps2-img-wrap">
+                <img
+                  src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                  alt="{{ block.settings.image_1_alt | default: 'Step 1' }}"
+                  class="ps2-img"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
+            {%- if block.settings.image_2 != blank -%}
+              <div class="ps2-img-wrap">
+                <img
+                  src="{{ block.settings.image_2 | image_url: width: 700 }}"
+                  alt="{{ block.settings.image_2_alt | default: 'Step 2' }}"
+                  class="ps2-img"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
+            {%- if block.settings.image_3 != blank -%}
+              <div class="ps2-img-wrap">
+                <img
+                  src="{{ block.settings.image_3 | image_url: width: 700 }}"
+                  alt="{{ block.settings.image_3_alt | default: 'Step 3' }}"
+                  class="ps2-img"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- when 'footer_text' -%}
+          <div class="ps2-footer-block" {{ block.shopify_attributes }}>
+            {%- if block.settings.bold_text != blank -%}
+              <p class="ps2-footer-bold">{{ block.settings.bold_text }}</p>
+            {%- endif -%}
+            {%- if block.settings.light_text != blank -%}
+              <p class="ps2-footer-light">{{ block.settings.light_text }}</p>
+            {%- endif -%}
+          </div>
+
+      {%- endcase -%}
+
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Payment Steps",
+  "tag": "section",
+  "class": "ps2-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f5f0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading text",
+          "default": "TO PAY WITH PAYPAL FOLLOW THESE STEPS:"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#c0392b"
+        }
+      ]
+    },
+    {
+      "type": "steps_text",
+      "name": "Steps Text",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "steps",
+          "label": "Steps (separate each step with |)",
+          "default": "Step 1: Add the products you want in your cart.|Step 2: Go to checkout.|Step 3: To place an international order you can do the following"
+        }
+      ]
+    },
+    {
+      "type": "image_row",
+      "name": "Image Row (3 images)",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "text",
+          "id": "image_1_alt",
+          "label": "Image 1 alt text",
+          "default": "Step 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "text",
+          "id": "image_2_alt",
+          "label": "Image 2 alt text",
+          "default": "Step 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "text",
+          "id": "image_3_alt",
+          "label": "Image 3 alt text",
+          "default": "Step 3"
+        }
+      ]
+    },
+    {
+      "type": "footer_text",
+      "name": "Footer Text",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "bold_text",
+          "label": "Bold text",
+          "default": "Alternatively, you can make a direct transfer and save on extra Paypal charges"
+        },
+        {
+          "type": "textarea",
+          "id": "light_text",
+          "label": "Light text",
+          "default": "Select Bank Transfer on the Payments page and share the transaction ID/screenshot of your payment within 48 hours of placing your order. You can whatsapp us or write to us as orders@mypahadidukan.com."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Payment Steps",
+      "blocks": [
+        {
+          "type": "steps_text",
+          "settings": {
+            "steps": "Step 1: Add the products you want in your cart.|Step 2: Go to checkout.|Step 3: To place an international order you can do the following"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "heading_text": "TO PAY WITH PAYPAL FOLLOW THESE STEPS:",
+            "text_color": "#c0392b"
+          }
+        },
+        {
+          "type": "image_row"
+        },
+        {
+          "type": "footer_text",
+          "settings": {
+            "bold_text": "Alternatively, you can make a direct transfer and save on extra Paypal charges",
+            "light_text": "Select Bank Transfer on the Payments page and share the transaction ID/screenshot of your payment within 48 hours of placing your order. You can whatsapp us or write to us as orders@mypahadidukan.com."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

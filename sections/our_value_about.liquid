@@ -1,0 +1,172 @@
+{{ 'section-our-values-about.css' | asset_url | stylesheet_tag }}
+
+<section class="our-values-section">
+  <div class="page-width">
+
+    <div class="ov-header">
+      <div class="ov-left-top1">
+            <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true"><path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e07b39" stroke-width="1.5" fill="none" stroke-linejoin="round"></path></svg>
+            <span class="ov-subtitle">
+            {{ section.settings.subtitle }}
+            </span>
+      </div>
+      <div class="ov-wrapper">
+            <div class="ov-left">
+                <h2 class="ov-title">
+                {{ section.settings.heading }}
+                </h2>
+            </div>
+
+            <div class="ov-right">
+                {{ section.settings.description }}
+            </div>
+      </div>
+    </div>
+
+    <div class="ov-grid">
+
+      {% for block in section.blocks %}
+        {% if block.type == 'value' %}
+          <div class="ov-card" {{ block.shopify_attributes }}>
+            <div class="ov-card-top">
+
+              {% if block.settings.icon != blank %}
+                <div class="ov-icon">
+                  <img
+                    src="{{ block.settings.icon | image_url }}"
+                    alt=""
+                    loading="lazy"
+                    width="24"
+                    height="24"
+                  >
+                </div>
+              {% endif %}
+
+              <span class="ov-number">
+                {{ block.settings.number }}
+              </span>
+            </div>
+
+            <h3 class="ov-card-title">
+              {{ block.settings.title }}
+            </h3>
+
+            <div class="ov-card-text">
+              {{ block.settings.text }}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {% if section.settings.highlight_text != blank %}
+        <div class="ov-highlight">
+          {% if section.settings.highlight_icon != blank %}
+            <img
+              src="{{ section.settings.highlight_icon | image_url }}"
+              alt=""
+              loading="lazy"
+              width="30"
+              height="30"
+            >
+          {% endif %}
+
+          <div class="ov-highlight-text">
+            {{ section.settings.highlight_text }}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "OUR VALUES"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Five non-negotiables, written into every jar."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>These aren't taglines pinned to a wall. They are the rules we hold ourselves and our partners to, on every batch, every season.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "highlight_icon",
+      "label": "Highlight Icon"
+    },
+    {
+      "type": "textarea",
+      "id": "highlight_text",
+      "label": "textarea Text",
+      "default": "<p>A small team, obsessed with the details others skip.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Transparency"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Every product traces back to its valley, its farmer, its harvest."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Values",
+      "blocks": [
+        {
+          "type": "value"
+        },
+        {
+          "type": "value"
+        },
+        {
+          "type": "value"
+        },
+        {
+          "type": "value"
+        },
+        {
+          "type": "value"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,146 @@
+/* =====================
+   OUR MISSION SECTION
+   ===================== */
+
+.mission-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding:40px 0;
+}
+
+.mission-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 72px 56px;
+  box-sizing: border-box;
+}
+
+/* --- LABEL --- */
+
+.mission-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.mission-label-icon {
+  display: flex;
+  align-items: center;
+}
+
+.mission-label-text {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* --- HEADING --- */
+
+.mission-heading {
+    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-size: 71px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin: 0 0 56px;
+    max-width: 1100px;
+}
+
+.mission-heading em {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+/* --- DIVIDER --- */
+
+.mission-divider {
+  width: 100%;
+  border-top: 1px solid;
+  margin-bottom: 40px;
+  opacity: 0.4;
+}
+
+/* --- STATS GRID --- */
+
+.mission-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding-top: 20px;
+}
+
+.mission-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+.mission-stat-number {
+  font-family: 'Cormorant Garamond', 'Garamond', Georgia, serif;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  border-top:1px solid #f5f1e4;
+  padding-top:29px;
+}
+
+.mission-stat-label {
+  font-family: Inter,sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 900px) {
+  .mission-inner {
+    padding: 56px 32px;
+  }
+
+  .mission-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 0;
+  }
+
+  .mission-heading {
+    font-size: clamp(36px, 8vw, 60px);
+    margin-bottom: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mission-inner {
+    padding: 40px 20px;
+  }
+
+  .mission-heading {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  .mission-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 16px;
+  }
+
+  .mission-stat-number {
+    font-size: 55px;
+  }
+  
+  .mission-stat-label{
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+}

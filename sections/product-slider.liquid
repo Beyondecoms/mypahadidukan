@@ -1,0 +1,384 @@
+{{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
+
+<div id="ps-section-{{ section.id }}" class="ps-section" style="
+    --ps-bg-desktop: {% if section.settings.bg_image != blank %}url({{ section.settings.bg_image | image_url: width: 2000 }}){% else %}none{% endif %};
+    --ps-bg-mobile: {% if section.settings.bg_image_mobile != blank %}url({{ section.settings.bg_image_mobile | image_url: width: 1000 }}){% else %}none{% endif %};
+    --ps-bg-color: {{ section.settings.bg_color }};
+  ">
+
+  <!-- Corner Decorations -->
+  {%- if section.settings.corner_tr != blank -%}
+    <img src="{{ section.settings.corner_tr | image_url: width: 120 }}" class="ps-corner ps-corner--tr" alt="">
+  {%- endif -%}
+  {%- if section.settings.corner_br != blank -%}
+    <img src="{{ section.settings.corner_br | image_url: width: 120 }}" class="ps-corner ps-corner--br" alt="">
+  {%- endif -%}
+  {%- if section.settings.corner_tl != blank -%}
+    <img src="{{ section.settings.corner_tl | image_url: width: 120 }}" class="ps-corner ps-corner--tl" alt="">
+  {%- endif -%}
+  {%- if section.settings.corner_bl != blank -%}
+    <img src="{{ section.settings.corner_bl | image_url: width: 120 }}" class="ps-corner ps-corner--bl" alt="">
+  {%- endif -%}
+
+  <div class="ps-wrapper">
+
+    <h2 class="ps-title">{{ section.settings.title }}</h2>
+    <div>
+      <div>
+    <div class="ps-slider-row">
+      <button class="ps-arrow ps-arrow--prev" aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="ps-slider">
+        {%- assign collection = collections[section.settings.collection] -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          <div class="ps-card">
+           <button 
+              type="button"
+              aria-label="Add to Wishlist" 
+              class="swym-button swym-add-to-wishlist-view-product product_{{ product.id }}" 
+              data-with-epi="true" 
+              data-swaction="addToWishlist" 
+              data-product-id="{{ product.id }}" 
+              data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants[0].id }}" 
+              data-product-url="{{ shop.url | append: product.url }}">
+            </button>
+            {%- if product.metafields.custom.badge != blank -%}
+              <span class="ps-badge">{{ product.metafields.custom.badge }}</span>
+            {%- elsif forloop.index == 1 -%}
+              <span class="ps-badge ps-badge--recommended">Recommended</span>
+            {%- elsif forloop.index == 3 -%}
+              <span class="ps-badge ps-badge--trending">Trending</span>
+            {%- endif -%}
+
+            {%- assign ps_first_image = product.featured_image -%}
+            {%- assign ps_second_image = product.images[1] -%}
+
+            <a href="{{ product.url }}" class="ps-img-wrap{% if section.settings.show_secondary_image and ps_second_image %} ps-img-wrap--has-secondary{% endif %}">
+              <img
+                src="{{ ps_first_image | image_url: width: 400 }}"
+                alt="{{ product.title | escape }}"
+                class="ps-img ps-img--primary">
+
+              {%- if section.settings.show_secondary_image and ps_second_image -%}
+                <img
+                  src="{{ ps_second_image | image_url: width: 400 }}"
+                  alt="{{ product.title | escape }}"
+                  class="ps-img ps-img--secondary"
+                  loading="lazy">
+              {%- endif -%}
+            </a>
+
+            {%- if product.compare_at_price > product.price -%}
+              <div class="ps-discount-bar">
+                {{ section.settings.discount_text }}
+              </div>
+            {%- endif -%}
+
+            <div class="ps-info">
+              <a href="{{ product.url }}" class="ps-product-title">{{ product.title | truncate: 35 }}</a>
+              <p class="ps-variant">{{ product.variants.first.title}}</p>
+              {%- assign ps_rating = product.metafields.reviews.rating.value | default: 4.8 -%}
+              {%- assign ps_rating_float = ps_rating | append: '' | plus: 0.0 -%}
+              {%- assign ps_rating_int = ps_rating_float | floor -%}
+              {%- assign ps_rating_dec = ps_rating_float | minus: ps_rating_int -%}
+              {%- assign ps_partial_star = ps_rating_int | plus: 1 -%}
+              {%- assign ps_dec_width = ps_rating_dec | times: 100 | round -%}
+
+              <div class="ps-stars">
+                {%- for i in (1..5) -%}
+                  {%- if i <= ps_rating_int -%}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- elsif i == ps_partial_star and ps_dec_width > 0 -%}
+                    <span style="position:relative;display:inline-block;width:16px;height:16px;vertical-align:middle;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="position:absolute;left:0;top:0;display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      <span style="position:absolute;left:0;top:0;overflow:hidden;width:{{ ps_dec_width }}%;height:100%;display:block;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      </span>
+                    </span>
+                  {%- else -%}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="display:block;vertical-align:middle;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- endif -%}
+                {%- endfor -%}
+                <span class="ps-rating-score">{{ ps_rating_float | round: 1 }}</span>
+              </div>
+              <div class="ps-price-row">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="ps-compare">₹{{ product.compare_at_price | money_without_currency }}</span>
+                {%- endif -%}
+                <span class="ps-price">₹{{ product.price | money_without_currency }}</span>
+
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span class="ps-off">{{ discount }}%off</span>
+                {%- endif -%}
+              </div>
+
+              {%- if product.available -%}
+                <button class="ps-atc" data-variant-id="{{ product.variants.first.id }}">
+                  Add To Cart
+                </button>
+              {%- else -%}
+                <button class="ps-atc ps-atc--oos" disabled>
+                  Out of Stock
+                </button>
+              {%- endif -%}
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <button class="ps-arrow ps-arrow--next" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 15L12.5 10L7.5 5" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  </div>
+    <div class="ps-dots"></div>
+
+  </div>
+</div>
+<script>
+(function () {
+  const section = document.getElementById('ps-section-{{ section.id }}');
+  if (!section) return;
+
+  const slider = section.querySelector('.ps-slider');
+  const prevBtn = section.querySelector('.ps-arrow--prev');
+  const nextBtn = section.querySelector('.ps-arrow--next');
+  const dotsContainer = section.querySelector('.ps-dots');
+  const cards = slider.querySelectorAll('.ps-card');
+
+  let current = 0;
+
+  const visible = () => window.innerWidth < 600 ? 2 : window.innerWidth < 900 ? 4 : 5;
+
+  function cardWidth() {
+    return cards[0] ? cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap || 24) : 0;
+  }
+
+  function buildDots() {
+    const count = Math.max(1, cards.length - visible() + 1);
+    dotsContainer.innerHTML = '';
+
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement('button');
+      b.className = 'ps-dot' + (i === 0 ? ' active' : '');
+      b.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(b);
+    }
+  }
+
+  function updateArrows() {
+    prevBtn.classList.toggle('disabled', current <= 0);
+    nextBtn.classList.toggle('disabled', current >= cards.length - visible());
+  }
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(i, cards.length - visible()));
+    slider.scrollTo({ left: current * cardWidth(), behavior: 'smooth' });
+
+    dotsContainer.querySelectorAll('.ps-dot').forEach((d, idx) => {
+      d.classList.toggle('active', idx === current);
+    });
+
+    updateArrows();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  slider.addEventListener('scroll', () => {
+    const cw = cardWidth();
+    if (!cw) return;
+
+    current = Math.round(slider.scrollLeft / cw);
+
+    dotsContainer.querySelectorAll('.ps-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+
+    updateArrows();
+  });
+
+  window.addEventListener('resize', () => {
+    buildDots();
+    updateArrows();
+  });
+
+  buildDots();
+  updateArrows();
+
+    // Add to cart
+  section.querySelectorAll('.ps-atc').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.variantId;
+      btn.textContent = 'Adding...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id,
+            quantity: 1,
+            sections: ['cart-drawer'],
+            sections_url: window.location.pathname
+          })
+        });
+
+        const addedItem = await response.json();
+
+        if (addedItem.sections?.['cart-drawer']) {
+          const html = new DOMParser().parseFromString(
+            addedItem.sections['cart-drawer'], 'text/html'
+          );
+
+          // Swap body first — replaces empty state + all items in one shot
+          const newBody = html.querySelector('#nc-body');
+          const oldBody = document.querySelector('#nc-body');
+          if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+          // Insert or swap price breakdown
+          const newBreakdown = html.querySelector('.nc-price-breakdown');
+          if (newBreakdown) {
+            const oldBreakdown = document.querySelector('.nc-price-breakdown');
+            if (oldBreakdown) {
+              oldBreakdown.replaceWith(newBreakdown);
+            } else {
+              // Not in DOM on empty cart page load — insert before footer
+              const footer = document.querySelector('.cart-drawer__footer');
+              if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+            }
+          }
+
+          // Swap footer (sits outside nc-body)
+          const newFooter = html.querySelector('.cart-drawer__footer');
+          const oldFooter = document.querySelector('.cart-drawer__footer');
+          if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+        }
+        var drawer = document.getElementById('nc-cart-drawer');
+        if (drawer) {
+          drawer.classList.add('is-open');
+          drawer.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          console.log('drawer classes after:', drawer.className);
+        }
+        // Fetch full cart for pubsub (badge + price breakdown JS update)
+        const cartResponse = await fetch('/cart.js', {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const cartData = await cartResponse.json();
+
+        if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: cartData });
+        }
+
+        // Directly update price breakdown in case pubsub fires before DOM swap completes
+        if (typeof window.ncUpdatePriceBreakdown === 'function') {
+          window.ncUpdatePriceBreakdown(cartData);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        btn.textContent = 'Add To Cart';
+        btn.disabled = false;
+      }
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Slider",
+  "tag": "section",
+  "class": "ps-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Swap to second image on hover",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Number of products",
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Discount banner text",
+      "default": "Extra 10% Discount at Checkout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    },
+    {
+      "type": "image_picker",
+      "id": "corner_tr",
+      "label": "Top right decoration image"
+    },
+    {
+      "type": "image_picker",
+      "id": "corner_br",
+      "label": "Bottom right decoration image"
+    },
+    {
+      "type": "image_picker",
+      "id": "corner_tl",
+      "label": "Top left decoration image"
+    },
+    {
+      "type": "image_picker",
+      "id": "corner_bl",
+      "label": "Bottom left decoration image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Slider",
+      "settings": {
+        "title": "Best Sellers"
+      }
+    }
+  ]
+}
+{% endschema %}

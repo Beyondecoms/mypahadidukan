@@ -1,0 +1,140 @@
+/* ── CARD ── */
+.ac-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
+}
+
+.ac-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+}
+
+/* ── IMAGE ── */
+.ac-img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #e8e0d0;
+}
+
+.ac-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.ac-card:hover .ac-img { transform: scale(1.04); }
+
+.ac-img-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.ac-img-placeholder svg {
+  width: 100%;
+  height: 100%;
+  color: #c9c0a4;
+}
+
+/* ── BADGE ── */
+.ac-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #c4602a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-family-normal);
+  z-index: 2;
+}
+
+/* ── BODY ── */
+.ac-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* ── META (date / author) ── */
+.ac-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #999;
+  font-family: var(--font-family-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.ac-meta-dot { color: #ccc; }
+
+/* ── TITLE ── */
+.ac-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+  font-family: var(--font-heading-family);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── EXCERPT ── */
+.ac-excerpt {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+  font-family: var(--font-family-normal);
+}
+
+/* ── READ MORE ── */
+.ac-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-top: auto;
+  font-family: var(--font-family-normal);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.ac-card:hover .ac-read {
+  border-color: #c4602a;
+  color: #c4602a;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .ac-body { padding: 16px; gap: 8px; }
+  .ac-title { font-size: 15px; }
+  .ac-excerpt { font-size: 13px; }
+}

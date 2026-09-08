@@ -1,0 +1,177 @@
+{{ 'section-collection-circles.css' | asset_url | stylesheet_tag }}
+
+<div class="collection-circles-section" style="background: {{ section.settings.bg_color }};">
+  <div class="collection-circles-wrapper">
+
+    <!-- Scroll Buttons -->
+    <div class="collection-slider-row">
+      <button class="collection-arrow collection-arrow--prev" id="collectionPrev" aria-label="Previous">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="collection-slider" id="collectionSlider">
+        {%- for block in section.blocks -%}
+          <div class="collection-slide" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.collection_link }}" class="collection-circle-link">
+              <div class="collection-circle">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 300 }}"
+                    alt="{{ block.settings.label }}"
+                    width="300"
+                    height="300"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <p class="collection-label">{{ block.settings.label }}</p>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <button class="collection-arrow collection-arrow--next" id="collectionNext" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Dots -->
+    <div class="collection-dots" id="collectionDots">
+      {%- for block in section.blocks -%}
+        <button class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  const slider = document.getElementById('collectionSlider');
+  const dotsContainer = document.getElementById('collectionDots');
+  const prevBtn = document.getElementById('collectionPrev');
+  const nextBtn = document.getElementById('collectionNext');
+  if (!slider || !dotsContainer) return;
+
+  const slides = slider.querySelectorAll('.collection-slide');
+  const totalSlides = slides.length;
+
+  const visibleCount = () => window.innerWidth < 600 ? 4 : window.innerWidth < 900 ? 6 : 7;
+
+  let current = 0;
+
+  // Build only the dots we need
+  function buildDots() {
+    const scrollable = Math.max(1, totalSlides - visibleCount() + 1);
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < scrollable; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('aria-label', 'Slide ' + (i + 1));
+      btn.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(btn);
+    }
+  }
+
+  function getDots() {
+    return dotsContainer.querySelectorAll('.dot');
+  }
+
+  function getSlideWidth() {
+    return slides[0] ? slides[0].offsetWidth + parseInt(getComputedStyle(slider).gap || 24) : 0;
+  }
+
+  function updateArrows() {
+    const maxIndex = totalSlides - visibleCount();
+    if (prevBtn) prevBtn.classList.toggle('disabled', current <= 0);
+    if (nextBtn) nextBtn.classList.toggle('disabled', current >= maxIndex);
+  }
+
+  function goTo(index) {
+    const maxIndex = Math.max(0, totalSlides - visibleCount());
+    current = Math.max(0, Math.min(index, maxIndex));
+    slider.scrollTo({ left: current * getSlideWidth(), behavior: 'smooth' });
+    getDots().forEach((d, i) => d.classList.toggle('active', i === current));
+    updateArrows();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  slider.addEventListener('scroll', () => {
+    const sw = getSlideWidth();
+    if (!sw) return;
+    const idx = Math.round(slider.scrollLeft / sw);
+    current = idx;
+    getDots().forEach((d, i) => d.classList.toggle('active', i === idx));
+    updateArrows();
+  });
+
+  // Rebuild dots on resize
+  window.addEventListener('resize', () => {
+    buildDots();
+    updateArrows();
+  });
+
+  buildDots();
+  updateArrows();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Collection Circles",
+  "tag": "section",
+  "class": "collection-circles-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "circle",
+      "name": "Collection Circle",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Circle image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Collection Name"
+        },
+        {
+          "type": "url",
+          "id": "collection_link",
+          "label": "Collection link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Circles",
+      "blocks": [
+        { "type": "circle", "settings": { "label": "Pahadi Wellness" } },
+        { "type": "circle", "settings": { "label": "Seabuckthorn" } },
+        { "type": "circle", "settings": { "label": "Gifting Collection" } },
+        { "type": "circle", "settings": { "label": "Dry Fruits" } },
+        { "type": "circle", "settings": { "label": "Pure Ghee" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,257 @@
+/* ── OUTER ── */
+.bh-section-outer { width: 100%; }
+
+.bh-section {
+  width: 100%;
+  padding: 64px 0 64px 0;
+  overflow: hidden;
+}
+
+/* ── INNER GRID ── */
+.bh-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* ══════════════════
+   LEFT
+══════════════════ */
+
+/* ── PILL BADGE ── */
+.bh-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #3d2b1a;
+  margin-bottom: 28px;
+  font-family: Inter, sans-serif;
+
+}
+
+.bh-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e07b39;
+  flex-shrink: 0;
+}
+
+/* ── HEADLINE ── */
+.bh-headline {
+  font-size: 68px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 28px;
+  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  color: var(--primary-web-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bh-line1,
+.bh-line2 {
+  display: block;
+  font-variant: small-caps;
+  letter-spacing: 0.01em;
+}
+
+/* Orange italic accent — "Pahad" */
+.bh-accent1 {
+  font-style: italic;
+  color: #e8754d;
+  font-variant: normal;
+  font-weight: 500;
+  font-family: IM Fell English,Georgia,serif;
+}
+
+/* Green italic accent — "kitchen" */
+.bh-accent2 {
+  font-style: italic;
+  color: #1a6b4a;
+  font-variant: normal;
+  font-weight: 500;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.bh-suffix {
+  color: #1a6b4a;
+  font-variant: normal;
+}
+
+/* ── BODY ── */
+.bh-body {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #3a4a44;
+  margin: 0 0 40px;
+  max-width: 480px;
+  font-family: var(--font-family-normal);
+}
+
+/* ── CTAs ── */
+.bh-ctas {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.bh-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 14px 22px;
+    background: var(--primary-web-color);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: Inter, sans-serif;
+    transition: background .2s ease, transform .15s ease;
+}
+
+.bh-btn-primary:hover {
+  background: #155c3e;
+  transform: translateX(3px);
+}
+
+.bh-btn-secondary {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1b2420;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  font-family: Inter, sans-serif;
+  transition: color 0.2s ease;
+}
+
+.bh-btn-secondary:hover {
+  color: #1a6b4a;
+}
+
+/* ══════════════════
+   RIGHT
+══════════════════ */
+
+.bh-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+
+/* ── IMAGE ── */
+.bh-img-wrap {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.bh-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 5 / 4;
+  transition: transform 0.6s ease;
+}
+
+.bh-img-wrap:hover .bh-img {
+  transform: scale(1.03);
+}
+
+.bh-img-placeholder {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  background: #e8e0d0;
+  display: block;
+}
+
+/* ── SOURCE BAR ── */
+.bh-source-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0 0;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.bh-source-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.bh-source-text {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #3a4a44;
+  font-family: Inter,sans-serif;
+  text-transform: uppercase;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  .bh-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px;
+  }
+
+  .bh-section {
+    padding: 64px 0;
+  }
+
+  .bh-headline {
+    font-size: clamp(36px, 8vw, 52px);
+  }
+
+  .bh-body {
+    font-size: 15px;
+    max-width: 100%;
+  }
+
+  .bh-right {
+    align-items: stretch;
+  }
+
+  .bh-source-bar {
+    justify-content: flex-start;
+  }
+
+  .bh-source-text {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 600px) {
+  .bh-inner {
+    padding: 0 16px;
+  }
+
+  .bh-ctas {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .bh-btn-primary {
+    justify-content: center;
+  }
+}

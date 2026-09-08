@@ -1,0 +1,234 @@
+{% comment %}
+  Collection FAQ Section
+  Displays FAQs populated via collection metafields:
+  - `custom.collection_faq_questions` (List of Single line text)
+  - `custom.collection_faq_answer` (List of Single line text)
+  Or fallback blocks if configured in theme editor.
+{% endcomment %}
+
+{{ 'section-faq-pdp.css' | asset_url | stylesheet_tag }}
+
+{%- assign faq_questions = collection.metafields.custom.collection_faq_questions.value -%}
+{%- assign faq_answers = collection.metafields.custom.collection_faq_answer.value -%}
+{%- assign has_metafield_faqs = false -%}
+
+{%- if faq_questions != blank and faq_questions.size > 0 -%}
+  {%- assign has_metafield_faqs = true -%}
+{%- endif -%}
+
+{%- if has_metafield_faqs or section.blocks.size > 0 -%}
+  <div id="collection-faq-{{ section.id }}" class="pdp-section collection-faq-section" style="background: {{ section.settings.bg_color | default: '#ffffff' }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+    <div class="pdp-wrapper">
+
+      <!-- Section Title -->
+      {%- if section.settings.title != blank -%}
+        <h2 class="pdp-title-faq {% if section.settings.image == blank %}title-center{% endif %}">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      <div class="pdp-inner {% if section.settings.image == blank %}pdp-inner--no-image{% endif %}">
+
+        <!-- Optional Left Image -->
+        {%- if section.settings.image != blank -%}
+          <div class="pdp-image-faq-col">
+            <img
+              src="{{ section.settings.image | image_url: width: 800 }}"
+              alt="{{ section.settings.title | default: 'Collection FAQ' }}"
+              class="pdp-image-faq"
+              loading="lazy"
+            >
+          </div>
+        {%- endif -%}
+
+        <!-- FAQ Column -->
+        <div class="pdp-faq-col">
+
+          {%- if has_metafield_faqs -%}
+            {%- for question in faq_questions -%}
+              {%- assign answer = faq_answers[forloop.index0] -%}
+              {%- if question != blank -%}
+                <div class="pdp-faq-item">
+                  <button
+                    type="button"
+                    class="pdp-faq-question"
+                    aria-expanded="false"
+                    data-faq-index="{{ forloop.index0 }}"
+                  >
+                    <span class="pdp-faq-text">{{ question }}</span>
+                    <span class="pdp-faq-icon">
+                      <svg class="pdp-icon-plus" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 0C10.3009 0.0448832 6.76597 1.53429 4.15013 4.15013C1.53429 6.76597 0.0448832 10.3009 0 14C0.0448832 17.6991 1.53429 21.234 4.15013 23.8499C6.76597 26.4657 10.3009 27.9551 14 28C17.6991 27.9551 21.234 26.4657 23.8499 23.8499C26.4657 21.234 27.9551 17.6991 28 14C27.9551 10.3009 26.4657 6.76597 23.8499 4.15013C21.234 1.53429 17.6991 0.0448832 14 0ZM22 15H15V22H13V15H6V13H13V6H15V13H22V15Z" fill="#048E79"/>
+                      </svg>
+                      <svg class="pdp-icon-minus" width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="11" fill="#048E79"/>
+                        <line x1="7" y1="12" x2="17" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                  <div class="pdp-faq-answer">
+                    <p class="pdp-faq-answer-text">{{ answer | newline_to_br }}</p>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+          {%- elsif section.blocks.size > 0 -%}
+            {%- for block in section.blocks -%}
+              <div class="pdp-faq-item" {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="pdp-faq-question"
+                  aria-expanded="false"
+                  data-faq-index="{{ forloop.index0 }}"
+                >
+                  <span class="pdp-faq-text">{{ block.settings.question }}</span>
+                  <span class="pdp-faq-icon">
+                    <svg class="pdp-icon-plus" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 0C10.3009 0.0448832 6.76597 1.53429 4.15013 4.15013C1.53429 6.76597 0.0448832 10.3009 0 14C0.0448832 17.6991 1.53429 21.234 4.15013 23.8499C6.76597 26.4657 10.3009 27.9551 14 28C17.6991 27.9551 21.234 26.4657 23.8499 23.8499C26.4657 21.234 27.9551 17.6991 28 14C27.9551 10.3009 26.4657 6.76597 23.8499 4.15013C21.234 1.53429 17.6991 0.0448832 14 0ZM22 15H15V22H13V15H6V13H13V6H15V13H22V15Z" fill="#048E79"/>
+                    </svg>
+                    <svg class="pdp-icon-minus" width="28" height="28" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="11" fill="#048E79"/>
+                      <line x1="7" y1="12" x2="17" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </button>
+                <div class="pdp-faq-answer">
+                  <p class="pdp-faq-answer-text">{{ block.settings.answer | newline_to_br }}</p>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var container = document.getElementById('collection-faq-{{ section.id }}');
+      if (!container) return;
+      var items = container.querySelectorAll('.pdp-faq-item');
+
+      items.forEach(function (item) {
+        var btn = item.querySelector('.pdp-faq-question');
+        var answer = item.querySelector('.pdp-faq-answer');
+        if (!btn || !answer) return;
+
+        btn.addEventListener('click', function () {
+          var isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          // Close all in this section
+          items.forEach(function (otherItem) {
+            var otherBtn = otherItem.querySelector('.pdp-faq-question');
+            var otherAnswer = otherItem.querySelector('.pdp-faq-answer');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+            otherItem.classList.remove('pdp-faq-item--open');
+            if (otherAnswer) otherAnswer.style.maxHeight = null;
+          });
+
+          // Open clicked if it was closed
+          if (!isOpen) {
+            btn.setAttribute('aria-expanded', 'true');
+            item.classList.add('pdp-faq-item--open');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+          }
+        });
+      });
+    })();
+  </script>
+
+{%- elsif request.design_mode -%}
+  <div class="pdp-section collection-faq-section collection-faq--placeholder" style="padding: 30px 20px; text-align: center; background: #fafafa; border: 1px dashed #d0d0d0; margin: 20px auto; max-width: 1300px; border-radius: 8px;">
+    <p style="margin: 0; color: #666; font-size: 14px; font-family: 'Archivo', sans-serif;">
+      <strong>Collection FAQ:</strong> This section is active. Questions will appear once <code>custom.collection_faq_questions</code> and <code>custom.collection_faq_answer</code> metafields are populated, or blocks are added in the theme editor.
+    </p>
+  </div>
+{%- endif -%}
+
+<style>
+  .collection-faq-section .pdp-inner--no-image {
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .collection-faq-section .pdp-inner--no-image .pdp-faq-col {
+    width: 100%;
+  }
+  .collection-faq-section .pdp-faq-question {
+    font-family: var(--font-family-normal, 'Archivo', sans-serif);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection FAQ",
+  "tag": "section",
+  "class": "pdp-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Optional Left Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is unique about products from this region?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Our products are authentic, sustainably harvested, and sourced directly from local mountain farmers."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection FAQ"
+    }
+  ]
+}
+{% endschema %}

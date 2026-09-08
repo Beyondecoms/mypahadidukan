@@ -1,0 +1,179 @@
+{{ 'section-about-gems.css' | asset_url | stylesheet_tag }}
+<section class="vision-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="vision-inner">
+    
+    <!-- LEFT COLUMN -->
+    <div class="vision-left">
+      <div class="vision-label">
+        <span class="vision-label-icon">
+        <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true">
+            <path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e87750" stroke-width="1.5" fill="none" stroke-linejoin="round">
+            </path>
+        </svg>
+        </span>
+        <span class="vision-label-text" style="color: {{ section.settings.accent_color }};">{{ section.settings.label_text }}</span>
+      </div>
+
+      <h2 class="vision-heading" style="color: {{ section.settings.heading_color }};">
+        {{ section.settings.heading_line1 }}
+        <br>
+        <em>{{ section.settings.heading_italic }}</em>
+        {{ section.settings.heading_line2 }}
+      </h2>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="vision-right">
+      {% if section.settings.paragraph_1 != blank %}
+        <p class="vision-body" style="color: {{ section.settings.body_color }};">{{ section.settings.paragraph_1 }}</p>
+      {% endif %}
+
+      {% if section.settings.paragraph_2 != blank %}
+        <p class="vision-body" style="color: {{ section.settings.body_color }};">{{ section.settings.paragraph_2 }}</p>
+      {% endif %}
+
+      {% if section.settings.paragraph_3 != blank %}
+        <p class="vision-body" style="color: {{ section.settings.body_color }};">{{ section.settings.paragraph_3 }}</p>
+      {% endif %}
+
+      {% if section.settings.quote_line1 != blank %}
+        <blockquote class="vision-quote">
+          <p class="vision-quote-heading" style="color: {{ section.settings.accent_color }};">{{ section.settings.quote_line1 }}</p>
+          <p class="vision-quote-italic" style="color: {{ section.settings.accent_color }};">{{ section.settings.quote_line2 }}</p>
+        </blockquote>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Vision",
+  "tag": "section",
+  "class": "vision-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f0ede4"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / Heading Color",
+      "default": "#2e7d6b"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Main Heading Color",
+      "default": "#2e7d6b"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#3b3b3b"
+    },
+    {
+      "type": "header",
+      "content": "Left Column"
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label Text",
+      "default": "OUR VISION"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading — First Part",
+      "default": "Gems hidden in the"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading — Italic Word",
+      "default": "mountains"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading — Last Part",
+      "default": "— finally within reach."
+    },
+    {
+      "type": "header",
+      "content": "Right Column — Body Text"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "Our founders are avid travellers. Over years of wandering Himalayan trails, they kept stumbling onto small businesses quietly making the most extraordinary, indigenous, organic and unadulterated goods."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "These gems were tucked away in the mountains — incredible to taste, impossible to find. We built My Pahadi Dukan as the bridge: a platform for these budding entrepreneurs to connect with people across the length and breadth of the country."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_3",
+      "label": "Paragraph 3",
+      "default": "The result is honest. Eco-conscious buyers get high-quality produce at fair prices. The absence of middlemen means our farmers and small producers earn meaningfully more."
+    },
+    {
+      "type": "header",
+      "content": "Blockquote"
+    },
+    {
+      "type": "text",
+      "id": "quote_line1",
+      "label": "Quote — First Line",
+      "default": "Quality products, real on-ground impact."
+    },
+    {
+      "type": "text",
+      "id": "quote_line2",
+      "label": "Quote — Second Line (Italic)",
+      "default": "That's what we stand for in a nutshell."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Gems "
+    }
+  ]
+}
+{% endschema %}

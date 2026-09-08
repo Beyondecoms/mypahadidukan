@@ -1,0 +1,218 @@
+.our-values-section {
+  background: #f5f1e7;
+  padding: 90px 0;
+}
+
+.our-values-section .page-width {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* HEADER */
+
+.ov-header {
+  display: flex;
+  margin-bottom: 50px;
+  flex-direction: column;
+}
+
+.ov-left {
+  max-width: 650px;
+}
+.ov-left-top1{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: #e8754d;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+    margin-bottom: 12px;
+}
+
+.ov-title {
+    margin: 0;
+    color: #0f7263;
+    font-size: 38px;
+    line-height: 1.2;
+    word-spacing: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+}
+.ov-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.ov-right {
+    max-width: 515px;
+    color: #3a4a44;
+    font-size: 17px;
+    font-family: Inter, sans-serif;
+    line-height: 1.4;
+    margin-top: 15px;
+}
+
+/* GRID */
+
+.ov-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid #dfd8ca;
+  border-left: 1px solid #dfd8ca;
+}
+
+.ov-card,
+.ov-highlight {
+  min-height: 260px;
+  padding: 30px;
+  border-right: 1px solid #dfd8ca;
+  border-bottom: 1px solid #dfd8ca;
+}
+
+.ov-card {
+  background: transparent;
+}
+
+.ov-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 13%;
+}
+
+.ov-icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d8d1c3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ov-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.ov-number {
+  color: #e07b39;
+  font-size: 21px;
+  letter-spacing: 2px;
+  font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+}
+
+.ov-card-title {
+    color: #0f6b5c;
+    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-weight: 400;
+    letter-spacing: .01em;
+    font-size: 28px;
+    line-height: 1.08;
+}
+
+.ov-card-text {
+    color: #3a4a44;
+    font-size: 16px;
+    line-height: 1.65;
+    margin-top: 12px;
+    font-family: Inter, sans-serif;
+}
+
+/* HIGHLIGHT CARD */
+
+.ov-highlight {
+    background: #0f7263;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.ov-highlight img {
+  width: 28px;
+  margin-bottom: 10px;
+}
+
+.ov-highlight-text {
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+}
+
+.ov-highlight-text strong {
+  font-weight: 700;
+  color: #f7edb1;
+  font-style: italic;
+}
+
+.ov-highlight-text p {
+  margin: 0;
+}
+
+/* TABLET */
+
+@media screen and (max-width: 989px) {
+  .ov-wrapper{
+    flex-direction: column;
+    gap:25px;
+  }
+  .ov-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ov-right {
+        max-width: 100%;
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+  .ov-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ov-title {
+    font-size: 42px;
+  }
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 749px) {
+
+  .our-values-section {
+    padding: 60px 0;
+  }
+
+  .ov-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ov-title {
+    font-size: 32px;
+  }
+
+  .ov-card,
+  .ov-highlight {
+    min-height: auto;
+    padding: 41px;
+  }
+
+    .ov-title {
+        font-size: 24px;
+        word-spacing: 9px;
+        line-height: 1.6;
+    }
+
+  .ov-highlight-text {
+    font-size: 20px;
+  }
+}

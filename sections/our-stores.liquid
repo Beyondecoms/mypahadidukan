@@ -1,0 +1,402 @@
+{{ 'section-our-stores.css' | asset_url | stylesheet_tag }}
+
+<div class="os-section" style="background: {{ section.settings.bg_color }};">
+  <div class="os-wrapper">
+
+    <!-- ── HEADER ROW ── -->
+    <div class="os-header">
+
+      <div class="os-header-left">
+        <div class="os-label">
+            <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true"><path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e07b39" stroke-width="1.5" fill="none" stroke-linejoin="round"></path></svg>
+          <span>{{ section.settings.label | default: 'VISIT US IN PERSON' }}</span>
+        </div>
+        <h2 class="os-title">
+          {{ section.settings.title_plain | default: 'Our' }}
+          <em class="os-title-accent">{{ section.settings.title_accent | default: 'Stores' }}</em>
+          <span class="os-title-dot">.</span>
+        </h2>
+      </div>
+
+      <div class="os-header-right">
+        {%- if section.settings.intro_text != blank -%}
+          <p class="os-intro">{{ section.settings.intro_text }}</p>
+        {%- endif -%}
+        <div class="os-meta-row">
+          {%- if section.settings.meta_locations != blank -%}
+            <span class="os-meta-item">
+              <span class="os-meta-dot"></span>
+              {{ section.settings.meta_locations }}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.meta_states != blank -%}
+            <span class="os-meta-sep">·</span>
+            <span class="os-meta-item">{{ section.settings.meta_states }}</span>
+          {%- endif -%}
+          {%- if section.settings.meta_soon != blank -%}
+            <span class="os-meta-sep">·</span>
+            <span class="os-meta-item">{{ section.settings.meta_soon }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── STORE CARDS GRID ── -->
+    <div class="os-grid">
+      {%- assign stores = section.blocks | where: 'type', 'store' -%}
+      {%- for block in stores -%}
+        <div class="os-card" {{ block.shopify_attributes }}>
+
+          <!-- Image with overlay -->
+          <div class="os-card-img-wrap">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 900 }}"
+                alt="{{ block.settings.store_name }}"
+                class="os-card-img"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="os-card-img-placeholder"></div>
+            {%- endif -%}
+
+            <!-- Number + State pill -->
+            <div class="os-card-pill">
+              <span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <span class="os-pill-sep">·</span>
+              <span>{{ block.settings.state | upcase }}</span>
+            </div>
+
+            <!-- City + type overlay bottom left -->
+            <div class="os-card-overlay">
+              <h3 class="os-card-city">{{ block.settings.city }}</h3>
+              <p class="os-card-type">{{ block.settings.store_type }}</p>
+            </div>
+
+            <!-- Map pin -->
+            {%- if block.settings.map_url != blank -%}
+              <a href="{{ block.settings.map_url }}" target="_blank" rel="noopener" class="os-card-pin" aria-label="View on map">
+                <svg width="18" height="22" viewBox="0 0 24 30" fill="#0a5246">
+                  <path d="M12 0C7.589 0 4 3.589 4 8c0 6 8 16 8 16s8-10 8-16c0-4.411-3.589-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+
+          <!-- Card Body -->
+          <div class="os-card-body">
+
+            <h4 class="os-card-name">{{ block.settings.store_name }}</h4>
+            {%- if block.settings.address != blank -%}
+              <p class="os-card-address">{{ block.settings.address }}</p>
+            {%- endif -%}
+
+            <div class="os-card-divider"></div>
+
+            <div class="os-card-info">
+              {%- if block.settings.hours != blank -%}
+                <div class="os-info-col">
+                  <span class="os-info-label">HOURS</span>
+                  <span class="os-info-val">{{ block.settings.hours }}</span>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.phone != blank -%}
+                <div class="os-info-col">
+                  <span class="os-info-label">PHONE</span>
+                  <a href="tel:{{ block.settings.phone }}" class="os-info-phone">{{ block.settings.phone }}</a>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <div class="os-card-divider"></div>
+
+            <!-- Action Buttons -->
+            <div class="os-card-actions">
+              {%- if block.settings.map_url != blank -%}
+                <a href="{{ block.settings.map_url }}" target="_blank" rel="noopener" class="os-btn-directions">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                  Get Directions
+                </a>
+              {%- endif -%}
+              <div class="os-btn-group">
+                {%- if block.settings.phone != blank -%}
+                  <a href="tel:{{ block.settings.phone }}" class="os-btn-icon" aria-label="Call">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.calendar_url != blank -%}
+                  <a href="{{ block.settings.calendar_url }}" target="_blank" rel="noopener" class="os-btn-icon" aria-label="Book visit" style="background:white;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    <!-- Scroll progress bar -->
+    <div class="os-scroll-bar" id="os-scroll-bar-{{ section.id }}">
+    <div class="os-scroll-bar-fill" id="os-scroll-fill-{{ section.id }}"></div>
+    </div>
+    <!-- ── OPENING SOON BANNER ── -->
+    {%- assign soon_block = section.blocks | where: 'type', 'coming_soon' | first -%}
+    {%- if soon_block -%}
+      <div class="os-soon-bar" {{ soon_block.shopify_attributes }}>
+        <div class="os-soon-left">
+            <div class="os-soon-svg-left">
+                <svg width="26" height="15.6" viewBox="0 0 40 24" fill="none" aria-hidden="true">
+                    <path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e8754d" stroke-width="1.5" fill="none" stroke-linejoin="round">
+                    </path>
+                </svg>
+                <div class="os-soon-label">
+                    <span>{{ soon_block.settings.label | default: 'OPENING SOON' }}</span>
+                    <p class="os-soon-cities">{{ soon_block.settings.cities }}</p>
+                </div>
+                </div>
+            </div>
+        <!-- Notify button — replace href with your app's notify URL or popup trigger -->
+        <a
+          href="{{ soon_block.settings.notify_url | default: '#notify' }}"
+          class="os-soon-notify"
+          id="os-notify-btn"
+        >
+          {{ soon_block.settings.notify_label | default: 'Notify me' }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var grid = document.querySelector('.os-grid');
+  var fill = document.getElementById('os-scroll-fill-{{ section.id }}');
+  if (!grid || !fill) return;
+
+  grid.addEventListener('scroll', function () {
+    var maxScroll = grid.scrollWidth - grid.clientWidth;
+    var progress  = maxScroll > 0 ? grid.scrollLeft / maxScroll : 0;
+    var maxScroll = grid.scrollWidth - grid.clientWidth;
+    var progress = maxScroll > 0 ? grid.scrollLeft / maxScroll : 0;
+
+    var trackWidth = fill.parentElement.clientWidth;
+    var thumbWidth = fill.clientWidth;
+
+    var maxMove = trackWidth - thumbWidth;
+
+    fill.style.transform =
+    'translateX(' + (progress * maxMove) + 'px)';  });
+    })();
+</script>
+
+{% schema %}
+{
+  "name": "Our Stores",
+  "tag": "section",
+  "class": "os-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f0ebe0"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "VISIT US IN PERSON"
+    },
+    {
+      "type": "text",
+      "id": "title_plain",
+      "label": "Title — plain word",
+      "default": "Our"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Title — accent word (italic orange)",
+      "default": "Stores"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro text (right side)",
+      "default": "Find a Pahadi Dukan near you. Walk in, smell the spices, taste before you buy — and meet the team behind every jar."
+    },
+    {
+      "type": "text",
+      "id": "meta_locations",
+      "label": "Meta — locations",
+      "default": "2 locations"
+    },
+    {
+      "type": "text",
+      "id": "meta_states",
+      "label": "Meta — states",
+      "default": "2 states"
+    },
+    {
+      "type": "text",
+      "id": "meta_soon",
+      "label": "Meta — coming soon text",
+      "default": "More opening soon"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Store image"
+        },
+        {
+          "type": "text",
+          "id": "state",
+          "label": "State (shown in pill)",
+          "default": "Uttar Pradesh"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City (overlay on image)",
+          "default": "Lucknow"
+        },
+        {
+          "type": "text",
+          "id": "store_type",
+          "label": "Store type tags",
+          "default": "Grocery · Tasting Counter"
+        },
+        {
+          "type": "text",
+          "id": "store_name",
+          "label": "Store name",
+          "default": "New Lucknow Store"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "label": "Address",
+          "default": "Picnic Spot Road, Khurram Nagar Rd, opp. Fatimi Masjid, Sector 8, Vikas Nagar, Lucknow, UP 226022"
+        },
+        {
+          "type": "text",
+          "id": "hours",
+          "label": "Hours",
+          "default": "Mon – Sun · 10:00 – 21:00"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone number",
+          "default": "08881999204"
+        },
+        {
+          "type": "url",
+          "id": "map_url",
+          "label": "Google Maps URL"
+        },
+        {
+          "type": "url",
+          "id": "calendar_url",
+          "label": "Book visit URL (optional)"
+        }
+      ]
+    },
+    {
+      "type": "coming_soon",
+      "name": "Coming Soon Banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "OPENING SOON"
+        },
+        {
+          "type": "text",
+          "id": "cities",
+          "label": "Cities text",
+          "default": "Rishikesh · Shimla · Manali"
+        },
+        {
+          "type": "text",
+          "id": "notify_label",
+          "label": "Notify button label",
+          "default": "Notify me"
+        },
+        {
+          "type": "url",
+          "id": "notify_url",
+          "label": "Notify button URL (or leave blank for app popup)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Stores",
+      "blocks": [
+        {
+          "type": "store",
+          "settings": {
+            "state": "Uttar Pradesh",
+            "city": "Lucknow",
+            "store_type": "Grocery · Tasting Counter",
+            "store_name": "New Lucknow Store",
+            "address": "Picnic Spot Road, Khurram Nagar Rd, opp. Fatimi Masjid, Sector 8, Vikas Nagar, Lucknow, UP 226022",
+            "hours": "Mon – Sun · 10:00 – 21:00",
+            "phone": "08881999204"
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+            "state": "Uttarakhand",
+            "city": "Dehradun",
+            "store_type": "Flagship · Tasting · Workshop",
+            "store_name": "Dehradun Flagship",
+            "address": "Rajpur Road, near Astley Hall, Dehradun, Uttarakhand 248001",
+            "hours": "Mon – Sun · 09:30 – 21:30",
+            "phone": "08881999205"
+          }
+        },
+        {
+          "type": "coming_soon",
+          "settings": {
+            "label": "OPENING SOON",
+            "cities": "Rishikesh · Shimla · Manali",
+            "notify_label": "Notify me"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

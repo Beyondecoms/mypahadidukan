@@ -1,0 +1,96 @@
+{{ 'section-about-marquee-bar.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .marquee-ab-content {
+    animation-duration: {{ section.settings.speed }}s;
+  }
+  .marquee-ab-text {
+    font-size: {{ section.settings.font_size }}px;
+  }
+</style>
+
+<div class="marquee-ab-bar" style="background: {{ section.settings.bg_color }};">
+  <div class="marquee-ab-track">
+
+    {%- assign repeat_times = 4 -%}
+    {%- for i in (1..repeat_times) -%}
+      <div class="marquee-ab-content" {% if i > 1 %}aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <span class="marquee-ab-item" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>
+           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g stroke="#e87750" stroke-width="1.3" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="4.5" y1="4.5" x2="19.5" y2="19.5"></line><line x1="19.5" y1="4.5" x2="4.5" y2="19.5"></line></g></svg>
+            <span class="marquee-ab-text" style="color: {{ section.settings.text_color }};">
+              {{ block.settings.text }}
+            </span>
+          </span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Marquee Bar",
+  "tag": "div",
+  "class": "marquee-bar-section-ab",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#8B3A2A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 11,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Kashmir's Saffron"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Marquee Bar",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Kashmir's Saffron" } },
+        { "type": "item", "settings": { "text": "Himalaya's Shilajit" } },
+        { "type": "item", "settings": { "text": "Ladakh's Seabuckthorn" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

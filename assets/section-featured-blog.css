@@ -1,0 +1,217 @@
+.fb-section-outer {
+  width: 100%;
+}
+
+.fb-section {
+  padding: 3% 0 3%;
+  width: 100%;
+}
+
+.fb-wrapper {
+  max-width: 1400px;
+  margin: 0 auto; 
+  padding: 0 24px;
+}
+
+/* ── TITLE ── */
+.fb-title {
+    font-size: var(--font-heading-size);
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    color: #231F20;
+    margin: 0 0 24px;
+    font-variant: small-caps;
+}
+
+/* ── SLIDER ROW ── */
+.fb-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── ARROWS ── */
+.fb-arrow {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #ccc;
+  background: #fff;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.fb-arrow:hover { border-color: #1a6b4a; color: #1a6b4a; }
+.fb-arrow.disabled { opacity: 0.3; pointer-events: none; }
+
+/* ── SLIDER ── */
+.fb-slider {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  flex: 1;
+  padding: 8px 4px;
+}
+
+.fb-slider::-webkit-scrollbar { display: none; }
+
+/* ── CARD ── */
+.fb-card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.fb-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+
+/* ── IMAGE ── */
+.fb-img-wrap {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.fb-img-wrap img,
+.fb-placeholder-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.fb-card:hover .fb-img-wrap img { transform: scale(1.04); }
+
+/* ── INFO ── */
+.fb-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.fb-article-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a2e1a;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.fb-excerpt {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 130%;
+    font-weight: 400;
+}
+
+/* ── READ MORE ── */
+.fb-read-more {
+  display: block;
+  margin-top: auto;
+  padding: 12px;
+  background: var(--primary-web-color);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  font-family: var(--font-heading-family);
+}
+
+.fb-read-more:hover { background: #155c3e; }
+
+/* ── DOTS ── */
+.fb-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.fb-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #d0cfc8;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, width 0.25s;
+}
+
+.fb-dot.active {
+  background: #1a6b4a;
+  width: 28px;
+  border-radius: 999px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .fb-card { flex: 0 0 calc((100% - -22px) / 1); }
+}
+
+@media (max-width: 600px) {
+  .fb-read-more{
+    padding:6px;
+  }
+    /* Hide arrows */
+  .fb-arrow {
+    display: none;
+  }
+
+  .fb-slider {
+    gap: 12px;
+    padding: 8px 16px;
+  }
+  .fb-title { 
+    font-size: var(--font-heading-size-mobile); 
+    margin-bottom: 0px;
+  }
+    /* Progress bar dots — same style as collection circles */
+  .fb-dots {
+    gap: 0;
+    padding: 0 16px;
+    height: 3px;
+    margin-top: 16px;
+  }
+
+  .fb-dot {
+    flex: 1;
+    height: 3px;
+    width: auto;
+    border-radius: 0;
+    background: #d0cfc8;
+  }
+
+  .fb-dot:first-child { border-radius: 999px 0 0 999px; }
+  .fb-dot:last-child  { border-radius: 0 999px 999px 0; }
+
+  .fb-dot.active {
+    background: #1a6b4a;
+    width: auto;
+    border-radius: 0;
+  }
+
+  .fb-dot.active:first-child { border-radius: 999px 0 0 999px; }
+  .fb-dot.active:last-child  { border-radius: 0 999px 999px 0; }
+}

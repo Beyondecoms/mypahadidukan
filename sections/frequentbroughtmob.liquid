@@ -1,0 +1,240 @@
+{%- comment -%} Try metafield first, fallback to section setting {%- endcomment -%}
+{%- assign fbt_product = product.metafields.custom.frequently_bought_together.value -%}
+
+{%- if fbt_product == blank and section.settings.product != blank -%}
+  {%- assign fbt_product = all_products[section.settings.product] -%}
+{%- endif -%}
+
+{%- if fbt_product != blank -%}
+  {%- assign fbt_variant = fbt_product.selected_or_first_available_variant -%}
+
+  <style>
+    .pm-fbt-section {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .pm-fbt-section {
+        display: block;
+        margin: 20px 16px 0;
+      }
+    }
+    .pm-fbt-label {
+      font-size: 12px;
+      font-weight: 400;
+      font-family: var(--font-family-normal);
+      color: #000000CC;
+      margin: 0 0 5px 0;
+    }
+    .pm-fbt-card {
+      background: #e8f5f0;
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pm-fbt-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .pm-fbt-img-wrap {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .pm-fbt-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pm-fbt-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .pm-fbt-title {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-family-normal);
+      color: #1b1b1b;
+      margin: 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .pm-fbt-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .pm-fbt-price-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pm-fbt-price {
+      font-size: 17px;
+      font-weight: 700;
+      font-family: var(--font-family-normal);
+      color: #1b1b1b;
+    }
+    .pm-fbt-compare {
+      font-size: 14px;
+      color: #9ca3af;
+      font-family: var(--font-family-normal);
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+    .pm-fbt-discount {
+      background: #F3743C;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-family-normal);
+      padding: 3px 6px;
+      border-radius: 4px;
+      line-height: 100%;
+    }
+    .pm-fbt-atc-btn {
+      background: var(--primary-web-color);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-family-normal);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .pm-fbt-atc-btn:hover {
+      background: #155c3e;
+    }
+    .pm-fbt-atc-btn:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+  </style>
+
+  <div class="pm-fbt-section">
+    <div class="pm-fbt-card">
+      <!-- Top Row: Image + Info -->
+      <div class="pm-fbt-top">
+        <div class="pm-fbt-img-wrap">
+          <img
+            src="{{ fbt_product.featured_image | image_url: width: 200 }}"
+            alt="{{ fbt_product.title }}"
+            width="100"
+            height="100"
+            loading="lazy"
+          >
+        </div>
+        <div class="pm-fbt-info">
+          <p class="pm-fbt-label">Frequently Bought Together</p>
+          <p class="pm-fbt-title">{{ fbt_product.title }}</p>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Price + ATC -->
+      <div class="pm-fbt-bottom">
+        <div class="pm-fbt-price-row">
+          <span class="pm-fbt-price">₹{{ fbt_variant.price | money_without_currency }}</span>
+          {%- if fbt_variant.compare_at_price > fbt_variant.price -%}
+            <span class="pm-fbt-compare">₹{{ fbt_variant.compare_at_price | money_without_currency }}</span>
+            {%- assign fbt_disc = fbt_variant.compare_at_price | minus: fbt_variant.price | times: 100 | divided_by: fbt_variant.compare_at_price -%}
+            <span class="pm-fbt-discount">{{ fbt_disc }}% off</span>
+          {%- endif -%}
+        </div>
+        <button
+          class="pm-fbt-atc-btn"
+          id="pm-fbt-atc-btn"
+          data-variant-id="{{ fbt_variant.id }}"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('pm-fbt-atc-btn');
+      if (!btn) return;
+
+      btn.addEventListener('click', async function () {
+        var variantId = parseInt(btn.dataset.variantId);
+
+        btn.textContent = 'Adding...';
+        btn.disabled = true;
+
+        try {
+          await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+          });
+
+          if (window.ncRerenderCart) {
+            var cart = await fetch('/cart.js').then(r => r.json());
+            window.ncRerenderCart(cart);
+          }
+
+          if (window.ncCartOpen) window.ncCartOpen();
+          document.dispatchEvent(new CustomEvent('cart:open'));
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && cartDrawer.open) cartDrawer.open();
+
+          btn.textContent = 'Added!';
+          setTimeout(function () {
+            btn.textContent = 'Add to Cart';
+            btn.disabled = false;
+          }, 2000);
+
+        } catch (e) {
+          console.error('FBT ATC error:', e);
+          btn.textContent = 'Add to Cart';
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Frequently BT",
+  "tag": "div",
+  "class": "pm-fbt-wrapper",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Fallback Product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Used only if no metafield is set on the product. Metafield: custom.frequently_bought_together"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Fallback Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frequently Bought Together"
+    }
+  ]
+}
+{% endschema %}

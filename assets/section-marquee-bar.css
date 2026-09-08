@@ -1,0 +1,50 @@
+.marquee-bar-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-bar {
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  animation: marquee-scroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px;
+}
+
+.marquee-text {
+  font-size: 13px;
+  font-weight: 500;
+  padding-left: 27px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Pause on hover */
+.marquee-bar:hover .marquee-content {
+  animation-play-state: paused;
+}

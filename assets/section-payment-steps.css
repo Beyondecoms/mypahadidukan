@@ -1,0 +1,135 @@
+/* ── OUTER ── */
+.ps2-section-outer { width: 100%; }
+
+.ps2-section {
+  width: 100%;
+  padding: 56px 0 64px;
+}
+
+.ps2-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── HEADING BLOCK ── */
+.ps2-heading-block {
+  text-align: center;
+}
+
+.ps2-heading {
+  font-size: 33px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+  font-family: var(--font-family-normal);
+  line-height: 1.3;
+}
+
+/* ── STEPS TEXT BLOCK ── */
+.ps2-steps-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 7%;
+}
+
+.ps2-step {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.5;
+  font-family: var(--font-family-normal);
+}
+
+/* ── IMAGE ROW ── */
+.ps2-image-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.ps2-img-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.06);
+  line-height: 0;
+}
+
+.ps2-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+/* ── ZOOM ON HOVER ── */
+.ps2-img-wrap {
+  overflow: hidden; /* already there — clips the zoom */
+}
+
+.ps2-img {
+  transition: transform 0.4s ease;
+}
+
+.ps2-img-wrap:hover .ps2-img {
+  transform: scale(1.05);
+}
+
+/* ── FOOTER TEXT BLOCK ── */
+.ps2-footer-block {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 40px;
+}
+
+.ps2-footer-bold {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+  font-family: var(--font-family-normal);
+}
+
+.ps2-footer-light {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+  line-height: 1.7;
+  font-family: var(--font-family-normal);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .ps2-wrapper {
+    padding: 0 16px;
+    gap: 28px;
+  }
+
+  .ps2-section { padding: 40px 0 48px; }
+
+  .ps2-image-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ps2-footer-block { padding: 0; }
+
+  .ps2-step { font-size: 15px; }
+
+  .ps2-heading { font-size: 16px; }
+}

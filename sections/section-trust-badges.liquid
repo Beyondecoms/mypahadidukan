@@ -1,0 +1,127 @@
+{{ 'section-trust-badges.css' | asset_url | stylesheet_tag }}
+
+<div class="{{ section.settings.section_style }}" style="background: {{ section.settings.bg_color }};">
+  <div class="tb-inner">
+    {%- for block in section.blocks -%}
+      <div class="tb-item" {{ block.shopify_attributes }}>
+
+        <!-- Icon / Image -->
+        <div class="tb-icon-wrap">
+          {%- if block.settings.icon_image != blank -%}
+            <img
+              src="{{ block.settings.icon_image | image_url: width: 120 }}"
+              alt="{{ block.settings.title }}"
+              class="tb-icon-img"
+              loading="lazy"
+            >
+          {%- else -%}
+            <!-- Fallback placeholder circle -->
+            <div class="tb-icon-placeholder">
+              <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+                <circle cx="19" cy="19" r="17" stroke="#e07b39" stroke-width="1.5" fill="none"/>
+                <path d="M12 19l5 5 9-9" stroke="#e07b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Text -->
+        <div class="tb-text">
+          <p class="tb-title">{{ block.settings.title }}</p>
+          <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+        </div>
+
+      </div>
+
+      {%- unless forloop.last -%}
+        <div class="tb-divider" aria-hidden="true"></div>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "tag": "section",
+  "class": "tb-section-outer",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_style",
+      "label": "Section Style",
+      "options": [
+        { "value": "tb-section", "label": "Default" },
+        { "value": "tb-section-border", "label": "With Border" }
+      ],
+      "default": "tb-section"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf3c8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image (circular illustration)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "100% Natural"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "From Pahadi Region"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "title": "100% Natural",
+            "subtitle": "From Pahadi Region"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "100k+",
+            "subtitle": "Trusted Customers"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "Lab Tested",
+            "subtitle": "From Lorem Ipsum"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "Fssai Approved",
+            "subtitle": "Lorem Ipsum Lorem"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

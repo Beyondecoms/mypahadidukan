@@ -1,576 +1,429 @@
-if (!customElements.get("product-info")) {
-  class ProductInfo extends HTMLElement {
-    abortController = undefined;
-    onVariantChangeUnsubscriber = undefined;
-    pendingRequestUrl = null;
-    preProcessHtmlCallbacks = [];
-    postProcessHtmlCallbacks = [];
+if (!customElements.get('product-info')) {
+  customElements.define(
+    'product-info',
+    class ProductInfo extends HTMLElement {
+      quantityInput = undefined;
+      quantityForm = undefined;
+      onVariantChangeUnsubscriber = undefined;
+      cartUpdateUnsubscriber = undefined;
+      abortController = undefined;
+      pendingRequestUrl = null;
+      preProcessHtmlCallbacks = [];
+      postProcessHtmlCallbacks = [];
 
-    constructor() {
-      super();
+      constructor() {
+        super();
 
-      this.onWindowLoad = this.onWindowLoad.bind(this);
-    }
-
-    get productId() {
-      return this.getAttribute('data-product-id');
-    }
-
-    get sectionId() {
-      return this.dataset.originalSection || this.dataset.sectionId;
-    }
-
-    get disableSelectedVariantDefault() {
-      return this.dataset.disableSelectedVariantDefault === "true" || false;
-    }
-
-    get enableVariantGroupImages() {
-      return this.dataset.enableVariantGroupImages === "true" || false;
-    }
-
-    get enableHistoryState() {
-      return this.dataset.enableHistoryState === "true" || false;
-    }
-
-    get viewMode() {
-      return this.dataset.viewMode || 'main-product'
-    }
-
-    get pickupAvailability() {
-      return this.querySelector(`pickup-availability`);
-    }
-
-    get productForm() {
-      return this.querySelector('product-form'); // fallback: product-form.m-product-form--main
-    }
-
-    get productMedia() {
-      return this.querySelector(`[id^="MediaGallery-${this.dataset.sectionId}"]`);
-    }
-
-    get variantPicker() {
-      return this.querySelector('variant-picker');
-    }
-
-    get quantityInput() {
-      return this.querySelector(`m-quantity-input input`);
-    }
-    get quantityInputStickyAtc() {
-      return this.querySelector(`.m-sticky-addtocart m-quantity-input input`);
-    }
-
-    get stickyAtc() {
-      return this.querySelector('sticky-atc');
-    }
-
-    connectedCallback() {
-      if (this.viewMode === "main-product") {
-        window.addEventListener("load", this.onWindowLoad);
+        this.quantityInput = this.querySelector('.quantity__input');
       }
 
-      this.init();
-    }
+      connectedCallback() {
+        this.initializeProductSwapUtility();
 
-    disconnectedCallback() {
-      window.removeEventListener("load", this.onWindowLoad);
-      this.onVariantChangeUnsubscriber();
-      this.cartUpdateUnsubscriber?.();
-    }
+        this.onVariantChangeUnsubscriber = subscribe(
+          PUB_SUB_EVENTS.optionValueSelectionChange,
+          this.handleOptionValueChange.bind(this)
+        );
 
-    init() {
-      this.currentVariant = this.getSelectedVariant(this);
-      this.quantityInputs = [];
-
-      if (this.quantityInput) {
-        this.quantityInputs.push(this.quantityInput);
-      }
-      if (this.quantityInputStickyAtc) {
-        this.quantityInputs.push(this.quantityInputStickyAtc);
+        this.initQuantityHandlers();
+        this.dispatchEvent(new CustomEvent('product-info:loaded', { bubbles: true }));
       }
 
-      if (this.disableSelectedVariantDefault) {
-        this.handleDisableSelectedVariantDefault();
+      addPreProcessCallback(callback) {
+        this.preProcessHtmlCallbacks.push(callback);
       }
 
-      this.onVariantChangeUnsubscriber = MinimogEvents.subscribe(
-        MinimogTheme.pubSubEvents.optionValueSelectionChange,
-        this.handleOptionValueChange.bind(this)
-      );
+      initQuantityHandlers() {
+        if (!this.quantityInput) return;
 
-      this.showFeaturedMedia = this.dataset.showFeaturedMedia === "true" || false;
+        this.quantityForm = this.querySelector('.product-form__quantity');
+        if (!this.quantityForm) return;
 
-      this.initialMedias = this.productMedia ? this.productMedia.querySelectorAll('.m-product-media--item') : null;
-      this.initialThumbs = this.productMedia ? this.productMedia.querySelectorAll(".m-product-media--slider__thumbnails [data-media-type]") : null;
-
-      if (this.enableVariantGroupImages) {
-        this.variantGroupImagesData = this.getVariantGroupImagesData();
-        this.showFeaturedMedia = false;
-      };
-
-      this.initQuantityHandlers();
-
-      if (this.currentVariant && !this.showFeaturedMedia) {
-        this.updateMedia(this.currentVariant);
+        this.setQuantityBoundries();
+        if (!this.dataset.originalSection) {
+          this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, this.fetchQuantityRules.bind(this));
+        }
       }
-    }
 
-    getVariantGroupImagesData() {
-      return (
-        JSON.parse(
-          this.querySelector('#variantGroup[type="application/json"]')
-            .textContent
-        ) || {}
-      );
-    }
+      disconnectedCallback() {
+        this.onVariantChangeUnsubscriber();
+        this.cartUpdateUnsubscriber?.();
+      }
 
-    handleOptionValueChange({ data: { event, target, selectedOptionValues } }) {
-      if (!this.contains(event.target)) return;
-
-      const productUrl = target.dataset.productUrl || this.pendingRequestUrl || this.dataset.url;
-      const shouldSwapProduct = this.dataset.url !== productUrl;
-      // this.pendingRequestUrl = productUrl;
-      const shouldFetchFullPage = this.dataset.updateUrl === 'true' && shouldSwapProduct;
-
-      this.renderProductInfo({
-        requestUrl: this.buildRequestUrlWithParams(productUrl, selectedOptionValues, shouldFetchFullPage),
-        targetId: target.id,
-        callback: shouldSwapProduct
-          ? this.handleSwapProduct(productUrl, shouldFetchFullPage, this.viewMode)
-          : this.handleUpdateProductInfo(productUrl, this.viewMode),
-      });
-    }
-
-    renderProductInfo({ requestUrl, targetId, callback }) {
-      this.abortController?.abort();
-      this.abortController = new AbortController();
-
-      fetch(requestUrl, { signal: this.abortController.signal })
-        .then((response) => response.text())
-        .then((responseText) => {
-          this.pendingRequestUrl = null;
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          callback(html);
-        })
-        .then(() => {
-          // set focus to last clicked option value
-          document.querySelector(`#${targetId}`)?.focus();
-        })
-        .catch((error) => {
-          if (error.name === 'AbortError') {
-            console.log('Fetch aborted by user');
-          } else {
-            console.error(error);
-          }
+      initializeProductSwapUtility() {
+        this.preProcessHtmlCallbacks.push((html) =>
+          html.querySelectorAll('.scroll-trigger').forEach((element) => element.classList.add('scroll-trigger--cancel'))
+        );
+        this.postProcessHtmlCallbacks.push((newNode) => {
+          window?.Shopify?.PaymentButton?.init();
+          window?.ProductModel?.loadShopifyXR();
         });
-    }
-
-    buildRequestUrlWithParams(url, optionValues, shouldFetchFullPage = false) {
-      const params = [];
-
-      !shouldFetchFullPage && params.push(`section_id=${this.sectionId}`);
-
-      if (optionValues.length) {
-        params.push(`option_values=${optionValues.join(',')}`);
       }
 
-      return `${url}?${params.join('&')}`;
-    }
+      handleOptionValueChange({ data: { event, target, selectedOptionValues } }) {
+        if (!this.contains(event.target)) return;
 
-    handleUpdateProductInfo(productUrl, viewMode) {
-      return (html) => {
-        const quickView = html.querySelector('#MainProduct-quick-view__content');
-        if (quickView && viewMode === 'quick-view') {
-          html = new DOMParser().parseFromString(quickView.innerHTML, "text/html");
-        }
+        this.resetProductFormState();
 
-        const variant = this.getSelectedVariant(html);
+        const productUrl = target.dataset.productUrl || this.pendingRequestUrl || this.dataset.url;
+        this.pendingRequestUrl = productUrl;
+        const shouldSwapProduct = this.dataset.url !== productUrl;
+        const shouldFetchFullPage = this.dataset.updateUrl === 'true' && shouldSwapProduct;
 
-        this.pickupAvailability?.update(variant);
-        this.updateOptionValues(html);
-        this.updateURL(productUrl, variant?.id);
-        this.updateVariantInputs(variant?.id);
+        this.renderProductInfo({
+          requestUrl: this.buildRequestUrlWithParams(productUrl, selectedOptionValues, shouldFetchFullPage),
+          targetId: target.id,
+          callback: shouldSwapProduct
+            ? this.handleSwapProduct(productUrl, shouldFetchFullPage)
+            : this.handleUpdateProductInfo(productUrl),
+        });
+      }
 
-        if (!variant) {
-          this.setUnavailable();
-          return;
-        }
+      resetProductFormState() {
+        const productForm = this.productForm;
+        productForm?.toggleSubmitButton(true);
+        productForm?.handleErrorMessage();
+      }
 
-        this.updateMedia(variant);
+      handleSwapProduct(productUrl, updateFullPage) {
+        return (html) => {
+          this.productModal?.remove();
 
-        const updateSourceFromDestination = (id, shouldHide = (source) => false) => {
-          const source = html.getElementById(`${id}-${this.sectionId}`);
-          const destination = this.querySelector(`#${id}-${this.dataset.sectionId}`);
-          if (source && destination) {
-            destination.innerHTML = source.innerHTML;
-            destination.classList.toggle('m:hidden', shouldHide(source));
+          const selector = updateFullPage ? "product-info[id^='MainProduct']" : 'product-info';
+          const variant = this.getSelectedVariant(html.querySelector(selector));
+          this.updateURL(productUrl, variant?.id);
+
+          if (updateFullPage) {
+            document.querySelector('head title').innerHTML = html.querySelector('head title').innerHTML;
+
+            HTMLUpdateUtility.viewTransition(
+              document.querySelector('main'),
+              html.querySelector('main'),
+              this.preProcessHtmlCallbacks,
+              this.postProcessHtmlCallbacks
+            );
+          } else {
+            HTMLUpdateUtility.viewTransition(
+              this,
+              html.querySelector('product-info'),
+              this.preProcessHtmlCallbacks,
+              this.postProcessHtmlCallbacks
+            );
           }
         };
+      }
 
-        updateSourceFromDestination('Price');
-        updateSourceFromDestination("Inventory");
-        updateSourceFromDestination("Sku");
-        updateSourceFromDestination("Availability");
-        updateSourceFromDestination("Volume");
-        updateSourceFromDestination('PricePerItem');
+      renderProductInfo({ requestUrl, targetId, callback }) {
+        this.abortController?.abort();
+        this.abortController = new AbortController();
 
-        this.updateQuantityRules(this.sectionId, this.productId, html);
-        this.querySelector(`#QuantityRules-${this.dataset.section}`)?.classList.remove('m:hidden');
-        this.querySelector(`#VolumeNote-${this.dataset.section}`)?.classList.remove('m:hidden');
-
-        const addButtonUpdated = html.getElementById(`ProductSubmitButton-${this.sectionId}`);
-        this.toggleAddButton(
-          addButtonUpdated ? addButtonUpdated.hasAttribute('disabled') : true,
-          window.MinimogStrings.soldOut
-        );
-
-        this.currentVariant = variant;
-
-        MinimogEvents.emit(MinimogTheme.pubSubEvents.variantChange, {
-          data: { variant, sectionId: this.sectionId, html },
-        });
-
-        document.dispatchEvent(
-          new CustomEvent('variant:changed', {
-            detail: {
-              variant: this.currentVariant,
-            },
+        fetch(requestUrl, { signal: this.abortController.signal })
+          .then((response) => response.text())
+          .then((responseText) => {
+            this.pendingRequestUrl = null;
+            const html = new DOMParser().parseFromString(responseText, 'text/html');
+            callback(html);
           })
-        );
-      };
-    }
+          .then(() => {
+            // set focus to last clicked option value
+            document.querySelector(`#${targetId}`)?.focus();
+          })
+          .catch((error) => {
+            if (error.name === 'AbortError') {
+              console.log('Fetch aborted by user');
+            } else {
+              console.error(error);
+            }
+          });
+      }
 
-    handleSwapProduct(productUrl, updateFullPage, viewMode) {
-      return (html) => {
-        const quickView = html.querySelector('#MainProduct-quick-view__content');
-        if (quickView && viewMode === 'quick-view') {
-          html = new DOMParser().parseFromString(quickView.innerHTML, "text/html");
+      getSelectedVariant(productInfoNode) {
+        const selectedVariant = productInfoNode.querySelector('variant-selects [data-selected-variant]')?.innerHTML;
+        return !!selectedVariant ? JSON.parse(selectedVariant) : null;
+      }
+
+      buildRequestUrlWithParams(url, optionValues, shouldFetchFullPage = false) {
+        const params = [];
+
+        !shouldFetchFullPage && params.push(`section_id=${this.sectionId}`);
+
+        if (optionValues.length) {
+          params.push(`option_values=${optionValues.join(',')}`);
         }
 
-        const selector = updateFullPage ? "product-info[id^='MainProduct']" : 'product-info';
-        const productInfo = html.querySelector(selector);
-        const variant = this.getSelectedVariant(productInfo);
-        productInfo.dataset.disableSelectedVariantDefault = false;
+        return `${url}?${params.join('&')}`;
+      }
 
-        this.updateURL(productUrl, variant?.id);
-
-        if (updateFullPage) {
-          document.querySelector('head title').innerHTML = html.querySelector('head title').innerHTML;
-          HTMLUpdateUtility.viewTransition(
-            document.querySelector('main'),
-            html.querySelector('main'),
-            this.preProcessHtmlCallbacks,
-            this.postProcessHtmlCallbacks
-          );
-        } else {
-          HTMLUpdateUtility.viewTransition(
-            this,
-            productInfo,
-            this.preProcessHtmlCallbacks,
-            this.postProcessHtmlCallbacks
-          );
+      updateOptionValues(html) {
+        const variantSelects = html.querySelector('variant-selects');
+        if (variantSelects) {
+          HTMLUpdateUtility.viewTransition(this.variantSelectors, variantSelects, this.preProcessHtmlCallbacks);
         }
+      }
 
-        this.currentVariant = variant;
-      };
-    }
+      handleUpdateProductInfo(productUrl) {
+        return (html) => {
+          const variant = this.getSelectedVariant(html);
 
-    getSelectedVariant(productInfoNode) {
-      const selectedVariant = productInfoNode.querySelector('variant-picker [data-selected-variant]')?.innerHTML;
-      return !!selectedVariant ? JSON.parse(selectedVariant) : null;
-    }
+          this.pickupAvailability?.update(variant);
+          this.updateOptionValues(html);
+          this.updateURL(productUrl, variant?.id);
+          this.updateVariantInputs(variant?.id);
 
-    updateURL(url, variantId) {
-      if (this.dataset.updateUrl === 'false') return;
-      window.history.replaceState({}, '', `${url}${this.enableHistoryState && variantId ? `?variant=${variantId}` : ''}`);
-    }
+          if (!variant) {
+            this.setUnavailable();
+            return;
+          }
 
-    updateVariantInputs(variantId) {
-      document
-        .querySelectorAll(`#product-form-${this.dataset.sectionId}, #product-form-installment-${this.dataset.sectionId}`)
-        .forEach((productForm) => {
+          this.updateMedia(html, variant?.featured_media?.id);
+
+          const updateSourceFromDestination = (id, shouldHide = (source) => false) => {
+            const source = html.getElementById(`${id}-${this.sectionId}`);
+            const destination = this.querySelector(`#${id}-${this.dataset.section}`);
+            if (source && destination) {
+              destination.innerHTML = source.innerHTML;
+              destination.classList.toggle('hidden', shouldHide(source));
+            }
+          };
+
+          updateSourceFromDestination('price');
+          updateSourceFromDestination('Sku', ({ classList }) => classList.contains('hidden'));
+          updateSourceFromDestination('Inventory', ({ innerText }) => innerText === '');
+          updateSourceFromDestination('Volume');
+          updateSourceFromDestination('Price-Per-Item', ({ classList }) => classList.contains('hidden'));
+
+          this.updateQuantityRules(this.sectionId, html);
+          this.querySelector(`#Quantity-Rules-${this.dataset.section}`)?.classList.remove('hidden');
+          this.querySelector(`#Volume-Note-${this.dataset.section}`)?.classList.remove('hidden');
+
+          this.productForm?.toggleSubmitButton(
+            html.getElementById(`ProductSubmitButton-${this.sectionId}`)?.hasAttribute('disabled') ?? true,
+            window.variantStrings.soldOut
+          );
+
+          publish(PUB_SUB_EVENTS.variantChange, {
+            data: {
+              sectionId: this.sectionId,
+              html,
+              variant,
+            },
+          });
+        };
+      }
+
+      updateVariantInputs(variantId) {
+        this.querySelectorAll(
+          `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`
+        ).forEach((productForm) => {
           const input = productForm.querySelector('input[name="id"]');
           input.value = variantId ?? '';
           input.dispatchEvent(new Event('change', { bubbles: true }));
         });
-    }
-
-    updateOptionValues(html) {
-      const variantPicker = html.querySelector('variant-picker');
-      if (variantPicker) {
-        HTMLUpdateUtility.viewTransition(this.variantPicker, variantPicker, this.preProcessHtmlCallbacks);
-      }
-    }
-
-    setUnavailable() {
-      const productForm = document.getElementById(
-        `product-form-${this.sectionId}`
-      );
-      const addButton = productForm.querySelector('[name="add"]');
-
-      if (addButton) {
-        this.toggleAddButton(true, window.MinimogStrings.unavailable);
       }
 
-      const selectors = [
-        "Price",
-        "Inventory",
-        "Sku",
-        "Availability"
-      ]
-        .map((id) => `#${id}-${this.sectionId}`)
-        .join(", ");
-      document
-        .querySelectorAll(selectors)
-        .forEach((selector) => selector.classList.add('m:hidden'));
-    }
+      updateURL(url, variantId) {
+        this.querySelector('share-button')?.updateUrl(
+          `${window.shopUrl}${url}${variantId ? `?variant=${variantId}` : ''}`
+        );
 
-    toggleAddButton(disable = true, text, modifyClass = true) {
-      const productForm = document.getElementById(`product-form-${this.dataset.sectionId}`);
-      if (!productForm) return;
-      const addButton = productForm.querySelector('[name="add"]');
-      const addButtonText = productForm.querySelector('[name="add"] > span.m-add-to-cart--text');
-      if (!addButton) return;
-
-      if (disable) {
-        addButton.setAttribute('disabled', 'disabled');
-        if (text) addButtonText.textContent = text;
-      } else {
-        addButton.removeAttribute('disabled');
-        addButtonText.innerHTML = window.MinimogStrings.addToCart;
+        if (this.dataset.updateUrl === 'false') return;
+        window.history.replaceState({}, '', `${url}${variantId ? `?variant=${variantId}` : ''}`);
       }
 
-      if (!modifyClass) return;
-    }
+      setUnavailable() {
+        this.productForm?.toggleSubmitButton(true, window.variantStrings.unavailable);
 
-    updateMedia(variant) {
-      if (!this.productMedia) return;
-      if (this.enableVariantGroupImages && this.variantGroupImagesData.enable) {
-        this.handleVariantGroupImage(variant);
+        const selectors = ['price', 'Inventory', 'Sku', 'Price-Per-Item', 'Volume-Note', 'Volume', 'Quantity-Rules']
+          .map((id) => `#${id}-${this.dataset.section}`)
+          .join(', ');
+        document.querySelectorAll(selectors).forEach(({ classList }) => classList.add('hidden'));
+      }
 
-        if (this.productMedia.slider) {
-          this.productMedia.slider.updateSlides();
-          this.productMedia.navSlider.updateSlides();
+      updateMedia(html, variantFeaturedMediaId) {
+        if (!variantFeaturedMediaId) return;
 
-          this.productMedia.slider.slideTo(0);
-          this.productMedia.navSlider.slideTo(0);
+        const mediaGallerySource = this.querySelector('media-gallery ul');
+        const mediaGalleryDestination = html.querySelector(`media-gallery ul`);
 
-          this.productMedia.handleSlideChange();
-        }
-        if (this.productMedia.enableImageZoom) {
-          this.productMedia.handlePhotoswipe();
-        }
-      } else {
-        const setActiveMedia = () => {
-          if (typeof this.productMedia.setActiveMedia === 'function') {
-            this.productMedia.init();
-            this.productMedia.setActiveMedia(variant);
-            return true; // Indicate success
-          }
-          return false; // Indicate failure
+        const refreshSourceData = () => {
+          if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover(2);
+          const mediaGallerySourceItems = Array.from(mediaGallerySource.querySelectorAll('li[data-media-id]'));
+          const sourceSet = new Set(mediaGallerySourceItems.map((item) => item.dataset.mediaId));
+          const sourceMap = new Map(
+            mediaGallerySourceItems.map((item, index) => [item.dataset.mediaId, { item, index }])
+          );
+          return [mediaGallerySourceItems, sourceSet, sourceMap];
         };
 
-        if (!setActiveMedia()) {
-          this.timer = setInterval(() => {
-            if (setActiveMedia()) {
-              clearInterval(this.timer);
+        if (mediaGallerySource && mediaGalleryDestination) {
+          let [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
+          const mediaGalleryDestinationItems = Array.from(
+            mediaGalleryDestination.querySelectorAll('li[data-media-id]')
+          );
+          const destinationSet = new Set(mediaGalleryDestinationItems.map(({ dataset }) => dataset.mediaId));
+          let shouldRefresh = false;
+
+          // add items from new data not present in DOM
+          for (let i = mediaGalleryDestinationItems.length - 1; i >= 0; i--) {
+            if (!sourceSet.has(mediaGalleryDestinationItems[i].dataset.mediaId)) {
+              mediaGallerySource.prepend(mediaGalleryDestinationItems[i]);
+              shouldRefresh = true;
             }
-          }, 100);
-        }
-      }
-    }
+          }
 
-    handleDisableSelectedVariantDefault() {
-      let urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has("variant")) return;
-
-      this.pickerFields = this.querySelectorAll("[data-picker-field]");
-
-      this.pickerFields && this.pickerFields.forEach((field) => {
-        let pickerType = field.dataset.pickerField;
-        switch (pickerType) {
-          case "select":
-            let selectBox = field.querySelector("select");
-            let option = document.createElement("option");
-            option.text = this.dataset.variantOptionNoneText;
-            option.setAttribute("disabled", "");
-            option.setAttribute("selected", "");
-
-            selectBox.add(option, 0);
-            break;
-          default:
-            let checkedInputs = field.querySelectorAll("input:checked");
-            checkedInputs &&
-              checkedInputs.forEach(function (input) {
-                input.removeAttribute("checked");
-              });
-            break;
-        }
-
-        field.dataset.selectedValue = "";
-        if (field.querySelector(".option-label--selected")) field.querySelector(".option-label--selected").textContent = "";
-      });
-
-      this.setUnavailable();
-      this.currentVariant = null;
-    }
-
-    handleVariantGroupImage(variant) {
-      const selectedVariantData = this.variantGroupImagesData.mapping.find(
-        (item) => Number(item.id) === variant.id
-      );
-
-      const selectedMedias = (initialItems) => {
-        const selectedVariantMedias = Array.from(initialItems)
-          .map((media) => {
-            const index = selectedVariantData.media.indexOf(media.dataset.mediaId);
-            const mediaType = media.dataset.mediaType;
-            if (index !== -1 || mediaType !== 'image') {
-              return media;
+          // remove items from DOM not present in new data
+          for (let i = 0; i < mediaGallerySourceItems.length; i++) {
+            if (!destinationSet.has(mediaGallerySourceItems[i].dataset.mediaId)) {
+              mediaGallerySourceItems[i].remove();
+              shouldRefresh = true;
             }
-            return null;
-          })
-          .filter(Boolean);
+          }
 
-        if (selectedVariantMedias.length <= 0) {
-          return Array.from(initialItems).map((media, index) => {
-            media.dataset.index = index;
+          // refresh
+          if (shouldRefresh) [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
 
-            media.removeAttribute('style'); // Avoid style of swipe slide item
-            media.querySelector('.m-product-media').setAttribute("style", `--animation-order: ${index + 1};`);
+          // if media galleries don't match, sort to match new data order
+          mediaGalleryDestinationItems.forEach((destinationItem, destinationIndex) => {
+            const sourceData = sourceMap.get(destinationItem.dataset.mediaId);
 
-            return media;
+            if (sourceData && sourceData.index !== destinationIndex) {
+              mediaGallerySource.insertBefore(
+                sourceData.item,
+                mediaGallerySource.querySelector(`li:nth-of-type(${destinationIndex + 1})`)
+              );
+
+              // refresh source now that it has been modified
+              [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
+            }
           });
         }
 
-        const orderedMedias = Object.values(selectedVariantData.media)
-          .map(id => selectedVariantMedias.find(media => media.dataset.mediaId === id))
-          .filter(Boolean);
+        // set featured media as active in the media gallery
+        this.querySelector(`media-gallery`)?.setActiveMedia?.(
+          `${this.dataset.section}-${variantFeaturedMediaId}`,
+          true
+        );
 
-        const remainingMedias = selectedVariantMedias.filter(media => !Object.values(selectedVariantData.media).includes(media.dataset.mediaId));
-
-        return Array.from([...orderedMedias, ...remainingMedias]).map((media, index) => {
-          media.dataset.index = index;
-
-          media.removeAttribute('style'); // Avoid style of swipe slide item
-          media.querySelector('.m-product-media').setAttribute("style", `--animation-order: ${index + 1};`);
-
-          return media;
-        });
+        // update media modal
+        const modalContent = this.productModal?.querySelector(`.product-media-modal__content`);
+        const newModalContent = html.querySelector(`product-modal .product-media-modal__content`);
+        if (modalContent && newModalContent) modalContent.innerHTML = newModalContent.innerHTML;
       }
 
-      const mediaWrapper = this.productMedia.querySelector(".m-media-gallery__list");
-      const thumbWrapper = this.productMedia.querySelector(".m-product-media--slider__thumbnails .swiper-wrapper");
+      setQuantityBoundries() {
+        const data = {
+          cartQuantity: this.quantityInput.dataset.cartQuantity ? parseInt(this.quantityInput.dataset.cartQuantity) : 0,
+          min: this.quantityInput.dataset.min ? parseInt(this.quantityInput.dataset.min) : 1,
+          max: this.quantityInput.dataset.max ? parseInt(this.quantityInput.dataset.max) : null,
+          step: this.quantityInput.step ? parseInt(this.quantityInput.step) : 1,
+        };
 
-      const layout = this.productMedia.dataset.layout;
+        let min = data.min;
+        const max = data.max === null ? data.max : data.max - data.cartQuantity;
+        if (max !== null) min = Math.min(min, max);
+        if (data.cartQuantity >= data.min) min = Math.min(min, data.step);
 
-      mediaWrapper.innerHTML = "";
-      thumbWrapper.innerHTML = "";
+        this.quantityInput.min = min;
 
-      selectedMedias(this.initialMedias).forEach((media, index) => {
-        if (layout === "layout-2") {
-          media.classList.remove("m-col-span-2");
-          if (index % 3 === 0) {
-            media.classList.add("m-col-span-2");
+        if (max) {
+          this.quantityInput.max = max;
+        } else {
+          this.quantityInput.removeAttribute('max');
+        }
+        this.quantityInput.value = min;
+
+        publish(PUB_SUB_EVENTS.quantityUpdate, undefined);
+      }
+
+      fetchQuantityRules() {
+        const currentVariantId = this.productForm?.variantIdInput?.value;
+        if (!currentVariantId) return;
+
+        this.querySelector('.quantity__rules-cart .loading__spinner').classList.remove('hidden');
+        return fetch(`${this.dataset.url}?variant=${currentVariantId}&section_id=${this.dataset.section}`)
+          .then((response) => response.text())
+          .then((responseText) => {
+            const html = new DOMParser().parseFromString(responseText, 'text/html');
+            this.updateQuantityRules(this.dataset.section, html);
+          })
+          .catch((e) => console.error(e))
+          .finally(() => this.querySelector('.quantity__rules-cart .loading__spinner').classList.add('hidden'));
+      }
+
+      updateQuantityRules(sectionId, html) {
+        if (!this.quantityInput) return;
+        this.setQuantityBoundries();
+
+        const quantityFormUpdated = html.getElementById(`Quantity-Form-${sectionId}`);
+        const selectors = ['.quantity__input', '.quantity__rules', '.quantity__label'];
+        for (let selector of selectors) {
+          const current = this.quantityForm.querySelector(selector);
+          const updated = quantityFormUpdated.querySelector(selector);
+          if (!current || !updated) continue;
+          if (selector === '.quantity__input') {
+            const attributes = ['data-cart-quantity', 'data-min', 'data-max', 'step'];
+            for (let attribute of attributes) {
+              const valueUpdated = updated.getAttribute(attribute);
+              if (valueUpdated !== null) {
+                current.setAttribute(attribute, valueUpdated);
+              } else {
+                current.removeAttribute(attribute);
+              }
+            }
+          } else {
+            current.innerHTML = updated.innerHTML;
+            if (selector === '.quantity__label') {
+              const updatedAriaLabelledBy = updated.getAttribute('aria-labelledby');
+              if (updatedAriaLabelledBy) {
+                current.setAttribute('aria-labelledby', updatedAriaLabelledBy);
+                // Update the referenced visually hidden element
+                const labelId = updatedAriaLabelledBy;
+                const currentHiddenLabel = document.getElementById(labelId);
+                const updatedHiddenLabel = html.getElementById(labelId);
+                if (currentHiddenLabel && updatedHiddenLabel) {
+                  currentHiddenLabel.textContent = updatedHiddenLabel.textContent;
+                }
+              }
+            }
           }
         }
-        mediaWrapper.append(media);
-      });
-      selectedMedias(this.initialThumbs).forEach((media) => {
-        media.classList.toggle("swiper-slide-thumb-active", media.dataset.index === "0");
-        thumbWrapper.append(media);
-      });
-    }
+      }
 
-    initQuantityHandlers() {
-      if (this.quantityInputs.length <= 0) return;
+      get productForm() {
+        return this.querySelector(`product-form`);
+      }
 
-      this.setQuantityBoundries();
-      if (!this.hasAttribute("data-original-section-id")) {
-        this.cartUpdateUnsubscriber = MinimogEvents.subscribe(
-          MinimogTheme.pubSubEvents.cartUpdate,
-          this.fetchQuantityRules.bind(this)
+      get productModal() {
+        return document.querySelector(`#ProductModal-${this.dataset.section}`);
+      }
+
+      get pickupAvailability() {
+        return this.querySelector(`pickup-availability`);
+      }
+
+      get variantSelectors() {
+        return this.querySelector('variant-selects');
+      }
+
+      get relatedProducts() {
+        const relatedProductsSectionId = SectionId.getIdForSection(
+          SectionId.parseId(this.sectionId),
+          'related-products'
         );
+        return document.querySelector(`product-recommendations[data-section-id^="${relatedProductsSectionId}"]`);
+      }
+
+      get quickOrderList() {
+        const quickOrderListSectionId = SectionId.getIdForSection(
+          SectionId.parseId(this.sectionId),
+          'quick_order_list'
+        );
+        return document.querySelector(`quick-order-list[data-id^="${quickOrderListSectionId}"]`);
+      }
+
+      get sectionId() {
+        return this.dataset.originalSection || this.dataset.section;
       }
     }
-
-    setQuantityBoundries() {
-      this.quantityInputs.forEach((input) => {
-        const quantityInputWrapper = input.closest('m-quantity-input');
-        quantityInputWrapper.setQuantityBoundries(this.sectionId, this.productId);
-      });
-    }
-
-    fetchQuantityRules() {
-      const currentVariantId = this.productForm?.variantIdInput?.value;
-      if (!currentVariantId) return;
-
-      this.querySelector('.quantity__rules-cart')?.classList.add('loading');
-
-      fetch(
-        `${this.getAttribute(
-          "data-url"
-        )}?variant=${currentVariantId}&section_id=${this.sectionId}`
-      )
-        .then((response) => response.text())
-        .then((responseText) => {
-          const parsedHTML = new DOMParser().parseFromString(
-            responseText,
-            "text/html"
-          );
-          this.updateQuantityRules(
-            this.sectionId,
-            this.productId,
-            parsedHTML
-          );
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.querySelector('.quantity__rules-cart')?.classList.remove('loading');
-        });
-    }
-
-    updateQuantityRules(sectionId, productId, parsedHTML) {
-      if (this.quantityInputs.length <= 0) return;
-
-      this.quantityInputs.forEach((input) => {
-        const quantityInputWrapper = input.closest('m-quantity-input');
-        quantityInputWrapper.updateQuantityRules(sectionId, productId, parsedHTML);
-      });
-
-      this.setQuantityBoundries();
-    }
-
-    addRecentViewedProduct() {
-      const cookies = getCookie('m-recent-viewed-products')
-      let products = cookies ? JSON.parse(cookies) : []
-      if (products.indexOf(MinimogSettings.productHandle) === -1) {
-        products.unshift(MinimogSettings.productHandle)
-        products = products.slice(0, 20)
-        setCookie('m-recent-viewed-products', JSON.stringify(products));
-      }
-    }
-
-    onWindowLoad() {
-      this.acc = [];
-      MinimogTheme.CompareProduct && MinimogTheme.CompareProduct.setCompareButtonsState();
-      MinimogTheme.Wishlist && MinimogTheme.Wishlist.setWishlistButtonsState();
-      this.addRecentViewedProduct();
-
-      addEventDelegate({
-        context: this,
-        selector: (window.__minimog_review_selector || '') + '.m-product-collapsible .jdgm-widget-actions-wrapper, .m-product-collapsible .spr-summary-actions-newreview',
-        handler: (e) => {
-          const index = e.target.closest('.m-product-collapsible').dataset.index
-          setTimeout(() => {
-            this.acc[Number(index)].setContentHeight()
-          }, 300)
-        },
-        capture: true
-      })
-    }
-  }
-
-  customElements.define("product-info", ProductInfo);
+  );
 }

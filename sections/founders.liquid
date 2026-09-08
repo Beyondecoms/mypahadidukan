@@ -1,0 +1,245 @@
+{{ 'section-founders.css' | asset_url | stylesheet_tag }}
+
+<section class="team-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="team-inner" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+
+    <!-- LABEL -->
+    <div class="team-label">
+      <span class="team-label-icon">
+        <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true">
+            <path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e87750" stroke-width="1.5" fill="none" stroke-linejoin="round">
+            </path>
+        </svg>
+      </span>
+      <span class="team-label-text" style="color: {{ section.settings.accent_color }};">{{ section.settings.label_text }}</span>
+    </div>
+
+    <!-- HEADING -->
+    <h2 class="team-heading" style="color: {{ section.settings.heading_color }};">
+      {{ section.settings.heading_before_italic }}
+      <em style="color: {{ section.settings.italic_color }};">{{ section.settings.heading_italic }}</em>
+      {{ section.settings.heading_after_italic }}
+    </h2>
+
+    <!-- TEAM GRID -->
+    <div class="team-grid">
+      {% for block in section.blocks %}
+        <div class="team-card" {{ block.shopify_attributes }}>
+
+          <!-- PHOTO -->
+          <div class="team-card-image">
+            {% if block.settings.photo != blank %}
+              <img
+                src="{{ block.settings.photo | image_url: width: 600 }}"
+                alt="{{ block.settings.name }}"
+                width="600"
+                height="700"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="team-card-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="8" r="4" stroke="{{ section.settings.heading_color }}" stroke-width="1.2"/>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="{{ section.settings.heading_color }}" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- NAME + ROLE -->
+          <div class="team-card-meta">
+            <span class="team-card-name" style="color: {{ section.settings.name_color }};">{{ block.settings.name }}</span>
+            <span class="team-card-role" style="color: {{ section.settings.role_color }};">{{ block.settings.role }}</span>
+          </div>
+
+          <!-- QUOTE -->
+          {% if block.settings.quote != blank %}
+            <p class="team-card-quote" style="color: {{ section.settings.quote_color }};">{{ block.settings.quote }}</p>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founders",
+  "tag": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f0ede4"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Label & Icon Color",
+      "default": "#c0704a"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2e7d6b"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic Text Color",
+      "default": "#2e7d6b"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name Color",
+      "default": "#2e7d6b"
+    },
+    {
+      "type": "color",
+      "id": "role_color",
+      "label": "Role Color",
+      "default": "#8a9e99"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Color",
+      "default": "#5a5a5a"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label Text",
+      "default": "MEET THE TEAM"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_before_italic",
+      "label": "Heading — Text Before Italic",
+      "default": "Four founders."
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading — Italic Part",
+      "default": "One mountain"
+    },
+    {
+      "type": "text",
+      "id": "heading_after_italic",
+      "label": "Heading — Text After Italic",
+      "default": "obsession."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Founder Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Co-Founder"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "\"A short quote that captures their spirit.\""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founders",
+      "blocks": [
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Himanshu Dua",
+            "role": "Co-Founder",
+            "quote": "\"I want every Indian household to taste the mountains.\""
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Shubham Tandon",
+            "role": "Co-Founder",
+            "quote": "\"Sourcing is a relationship — not a transaction.\""
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Mohd Anas Zubair",
+            "role": "Co-Founder",
+            "quote": "\"We measure success in farmer incomes, not just revenue.\""
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Rohan Sehgal",
+            "role": "Co-Founder",
+            "quote": "\"If a customer isn't delighted, we haven't done our job.\""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

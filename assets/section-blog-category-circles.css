@@ -1,0 +1,124 @@
+.bcc-section-outer { width: 100%; }
+
+.bcc-section {
+  width: 100%;
+  padding: 32px 0 24px;
+}
+
+.bcc-outer {
+  display: flex;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+/* ── TRACK ── */
+.bcc-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  justify-content: space-evenly;
+  scroll-behavior: smooth;
+  padding: 12px 8px;
+  flex: 1;
+}
+
+.bcc-track::-webkit-scrollbar { display: none; }
+
+/* ── ARROWS ── */
+.bcc-arrow {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: none !important;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.bcc-arrow:hover {
+  background: #f5ede0;
+  border-color: #c4602a;
+  color: #c4602a;
+}
+
+/* ── CIRCLE ITEM ── */
+.bcc-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.bcc-item:hover { transform: translateY(-4px); }
+
+/* ── CIRCLE ── */
+.bcc-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid transparent;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.bcc-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bcc-emoji {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.bcc-item.active .bcc-circle,
+.bcc-item:hover .bcc-circle {
+  /* border-color: #c4602a; */
+  box-shadow: 0 0 0 4px rgba(196,96,42,0.12);
+}
+
+/* ── LABEL ── */
+.bcc-label {
+    font-size: 21px;
+    font-weight: 500;
+    color: #555;
+    text-align: center;
+    font-family: var(--font-family-normal);
+    max-width: 217px;
+    line-height: 1.3;
+}
+
+.bcc-item.active .bcc-label {
+  color: #c4602a;
+  font-weight: 700;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .bcc-circle { width: 100px; height: 100px; }
+  /* .bcc-circle img { width: 40px; height: 40px; } */
+  .bcc-emoji { font-size: 30px; }
+  .bcc-label { font-size: 14px; max-width: 130px; }
+  .bcc-track { gap: 16px; }
+}

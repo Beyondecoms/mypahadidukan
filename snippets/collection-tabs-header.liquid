@@ -1,0 +1,130 @@
+<div class="custom-tabs-header">
+  {% for block in section.blocks %}
+    {% assign tab_collection = collections[block.settings.collection] %}
+    {% if tab_collection != blank %}
+      <a
+        href="{{ tab_collection.url }}"
+        class="custom-tab {% if collection.handle == tab_collection.handle %}active{% endif %}"
+        data-collection-handle="{{ tab_collection.handle }}"
+      >
+        <div class="tab-image">
+          <img src="{{ block.settings.image | img_url: '200x' }}" alt="{{ block.settings.title }}">
+        </div>
+        <div class="tab-title">
+          {{ block.settings.title }}
+        </div>
+      </a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<style>
+.custom-tabs-header {
+    display: flex;
+    padding-left: 10px;
+    gap: 0px;
+    width: 100%;
+    height: 258px;
+    overflow: scroll;
+    opacity: 1;
+    margin: 3% auto;
+    justify-content: space-evenly;
+    align-items: center;
+    box-sizing: border-box;
+    max-width: 1400px;
+}
+.custom-tabs-header::-webkit-scrollbar{
+  display: none; /* Chrome, Safari */
+}
+/* Default state */
+.custom-tab {
+    cursor: pointer;
+    flex: 0 0 calc((100% - 60px) / 7);
+    text-align: center;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.tab-image img {
+  width: 100px;
+  height: 125px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+.tab-image img:hover{
+  opacity: 1;
+}
+
+/* Text styling */
+.tab-title {
+  margin-top: -9px;
+  font-family: "Courier New";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 130%;
+  text-align: center;
+  color: #231F20;
+}
+
+/* Active state */
+.custom-tab.active .tab-image img {
+  width: 156px;
+  height: 204px;
+  opacity: 1;
+}
+
+.custom-tab.active {
+  transform: scale(1.05);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+  body{
+    overflow-x:hidden;
+  }
+  .custom-tabs-header{
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        height: auto;
+        padding: 10px 56px 10px;
+        gap: 0px;
+  }
+  .custom-tabs-header::-webkit-scrollbar{
+    display: none; /* Chrome, Safari */
+  }
+  .custom-tab{
+    flex:0 0 calc((100% - -112px) / 3); /* Show 3 tabs with some padding */
+    min-width:0;
+    scroll-snap-align:center;
+    transform:scale(0.85);
+    opacity:1.5;
+  }
+  .tab-image img{
+  width: 70px;
+  height: 95px;
+}
+
+/* active image mobile */
+.custom-tab.active .tab-image img{
+         width: 106px;
+        height: 132px;
+}
+}
+</style>
+
+<script>
+/* Center the active tab into view on mobile after a real page load */
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.innerWidth > 768) return;
+  var activeTab = document.querySelector('.custom-tab.active');
+  if (activeTab) {
+    activeTab.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+  }
+});
+</script>

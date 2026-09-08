@@ -1,516 +1,554 @@
 {
   "general": {
-    "404": {
-      "title": "Ups!",
-      "button": "Pojdi domov",
-      "subtext": "Stran ni najdena!"
-    },
-    "accessibility": {
-      "unit_price_separator": "per",
-      "error": "Napaka",
-      "link_messages": {
-        "new_window": "Odpre se v novem oknu."
-      },
-      "close_header": "Zapri glavo",
-      "close": "Zapri"
-    },
-    "meta": {
-      "tags": "Označeno »{{ tags }}«",
-      "page": "stran {{ page }}"
-    },
-    "time": {
-      "days": "dnevi",
-      "hrs": "ure",
-      "hours": "ure",
-      "mins": "min",
-      "minutes": "minut",
-      "secs": "sek",
-      "seconds": "sekund"
-    },
-    "breadcrumbs": {
-      "home": "domov",
-      "home_link_title": "Nazaj na domačo stran"
-    },
     "password_page": {
-      "opening_soon": "Odprtje kmalu"
+      "login_form_heading": "Vstopite v trgovino z geslom:",
+      "login_password_button": "Vstop z geslom",
+      "login_form_password_label": "Geslo",
+      "login_form_password_placeholder": "Vaše geslo",
+      "login_form_error": "Geslo ni pravilno!",
+      "login_form_submit": "Vstop",
+      "admin_link_html": "Ali ste lastnik te trgovine? <a href=\"/admin\" class=\"link underlined-link\">Prijavite se tukaj</a>",
+      "powered_by_shopify_html": "To trgovino bo omogočala platforma {{ shopify }}"
     },
-    "social": {},
-    "search": {
-      "title": "Iščite v naši trgovini",
-      "placeholder": "Iskanje izdelkov",
-      "placeholder_short": "Iskanje",
-      "popular_searches": "Priljubljena iskanja",
-      "results_for": "rezultati za",
-      "more_results": "Več rezultatov",
-      "heading": {
-        "one": "Rezultat iskanja: \"{{ terms }}\"",
-        "other": "Rezultati iskanja: \"{{ terms }}\""
+    "social": {
+      "alt_text": {
+        "share_on_facebook": "Delite v Facebooku",
+        "share_on_twitter": "Delite na omrežju X",
+        "share_on_pinterest": "Pripnite v Pinterestu"
       },
-      "results_with_count": {
-        "one": "Najdenih {{ count }} rezultatov za \"{{ terms }}\"",
-        "other": "Najdenih {{ count }} rezultatov za \"{{ terms }}\""
-      },
-      "no_results": "Ni rezultatov za",
-      "no_results_html": "Poskusite z drugim iskalnim izrazom ali se vrnite na <a href=\"/\">domačo stran</a>.",
-      "suggestions": "Predlogi",
-      "page_article": "Strani in članki",
-      "products": "Izdelki"
-    },
-    "newsletter_form": {
-      "confirmation": "Hvala za naročanje"
-    },
-    "payment": {
-      "options": "Možnosti plačila"
-    },
-    "notifications": {
-      "item_added": "Izdelek je bil uspešno dodan v košarico",
-      "required_field": "Prosimo, izpolnite vsa zahtevana polja (*), preden dodate v košarico!"
-    },
-    "foxkit": {
-      "add": "Dodaj"
-    },
-    "tooltip": {
-      "not_found": "Vrsta opisa orodja ni bila najdena"
-    }
-  },
-  "sections": {
-    "video": {
-      "play": "Igraj"
-    },
-    "collection_template": {
-      "from": "Od",
-      "to": "Za",
-      "product_count": {
-        "one": "Prikaz {{ product_count }} od {{ count }} izdelka",
-        "other": "Prikaz {{ product_count }} od {{ count }} izdelkov"
+      "links": {
+        "twitter": "X (Twitter)",
+        "facebook": "Facebook",
+        "pinterest": "Pinterest",
+        "instagram": "Instagram",
+        "tumblr": "Tumblr",
+        "snapchat": "Snapchat",
+        "youtube": "YouTube",
+        "vimeo": "Vimeo",
+        "tiktok": "TikTok"
       }
+    },
+    "continue_shopping": "Nadaljuj nakup",
+    "pagination": {
+      "label": "Oštevilčevanje strani",
+      "page": "Stran {{ number }}",
+      "next": "Naslednja stran",
+      "previous": "Prejšnja stran"
+    },
+    "search": {
+      "search": "Iskanje",
+      "reset": "Počisti iskalni izraz"
+    },
+    "cart": {
+      "view": "Prikaži košarico ({{ count }})",
+      "item_added": "Artikel je dodan v košarico",
+      "view_empty_cart": "Prikaži košarico"
+    },
+    "share": {
+      "copy_to_clipboard": "Kopiraj povezavo",
+      "share_url": "Povezava",
+      "success_message": "Povezava je kopirana v odložišče",
+      "close": "Zapri skupno rabo"
     },
     "slider": {
-      "video": {
-        "notice": "Vaš brskalnik ne podpira video oznake."
-      }
-    },
-    "lookbook": {
-      "shop_this_look": {
-        "popup": {
-          "title": "Kupi ta videz",
-          "product_title": "Primer naslova izdelka"
-        }
-      }
-    },
-    "quick_order_list": {
-      "view_cart": "Pogled",
-      "total_items": "Skupni predmeti",
-      "remove_all_items_confirmation": "Odstranite vse {{ quantity }} predmete iz košarice?",
-      "remove_all": "Odstranite vse",
-      "cancel": "Odpovedati"
+      "of": "od",
+      "next_slide": "Podrsajte desno",
+      "previous_slide": "Podrsajte levo",
+      "name": "Drsnik"
     }
+  },
+  "newsletter": {
+    "label": "E-poštni naslov",
+    "success": "Hvala, ker ste se naročili",
+    "button_label": "Naroči"
+  },
+  "accessibility": {
+    "skip_to_text": "Preskoči na vsebino",
+    "close": "Zapri",
+    "unit_price_separator": "na",
+    "vendor": "Ponudnik:",
+    "error": "Napaka",
+    "refresh_page": "Ko izberete elemente, se celotna stran osveži.",
+    "loading": "Nalaganje ...",
+    "link_messages": {
+      "new_window": "Odpre se v novem oknu.",
+      "external": "Odpre zunanje spletno mesto."
+    },
+    "skip_to_product_info": "Preskoči na informacije o izdelku",
+    "total_reviews": "skupno število pregledov",
+    "star_reviews_info": "{{ rating_value }} od {{ rating_max }} zvezdic",
+    "collapsible_content_title": "Vsebina, ki jo je mogoče strniti",
+    "complementary_products": "Dopolnilni izdelki"
   },
   "blogs": {
     "article": {
-      "by_author": "avtor",
-      "posted_in": "na",
-      "tags": "Oznake:",
-      "read_more": "Preberi več",
-      "related_title": "povezani članki",
-      "next_post": "Naslednji",
-      "previous_post": "Prejšnja"
-    },
-    "comments": {
-      "title": "Pustite komentar",
-      "sub_title": "Vaš elektronski naslov ne bo objavljen.",
-      "name": "Tvoje ime*",
-      "email": "Vaš e-poštni naslov*",
-      "message": "Komentiraj",
-      "post": "Oddaj zdaj",
-      "reply": "Odgovori",
-      "at_time": "pri",
-      "success_moderated": "Vaš komentar je bil uspešno objavljen. Kmalu ga bomo objavili, saj je naš blog moderiran.",
-      "success": "Vaš komentar je bil uspešno objavljen! Hvala vam!",
-      "comments_with_count": {
+      "blog": "Spletni dnevnik",
+      "read_more_title": "Več o tem: {{ title }}",
+      "moderated": "Upoštevajte, da morajo biti komentarji pred objavo odobreni.",
+      "comment_form_title": "Napišite komentar",
+      "name": "Ime",
+      "email": "E-poštni naslov",
+      "message": "Komentar",
+      "post": "Objavi komentar",
+      "back_to_blog": "Nazaj na spletni dnevnik",
+      "share": "Deli članek",
+      "success": "Vaš komentar je bil uspešno objavljen. Hvala!",
+      "success_moderated": "Vaš komentar je bil uspešno objavljen. Objavljen bo čez nekaj časa, saj je naš spletni dnevnik moderiran.",
+      "comments": {
         "one": "{{ count }} komentar",
-        "other": "{{ count }} komentarjev"
+        "other": "Št. komentarjev: {{ count }}",
+        "few": "Št. komentarjev: {{ count }}",
+        "two": "Št. komentarjev: {{ count }}"
       }
     }
   },
-  "sidebar": {
-    "clear_all": "POČISTI VSE"
+  "onboarding": {
+    "product_title": "Primer naslova izdelka",
+    "collection_title": "Ime vaše zbirke"
   },
-  "cart": {
-    "general": {
-      "title": "Nakupovalni voziček",
-      "remove": "Odstrani",
-      "note": "Posebna navodila za prodajalca",
-      "drawer_note": "Opomba",
-      "shipping": "Dostava",
-      "drawer_coupon": "kupon",
-      "subtotal": "Vmesni seštevek",
-      "taxes_and_shipping_at_checkout": "Davki in poštnina se izračunajo na blagajni",
-      "taxes_and_shipping_policy_at_checkout_html": "Davki in <a href=\"{{ link }}\">poštnina</a> izračunani na blagajni",
-      "taxes_included_but_shipping_at_checkout": "Davek je vključen in poštnina izračunana na blagajni",
-      "taxes_included_and_shipping_policy_html": "Davek vključen. <a href=\"{{ link }}\">Poštnina</a> se izračuna na blagajni.",
-      "enter_discount_code": "Tukaj vnesite kodo za popust",
-      "checkout": "Preveri",
-      "viewcart": "Poglej voziček",
-      "empty": "Vaša košarica je trenutno prazna.",
-      "coupon_title": "Dodajte kodo za popust",
-      "estimate_shipping_title": "Ocenite cene pošiljanja",
-      "estimate_shipping_button": "Izračunaj",
-      "note_title": "Dodajte opombo za prodajalca",
-      "cancel": "Prekliči",
-      "save": "Shrani",
-      "zipcode_validate": "Polje za poštno številko ne sme biti prazno",
-      "shipping_rates_result": "Za vaš naslov smo našli {{count}} poštnino",
-      "no_found_shipping_rate": "Za vaš naslov ni cen pošiljanja.",
-      "recommend_title": "Priporočilo za vas",
-      "delivery_days": {
-        "one": "dan",
-        "other": "dnevi"
+  "products": {
+    "product": {
+      "add_to_cart": "Dodaj v košarico",
+      "description": "Opis",
+      "on_sale": "Znižanje",
+      "product_variants": "Različice izdelka",
+      "share": "Deli ta izdelek",
+      "sold_out": "Razprodano",
+      "unavailable": "Ni na voljo",
+      "vendor": "Prodajalec",
+      "video_exit_message": "{{ title }} odpre celozaslonski videoposnetek v istem oknu.",
+      "xr_button": "Prikaži v prostoru",
+      "xr_button_label": "Prikaz v prostoru naloži element v oknu z razširjeno resničnostjo",
+      "quantity": {
+        "label": "Količina",
+        "input_label": "Količina za izdelek {{ product }}",
+        "increase": "Povečaj količino za izdelek {{ product }}",
+        "decrease": "Pomanjšaš količino za izdelek {{ product }}",
+        "minimum_of": "Najmanj od {{ quantity }}",
+        "maximum_of": "Največ od {{ quantity }}",
+        "multiples_of": "V korakih po {{ quantity }}",
+        "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> v košarici",
+        "note": "Prikaži pravila glede količine",
+        "min_of": "Najmanj {{ quantity }}",
+        "max_of": "Največ {{ quantity }}",
+        "in_cart_aria_label": "Količina ({{ quantity }} v košarici)"
       },
-      "gift_wrapping_html": "Za {{ price }} zavijte izdelke v tem vrstnem redu.",
-      "gift_note_placeholder": "Darilno sporočilo (brezplačno in neobvezno)",
-      "cart_error": "Med posodabljanjem vozička je prišlo do napake. Prosim poskusite ponovno.",
-      "cart_quantity_error_html": "V voziček lahko dodate samo {{ quantity }} tega izdelka.",
-      "delivery_title": "Dostava",
-      "delivery_time": "Čas dostave",
-      "delivery_label": "Izberite datum dostave:",
-      "delivery_error": "Izberite trenutni ali prihodnji čas."
+      "price": {
+        "from_price_html": "Od {{ price }}",
+        "regular_price": "Redna cena",
+        "sale_price": "Znižana cena",
+        "unit_price": "Cena na enoto"
+      },
+      "pickup_availability": {
+        "view_store_info": "Prikaži podatke o trgovini",
+        "check_other_stores": "Preveri razpoložljivost v drugih trgovinah",
+        "pick_up_available": "Na voljo je osebni prevzem",
+        "pick_up_available_at_html": "Prevzem je mogoč na prevzemnem mestu <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Na prevzemnem mestu <span class=\"color-foreground\">{{ location_name }}</span> osebni prevzem trenutno ni mogoč",
+        "unavailable": "Podatka o razpoložljivosti osebnega prevzema ni mogoče naložiti",
+        "refresh": "Osveži"
+      },
+      "media": {
+        "open_media": "Predstavnostne vsebine {{ index }} odprite v modalnem načinu",
+        "play_model": "Predvajaj 3D-pregledovalnik",
+        "play_video": "Predvajaj videoposnetek",
+        "gallery_viewer": "Pregledovalnik galerije",
+        "load_image": "Naložite sliko {{ index }} v pogledu galerije",
+        "load_model": "Naložite 3D-model {{ index }} v pogledu galerije",
+        "load_video": "Predvajajte videoposnetek {{ index }} v pogledu galerije",
+        "image_available": "Slika {{ index }} je zdaj na voljo v pogledu galerije"
+      },
+      "nested_label": "{{ title }} za {{ parent_title }}",
+      "view_full_details": "Prikaži vse podrobnosti",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Dostava</a> se obračuna ob zaključku nakupa.",
+      "choose_options": "Izberite možnosti",
+      "choose_product_options": "Izberite možnosti za izdelek {{ product_name }}",
+      "value_unavailable": "{{ option_value }} – ni na voljo",
+      "variant_sold_out_or_unavailable": "Različica je razprodana ali ni na voljo",
+      "inventory_in_stock": "Na zalogi",
+      "inventory_in_stock_show_count": "Na zalogi: {{ quantity }}",
+      "inventory_low_stock": "Majhna zaloga",
+      "inventory_low_stock_show_count": "Majhna zaloga, preostalo še: {{ quantity }}",
+      "inventory_out_of_stock": "Ni na zalogi",
+      "inventory_out_of_stock_continue_selling": "Na zalogi",
+      "sku": "Inventarna številka",
+      "volume_pricing": {
+        "title": "Količinski popust",
+        "note": "Na voljo je količinski popust",
+        "minimum": "{{ quantity }} in več",
+        "price_range": "{{ minimum }}–{{ maximum }}",
+        "price_at_each_html": "po ceni {{ price }}/kos"
+      },
+      "taxes_included": "Davki vključeni.",
+      "duties_included": "Dajatve vključene.",
+      "duties_and_taxes_included": "Dajatve in davki vključeni."
     },
-    "label": {
+    "modal": {
+      "label": "Galerija predstavnostnih vsebin"
+    },
+    "facets": {
+      "apply": "Uporabi",
+      "clear": "Počisti",
+      "clear_all": "Odstrani vse",
+      "from": "Od",
+      "filter_and_sort": "Filtriranje in razvrščanje",
+      "filter_by_label": "Filtriraj:",
+      "filter_button": "Filtriraj",
+      "max_price": "Najvišja cena je {{ price }}",
+      "reset": "Ponastavi",
+      "sort_button": "Razvrsti",
+      "sort_by_label": "Razvrsti po:",
+      "to": "Za",
+      "filters_selected": {
+        "one": "Št. izbranih: {{ count }}",
+        "other": "Št. izbranih: {{ count }}",
+        "few": "Št. izbranih: {{ count }}",
+        "two": "Št. izbranih: {{ count }}"
+      },
+      "product_count": {
+        "one": "{{ product_count }} od {{ count }} izdelka",
+        "other": "{{ product_count }} od toliko izdelkov: {{ count }}",
+        "few": "{{ product_count }} od toliko izdelkov: {{ count }}",
+        "two": "{{ product_count }} od toliko izdelkov: {{ count }}"
+      },
+      "product_count_simple": {
+        "one": "{{ count }} izdelek",
+        "other": "Št. izdelkov: {{ count }}",
+        "few": "Št. izdelkov: {{ count }}",
+        "two": "Št. izdelkov: {{ count }}"
+      },
+      "clear_filter": "Odstrani filter",
+      "filter_selected_accessibility": "{{ type }} (št. izbranih filtrov: {{ count }})",
+      "show_more": "Prikaži več",
+      "show_less": "Prikaži manj",
+      "filter_and_operator_subtitle": "Ustreza vsem"
+    }
+  },
+  "templates": {
+    "search": {
+      "no_results": "Za »{{ terms }}« ni bil najden noben rezultat. Preverite črkovanje ali uporabite drugo besedo ali frazo.",
+      "page": "Stran",
+      "title": "Rezultati iskanja",
+      "results_with_count": {
+        "one": "{{ count }} rezultat",
+        "other": "Št. rezultatov: {{ count }}",
+        "few": "Št. rezultatov: {{ count }}",
+        "two": "Št. rezultatov: {{ count }}"
+      },
+      "products": "Izdelki",
+      "search_for": "Poiščite »{{ terms }}«",
+      "results_with_count_and_term": {
+        "one": "Št. najdenih rezultatov za »{{ terms }}«: {{ count }}",
+        "other": "Št. najdenih rezultatov za »{{ terms }}«: {{ count }}",
+        "few": "Št. najdenih rezultatov za »{{ terms }}«: {{ count }}",
+        "two": "Št. najdenih rezultatov za »{{ terms }}«: {{ count }}"
+      },
+      "results_pages_with_count": {
+        "one": "{{ count }} stran",
+        "other": "Št. strani: {{ count }}",
+        "few": "Št. strani: {{ count }}",
+        "two": "Št. strani: {{ count }}"
+      },
+      "results_suggestions_with_count": {
+        "one": "{{ count }} predlog",
+        "other": "Št. predlogov: {{ count }}",
+        "few": "Št. predlogov: {{ count }}",
+        "two": "Št. predlogov: {{ count }}"
+      },
+      "results_products_with_count": {
+        "one": "{{ count }} izdelek",
+        "other": "Št. izdelkov: {{ count }}",
+        "few": "Št. izdelkov: {{ count }}",
+        "two": "Št. izdelkov: {{ count }}"
+      },
+      "suggestions": "Predlogi",
+      "pages": "Strani"
+    },
+    "cart": {
+      "cart": "Košarica"
+    },
+    "contact": {
+      "form": {
+        "name": "Ime",
+        "email": "E-poštni naslov",
+        "phone": "Telefonska številka",
+        "comment": "Komentar",
+        "send": "Pošlji",
+        "post_success": "Hvala za vaše sporočilo. Z vami bomo v stiku takoj, ko bo mogoče.",
+        "error_heading": "Prilagodite naslednje:",
+        "title": "Obrazec za stik"
+      }
+    },
+    "404": {
+      "title": "Strani ni mogoče najti",
+      "subtext": "404"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement": "Obvestilo",
+      "menu": "Meni",
+      "cart_count": {
+        "one": "{{ count }} element",
+        "other": "Št. elementov: {{ count }}",
+        "few": "Št. elementov: {{ count }}",
+        "two": "Št. elementov: {{ count }}"
+      }
+    },
+    "cart": {
+      "title": "Vaša košarica",
+      "caption": "Izdelki v košarici",
+      "remove_title": "Odstrani izdelek {{ title }}",
+      "note": "Posebna navodila za naročilo",
+      "checkout": "Zaključi nakup",
+      "empty": "Vaša košarica je prazna",
+      "cart_error": "Pri posodabljanju vaše košarice je prišlo do napake. Poskusite znova.",
+      "cart_quantity_error_html": "V košarico lahko dodate največ toliko tovrstnih izdelkov: {{ quantity }}.",
+      "update": "Posodobitev",
+      "headings": {
+        "product": "Izdelek",
+        "price": "Cena",
+        "total": "Skupaj",
+        "quantity": "Količina",
+        "image": "Slika izdelka"
+      },
+      "login": {
+        "title": "Ali imate račun?",
+        "paragraph_html": "Za hitrejši zaključek nakupa <a href=\"{{ link }}\" class=\"link underlined-link\">se prijavite</a>."
+      },
+      "estimated_total": "Predvideni skupni znesek",
+      "new_estimated_total": "Nov predvideni skupni znesek",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Dajatve in davki vključeni. Popusti in <a href=\"{{ link }}\">strošek dostave</a> se obračunajo ob zaključku nakupa.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Dajatve in davki vključeni. Popusti in strošek dostave se obračunajo ob zaključku nakupa.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Davki vključeni. Popusti in <a href=\"{{ link }}\">strošek dostave</a> se obračunajo ob zaključku nakupa.",
+      "taxes_included_shipping_at_checkout_without_policy": "Davki vključeni. Popusti in strošek dostave se obračunajo ob zaključku nakupa.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Dajatve vključene. Davki, popusti in <a href=\"{{ link }}\">strošek dostave</a> se obračunajo ob zaključku nakupa.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Dajatve vključene. Davki, popusti in strošek dostave se obračunajo ob zaključku nakupa.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Davki, popusti in <a href=\"{{ link }}\">strošek dostave</a> se obračunajo ob zaključku nakupa.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Davki, popusti in strošek dostave se obračunajo ob zaključku nakupa."
+    },
+    "footer": {
+      "payment": "Načini plačila"
+    },
+    "featured_blog": {
+      "view_all": "Prikaži vse",
+      "onboarding_title": "Objava v spletnem dnevniku",
+      "onboarding_content": "Strankam zagotovite povzetek objave v spletnem dnevniku"
+    },
+    "featured_collection": {
+      "view_all": "Prikaži vse",
+      "view_all_label": "Prikaži vse izdelke v zbirki {{ collection_name }}"
+    },
+    "collection_list": {
+      "view_all": "Prikaži vse"
+    },
+    "collection_template": {
+      "title": "Zbirka",
+      "empty": "Ni najdenih izdelkov",
+      "use_fewer_filters_html": "Uporabite manj filtrov ali <a class=\"{{ class }}\" href=\"{{ link }}\">odstranite vse</a>"
+    },
+    "video": {
+      "load_video": "Naloži videoposnetek: {{ description }}"
+    },
+    "slideshow": {
+      "load_slide": "Naloži diapozitiv",
+      "previous_slideshow": "Prejšnji diapozitiv",
+      "next_slideshow": "Naslednji diapozitiv",
+      "pause_slideshow": "Zaustavi diaprojekcijo",
+      "play_slideshow": "Predvajaj diaprojekcijo",
+      "carousel": "Vrtiljak",
+      "slide": "Diapozitiv"
+    },
+    "page": {
+      "title": "Naslov strani"
+    },
+    "announcements": {
+      "previous_announcement": "Prejšnje obvestilo",
+      "next_announcement": "Naslednje obvestilo",
+      "carousel": "Vrtiljak",
+      "announcement": "Obvestilo",
+      "announcement_bar": "Vrstica za obvestila"
+    },
+    "quick_order_list": {
+      "product_total": "Vmesna vsota",
+      "view_cart": "Prikaži košarico",
+      "each": "{{ money }}/kos",
       "product": "Izdelek",
-      "price": "Cena",
-      "quantity": "Količina",
-      "qty": "Količina",
-      "total": "Skupaj",
-      "regular_total": "Redna vsota",
-      "discounted_total": "Skupaj s popustom",
-      "product_details": "Podrobnosti produkta",
-      "variant": "Varianta"
+      "variant": "Različica",
+      "variant_total": "Skupaj različice",
+      "items_added": {
+        "one": "Dodan je {{ quantity }} artikel",
+        "other": "Dodani so artikli: {{ quantity }}",
+        "few": "Dodani so artikli: {{ quantity }}",
+        "two": "Dodani so artikli: {{ quantity }}"
+      },
+      "items_removed": {
+        "one": "Odstranjen je {{ quantity }} artikel",
+        "other": "Odstranjeni so artikli: {{ quantity }}",
+        "few": "Odstranjeni so artikli: {{ quantity }}",
+        "two": "Odstranjeni so artikli: {{ quantity }}"
+      },
+      "product_variants": "Različice izdelka",
+      "total_items": "Skupno število izdelkov",
+      "remove_all_items_confirmation": "Ali želite iz košarice odstraniti vse izdelke ({{ quantity }})?",
+      "remove_all": "Odstrani vse",
+      "cancel": "Prekliči",
+      "remove_all_single_item_confirmation": "Ali želite iz košarice odstraniti 1 izdelek?",
+      "min_error": "Ta artikel ima najmanj {{ min }}",
+      "max_error": "Ta artikel ima največ {{ max }}",
+      "step_error": "Ta artikel lahko dodate samo v korakih po {{ step }}."
     }
   },
-  "collections": {
-    "general": {
-      "no_matches": "Oprostite, v tej zbirki ni izdelkov",
-      "collection_items": "{{ title }} elementov"
-    },
-    "sidebar": {
-      "clear_all": "Počisti vse"
-    },
-    "toolbar": {
-      "show_filter": "Filter",
-      "view_layout": "Pogled",
-      "view_list": "Seznam",
-      "grid_2cloumns": "2 stolpca",
-      "grid_3cloumns": "3 stolpci",
-      "grid_4cloumns": "4 stolpci",
-      "grid_5cloumns": "5 stolpcev"
-    },
-    "sorting": {
-      "title": "Razvrsti po"
-    },
-    "paginate": {
-      "load_more": "Naloži več"
-    }
-  },
-  "contact": {
-    "form": {
-      "name": "Ime",
-      "email": "E-naslov",
-      "phone": "Telefonska številka",
-      "message": "Sporočilo",
-      "send": "Oddaj zdaj",
-      "post_success": "Hvala, ker ste nas kontaktirali. Odgovorili vam bomo takoj, ko bo mogoče.",
-      "save_infor_message": "Shrani moje ime, e-pošto in spletno mesto v tem brskalniku za naslednjič, ko bom komentiral."
-    },
-    "ask-form": {
-      "heading": "Postavi vprašanje",
-      "name": "Tvoje ime",
-      "email": "Vaš e-poštni naslov",
-      "phone": "Vaša telefonska številka",
-      "message": "Tvoje sporočilo",
-      "required-fields": "Zahtevana polja",
-      "send": "Oddaj zdaj",
-      "post_success": "Hvala za skrb. Odgovorili vam bomo takoj, ko bo mogoče."
-    }
+  "localization": {
+    "country_label": "Država/regija",
+    "language_label": "Jezik",
+    "update_language": "Posodobi jezik",
+    "update_country": "Posodobi državo/regijo",
+    "search": "Išči",
+    "popular_countries_regions": "Priljubljene države/regije",
+    "country_results_count": "Najdene države/regije: {{ count }}"
   },
   "customer": {
     "account": {
-      "title": "Moj račun",
-      "page_title": "račun",
-      "dashboard": "Nadzorna plošča",
-      "addresses": "Naslovi",
-      "wishlist": "Seznam želja",
-      "log_out": "Odjava",
-      "details": "podrobnosti računa",
-      "name": "Ime",
-      "email": "E-naslov",
-      "view_addresses": "Ogled naslovov",
-      "return": "Nazaj na podrobnosti računa",
-      "greeting": "zdravo",
-      "not": "ne"
+      "title": "Račun",
+      "details": "Podatki o računu",
+      "view_addresses": "Prikaži naslove",
+      "return": "Nazaj na podatke o računu"
     },
+    "account_fallback": "Račun",
+    "log_in": "Prijava",
+    "log_out": "Odjava",
     "activate_account": {
       "title": "Aktiviraj račun",
-      "subtext": "Ustvarite geslo, da aktivirate svoj račun.",
+      "subtext": "Za aktivacijo računa morate ustvariti geslo.",
       "password": "Geslo",
-      "password_confirm": "potrdi geslo",
+      "password_confirm": "Potrdite geslo",
       "submit": "Aktiviraj račun",
       "cancel": "Zavrni povabilo"
     },
     "addresses": {
-      "title": "Vaši naslovi",
-      "your_addresses": "Vaši naslovi",
-      "default": "Privzeti naslov",
-      "add_new": "Dodajte nov naslov",
-      "name": "Ime",
+      "title": "Naslovi",
+      "default": "Privzeto",
+      "add_new": "Dodaj nov naslov",
+      "edit_address": "Uredi naslov",
       "first_name": "Ime",
       "last_name": "Priimek",
       "company": "Podjetje",
-      "address1": "Naslov",
-      "address2": "Apartma, apartma itd.",
-      "city": "Mesto",
-      "country": "Država",
-      "province": "Pokrajina",
+      "address1": "Naslov 1",
+      "address2": "Naslov 2",
+      "city": "Kraj",
+      "country": "Država/regija",
+      "province": "Provinca",
       "zip": "Poštna številka",
-      "phone": "Telefon",
+      "phone": "Telefonska številka",
       "set_default": "Nastavi kot privzeti naslov",
+      "add": "Dodaj naslov",
       "update": "Posodobi naslov",
       "cancel": "Prekliči",
       "edit": "Uredi",
       "delete": "Izbriši",
       "delete_confirm": "Ali ste prepričani, da želite izbrisati ta naslov?"
     },
-    "login": {
-      "title": "Vpiši se",
-      "email": "E-naslov",
+    "login_page": {
+      "cancel": "Prekliči",
+      "create_account": "Ustvari račun",
+      "email": "E-poštni naslov",
+      "forgot_password": "Ali ste pozabili geslo?",
+      "guest_continue": "Nadaljuj",
+      "guest_title": "Želim nadaljevati kot gost",
       "password": "Geslo",
-      "forgot_password": "Ste pozabili geslo?",
-      "sign_in": "Prijava",
-      "new_customer": "Nova stranka",
-      "alternate_provider_separator":"ali"
-    },
-    "orders": {
-      "title": "Zgodovina naročil",
-      "order_number": "naročilo",
-      "date": "Datum",
-      "payment_status": "Stanje plačila",
-      "fulfillment_status": "Stanje izpolnitve",
-      "total": "Skupaj",
-      "make_your_first_order": "Naredite svoje prvo naročilo.",
-      "none": "Oddali niste še nobenega naročila."
+      "title": "Prijava",
+      "sign_in": "Vpis",
+      "submit": "Pošlji",
+      "alternate_provider_separator": "ali"
     },
     "order": {
       "title": "Naročilo {{ name }}",
-      "date": "Datum objave: {{ date }}",
-      "cancelled": "Naročilo preklicano {{ date }}",
+      "date_html": "Izvedeno dne {{ date }}",
+      "cancelled_html": "Naročilo je bilo preklicano dne {{ date }}",
       "cancelled_reason": "Razlog: {{ reason }}",
-      "billing_address": "Naslov za pošiljanje računa",
-      "fulfilled_at_html": "Izpolnjeno {{ date }}",
+      "billing_address": "Naslov plačnika računa",
       "payment_status": "Stanje plačila",
-      "shipping_address": "naslov za pošiljanje",
-      "fulfillment_status": "Stanje izpolnitve",
-      "discounts": "Popusti",
+      "shipping_address": "Naslov za dostavo",
+      "fulfillment_status": "Stanje naročila",
+      "discount": "Popust",
       "shipping": "Dostava",
-      "tax": "davek",
+      "tax": "Davek",
       "product": "Izdelek",
-      "sku": "SKU",
+      "sku": "Inventarna številka",
       "price": "Cena",
       "quantity": "Količina",
       "total": "Skupaj",
-      "track_shipment": "Sledite pošiljki",
-      "subtotal": "Vmesni seštevek",
-      "discount": "Popust"
+      "fulfilled_at_html": "Izpolnjeno dne {{ date }}",
+      "track_shipment": "Sledenje pošiljki",
+      "tracking_url": "Povezava za sledenje",
+      "tracking_company": "Dostavno podjetje",
+      "tracking_number": "Številka za sledenje",
+      "subtotal": "Vmesna vsota",
+      "total_duties": "Carinske dajatve",
+      "total_refunded": "Povrnjeno"
+    },
+    "orders": {
+      "title": "Zgodovina naročil",
+      "order_number": "Naročilo",
+      "order_number_link": "Številka naročila {{ number }}",
+      "date": "Datum",
+      "payment_status": "Stanje plačila",
+      "fulfillment_status": "Stanje naročila",
+      "total": "Skupaj",
+      "none": "Izvedli niste še nobenega naročila."
     },
     "recover_password": {
-      "title": "Ponastavi geslo",
-      "email": "E-naslov",
-      "submit": "Predloži",
-      "cancel": "Prekliči",
-      "subtext": "Poslali vam bomo e-poštno sporočilo za ponastavitev gesla.",
-      "success": "Poslali smo vam e-pošto s povezavo za posodobitev gesla."
-    },
-    "reset_password": {
-      "title": "Ponastavi geslo računa",
-      "subtext": "Vnesite novo geslo za {{ email }}",
-      "password": "Geslo",
-      "password_confirm": "potrdi geslo",
-      "submit": "Ponastavitev gesla"
+      "title": "Ponastavite svoje geslo",
+      "subtext": "Poslali vam bomo e-poštno sporočilo za ponastavitev gesla",
+      "success": "Poslali smo vam e-poštno sporočilo s povezavo za posodobitev gesla."
     },
     "register": {
-      "title": "Registrirajte se",
-      "description": "Prijavite se za dostop do zgodnje razprodaje ter prilagojenih novosti, trendov in promocij. Če se želite odjaviti, kliknite Odjava v naših e-poštnih sporočilih.",
+      "title": "Ustvari račun",
       "first_name": "Ime",
-      "last_name": "Priimek"
-    }
-  },
-  "homepage": {
-    "onboarding": {
-      "blog_title": "Naslov vaše objave",
-      "blog_excerpt": "Vaša trgovina še ni objavila nobene objave v spletnem dnevniku. Spletni dnevnik lahko uporabite za pogovor o lansiranju novih izdelkov, nasvetih ali drugih novicah, ki jih želite deliti s svojimi strankami.",
-      "product_title": "Primer naslova izdelka",
-      "product_description": "To področje se uporablja za opis podrobnosti vašega izdelka. Povejte strankam o videzu, občutku in slogu vašega izdelka. Dodajte podrobnosti o barvi, uporabljenih materialih, velikosti in kraju izdelave.",
-      "collection_title": "Primer naslova zbirke",
-      "collection_description": "Tukaj je opis zbirke, ki vsebuje podrobnosti o zbirki.",
-      "no_content": "Ta razdelek trenutno ne vsebuje nobene vsebine. Dodajte vsebino v ta razdelek s stransko vrstico.",
-      "blog_readmore": "Preberi več",
-      "blog_tag": "Minimog"
-    }
-  },
-  "layout": {
-    "back_to_shopping": "Nazaj k nakupovanju",
-    "back": "Nazaj",
-    "wishlist": {
-      "title": "Seznam želja",
-      "no_products": "Na stran s seznamom želja ni bil dodan noben izdelek."
+      "last_name": "Priimek",
+      "email": "E-poštni naslov",
+      "password": "Geslo",
+      "submit": "Ustvari"
     },
-    "compare": {
-      "title": "Primerjaj",
-      "no_products": "Na stran za primerjavo ni bil dodan noben izdelek."
-    },
-    "cart": {
-      "title": "Voziček"
-    },
-    "customer": {
-      "account": "račun",
-      "log_in": "Vpiši se"
-    }
-  },
-  "pages": {
-    "find_a_store": "Najdi trgovino"
-  },
-  "products": {
-    "product": {
-      "regular_price": "Običajna cena",
-      "sold_out": "Razprodano",
-      "availability": "Razpoložljivost",
-      "brand": "Znamka",
-      "colors": "Barve",
-      "in_stock": "Na zalogi",
-      "out_of_stock": "Ni na zalogi",
-      "low_stock": "Majhna zaloga",
-      "backordered": "Nenaročeno",
-      "unavailable": "Ni na voljo",
-      "on_sale": "Na razprodaji",
-      "from_text_html": "Od {{ price }}",
-      "quantity": "Količina",
-      "add_to_cart": "Dodaj v voziček",
-      "add_to_wishlist": "Dodaj na seznam želja",
-      "remove_from_wishlist": "Odstrani s seznama želja",
-      "add_to_compare": "Primerjaj",
-      "add_a_question": "Postavi vprašanje",
-      "remove_from_compare": "Odstrani iz primerjave",
-      "quick_add": "Hitro dodajanje",
-      "zoom_in": "Približaj",
-      "quick_view": "Hiter pogled",
-      "collection": "Zbirka",
-      "decrease_quantity": "Zmanjšaj količino {{ title }} za eno",
-      "increase_quantity": "Povečajte količino {{ title }} za eno",
-      "quantity_input_label": "Količina za {{ product }}",
-      "include_taxes": "Davek vključen.",
-      "price": {
-        "from_price_html": "Od {{ price }}",
-        "regular_price": "Običajna cena",
-        "sale_price": "Prodajna cena",
-        "unit_price": "Cena na enoto",
-        "save_price_html": "Shranite <span data-sale-value>{{ amount }}</span>"
-      },
-      "preorder": "Prednaročilo",
-      "product_quantity": "Količina izdelka",
-      "product_recommendation_heading": "Morda bi vam bilo všeč tudi",
-      "product_reviews_heading": "Ocene in ocene",
-      "quantity_minimum_message": "Količina mora biti 1 ali več",
-      "not_enough_items_message": "Na voljo ni dovolj artiklov. Samo še {{ quantity }}.",
-      "sale_price": "Prodajna cena",
-      "see_more_options": "Oglejte si še {{ count }} možnost(-e)",
-      "sold_out_items_message": "Izdelek je že razprodan.",
-      "view_details": "Ogled podrobnosti",
-      "vendor": "Prodajalec",
-      "type": "Vrsta",
-      "sku": "SKU",
-      "collections": "Zbirke",
-      "social_share": "Deliti",
-      "copy_link": "Kopiraj povezavo",
-      "unit_price_label": "Cena na enoto",
-      "size_guide": "Vodič po velikosti",
-      "save_html": "Prihranite <span class=\"m-currency--saved m:font-medium\" data-saved-price>{{ amount }}</span>",
-      "recently_viewed_products": "Nedavno ogledani izdelki",
-      "select_options": "Izberite možnosti",
-      "sold": "prodano",
-      "available": "Na voljo",
-      "xr_button": "Ogled v vašem prostoru",
-      "xr_button_label": "Ogled v vašem prostoru, nalaganje elementa v okno razširjene resničnosti",
-      "pickup_availability": {
-        "view_store_info": "Ogled informacij o trgovini",
-        "check_other_stores": "Preverite razpoložljivost v drugih trgovinah",
-        "pick_up_available": "Možnost prevzema",
-        "pick_up_available_at_html": "Prevzem je na voljo pri <span>{{ location_name }}</span>",
-        "pick_up_unavailable_at_html": "Prevzem trenutno ni na voljo pri <span>{{ location_name }}</span>",
-        "unavailable": "Razpoložljivosti prevzema ni bilo mogoče naložiti",
-        "refresh": "Osveži"
-      },
-      "select_variant": "Pred dodajanjem izdelka v košarico izberite različico.",
-      "preorder_note": "Izdelek v prednaročilu",
-      "sale_text": "Prodaja",
-      "choose_an_option": "Izberite možnost",
-      "inventory_quantity_html": "<span class =\"m-product-inventory__quantity\"> {{ quantity }} </span> na zalogi",
-      "inventory_low_quantity_html": "Samo <span class =\"m-product-inventory__quantity\"> {{ quantity }} </span> levo",
-      "quantity_in_cart_html": "<span class =\"quantity-cart\"> {{ quantity }} </span> v vozičku",
-      "quantity_minimum_of": "Najmanj {{ quantity }}",
-      "quantity_maximum_of": "Največ {{ quantity }}",
-      "quantity_multiples_of": "Prirast {{ quantity }}",
-      "volume_pricing": {
-        "title": "Cene za glasnost",
-        "note": "Na voljo cene za glasnost",
-        "minimum": "{{ quantity }}+",
-        "price_at_each": "pri {{ price }}/ea",
-        "price_range": "{{ minimum }} - {{ maximum }}",
-        "each": "{{ money }}/ea",
-        "price_at_each_html": "pri {{ price }}/ea",
-        "price_range_html": "{{ minimum }} - {{ maximum }}",
-        "each_html": "{{ money }}/ea"
-      },
-      "variant_sold_out_or_unavailable": "Varianta razprodana ali ni na voljo"
-    },
-    "facets": {
-      "show_more": "Pokaži več"
+    "reset_password": {
+      "title": "Ponastavitev gesla za račun",
+      "subtext": "Vnesite novo geslo",
+      "password": "Geslo",
+      "password_confirm": "Potrdite geslo",
+      "submit": "Ponastavi geslo"
     }
   },
   "gift_cards": {
     "issued": {
-      "title": "Tukaj je vaša darilna kartica za {{ value }} za {{ shop }}!",
-      "subtext": "Vaša darilna kartica",
-      "gift_card_code": "Koda darilne kartice",
-      "shop_link": "Nadaljuj z nakupovanjem",
-      "remaining_html": "Preostalo {{ balance }}",
+      "title": "To je darilni bon v vrednosti {{ value }} za trgovino {{ shop }}!",
+      "subtext": "Vaš darilni bon",
+      "gift_card_code": "Koda darilnega bona",
+      "shop_link": "Obišči spletno trgovino",
       "add_to_apple_wallet": "Dodaj v Apple Wallet",
-      "qr_image_alt": "Koda QR — skenirajte za unovčenje darilne kartice",
-      "copy_code": "Kopiraj kodo",
-      "expired": "potekel",
-      "copy_code_success": "Koda je bila uspešno kopirana",
-      "print_gift_card": "Tiskanje"
+      "qr_image_alt": "Koda QR – optično jo preberite za unovčenje darilnega bona",
+      "copy_code": "Kopiraj kodo darilnega bona",
+      "expired": "Poteklo",
+      "copy_code_success": "Koda je uspešno kopirana",
+      "how_to_use_gift_card": "Uporabite kodo darilnega bona v spletu ali kodo QR v trgovini",
+      "expiration_date": "Poteče {{ expires_on }}"
     }
-  },
-  "date_formats": {
-    "month_day_year": "%B %d, %Y"
   },
   "recipient": {
     "form": {
-      "checkbox": "To želim poslati kot darilo",
-      "email_label": "E-pošta prejemnika",
-      "email_label_optional": "E-pošta prejemnika (neobvezno)",
-      "email": "E-naslov",
-      "name_label": "Ime prejemnika (neobvezno)",
+      "checkbox": "Želim poslati kot darilo",
+      "email_label": "E-poštni naslov prejemnika",
+      "email": "E-poštni naslov",
+      "name_label": "Ime prejemnika (izbirno)",
       "name": "Ime",
-      "message_label": "Sporočilo (neobvezno)",
+      "message_label": "Sporočilo (izbirno)",
       "message": "Sporočilo",
-      "max_characters": "Največ {{ max_chars }} znakov"
-    }
-  },
-  "templates": {
-    "contact": {
-      "form": {
-        "error_heading": "Prilagodite naslednje:"
-      }
+      "max_characters": "Največje št. znakov: {{ max_chars }}",
+      "email_label_optional_for_no_js_behavior": "E-poštni naslov prejemnika (izbirno)",
+      "send_on": "LLLL-MM-DD",
+      "send_on_label": "Pošlji na datum (izbirno)",
+      "expanded": "Razširjen obrazec prejemnika darilnega bona",
+      "collapsed": "Strnjen obrazec prejemnika darilnega bona"
     }
   }
 }

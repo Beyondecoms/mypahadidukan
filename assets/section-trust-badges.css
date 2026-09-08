@@ -1,0 +1,184 @@
+/* ── OUTER ── */
+.tb-section-outer {
+  width: 100%;
+}
+
+/* ── SECTION ── */
+.tb-section {
+  width: 100%;
+  padding: 0px 40px 40px 40px;
+  position:relative;
+}
+
+/* ── INNER ROW ── */
+.tb-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── SINGLE BADGE ITEM ── */
+.tb-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 36px;
+  flex: 1 1 200px;
+  min-width: 180px;
+}
+
+/* ── ICON WRAPPER — circular frame ── */
+.tb-icon-wrap {
+  flex-shrink: 0;
+  width: 74px;
+  height: 80px;
+  border-radius: 99%;
+  overflow: hidden;
+  border: 2px solid rgba(224, 123, 57, 0.25);
+  background: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tb-item:hover .tb-icon-wrap {
+  transform: scale(1.06);
+  box-shadow: 0 4px 18px rgba(224, 123, 57, 0.18);
+}
+
+.tb-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Fallback placeholder */
+.tb-icon-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── TEXT ── */
+.tb-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tb-title {
+  margin: 0;
+  font-family: 'Caveat', 'Patrick Hand', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2e1a0e;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.tb-subtitle {
+  margin: 0;
+  font-family: 'Caveat', 'Patrick Hand', cursive;
+  font-size: 15px;
+  font-weight: 400;
+  color: #7a5c3a;
+  line-height: 1.3;
+  margin-bottom:7px ;
+}
+
+/* ── VERTICAL DIVIDER between items ── */
+.tb-divider {
+  width: 1px;
+  height: 48px;
+  background: rgba(61, 43, 26, 0.15);
+  flex-shrink: 0;
+  align-self: center;
+}
+.tb-section-border {
+  width: 100%;
+  padding: 40px;
+  position:relative;
+}
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .tb-section {
+    padding: 16px 20px;
+  }
+
+  .tb-item {
+    padding: 10px 20px;
+  }
+
+  .tb-divider {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+
+  .tb-section {
+    padding: 14px 10px;
+  }
+
+  .tb-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px 17px;
+    align-items: start;
+  }
+
+  .tb-item {
+    width: 100%;
+    min-width: unset;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    gap: 8px;
+  }
+
+.tb-icon-wrap {
+    width: 60px;
+    height: 74px;
+    border-radius: 99px;
+    overflow: hidden;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+  .tb-title {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+
+  .tb-subtitle {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .tb-divider {
+    display: none;
+  }
+
+  .tb-text {
+    align-items: center;
+  }
+  .tb-section-border {
+    padding: 13px;
+  }
+  .tb-section-border::after{
+    height: 40px !important;
+  }
+}
+.tb-section-border::after { content: ""; position: absolute; bottom: -20px; left: 0; right: 0; height: 30px; background: radial-gradient( circle at 50% 0%, #ffeeb7 60%, transparent 61% ); background-size: 80px 30px; background-repeat: repeat-x; }

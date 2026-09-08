@@ -1,0 +1,545 @@
+<style>
+    /* ── STICKY BOTTOM BAR ── */
+.psb-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 8000;
+  background: #ffffff;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  padding: 12px 24px;
+
+  /* Slide up animation */
+  animation: psb-slide-up 0.3s ease forwards;
+}
+
+@keyframes psb-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── INNER ── */
+.psb-inner {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* ── PRODUCT INFO ── */
+.psb-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── IMAGE ── */
+.psb-img-wrap {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.psb-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── INFO TEXT ── */
+.psb-info {
+  display: flex;
+  flex-direction: column;
+  gap:0px;
+}
+
+.psb-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: #010000;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+    font-family: var(--font-family-normal);
+}
+
+.psb-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.psb-compare {
+    font-size: 14px;
+    color: #A1A4AC;
+    font-weight: 500;
+    text-decoration: line-through;
+    font-family: var(--font-family-normal);
+}
+
+.psb-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #231F20;
+    font-family: var(--font-family-normal);
+}
+
+.psb-discount {
+  background: #F3743C;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px;
+  border-radius: 4px;
+  line-height: 100%;
+  font-family: var(--font-family-normal);
+}
+
+/* ── ADD TO CART BUTTON ── */
+.psb-atc-btn {
+  flex-shrink: 0;
+  padding: 18px 61px;
+  background: var(--primary-web-color);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-family-normal);
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.psb-atc-btn:hover {
+  background: #155c3e;
+  transform: translateY(-1px);
+}
+
+.psb-atc-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+/* ── OUT OF STOCK / NOTIFY ME (sticky bar) ── */
+.psb-atc-btn--oos {
+  background: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.psb-atc-btn--oos:hover {
+  background: #e0e0e0;
+  transform: none;
+}
+
+.psb-notify-btn {
+  flex-shrink: 0;
+  padding: 18px 61px;
+  background: #13bba2;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-family-normal);
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.psb-notify-btn:disabled {
+  background: #155c3e;
+  transform: translateY(-1px);
+}
+
+.psb-variant-select{
+  display: none;
+}
+.psb-bar-desktop{
+  display: block;
+  width: 100%;
+}
+.psb-bar-mobile{
+  display: none;
+}
+/* ── HIDE ON MOBILE (mobile has its own sticky bar) ── */
+@media (max-width: 768px) {
+  .psb-bar-mobile{
+  display: block;
+  width: 100%;
+}
+.psb-bar-desktop{
+  display: none;
+}
+  .psb-variant-select{
+    display: block;
+  }
+  .psb-bar{
+    padding: 10px 14px;
+    background: #fff;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .psb-inner{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Product Image */
+  .psb-img-wrap{
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .psb-img-wrap img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product info */
+  .psb-product{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .psb-info{
+    flex: 1;
+    min-width: 0;
+  }
+
+  .psb-title{
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.3;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        width:280px;
+  }
+  .atc-select{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  /* Variant dropdown style */
+  .psb-price-row{
+    display: none;
+  }
+
+  .psb-variant-select{
+    width: 100%;
+    height: 44px;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 0 14px;
+    font-size: 15px;
+    background: #fff;
+    outline: none;
+  }
+
+  /* Button */
+  .psb-atc-btn,
+  .psb-notify-btn{
+    height: 44px;
+    padding: 0 26px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+}
+</style>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+
+<div class="psb-bar" id="psb-bar" style="display: none;">
+  <div class="psb-bar-desktop">
+    <div class="psb-inner">
+      <!-- Product Image + Info -->
+      <div class="psb-product">
+        <div class="psb-img-wrap">
+          <img
+            src="{{ product.featured_image | image_url: width: 120 }}"
+            alt="{{ product.title }}"
+            width="60"
+            height="60"
+            loading="lazy"
+          >
+        </div>
+        <div class="psb-info">
+          <p class="psb-title">{{ product.title }}</p>
+          <select class="psb-variant-select">
+          {% for variant in product.variants %}
+              <option value="{{ variant.id }}">
+              {{ variant.title }}
+              </option>
+          {% endfor %}
+          </select>
+          <div class="psb-price-row">
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              <span class="psb-compare">₹{{ current_variant.compare_at_price | money_without_currency }}</span>
+            {%- endif -%}
+            <span class="psb-price">₹{{ current_variant.price | money_without_currency }}</span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              {%- assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+              <span class="psb-discount">{{ disc }}%off</span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      <!-- Add to Cart Button -->
+      {%- if product.available -%}
+        <button class="psb-atc-btn" id="psb-atc-btn">
+          Add to Cart
+        </button>
+      {%- else -%}
+        <button class="psb-notify-btn" id="psb-notify-btn">
+          Out Of Stock
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="psb-bar-mobile">
+    <div class=psb-inner>
+        <div class="psb-bar-mobile-right">
+          <div class="psb-img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 120 }}"
+                alt="{{ product.title }}"
+                width="60"
+                height="60"
+                loading="lazy"
+              >
+          </div>
+        </div>
+        <div class="psb-bar-mobile-left">
+              <p class="psb-title">{{ product.title }}</p>
+              <div class="atc-select">
+                <select class="psb-variant-select">
+                {% for variant in product.variants %}
+                    <option value="{{ variant.id }}">
+                    {{ variant.title }}
+                    </option>
+                {% endfor %}
+                </select>
+                {%- if product.available -%}
+                  <button class="psb-atc-btn" id="psb-atc-btn-mobile">
+                    Add to Cart
+                  </button>
+                {%- else -%}
+                  <button class="psb-notify-btn" id="psb-notify-btn-mobile">
+                    Out Of Stock
+                  </button>
+                {%- endif -%}
+              </div>
+        </div>
+    </div>
+    </div>
+  </div>
+<script>
+(function () {
+  var bar = document.getElementById('psb-bar');
+  var psbBtn = document.getElementById('psb-atc-btn');
+  var psbBtnMobile = document.getElementById('psb-atc-btn-mobile');
+
+  if (!bar) return;
+
+  // ── Find whichever ATC button is actually visible on screen ──
+  // Desktop button: id="pm-atc-btn"  (inside .pm-desktop-only)
+  // Mobile button:  id="pm-atc-btn-m" (inside .pm-mobile-only)
+  // Both share the class "pm-atc-btn", so this picks whichever
+  // one isn't hidden by display:none from the responsive CSS.
+  function getVisibleATC() {
+    var candidates = document.querySelectorAll('.pm-atc-btn');
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].offsetParent !== null) {
+        return candidates[i];
+      }
+    }
+    return null;
+  }
+
+function checkVisibility() {
+  var addToCartSection = getVisibleATC();
+  var isATCVisible = false;
+
+  if (addToCartSection) {
+    var rect = addToCartSection.getBoundingClientRect();
+    isATCVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  }
+
+  // Footer visible — require actual height AND meaningful overlap with viewport
+  var footer = document.querySelector('footer');
+  var isFooterVisible = false;
+
+  if (footer) {
+    var footerRect = footer.getBoundingClientRect();
+    var hasRealHeight = footerRect.height > 20; // guard against unmeasured/0-height footer
+    isFooterVisible = hasRealHeight && footerRect.top < (window.innerHeight - 100);
+  }
+
+  if (isATCVisible || isFooterVisible) {
+    bar.style.display = 'none';
+  } else {
+    bar.style.display = 'flex';
+  }
+}
+
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener('resize', checkVisibility, { passive: true });
+  checkVisibility();
+
+  // ── SHARED ADD TO CART HANDLER (sticky bar buttons) ──
+  function handleAddToCart(btn) {
+    btn.addEventListener('click', async function () {
+      btn.textContent = 'Adding...';
+      btn.disabled = true;
+
+      var variantId;
+
+      if (window.innerWidth <= 768) {
+        var select = document.querySelector('.psb-bar-mobile .psb-variant-select');
+        variantId = select ? parseInt(select.value) : {{ current_variant.id }};
+      } else {
+        var activeCard = document.querySelector('.pm-variant-card.active');
+        variantId = activeCard ? parseInt(activeCard.dataset.variantId) : {{ current_variant.id }};
+      }
+
+      // Read qty from whichever qty display is currently rendered
+      var qtyEl = document.getElementById('pm-qty-val') || document.getElementById('pm-qty-val-m');
+      var qty = qtyEl ? parseInt(qtyEl.textContent) || 1 : 1;
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: qty,
+            sections: ['cart-drawer'],
+            sections_url: window.location.pathname
+          })
+        });
+
+        const addedItem = await response.json();
+
+        if (addedItem.sections?.['cart-drawer']) {
+          const html = new DOMParser().parseFromString(
+            addedItem.sections['cart-drawer'], 'text/html'
+          );
+
+          const newBody = html.querySelector('#nc-body');
+          const oldBody = document.querySelector('#nc-body');
+          if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+          const newBreakdown = html.querySelector('.nc-price-breakdown');
+          if (newBreakdown) {
+            const oldBreakdown = document.querySelector('.nc-price-breakdown');
+            if (oldBreakdown) {
+              oldBreakdown.replaceWith(newBreakdown);
+            } else {
+              const footer = document.querySelector('.cart-drawer__footer');
+              if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+            }
+          }
+
+          const newFooter = html.querySelector('.cart-drawer__footer');
+          const oldFooter = document.querySelector('.cart-drawer__footer');
+          if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+        }
+
+        var drawer = document.getElementById('nc-cart-drawer');
+        if (drawer) {
+          drawer.classList.add('is-open');
+          drawer.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        const cartResponse = await fetch('/cart.js', {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const cartData = await cartResponse.json();
+
+        if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-main', cartData: cartData });
+        }
+
+        if (typeof window.ncUpdatePriceBreakdown === 'function') {
+          window.ncUpdatePriceBreakdown(cartData);
+        }
+
+      } catch (e) {
+        console.error(e);
+      } finally {
+        btn.textContent = 'Add to Cart';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  if (psbBtn) handleAddToCart(psbBtn);
+  if (psbBtnMobile) handleAddToCart(psbBtnMobile);
+
+  // Keep sticky-bar price in sync when a variant is selected (desktop)
+  var observer = new MutationObserver(function () {
+    var activeCard = document.querySelector('.pm-variant-card.active');
+    if (!activeCard) return;
+
+    var price   = parseInt(activeCard.dataset.price) / 100;
+    var compare = parseInt(activeCard.dataset.compare) / 100;
+
+    var priceEl   = bar.querySelector('.psb-price');
+    var compareEl = bar.querySelector('.psb-compare');
+    var discEl    = bar.querySelector('.psb-discount');
+
+    if (priceEl) priceEl.textContent = '₹' + Math.round(price);
+    if (compareEl) compareEl.textContent = compare > price ? '₹' + Math.round(compare) : '';
+    if (discEl && compare > price) {
+      var disc = Math.round((compare - price) * 100 / compare);
+      discEl.textContent = disc + '%off';
+      discEl.style.display = 'inline';
+    } else if (discEl) {
+      discEl.style.display = 'none';
+    }
+  });
+
+  var variantsGrid = document.querySelector('.pm-variants-grid');
+  if (variantsGrid) {
+    observer.observe(variantsGrid, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  }
+
+})();
+</script>

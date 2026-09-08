@@ -1,0 +1,374 @@
+{% comment %} /*for fast loading of image*/ {% endcomment %}
+{% for section in template.sections %}
+  {% for block in section.blocks %}
+    {% if block.type == 'region' and block.settings.map_image != blank %}
+      <link rel="preload" as="image" href="{{ block.settings.map_image | image_url: width: 1600 }}">
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% comment %} /**/ {% endcomment %}
+{{ 'section-slider-map.css' | asset_url | stylesheet_tag }}
+
+<div class="sbr-section" style="background: {{ section.settings.bg_color }};">
+
+  <div class="sbr-slider-wrap" id="sbr-slider-{{ section.id }}">
+
+    <!-- Header -->
+    <div class="sbr-header">
+      <span class="sbr-pin-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_1792_3961)">
+            <path d="M38.925 14.925C38.925 23.175 24 48 24 48C24 48 9.07501 23.175 9.07501 14.925C9.07501 6.675 15.75 0 24 0C32.25 0 38.925 6.675 38.925 14.925Z" fill="#F3743C"/>
+            <path d="M32.9616 17.0617C34.1324 12.1033 31.062 7.13448 26.1035 5.96363C21.145 4.79278 16.1762 7.86325 15.0054 12.8217C13.8345 17.7802 16.905 22.749 21.8635 23.9198C26.8219 25.0907 31.7907 22.0202 32.9616 17.0617Z" fill="#FDE9AE"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_1792_3961">
+              <rect width="48" height="48" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+      </span>
+      <h2 class="sbr-title">{{ section.settings.title }}</h2>
+    </div>
+
+    <!-- Slides -->
+    {%- for block in section.blocks -%}
+      {%- assign visibility = block.settings.visibility | default: 'both' -%}
+      <div
+        class="sbr-slide sbr-slide--{{ visibility }}{% unless forloop.first %} sbr-slide--hidden{% endunless %}"
+        data-index="{{ forloop.index0 }}"
+        data-visibility="{{ visibility }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="sbr-map-side">
+
+          {%- if block.settings.map_image != blank -%}
+            <img
+              src="{{ block.settings.map_image | image_url: width: 1600 }}"
+              alt="{{ block.settings.region_name }} map"
+              class="sbr-map-img"
+              loading="eager"
+            >
+          {%- else -%}
+            <div class="sbr-map-placeholder">Upload a map image in this block's settings</div>
+          {%- endif -%}
+
+          <!-- Info Card -->
+          <div
+            class="sbr-info-card"
+            style="--card-bg: {{ block.settings.card_bg_desktop | default: '#8B4513' }}; --card-bg-mobile: {{ block.settings.card_bg_mobile | default: '#1e3a2f' }}; background: var(--card-bg) !important;"
+          >
+            <div class="sbr-card-body" style="background: transparent !important;">
+
+              <div class="sbr-card-top">
+                <div class="sbr-card-title-wrap">
+                  <h3 class="sbr-panel-title">
+                    {{ block.settings.region_name }}
+                    {%- if block.settings.product_count != blank -%}
+                      <span class="sbr-panel-count">({{ block.settings.product_count }})</span>
+                    {%- endif -%}
+                  </h3>
+                </div>
+              {%- if block.settings.collection_link != blank -%}
+                <a
+                  href="{{ block.settings.collection_link }}{% if block.settings.collection_link contains '?' %}&{% else %}?{% endif %}tab={{ block.settings.region_name | handleize }}"
+                  class="sbr-panel-btn"
+                >
+                  {{ block.settings.button_label | default: 'Explore Now' }}
+                </a>
+              {%- endif -%}
+              </div>
+
+              {%- if block.settings.description != blank -%}
+                <p class="sbr-panel-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.tags != blank -%}
+                <div class="sbr-panel-tags">
+                  {%- assign tags = block.settings.tags | split: ',' -%}
+                  {%- for tag in tags -%}
+                    <span class="sbr-panel-tag">{{ tag | strip }}</span>
+                    {%- unless forloop.last -%}<span class="sbr-tag-sep">|</span>{%- endunless -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <!-- Arrows -->
+    <button class="sbr-arrow sbr-arrow--prev" id="sbr-prev-{{ section.id }}" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.5 15L7.5 10L12.5 5" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button class="sbr-arrow sbr-arrow--next" id="sbr-next-{{ section.id }}" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 15L12.5 10L7.5 5" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Dots -->
+    {%- if section.blocks.size > 1 -%}
+      <div class="sbr-dots" id="sbr-dots-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <button
+            class="sbr-dot{% if forloop.first %} active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            aria-label="Go to {{ block.settings.region_name }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var sliderId = 'sbr-slider-{{ section.id }}';
+  var prevBtn  = document.getElementById('sbr-prev-{{ section.id }}');
+  var nextBtn  = document.getElementById('sbr-next-{{ section.id }}');
+  var dotsWrap = document.getElementById('sbr-dots-{{ section.id }}');
+  var allSlides = Array.from(document.querySelectorAll('#' + sliderId + ' > .sbr-slide'));
+  var dots     = dotsWrap ? Array.from(dotsWrap.querySelectorAll('.sbr-dot')) : [];
+  var current  = 0;
+
+  function getVisibleSlides() {
+    return allSlides.filter(function(slide) {
+      var v = slide.dataset.visibility || 'both';
+      var isMobile = window.innerWidth <= 600;
+      if (v === 'desktop' && isMobile) return false;
+      if (v === 'mobile' && !isMobile) return false;
+      return true;
+    });
+  }
+
+  function goTo(idx) {
+    var visible = getVisibleSlides();
+    if (!visible.length) return;
+
+    visible[current] && visible[current].classList.add('sbr-slide--hidden');
+    if (dots[current]) dots[current].classList.remove('active');
+
+    current = (idx + visible.length) % visible.length;
+
+    visible[current].classList.remove('sbr-slide--hidden');
+    if (dots[current]) dots[current].classList.add('active');
+  }
+
+  function init() {
+    var visible = getVisibleSlides();
+    allSlides.forEach(function(s) { s.classList.add('sbr-slide--hidden'); });
+    if (visible[0]) visible[0].classList.remove('sbr-slide--hidden');
+    current = 0;
+    if (dots[0]) {
+      dots.forEach(function(d) { d.classList.remove('active'); });
+      dots[0].classList.add('active');
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goTo(parseInt(dot.dataset.index, 10));
+    });
+  });
+
+  init();
+  window.addEventListener('resize', init);
+})();
+
+function goTo(idx) {
+  var visible = getVisibleSlides();
+  if (!visible.length) return;
+
+  visible[current] && visible[current].classList.add('sbr-slide--hidden');
+  if (dots[current]) dots[current].classList.remove('active');
+
+  current = (idx + visible.length) % visible.length;
+
+  visible[current].classList.remove('sbr-slide--hidden');
+  if (dots[current]) dots[current].classList.add('active');
+
+  // ── Re-trigger card animation ──
+  var card = visible[current].querySelector('.sbr-info-card');
+  if (card) {
+    card.style.animation = 'none';
+    card.offsetHeight; /* force reflow */
+    card.style.animation = '';
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Slider Map",
+  "tag": "section",
+  "class": "sbr-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Shop By Region"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5e6b8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "region",
+      "name": "Region",
+      "settings": [
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Show On",
+          "default": "both",
+          "options": [
+            { "value": "both",    "label": "Desktop + Mobile" },
+            { "value": "desktop", "label": "Desktop Only" },
+            { "value": "mobile",  "label": "Mobile Only" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "map_image",
+          "label": "Map image (with pin already marked on it)"
+        },
+        {
+          "type": "text",
+          "id": "region_name",
+          "label": "Region name",
+          "default": "Ladakh"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Product count",
+          "default": "30+ Products"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "We source directly from the hills, bringing authentic products straight from local artisans to you."
+        },
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags (comma separated)",
+          "default": "Authentic, Pure, Wholesome"
+        },
+        {
+          "type": "url",
+          "id": "collection_link",
+          "label": "Collection link"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore Now"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_desktop",
+          "label": "Card background (desktop)",
+          "default": "#8B4513"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_mobile",
+          "label": "Card background (mobile)",
+          "default": "#1e3a2f"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop By Region",
+      "blocks": [
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Ladakh",
+            "product_count": "30+ Products",
+            "description": "We source directly from the hills, bringing authentic products straight from local artisans to you.",
+            "tags": "Authentic, Pure, Wholesome",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Jammu & Kashmir",
+            "product_count": "20+ Products",
+            "description": "Premium saffron and dry fruits sourced from the Kashmir valley.",
+            "tags": "Saffron, Dry Fruits, Premium",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Himachal Pradesh",
+            "product_count": "25+ Products",
+            "description": "Fresh mountain produce from the valleys of Himachal.",
+            "tags": "Fresh, Natural, Mountain",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Uttarakhand",
+            "product_count": "15+ Products",
+            "description": "Organic herbs and spices from the Himalayan foothills.",
+            "tags": "Organic, Herbs, Spices",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Meghalaya",
+            "product_count": "10+ Products",
+            "description": "Exotic produce from the wettest region of India.",
+            "tags": "Exotic, Forest, Pure",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Nagaland",
+            "product_count": "10+ Products",
+            "description": "Traditional tribal foods and spices from Nagaland.",
+            "tags": "Tribal, Spicy, Traditional",
+            "button_label": "Explore Now",
+            "visibility": "both"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

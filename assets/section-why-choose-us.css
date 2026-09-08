@@ -1,0 +1,168 @@
+.why-choose-outer {
+  width: 100%;
+}
+
+.why-choose-section {
+  padding: 3% 0 3%;
+  width: 100%;
+}
+
+.why-choose-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ── HEADER ROW ── */
+.why-choose-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ── TITLE ── */
+.why-choose-title {
+font-size: 48px;
+    font-weight: 400;
+    font-family: var(--font-heading-family);
+    color: #231F20;
+    margin: 0;
+    font-variant: small-caps;
+}
+
+/* ── TABS ── */
+.why-choose-tabs {
+  display: flex;
+  gap: 12px;
+      background: #f5f9f7;
+    padding: 10px;
+    border-radius: 13px;
+
+}
+
+.why-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #2d2d2d;
+  font-family: var(--font-family-normal);
+  font-size: 16px;
+  font-family: var(--font-family-normal);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.why-tab svg {
+  flex-shrink: 0;
+}
+
+.why-tab.active {
+  background: #1a6b4a;
+  color: #ffffff;
+}
+
+.why-tab.active svg {
+  stroke: #ffffff;
+}
+
+.why-tab:hover:not(.active) {
+  color: #1a6b4a;
+}
+
+/* ── VIDEO WRAP ── */
+/* ── VIDEO WRAP ── */
+.why-choose-video-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1320px;
+  height: 510px;           /* fixed height instead of max-height */
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ── VIDEO PANELS ── */
+.why-video-panel {
+  display: none;
+  width: 100%;
+  height: 100%;            /* fill the fixed wrap height */
+  overflow: hidden;
+  position: relative;
+}
+
+.why-video-panel.active {
+  display: block;
+}
+
+.why-video-panel iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 180%;            /* crops black bars */
+  border: none;
+  pointer-events: all;
+}
+
+/* ── PLACEHOLDER ── */
+.why-video-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background: #e8e0cc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .why-choose-video-wrap {
+    height: 220px;         
+  }
+
+  .why-choose-wrapper {
+    padding: 0 24px;
+  }
+
+  .why-choose-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .why-choose-title {
+    font-size: 30px;
+  }
+
+  .why-video-panel {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .why-video-panel iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+  }
+  .why-tab{
+    padding: 4px 20px;
+    font-size: 13px;
+  }
+}

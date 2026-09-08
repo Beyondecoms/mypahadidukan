@@ -1,0 +1,528 @@
+/* ── SECTION ── */
+.pt-section-outer { width: 100%; }
+.pt-section { width: 100%; background: #fff; }
+
+/* ── TAB BAR ── */
+.pt-tab-bar {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.pt-tabs-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.pt-tabs-wrap::-webkit-scrollbar { display: none; }
+
+/* ── SLIDING INDICATOR ── */
+.pt-tab-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: var(--primary-web-color, #1a6b4a);
+  border-radius: 9px;
+  transition: left 0.35s cubic-bezier(0.4,0,0.2,1),
+              width 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── TABS ── */
+.pt-tab {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  flex-shrink: 0;
+  padding: 11px 20px;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-family-normal, sans-serif);
+  color: #555;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+  text-align: center;
+  border-radius: 9px;
+  line-height: 1;
+  margin: 4px;
+}
+
+.pt-tab.active {
+  color: #fff;
+  background-color: var(--primary-web-color);
+}
+
+/* ── CONTENT AREA ── */
+.pt-content {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ── PANELS ── */
+.pt-panel {
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.pt-panel.active {
+  display: block;
+  position: relative;
+}
+
+/* ── BANNER IMAGE (description / benefits / nutrients) ── */
+.pt-banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+}
+
+.pt-banner-placeholder {
+  width: 100%;
+  min-height: 300px;
+  background: #f5f0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #999;
+  padding: 24px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ── INGREDIENTS SECTION ── */
+.pt-ing-outer {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-web-color, #1a6b4a) #f0f0f0;
+  padding: 24px 0 20px;
+}
+
+.pt-ing-outer::-webkit-scrollbar {
+  height: 5px;
+}
+.pt-ing-outer::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+.pt-ing-outer::-webkit-scrollbar-thumb {
+  background: var(--primary-web-color, #1a6b4a);
+  border-radius: 4px;
+}
+
+.pt-ing-track {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 0 24px 8px;
+  /* Cards won't shrink — forces scrolling when overflow */
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── INGREDIENT CARD ── */
+.pt-ing-card {
+  flex: 0 0 390px;
+  width: 390px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.pt-ing-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+  transform: translateY(-3px);
+}
+
+/* Image sits at the top */
+.pt-ing-img-wrap {
+  width: 100%;
+  height: 200px;
+  background: #faf7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pt-ing-img-placeholder {
+  background: #f0ebe0;
+}
+
+.pt-ing-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.pt-ing-card:hover .pt-ing-img {
+  transform: scale(1.05);
+}
+
+/* Text body below image */
+.pt-ing-body {
+  padding: 20px 22px 24px;
+  text-align: center;
+  flex: 1;
+}
+
+.pt-ing-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  font-family: var(--font-family-normal, sans-serif);
+}
+
+.pt-ing-desc {
+  font-size: 16px;
+  color: #000000;
+  line-height: 1.65;
+  margin: 0;
+  font-family: var(--font-family-normal, sans-serif);
+}
+
+/* When only 1–2 cards: centre them instead of left-aligning */
+.pt-ing-track:has(.pt-ing-card:nth-child(1):last-child),
+.pt-ing-track:has(.pt-ing-card:nth-child(2):last-child) {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── HOW TO USE ── */
+.pt-how-inner {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  background: #fffbef;
+  border-radius: 18px;
+  margin: 24px auto;
+  padding: 21px 52px;
+  max-width: 1350px;
+}
+
+.pt-how-video-wrap {
+  flex: 0 0 320px;
+  width: 320px;
+  position: relative;
+}
+
+.pt-video-thumb {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  min-height: unset;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.pt-video-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.pt-video-thumb:hover .pt-video-poster {
+  transform: scale(1.03);
+}
+
+.pt-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.pt-play-btn svg { width: 100%; height: 100%; }
+
+.pt-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.pt-video-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background: #e8ddd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #999;
+}
+
+.pt-how-content {
+  flex: 1;
+  padding: 0;
+  max-width: 700px;
+}
+
+.pt-how-heading {
+  font-size: 48px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 30px;
+  line-height: 1.15;
+  font-family: var(--font-family-normal);
+}
+
+/* Steps */
+.pt-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 75%;
+}
+
+.pt-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 19px;
+  color: #2d2d2d;
+  line-height: 1.55;
+  font-family: var(--font-family-normal, sans-serif);
+  border-bottom: .5px solid rgb(184, 183, 183);
+  padding-bottom: 16px;
+}
+
+.pt-step-num {
+  flex-shrink: 0;
+  font-size: 23px;
+  font-weight: 700;
+  color: #e07b39;
+  min-width: 11px;
+}
+
+.pt-step-text {
+  color: #3a3a3a;
+  font-family: var(--font-family-normal);
+  font-weight: 500;
+  font-size: 21px;
+}
+
+/* ── MOBILE VIEW ── */
+@media (max-width: 768px) {
+
+  body,
+  .pt-section-outer,
+  .pt-section {
+    overflow-x: hidden;
+  }
+
+  /* Tab Bar */
+  .pt-tab-bar {
+    margin: 8px;
+  }
+
+  .pt-tabs-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 4px;
+    gap: 2px;
+    border-radius: 14px;
+  }
+
+  .pt-tab {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 4px;
+    margin: 0;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+    border-radius: 10px;
+  }
+
+  .pt-tab-indicator {
+    top: 4px;
+    left: 4px;
+    border-radius: 10px;
+  }
+
+  /* Content */
+  .pt-content {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .pt-panel.active {
+    display: block;
+    position: relative;
+  }
+
+  /* Banner images */
+  .pt-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* General text inside panels */
+  .pt-panel h1,
+  .pt-panel h2,
+  .pt-panel h3,
+  .pt-panel h4 {
+    font-size: 22px;
+    line-height: 1.35;
+    text-align: center;
+    padding: 0 14px;
+    margin-bottom: 14px;
+  }
+
+  .pt-panel p,
+  .pt-panel li,
+  .pt-panel span {
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+    color: #333;
+  }
+
+  /* Ingredients — allow horizontal scroll on mobile */
+  .pt-ing-outer {
+    padding: 16px 0 12px;
+  }
+
+  .pt-ing-track {
+    gap: 16px;
+    padding: 0 16px 8px;
+    justify-content: unset !important;
+  }
+
+  .pt-ing-card {
+    flex: 0 0 90%;
+    width: 220px;
+  }
+
+  .pt-ing-img-wrap {
+    height: 150px;
+  }
+
+  .pt-ing-body {
+    padding: 14px 16px 18px;
+  }
+
+  .pt-ing-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .pt-ing-desc {
+    font-size: 12px;
+  }
+
+  /* How to use */
+  .pt-how-inner {
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: auto;
+    gap: 0;
+    padding: 0;
+  }
+
+  .pt-how-video-wrap {
+    width: 100%;
+    flex: unset;
+  }
+
+  .pt-video-thumb,
+  .pt-video-placeholder {
+    min-height: 220px;
+  }
+
+  .pt-how-content {
+    width: 100%;
+    padding: 20px 16px;
+    gap: 16px;
+    box-sizing: border-box;
+  }
+
+  .pt-how-heading {
+    font-size: 22px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .pt-steps-list {
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .pt-step-item {
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .pt-step-num {
+    min-width: 18px;
+    font-size: 13px;
+  }
+
+  .pt-step-text {
+    font-size: 13px;
+  }
+
+  .pt-panel {
+    word-break: break-word;
+  }
+}
+
+/* ── DESKTOP / MOBILE IMAGE SWITCHING ── */
+.pt-banner-mobile  { display: none; }
+.pt-banner-desktop { display: block; }
+
+@media (max-width: 768px) {
+  .pt-banner-mobile  { display: block; }
+  .pt-banner-desktop { display: none; }
+}

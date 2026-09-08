@@ -1,0 +1,239 @@
+{{ 'section-bank-details.css' | asset_url | stylesheet_tag }}
+
+<section class="bd-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="bd-inner" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+
+    <!-- BANK DETAILS TABLE -->
+    <div class="bd-table">
+      {% assign fields = section.blocks | where: "type", "bank_field" %}
+      {% for block in fields %}
+        <div class="bd-row" {{ block.shopify_attributes }}>
+          <span class="bd-label" style="color: {{ section.settings.label_color }};">{{ block.settings.label }}:</span>
+          <span class="bd-value" style="color: {{ section.settings.value_color }};">{{ block.settings.value }}</span>
+        <button
+        class="bd-copy-btn"
+        data-copy="{{ block.settings.value }}"
+        aria-label="Copy {{ block.settings.label }}"
+        title="Copy"
+        >
+            <!-- CLIPBOARD IMAGE -->
+            <span class="bd-icon-clipboard">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="2" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="9" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>           
+             </span>
+            <!-- COPIED CHECKMARK SVG -->
+            <span class="bd-icon-copied">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#1a6b4a" opacity="0.12"/>
+                <path d="M7 12.5l3.5 3.5L17 9" stroke="#1a6b4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="bd-copied-text">Copied!</span>
+            </span>
+        </button>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="bd-divider" style="border-color: {{ section.settings.divider_color }};"></div>
+
+    <!-- HELP SECTION -->
+    <div class="bd-help">
+      <h3 class="bd-help-title" style="color: {{ section.settings.help_title_color }};">{{ section.settings.help_title }}</h3>
+      <p class="bd-help-sub" style="color: {{ section.settings.help_sub_color }};">{{ section.settings.help_subtitle }}</p>
+      <div class="bd-help-links">
+        {% if section.settings.whatsapp_url != blank %}
+          <a class="bd-help-link" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" style="color: {{ section.settings.link_color }};">
+            {{ section.settings.whatsapp_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.email_url != blank %}
+          <a class="bd-help-link" href="{{ section.settings.email_url }}" style="color: {{ section.settings.link_color }};">
+            {{ section.settings.email_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.bd-copy-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var text = btn.getAttribute('data-copy');
+      navigator.clipboard.writeText(text).then(function() {
+        btn.classList.add('bd-copied');
+        setTimeout(function() {
+          btn.classList.remove('bd-copied');
+        }, 2000);
+      }).catch(function() {
+        // Fallback for older browsers
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.classList.add('bd-copied');
+        setTimeout(function() {
+          btn.classList.remove('bd-copied');
+        }, 2000);
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Bank Details",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#faf9f7"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "value_color",
+      "label": "Value Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#e0dbd4"
+    },
+    {
+      "type": "color",
+      "id": "help_title_color",
+      "label": "Help Title Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "help_sub_color",
+      "label": "Help Subtitle Color",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Help Section"
+    },
+    {
+      "type": "text",
+      "id": "help_title",
+      "label": "Help Title",
+      "default": "In case you face any problems:"
+    },
+    {
+      "type": "text",
+      "id": "help_subtitle",
+      "label": "Help Subtitle",
+      "default": "You may reach out to us:"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp Button Label",
+      "default": "Whatsapp Us"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "WhatsApp Link"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email Button Label",
+      "default": "Email Us"
+    },
+    {
+      "type": "url",
+      "id": "email_url",
+      "label": "Email Link"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bank_field",
+      "name": "Bank Field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Field Label",
+          "default": "Name"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Field Value",
+          "default": "HIMKART INDIA PRIVATE LIMITED"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bank Details",
+      "blocks": [
+        { "type": "bank_field", "settings": { "label": "Name", "value": "HIMKART INDIA PRIVATE LIMITED" } },
+        { "type": "bank_field", "settings": { "label": "A/c No.", "value": "50200079999538" } },
+        { "type": "bank_field", "settings": { "label": "IFSC", "value": "HDFC0000341" } },
+        { "type": "bank_field", "settings": { "label": "Branch", "value": "CIVIL LINES JALANDHAR" } },
+        { "type": "bank_field", "settings": { "label": "Bank AD Code", "value": "0510046" } },
+        { "type": "bank_field", "settings": { "label": "SWIFT CODE", "value": "HDFCINBB" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

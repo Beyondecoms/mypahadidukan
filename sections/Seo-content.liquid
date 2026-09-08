@@ -1,0 +1,349 @@
+<section class="seo-section">
+ 
+  <div class="seo-content-wrapper">
+    <button type="button" class="seo-header" onclick="toggleSEOContent(this)">
+      <span class="toggle-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 0C10.3009 0.0448832 6.76597 1.53429 4.15013 4.15013C1.53429 6.76597 0.0448832 10.3009 0 14C0.0448832 17.6991 1.53429 21.234 4.15013 23.8499C6.76597 26.4657 10.3009 27.9551 14 28C17.6991 27.9551 21.234 26.4657 23.8499 23.8499C26.4657 21.234 27.9551 17.6991 28 14C27.9551 10.3009 26.4657 6.76597 23.8499 4.15013C21.234 1.53429 17.6991 0.0448832 14 0ZM22 15H15V22H13V15H6V13H13V6H15V13H22V15Z" fill="#048E79"/>
+        </svg>
+      </span>
+      <h2>{{ section.settings.heading }}</h2>
+    </button>
+
+    <div class="seo-content">
+      <h3>{{ section.settings.subheading1 }}</h3>
+      <p>{{ section.settings.paragraph1 }}</p>
+
+      <h3>{{ section.settings.subheading2 }}</h3>
+      <p>{{ section.settings.paragraph2 }}</p>
+
+      <h3>{{ section.settings.subheading3 }}</h3>
+      <p>{{ section.settings.paragraph3 }}</p>
+
+      <h3>{{ section.settings.subheading4 }}</h3>
+      <p>{{ section.settings.paragraph4 }}</p>
+
+      <h3>{{ section.settings.subheading5 }}</h3>
+      <p>{{ section.settings.paragraph5 }}</p>
+
+      <h3>{{ section.settings.subheading6 }}</h3>
+      <p>{{ section.settings.paragraph6 }}</p>
+    </div>
+  </div>
+
+  <style>
+    .seo-section {
+      text-align: center;
+      padding: 20px 2% 20px 2%;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* === Feature Cards === */
+    .seo-features {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      /* gap: 57px; */
+      /* flex-wrap: wrap; */
+      margin-bottom: 40px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 39px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 4px 4px 0px #00000040;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card img {
+      width: 60px;
+      height:60px;
+    }
+
+    .feature-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 160%;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: capitalize;
+      color: #57b72e;
+    }
+
+    .divider {
+      display:block !important;
+      width: 2px;
+      height: 60px;
+      background: #9ed89b;
+    }
+
+    /* === Collapsible SEO Box === */
+    .seo-content-wrapper {
+      background: #e2e8f0;
+      border-radius: 10px;
+      margin: 0 auto;
+      text-align: left;
+      overflow: hidden;
+      @media (max-wodth:768px) {
+        border-radius: 5px;
+      }
+    }
+
+    .seo-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background:#F6F5F3;
+      padding: 10px 20px;
+      width: 100%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.3s ease;
+    }
+
+    .seo-header:hover {
+      background: #e8e6e2;
+    }
+
+    .seo-header h2 {
+      font-family: var(--font-family-normal);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      letter-spacing: 0;
+      text-transform: capitalize;
+      color: #231F20;
+      margin: 0;
+    }
+
+    .toggle-icon {
+      color: #fff;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .seo-header.active .toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Smooth slide animation */
+    .seo-content {
+      max-height: 0;
+      overflow: hidden;
+      background: #F6F5F3;
+      padding: 0 25px;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+    }
+
+    .seo-header.active + .seo-content {
+      max-height: fit-content;
+      padding: 22px 25px 25px;
+    }
+
+    .seo-content h3 {
+    color: var(--primary-web-color);
+    font-weight: 700;
+    font-weight: 700;
+    font-family: var(--font-family-normal);
+    font-size: 22px;
+    letter-spacing: 0;
+    line-height:200%;
+    }
+
+    .seo-content p {
+    color: #000;
+    line-height: 1.7;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0;
+    }
+
+    @media (max-width: 768px) {
+      .seo-header.active + .seo-content{
+        padding: 0px 17px 4px;
+      }
+      .seo-content p{
+       font-size:12px;
+      }
+      .seo-content h3{
+       font-size:12px;
+      }
+      .seo-section{
+        padding: 3% 6% 4% 6%;
+      }
+
+        .toggle-icon{
+          height: 15px;
+          width: 15px;
+        }
+        .seo-header{
+        padding: 10px 12px;
+      }
+
+      .seo-header h2{
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-transform: capitalize;
+      }
+
+      .seo-features {
+        flex-direction: row;
+        flex-wrap:nowrap;
+        gap:5px;
+        margin--bottom:30px;
+      }
+      .feature-card img {
+      width: 25px;
+      height:25px;
+      {% comment %} margin-bottom: 12px; {% endcomment %}
+    }
+      .feature-card{
+        padding: 0;
+        border-radius: 4px;
+
+      }
+
+      .divider {
+        display: none !important;
+      }
+      .feature-card {
+        {% comment %} width: 100%; {% endcomment %}
+        max-width: 280px;
+        padding:6px;
+      }
+      .feature-card h3 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 8px;
+        line-height: 160%;
+        letter-spacing: 0;
+        text-transform: capitalize;
+      }
+    }
+  </style>
+
+  <script>
+    function toggleSEOContent(button) {
+      button.classList.toggle('active');
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "SEO Collapsible Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "SEO Content"
+    },
+    {
+      "type": "text",
+      "id": "subheading1",
+      "label": "Subheading 1",
+      "default": "An Ayurvedic Company Where Tradition Meets Innovation"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph1",
+      "label": "Paragraph 1",
+      "default": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda..."
+    },
+    {
+      "type": "text",
+      "id": "subheading2",
+      "label": "Subheading 2",
+      "default": "Behind Every Success Is A Great Team"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph2",
+      "label": "Paragraph 2",
+      "default": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors..."
+    },
+    {
+      "type": "text",
+      "id": "subheading3",
+      "label": "Subheading 3",
+      "default": "An Ayurvedic Company Where Tradition Meets Innovation"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph3",
+      "label": "Paragraph 3",
+      "default": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda..."
+    },
+    {
+      "type": "text",
+      "id": "subheading4",
+      "label": "Subheading 4",
+      "default": "Behind Every Success Is A Great Team"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph4",
+      "label": "Paragraph 4",
+      "default": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors..."
+    },
+    {
+      "type": "text",
+      "id": "subheading5",
+      "label": "Subheading 5",
+      "default": "An Ayurvedic Company Where Tradition Meets Innovation"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph5",
+      "label": "Paragraph 5",
+      "default": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda..."
+    },
+    {
+      "type": "text",
+      "id": "subheading6",
+      "label": "Subheading 6",
+      "default": "Behind Every Success Is A Great Team"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph6",
+      "label": "Paragraph 6",
+      "default": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors..."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon Image" },
+        { "type": "text", "id": "title", "label": "Feature Title" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,611 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.fullwidth -%}
+  {%- assign container = 'container-full' -%}
+{%- elsif section.settings.max_width != blank -%}
+  {%- assign container = 'bwp-container' -%}
+{%- else -%}
+  {%- assign container = 'container' -%}
+{%- endif -%}
+{%- assign max_width = '' -%}
+{%- if section.settings.fullwidth == blank and section.settings.max_width != blank -%}
+  {%- assign width_container = section.settings.max_width | plus: 0 -%}
+  {%- capture max_width -%}style="max-width: {{ section.settings.max_width }};"{%- endcapture -%}
+{%- endif -%}
+{% assign margin = section.settings.margin | split: '|' %}
+{% assign padding = section.settings.padding | split: '|' %}
+
+{%- if section.settings.show_topbar -%}
+  {%- style -%}
+    {% if section.settings.topbar_absolute %}
+      @media (min-width:1050px){
+        body.template-index .bwp-header-topbar{
+          position:absolute;width:100%;z-index: 100;
+          {%- if section.settings.bg_background2 -%}background:{{ section.settings.bg_background2 }};{%- endif -%}
+        }
+      }
+    {%- endif -%}
+    {% if section.settings.border %}
+      .bwp-header-topbar:before{
+        content:"";
+        position:absolute;
+        width:100%;
+        height:100%;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+        border-style:solid;
+        border-width: {{ section.settings.border_width }};
+        border-color: {{ section.settings.border_color }};
+        opacity:{{ section.settings.border_opacity }};
+      }
+    {%- endif -%}
+    {%- if margin[0] != blank or padding[0] != blank or section.settings.bg_background or section.settings.font_size or section.settings.color_text -%}
+      .bwp-header-topbar{
+        {%- if margin[0] != blank -%}margin: {{ margin[0] }};{%- endif -%}
+        {%- if padding[0] != blank -%}padding:{{ padding[0] }};{%- endif -%}
+        {%- if section.settings.bg_background -%}background:{{ section.settings.bg_background }};{%- endif -%}
+        {%- if section.settings.font_size -%}font-size:{{ section.settings.font_size }}px;{%- endif -%}
+        {%- if section.settings.color_text -%}color:{{ section.settings.color_text }};{%- endif -%}
+        {%- if section.settings.font_weight -%}font-weight:{{ section.settings.font_weight }};{%- endif -%}
+      }
+      .bwp-header-topbar .header-selector__toggle:after{
+        {%- if section.settings.color_text -%}color:{{ section.settings.color_text }};{%- endif -%}
+      }
+      .bwp-header-topbar .content-item-phone .phone-text {
+        /* font-weight: 500; */
+      }
+      .bwp-header-topbar .content-item-phone a.phone-text {
+        color: inherit;
+        /* text-decoration: none; */
+        transition: color 0.3s ease;
+      }
+      .bwp-header-topbar .content-item-phone a.phone-text:hover {
+        color: {{ section.settings.phone_text_hover_color }};
+      }
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'custom-text' %}
+          {% assign color_custom_text            = block.settings.color_custom_text %}
+          {% assign color_custom_text_link       = block.settings.color_custom_text_link %}
+          {% assign color_custom_text_link_hover = block.settings.color_custom_text_link_hover %}
+          {%- if color_custom_text != blank -%}
+            .bwp-header-topbar .content-item-custom-text{
+              color: {{ color_custom_text }};
+            }
+          {%- endif -%}
+          {%- if color_custom_text_link != blank -%}
+            .bwp-header-topbar .content-item-custom-text a{
+              color: {{ color_custom_text_link }};
+            }
+          {%- endif -%}
+          /* Desktop */
+          .bwp-header-topbar .notification-text{
+            text-align: {{ block.settings.text_align }};
+            {%- if block.settings.font_size_desktop != blank -%}
+              font-size: {{ block.settings.font_size_desktop }}px;
+            {%- endif -%}
+          }
+          /* Mobile */
+          @media (max-width: 991px){
+            .bwp-header-topbar .notification-text{
+              text-align: center;
+              {%- if block.settings.font_size_mobile != blank -%}
+                font-size: {{ block.settings.font_size_mobile }}px;
+              {%- endif -%}
+            }
+          }
+        {% elsif block.type == 'social' %}
+          .bwp-header-topbar .social-icons a{
+            color: {{ block.settings.color_social }};
+            fill: {{ block.settings.color_social }};
+          }
+        {% endif %}
+      {%- endfor -%}
+    {%- endif -%}
+    @media (max-width:1200px){
+      {%- if margin[1] != blank or padding[1] != blank -%}
+        .bwp-header-topbar{
+          {%- if margin[1] != blank -%}margin: {{ margin[1] }};{%- endif -%}
+          {%- if padding[1] != blank -%}padding:{{ padding[1] }};{%- endif -%}
+        }
+      {%- endif -%}
+    }
+    @media (max-width:991px){
+      {%- if margin[2] != blank or padding[2] != blank -%}
+        .bwp-header-topbar{
+          {%- if margin[2] != blank -%}margin: {{ margin[2] }};{%- endif -%}
+          {%- if padding[2] != blank -%}padding:{{ padding[2] }};{%- endif -%}
+        }
+      {%- endif -%}
+    }
+    @media (max-width:767px){
+      {%- if margin[3] != blank or padding[3] != blank -%}
+        .bwp-header-topbar{
+          {%- if margin[3] != blank -%}margin: {{ margin[3] }};{%- endif -%}
+          {%- if padding[3] != blank -%}padding:{{ padding[3] }};{%- endif -%}
+        }
+      {%- endif -%}
+    }
+    .bwp-header-topbar .notification-item{ display: none; }
+    .bwp-header-topbar .notification-item.active{ display: block; }
+    /* .bwp-header-topbar .notification-text a:hover{ text-decoration: underline; } */
+  {%- endstyle -%}
+
+  <style>
+    .notif-prev{
+      cursor: pointer;
+    }
+    .notif-next{
+      cursor: pointer;
+    }
+    @media (max-width:767px){
+      .notif-prev, .notif-next{
+        display:flex;
+        justify-content:center;
+      }
+      .bwp-header-topbar .topbar-row {
+      padding-bottom: 3px;
+    }
+    }
+  </style>
+
+  <div
+    data-section-id="{{ section.id }}"
+    data-section-type="header-topbar-section"
+    class="bwp-header-topbar {% unless section.settings.show_mobile %}hide_mobile{%- endunless -%}"
+  >
+    <div class="header-topbar">
+      <div class="{{ container }}" {{ max_width }}>
+        {%- assign customBlocks = section.blocks | where: 'type', 'custom-text' -%}
+
+        <div class="topbar-row">
+          <!-- ── LEFT COLUMN ── -->
+          <div class="topbar-left">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'language-currency' -%}
+                  <div class="content-item-currency{% unless block.settings.show_mobile_currency %} hide_ipad{%- endunless -%}">
+                    <div class="language-currency item">
+                      {%- if settings.show_currency_selector -%}{% include 'currency-selector' %}{%- endif -%}
+                      {%- if settings.show_locale_selector -%}{% include 'locale-selector' %}{%- endif -%}
+                    </div>
+                  </div>
+                {%- when 'social' -%}
+                  <div class="content-item-social{% unless block.settings.show_mobile_social %} hide_ipad{%- endunless -%}">
+                    <div class="social item">{% include 'social-media' %}</div>
+                  </div>
+                {%- when 'text-with-icon' -%}
+                  <div class="content-item-text-with-icon{% unless block.settings.show_mobile_text_icon %} hide_ipad{%- endunless -%}">
+                    <div class="custom-text item">
+                      {%- if block.settings.text_icon_content1 != blank -%}
+                        <div class="text-icon1" style="--color1:{{ block.settings.color_text_icon1 }}">
+                          {{ block.settings.text_icon_content1 }}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.text_icon_content2 != blank -%}
+                        <div class="text-icon2" style="--color2:{{ block.settings.color_text_icon2 }}">
+                          {{ block.settings.text_icon_content2 }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+
+          <!-- ── CENTER COLUMN — notification carousel ── -->
+          <div class="topbar-center">
+            <div class="notif-prev">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.7">
+<path d="M10.8 12L14.5692 7.89598C14.7238 7.73982 14.8105 7.52894 14.8105 7.30918C14.8105 7.08942 14.7238 6.87854 14.5692 6.72238C14.4933 6.64528 14.4028 6.58405 14.3029 6.54226C14.2031 6.50047 14.096 6.47894 13.9878 6.47894C13.8796 6.47894 13.7724 6.50047 13.6726 6.54226C13.5728 6.58405 13.4823 6.64528 13.4064 6.72238L8.81039 11.412C8.65598 11.5685 8.56941 11.7795 8.56941 11.9994C8.56941 12.2192 8.65598 12.4303 8.81039 12.5868L13.4064 17.2764C13.4823 17.3535 13.5728 17.4147 13.6726 17.4565C13.7724 17.4983 13.8796 17.5198 13.9878 17.5198C14.096 17.5198 14.2031 17.4983 14.3029 17.4565C14.4028 17.4147 14.4933 17.3535 14.5692 17.2764C14.7238 17.1202 14.8105 16.9093 14.8105 16.6896C14.8105 16.4698 14.7238 16.2589 14.5692 16.1028L10.8 12Z" fill="white"/>
+</g>
+</svg>
+
+            </div>
+            {%- for block in customBlocks -%}
+              {%- assign notif_url = block.settings.notification_url -%}
+              <div class="content-item-custom-text notification-item{% unless block.settings.show_mobile_custom_text %} hide_ipad{% endunless %}{% if forloop.first %} active{% endif %}">
+                {%- if notif_url != blank -%}
+                  <a
+                    href="{{ notif_url }}"
+                    class="notification-text"
+                    {% comment %} style="--color-link:{{ block.settings.color_custom_text_link }}; color: inherit;" {% endcomment %}
+                    style="--color-link:{{ block.settings.color_custom_text_link }}"
+                  >
+                    {{ block.settings.custom_text_content }}
+                  </a>
+                {%- else -%}
+                  <div class="notification-text" style="--color-link:{{ block.settings.color_custom_text_link }}">
+                    {{ block.settings.custom_text_content }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+            <div class="notif-next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.7">
+<path d="M13.2 12L9.43081 7.89598C9.27619 7.73982 9.18945 7.52894 9.18945 7.30918C9.18945 7.08942 9.27619 6.87854 9.43081 6.72238C9.50674 6.64528 9.59725 6.58405 9.69706 6.54226C9.79687 6.50047 9.904 6.47894 10.0122 6.47894C10.1204 6.47894 10.2276 6.50047 10.3274 6.54226C10.4272 6.58405 10.5177 6.64528 10.5936 6.72238L15.1896 11.412C15.344 11.5685 15.4306 11.7795 15.4306 11.9994C15.4306 12.2192 15.344 12.4303 15.1896 12.5868L10.5936 17.2764C10.5177 17.3535 10.4272 17.4147 10.3274 17.4565C10.2276 17.4983 10.1204 17.5198 10.0122 17.5198C9.904 17.5198 9.79687 17.4983 9.69706 17.4565C9.59725 17.4147 9.50674 17.3535 9.43081 17.2764C9.27619 17.1202 9.18945 16.9093 9.18945 16.6896C9.18945 16.4698 9.27619 16.2589 9.43081 16.1028L13.2 12Z" fill="white"/>
+</g>
+</svg>
+
+            </div>
+          </div>
+
+          <!-- ── RIGHT COLUMN — track order ── -->
+          <div class="topbar-right">
+            {%- if section.settings.track_order != blank -%}
+              <div class="content-item-track-order hide_ipad">
+                <a href="{{ section.settings.track_order_link }}" class="track-order-text">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.39423 1.60694C6.53305 1.61076 6.66147 1.61798 6.77607 1.6333C7.02614 1.66679 7.28266 1.74471 7.49286 1.95362C7.70312 2.16278 7.79608 2.55223 7.82978 2.80127H8.49286C8.67615 2.80126 8.84667 2.80197 8.99091 2.81592C9.15052 2.83138 9.31442 2.86636 9.47626 2.95752C9.63806 3.04866 9.7529 3.17016 9.84833 3.29834C9.9346 3.41426 10.0226 3.55986 10.1169 3.71631L10.9645 5.12256C11.0477 5.25992 11.1322 5.3991 11.1765 5.55811C11.2206 5.71705 11.2207 5.87927 11.2204 6.03955V7.37647C11.2204 7.58384 11.2198 7.77061 11.2058 7.9253C11.1906 8.09139 11.1561 8.26752 11.0583 8.43604C10.9526 8.61801 10.8008 8.76939 10.6179 8.87451C10.4486 8.97176 10.1141 9.01567 9.94696 9.03076C9.741 9.72624 9.09362 10.2339 8.32782 10.2339C7.56377 10.2338 6.91799 9.72781 6.71064 9.03467H5.12568C4.91831 9.72784 4.2726 10.2338 3.50849 10.2339C2.74278 10.2339 2.09636 9.72612 1.89032 9.03076C1.72344 9.01572 1.38902 8.97169 1.21943 8.87451C1.03636 8.76937 0.883767 8.61812 0.778019 8.43604C0.680216 8.26751 0.645704 8.09139 0.630558 7.9253C0.616466 7.77061 0.616873 7.58384 0.616886 7.37647V3.4917C0.616858 3.17807 0.616336 2.89557 0.64716 2.66748C0.680836 2.41855 0.759156 2.1628 0.969425 1.95362C1.17974 1.74451 1.43697 1.66677 1.6872 1.6333C1.91633 1.6027 2.19937 1.603 2.51435 1.60303H5.94794L6.39423 1.60694ZM3.50849 7.83643C3.10942 7.83654 2.78602 8.15819 2.78583 8.55518C2.78583 8.95233 3.1093 9.27479 3.50849 9.27491C3.90777 9.27491 4.23212 8.9524 4.23212 8.55518C4.23193 8.15812 3.90765 7.83643 3.50849 7.83643ZM8.3288 7.83643C7.92963 7.83643 7.60536 8.15812 7.60517 8.55518C7.60517 8.9524 7.92952 9.27491 8.3288 9.27491C8.72793 9.27473 9.05146 8.95229 9.05146 8.55518C9.05127 8.15823 8.72781 7.83661 8.3288 7.83643ZM7.84638 3.76026V6.94678C7.9991 6.90156 8.16132 6.87744 8.3288 6.87744C9.09092 6.87759 9.73501 7.38036 9.94403 8.0708C10.1663 8.07079 10.2564 7.92525 10.2565 7.83643V5.81397L9.00263 3.76026H7.84638Z" fill="#323232"/>
+                  </svg>
+                  {{section.settings.track_order}}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+        <!-- end .topbar-row -->
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+  if (!section) return;
+
+  var items = section.querySelectorAll('.notification-item');
+  var prevBtn = section.querySelector('.notif-prev');
+  var nextBtn = section.querySelector('.notif-next');
+
+  if (items.length < 2) return;
+
+  var interval = {{ section.settings.notification_interval | default: 5 }} * 1000;
+  var current = 0;
+
+  function showItem(index){
+    items.forEach(item => item.classList.remove('active'));
+    items[index].classList.add('active');
+  }
+
+  function nextSlide(){
+    current = (current + 1) % items.length;
+    showItem(current);
+  }
+
+  function prevSlide(){
+    current = (current - 1 + items.length) % items.length;
+    showItem(current);
+  }
+
+  var autoSlide = setInterval(nextSlide, interval);
+
+  if(nextBtn){
+    nextBtn.addEventListener('click', function(){
+      nextSlide();
+    });
+  }
+
+  if(prevBtn){
+    prevBtn.addEventListener('click', function(){
+      prevSlide();
+    });
+  }
+
+});
+</script>
+
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_topbar",
+      "label": "Show Topbar",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "track_order_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "text",
+      "id": "track_order",
+      "label": "track Order",
+      "info": "Static text displayed at the rightmost side"
+    },
+    {
+      "type": "header",
+      "content": "Layout settings"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Width container",
+      "info": "Default: 1440px"
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Fullwidth",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "padding",
+      "label": "Padding",
+      "placeholder": "0px 0px 0px 0px",
+      "info": "Screen: desktop | 1200px | 991px | 767px"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Margin",
+      "placeholder": "0px 0px 0px 0px",
+      "info": "Screen: desktop | 1200px | 991px | 767px"
+    },
+    {
+      "type": "color",
+      "id": "bg_background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "topbar_absolute",
+      "label": "Topbar absolute",
+      "info": "Only use for homepage",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_background2",
+      "label": "Only use for Topbar absolute",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 19
+    },
+    {
+      "type": "number",
+      "id": "notification_interval",
+      "label": "Notification interval (seconds)",
+      "default": 5,
+      "info": "How long each custom text stays before switching"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Color text",
+      "default": "#868686"
+    },
+    {
+      "type": "text",
+      "id": "font_weight",
+      "label": "Font Weight",
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "border",
+      "label": "Show border",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "border_width",
+      "label": "Border width",
+      "default": "1px 1px 1px 1px",
+      "info": "top right bottom left"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#868686"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Border opacity",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile",
+      "label": "Show topbar on mobile",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "language-currency",
+      "name": "Language and Currency",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_mobile_currency",
+          "label": "Show on mobile and tablet",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_mobile_social",
+          "label": "Show on mobile and tablet",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "color_social",
+          "label": "Color",
+          "default": "#fff"
+        }
+      ]
+    },
+    {
+      "type": "custom-text",
+      "name": "Custom Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "custom_text_content",
+          "label": "Content",
+          "default": "Summer sale discount off 30%! <a href=\"#\">Shop Now</a>"
+        },
+        {
+          "type": "url",
+          "id": "notification_url",
+          "label": "Redirect URL",
+          "info": "Optional — clicking the notification bar will go to this URL"
+        },
+        {
+          "type": "color",
+          "id": "color_custom_text",
+          "label": "Color content",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "color_custom_text_link",
+          "label": "Color link",
+          "default": "#f11e1e"
+        },
+        {
+          "type": "color",
+          "id": "color_custom_text_link_hover",
+          "label": "Color link hover",
+          "default": "#f11e1e"
+        },
+        {
+          "type": "header",
+          "content": "Desktop Typography"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "label": "Font Size (Desktop)",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "default": 19
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Align (Desktop)",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Typography"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font Size (Mobile)",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "text_align_mobi",
+          "label": "Text Align (Mobile)",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_custom_text",
+          "label": "Show on mobile and tablet",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "text-with-icon",
+      "name": "Text with icon",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content 1"
+        },
+        {
+          "type": "textarea",
+          "id": "text_icon_content1",
+          "label": "Content",
+          "default": "<i class='icon-pin'></i> +Store Location"
+        },
+        {
+          "type": "color",
+          "id": "color_text_icon1",
+          "label": "Color content",
+          "default": "#fff"
+        },
+        {
+          "type": "header",
+          "content": "Content 2"
+        },
+        {
+          "type": "textarea",
+          "id": "text_icon_content2",
+          "label": "Content",
+          "default": "<i class='icon-email'><\/i> sayhello@demati.com"
+        },
+        {
+          "type": "color",
+          "id": "color_text_icon2",
+          "label": "Color content",
+          "default": "#fff"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mobile_text_icon",
+          "label": "Show on mobile and tablet",
+          "default": true
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

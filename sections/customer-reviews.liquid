@@ -1,0 +1,355 @@
+{{ 'section-customer-reviews.css' | asset_url | stylesheet_tag }}
+
+<div class="cr-section" style="
+    --cr-bg-desktop: {% if section.settings.bg_image != blank %}url({{ section.settings.bg_image | image_url: width: 2000 }}){% else %}none{% endif %};
+    --cr-bg-mobile: {% if section.settings.bg_image_mobile != blank %}url({{ section.settings.bg_image_mobile | image_url: width: 1000 }}){% else %}none{% endif %};
+    --cr-bg-color: {{ section.settings.bg_color }};
+  ">
+  <div class="cr-wrapper">
+
+    <!-- Header (unchanged) -->
+    <div class="cr-header">
+      <h2 class="cr-title">{{ section.settings.title }}</h2>
+      <div class="cr-overall-stars">
+        {%- for i in (1..5) -%}
+          {%- if i <= section.settings.overall_rating -%}
+            <span class="cr-star full">★</span>
+          {%- else -%}
+            <span class="cr-star empty">★</span>
+          {%- endif -%}
+        {%- endfor -%}
+        <span class="cr-overall-text">
+          {{ section.settings.rating_score }} Based On {{ section.settings.review_count }} Reviews
+        </span>
+      </div>
+    </div>
+
+    <!-- CAROUSEL -->
+    <div class="cr-carousel" id="cr-carousel-{{ section.id }}">
+      <div class="cr-carousel-viewport">
+        <div class="cr-track" id="cr-track-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <div class="cr-card" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              <div class="cr-stars">
+                {%- for i in (1..5) -%}
+                  {%- if i <= block.settings.rating -%}<span class="cr-star full">★</span>{%- else -%}<span class="cr-star empty">★</span>{%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              <div class="cr-quote-icon">&#10077;</div>
+
+              {%- if block.settings.review_title != blank -%}
+                <p class="cr-review-title">{{ block.settings.review_title }}</p>
+              {%- endif -%}
+              <p class="cr-review-text">{{ block.settings.review_text }}</p>
+
+              <div class="cr-card-divider"></div>
+
+              <div class="cr-card-footer">
+                <div class="cr-card-top">
+                  <div class="cr-avatar">
+                    {%- if block.settings.profile_image != blank -%}
+                      <img src="{{ block.settings.profile_image | image_url: width: 80 }}" alt="{{ block.settings.customer_name }}" loading="lazy">
+                    {%- else -%}
+                      <span class="cr-initials" style="background: {{ block.settings.avatar_color }};">{{ block.settings.initials }}</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="cr-name-wrap">
+                    <span class="cr-name">{{ block.settings.customer_name }}</span>
+                    {%- if block.settings.verified -%}
+                      <span class="cr-verified">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a6b4a"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Verified buyer
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- if block.settings.product != blank -%}
+                  {%- assign reviewed_product = all_products[block.settings.product] -%}
+                  {%- if reviewed_product != blank -%}
+                    <div class="cr-product">
+                      <img src="{{ reviewed_product.featured_image | image_url: width: 60 }}" alt="{{ reviewed_product.title }}" width="30" height="30" loading="lazy">
+                      <span>{{ reviewed_product.title | truncate: 22 }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- NAV -->
+      <div class="cr-nav">
+        <button type="button" class="cr-nav-arrow cr-nav-prev" aria-label="Previous review">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="cr-nav-arrow cr-nav-next active" aria-label="Next review">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var viewport = document.querySelector('#cr-carousel-{{ section.id }} .cr-carousel-viewport');
+  var track = document.getElementById('cr-track-{{ section.id }}');
+  if (!track) return;
+
+  var originalCards = Array.prototype.slice.call(track.querySelectorAll('.cr-card'));
+  var total = originalCards.length;
+  if (total === 0) return;
+
+  var prevBtn = document.querySelector('#cr-carousel-{{ section.id }} .cr-nav-prev');
+  var nextBtn = document.querySelector('#cr-carousel-{{ section.id }} .cr-nav-next');
+  {% comment %} var currentEl = document.getElementById('cr-current-{{ section.id }}'); {% endcomment %}
+
+  // ── CLONE CARDS FOR INFINITE LOOP ──
+  // Prepend a clone of the last card, append a clone of the first card.
+  var firstClone = originalCards[0].cloneNode(true);
+  var lastClone = originalCards[total - 1].cloneNode(true);
+  firstClone.classList.add('cr-clone');
+  lastClone.classList.add('cr-clone');
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, originalCards[0]);
+
+  var cards = Array.prototype.slice.call(track.querySelectorAll('.cr-card'));
+  // real index 0 now sits at array index 1 (after the prepended lastClone)
+  var current = 1;
+  var isTransitioning = false;
+
+  function cardGap() {
+    return parseInt(getComputedStyle(track).gap) || 0;
+  }
+
+  function realIndex(i) {
+    // maps track index -> displayed 1-based real index
+    if (i === 0) return total;
+    if (i === cards.length - 1) return 1;
+    return i;
+  }
+
+function render(withTransition) {
+    var activeCard = cards[current];
+    var cardWidth = activeCard.getBoundingClientRect().width;
+    var viewportWidth = viewport.getBoundingClientRect().width;
+
+    // distance from track start to the left edge of the active card
+    var offsetToCard = activeCard.offsetLeft;
+
+    // center the active card: push track so its midpoint = viewport midpoint
+    var offset = (viewportWidth / 2) - (cardWidth / 2) - offsetToCard;
+
+    track.style.transition = withTransition ? 'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)' : 'none';
+    track.style.transform = 'translateX(' + offset + 'px)';
+
+    cards.forEach(function (card, i) {
+      card.classList.toggle('active', i === current);
+    });
+
+    currentEl.textContent = realIndex(current);
+}
+
+  function goTo(index, withTransition) {
+    if (isTransitioning) return;
+    current = index;
+    isTransitioning = withTransition !== false;
+    render(withTransition !== false);
+  }
+
+  // After a transition ends, if we're sitting on a clone, snap silently to the real card
+  track.addEventListener('transitionend', function () {
+    isTransitioning = false;
+    if (current === 0) {
+      current = cards.length - 2; // jump to real last card
+      render(false);
+    } else if (current === cards.length - 1) {
+      current = 1; // jump to real first card
+      render(false);
+    }
+  });
+
+  prevBtn.addEventListener('click', function () { goTo(current - 1); });
+  nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+  // swipe support
+  var startX = 0, isDown = false;
+  track.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; isDown = true; }, { passive: true });
+  track.addEventListener('touchend', function (e) {
+    if (!isDown) return;
+    isDown = false;
+    var diff = e.changedTouches[0].clientX - startX;
+    if (diff > 40) goTo(current - 1);
+    else if (diff < -40) goTo(current + 1);
+  }, { passive: true });
+
+  window.addEventListener('resize', function () { render(false); });
+  render(false);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "section",
+  "class": "cr-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Trusted By 50000+ Customers"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "overall_rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Overall star rating",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating score (e.g. 4.68)",
+      "default": "4.8"
+    },
+    {
+      "type": "range",
+      "id": "review_count",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "Review count",
+      "default": 5
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer name",
+          "default": "Sarah Johnson"
+        },
+        {
+          "type": "text",
+          "id": "initials",
+          "label": "Initials (fallback)",
+          "default": "SJ"
+        },
+        {
+          "type": "color",
+          "id": "avatar_color",
+          "label": "Avatar background color",
+          "default": "#1a6b4a"
+        },
+        {
+          "type": "image_picker",
+          "id": "profile_image",
+          "label": "Profile picture"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified buyer",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Review title",
+          "default": "Absolutely Amazing Product!"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "I've been using this product for three months now and the results are incredible."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Garry Shaundes",
+            "initials": "GS",
+            "avatar_color": "#6366f1",
+            "verified": true,
+            "rating": 5,
+            "review_title": "MPD Quality is top Notched!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Garry Shaundes",
+            "initials": "GS",
+            "avatar_color": "#0ea5e9",
+            "verified": true,
+            "rating": 5,
+            "review_title": "MPD is the best!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Garry Shaundes",
+            "initials": "GS",
+            "avatar_color": "#f97316",
+            "verified": true,
+            "rating": 5,
+            "review_title": "MPD Wow the Quality is top Notched!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

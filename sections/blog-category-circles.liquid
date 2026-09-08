@@ -1,0 +1,150 @@
+{{ 'section-blog-category-circles.css' | asset_url | stylesheet_tag }}
+
+<div class="bcc-section" style="background: {{ section.settings.bg_color }};" id="bcc-{{ section.id }}">
+  <div class="bcc-outer">
+
+    <button class="bcc-arrow bcc-arrow--prev" id="bcc-prev-{{ section.id }}" aria-label="Previous">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="bcc-track" id="bcc-track-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <button
+          class="bcc-item {% if forloop.first %}active{% endif %}"
+          data-blog="{{ block.settings.blog_handle }}"
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="bcc-circle" style="background: {{ block.settings.circle_bg | default: '#f5ede0' }};">
+            {%- if block.settings.icon != blank -%}
+              <img
+                src="{{ block.settings.icon | image_url: width: 100 }}"
+                alt="{{ block.settings.label }}"
+                width="52"
+                height="52"
+                loading="lazy"
+              >
+            {%- elsif block.settings.emoji != blank -%}
+              <span class="bcc-emoji">{{ block.settings.emoji }}</span>
+            {%- endif -%}
+          </div>
+          <span class="bcc-label">{{ block.settings.label }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+
+    <button class="bcc-arrow bcc-arrow--next" id="bcc-next-{{ section.id }}" aria-label="Next">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var track   = document.getElementById('bcc-track-{{ section.id }}');
+  var prevBtn = document.getElementById('bcc-prev-{{ section.id }}');
+  var nextBtn = document.getElementById('bcc-next-{{ section.id }}');
+  var items   = Array.from(document.querySelectorAll('#bcc-{{ section.id }} .bcc-item'));
+  var current = 0;
+
+  function activate(idx) {
+    items.forEach(function(i) { i.classList.remove('active'); });
+    current = idx;
+    items[current].classList.add('active');
+    items[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+    // ── Fire event for blog grid section ──
+    document.dispatchEvent(new CustomEvent('bcf:categoryChange', {
+      detail: {
+        blog: items[current].dataset.blog,
+        index: current,
+        direction: idx > current ? 'right' : 'left'
+      }
+    }));
+  }
+
+  items.forEach(function(item, idx) {
+    item.addEventListener('click', function() {
+      if (idx !== current) activate(idx);
+    });
+  });
+
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    track.scrollBy({ left: -220, behavior: 'smooth' });
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    track.scrollBy({ left: 220, behavior: 'smooth' });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Blog Category Circles",
+  "tag": "section",
+  "class": "bcc-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f9f6f1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Info"
+        },
+        {
+          "type": "text",
+          "id": "blog_handle",
+          "label": "Blog handle",
+          "info": "Found in Online Store → Blog Posts → select blog. The URL slug e.g. 'news', 'recipes'",
+          "default": "news"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Circle icon image"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji fallback",
+          "default": "ℹ️"
+        },
+        {
+          "type": "color",
+          "id": "circle_bg",
+          "label": "Circle background",
+          "default": "#f5ede0"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Category Circles",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Info",                "blog_handle": "news",               "emoji": "ℹ️" } },
+        { "type": "category", "settings": { "label": "Shilajit",            "blog_handle": "shilajit",           "emoji": "⛰️" } },
+        { "type": "category", "settings": { "label": "Travel",              "blog_handle": "travel",             "emoji": "✈️" } },
+        { "type": "category", "settings": { "label": "Health and Wellness", "blog_handle": "health-and-wellness","emoji": "❤️" } },
+        { "type": "category", "settings": { "label": "Recipes",             "blog_handle": "recipes",            "emoji": "📋" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

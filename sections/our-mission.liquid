@@ -1,0 +1,217 @@
+{{ 'section-our-mission.css' | asset_url | stylesheet_tag }}
+
+<section class="mission-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="mission-inner">
+
+    <!-- LABEL -->
+    <div class="mission-label">
+      <span class="mission-label-icon">
+        <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true"><path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#f5f1e4" stroke-width="1.5" fill="none" stroke-linejoin="round"></path></svg>
+      </span>
+      <span class="mission-label-text" style="color: {{ section.settings.label_color }};">{{ section.settings.label_text }}</span>
+    </div>
+
+    <!-- HEADING -->
+    <h2 class="mission-heading" style="color: {{ section.settings.heading_color }};">
+      {{ section.settings.heading_before_italic }}
+      <em style="color: {{ section.settings.italic_color }};">{{ section.settings.heading_italic }}</em>
+      {{ section.settings.heading_after_italic }}
+    </h2>
+
+    <!-- DIVIDER -->
+    <div class="mission-divider" style="border-color: {{ section.settings.divider_color }};"></div>
+
+    <!-- STATS -->
+    <div class="mission-stats">
+      {% for i in (1..4) %}
+        {% assign stat_num = 'stat_' | append: i | append: '_number' %}
+        {% assign stat_label = 'stat_' | append: i | append: '_label' %}
+        {% if section.settings[stat_num] != blank %}
+          <div class="mission-stat-item">
+            <span class="mission-stat-number" style="color: {{ section.settings.stat_number_color }};">{{ section.settings[stat_num] }}</span>
+            <span class="mission-stat-label" style="color: {{ section.settings.stat_label_color }};">{{ section.settings[stat_label] }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Mission",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#2e6b5e"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label & Icon Color",
+      "default": "#e8dfc8"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#e8dfc8"
+    },
+    {
+      "type": "color",
+      "id": "italic_color",
+      "label": "Italic Text Color",
+      "default": "#e8dfc8"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Line Color",
+      "default": "#4a8a7a"
+    },
+    {
+      "type": "color",
+      "id": "stat_number_color",
+      "label": "Stat Number Color",
+      "default": "#e8dfc8"
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Stat Label Color",
+      "default": "#a8c4bc"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label Text",
+      "default": "OUR MISSION"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_before_italic",
+      "label": "Heading — Text Before Italic",
+      "default": "The world's first"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading — Italic Part",
+      "default": "source-to-table"
+    },
+    {
+      "type": "text",
+      "id": "heading_after_italic",
+      "label": "Heading — Text After Italic",
+      "default": "premium Himalayan brand."
+    },
+    {
+      "type": "header",
+      "content": "Stat 1"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Number",
+      "default": "120+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Label",
+      "default": "Pahadi Farmers Partnered"
+    },
+    {
+      "type": "header",
+      "content": "Stat 2"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Number",
+      "default": "8"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Label",
+      "default": "Himalayan States Sourced"
+    },
+    {
+      "type": "header",
+      "content": "Stat 3"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Number",
+      "default": "60k+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Label",
+      "default": "Households Served"
+    },
+    {
+      "type": "header",
+      "content": "Stat 4"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_number",
+      "label": "Number",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Label",
+      "default": "Middlemen in the Chain"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Mission"
+    }
+  ]
+}
+{% endschema %}

@@ -10,11 +10,37 @@
 {
   "sections": {
     "main": {
-      "type": "page",
-      "settings": {}
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "bestseller_caGpX4": {
+      "type": "bestseller",
+      "name": "Best Seller",
+      "settings": {
+        "show_heading": true,
+        "heading": "Best Sellers",
+        "subheading": "",
+        "collection": "all-products",
+        "products_to_show": 8,
+        "products_to_load": 4,
+        "button_label": "Shop more",
+        "columns_desktop": 4,
+        "columns_tablet": 2,
+        "columns_mobile": 2,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "bestseller_caGpX4"
   ]
 }

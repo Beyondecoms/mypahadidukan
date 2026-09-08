@@ -1,0 +1,211 @@
+{{ 'section-brand-hero.css' | asset_url | stylesheet_tag }}
+
+<div class="bh-section" style="background: {{ section.settings.bg_color }};">
+  <div class="bh-inner">
+
+    <!-- ── LEFT ── -->
+    <div class="bh-left">
+
+      <!-- Pill badge -->
+      <div class="bh-pill">
+        <span class="bh-pill-dot"></span>
+        {{ section.settings.pill_text }}
+      </div>
+
+      <!-- Headline -->
+      <h2 class="bh-headline">
+        {%- if section.settings.headline_line1 != blank -%}
+          <span class="bh-line1">{{ section.settings.headline_line1 }}
+            {%- if section.settings.headline_accent1 != blank -%}
+              <em class="bh-accent1">{{ section.settings.headline_accent1 }}</em>
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+        {%- if section.settings.headline_line2 != blank -%}
+          <span class="bh-line2">{{ section.settings.headline_line2 }}
+            {%- if section.settings.headline_accent2 != blank -%}
+              <em class="bh-accent2">{{ section.settings.headline_accent2 }}</em>
+            {%- endif -%}
+            {%- if section.settings.headline_suffix != blank -%}
+              <span class="bh-suffix">{{ section.settings.headline_suffix }}</span>
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </h2>
+
+      <!-- Body text -->
+      {%- if section.settings.body_text != blank -%}
+        <p class="bh-body">{{ section.settings.body_text }}</p>
+      {%- endif -%}
+
+      <!-- CTAs -->
+      <div class="bh-ctas">
+        {%- if section.settings.primary_btn_label != blank -%}
+          <a href="{{ section.settings.primary_btn_url | default: '/collections/all' }}" class="bh-btn-primary">
+            {{ section.settings.primary_btn_label }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_btn_label != blank -%}
+          <a href="{{ section.settings.secondary_btn_url | default: '/pages/our-story' }}" class="bh-btn-secondary">
+            {{ section.settings.secondary_btn_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT ── -->
+    <div class="bh-right">
+
+      <!-- Main image -->
+      <div class="bh-img-wrap">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            class="bh-img"
+            loading="eager"
+            width="700"
+            height="560"
+          >
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'bh-img-placeholder' }}
+        {%- endif -%}
+      </div>
+
+      <!-- Source bar below image -->
+      {%- if section.settings.source_text != blank -%}
+        <div class="bh-source-bar">
+          <span class="bh-source-icon">
+             <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true">
+                <path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e8754d" stroke-width="1.5" fill="none" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="bh-source-text">{{ section.settings.source_text }}</span>
+        </div>
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand Hero",
+  "tag": "section",
+  "class": "bh-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f0ebe0"
+    },
+    {
+      "type": "header",
+      "content": "Pill Badge"
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill text",
+      "default": "ABOUT — EST. 2021"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Line 1 text",
+      "default": "From the"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent1",
+      "label": "Line 1 accent (italic, orange)",
+      "default": "Pahad,"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Line 2 text",
+      "default": "to your"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent2",
+      "label": "Line 2 accent (italic, green)",
+      "default": "kitchen"
+    },
+    {
+      "type": "text",
+      "id": "headline_suffix",
+      "label": "Line 2 suffix (e.g. period)",
+      "default": "."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "We are building the world's first source-to-table premium Himalayan brand — connecting hidden mountain producers with households across India and beyond. No middlemen. No shortcuts. Just the real thing."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_label",
+      "label": "Primary button label",
+      "default": "Explore the shop"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_url",
+      "label": "Primary button URL"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_label",
+      "label": "Secondary button label",
+      "default": "Read our story"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_url",
+      "label": "Secondary button URL"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right side image"
+    },
+    {
+      "type": "text",
+      "id": "source_text",
+      "label": "Source bar text",
+      "default": "SOURCED ACROSS UTTARAKHAND · HIMACHAL · LADAKH · KASHMIR"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Hero"
+    }
+  ]
+}
+{% endschema %}

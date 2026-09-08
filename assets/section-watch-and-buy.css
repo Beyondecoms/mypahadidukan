@@ -1,0 +1,47 @@
+.wab-section {
+  padding: 40px 20px;
+  position: relative;
+  margin-top: 20px; /* space for the scallop */
+}
+
+.wab-wrapper {
+  max-width: 1400px;
+  margin: 0 2%;
+}
+
+.wab-title {
+  font-size: var(--font-heading-size);
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  margin-bottom: 18px;
+  text-transform: capitalize;
+  padding-left: 10px;
+  margin-top: 3%;
+  font-variant: small-caps;
+}
+
+@media (max-width: 768px) {
+  .wab-title {
+    font-size: var(--font-heading-size-mobile);
+    padding-left: 0;
+  }
+}
+
+.wab-section-border {
+  padding: 3% 20px;
+  position: relative;
+  /*margin-top: 20px; */
+}
+
+.wab-section-border::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background:
+    radial-gradient(circle at 11px 36px, transparent 14px, #FFFBEF 14px);
+  background-size: 30px 30px;
+  background-repeat: repeat-x;
+}

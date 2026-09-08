@@ -1,0 +1,56 @@
+<style>
+.chat-float-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: #1a2e1a;
+    padding: 10px 12px;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: var(--font-family-normal);
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.chat-float-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+}
+
+.chat-float-btn svg {
+  flex-shrink: 0;
+}
+
+/* Push up on mobile to sit above bottom nav */
+@media (max-width: 991px) {
+  .chat-float-btn {
+        bottom: 90px;
+        display:none;
+        right: 16px;
+        padding: 5px 9px;
+        font-size: 12px;
+  }
+}
+</style>
+
+    <a
+    href="https://wa.me/{{ settings.whatsapp_number | default: '919999999999' }}"
+    class="chat-float-btn"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat with us on WhatsApp"
+    >
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.0007 2C14.6497 2 17.1997 3.05 19.0697 4.93C20.9497 6.811 22.0007 9.35 22.0007 12.01C22.0007 15.51 20.1597 18.76 17.1597 20.57C14.1597 22.38 10.4297 22.48 7.33067 20.83H7.29967C7.00067 20.71 6.75967 20.5 6.47967 20.36C6.17067 20.23 5.81967 20.21 5.50067 20.311C4.75967 20.57 4.00967 20.78 3.23967 20.96C2.83967 20.97 2.71967 20.73 2.71967 20.34C2.89967 19.55 3.13967 18.769 3.42067 18.01C3.52967 17.68 3.50067 17.33 3.33067 17.019L3.13067 16.63C2.38967 15.22 2.00067 13.65 2.00067 12.061V12C2.00067 9.35 3.04967 6.8 4.92967 4.93C6.80967 3.05 9.34967 2 12.0007 2ZM16.6097 10.73C15.9097 10.73 15.3307 11.3 15.3307 12.01C15.3307 12.71 15.9097 13.29 16.6097 13.29C17.3197 13.29 17.8897 12.71 17.8897 12.01C17.8897 11.3 17.3197 10.73 16.6097 10.73ZM12.0007 10.73C11.2907 10.73 10.7197 11.3 10.7197 12.01C10.7197 12.71 11.2907 13.29 12.0007 13.29C12.7107 13.29 13.2797 12.71 13.2797 12.01C13.2797 11.3 12.7107 10.73 12.0007 10.73ZM7.38967 10.73C6.67967 10.73 6.10967 11.3 6.10967 12.01C6.10967 12.71 6.67967 13.29 7.38967 13.29C8.08967 13.29 8.67067 12.71 8.67067 12.01C8.67067 11.3 8.08967 10.73 7.38967 10.73Z" fill="#231F20"/>
+</svg>
+  Chat with us
+</a>

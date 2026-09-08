@@ -1,0 +1,538 @@
+{{ 'section-shop-by-region.css' | asset_url | stylesheet_tag }}
+
+<div class="sbr-section" style="background: {{ section.settings.bg_color }};" data-section-id="{{ section.id }}">
+
+  <!-- Header -->
+  <div class="sbr-header">
+    <span class="sbr-pin-icon">
+      <svg width="22" height="28" viewBox="0 0 24 30" fill="#e07b39">
+        <path d="M12 0C7.589 0 4 3.589 4 8c0 6 8 16 8 16s8-10 8-16c0-4.411-3.589-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+      </svg>
+    </span>
+    <h2 class="sbr-title">{{ section.settings.title }}</h2>
+  </div>
+
+  <div class="sbr-wrapper">
+
+    <!-- Map Container -->
+    <div class="sbr-map-container">
+
+      {%- assign level_index = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'level' -%}
+          {%- assign current_level_id = block.id -%}
+          {%- assign current_level_index = level_index -%}
+
+          <!-- Map Layer for this level -->
+          <div
+            class="sbr-map-layer{% if level_index == 0 %} active{% endif %}"
+            data-level-id="{{ block.id }}"
+            data-level-index="{{ level_index }}"
+            data-level-name="{{ block.settings.level_name | escape }}"
+            {{ block.shopify_attributes }}
+          >
+            <!-- Pin overlay — pins are absolutely positioned inside this, matching the image -->
+            <div class="sbr-pin-overlay">
+
+              {%- if block.settings.map_image != blank -%}
+                <img
+                  src="{{ block.settings.map_image | image_url: width: 1200 }}"
+                  alt="{{ block.settings.level_name }} Map"
+                  class="sbr-map-img"
+                  loading="lazy"
+                  data-natural-width="{{ block.settings.map_image.width }}"
+                  data-natural-height="{{ block.settings.map_image.height }}"
+                >
+              {%- else -%}
+                <div class="sbr-map-placeholder">
+                  <p>Upload map image for "{{ block.settings.level_name }}" in block settings</p>
+                </div>
+              {%- endif -%}
+
+              <!-- Region Pins for this level -->
+              {%- assign region_counter = 0 -%}
+              {%- assign in_level = false -%}
+              {%- for inner_block in section.blocks -%}
+                {%- if inner_block.type == 'level' -%}
+                  {%- if inner_block.id == block.id -%}
+                    {%- assign in_level = true -%}
+                  {%- else -%}
+                    {%- if in_level -%}
+                      {%- assign in_level = false -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- elsif inner_block.type == 'region' and in_level -%}
+                  <div
+                    class="sbr-pin"
+                    data-region-index="{{ region_counter }}"
+                    data-level-id="{{ block.id }}"
+                    data-pin-x="{{ inner_block.settings.pin_x }}"
+                    data-pin-y="{{ inner_block.settings.pin_y }}"
+                    {{ inner_block.shopify_attributes }}
+                  >
+                    <!-- IDLE state -->
+                    <div class="sbr-icon-idle">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#e07b39" fill-opacity="0.22" stroke="#e07b39" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="4.5" fill="#e07b39"/>
+                      </svg>
+                    </div>
+                    <!-- ACTIVE state -->
+                    <div class="sbr-icon-active">
+                      <svg width="30" height="38" viewBox="0 0 24 30" fill="#e07b39" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C7.589 0 4 3.589 4 8c0 6 8 16 8 16s8-10 8-16c0-4.411-3.589-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                      </svg>
+                    </div>
+                    <span class="sbr-pin-label">{{ inner_block.settings.region_name }}</span>
+                  </div>
+                  {%- assign region_counter = region_counter | plus: 1 -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+            </div><!-- /.sbr-pin-overlay -->
+
+          </div><!-- /.sbr-map-layer -->
+
+          {%- assign level_index = level_index | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      <!-- Prev / Next Arrows -->
+      <button class="sbr-arrow sbr-arrow--prev" id="sbr-prev-{{ section.id }}" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="sbr-arrow sbr-arrow--next" id="sbr-next-{{ section.id }}" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+    </div><!-- /.sbr-map-container -->
+
+    <!-- Info Cards -->
+    <div class="sbr-info-card" id="sbr-card-{{ section.id }}">
+      {%- assign in_level = false -%}
+      {%- assign current_level_id_card = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'level' -%}
+          {%- assign in_level = true -%}
+          {%- assign current_level_id_card = block.id -%}
+        {%- elsif block.type == 'region' and in_level -%}
+          <div
+            class="sbr-card-panel"
+            data-level-id="{{ current_level_id_card }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="sbr-card-top">
+              <h3 class="sbr-card-title">
+                {{ block.settings.region_name }}
+                {%- if block.settings.product_count != blank -%}
+                  <span class="sbr-card-count">({{ block.settings.product_count }})</span>
+                {%- endif -%}
+              </h3>
+              {%- if block.settings.collection != blank -%}
+                <a href="{{ block.settings.collection }}" class="sbr-card-btn">Explore Now</a>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.description != blank -%}
+              <p class="sbr-card-desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+            {%- if block.settings.tags != blank -%}
+              <div class="sbr-card-tags">
+                {%- assign tags = block.settings.tags | split: ',' -%}
+                {%- for tag in tags -%}
+                  <span class="sbr-card-tag">{{ tag | strip }}</span>
+                  {%- unless forloop.last -%}<span class="sbr-tag-divider">|</span>{%- endunless -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div><!-- /.sbr-info-card -->
+
+  </div><!-- /.sbr-wrapper -->
+</div><!-- /.sbr-section -->
+
+<script>
+(function () {
+  var section = document.querySelector('.sbr-section[data-section-id="{{ section.id }}"]');
+  if (!section) return;
+
+  var mapLayers = Array.from(section.querySelectorAll('.sbr-map-layer'));
+  var allPanels = Array.from(section.querySelectorAll('.sbr-card-panel'));
+
+  var levels = mapLayers.map(function(layer) {
+    var lid = layer.dataset.levelId;
+    return {
+      id:     lid,
+      name:   layer.dataset.levelName || ('Level ' + lid),
+      layer:  layer,
+      img:    layer.querySelector('.sbr-map-img'),
+      overlay: layer.querySelector('.sbr-pin-overlay'),
+      pins:   Array.from(layer.querySelectorAll('.sbr-pin')),
+      panels: allPanels.filter(function(p) { return p.dataset.levelId === lid; })
+    };
+  });
+
+  if (!levels.length) return;
+
+  var currentLevelIdx  = 0;
+  var currentRegionIdx = 0;
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PIN POSITIONING: relative to actual rendered image dimensions
+  //
+  // pin_x / pin_y are percentages of the original image dimensions.
+  // We read the image's rendered rect and place pins at the exact pixel
+  // spot on the rendered image — works identically on all screen sizes.
+  // ─────────────────────────────────────────────────────────────────────────
+  function repositionPins(lv) {
+    var img = lv.img;
+    if (!img) return;
+
+    var imgRect    = img.getBoundingClientRect();
+    var overlayRect = lv.overlay.getBoundingClientRect();
+
+    // Rendered image dimensions & offset relative to the overlay
+    var imgW   = imgRect.width;
+    var imgH   = imgRect.height;
+    var offsetX = imgRect.left - overlayRect.left;
+    var offsetY = imgRect.top  - overlayRect.top;
+
+    lv.pins.forEach(function(pin) {
+      var px = parseFloat(pin.dataset.pinX) / 100;  // 0–1
+      var py = parseFloat(pin.dataset.pinY) / 100;  // 0–1
+
+      // Pixel position on the rendered image
+      var pixelX = offsetX + px * imgW;
+      var pixelY = offsetY + py * imgH;
+
+      // Use px values instead of %, so they're always image-anchored
+      pin.style.left = pixelX + 'px';
+      pin.style.top  = pixelY + 'px';
+    });
+  }
+
+  function repositionAllPins() {
+    levels.forEach(function(lv) {
+      repositionPins(lv);
+    });
+  }
+
+  // Reposition on resize (debounced)
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(repositionAllPins, 60);
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Level indicator badge
+  // ─────────────────────────────────────────────────────────────────────────
+  var indicator = document.createElement('div');
+  indicator.className = 'sbr-level-indicator';
+  section.querySelector('.sbr-map-container').appendChild(indicator);
+
+  function updateIndicator(lIdx, rIdx) {
+    var lv = levels[lIdx];
+    indicator.innerHTML =
+      '<span class="sbr-ind-name">' + lv.name + '</span>' +
+      '<span class="sbr-ind-count">' + (rIdx + 1) + ' / ' + lv.pins.length + '</span>';
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Core helpers
+  // ─────────────────────────────────────────────────────────────────────────
+  function showLayer(lIdx) {
+    mapLayers.forEach(function(l, i) {
+      l.classList.toggle('active', i === lIdx);
+    });
+    // Reposition pins for newly visible layer after it renders
+    requestAnimationFrame(function() {
+      repositionPins(levels[lIdx]);
+    });
+  }
+
+  function activatePin(lIdx, rIdx) {
+    var lv = levels[lIdx];
+    lv.pins.forEach(function(p, i) { p.classList.toggle('active', i === rIdx); });
+    lv.panels.forEach(function(p, i) { p.style.display = i === rIdx ? 'flex' : 'none'; });
+  }
+
+  function deactivateLevel(lIdx) {
+    var lv = levels[lIdx];
+    lv.pins.forEach(function(p)   { p.classList.remove('active'); });
+    lv.panels.forEach(function(p) { p.style.display = 'none'; });
+  }
+
+  function goTo(lIdx, rIdx) {
+    if (lIdx !== currentLevelIdx) {
+      deactivateLevel(currentLevelIdx);
+      showLayer(lIdx);
+    }
+    currentLevelIdx  = lIdx;
+    currentRegionIdx = rIdx;
+    activatePin(lIdx, rIdx);
+    updateIndicator(lIdx, rIdx);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Pin click handlers
+  // ─────────────────────────────────────────────────────────────────────────
+  levels.forEach(function(lv, li) {
+    lv.pins.forEach(function(pin, ri) {
+      pin.addEventListener('click', function() { goTo(li, ri); });
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Arrow navigation
+  // ─────────────────────────────────────────────────────────────────────────
+  var prevBtn = document.getElementById('sbr-prev-{{ section.id }}');
+  var nextBtn = document.getElementById('sbr-next-{{ section.id }}');
+
+  function navigate(dir) {
+    var lv    = levels[currentLevelIdx];
+    var total = lv.pins.length;
+    var nextR = currentRegionIdx + dir;
+
+    if (nextR >= 0 && nextR < total) {
+      goTo(currentLevelIdx, nextR);
+    } else {
+      var nextL = currentLevelIdx + dir;
+      if (nextL < 0)              nextL = levels.length - 1;
+      if (nextL >= levels.length) nextL = 0;
+      var targetRegion = (dir > 0) ? 0 : levels[nextL].pins.length - 1;
+      goTo(nextL, targetRegion);
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { navigate(-1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { navigate(1); });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Initialise: wait for image to load so we get correct dimensions
+  // ─────────────────────────────────────────────────────────────────────────
+  allPanels.forEach(function(p) { p.style.display = 'none'; });
+
+  function initWhenReady() {
+    var firstImg = levels[0] && levels[0].img;
+    if (firstImg && !firstImg.complete) {
+      firstImg.addEventListener('load', function() {
+        repositionAllPins();
+        goTo(0, 0);
+      });
+    } else {
+      repositionAllPins();
+      goTo(0, 0);
+    }
+  }
+
+  // Also handle all other level images for correct reposition on switch
+  levels.forEach(function(lv) {
+    if (lv.img && !lv.img.complete) {
+      lv.img.addEventListener('load', function() {
+        repositionPins(lv);
+      });
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWhenReady);
+  } else {
+    initWhenReady();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Shop By Region",
+  "tag": "section",
+  "class": "sbr-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Shop By Region"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5e6b8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "level",
+      "name": "Map Level",
+      "settings": [
+        {
+          "type": "text",
+          "id": "level_name",
+          "label": "Level name (e.g. Top Region, Bottom Region)",
+          "default": "Top Region"
+        },
+        {
+          "type": "image_picker",
+          "id": "map_image",
+          "label": "Map image for this level"
+        }
+      ]
+    },
+    {
+      "type": "region",
+      "name": "Region Pin",
+      "settings": [
+        {
+          "type": "text",
+          "id": "region_name",
+          "label": "Region name",
+          "default": "Ladakh"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Product count text",
+          "default": "30+ Products"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Authentic products sourced directly from local artisans."
+        },
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags (comma separated)",
+          "default": "Authentic, Pure, Wholesome"
+        },
+        {
+          "type": "url",
+          "id": "collection",
+          "label": "Collection link"
+        },
+        {
+          "type": "range",
+          "id": "pin_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Pin horizontal position (left %)",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "pin_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Pin vertical position (top %)",
+          "default": 20
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compass",
+          "label": "Show compass icon (instead of pin)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop By Region",
+      "blocks": [
+        {
+          "type": "level",
+          "settings": { "level_name": "Top Region" }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Ladakh",
+            "product_count": "30+ Products",
+            "description": "We source directly from the hills, bringing authentic Himachali products straight from local artisans to you.",
+            "tags": "Authentic, Pure, Wholesome",
+            "pin_x": 32,
+            "pin_y": 18,
+            "show_compass": false
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Jammu & Kashmir",
+            "product_count": "20+ Products",
+            "description": "Premium saffron and dry fruits sourced from the Kashmir valley.",
+            "tags": "Saffron, Dry Fruits, Premium",
+            "pin_x": 25,
+            "pin_y": 28,
+            "show_compass": true
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Himachal Pradesh",
+            "product_count": "25+ Products",
+            "description": "Fresh mountain produce from the valleys of Himachal.",
+            "tags": "Fresh, Natural, Mountain",
+            "pin_x": 28,
+            "pin_y": 38,
+            "show_compass": true
+          }
+        },
+        {
+          "type": "level",
+          "settings": { "level_name": "Bottom Region" }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Meghalaya",
+            "product_count": "10+ Products",
+            "description": "Exotic produce from the wettest region of India.",
+            "tags": "Exotic, Forest, Pure",
+            "pin_x": 72,
+            "pin_y": 55,
+            "show_compass": true
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Nagaland",
+            "product_count": "10+ Products",
+            "description": "Traditional tribal foods and spices from Nagaland.",
+            "tags": "Tribal, Spicy, Traditional",
+            "pin_x": 82,
+            "pin_y": 50,
+            "show_compass": true
+          }
+        },
+        {
+          "type": "region",
+          "settings": {
+            "region_name": "Uttarakhand",
+            "product_count": "15+ Products",
+            "description": "Organic herbs and spices from the Himalayan foothills.",
+            "tags": "Organic, Herbs, Spices",
+            "pin_x": 33,
+            "pin_y": 45,
+            "show_compass": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

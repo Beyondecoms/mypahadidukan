@@ -1,44 +1,46 @@
-class Customer {
+const selectors = {
+  customerAddresses: '[data-customer-addresses]',
+  addressCountrySelect: '[data-address-country-select]',
+  addressContainer: '[data-address]',
+  toggleAddressButton: 'button[aria-expanded]',
+  cancelAddressButton: 'button[type="reset"]',
+  deleteAddressButton: 'button[data-confirm-message]',
+};
+
+const attributes = {
+  expanded: 'aria-expanded',
+  confirmMessage: 'data-confirm-message',
+};
+
+class CustomerAddresses {
   constructor() {
-    this.formNewSelectors = {
-      add: '.m-customer__add-new-btn',
-      cancel: '.m-customer__cancel-add-btn',
-      form: '.m-customer__form-new',
-      wrapper: '.m-customer__form-new-wrapper',
-    }
-    this.formEditSelectors = {
-      address: '.m-customer-address',
-      info: '.m-customer-address__info',
-      wrapper: '.m-customer__form-edit-wrapper',
-      form: '.m-customer__form-edit',
-      edit: '.m-customer__edit-btn',
-      delete: '.m-customer__form-delete',
-      cancel: '.m-customer__cancel-edit-btn',
-      select: '[data-address-country-select]'
-    }
-    this.selectors = {
-      customerAddresses: '[data-customer-addresses]'
-    }
-    this.container = document.querySelector(this.selectors.customerAddresses);
-    this.setupCountries()
-    this.initFormNew()
-    this.initFormEdit()
+    this.elements = this._getElements();
+    if (Object.keys(this.elements).length === 0) return;
+    this._setupCountries();
+    this._setupEventListeners();
   }
 
-  initFormNew() {
-    this.formNewNodes = queryDomNodes(this.formNewSelectors)
-    this.formNewNodes.add && this.formNewNodes.add && this.formNewNodes.add.addEventListener("click", () => this.toggleFormNew(true))
-    this.formNewNodes && this.formNewNodes.cancel && this.formNewNodes.cancel.addEventListener("click", () => this.toggleFormNew(false))
+  _getElements() {
+    const container = document.querySelector(selectors.customerAddresses);
+    return container
+      ? {
+          container,
+          addressContainer: container.querySelector(selectors.addressContainer),
+          toggleButtons: document.querySelectorAll(selectors.toggleAddressButton),
+          cancelButtons: container.querySelectorAll(selectors.cancelAddressButton),
+          deleteButtons: container.querySelectorAll(selectors.deleteAddressButton),
+          countrySelects: container.querySelectorAll(selectors.addressCountrySelect),
+        }
+      : {};
   }
 
-  setupCountries() {
-    const countrySelects = this.container.querySelectorAll(this.formEditSelectors.select);
+  _setupCountries() {
     if (Shopify && Shopify.CountryProvinceSelector) {
       // eslint-disable-next-line no-new
-      new Shopify.CountryProvinceSelector('AddressCountry_new', 'AddressProvince_new', {
+      new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
         hideElement: 'AddressProvinceContainerNew',
       });
-      countrySelects.forEach((select) => {
+      this.elements.countrySelects.forEach((select) => {
         const formId = select.dataset.formId;
         // eslint-disable-next-line no-new
         new Shopify.CountryProvinceSelector(`AddressCountry_${formId}`, `AddressProvince_${formId}`, {
@@ -48,45 +50,36 @@ class Customer {
     }
   }
 
-  initFormEdit() {
-    addEventDelegate({
-      selector: this.formEditSelectors.address,
-      handler: (e, address) => {
-        const nodes = queryDomNodes(this.formEditSelectors, address)
-        if (e && e.target === nodes.edit) {
-          nodes.info.classList.add('m:hidden')
-          nodes.wrapper.classList.remove('m:hidden')
-          return
-        }
-        if (e && e.target === nodes.cancel) {
-          nodes.wrapper.classList.add('m:hidden')
-          nodes.info.classList.remove('m:hidden')
-        }
-      }
-    })
-
-    addEventDelegate({
-      selector: this.formEditSelectors.delete,
-      handler: (e, deleteForm) => {
-        e.preventDefault()
-        const { confirmMessage } = deleteForm.dataset
-        if (window.confirm(confirmMessage)) {
-          deleteForm.submit()
-        }
-      }
-    })
+  _setupEventListeners() {
+    this.elements.toggleButtons.forEach((element) => {
+      element.addEventListener('click', this._handleAddEditButtonClick);
+    });
+    this.elements.cancelButtons.forEach((element) => {
+      element.addEventListener('click', this._handleCancelButtonClick);
+    });
+    this.elements.deleteButtons.forEach((element) => {
+      element.addEventListener('click', this._handleDeleteButtonClick);
+    });
   }
 
-  toggleFormNew(show) {
-    const { add, wrapper } = this.formNewNodes
-    if (show) {
-      add && add.classList.add('m:hidden')
-      wrapper && wrapper.classList.remove('m:hidden')
-    } else {
-      wrapper && wrapper.classList.add('m:hidden')
-      add && add.classList.remove('m:hidden')
+  _toggleExpanded(target) {
+    target.setAttribute(attributes.expanded, (target.getAttribute(attributes.expanded) === 'false').toString());
+  }
+
+  _handleAddEditButtonClick = ({ currentTarget }) => {
+    this._toggleExpanded(currentTarget);
+  };
+
+  _handleCancelButtonClick = ({ currentTarget }) => {
+    this._toggleExpanded(currentTarget.closest(selectors.addressContainer).querySelector(`[${attributes.expanded}]`));
+  };
+
+  _handleDeleteButtonClick = ({ currentTarget }) => {
+    // eslint-disable-next-line no-alert
+    if (confirm(currentTarget.getAttribute(attributes.confirmMessage))) {
+      Shopify.postLink(currentTarget.dataset.target, {
+        parameters: { _method: 'delete' },
+      });
     }
-  }
+  };
 }
-
-MinimogTheme.Customer = new Customer()

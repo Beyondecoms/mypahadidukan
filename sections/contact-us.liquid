@@ -1,0 +1,439 @@
+{{ 'section-contact-us.css' | asset_url | stylesheet_tag }}
+
+<div class="cu-section" style="background: {{ section.settings.bg_color }};">
+  <div class="cu-wrapper">
+
+    <!-- ══════════════════
+         LEFT COLUMN
+    ══════════════════ -->
+    <div class="cu-left">
+      <h2 class="cu-title">{{ section.settings.title | default: 'Contact Us' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="cu-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.whatsapp_url != blank -%}
+        <a href="{{ section.settings.whatsapp_url }}" class="cu-chat-btn" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          {{ section.settings.chat_btn_label | default: 'Chat with Us' }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- ══════════════════
+         RIGHT COLUMN
+    ══════════════════ -->
+    <div class="cu-right" style="background: {{ section.settings.faq_bg_color }}; box-shadow: 9999px 0 0 0 {{ section.settings.faq_bg_color }};">
+
+      <!-- FAQs Title -->
+      <div class="cu-faq-header">
+        <h2 class="cu-faq-title">{{ section.settings.faq_title | default: 'FAQs' }}</h2>
+        {%- if section.settings.faq_subtitle != blank -%}
+          <p class="cu-faq-subtitle">{{ section.settings.faq_subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Category Tabs -->
+      {%- assign categories = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq_item' -%}
+          {%- assign cat = block.settings.category -%}
+          {%- unless categories contains cat -%}
+            {%- assign categories = categories | append: cat | append: '|||' -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign category_list = categories | split: '|||' -%}
+
+      {%- if category_list.size > 1 -%}
+        <div class="cu-tabs" id="cu-tabs-{{ section.id }}">
+          {%- for cat in category_list -%}
+            {%- if cat != blank -%}
+              <button
+                class="cu-tab {% if forloop.first %}active{% endif %}"
+                data-cat="{{ cat }}"
+              >{{ cat }}</button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <!-- FAQ Items -->
+      <div class="cu-faq-list" id="cu-faq-list-{{ section.id }}">
+        {%- assign first_faq = true -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <div
+              class="cu-faq-item"
+              data-cat="{{ block.settings.category }}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                class="cu-faq-q {% if first_faq %}open{% endif %}"
+                aria-expanded="{% if first_faq %}true{% else %}false{% endif %}"
+              >
+                <span class="cu-faq-q-text">{{ block.settings.question }}</span>
+                <span class="cu-faq-icon">
+                  <svg class="cu-icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <svg class="cu-icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </span>
+              </button>
+              <div class="cu-faq-a" {% if first_faq %}style="max-height: 500px;"{% endif %}>
+                <div class="cu-faq-a-inner">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+            {%- assign first_faq = false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <!-- Write to Us -->
+      {%- if section.settings.email != blank -%}
+        <div class="cu-info-row">
+          <div class="cu-info-icon">
+               <svg width="54" height="42" viewBox="0 0 54 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.00256619 23.2956C0.00256619 18.496 -0.00529277 13.6984 0.00649567 8.89884C0.0123899 6.15058 0.851334 5.0568 3.49587 4.49214C9.12485 3.29373 14.7971 2.32631 20.5066 1.62345C29.8037 0.482286 39.1323 -0.108038 48.5022 0.0163446C48.8283 0.0202933 49.1564 0.00844733 49.4845 0.0202933C51.9169 0.0992664 53.2568 1.35889 53.3865 3.77546C53.7107 9.81493 53.8541 15.8603 53.9209 21.9077C53.9622 25.5878 54.0761 29.266 53.9209 32.9481C53.8089 35.6036 52.803 36.7467 50.1191 36.9955C46.4726 37.3331 42.8162 37.5681 39.1696 37.8958C31.2242 38.6105 23.2926 39.4575 15.3845 40.5295C11.8205 41.0113 8.2584 41.5049 4.69043 41.9451C1.85532 42.2966 0.322819 40.954 0.305136 38.0814C0.2737 33.1515 0.297277 28.2216 0.297277 23.2917C0.19904 23.2917 0.102768 23.2917 0.00453093 23.2917L0.00256619 23.2956ZM3.1933 7.09431C10.7183 14.3026 18.0389 21.0212 26.0845 26.8435C30.6466 23.6569 48.2035 5.39639 49.5219 2.44872C34.0102 2.29867 18.7128 3.72808 3.1933 7.09431ZM49.3038 34.3894C44.5629 30.2374 39.5901 26.4447 34.4503 22.8159C32.1378 24.9008 29.9255 26.9363 27.6681 28.9185C26.4873 29.957 26.2417 29.9531 24.941 29.037C23.3437 27.9116 21.7856 26.7329 20.2453 25.6036C15.2686 28.7073 5.90071 37.1001 4.78278 39.4812C19.5674 37.3489 34.3521 35.6964 49.3038 34.3894ZM51.5141 32.7329C51.5141 23.3865 51.5455 14.5119 50.9404 5.12788C46.003 10.7646 41.2365 15.9215 36.2186 21.0133C41.4193 24.7626 46.337 28.5197 51.5141 32.7329ZM18.0821 23.9649C14.6752 20.5908 3.50373 10.8297 2.70998 10.4605V37.0231C7.68077 32.2867 12.683 27.9057 18.0821 23.9649Z" fill="black"></path>
+                      <path d="M19.6067 6.80408C19.7855 7.39441 19.591 7.73597 19.0252 7.82284C16.0034 8.2947 12.9816 8.75867 9.95986 9.22264C9.56101 9.28384 9.1327 9.28976 9.00303 8.81C8.86943 8.31444 9.24666 8.08345 9.6455 8.02224C12.795 7.53656 15.9484 7.07062 19.1018 6.6185C19.2629 6.59481 19.4495 6.74485 19.6067 6.80606V6.80408Z" fill="black"></path>
+                      <path d="M23.1315 6.82581C22.825 7.03706 22.7307 7.13972 22.6128 7.17724C22.0627 7.349 21.4556 7.65897 21.1274 6.87122C21.0253 6.6264 21.1726 6.34802 21.4457 6.23548C22.1334 5.95118 22.8014 5.76164 23.1315 6.82581Z" fill="black"></path>
+                </svg>
+          </div>
+          <div class="cu-info-body">
+            <p class="cu-info-label">{{ section.settings.email_label | default: 'Write to Us' }}</p>
+            <a href="mailto:{{ section.settings.email }}" class="cu-info-value cu-info-link">{{ section.settings.email }}</a>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Mailing Address -->
+      {%- if section.settings.address != blank -%}
+        <div class="cu-info-row">
+          <div class="cu-info-icon">
+            {%- if section.settings.address_icon != blank -%}
+              <img src="{{ section.settings.address_icon | image_url: width: 80 }}" alt="Address" width="40" height="40" loading="lazy">
+            {%- else -%}
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <div class="cu-info-body">
+            <p class="cu-info-label">{{ section.settings.address_label | default: 'Mailing Address' }}</p>
+            <p class="cu-info-value">{{ section.settings.address | newline_to_br }}</p>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Working Hours -->
+      {%- if section.settings.working_hours != blank -%}
+        <div class="cu-working-hours">
+          <p class="cu-wh-label">{{ section.settings.wh_label | default: 'Working Hours:' }}</p>
+          <p class="cu-wh-value">{{ section.settings.working_hours }}</p>
+        </div>
+      {%- endif -%}
+
+      <!-- Footer note -->
+      {%- if section.settings.footer_note != blank -%}
+        <p class="cu-footer-note">{{ section.settings.footer_note }}</p>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var sectionEl = document.getElementById
+    ? document.querySelector('.cu-faq-list#cu-faq-list-{{ section.id }}')
+    : null;
+  var tabsEl    = document.getElementById('cu-tabs-{{ section.id }}');
+
+  // ── FAQ ACCORDION ──
+  function initAccordion(container) {
+    var items = Array.from(container.querySelectorAll('.cu-faq-item'));
+    items.forEach(function(item) {
+      var btn    = item.querySelector('.cu-faq-q');
+      var answer = item.querySelector('.cu-faq-a');
+      if (!btn || !answer) return;
+
+      btn.addEventListener('click', function() {
+        var isOpen = btn.classList.contains('open');
+
+        // Close all in this container
+        items.forEach(function(other) {
+          var otherBtn = other.querySelector('.cu-faq-q');
+          var otherAns = other.querySelector('.cu-faq-a');
+          if (otherBtn && otherAns) {
+            otherBtn.classList.remove('open');
+            otherBtn.setAttribute('aria-expanded', 'false');
+            otherAns.style.maxHeight = null;
+          }
+        });
+
+        // Open clicked if it was closed
+        if (!isOpen) {
+          btn.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  if (sectionEl) initAccordion(sectionEl);
+
+  // ── CATEGORY TABS ──
+  if (tabsEl && sectionEl) {
+    var tabs  = Array.from(tabsEl.querySelectorAll('.cu-tab'));
+    var items = Array.from(sectionEl.querySelectorAll('.cu-faq-item'));
+
+    function filterByCategory(cat) {
+      // Close all first
+      items.forEach(function(item) {
+        var btn = item.querySelector('.cu-faq-q');
+        var ans = item.querySelector('.cu-faq-a');
+        if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+        if (ans)   ans.style.maxHeight = null;
+
+        // Show/hide
+        var show = (item.dataset.cat === cat);
+        item.style.display = show ? '' : 'none';
+      });
+
+      // Open first visible
+      var firstVisible = items.find(function(i) { return i.dataset.cat === cat; });
+      if (firstVisible) {
+        var btn = firstVisible.querySelector('.cu-faq-q');
+        var ans = firstVisible.querySelector('.cu-faq-a');
+        if (btn) { btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+        if (ans)   ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    }
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        filterByCategory(tab.dataset.cat);
+      });
+    });
+
+    // Init first tab
+    if (tabs[0]) filterByCategory(tabs[0].dataset.cat);
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Contact Us",
+  "tag": "section",
+  "class": "cu-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#faf8f5"
+    },
+    {
+      "type": "color",
+      "id": "faq_bg_color",
+      "label": "FAQ column background color",
+      "default": "#fdf6e3"
+    },
+    {
+      "type": "header",
+      "content": "Left Column"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Contact Us"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle text",
+      "default": "If you're here, you either love us or we screwed up (usually the latter). Allow us to make it right. Please!"
+    },
+    {
+      "type": "text",
+      "id": "chat_btn_label",
+      "label": "Chat button label",
+      "default": "Chat with Us"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "WhatsApp URL"
+    },
+    {
+      "type": "header",
+      "content": "Right Column — FAQs"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ section title",
+      "default": "FAQs"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_subtitle",
+      "label": "FAQ subtitle",
+      "default": "Find answers to your most common questions about orders, delivery, returns, and more"
+    },
+    {
+      "type": "header",
+      "content": "Contact Info"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Write to Us"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "support@mypahadidukan.com"
+    },
+    {
+      "type": "text",
+      "id": "address_label",
+      "label": "Address label",
+      "default": "Mailing Address"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "H.O: Roorkee, Haridwar, Uttarakhand, 247667\nB.O: 1246 MIE, Bahadurgarh, HR - 124507"
+    },
+    {
+      "type": "image_picker",
+      "id": "address_icon",
+      "label": "Address icon image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "wh_label",
+      "label": "Working hours label",
+      "default": "Working Hours:"
+    },
+    {
+      "type": "text",
+      "id": "working_hours",
+      "label": "Working hours",
+      "default": "9AM - 6PM IST Monday to Saturday"
+    },
+    {
+      "type": "text",
+      "id": "footer_note",
+      "label": "Footer note (optional)",
+      "default": "-- The products listed on this website are not intended to diagnose, treat, cure, or prevent any disease. --"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Category",
+          "default": "Orders and Shipping",
+          "options": [
+            { "value": "Orders and Shipping",          "label": "Orders and Shipping" },
+            { "value": "Returns, Refund & Cancellations", "label": "Returns, Refund & Cancellations" },
+            { "value": "Replacement",                  "label": "Replacement" },
+            { "value": "General Queries",                    "label": "General Queries" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I know that my order is confirmed?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>You shall receive communication on WhatsApp and Email after placing your order successfully on the website.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders and Shipping",
+            "question": "How do I know that my order is confirmed?",
+            "answer": "<p>You shall receive communication on WhatsApp and Email after placing your order successfully on the website. Additionally, you can also check this under the My Orders page after logging in on the website.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders and Shipping",
+            "question": "I have not received my order after placing a COD order",
+            "answer": "<p>Please contact our support team and we will assist you with your order status.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders and Shipping",
+            "question": "What are the shipping charges that I need to pay?",
+            "answer": "<p>Shipping charges vary based on your location and order value. Free shipping is available on orders above a certain amount.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders and Shipping",
+            "question": "How can I track my order?",
+            "answer": "<p>You can track your order from the My Orders section after logging in, or via the tracking link sent to your email/WhatsApp.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders and Shipping",
+            "question": "Why is my order delayed?",
+            "answer": "<p>Orders may be delayed due to high demand, weather conditions, or courier issues. Please contact us if your order is delayed beyond the estimated delivery date.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Returns, Refund & Cancellations",
+            "question": "How do I return a product?",
+            "answer": "<p>To initiate a return, please contact our support team within 7 days of delivery with your order ID and reason for return.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Replacement",
+            "question": "How do I request a replacement?",
+            "answer": "<p>If you received a damaged or wrong product, please share photos with our support team and we will arrange a replacement.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

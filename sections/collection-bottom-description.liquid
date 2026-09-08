@@ -1,0 +1,163 @@
+{% comment %}
+  Collection Bottom Description Section
+  Displays the rich text metafield `custom.collection_bottom_description` below Related Items.
+{% endcomment %}
+
+{%- if collection.metafields.custom.collection_bottom_description != blank -%}
+  <div class="collection-bottom-desc-section section-{{ section.id }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: {{ section.settings.bg_color | default: 'transparent' }};">
+    <div class="collection-bottom-desc-container">
+      <div class="collection-bottom-desc-content rte">
+        {{ collection.metafields.custom.collection_bottom_description | metafield_tag }}
+      </div>
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div class="collection-bottom-desc-section section-{{ section.id }} collection-bottom-desc--placeholder" style="padding: 30px 20px; text-align: center; background: #fafafa; border: 1px dashed #d0d0d0; margin: 20px auto; max-width: 1320px; border-radius: 8px;">
+    <p style="margin: 0; color: #666; font-size: 14px; font-family: 'Archivo', sans-serif;">
+      <strong>Collection Bottom Description:</strong> This section is active. Content will display here once the <code>custom.collection_bottom_description</code> metafield is populated for this collection.
+    </p>
+  </div>
+{%- endif -%}
+
+<style>
+  .collection-bottom-desc-container {
+    width: 1320px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .collection-bottom-desc-content {
+    font-family: var(--font-family-normal, 'Archivo', sans-serif);
+    font-size: 15px;
+    line-height: 1.75;
+    color: #333333;
+  }
+
+  .collection-bottom-desc-content h1,
+  .collection-bottom-desc-content h2,
+  .collection-bottom-desc-content h3,
+  .collection-bottom-desc-content h4,
+  .collection-bottom-desc-content h5,
+  .collection-bottom-desc-content h6 {
+    font-family: var(--font-heading-family);
+    color: #231F20;
+    margin: 24px 0 12px 0;
+    line-height: 1.3;
+  }
+
+  .collection-bottom-desc-content h1:first-child,
+  .collection-bottom-desc-content h2:first-child,
+  .collection-bottom-desc-content h3:first-child {
+    margin-top: 0;
+  }
+
+  .collection-bottom-desc-content p {
+    margin: 0 0 14px 0;
+  }
+
+  .collection-bottom-desc-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .collection-bottom-desc-content a {
+    color: var(--primary-web-color, #048E79);
+    text-decoration: underline;
+    transition: opacity 0.2s;
+  }
+
+  .collection-bottom-desc-content a:hover {
+    opacity: 0.8;
+  }
+
+  .collection-bottom-desc-content ul,
+  .collection-bottom-desc-content ol {
+    margin: 0 0 16px 24px;
+    padding: 0;
+  }
+
+  .collection-bottom-desc-content li {
+    margin-bottom: 6px;
+  }
+
+  .collection-bottom-desc-content strong,
+  .collection-bottom-desc-content b {
+    font-weight: 700;
+    color: #231F20;
+  }
+
+  .collection-bottom-desc-content blockquote {
+    border-left: 3px solid var(--primary-web-color, #048E79);
+    margin: 16px 0;
+    padding-left: 16px;
+    color: #555;
+    font-style: italic;
+  }
+
+  @media (max-width: 1024px) {
+    .collection-bottom-desc-container {
+      width: calc(100% - 80px);
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-bottom-desc-container {
+      width: 93%;
+      padding: 0 12px;
+    }
+
+    .collection-bottom-desc-content {
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .collection-bottom-desc-content h1,
+    .collection-bottom-desc-content h2,
+    .collection-bottom-desc-content h3 {
+      margin: 18px 0 10px 0;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Bottom Desc",
+  "tag": "section",
+  "class": "collection-bottom-description-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Bottom Description"
+    }
+  ]
+}
+{% endschema %}

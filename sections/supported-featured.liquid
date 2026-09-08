@@ -1,0 +1,229 @@
+{{ 'section-supported-featured.css' | asset_url | stylesheet_tag }}
+
+<section class="sf-section-outer">
+  <div class="sf-section" style="background-color: {{ section.settings.background_color }};">
+    <div class="sf-inner">
+
+      <!-- ── LEFT: Supported By ── -->
+      <div class="sf-col-lb">
+        <div class="sf-label">
+          <span class="sf-mountain-icon">
+            <svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true"><path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e8754d" stroke-width="1.5" fill="none" stroke-linejoin="round"></path></svg>
+          </span>
+          <span style="color: {{ section.settings.label_color }};">{{ section.settings.left_label }}</span>
+        </div>
+
+        <h2 class="sf-heading" style="color: {{ section.settings.heading_color }};">{{ section.settings.left_heading }}</h2>
+
+        <!-- GRID TABLE -->
+        <div class="sf-grid-table">
+          {% assign supporter_blocks = section.blocks | where: "type", "supporter" %}
+          {% assign total = supporter_blocks | size %}
+          {% for block in supporter_blocks %}
+            <div class="sf-grid-cell {% if forloop.last and total == forloop.index and total != 1 %}sf-grid-cell--last{% endif %}" {{ block.shopify_attributes }}>
+              {% if block.settings.url != blank %}
+                <a class="sf-cell-link" href="{{ block.settings.url }}" target="_blank" rel="noopener">
+                  <span class="sf-cell-text">{{ block.settings.name }}</span>
+                </a>
+              {% else %}
+                <span class="sf-cell-text">{{ block.settings.name }}</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+          {% assign total_supporters = supporter_blocks | size %}
+          {% if total_supporters == 1 or total_supporters == 3 or total_supporters == 5 %}
+            <div class="sf-grid-cell sf-grid-cell--empty"></div>
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- ── RIGHT: Featured In ── -->
+      <div class="sf-col">
+        <div class="sf-label">
+          <span class="sf-mountain-icon">
+<svg width="22" height="13.2" viewBox="0 0 40 24" fill="none" aria-hidden="true"><path d="M2 22 L10 10 L14 16 L20 6 L26 16 L30 10 L38 22 Z" stroke="#e8754d" stroke-width="1.5" fill="none" stroke-linejoin="round"></path></svg>
+          </span>
+          <span style="color: {{ section.settings.label_color }};">{{ section.settings.right_label }}</span>
+        </div>
+
+        <h2 class="sf-heading" style="color: {{ section.settings.heading_color }};">{{ section.settings.right_heading }}</h2>
+
+        <!-- FEATURED LIST -->
+        <div class="sf-featured-list">
+          {% assign feature_blocks = section.blocks | where: "type", "feature" %}
+          {% for block in feature_blocks %}
+            {% assign num = forloop.index %}
+            {% if num < 10 %}{% assign num_str = '0' | append: num %}{% else %}{% assign num_str = num | append: '' %}{% endif %}
+            {% if block.settings.url != blank %}
+              <a class="sf-feature-row" href="{{ block.settings.url }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+            {% else %}
+              <div class="sf-feature-row" {{ block.shopify_attributes }}>
+            {% endif %}
+              <span class="sf-feature-num" style="color: {{ section.settings.num_color }};">{{ num_str }}</span>
+              <span class="sf-feature-name" style="color: {{ section.settings.heading_color }};">{{ block.settings.name }}</span>
+              {% if block.settings.url != blank %}
+                <span class="sf-feature-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0f6b5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </span>
+              {% endif %}
+            {% if block.settings.url != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="tricolor-dots" aria-hidden="true"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Supported & Featured",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f0ede4"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label & Icon Color",
+      "default": "#c0704a"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading & Feature Name Color",
+      "default": "#1a6b4a"
+    },
+    {
+      "type": "color",
+      "id": "num_color",
+      "label": "Number & Icon Color",
+      "default": "#e07b39"
+    },
+    {
+      "type": "header",
+      "content": "Left Column"
+    },
+    {
+      "type": "text",
+      "id": "left_label",
+      "label": "Left Label",
+      "default": "SUPPORTED BY"
+    },
+    {
+      "type": "textarea",
+      "id": "left_heading",
+      "label": "Left Heading",
+      "default": "Backed by institutions that believe in us."
+    },
+    {
+      "type": "header",
+      "content": "Right Column"
+    },
+    {
+      "type": "text",
+      "id": "right_label",
+      "label": "Right Label",
+      "default": "FEATURED IN"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Right Heading",
+      "default": "Stories worth telling."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "supporter",
+      "name": "Supporter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Institution Name",
+          "default": "Institution Name"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (optional)"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Featured Publication",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Publication Name",
+          "default": "Publication Name"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Article Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Supported & Featured",
+      "blocks": [
+        { "type": "supporter", "settings": { "name": "OYO" } },
+        { "type": "supporter", "settings": { "name": "IIT Mandi Catalyst" } },
+        { "type": "supporter", "settings": { "name": "IIM Kashipur" } },
+        { "type": "supporter", "settings": { "name": "MeitY · Govt. of India" } },
+        { "type": "supporter", "settings": { "name": "Ministry of Agriculture" } },
+        { "type": "feature", "settings": { "name": "Outlook" } },
+        { "type": "feature", "settings": { "name": "Devdiscourse" } },
+        { "type": "feature", "settings": { "name": "Free Press Journal" } },
+        { "type": "feature", "settings": { "name": "The Hindu" } },
+        { "type": "feature", "settings": { "name": "Business Standard" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

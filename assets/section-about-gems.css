@@ -1,0 +1,136 @@
+.vision-section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.vision-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.vision-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 72px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+/* --- LEFT COLUMN --- */
+
+.vision-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.vision-label-icon {
+  display: flex;
+  align-items: center;
+}
+
+.vision-label-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.vision-heading {
+  font-family: "Mrs Eaves Small Caps", "IM Fell English SC", Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.vision-heading em {
+    font-family: "IM Fell English", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;  text-transform: none;
+    letter-spacing: 0.01em;
+}
+
+/* --- RIGHT COLUMN --- */
+
+.vision-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vision-body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.vision-body a{
+  color:#0f6b5c;
+}
+
+/* --- BLOCKQUOTE --- */
+
+.vision-quote {
+  border-left: 2px solid #e87750;
+  padding-left: 20px;
+  margin: 8px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vision-quote-heading {
+  font-family: "Mrs Eaves Small Caps", "IM Fell English SC", Georgia, serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.vision-quote-italic {
+  font-family: "IM Fell English", Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 900px) {
+  .vision-inner {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    padding: 48px 24px;
+  }
+
+  .vision-heading {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vision-inner {
+    padding: 36px 20px;
+  }
+
+  .vision-body {
+    font-size: 14px;
+  }
+
+  .vision-quote-heading,
+  .vision-quote-italic {
+    font-size: 19px;
+  }
+}

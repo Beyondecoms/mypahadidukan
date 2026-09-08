@@ -1,61 +1,102 @@
-const SCROLL_ANIMATION_TRIGGER_CLASSNAME = "m-scroll-trigger";
-const SCROLL_ANIMATION_OFFSCREEN_CLASSNAME = "m-scroll-trigger--offscreen";
-const SCROLL_ANIMATION_CANCEL_CLASSNAME = "m-scroll-trigger--cancel";
+const SCROLL_ANIMATION_TRIGGER_CLASSNAME = 'scroll-trigger';
+const SCROLL_ANIMATION_OFFSCREEN_CLASSNAME = 'scroll-trigger--offscreen';
+const SCROLL_ZOOM_IN_TRIGGER_CLASSNAME = 'animate--zoom-in';
+const SCROLL_ANIMATION_CANCEL_CLASSNAME = 'scroll-trigger--cancel';
 
-function updateElementVisibility(element, isVisible) {
-  if (isVisible) {
-    element.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
-  } else {
-    element.classList.add(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
-    element.classList.remove(SCROLL_ANIMATION_CANCEL_CLASSNAME);
-  }
-}
-
-function handleMobileChange(element) {
-  const removeTriggerClass = () => element.classList.remove(SCROLL_ANIMATION_TRIGGER_CLASSNAME);
-
-  if (MinimogTheme.config.mqlMobile || element.dataset.type === "fixed") {
-    removeTriggerClass();
-  }
-
-  document.addEventListener("matchMobile", removeTriggerClass);
-  document.addEventListener("unmatchMobile", removeTriggerClass);
-}
-
-function onIntersection(entries, observer) {
-  entries.forEach((entry, index) => {
-    const { isIntersecting, target } = entry;
-    updateElementVisibility(target, isIntersecting);
-
-    if (isIntersecting) {
-      if (target.hasAttribute("data-cascade")) {
-        target.setAttribute("style", `--animation-order: ${index};`);
+// Scroll in animation logic
+function onIntersection(elements, observer) {
+  elements.forEach((element, index) => {
+    if (element.isIntersecting) {
+      const elementTarget = element.target;
+      if (elementTarget.classList.contains(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME)) {
+        elementTarget.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
+        if (elementTarget.hasAttribute('data-cascade'))
+          elementTarget.setAttribute('style', `--animation-order: ${index};`);
       }
-      observer.unobserve(target);
-    }
-
-    if (target.classList.contains("m-sidebar")) {
-      handleMobileChange(target);
+      observer.unobserve(elementTarget);
+    } else {
+      element.target.classList.add(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
+      element.target.classList.remove(SCROLL_ANIMATION_CANCEL_CLASSNAME);
     }
   });
 }
 
-const observer = new IntersectionObserver(onIntersection, {
-  rootMargin: "0px 0px -50px 0px",
-});
-
 function initializeScrollAnimationTrigger(rootEl = document, isDesignModeEvent = false) {
-  const elements = rootEl.getElementsByClassName(SCROLL_ANIMATION_TRIGGER_CLASSNAME);
+  const animationTriggerElements = Array.from(rootEl.getElementsByClassName(SCROLL_ANIMATION_TRIGGER_CLASSNAME));
+  if (animationTriggerElements.length === 0) return;
 
-  if (elements.length === 0 || isDesignModeEvent) return;
+  if (isDesignModeEvent) {
+    animationTriggerElements.forEach((element) => {
+      element.classList.add('scroll-trigger--design-mode');
+    });
+    return;
+  }
 
-  Array.from(elements).forEach((element) => observer.observe(element));
+  const observer = new IntersectionObserver(onIntersection, {
+    rootMargin: '0px 0px -50px 0px',
+  });
+  animationTriggerElements.forEach((element) => observer.observe(element));
 }
 
-document.addEventListener("DOMContentLoaded", () => initializeScrollAnimationTrigger());
+// Zoom in animation logic
+function initializeScrollZoomAnimationTrigger() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const animationTriggerElements = Array.from(document.getElementsByClassName(SCROLL_ZOOM_IN_TRIGGER_CLASSNAME));
+
+  if (animationTriggerElements.length === 0) return;
+
+  const scaleAmount = 0.2 / 100;
+
+  animationTriggerElements.forEach((element) => {
+    let elementIsVisible = false;
+    const observer = new IntersectionObserver((elements) => {
+      elements.forEach((entry) => {
+        elementIsVisible = entry.isIntersecting;
+      });
+    });
+    observer.observe(element);
+
+    element.style.setProperty('--zoom-in-ratio', 1 + scaleAmount * percentageSeen(element));
+
+    window.addEventListener(
+      'scroll',
+      throttle(() => {
+        if (!elementIsVisible) return;
+
+        element.style.setProperty('--zoom-in-ratio', 1 + scaleAmount * percentageSeen(element));
+      }),
+      { passive: true }
+    );
+  });
+}
+
+function percentageSeen(element) {
+  const viewportHeight = window.innerHeight;
+  const scrollY = window.scrollY;
+  const elementPositionY = element.getBoundingClientRect().top + scrollY;
+  const elementHeight = element.offsetHeight;
+
+  if (elementPositionY > scrollY + viewportHeight) {
+    // If we haven't reached the image yet
+    return 0;
+  } else if (elementPositionY + elementHeight < scrollY) {
+    // If we've completely scrolled past the image
+    return 100;
+  }
+
+  // When the image is in the viewport
+  const distance = scrollY + viewportHeight - elementPositionY;
+  let percentage = distance / ((viewportHeight + elementHeight) / 100);
+  return Math.round(percentage);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initializeScrollAnimationTrigger();
+  initializeScrollZoomAnimationTrigger();
+});
 
 if (Shopify.designMode) {
-  const reinitialize = (event) => initializeScrollAnimationTrigger(event.target, true);
-  document.addEventListener("shopify:section:load", reinitialize);
-  document.addEventListener("shopify:section:reorder", () => initializeScrollAnimationTrigger(document, true));
+  document.addEventListener('shopify:section:load', (event) => initializeScrollAnimationTrigger(event.target, true));
+  document.addEventListener('shopify:section:reorder', () => initializeScrollAnimationTrigger(document, true));
 }

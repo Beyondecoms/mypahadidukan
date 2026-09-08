@@ -1,0 +1,174 @@
+/* ===================
+   BANK DETAILS SECTION
+   =================== */
+
+.bd-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bd-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 48px;
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
+/* ── TABLE ── */
+.bd-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.bd-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 0;
+  font-family: var(--font-body-family, 'Helvetica Neue', Arial, sans-serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.bd-label {
+  font-weight: 700;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.bd-value {
+  font-weight: 400;
+  flex: 1;
+}
+
+/* ── COPY BUTTON ── */
+/* ── COPY BUTTON ── */
+.bd-copy-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+  margin-left: auto;
+}
+
+.bd-copy-btn:hover {
+  opacity: 0.75;
+}
+
+.bd-copy-btn img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Show clipboard by default, hide copied state */
+.bd-icon-clipboard { display: flex; align-items: center; }
+.bd-icon-copied    { display: none; align-items: center; gap: 6px; }
+
+/* When copied: swap */
+.bd-copy-btn.bd-copied .bd-icon-clipboard { display: none; }
+.bd-copy-btn.bd-copied .bd-icon-copied    { display: flex; }
+
+/* Copied text label */
+.bd-copied-text {
+  font-family: var(--font-body-family, 'Helvetica Neue', Arial, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a6b4a;
+  white-space: nowrap;
+}
+
+/* Show clipboard by default, hide checkmark */
+.bd-icon-clipboard { display: flex; }
+.bd-icon-copied    { display: none; }
+
+/* When copied: swap icons + turn green */
+.bd-copy-btn.bd-copied {
+  color: #1a6b4a;
+}
+
+.bd-copy-btn.bd-copied .bd-icon-clipboard { display: none; }
+.bd-copy-btn.bd-copied .bd-icon-copied    { display: flex; }
+
+/* ── DIVIDER ── */
+.bd-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid;
+  margin: 40px 0;
+}
+
+/* ── HELP SECTION ── */
+.bd-help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.bd-help-title {
+  font-family: var(--font-body-family, 'Helvetica Neue', Arial, sans-serif);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.bd-help-sub {
+  font-family: var(--font-body-family, 'Helvetica Neue', Arial, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.bd-help-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.bd-help-link {
+  font-family: var(--font-body-family, 'Helvetica Neue', Arial, sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.bd-help-link:hover {
+  opacity: 0.65;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .bd-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .bd-row {
+    font-size: 13px;
+  }
+
+  .bd-help-title {
+    font-size: 18px;
+  }
+
+  .bd-help-links {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

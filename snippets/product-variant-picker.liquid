@@ -1,175 +1,94 @@
-{% liquid
-  assign is_size = false
-  assign size_title_downcase = size_title | downcase
-  assign picker_types = ''
-  assign option_labels = ''
+{% comment %}
+  Renders product variant-picker
 
-  for option in product.options_with_values
-    assign found_option = false
-    assign option_design = ''
-    assign option_label = option.name
-
-    for i in (1..5)
-      unless found_option == true
-        assign option_name_key = 'variant_option_title' | append: i
-        assign option_design_key = 'variant_option_design' | append: i
-        assign option_label_key = 'variant_option_display_name' | append: i
-
-        assign option_name = settings[option_name_key]
-        if option_name == option.name
-          assign found_option = true
-          assign option_design = settings[option_design_key]
-          assign option_label = settings[option_label_key] | default: option.name
-        endif
-      endunless
-    endfor
-
-    assign design = option_design | prepend: ','
-    assign option_label = option_label | prepend: ','
-    if found_option == false or option_design == ''
-      assign design = settings.variant_option_design_default | prepend: ','
-    endif
-
-    assign picker_types = picker_types | append: design
-    assign option_labels = option_labels | append: option_label
-  endfor
-  assign picker_types = picker_types | remove_first: ',' | split: ','
-  assign option_labels = option_labels | remove_first: ',' | split: ','
-%}
-
-<variant-picker
-  id="variant-picker-{{ section.id }}"
-  data-product-id="{{ product.id }}"
-  data-section-id="{{ section.id }}"
-  data-update-url="{{ update_browser_history }}"
-  data-product-url="{{ product.url }}"
-  data-has-only-default-variant="{{ product.has_only_default_variant }}"
->
-  {%- unless product.has_only_default_variant -%}
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    {{ block.shopify_attributes }}
+  >
     {%- for option in product.options_with_values -%}
-      {% liquid
-        assign picker_type = picker_types[forloop.index0]
-        assign option_label = option_labels[forloop.index0]
-        assign option_name_downcase = option.name | downcase
-        if size_title_downcase contains option_name_downcase
-          assign is_size = true
-        else
-          assign is_size = false
-        endif
-
+      {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = block.settings.picker_type
 
-        if swatch_count > 0
-          if picker_type == 'dropdown'
+        if swatch_count > 0 and block.settings.swatch_shape != 'none'
+          if block.settings.picker_type == 'dropdown'
             assign picker_type = 'swatch_dropdown'
-          elsif picker_type == 'color'
-            assign picker_type = 'swatch_color'
+          else
+            assign picker_type = 'swatch'
           endif
         endif
-      %}
-      <div
-        class="m-product-option m-product-option--{{ picker_type }}"
-        data-picker-type="{{ picker_type }}"
-      >
-        <div
-          data-picker-field="{% if picker_type == 'dropdown' or picker_type == 'swatch_dropdown' %}select{% else %}radio{% endif %}"
-          data-option-name="{{ option.name }}"
-          data-selected-value="{{ option.selected_value }}"
-          class="m-product-option__inner"
-        >
-          <div class="m-product-option--label">
-            <label class="option-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-              <span class="option-label--title">{{ option_label }}:</span>
-              <span class="option-label--selected">{{ option.selected_value }}</span>
-            </label>
-            {% if is_size %}
-              <button data-open-sizeguide class="foxkit-sizechart-button m:inline-flex m:items-center m:hidden">
-                <svg
-                  class="m-svg-icon--large"
-                  fill="currentColor"
-                  stroke="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 640 512"
-                >
-                  <path d="M608 128H32c-17.67 0-32 14.33-32 32v192c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V160c0-17.67-14.33-32-32-32zm0 224H32V160h80v56c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-56h64v56c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-56h64v56c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-56h64v56c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-56h64v56c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-56h80v192z"/>
-                </svg>
-                <span class="foxkit-sizechart-button--label">{{ 'products.product.size_guide' | t }}</span>
-              </button>
-            {% endif %}
-          </div>
-          <div class="m-product-option--content m:inline-flex m:flex-wrap">
-            {%- case picker_type -%}
-              {% when 'dropdown', 'swatch_dropdown' %}
-                <select
-                  id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                  name="options[{{ option.name | escape }}]"
-                  form="{{ product_form_id }}"
-                >
-                  {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-                </select>
-              {% when 'swatch_color' %}
-                {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-              {% else %}
-                {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-            {%- endcase -%}
-          </div>
-          {% if is_size and product.vendor == 'My Pahadi Dukan' %}
-            {%- assign custom_svg = '' -%}
-            {%- if block and block.settings.tbspn_svg_icon != blank -%}
-              {%- assign custom_svg = block.settings.tbspn_svg_icon -%}
-            {%- else -%}
-              {%- for blk in section.blocks -%}
-                {%- if blk.type == 'variant_picker' and blk.settings.tbspn_svg_icon != blank -%}
-                  {%- assign custom_svg = blk.settings.tbspn_svg_icon -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endfor -%}
+      -%}
+      {%- if picker_type == 'swatch' -%}
+        <fieldset class="js product-form__input product-form__input--swatch">
+          <legend class="form__label">
+            {{ option.name }}:
+            <span data-selected-value>
+              {{- option.selected_value -}}
+            </span>
+          </legend>
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
+      {%- elsif picker_type == 'button' -%}
+        <fieldset class="js product-form__input product-form__input--pill">
+          <legend class="form__label">{{ option.name }}</legend>
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
+      {%- else -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+          <div class="select">
+            {%- if picker_type == 'swatch_dropdown' -%}
+              <span
+                data-selected-value
+                class="dropdown-swatch"
+              >
+                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+              </span>
             {%- endif -%}
-            {% for block in section.blocks %}
-              {% if block.type == 'text' and block.settings.text contains 'makes' %}
-                {%- assign text_to_show = block.settings.text | remove: '🥃' | remove: '🥛' | remove: '🍹' | strip -%}
-                <span class="tbspn-variant-text">
-                  {%- if custom_svg != blank -%}
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18" fill="none">
-<mask id="mask0_44_5853" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18">
-<rect width="18" height="18" fill="url(#pattern0_44_5853)"/>
-</mask>
-<g mask="url(#mask0_44_5853)">
-<rect width="18" height="18" fill="#D38946"/>
-</g>
-<defs>
-<pattern id="pattern0_44_5853" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_44_5853" transform="scale(0.005)"/>
-</pattern>
-<image id="image0_44_5853" width="200" height="200" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
-</defs>
-</svg>       
- {%- else -%}
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18" fill="none">
-<mask id="mask0_44_5853" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18">
-<rect width="18" height="18" fill="url(#pattern0_44_5853)"/>
-</mask>
-<g mask="url(#mask0_44_5853)">
-<rect width="18" height="18" fill="#D38946"/>
-</g>
-<defs>
-<pattern id="pattern0_44_5853" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_44_5853" transform="scale(0.005)"/>
-</pattern>
-<image id="image0_44_5853" width="200" height="200" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
-</defs>
-</svg>
-                  {%- endif -%}
-                  {{ text_to_show }}
-                </span>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options',
+                product: product,
+                option: option,
+                block: block,
+                picker_type: picker_type
+              %}
+            </select>
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </div>
         </div>
-      </div>
+      {%- endif -%}
     {%- endfor -%}
-  {%- endunless -%}
-  <script type="application/json" data-selected-variant>
-    {{ product.selected_or_first_available_variant | json }}
-  </script>
-</variant-picker>
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+  </variant-selects>
+{%- endunless -%}

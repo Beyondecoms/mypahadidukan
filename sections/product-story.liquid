@@ -1,0 +1,293 @@
+{{ 'section-brand-story.css' | asset_url | stylesheet_tag }}
+
+    <div 
+      class="bs-section"
+      style="
+        {% if section.settings.bg_image != blank %}
+          background-image: url({{ section.settings.bg_image | image_url: width: 2000 }});
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% else %}
+          background: {{ section.settings.bg_color }};
+        {% endif %}
+      "
+    >
+    <div class="bs-wrapper">
+      <!-- Mobile-only image shown above title -->
+    <h2 class="bs-philosophy-title">
+        {%- if section.settings.team_image != blank -%}
+      <img
+        src="{{ section.settings.team_image | image_url: width: 600 }}"
+        alt="{{ section.settings.philosophy_title }}"
+        class="bs-team-img--mobile-top"
+        loading="lazy"
+      >
+    {%- endif -%}
+      {{ section.settings.philosophy_title }}</h2>
+    <!-- ── ROW 1: Philosophy + Image ── -->
+    <div class="bs-top-row">
+      <div class="bs-left">
+        <p class="bs-philosophy-text">{{ section.settings.philosophy_text }}</p>
+
+        <!-- Stats -->
+        <div class="bs-stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="bs-stat" {{ block.shopify_attributes }}>
+                <div class="bs-stat-label-wrap">
+                  <div class="bs-stat-number">{{ block.settings.number }}</div>
+                  <span class="bs-stat-label-top">{{ block.settings.label_top }}</span>
+                </div>
+                <span class="bs-stat-label-bottom">{{ block.settings.label_bottom }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="bs-right">
+        {%- if section.settings.team_image != blank -%}
+          <img
+            src="{{ section.settings.team_image | image_url: width: 600 }}"
+            alt="{{ section.settings.philosophy_title }}"
+            class="bs-team-img"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- ── ROW 2: In the Media ── -->
+    <div class="bs-media-row">
+      <h3 class="bs-media-title">{{ section.settings.media_title }}</h3>
+      <div class="bs-marquee-outer">
+        <div class="bs-marquee-track bs-media-logos">
+          {%- for i in (1..6) -%}
+            {%- assign logo_key = 'media_logo_' | append: i -%}
+            {%- assign link_key = 'media_link_' | append: i -%}
+            {%- if section.settings[logo_key] != blank -%}
+              <div class="bs-media-logo">
+                {%- if section.settings[link_key] != blank -%}
+                  <a href="{{ section.settings[link_key] }}" target="_blank" rel="noopener">
+                {%- endif -%}
+                <img
+                  src="{{ section.settings[logo_key] | image_url: width: 160 }}"
+                  alt="Media logo {{ i }}"
+                  loading="lazy"
+                >
+                {%- if section.settings[link_key] != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- for i in (1..6) -%}
+            {%- assign logo_key = 'media_logo_' | append: i -%}
+            {%- assign link_key = 'media_link_' | append: i -%}
+            {%- if section.settings[logo_key] != blank -%}
+              <div class="bs-media-logo" aria-hidden="true">
+                {%- if section.settings[link_key] != blank -%}
+                  <a href="{{ section.settings[link_key] }}" target="_blank" rel="noopener" tabindex="-1">
+                {%- endif -%}
+                <img
+                  src="{{ section.settings[logo_key] | image_url: width: 160 }}"
+                  alt=""
+                  loading="lazy"
+                >
+                {%- if section.settings[link_key] != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var card = document.getElementById('bs-letter-{{ section.id }}');
+  if (!card) return;
+  card.addEventListener('click', function () {
+    card.classList.toggle('flipped');
+  });
+})();
+</script>
+<script>
+(function () {
+  var mediaLogos = document.querySelector('.bs-media-logos');
+  if (!mediaLogos) return;
+
+  if (!('IntersectionObserver' in window)) {
+    mediaLogos.classList.add('bs-in-view');
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        mediaLogos.classList.add('bs-in-view');
+      } else {
+        mediaLogos.classList.remove('bs-in-view');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  observer.observe(mediaLogos);
+})();
+</script>
+{% schema %}
+{
+  "name": "Brand Story",
+  "tag": "section",
+  "class": "bs-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "philosophy_title",
+      "label": "Philosophy title",
+      "default": "The Philosophy rooted in mountain"
+    },
+    {
+      "type": "textarea",
+      "id": "philosophy_text",
+      "label": "Philosophy text",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      "type": "image_picker",
+      "id": "team_image",
+      "label": "Team image"
+    },
+    {
+      "type": "header",
+      "content": "In the Media"
+    },
+    {
+      "type": "text",
+      "id": "media_title",
+      "label": "Media section title",
+      "default": "In the Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_1",
+      "label": "Media logo 1"
+    },
+    {
+      "type": "url",
+      "id": "media_link_1",
+      "label": "Media logo 1 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_2",
+      "label": "Media logo 2"
+    },
+    {
+      "type": "url",
+      "id": "media_link_2",
+      "label": "Media logo 2 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_3",
+      "label": "Media logo 3"
+    },
+    {
+      "type": "url",
+      "id": "media_link_3",
+      "label": "Media logo 3 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_4",
+      "label": "Media logo 4"
+    },
+    {
+      "type": "url",
+      "id": "media_link_4",
+      "label": "Media logo 4 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_5",
+      "label": "Media logo 5"
+    },
+    {
+      "type": "url",
+      "id": "media_link_5",
+      "label": "Media logo 5 link"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_logo_6",
+      "label": "Media logo 6"
+    },
+    {
+      "type": "url",
+      "id": "media_link_6",
+      "label": "Media logo 6 link"
+    },
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number (e.g. 221+)",
+          "default": "221+"
+        },
+        {
+          "type": "text",
+          "id": "label_top",
+          "label": "Label top",
+          "default": "Products"
+        },
+        {
+          "type": "text",
+          "id": "label_bottom",
+          "label": "Label bottom",
+          "default": "All Products"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "221", "label_top": "Products", "label_bottom": "All Products" } },
+        { "type": "stat", "settings": { "number": "48+", "label_top": "Products", "label_bottom": "New Launch" } },
+        { "type": "stat", "settings": { "number": "221", "label_top": "Value", "label_bottom": "Lorem Ipsum" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

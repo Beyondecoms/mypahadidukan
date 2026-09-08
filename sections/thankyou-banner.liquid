@@ -1,0 +1,90 @@
+<style>
+  .thankyou_desktop {
+    display: block;
+    padding:50px;
+  }
+
+  .thankyou_mobile {
+    display: none;
+  }
+
+  .thankyou img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .thankyou_desktop {
+      display: none;
+    }
+
+    .thankyou_mobile {
+      display: block;
+      padding:24px;
+    }
+  }
+</style>
+
+<section
+  class="thankyou"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="thankyou_desktop">
+    <a href="{{ section.settings.banner_redirect }}">
+      <img
+        src="{{ section.settings.desktop_background | image_url: width: 2000 }}"
+        alt="Thank you background image"
+        width="2000"
+        height="auto"
+      >
+    </a>
+  </div>
+
+  <div class="thankyou_mobile">
+    <a href="{{ section.settings.banner_redirect }}">
+      <img
+        src="{{ section.settings.mobile_background | image_url: width: 1000 }}"
+        alt="Thank you background image"
+        width="1000"
+        height="auto"
+      >
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Thank you",
+  "tag": "section",
+  "class": "thank_you_section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f0ede4"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background",
+      "label": "Desktop Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background",
+      "label": "Mobile Background"
+    },
+    {
+      "type": "url",
+      "id": "banner_redirect",
+      "label": "Redirect URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Thank You"
+    }
+  ]
+}
+{% endschema %}

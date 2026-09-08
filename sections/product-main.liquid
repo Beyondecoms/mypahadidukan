@@ -1,0 +1,921 @@
+{{ 'section-product-main.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign show_amazon = product.metafields.custom.available_on_amazon.value 
+  assign amazon_link = product.metafields.custom.amazon_link.value
+  assign trusted_count = product.metafields.custom.trusted_customers.value | default: '1M+'
+  assign stock_text = blank 
+  assign disclaimer = product.metafields.custom.disclaimer.value | default:'Not recommended for pregnant or breastfeeding women, individuals with low blood pressure, or those with a vitamin C allergy or vitamin K deficiency.'
+  assign fresh_batch_text = product.metafields.custom.fresh_batch_text.value | default:'Fresh Batch  Under Process'
+  assign fresh_batch_dates = product.metafields.custom.fresh_batch_dates.value | default:'Orders placed between Thursday, 23rd April and Wednesday, 29th April will be shipped 30th April onwards'
+-%}
+<div class="pm-breadcrumb-wrap">
+  {% render 'breadcrumb' %}
+</div>
+<div class="pm-desktop-only">
+  <div class="pm-section" id="pm-section-{{ section.id }}">
+    <div class="pm-inner">
+
+      <!-- ══════════════════════════════
+          LEFT COLUMN
+      ══════════════════════════════ -->
+      <div class="pm-left">
+
+        <!-- Badges row -->
+        {%- if section.blocks.size > 0 -%}
+          <div class="pm-badges-row">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'badge' -%}
+                <span class="pm-badge" style="background:{{ block.settings.bg_color }}; color:{{ block.settings.text_color }};" {{ block.shopify_attributes }}>
+                  {%- if block.settings.icon != blank -%}
+                    <img src="{{ block.settings.icon | image_url: width: 20 }}" alt="" width="16" height="16">
+                  {%- endif -%}
+                  {{ block.settings.label }}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+
+            <!-- Share / External link icon -->
+            <button class="pm-share-btn" onclick="navigator.share ? navigator.share({ title: '{{ product.title | escape }}', url: window.location.href }) : navigator.clipboard.writeText(window.location.href)" aria-label="Share">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.8">
+                <path d="M22.909 12.0014C22.6197 12.0014 22.3422 12.1164 22.1376 12.3209C21.9331 12.5255 21.8181 12.803 21.8181 13.0923V19.6378C21.8181 20.2164 21.5882 20.7714 21.1791 21.1805C20.7699 21.5897 20.215 21.8196 19.6363 21.8196H4.36362C3.78497 21.8196 3.23002 21.5897 2.82085 21.1805C2.41168 20.7714 2.18181 20.2164 2.18181 19.6378V4.36509C2.18181 3.78644 2.41168 3.23148 2.82085 2.82231C3.23002 2.41315 3.78497 2.18328 4.36362 2.18328H10.9091C11.1984 2.18328 11.4759 2.06834 11.6804 1.86376C11.885 1.65917 12 1.3817 12 1.09237C12 0.803044 11.885 0.525568 11.6804 0.320984C11.4759 0.116399 11.1984 0.00146484 10.9091 0.00146484H4.36362C3.20632 0.00146484 2.09641 0.461202 1.27808 1.27954C0.459738 2.09788 0 3.20778 0 4.36509V19.6378C0 20.7951 0.459738 21.905 1.27808 22.7233C2.09641 23.5417 3.20632 24.0014 4.36362 24.0014H19.6363C20.7936 24.0014 21.9035 23.5417 22.7219 22.7233C23.5402 21.905 23.9999 20.7951 23.9999 19.6378V13.0923C23.9999 12.803 23.885 12.5255 23.6804 12.3209C23.4758 12.1164 23.1983 12.0014 22.909 12.0014Z" fill="#363636"/>
+                <path d="M23.9048 0.669889C23.8549 0.558011 23.7863 0.455454 23.7019 0.366617C23.6888 0.352435 23.6845 0.33389 23.6703 0.319708C23.6561 0.305526 23.6376 0.301163 23.6234 0.288072C23.4293 0.100363 23.169 -0.00313943 22.899 7.25859e-05H16.3536C16.0643 7.25859e-05 15.7868 0.115007 15.5822 0.319591C15.3776 0.524176 15.2627 0.801652 15.2627 1.09098C15.2627 1.3803 15.3776 1.65778 15.5822 1.86237C15.7868 2.06695 16.0643 2.18188 16.3536 2.18188H20.2656L12.3096 10.1379C12.2054 10.2385 12.1223 10.3589 12.0651 10.492C12.008 10.6251 11.9779 10.7682 11.9766 10.9131C11.9753 11.0579 12.0029 11.2016 12.0578 11.3356C12.1127 11.4697 12.1937 11.5915 12.2961 11.6939C12.3985 11.7964 12.5203 11.8774 12.6544 11.9322C12.7884 11.9871 12.9321 12.0147 13.0769 12.0134C13.2218 12.0121 13.3649 11.982 13.498 11.9249C13.6311 11.8677 13.7515 11.7846 13.8521 11.6804L21.8081 3.72442V7.63641C21.8081 7.92574 21.9231 8.20322 22.1276 8.4078C22.3322 8.61238 22.6097 8.72732 22.899 8.72732C23.1884 8.72732 23.4658 8.61238 23.6704 8.4078C23.875 8.20322 23.9899 7.92574 23.9899 7.63641V1.09098C23.9901 0.946333 23.9611 0.803137 23.9048 0.669889Z" fill="#363636"/>
+                </g>
+                </svg>
+            </button>
+
+          </div>
+        {%- endif -%}
+
+        <!-- Title -->
+        <h1 class="pm-title">{{ product.title }}</h1>
+        <!-- Rating row -->
+        <div class="pm-rating-row">
+{%- assign rating = product.metafields.reviews.rating.value | default: 4.8 -%}
+
+<div class="pm-stars">
+  {%- assign rating_float = product.metafields.reviews.rating.value | default: 4.8 | append: '' | plus: 0.0 -%}
+  {% for i in (1..5) %}
+    {%- assign index_float = forloop.index0 | append: '' | plus: 0.0 -%}
+    {%- assign diff = rating_float | minus: index_float -%}
+    <span class="star-wrapper">
+      <svg class="star-bg" width="16" height="16" viewBox="0 0 24 24">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#d1d5db"/>
+      </svg>
+      <span class="star-fill" style="width:{% if diff >= 1 %}100{% elsif diff > 0 %}{{ diff | times: 100 | round }}{% else %}0{% endif %}%;">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#f59e0b"/>
+        </svg>
+      </span>
+    </span>
+  {% endfor %}
+</div>
+          <span class="pm-rating-score">{{ rating }}</span>
+          <a href="#judgeme_product_reviews" class="pm-rating-count">from {{ product.metafields.reviews.rating_count.value | default: '1,405' }} reviews</a>
+          <span class="pm-trusted">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a6b4a"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10" stroke="white" stroke-width="2" fill="none"/></svg>
+            Trusted by {{ trusted_count }} Customers
+          </span>
+        </div> 
+        {% comment %} <div class="pm-rating-row">
+          <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
+          <span class="pm-trusted">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a6b4a"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10" stroke="white" stroke-width="2" fill="none"/></svg>
+            Trusted by {{ trusted_count }} Customers
+          </span>
+        </div> {% endcomment %}
+        <!-- Vendor -->
+        <p class="pm-vendor">Vendor : <a href="/collections/vendor?q={{ product.vendor | url_encode }}">{{ product.vendor }}</a></p>
+
+        <!-- Price -->
+        <div class="pm-price-row">
+          <span class="pm-price">₹{{ current_variant.price | money_without_currency }}</span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="pm-compare">₹{{ current_variant.compare_at_price | money_without_currency }}</span>
+            {%- assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+            <span class="pm-discount-badge">{{ disc }}% off</span>
+          {%- endif -%}
+            {%- if current_variant.inventory_management == 'shopify' -%}
+                <span class="pm-stock">Last {{ current_variant.inventory_quantity }} stock left</span>
+            {%- endif -%}
+        </div>
+        <p class="pm-tax-note">MRP inclusive of all taxes</p>
+
+        <!-- Mini Reviews Carousel -->
+        <!-- Mini Reviews Carousel -->
+        {%- assign mini_reviews_json = product.metafields.custom.mini_reviews.value -%}
+        {%- if mini_reviews_json != blank -%}
+          <div class="pm-mini-reviews">
+            {%- for review in mini_reviews_json -%}
+              <div class="pm-mini-review">
+                <div class="pm-mini-top">
+                  <span class="pm-mini-name">{{ review.name }}</span>
+                  <div class="pm-mini-stars">
+                    {%- for i in (1..review.rating) -%}
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    {%- endfor -%}
+                  </div>
+                </div>
+                <p class="pm-mini-text">{{ review.review }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <!-- Select Pack -->
+        <div class="pm-pack-section">
+          <p class="pm-pack-label">Select Pack</p>
+          <div class="pm-variants-wrap">
+            <div class="pm-variants-grid" id="pm-variants-{{ section.id }}">
+              {%- for variant in product.variants -%}
+                {%- assign v_disc = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                <div
+                  class="pm-variant-card {% if variant.id == current_variant.id %}active{% endif %} {% if variant.metafields.custom.best_seller.value %}best-seller{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-price="{{ variant.price }}"
+                  data-compare="{{ variant.compare_at_price }}"
+                >
+                  {%- if variant.compare_at_price > variant.price -%}
+                    <div style="justify-content: space-between; display: flex; align-items: center;">
+                      <div class="pm-variant-disc">{{ v_disc }}% off
+                      </div>
+                      {%- if variant.id == current_variant.id -%}
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="20" height="20" rx="10" fill="#048E79"/>
+                        <path d="M5.71191 9.83165L8.73712 12.8569L14.4514 7.14258" stroke="white" stroke-width="0.9" stroke-linecap="round"/>
+                        </svg>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                  {% assign title_parts = variant.title | split: '(' %}
+
+                  <div class="pm-variant-title">
+                    {{ title_parts[0] | strip }}
+                  </div>
+
+                  {% if title_parts.size > 1 %}
+                    <div class="pm-variant-sub">
+                      {{ title_parts[1] | remove: ')' | strip }}
+                    </div>
+                  {% endif %}
+                  <div class="pm-variant-price">
+                    <span class="pm-variant-main-price">₹{{ variant.price | money_without_currency }}</span>
+                    {% comment %} ₹{{ variant.price | money_without_currency }} {% endcomment %}
+                    {%- if variant.compare_at_price > variant.price -%}
+                      <span class="pm-variant-compare">₹{{ variant.compare_at_price | money_without_currency }}</span>
+                    {%- endif -%}
+                  </div>
+                  {%- if variant.metafields.custom.per_bottle_price.value != blank -%}
+                    <div class="pm-variant-per">₹{{ variant.metafields.custom.per_bottle_price.value }} per bottle</div>
+                  {%- endif -%}
+                  {%- if variant.metafields.custom.tag -%}
+                    <div class="pm-best-seller-tag">{{ variant.metafields.custom.tag }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="pm-variants-dots" id="pm-variants-dots-{{ section.id }}"></div>
+            <!-- Mobile progress bar -->
+            <div class="pm-variants-bar" id="pm-variants-bar-{{ section.id }}">
+              <div class="pm-variants-bar-fill" id="pm-variants-bar-fill-{{ section.id }}"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        {%- if disclaimer != blank -%}
+          <div class="pm-disclaimer">{{ disclaimer }}</div>
+        {%- endif -%}
+        {%- if product.available -%}
+          <div class="add-to-buy">
+              <!-- Quantity + ATC -->
+              <div class="pm-atc-row">
+                <div class="pm-qty">
+                  <button class="pm-qty-btn" id="pm-qty-minus">−</button>
+                  <span class="pm-qty-val" id="pm-qty-val">1</span>
+                  <button class="pm-qty-btn" id="pm-qty-plus">+</button>
+                </div>
+                <button class="pm-atc-btn" id="pm-atc-btn">Add to Cart</button>
+              </div>
+
+              <!-- Buy It Now + Amazon -->
+              <div class="pm-buy-row">
+                {%- form 'product', product, id: 'pm-gokwik-form', style: 'display:none' -%}
+                  <input type="hidden" name="id" value="{{ current_variant.id }}" id="pm-gokwik-variant">
+                  <input type="hidden" name="quantity" value="1" id="pm-gokwik-qty">
+                {%- endform -%}
+
+                <button 
+                  type="button" 
+                  class="pm-buy-btn" 
+                  id="pm-buy-btn"
+                  onclick="onBuyNowClick(this,'#pm-gokwik-form')"
+                  {% if settings.hideFlow %} style="display:none !important;" {% endif %}
+                >
+                  Buy It Now
+                </button>
+                {%- if show_amazon == true -%}
+                  <a href="{{ amazon_link.url | default: 'https://amazon.in' }}" class="pm-amazon-btn" target="_blank" rel="noopener">
+                    Available at
+                              <svg width="54" height="16" viewBox="0 0 54 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1777_5644)">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M32.97 12.5128C29.893 14.788 25.4175 16 21.5574 16C16.1494 16 11.301 14.0047 7.60868 10.6854C7.32896 10.4244 7.5714 10.07 7.92567 10.2751C11.8977 12.5875 16.8022 13.9674 21.8744 13.9674C25.287 13.9674 29.0538 13.2588 32.5224 11.7856C33.0444 11.5805 33.4734 12.1399 32.9699 12.5128H32.97Z" fill="#FF9900"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M34.2568 11.0398C33.8653 10.5363 31.646 10.7973 30.6577 10.9279C30.3593 10.9652 30.3034 10.7041 30.5831 10.5176C32.3547 9.26819 35.2451 9.64112 35.5808 10.0514C35.9164 10.4617 35.4876 13.3705 33.8276 14.7507C33.5666 14.9558 33.3241 14.8439 33.4361 14.5642C33.8092 13.6318 34.6484 11.5617 34.2568 11.0398Z" fill="#FF9900"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M30.7136 1.75319V0.540766C30.7115 0.501024 30.7178 0.461282 30.732 0.424121C30.7463 0.38696 30.7682 0.353213 30.7963 0.325071C30.8245 0.29693 30.8582 0.275024 30.8954 0.260779C30.9325 0.246533 30.9723 0.240265 31.012 0.242383H36.42C36.5014 0.240669 36.5802 0.270971 36.6395 0.32677C36.6988 0.38257 36.7338 0.459411 36.737 0.540766V1.56641C36.737 1.73424 36.5878 1.9579 36.3267 2.33101L33.5296 6.3217C34.5739 6.30303 35.6742 6.4522 36.6065 6.97418C36.8116 7.08607 36.8675 7.27257 36.8862 7.4404V8.72709C36.8862 8.91359 36.6997 9.11858 36.4947 9.00681C34.835 8.13033 32.6159 8.03711 30.7885 9.02547C30.602 9.11869 30.397 8.93225 30.397 8.74576V7.51512C30.397 7.32862 30.397 6.99313 30.6021 6.69464L33.8468 2.05129H31.0307C30.9493 2.05301 30.8705 2.02274 30.8113 1.967C30.752 1.91127 30.7169 1.8345 30.7136 1.75319ZM11.0027 9.26803H9.36168C9.28814 9.26061 9.21908 9.22921 9.16516 9.17866C9.11123 9.12811 9.07544 9.06122 9.0633 8.98831V0.559433C9.06652 0.478088 9.10153 0.401256 9.16081 0.345457C9.22009 0.289659 9.2989 0.259351 9.38029 0.26105H10.9094C10.985 0.262193 11.0575 0.291489 11.1127 0.343214C11.1679 0.394938 11.2018 0.465376 11.2078 0.540766V1.64102H11.2451C11.6366 0.578099 12.4013 0.0746099 13.4083 0.0746099C14.4339 0.0746099 15.0866 0.578099 15.5342 1.64102C15.9257 0.578099 16.8395 0.0746099 17.8093 0.0746099C18.4993 0.0746099 19.2453 0.354326 19.7115 1.00704C20.2335 1.71563 20.1217 2.74128 20.1217 3.65504V8.98837C20.1185 9.06971 20.0835 9.14654 20.0242 9.20234C19.9649 9.25814 19.8861 9.28845 19.8047 9.28675H18.1822C18.0143 9.26808 17.8838 9.13759 17.8838 8.98837V4.51279C17.8838 4.15847 17.9211 3.26338 17.8465 2.92772C17.716 2.36828 17.3617 2.20045 16.8768 2.20045C16.6627 2.20655 16.4551 2.27512 16.2795 2.39771C16.1039 2.5203 15.9679 2.69158 15.8884 2.89044C15.7206 3.31932 15.7393 4.02797 15.7393 4.51279V8.98837C15.736 9.06971 15.701 9.14654 15.6418 9.20234C15.5825 9.25814 15.5037 9.28845 15.4223 9.28675H13.7813C13.6134 9.26808 13.4829 9.13759 13.4829 8.98837V4.51279C13.4829 3.58037 13.632 2.18179 12.4759 2.18179C11.3011 2.18179 11.3384 3.52443 11.3384 4.51279V8.98837C11.3266 9.06813 11.2859 9.14076 11.224 9.19237C11.1621 9.24398 11.0833 9.27094 11.0027 9.26808V9.26803ZM41.399 0.0746099C43.8419 0.0746099 45.1659 2.16318 45.1659 4.82984C45.1659 7.40329 43.7114 9.45452 41.399 9.45452C39.012 9.45452 37.7066 7.36596 37.7066 4.75523C37.688 2.12584 39.012 0.074383 41.399 0.074383V0.0746099ZM41.399 1.80885C40.1868 1.80885 40.1123 3.46854 40.1123 4.49418C40.1123 5.51983 40.0936 7.72028 41.3804 7.72028C42.6484 7.72028 42.723 5.94871 42.723 4.86712C42.723 4.15847 42.6857 3.30071 42.4805 2.62933C42.2941 2.03257 41.9211 1.80885 41.399 1.80885ZM48.3174 9.26803H46.6763C46.5085 9.24936 46.378 9.11886 46.378 8.96964V0.521986C46.3882 0.444982 46.426 0.374276 46.4842 0.322881C46.5425 0.271486 46.6173 0.24286 46.695 0.242269H48.2242C48.2935 0.244715 48.3601 0.26971 48.414 0.313462C48.4678 0.357215 48.5059 0.417338 48.5225 0.484709V1.7714H48.5598C49.026 0.615206 49.6601 0.0744397 50.7976 0.0744397C51.5249 0.0744397 52.2521 0.335433 52.7183 1.06281C53.1472 1.73413 53.1472 2.87166 53.1472 3.6922V9.00686C53.136 9.08186 53.0973 9.15002 53.0388 9.19822C52.9802 9.24641 52.9059 9.27122 52.8302 9.26786H51.189C51.0399 9.24919 50.9093 9.13736 50.8906 9.00686V4.41957C50.8906 3.48715 51.0025 2.1444 49.865 2.1444C49.4735 2.1444 49.1005 2.40539 48.914 2.81572C48.6902 3.3377 48.653 3.84136 48.653 4.41946V8.96982C48.6426 9.05173 48.6028 9.12709 48.5411 9.18194C48.4794 9.2368 48.3999 9.26745 48.3173 9.2682L48.3174 9.26803ZM26.406 5.24011C26.406 5.87416 26.4247 6.41492 26.1077 6.9933C25.8467 7.45952 25.4363 7.73923 24.9701 7.73923C24.3361 7.73923 23.9632 7.25441 23.9632 6.54576C23.9632 5.14718 25.2126 4.88607 26.406 4.88607V5.24011ZM28.0657 9.24942C28.0126 9.29581 27.9462 9.32436 27.876 9.33105C27.8058 9.33774 27.7352 9.32222 27.6742 9.28669C27.1335 8.83915 27.0218 8.61537 26.7232 8.18644C25.8281 9.09991 25.1754 9.37991 24.0193 9.37991C22.6393 9.37991 21.5577 8.5221 21.5577 6.82513C21.5577 5.4825 22.285 4.5874 23.3109 4.1398C24.206 3.74831 25.4556 3.67359 26.4064 3.5617V3.3566C26.4064 2.96511 26.4437 2.49878 26.2013 2.16312C25.9962 1.86474 25.6232 1.73424 25.2879 1.73424C24.6538 1.73424 24.0944 2.05123 23.9638 2.72261C23.9266 2.87177 23.8333 3.02099 23.6841 3.02099L22.099 2.85316C21.9685 2.81589 21.8193 2.72267 21.8566 2.5175C22.2295 0.578099 23.9638 0 25.5302 0C26.3321 0 27.3764 0.205106 28.0104 0.820482C28.8123 1.56641 28.7377 2.57367 28.7377 3.65498V6.20976C28.7377 6.97435 29.0547 7.31001 29.3531 7.73889C29.4649 7.88806 29.4836 8.07455 29.3531 8.16777C28.9987 8.44749 28.402 8.96964 28.0664 9.24936L28.0657 9.24942ZM4.8675 5.24011C4.8675 5.87416 4.88616 6.41492 4.56911 6.9933C4.30812 7.45952 3.89779 7.73923 3.43158 7.73923C2.79754 7.73923 2.4246 7.25441 2.4246 6.54576C2.4246 5.14718 3.67402 4.88607 4.8675 4.88607V5.24011ZM6.50852 9.24942C6.45537 9.29581 6.389 9.32436 6.31877 9.33105C6.24854 9.33774 6.17798 9.32222 6.11703 9.28669C5.57626 8.83915 5.46455 8.61537 5.16599 8.18644C4.2709 9.09991 3.61819 9.37991 2.46205 9.37991C1.08208 9.37991 0.000488281 8.5221 0.000488281 6.82513C0.000488281 5.4825 0.727751 4.5874 1.75368 4.1398C2.64877 3.74831 3.89836 3.67359 4.84923 3.5617V3.3566C4.84923 2.96511 4.8865 2.49878 4.64412 2.16312C4.43901 1.86474 4.06602 1.73424 3.73064 1.73424C3.0966 1.73424 2.53717 2.05123 2.40662 2.72261C2.36934 2.87177 2.27612 3.02099 2.1269 3.02099L0.541822 2.85316C0.411325 2.81589 0.262105 2.72267 0.299382 2.5175C0.672318 0.578099 2.40662 0 3.97303 0C4.7749 0 5.81916 0.205106 6.4532 0.820482C7.25507 1.56641 7.18046 2.57367 7.18046 3.65498V6.20976C7.18046 6.97435 7.49745 7.31001 7.79584 7.73889C7.90772 7.88806 7.92633 8.07455 7.79584 8.16777C7.44151 8.44749 6.8448 8.96964 6.50914 9.24936L6.50852 9.24942Z" fill="#231F20"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1777_5644">
+                  <rect width="53.1468" height="16" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                  </a>
+                {%- endif -%}
+              </div>
+          </div>
+        {%- else -%}
+          <div class="out-to-notify">
+              <button class="pm-out" disabled>Out of Stock</button>
+          </div>
+        {%- endif -%}
+        <!-- Trust Icons -->
+        <div class="pm-trust-row">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust_icon' -%}
+              <div class="pm-trust-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <img src="{{ block.settings.icon | image_url: width: 40 }}" alt="{{ block.settings.label }}" width="32" height="32">
+                {%- else -%}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a6b4a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+                {%- endif -%}
+                <span>{{ block.settings.label }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <!-- Ingredients Accordion -->
+        <div class="pm-accordion">
+          <button class="pm-accordion-btn" data-accordion="ingredients">
+            <span>Ingredients</span>
+            <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.4265 0C15.2545 0 15.0824 0.0573478 14.9677 0.172043L8.02867 7.11111L1.03226 0.172043C0.802867 -0.0573476 0.401434 -0.0573476 0.172043 0.172043C-0.0573477 0.401434 -0.0573477 0.802867 0.172043 1.03226L7.56989 8.43011C7.79928 8.6595 8.20072 8.6595 8.43011 8.43011L15.828 1.03226C16.0573 0.802867 16.0573 0.401434 15.828 0.172043C15.7706 0.0573478 15.5986 0 15.4265 0Z" fill="black"/>
+            </svg>
+          </button>
+          <div class="pm-accordion-body" id="pm-acc-ingredients">
+            <div class="pm-accordion-content">
+              {{ product.metafields.custom.ingredientsdd.value | default: section.settings.ingredients_text }}
+            </div>
+          </div>
+        </div>
+
+        <div class="pm-accordion">
+          <button class="pm-accordion-btn" data-accordion="additional">
+            <span>Additional Information</span>
+            <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.4265 0C15.2545 0 15.0824 0.0573478 14.9677 0.172043L8.02867 7.11111L1.03226 0.172043C0.802867 -0.0573476 0.401434 -0.0573476 0.172043 0.172043C-0.0573477 0.401434 -0.0573477 0.802867 0.172043 1.03226L7.56989 8.43011C7.79928 8.6595 8.20072 8.6595 8.43011 8.43011L15.828 1.03226C16.0573 0.802867 16.0573 0.401434 15.828 0.172043C15.7706 0.0573478 15.5986 0 15.4265 0Z" fill="black"/>
+            </svg>
+          </button>
+          <div class="pm-accordion-body" id="pm-acc-additional">
+            <div class="pm-accordion-content">
+              {{ product.metafields.custom.additional_info.value | default: section.settings.additional_info_text }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══════════════════════════════
+          RIGHT COLUMN
+      ══════════════════════════════ -->
+      <div class="pm-right">
+
+        <!-- Main Image -->
+        <div class="pm-main-image-wrap">
+          <button class="pm-wishlist-btn my-custom-wishlist-button swym-button swym-add-to-wishlist" data-with-epi="true"
+    data-swaction="addToWishlist"
+    data-product-id="{{ product.id }}"
+    data-variant-id="{{ product.variants[0].id }}"
+    data-product-url="{{ shop.url }}{{ product.url }}" aria-label="Wishlist">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <div class="pm-main-image-slider" id="pm-main-slider-{{ section.id }}">
+            {%- for image in product.images -%}
+              <div class="pm-main-slide {% if forloop.first %}active{% endif %}">
+                <img
+                  src="{{ image | image_url: width: 900 }}"
+                  alt="{{ product.title }}"
+                  class="pm-main-img"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                >
+              </div>
+            {%- endfor -%}
+          </div>
+          {% comment %} circular button {% endcomment %}
+           {%- if product.images.size > 1 -%}
+              <button class="pm-main-arrow pm-main-arrow-prev" id="pm-main-prev-{{ section.id }}" aria-label="Previous image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="pm-main-arrow pm-main-arrow-next" id="pm-main-next-{{ section.id }}" aria-label="Next image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            {%- endif -%}
+          <!-- Dot indicators -->
+          <div class="pm-main-dots" id="pm-main-dots-{{ section.id }}">
+            {%- for image in product.images -%}
+              <button class="pm-main-dot {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}"></button>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="pm-thumbnails" id="pm-thumbs-{{ section.id }}">
+          {%- for image in product.images -%}
+            <div class="pm-thumb {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}">
+              <img
+                src="{{ image | image_url: width: 160 }}"
+                alt="{{ product.title }}"
+                loading="lazy"
+              >
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Check Delivery -->
+        {% comment %} <div class="pm-delivery-section">
+          <p class="pm-delivery-title">Check Delivery</p>
+          <div class="pm-delivery-row">
+            <input type="text" class="pm-pincode-input" placeholder="Enter Pincode" maxlength="6" id="pm-pincode">
+            <button class="pm-pincode-check" id="pm-pincode-btn">Check</button>
+          </div>
+          <p class="pm-delivery-estimate" id="pm-delivery-result"></p>
+        </div> {% endcomment %}
+        <!-- Check Delivery -->
+        <div class="pm-delivery-section">
+          <p class="pm-delivery-title">Check Delivery</p>
+          <div class="promise-product-page">
+            <div class="sr-promise-pdp-page" id="PromiseEddSection"></div>
+          </div>
+        </div>
+        <!-- Fresh Batch Banner -->
+        {%- if fresh_batch_text != blank -%}
+          <div class="pm-fresh-batch">
+            <div class="pm-fresh-left"></div>
+            <div class="pm-fresh-content">
+              <p class="pm-fresh-title">{{ fresh_batch_text }}</p>
+              {%- if fresh_batch_dates != blank -%}
+                <p class="pm-fresh-dates">{{ fresh_batch_dates }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- Available Offers -->
+        {%- assign offer_blocks = section.blocks | where: 'type', 'offer' -%}
+        {%- if offer_blocks.size > 0 -%}
+          <div class="pm-offers-section">
+            <p class="pm-offers-title">Available Offers</p>
+            <div class="pm-offers-grid">
+              {%- for block in offer_blocks -%}
+                <div class="pm-offer-card" {{ block.shopify_attributes }}>
+                  <p class="pm-offer-text">{{ block.settings.offer_text }}</p>
+                  {%- if block.settings.coupon_code != blank -%}
+                    <div class="pm-coupon-row">
+                      <span class="pm-coupon-label">Code: {{ block.settings.coupon_code }}</span>
+                      <button class="pm-coupon-copy" data-code="{{ block.settings.coupon_code }}">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pm-mobile-only">
+  {% render 'product-main-mobile' %}
+</div>
+  {%- render 'product-sticky-bar' -%}
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('pm-section-{{ section.id }}');
+  if (!sectionEl) return;
+
+  // ── IMAGE SLIDER ──
+  var mainSlides = Array.from(sectionEl.querySelectorAll('#pm-main-slider-{{ section.id }} .pm-main-slide'));
+  var mainDots   = Array.from(sectionEl.querySelectorAll('#pm-main-dots-{{ section.id }} .pm-main-dot'));
+  var thumbs     = Array.from(sectionEl.querySelectorAll('#pm-thumbs-{{ section.id }} .pm-thumb'));
+  var currentImg = 0;
+
+  function goToImage(idx) {
+    mainSlides[currentImg].classList.remove('active');
+    mainDots[currentImg] && mainDots[currentImg].classList.remove('active');
+    thumbs[currentImg] && thumbs[currentImg].classList.remove('active');
+    currentImg = idx;
+    mainSlides[currentImg].classList.add('active');
+    mainDots[currentImg] && mainDots[currentImg].classList.add('active');
+    thumbs[currentImg] && thumbs[currentImg].classList.add('active');
+  }
+
+  mainDots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { goToImage(i); });
+  });
+
+  thumbs.forEach(function(thumb, i) {
+    thumb.addEventListener('click', function() { goToImage(i); });
+  });
+
+  // ── VARIANT SELECTOR ──
+  var variantCards = Array.from(sectionEl.querySelectorAll('.pm-variant-card'));
+  var selectedVariantId = {{ current_variant.id }};
+
+  variantCards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      variantCards.forEach(function(c) { c.classList.remove('active'); });
+      card.classList.add('active');
+      selectedVariantId = parseInt(card.dataset.variantId);
+
+      // Update price display
+      var price    = parseInt(card.dataset.price);
+      var compare  = parseInt(card.dataset.compare);
+      var priceEl  = sectionEl.querySelector('.pm-price');
+      var compareEl = sectionEl.querySelector('.pm-compare');
+      var discEl   = sectionEl.querySelector('.pm-discount-badge');
+
+      if (priceEl) priceEl.textContent = '₹' + (price / 100).toFixed(0);
+      if (compareEl && compare > price) {
+        compareEl.textContent = '₹' + (compare / 100).toFixed(0);
+        if (discEl) {
+          var disc = Math.round((compare - price) * 100 / compare);
+          discEl.textContent = disc + '% off';
+        }
+      }
+    });
+  });
+    // ── ACCORDIONS ──
+  var accBtns = sectionEl.querySelectorAll('.pm-accordion-btn');
+  accBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key = btn.dataset.accordion;
+      var body = document.getElementById('pm-acc-' + key);
+      var isOpen = btn.classList.contains('open');
+      // Close all
+      accBtns.forEach(function(b) {
+        b.classList.remove('open');
+        var k = b.dataset.accordion;
+        var bd = document.getElementById('pm-acc-' + k);
+        if (bd) bd.style.maxHeight = null;
+      });
+      if (!isOpen && body) {
+        btn.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // ── COUPON COPY ──
+  sectionEl.querySelectorAll('.pm-coupon-copy').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var cleanCode = btn.dataset.code.replace(/<[^>]*>/g, '').trim();
+        navigator.clipboard.writeText(cleanCode).then(function() {
+        btn.innerHTML = '✓';
+        setTimeout(function() {
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        }, 1500);
+      });
+    });
+  });
+
+   // ── QUANTITY ──
+  var qty = 1;
+  var qtyVal = document.getElementById('pm-qty-val');
+  var maxQty = 3;
+
+  document.getElementById('pm-qty-minus').addEventListener('click', function() {
+    if (qty > 1) { qty--; qtyVal.textContent = qty; }
+  });
+  document.getElementById('pm-qty-plus').addEventListener('click', function() {
+    if (qty < maxQty) { qty++; qtyVal.textContent = qty; }
+  });
+
+  // ── ADD TO CART ──
+  document.getElementById('pm-atc-btn').addEventListener('click', async function () {
+    const btn = this;
+    btn.textContent = 'Adding...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: selectedVariantId,
+          quantity: qty,
+          sections: ['cart-drawer'],
+          sections_url: window.location.pathname
+        })
+      });
+
+      const addedItem = await response.json();
+
+      if (addedItem.sections?.['cart-drawer']) {
+        const html = new DOMParser().parseFromString(
+          addedItem.sections['cart-drawer'], 'text/html'
+        );
+
+        // Swap body first — replaces empty state + all items in one shot
+        const newBody = html.querySelector('#nc-body');
+        const oldBody = document.querySelector('#nc-body');
+        if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+        // Insert or swap price breakdown
+        const newBreakdown = html.querySelector('.nc-price-breakdown');
+        if (newBreakdown) {
+          const oldBreakdown = document.querySelector('.nc-price-breakdown');
+          if (oldBreakdown) {
+            oldBreakdown.replaceWith(newBreakdown);
+          } else {
+            // Not in DOM on empty cart page load — insert before footer
+            const footer = document.querySelector('.cart-drawer__footer');
+            if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+          }
+        }
+
+        // Swap footer (sits outside nc-body)
+        const newFooter = html.querySelector('.cart-drawer__footer');
+        const oldFooter = document.querySelector('.cart-drawer__footer');
+        if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+      }
+
+      // Open cart drawer
+      var drawer = document.getElementById('nc-cart-drawer');
+      if (drawer) {
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Fetch full cart for pubsub (badge + price breakdown JS update)
+      const cartResponse = await fetch('/cart.js', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      });
+      const cartData = await cartResponse.json();
+
+      if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-main', cartData: cartData });
+      }
+
+      if (typeof window.ncUpdatePriceBreakdown === 'function') {
+        window.ncUpdatePriceBreakdown(cartData);
+      }
+
+    } catch (e) {
+      console.error(e);
+    }
+
+    btn.textContent = 'Add to Cart';
+    btn.disabled = false;
+  });
+
+  // ── BUY IT NOW ──
+// ── SYNC HIDDEN FORM ──
+function syncGokwikForm() {
+  var gkVariant = document.getElementById('pm-gokwik-variant');
+  var gkQty     = document.getElementById('pm-gokwik-qty');
+  if (gkVariant) gkVariant.value = selectedVariantId;
+  if (gkQty)     gkQty.value     = qty;
+}
+
+// Keep form in sync on variant change
+variantCards.forEach(function(card) {
+  card.addEventListener('click', function() { syncGokwikForm(); });
+});
+
+// Keep form in sync on qty change  
+document.getElementById('pm-qty-minus').addEventListener('click', function() { syncGokwikForm(); });
+document.getElementById('pm-qty-plus').addEventListener('click',  function() { syncGokwikForm(); });
+
+// ── BUY IT NOW — GoKwik with direct checkout fallback ──
+document.getElementById('pm-buy-btn').addEventListener('click', function() {
+  syncGokwikForm();
+  if (typeof onBuyNowClick === 'function') {
+    // GoKwik loaded — it handles the click via onclick attribute
+    return;
+  }
+  // GoKwik not loaded — fallback to direct checkout
+  window.location.href = '/checkout?variant=' + selectedVariantId + '&quantity=' + qty;
+});
+
+  // ── PINCODE CHECK ──
+  {% comment %} document.getElementById('pm-pincode-btn').addEventListener('click', function() {
+    var pin = document.getElementById('pm-pincode').value;
+    var result = document.getElementById('pm-delivery-result');
+    if (pin.length === 6) {
+      var date = new Date();
+      date.setDate(date.getDate() + 5);
+      result.textContent = 'Get it by ' + date.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'short', year:'numeric' });
+    } else {
+      result.textContent = 'Please enter a valid 6-digit pincode';
+    }
+  }); {% endcomment %}
+
+// ── VARIANTS SLIDER DOTS / BAR ──
+  var variantsGrid = document.getElementById('pm-variants-{{ section.id }}');
+  var variantsDots = document.getElementById('pm-variants-dots-{{ section.id }}');
+  var variantsBar  = document.getElementById('pm-variants-bar-{{ section.id }}');
+  var variantsBarFill = document.getElementById('pm-variants-bar-fill-{{ section.id }}');
+  var totalCards = variantCards.length;
+  var totalPages = 1;
+  var cardsPerView = 1;
+
+  function buildVariantsDots() {
+    if (!variantsDots || !variantsGrid || totalCards === 0) return;
+
+    variantsDots.innerHTML = '';
+
+    var cardWidth = variantCards[0].offsetWidth;
+    var gap = 12;
+    cardsPerView = Math.max(1, Math.round(variantsGrid.clientWidth / (cardWidth + gap)));
+    totalPages = Math.max(1, Math.ceil(totalCards / cardsPerView));
+
+    if (totalPages <= 1) return;
+
+    for (var di = 0; di < totalPages; di++) {
+      var dot = document.createElement('button');
+      dot.className = 'pm-variants-dot' + (di === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Page ' + (di + 1));
+      dot.dataset.variantDot = di;
+      variantsDots.appendChild(dot);
+    }
+
+    variantsDots.querySelectorAll('.pm-variants-dot').forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var pageIdx = parseInt(dot.dataset.variantDot);
+        var cardIdx = pageIdx * cardsPerView;
+        var card = variantCards[Math.min(cardIdx, totalCards - 1)];
+        if (card) {
+          variantsGrid.scrollTo({ left: card.offsetLeft - variantsGrid.offsetLeft, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  // ── SHOW DOTS/BAR ONLY WHEN OVERFLOWING ──
+  function updateVariantsOverflow() {
+    if (!variantsGrid) return;
+    var isOverflowing = variantsGrid.scrollWidth > variantsGrid.clientWidth + 2;
+    if (variantsDots) variantsDots.style.display = isOverflowing ? '' : 'none';
+    if (variantsBar) variantsBar.style.display = isOverflowing ? '' : 'none';
+  }
+
+  buildVariantsDots();
+  updateVariantsOverflow();
+
+  window.addEventListener('resize', function () {
+    buildVariantsDots();
+    updateVariantsOverflow();
+  });
+
+  // ── ARROW FUNCTIONALITY ──
+  var prevBtn = document.getElementById('pm-main-prev-{{ section.id }}');
+  var nextBtn = document.getElementById('pm-main-next-{{ section.id }}');
+  var totalImages = mainSlides.length;
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () {
+      var idx = (currentImg - 1 + totalImages) % totalImages;
+      goToImage(idx);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      var idx = (currentImg + 1) % totalImages;
+      goToImage(idx);
+    });
+  }
+
+  // Update dots/bar on scroll
+// Update dots/bar on scroll
+  if (variantsGrid) {
+    variantsGrid.addEventListener('scroll', function() {
+      var scrollLeft = variantsGrid.scrollLeft;
+      var maxScroll  = variantsGrid.scrollWidth - variantsGrid.clientWidth;
+      var progress   = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+
+      // Update progress bar (mobile)
+      if (variantsBarFill) {
+        variantsBarFill.style.width = (progress * 100) + '%';
+      }
+
+      // Update dots (desktop) — map scroll progress directly to page index
+      if (variantsDots && totalPages > 1) {
+        var activeIdx = Math.round(progress * (totalPages - 1));
+        activeIdx = Math.max(0, Math.min(activeIdx, totalPages - 1));
+
+        variantsDots.querySelectorAll('.pm-variants-dot').forEach(function(d, i) {
+          d.classList.toggle('active', i === activeIdx);
+        });
+      }
+    });
+  }
+  
+  document.querySelectorAll('a[href="#judgeme_product_reviews"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.getElementById('judgeme_product_reviews');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  var initInterval = setInterval(function () {
+    if (typeof editPromisePincode === 'function') {
+      editPromisePincode();
+      clearInterval(initInterval);
+
+      var mq = window.matchMedia('(max-width: 768px)');
+
+      // Store the original desktop anchor ONCE before any moves
+      var desktopRight    = document.querySelector('.pm-desktop-only .pm-right');
+      var freshBatch      = desktopRight && desktopRight.querySelector('.pm-fresh-batch');
+      var placeholder     = document.querySelector('.pm-mobile-delivery-placeholder');
+      var deliverySection = document.querySelector('.pm-desktop-only .pm-delivery-section');
+
+      function placeDelivery(isMobile) {
+        if (!deliverySection) return;
+
+        if (isMobile && placeholder) {
+          placeholder.appendChild(deliverySection);
+        } else {
+          // Move back to exact original position in desktop
+          if (freshBatch) {
+            desktopRight.insertBefore(deliverySection, freshBatch);
+          } else if (desktopRight) {
+            desktopRight.appendChild(deliverySection);
+          }
+        }
+      }
+
+      placeDelivery(mq.matches);
+
+      mq.addEventListener('change', function (e) {
+        placeDelivery(e.matches);
+      });
+    }
+  }, 500);
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "tag": "section",
+  "class": "pm-section-outer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "ingredients_text",
+      "label": "Default ingredients text"
+    },
+    {
+      "type": "textarea",
+      "id": "additional_info_text",
+      "label": "Default additional info text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Product Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Badge label",
+          "default": "Boosts Immunity"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background",
+          "default": "#1a6b4a"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "mini_review",
+      "name": "Mini Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name",
+          "default": "Raja Kumar"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "review",
+          "label": "Review text",
+          "default": "Great Results, Loved it!"
+        }
+      ]
+    },
+    {
+      "type": "trust_icon",
+      "name": "Trust Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "No Added Sugar"
+        }
+      ]
+    },
+    {
+      "type": "offer",
+      "name": "Available Offer",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "offer_text",
+          "label": "Offer text",
+          "default": "Get a EXTRA 10% Off on a Cart value of Rs2199"
+        },
+        {
+          "type": "text",
+          "id": "coupon_code",
+          "label": "Coupon code",
+          "default": "SUMMER10"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Main",
+      "blocks": [
+        { "type": "badge", "settings": { "label": "Boosts Immunity", "bg_color": "#1a6b4a" } },
+        { "type": "badge", "settings": { "label": "No Added Color", "bg_color": "#7c5c3a" } },
+        { "type": "badge", "settings": { "label": "No Added Sugar", "bg_color": "#555" } },
+        { "type": "mini_review", "settings": { "name": "Raja Kumar", "rating": 5, "review": "Great Results, Loved it!" } },
+        { "type": "mini_review", "settings": { "name": "Priya", "rating": 5, "review": "Awesome Taste fr..!" } },
+        { "type": "mini_review", "settings": { "name": "Raja Kumar", "rating": 3, "review": "Great Results, Love" } },
+        { "type": "trust_icon", "settings": { "label": "No Added Sugar" } },
+        { "type": "trust_icon", "settings": { "label": "No Preservatives 100% Natural" } },
+        { "type": "trust_icon", "settings": { "label": "No Added Color" } },
+        { "type": "offer", "settings": { "offer_text": "Get a EXTRA 10% Off on a Cart value of Rs2199", "coupon_code": "SUMMER10" } },
+        { "type": "offer", "settings": { "offer_text": "Buy 2 Get 1 Free on a Seabuckthorn pulp", "coupon_code": "BUY310" } },
+        { "type": "offer", "settings": { "offer_text": "Get a EXTRA 10% Off on a Cart value of Rs2199", "coupon_code": "SUMMER10" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

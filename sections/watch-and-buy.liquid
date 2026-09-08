@@ -1,0 +1,81 @@
+{{ 'section-watch-and-buy.css' | asset_url | stylesheet_tag }}
+
+<div class="{{ section.settings.section_style }}" style=" {% if section.settings.bg_image != blank %}
+          background-image: url({{ section.settings.bg_image | image_url: width: 2000 }});
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% else %}
+          background: {{ section.settings.bg_color }};
+        {% endif %} ">
+  
+  <div class="wab-wrapper">
+    <h2 class="wab-title" style="color: {{ section.settings.title_color }};">
+      {{ section.settings.title }}
+    </h2>
+
+    <div class="wab-content">
+      {% for block in section.blocks %}
+        {% render block %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Watch & Buy",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_style",
+      "label": "Section Style",
+      "options": [
+        { "value": "wab-section", "label": "Default" },
+        { "value": "wab-section-border", "label": "With Border" }
+      ],
+      "default": "wab-section"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Watch & Buy"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fdf6e3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Watch & Buy"
+    }
+  ]
+}
+{% endschema %}

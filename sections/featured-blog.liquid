@@ -1,0 +1,177 @@
+{{ 'section-featured-blog.css' | asset_url | stylesheet_tag }}
+
+<div class="fb-section" id="fb-section-{{ section.id }}" style="background: {{ section.settings.bg_color }};">
+  <div class="fb-wrapper">
+
+    <h2 class="fb-title">{{ section.settings.title }}</h2>
+
+    <div class="fb-slider-row">
+      <button class="fb-arrow fb-arrow--prev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="fb-slider">
+        {%- for block in section.blocks -%}
+          {%- assign blog_handle = block.settings.blog -%}
+          {%- assign selected_blog = blogs[blog_handle] -%}
+          {%- if selected_blog != blank -%}
+            {%- assign article = selected_blog.articles.first -%}
+            {%- if article != blank -%}
+              <div class="fb-card" {{ block.shopify_attributes }}>
+                <a href="{{ article.url }}" class="fb-img-wrap">
+                  {%- if article.image != blank -%}
+                    <img
+                      src="{{ article.image | image_url: width: 600 }}"
+                      alt="{{ article.title }}"
+                      width="600"
+                      height="400"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'fb-placeholder-img' }}
+                  {%- endif -%}
+                </a>
+                <div class="fb-info">
+                  <h3 class="fb-article-title">{{ article.title }}</h3>
+                  <p class="fb-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+                  <a href="{{ article.url }}" class="fb-read-more">Read More</a>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <button class="fb-arrow fb-arrow--next" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="fb-dots"></div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('fb-section-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var slider = sectionEl.querySelector('.fb-slider');
+  var prevBtn = sectionEl.querySelector('.fb-arrow--prev');
+  var nextBtn = sectionEl.querySelector('.fb-arrow--next');
+  var dotsContainer = sectionEl.querySelector('.fb-dots');
+  var cards = slider.querySelectorAll('.fb-card');
+  var current = 0;
+
+  if (!cards.length) return;
+
+  function visible() {
+    return window.innerWidth < 600 ? 1 : window.innerWidth < 900 ? 2 : 3;
+  }
+
+  function cardWidth() {
+    var gap = parseInt(getComputedStyle(slider).gap) || 24;
+    return cards[0].offsetWidth + gap;
+  }
+
+  function buildDots() {
+    var count = Math.max(1, cards.length - visible() + 1);
+    dotsContainer.innerHTML = '';
+    for (var i = 0; i < count; i++) {
+      var b = document.createElement('button');
+      b.className = 'fb-dot' + (i === 0 ? ' active' : '');
+      b.setAttribute('aria-label', 'Slide ' + (i + 1));
+      b.addEventListener('click', (function(idx) {
+        return function() { goTo(idx); };
+      })(i));
+      dotsContainer.appendChild(b);
+    }
+  }
+
+  function updateArrows() {
+    prevBtn.classList.toggle('disabled', current <= 0);
+    nextBtn.classList.toggle('disabled', current >= cards.length - visible());
+  }
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(i, cards.length - visible()));
+    slider.scrollTo({ left: current * cardWidth(), behavior: 'smooth' });
+    dotsContainer.querySelectorAll('.fb-dot').forEach(function(d, idx) {
+      d.classList.toggle('active', idx === current);
+    });
+    updateArrows();
+  }
+
+  prevBtn.addEventListener('click', function() { goTo(current - 1); });
+  nextBtn.addEventListener('click', function() { goTo(current + 1); });
+
+  slider.addEventListener('scroll', function() {
+    var cw = cardWidth();
+    if (!cw) return;
+    var idx = Math.round(slider.scrollLeft / cw);
+    current = idx;
+    dotsContainer.querySelectorAll('.fb-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === idx);
+    });
+    updateArrows();
+  });
+ 
+  window.addEventListener('resize', function() {
+    buildDots();
+    updateArrows();
+  });
+
+  buildDots();
+  updateArrows();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Featured Blog",
+  "tag": "section",
+  "class": "fb-section-outer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section heading",
+      "default": "Latest Blog"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog",
+      "name": "Blog",
+      "settings": [
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Select Blog"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Blog",
+      "blocks": [
+        { "type": "blog" },
+        { "type": "blog" },
+        { "type": "blog" }
+      ]
+    }
+  ]
+}
+{% endschema %}

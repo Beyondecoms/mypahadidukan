@@ -1,0 +1,217 @@
+{{ 'section-inter-shipping.css' | asset_url | stylesheet_tag }}
+
+<div class="is-section" style="background: {{ section.settings.bg_color }};">
+  <div class="is-wrapper">
+
+    <!-- Title -->
+    <h1 class="is-title">{{ section.settings.title | default: 'International Shipping' }}</h1>
+
+    <!-- Items -->
+    <div class="is-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'shipping_item' -%}
+          <div class="is-item" {{ block.shopify_attributes }}>
+            <div class="is-item-inner">
+
+              <!-- Icon + Heading row -->
+              <div class="is-item-header">
+                {%- if block.settings.icon != blank -%}
+                  <div class="is-icon-wrap">
+                    <img
+                      src="{{ block.settings.icon | image_url: width: 80 }}"
+                      alt="{{ block.settings.heading }}"
+                      width="40"
+                      height="40"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+                <h2 class="is-item-heading">{{ block.settings.heading }}</h2>
+              </div>
+
+              <!-- Body content -->
+              <div class="is-item-body">
+                {%- if block.settings.text != blank -%}
+                  <p class="is-item-text">{{ block.settings.text }}</p>
+                {%- endif -%}
+
+                {%- if block.settings.bold_label != blank -%}
+                  <p class="is-item-bold">{{ block.settings.bold_label }}</p>
+                {%- endif -%}
+
+                {%- if block.settings.list_items != blank -%}
+                  <ul class="is-item-list">
+                    {%- assign items = block.settings.list_items | split: '|' -%}
+                    {%- for item in items -%}
+                      {%- if item != blank -%}
+                        <li>{{ item | strip }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- Footer contact row -->
+    {%- if section.settings.contact_label != blank or section.settings.whatsapp_url != blank or section.settings.email_url != blank -%}
+      <div class="is-footer">
+        {%- if section.settings.contact_label != blank -%}
+          <p class="is-footer-label">{{ section.settings.contact_label }}</p>
+        {%- endif -%}
+        <div class="is-footer-links">
+          {%- if section.settings.whatsapp_url != blank -%}
+            <a href="{{ section.settings.whatsapp_url }}" class="is-footer-link" target="_blank" rel="noopener">
+              {{ section.settings.whatsapp_label | default: 'Whatsapp Us' }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.email_url != blank -%}
+            <a href="{{ section.settings.email_url }}" class="is-footer-link">
+              {{ section.settings.email_label | default: 'Email Us' }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "International Shipping",
+  "tag": "section",
+  "class": "is-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "International Shipping"
+    },
+    {
+      "type": "header",
+      "content": "Footer Contact"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact label",
+      "default": "You may reach out to us:"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp link label",
+      "default": "Whatsapp Us"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "WhatsApp URL"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email link label",
+      "default": "Email Us"
+    },
+    {
+      "type": "url",
+      "id": "email_url",
+      "label": "Email URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shipping_item",
+      "name": "Shipping Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shipping Options"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Body text",
+          "default": "MPD ships internationally to 70+ countries using the Government of India postal service or DHL, depending on service availability in your country."
+        },
+        {
+          "type": "text",
+          "id": "bold_label",
+          "label": "Bold sub-label (optional)",
+          "info": "e.g. 'Delivery time does not include:'"
+        },
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items (separate with |)",
+          "info": "e.g. Item one|Item two|Item three"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "International Shipping",
+      "blocks": [
+        {
+          "type": "shipping_item",
+          "settings": {
+            "heading": "Shipping Options",
+            "text": "MPD ships internationally to 70+ countries using the Government of India postal service or DHL, depending on service availability in your country."
+          }
+        },
+        {
+          "type": "shipping_item",
+          "settings": {
+            "heading": "Payment Methods",
+            "text": "We accept all international debit and credit cards, as well as PayPal."
+          }
+        },
+        {
+          "type": "shipping_item",
+          "settings": {
+            "heading": "Customs Fees",
+            "text": "Please note that additional charges, such as customs handling fees, import duties, or other taxes, may apply based on your country's regulations. These fees will be solely the responsibility of the customer."
+          }
+        },
+        {
+          "type": "shipping_item",
+          "settings": {
+            "heading": "Placing an Order",
+            "text": "You can place an order directly on our website, or you can fill out the form below to request assistance for placing your order."
+          }
+        },
+        {
+          "type": "shipping_item",
+          "settings": {
+            "heading": "Delivery Time",
+            "text": "Delivery typically takes 7-15 business days, depending on your exact location.",
+            "bold_label": "Delivery time does not include:",
+            "list_items": "Additional delays in clearance of goods by customs.|Delays by the delivery partner."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

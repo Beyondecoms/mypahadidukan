@@ -1,477 +1,254 @@
-{{ 'video.css' | asset_url | stylesheet_tag }}
+{{ 'video-section.css' | asset_url | stylesheet_tag }}
+{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
-{% liquid
-  if section.settings.width == blank
-    assign width = '100%'
-  else
-    assign width = section.settings.width
-  endif
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
 
-  assign autoplay = false
-  if section.settings.autoplay and section.settings.muted
-    assign autoplay = true
-  endif
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
 
-  assign cover_image = false
-  if section.settings.image != blank
-    assign cover_image = true
-  endif
+{%- liquid
+  assign video_id = section.settings.video.id | default: section.settings.video_url.id
+  assign video_alt = section.settings.video.alt | default: section.settings.description
+  assign alt = 'sections.video.load_video' | t: description: video_alt | escape
+  assign poster = section.settings.video.preview_image | default: section.settings.cover_image
 
-  assign animation_effect = settings.animations
-  assign animated = false
-  if animation_effect != 'none'
-    assign animated = true
-    if section.settings.animations != 'inherit'
-      assign animation_effect = section.settings.animations
+  if section.settings.video != null
+    assign ratio_diff = section.settings.video.aspect_ratio | minus: poster.aspect_ratio | abs
+    if ratio_diff < 0.01 and ratio_diff > 0
+      assign fix_ratio = true
     endif
   endif
+-%}
 
-  assign container = section.settings.container
-  if container == 'w-full'
-    assign container = 'container-full'
-  endif
+{%- capture sizes -%}
+  {% if section.settings.full_width -%}
+    100vw
+  {%- else -%}
+    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px)
+    calc(100vw - 10rem), 100vw
+  {%- endif %}
+{%- endcapture -%}
 
-  assign classes = 'm-section m-video'
-  if section.settings.custom_class != blank
-    assign classes = classes | append: ' ' | append: section.settings.custom_class
-  endif
-  assign classes = classes | append: ' m-gradient' | append: ' m-color-' | append: section.settings.color_scheme
-%}
-
-<style>
-  #m-video-section--{{ section.id }} {
-    --section-padding-top: {{ section.settings.padding_top }}px;
-    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
-  }
-</style>
-<section
-  class="{{ classes }}"
-  id="m-video-section--{{ section.id }}"
-  data-section-id="{{ section.id }}"
-  data-section-type="video-section"
-  data-video-ratio="{{ section.settings.ratio | default: '16:9' }}"
-  data-autoplay="{{ autoplay }}"
-  data-loop="{{ section.settings.loop }}"
-  data-muted="{{ section.settings.muted }}"
->
-  <div class="{{ container }} m-section-my m-section-py">
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="video-section isolate{% unless section.settings.full_width %} page-width{% endunless %} section-{{ section.id }}-padding">
     <div
-      class="m-video__wrapper{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}"
-      style="width: {{- width -}};"
+      {% if section.settings.full_width %}
+        class="page-width"
+      {% endif %}
     >
-      <div
-        class="m-video__inner m:blocks-radius"
-        style="--aspect-ratio: {{ section.settings.ratio | replace: ':', '/' }}"
-      >
-        <video-component
-          class="deferred-media no-js-hidden"
-          data-media-id="{{ section.settings.video_link.id }}"
-          data-auto-play="{{ autoplay }}"
-          data-cover-image="{{ cover_image }}"
-        >
-          {%- unless autoplay -%}
-            <button
-              id="Video-Deferred-Poster-Modal-{{ section.settings.video_link.id }}-{{ section.id }}"
-              class="deferred-media__poster"
-              type="button"
-              aria-label="{{ 'sections.video.play' | t }}"
-            >
-              <span class="deferred-media__poster-button m-video__play m-video__play--style-{{ section.settings.play_style }} m-video__play--size-{{ section.settings.play_size }} m:text-{{ section.settings.text_color }}">
-                <svg viewBox="0 0 18 18" fill="currentColor">
-                  <path d="M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z" fill="currentColor"></path>
-                </svg>
-              </span>
-              {%- unless section.settings.video_title == blank -%}
-                <h2 class="m-video__title m-video__title--{{ section.settings.text_size }} m:hidden md:m:block m:text-{{ section.settings.text_color }}">
-                  {{ section.settings.video_title }}
-                </h2>
-              {%- endunless -%}
-              {%- if section.settings.image != blank -%}
-                <div
-                  class="m-video__cover m-bg-lazy"
-                  style="background-image: url({{ section.settings.image | image_url: width: 1920 }})"
-                ></div>
-              {%- else -%}
-                <div class="m-video__cover m-video__cover-placeholder">
-                  {{ 'lifestyle-2' | placeholder_svg_tag: 'm-placeholder-svg m:w-full m:h-full' }}
-                </div>
-              {%- endif -%}
-            </button>
-          {%- endunless -%}
-          <template>
-            {%- if section.settings.video_type == 'external' -%}
-              {%- if section.settings.video_link.type == 'youtube' -%}
-                {% liquid
-                  assign youtubeURL = 'https://www.youtube.com/embed/' | append: section.settings.video_link.id | append: '?enablejsapi=1'
-                  if section.settings.muted
-                    assign youtubeURL = youtubeURL | append: '&mute=1'
-                    if section.settings.autoplay
-                      assign youtubeURL = youtubeURL | append: '&autoplay=1'
-                    endif
-                  endif
-
-                  if section.settings.loop
-                    assign youtubeURL = youtubeURL | append: '&loop=1&playlist=' | append: section.settings.video_link.id
-                  endif
-                %}
-                <iframe
-                  src="{{ youtubeURL }}"
-                  class="js-youtube"
-                  allow="autoplay; encrypted-media"
-                  allowfullscreen
-                  title="{{ section.settings.video_title | escape }}"
-                ></iframe>
-              {%- else -%}
-                {% liquid
-                  assign vimeoURL = 'https://player.vimeo.com/video/' | append: section.settings.video_link.id
-                  assign hasParam = false
-                  assign vimeoParam = ''
-
-                  if section.settings.muted
-                    assign hasParam = true
-                    assign vimeoParam = vimeoParam | append: '&muted=1'
-
-                    if section.settings.autoplay
-                      assign vimeoParam = vimeoParam | append: '&autoplay=1'
-                    endif
-                  endif
-
-                  if section.settings.loop
-                    assign hasParam = true
-                    assign vimeoParam = vimeoParam | append: '&loop=1'
-                  endif
-
-                  if hasParam
-                    assign vimeoURL = vimeoURL | append: '?' | append: vimeoParam
-                  endif
-                %}
-                <iframe
-                  src="{{ vimeoURL }}"
-                  class="js-vimeo"
-                  allow="autoplay; encrypted-media"
-                  allowfullscreen
-                  title="{{ section.settings.video_title | escape }}"
-                ></iframe>
-              {%- endif -%}
-            {%- else -%}
-              {% liquid
-                assign video_url = 'https://cdn.shopify.com/videos/c/o/v/fbb140fd46e3429eba459e1549dbbe38.mp4'
-                for source in section.settings.shopify_video.sources
-                  assign format = source.format
-                  if format == 'mp4'
-                    assign video_url = source.url
-                    break
-                  endif
-                endfor
-              %}
-              <video
-                src="{{ video_url }}"
-                playsinline
-                {% if section.settings.show_controls %}
-                  controls
-                {% endif %}
-                {% if section.settings.loop %}
-                  loop
-                {% endif %}
-                {% if section.settings.muted %}
-                  muted
-                  {% if section.settings.autoplay %} autoplay{% endif %}
-                {% endif %}
-              ></video>
-            {%- endif -%}
-          </template>
-        </video-component>
-      </div>
+      {%- unless section.settings.heading == blank -%}
+        <div class="title-wrapper title-wrapper--no-top-margin{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        </div>
+      {%- endunless -%}
     </div>
+    <deferred-media
+      class="video-section__media deferred-media gradient global-media-settings{% if section.settings.full_width %} global-media-settings--full-width{% endif %}{% if fix_ratio %} media-fit-cover{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      data-media-id="{{ video_id }}"
+      {% if poster != null %}
+        style="--ratio-percent: {{ 1 | divided_by: poster.aspect_ratio | times: 100 }}%;"
+      {% endif %}
+    >
+      <button
+        id="Deferred-Poster-Modal-{{ video_id }}"
+        class="video-section__poster media deferred-media__poster media--landscape"
+        type="button"
+        aria-label="{{ alt }}"
+      >
+        {%- if poster != null -%}
+          {{
+            poster
+            | image_url: width: 3840
+            | image_tag: sizes: sizes, widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840', alt: alt
+          }}
+        {%- else -%}
+          {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+        {%- endif -%}
+        <span class="deferred-media__poster-button motion-reduce">
+          <span class="svg-wrapper">
+            {{- 'icon-play.svg' | inline_asset_content -}}
+          </span>
+        </span>
+      </button>
+      <template>
+        {%- if section.settings.video == null and section.settings.video_url != null -%}
+          {%- liquid
+            assign loop = ''
+            if section.settings.enable_video_looping
+              assign loop = '&loop=1&playlist=' | append: video_id
+            endif
+          -%}
+          {%- if section.settings.video_url.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=1{{ loop }}"
+              class="js-youtube"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1{{ loop }}"
+              class="js-vimeo"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- endif -%}
+        {%- else -%}
+          {{
+            section.settings.video
+            | video_tag:
+              image_size: '1100x',
+              autoplay: true,
+              loop: section.settings.enable_video_looping,
+              controls: true,
+              muted: false
+          }}
+        {%- endif -%}
+      </template>
+    </deferred-media>
   </div>
-</section>
+</div>
 
 {% schema %}
 {
-  "name": "Video",
+  "name": "t:sections.video.name",
+  "tag": "section",
+  "class": "section",
   "disabled_on": {
     "groups": ["header", "footer"]
   },
   "settings": [
     {
-      "type": "paragraph",
-      "content": "[Watch tutorial](https://foxecom.link/7sOoqj)"
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "t:sections.video.settings.heading.default",
+      "label": "t:sections.video.settings.heading.label"
     },
     {
       "type": "select",
-      "id": "container",
-      "label": "Container type",
-      "default": "w-full",
+      "id": "heading_size",
       "options": [
         {
-          "value": "container-fluid",
-          "label": "Default"
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
         },
         {
-          "value": "w-full",
-          "label": "Full width"
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
         },
         {
-          "value": "container",
-          "label": "Use container box"
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
         }
-      ]
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "t:sections.video.settings.enable_video_looping.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__1.content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:sections.video.settings.video.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__2.content"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.video.settings.paragraph.content"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "label": "t:sections.video.settings.video_url.label",
+      "info": "t:sections.video.settings.video_url.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "t:sections.video.settings.cover_image.label"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "t:sections.video.settings.description.label",
+      "info": "t:sections.video.settings.description.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video.settings.header__3.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.video.settings.full_width.label",
+      "default": false
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "Color scheme"
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
     },
     {
       "type": "header",
-      "content": "Video settings"
-    },
-    {
-      "type": "select",
-      "id": "video_type",
-      "label": "Video type",
-      "default": "shopify",
-      "options": [
-        {
-          "value": "shopify",
-          "label": "Shopify hosted"
-        },
-        {
-          "value": "external",
-          "label": "External"
-        }
-      ]
-    },
-    {
-      "type": "video",
-      "id": "shopify_video",
-      "label": "Shopify hosted"
-    },
-    {
-      "type": "video_url",
-      "id": "video_link",
-      "label": "Video link",
-      "accept": ["youtube", "vimeo"],
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-      "info": "Accepts YouTube or Vimeo links"
-    },
-    {
-      "type": "select",
-      "id": "ratio",
-      "label": "Video ratio",
-      "default": "16:9",
-      "options": [
-        {
-          "value": "16:9",
-          "label": "16:9"
-        },
-        {
-          "value": "21:9",
-          "label": "21:9"
-        },
-        {
-          "value": "4:3",
-          "label": "4:3"
-        },
-        {
-          "value": "3:4",
-          "label": "3:4"
-        },
-        {
-          "value": "1:1",
-          "label": "1:1"
-        },
-        {
-          "value": "4:5",
-          "label": "4:5"
-        },
-        {
-          "value": "9:16",
-          "label": "9:16"
-        }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Cover image"
-    },
-    {
-      "type": "textarea",
-      "id": "video_title",
-      "label": "Heading"
-    },
-    {
-      "type": "select",
-      "id": "text_size",
-      "label": "Text size",
-      "default": "medium",
-      "options": [
-        {
-          "label": "Medium",
-          "value": "medium"
-        },
-        {
-          "label": "Large",
-          "value": "large"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "inherit",
-      "options": [
-        {
-          "value": "black",
-          "label": "Dark"
-        },
-        {
-          "value": "white",
-          "label": "Light"
-        },
-        {
-          "value": "inherit",
-          "label": "Inherit"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "play_style",
-      "label": "Play button style",
-      "options": [
-        {
-          "label": "Outline",
-          "value": "outline"
-        },
-        {
-          "label": "Solid",
-          "value": "solid"
-        }
-      ],
-      "default": "solid"
-    },
-    {
-      "type": "select",
-      "id": "play_size",
-      "label": "Play button size",
-      "options": [
-        {
-          "label": "Medium",
-          "value": "medium"
-        },
-        {
-          "label": "Large",
-          "value": "large"
-        }
-      ],
-      "default": "medium"
-    },
-    {
-      "type": "text",
-      "id": "width",
-      "label": "Video width",
-      "default": "650px",
-      "info": "Leave blank for follow container width"
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Autoplay",
-      "default": false,
-      "info": "Only work if the muted box is checked"
-    },
-    {
-      "type": "checkbox",
-      "id": "loop",
-      "label": "Loop",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "muted",
-      "label": "Muted",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_controls",
-      "label": "Show controls",
-      "default": false,
-      "info": "Only work when use Shopify hosted video type"
-    },
-    {
-      "type": "header",
-      "content": "Section Padding"
+      "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
       "id": "padding_top",
-      "label": "Padding Top",
-      "default": 50,
       "min": 0,
       "max": 100,
-      "step": 2,
-      "unit": "px"
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Padding Bottom",
-      "default": 50,
       "min": 0,
       "max": 100,
-      "step": 2,
-      "unit": "px"
-    },
-    {
-      "type": "header",
-      "content": "Custom Attributes"
-    },
-    {
-      "type": "text",
-      "id": "custom_class",
-      "label": "Custom classes"
-    },
-    {
-      "type": "header",
-      "content": "Animations"
-    },
-    {
-      "type": "select",
-      "id": "animations",
-      "label": "Visible in the view animation",
-      "default": "inherit",
-      "options": [
-        {
-          "value": "inherit",
-          "label": "Inherit global setting"
-        },
-        {
-          "value": "fade-in",
-          "label": "Fade in"
-        },
-        {
-          "value": "fade-in-up",
-          "label": "Fade in up"
-        },
-        {
-          "value": "fade-in-left",
-          "label": "Fade in left"
-        },
-        {
-          "value": "fade-in-right",
-          "label": "Fade in right"
-        }
-      ]
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
     }
   ],
   "presets": [
     {
-      "name": "Video",
-      "category": "Video"
+      "name": "t:sections.video.presets.name"
     }
   ]
 }

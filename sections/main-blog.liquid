@@ -1,0 +1,285 @@
+{{ 'section-blog-articles-grid.css' | asset_url | stylesheet_tag }}
+
+<div class="bag-section" style="background: {{ section.settings.bg_color }};" id="bag-{{ section.id }}">
+  <div class="bag-wrapper">
+
+    <!-- Category Title -->
+    <h2 class="bag-active-title" id="bag-title-{{ section.id }}">
+      {{ section.blocks.first.settings.blog_label | default: section.blocks.first.settings.blog_handle }}
+    </h2>
+
+    <!-- Panels -->
+    <div class="bag-panels-wrap" id="bag-panels-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        {%- assign blog_obj = blogs[block.settings.blog_handle] -%}
+        <div
+          class="bag-panel {% if forloop.first %}active{% endif %}"
+          data-panel="{{ forloop.index0 }}"
+          data-blog="{{ block.settings.blog_handle }}"
+          data-label="{{ block.settings.blog_label | default: block.settings.blog_handle }}"
+        >
+          {%- if blog_obj != blank and blog_obj.articles.size > 0 -%}
+            <div class="bag-grid">
+              {%- for article in blog_obj.articles limit: section.settings.articles_count -%}
+                <a href="{{ article.url }}" class="bag-card">
+                  <div class="bag-card-img-wrap">
+                    {%- if article.image != blank -%}
+                      <img
+                        src="{{ article.image | image_url: width: 600 }}"
+                        alt="{{ article.title }}"
+                        class="bag-card-img"
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      <div class="bag-card-img-placeholder"></div>
+                    {%- endif -%}
+                  </div>
+                  <div class="bag-card-body">
+                    <h3 class="bag-card-title">{{ article.title }}</h3>
+                    <p class="bag-card-excerpt">
+                      {{ article.excerpt_or_content | strip_html | truncate: 120 }}
+                    </p>
+                    <div class="bag-card-read">
+                      Read More
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 8 16 12 12 16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <p class="bag-empty">No articles found. Make sure the blog handle is correct.</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var sectionEl = document.getElementById('bag-{{ section.id }}');
+    if (!sectionEl) return;
+
+    var panels  = Array.from(sectionEl.querySelectorAll('.bag-panel'));
+    var titleEl = document.getElementById('bag-title-{{ section.id }}');
+    var current = 0;
+    var perPage = parseInt('{{ section.settings.articles_per_page }}') || 6;
+
+    // ── INIT all panels ──
+    panels.forEach(function(panel) {
+      initPanel(panel);
+    });
+
+    function initPanel(panel) {
+      var cards = Array.from(panel.querySelectorAll('.bag-card'));
+      var total = cards.length;
+
+      if (!perPage || perPage <= 0 || isNaN(perPage)) perPage = 6;
+      if (total <= perPage) return;
+
+      var totalPages = Math.ceil(total / perPage);
+      panel.dataset.totalPages = totalPages;
+      panel.dataset.currentPage = 1;
+
+      showPage(panel, 1);
+      buildPagination(panel, totalPages);
+    }
+
+    function showPage(panel, page) {
+      var cards = Array.from(panel.querySelectorAll('.bag-card'));
+      var total = cards.length;
+
+      if (!perPage || perPage <= 0 || isNaN(perPage)) perPage = 6;
+
+      var totalPages = Math.ceil(total / perPage);
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+
+      var start = (page - 1) * perPage;
+      var end   = start + perPage;
+
+      cards.forEach(function(card, i) {
+        card.style.display = (i >= start && i < end) ? '' : 'none';
+      });
+
+      panel.dataset.currentPage = page;
+
+      var paginationEl = panel.querySelector('.bag-pagination');
+      if (paginationEl) updatePaginationUI(paginationEl, totalPages, page);
+    }
+
+    function buildPagination(panel, totalPages) {
+      var existing = panel.querySelector('.bag-pagination');
+      if (existing) existing.remove();
+
+      var pag = document.createElement('div');
+      pag.className = 'bag-pagination';
+
+      pag.addEventListener('click', function(e) {
+        var btn = e.target.closest('.bag-page-btn');
+        if (!btn || btn.disabled) return;
+        var page = parseInt(btn.dataset.page);
+        if (!isNaN(page)) {
+          showPage(panel, page);
+          sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      panel.appendChild(pag);
+      updatePaginationUI(pag, totalPages, 1);
+    }
+
+    function updatePaginationUI(pag, totalPages, currentPage) {
+      pag.innerHTML = '';
+
+      function makeBtn(label, page, isActive, isDisabled) {
+        var btn = document.createElement('button');
+        btn.className = 'bag-page-btn' + (isActive ? ' active' : '') + (isDisabled ? ' disabled' : '');
+        btn.dataset.page = page;
+        btn.disabled = isDisabled;
+        btn.innerHTML = label;
+        return btn;
+      }
+
+      pag.appendChild(makeBtn('&laquo;', currentPage - 1, false, currentPage === 1));
+
+      getPageNumbers(currentPage, totalPages).forEach(function(p) {
+        if (p === '...') {
+          var ellipsis = document.createElement('span');
+          ellipsis.className = 'bag-page-ellipsis';
+          ellipsis.textContent = '...';
+          pag.appendChild(ellipsis);
+        } else {
+          pag.appendChild(makeBtn(p, p, p === currentPage, false));
+        }
+      });
+
+      pag.appendChild(makeBtn('&raquo;', currentPage + 1, false, currentPage === totalPages));
+    }
+
+    function getPageNumbers(current, total) {
+      if (total <= 5) {
+        var arr = [];
+        for (var i = 1; i <= total; i++) arr.push(i);
+        return arr;
+      }
+      var pages = [1];
+      if (current > 3) pages.push('...');
+      for (var p = Math.max(2, current - 1); p <= Math.min(total - 1, current + 1); p++) {
+        pages.push(p);
+      }
+      if (current < total - 2) pages.push('...');
+      pages.push(total);
+      return pages;
+    }
+
+    // ── SWITCH PANEL ──
+    function switchTo(blogHandle, direction) {
+      var targetIdx = panels.findIndex(function(p) {
+        return p.dataset.blog === blogHandle;
+      });
+      if (targetIdx === -1 || targetIdx === current) return;
+
+      var outClass = direction === 'right' ? 'slide-out-left' : 'slide-out-right';
+      panels[current].classList.add(outClass);
+
+      setTimeout(function() {
+        panels[current].classList.remove('active', outClass);
+        current = targetIdx;
+
+        if (titleEl) titleEl.textContent = panels[current].dataset.label;
+
+        // ✅ Reset to page 1 on panel switch
+        if (panels[current].dataset.totalPages) {
+          showPage(panels[current], 1);
+        }
+
+        var inClass = direction === 'right' ? 'slide-in-right' : 'slide-in-left';
+        panels[current].classList.add('active', inClass);
+
+        setTimeout(function() {
+          panels[current].classList.remove(inClass);
+        }, 420);
+
+      }, 200);
+    }
+
+    document.addEventListener('bcf:categoryChange', function(e) {
+      switchTo(e.detail.blog, e.detail.direction || 'right');
+    });
+
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Blog Articles Grid",
+  "tag": "section",
+  "class": "bag-section-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f9f6f1"
+    },
+    {
+      "type": "range",
+      "id": "articles_count",
+      "min": 60,
+      "max": 80,
+      "step": 2,
+      "label": "Articles per category",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "label": "Articles per page",
+      "default": 9
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_panel",
+      "name": "Blog Panel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "blog_handle",
+          "label": "Blog handle",
+          "info": "Must match exactly the handle in Blog Category Circles section",
+          "default": "news"
+        },
+        {
+          "type": "text",
+          "id": "blog_label",
+          "label": "Display label (shown as title)",
+          "default": "Info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Articles Grid",
+      "blocks": [
+        { "type": "blog_panel", "settings": { "blog_handle": "news",               "blog_label": "Info" } },
+        { "type": "blog_panel", "settings": { "blog_handle": "shilajit",           "blog_label": "Shilajit" } },
+        { "type": "blog_panel", "settings": { "blog_handle": "travel",             "blog_label": "Travel" } },
+        { "type": "blog_panel", "settings": { "blog_handle": "health-and-wellness","blog_label": "Health and Wellness" } },
+        { "type": "blog_panel", "settings": { "blog_handle": "recipes",            "blog_label": "Recipes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,338 @@
+{% comment %}
+  Best Seller Section
+  - Pulls products from a chosen collection
+  - Renders each with your existing 'card-product' snippet
+  - Heading is editable, and can be hidden/removed from the theme editor
+  - "Shop more" button reveals additional cards via JS (no reload)
+  Save as: sections/best-seller.liquid
+{% endcomment %}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign initial_count = section.settings.products_to_show
+  assign load_count = section.settings.products_to_load
+-%}
+
+<div class="bestseller-section" id="BestSeller-{{ section.id }}"
+  style="
+    --bs-columns-desktop: {{ section.settings.columns_desktop }};
+    --bs-columns-tablet: {{ section.settings.columns_tablet }};
+    --bs-columns-mobile: {{ section.settings.columns_mobile }};
+  "
+  data-initial-count="{{ initial_count }}"
+  data-load-count="{{ load_count }}"
+>
+
+  {%- if section.settings.show_heading and section.settings.heading != blank -%}
+    <div class="bestseller-header">
+      <h2 class="bestseller-heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="bestseller-subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if collection != blank and collection.products.size > 0 -%}
+    <div class="bestseller-grid" data-bestseller-grid>
+      {%- for product in collection.products -%}
+        <div
+          class="bestseller-item{% if forloop.index > initial_count %} is-hidden{% endif %}"
+          data-bestseller-item
+        >
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: section.settings.image_ratio,
+            image_shape: section.settings.image_shape,
+            show_secondary_image: section.settings.show_secondary_image,
+            show_vendor: section.settings.show_vendor,
+            show_rating: section.settings.show_rating,
+            lazy_load: true,
+            skip_styles: false
+          %}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if collection.products.size > initial_count -%}
+      <div class="bestseller-footer">
+        <button type="button" class="bestseller-shop-more-btn" data-bestseller-show-more>
+          <span data-btn-label>{{ section.settings.button_label | default: 'Shop more' }}</span>
+        </button>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <p class="bestseller-empty">Select a collection with products to display best sellers.</p>
+  {%- endif -%}
+</div>
+
+<style>
+  #BestSeller-{{ section.id }} {
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-header {
+    margin-bottom: 32px;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-heading {
+    font-family: var(--font-heading-family);
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    color: var(--primary-web-color);
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-subheading {
+    font-size: 1rem;
+    color: #6b6b6b;
+    margin: 0;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--bs-columns-mobile, 2), 1fr);
+    gap: 24px;
+    text-align: left;
+  }
+
+  @media screen and (min-width: 750px) {
+    #BestSeller-{{ section.id }} .bestseller-grid {
+      grid-template-columns: repeat(var(--bs-columns-tablet, 2), 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    #BestSeller-{{ section.id }} .bestseller-grid {
+      grid-template-columns: repeat(var(--bs-columns-desktop, 4), 1fr);
+      gap: 32px;
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #BestSeller-{{ section.id }} .bestseller-heading {
+      font-size: 32px;
+    }
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-item.is-hidden {
+    display: none;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-footer {
+    margin-top: 40px;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-shop-more-btn {
+    font-family: var(--font-family-normal);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 29px;
+    border: none;
+    border-radius: 16px;
+    background-color: #ab512a;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-shop-more-btn:hover {
+    background-color: #a4432f;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-shop-more-btn:active {
+    transform: scale(0.97);
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-shop-more-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #BestSeller-{{ section.id }} .bestseller-empty {
+    color: #6b6b6b;
+  }
+</style>
+
+<script>
+  (function () {
+    function initBestSeller(root) {
+      var button = root.querySelector('[data-bestseller-show-more]');
+      if (!button) return;
+
+      var loadCount = parseInt(root.getAttribute('data-load-count'), 10) || 4;
+
+      button.addEventListener('click', function () {
+        var hiddenItems = root.querySelectorAll('[data-bestseller-item].is-hidden');
+        if (!hiddenItems.length) return;
+
+        for (var i = 0; i < hiddenItems.length && i < loadCount; i++) {
+          hiddenItems[i].classList.remove('is-hidden');
+        }
+
+        var remaining = root.querySelectorAll('[data-bestseller-item].is-hidden');
+        if (!remaining.length) {
+          button.style.display = 'none';
+        }
+      });
+    }
+
+    function initAll() {
+      document.querySelectorAll('.bestseller-section').forEach(initBestSeller);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      var section = event.target.querySelector('.bestseller-section');
+      if (section) initBestSeller(section);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Best Seller",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Show heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Best Seller"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products initially shown",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "products_to_load",
+      "label": "Products revealed per click",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop more"
+    },
+    {
+      "type": "header",
+      "content": "Grid layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Card settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "label": "Image shape",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "arch", "label": "Arch" },
+        { "value": "blob", "label": "Blob" },
+        { "value": "chevronleft", "label": "Chevron left" },
+        { "value": "chevronright", "label": "Chevron right" },
+        { "value": "diamond", "label": "Diamond" },
+        { "value": "parallelogram", "label": "Parallelogram" },
+        { "value": "round", "label": "Round" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show product rating",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Seller"
+    }
+  ]
+}
+{% endschema %}

@@ -1,930 +1,512 @@
-{{ 'component-product-inventory.css' | asset_url | stylesheet_tag }}
-{{ 'tabs.css' | asset_url | stylesheet_tag }}
-{{ 'product-tabs.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  ── Pre-pass: figure out which blocks actually have data ──────────────────────
+  Build a comma-separated string of block indexes that have real content.
+  A block index is appended as "N," so we can safely use `contains "N,"`.
+{% endcomment %}
+{%- assign visible_blocks = "" -%}
+{%- for block in section.blocks -%}
+  {%- assign _has = false -%}
 
+  {%- case block.type -%}
 
-{% style %}
-  /* Rich tab layout */
-.m-tab-header--rich {
-  display: flex !important;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px !important;
-  border-radius: 12px;
-  border: 1.5px solid #e8e0d6;
-  background: #fff;
-  transition: border-color 0.2s ease, background 0.2s ease;
-  min-width: 180px;
-}
+    {%- when 'description_tab' -%}
+      {%- if product.metafields.custom.description_banner_desktop != blank -%}
+        {%- assign _has = true -%}
+      {%- endif -%}
 
-.m-tab-header--rich:hover {
-  border-color: #c8462e20;
-  background: #fdf6f0;
-}
+    {%- when 'benefits_tab' -%}
+      {%- if product.metafields.custom.benefits_banner_desktop != blank -%}
+        {%- assign _has = true -%}
+      {%- endif -%}
 
-/* Active state — matches the peach highlight in the image */
-.m-tab-header--rich.is-active,
-.m-tab-header--rich[class*="active"],
-.m-tab-header--rich.active {
-  border-color: #c8462e !important;
-  background: #fdf0ea !important;
-}
+    {%- when 'nutrients_tab' -%}
+      {%- if product.metafields.custom.nutrients_banner_desktop != blank -%}
+        {%- assign _has = true -%}
+      {%- endif -%}
 
-.m-tab-header__icon {
-  font-size: 36px;
-  line-height: 1;
-  flex-shrink: 0;
-}
+    {%- when 'ingredients_tab' -%}
+      {%- assign _ing = product.metafields.custom.ingredients_json.value -%}
+      {%- if _ing != blank -%}{%- assign _has = true -%}{%- endif -%}
 
-.m-tab-header__content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: left;
-}
+    {%- when 'how_to_use_tab' -%}
+      {%- assign _vid   = product.metafields.custom.how_to_use_video.value -%}
+      {%- assign _steps = product.metafields.custom.how_to_use_steps.value -%}
+      {%- if _vid != blank or _steps != blank -%}{%- assign _has = true -%}{%- endif -%}
 
-.m-tab-header__title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #2c1a0e;
-  line-height: 1.3;
-}
+  {%- endcase -%}
 
-.m-tab-header__subtitle {
-  font-size: 12px;
-  font-weight: 400;
-  color: #9b7b5e;
-  line-height: 1.3;
-}
-{% endstyle %}
+  {%- if _has -%}
+    {%- assign visible_blocks = visible_blocks | append: forloop.index0 | append: "," -%}
+  {%- endif -%}
+{%- endfor -%}
 
+{% comment %} ── Render nothing if no block has data ─────────────────────────── {% endcomment %}
+{%- if visible_blocks == "" -%}
+  {%- comment -%}No data for any tab – section is intentionally empty.{%- endcomment -%}
+{%- else -%}
 
+{{ 'section-product-tabs.css' | asset_url | stylesheet_tag }}
 
-<script src="{{ 'product-tabs.js' | asset_url }}" defer="defer"></script>
-{%- liquid
-  assign button_type = section.settings.button_type
-  assign product_limit = section.settings.limit
+<div class="pt-section" id="pt-section-{{ section.id }}">
 
-  assign enable_slider = false
-  assign mobile_disable_slider = section.settings.mobile_disable_slider
-  if section.settings.enable_slider
-    assign enable_slider = true
-  endif
-
-  assign items_per_row = section.settings.items_per_row
-  assign card_style = section.settings.pcard_layout
-  assign image_ratio = section.settings.pcard_image_ratio
-  assign show_vendor = section.settings.show_vendor
-  assign tab_header = section.settings.tab_header
-  assign button_type = section.settings.button_type
-  assign use_scroll_mobile = section.settings.use_scroll_mobile
-
-  if card_style == null or card_style == blank
-    assign card_style = settings.pcard_layout
-  endif
-
-  assign animation_effect = settings.animations
-  assign animated = false
-  if animation_effect != 'none'
-    assign animated = true
-    if section.settings.animations != 'inherit'
-      assign animation_effect = section.settings.animations
-    endif
-  endif
-
-  assign container = section.settings.container
-  if container == 'w-full'
-    assign container = 'container-full'
-  endif
-
-  assign button_loadmore_class = ''
-  if enable_slider
-    assign button_loadmore_class = 'md:m:hidden'
-    if mobile_disable_slider
-      if use_scroll_mobile
-        assign button_loadmore_class = button_loadmore_class | append: ' m:hidden'
-      else
-        assign button_loadmore_class = button_loadmore_class | append: ' m:flex'
-      endif
-    else
-      assign button_loadmore_class = button_loadmore_class | append: ' m:hidden'
-    endif
-  else
-    assign button_loadmore_class = 'md:m:flex'
-    if use_scroll_mobile
-      assign button_loadmore_class = button_loadmore_class | append: ' m:hidden'
-    else
-      assign button_loadmore_class = button_loadmore_class | append: ' m:flex'
-    endif
-  endif
-
-  assign classes = 'm-section m-product-tabs m:block'
-  if section.settings.custom_class != blank
-    assign classes = classes | append: ' ' | append: section.settings.custom_class
-  endif
-  assign classes = classes | append: ' m-product-tabs--' | append: tab_header | append: ' m-gradient' | append: ' m-color-' | append: section.settings.color_scheme
--%}
-
-{%- capture dropdown -%}
-  {% if section.blocks.size > 0 %}
-    <m-select-component data-tab-header="{{ tab_header }}">
-      <select
-        name="country_code"
-        class="js-selectNative"
-        data-tab-select
-      >
-        {% for block in section.blocks %}
-          {%- liquid
-            assign tab_name = block.settings.title
-            assign current_collection = block.settings.collection
-            if block.settings.title == blank
-              assign tab_name = 'Tab ' | append: forloop.index
-              if collection != blank
-                assign tab_name = current_collection.title
-              endif
-            endif
-          -%}
-          <option
-            value="{{ forloop.index0 }}"
-            {% if forloop.index0 == 0 %}
-              selected="selected"
-            {% endif %}
+  <!-- Tab Bar -->
+  <div class="pt-tab-bar">
+    <div class="pt-tabs-wrap">
+      <div class="pt-tab-indicator"></div>
+      {%- assign _tab_i = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign _bkey = forloop.index0 | append: "," -%}
+        {%- if visible_blocks contains _bkey -%}
+          <button
+            class="pt-tab {% if _tab_i == 0 %}active{% endif %}"
+            data-tab="{{ _tab_i }}"
+            {{ block.shopify_attributes }}
           >
-            {{ tab_name }}
-          </option>
-        {%- endfor -%}
-      </select>
-      <div
-        class="m-select-custom m-select-custom--custom-width m-select-custom--plain js-selectCustom h3"
-        aria-hidden="true"
-      >
-        <div class="m-select-custom--trigger">
-          <span class="m-select-custom--trigger-text"></span>
-          <span class="m-select-custom--trigger-icon">
-            <svg
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path d="M441.9 167.3l-19.8-19.8c-4.7-4.7-12.3-4.7-17 0L224 328.2 42.9 147.5c-4.7-4.7-12.3-4.7-17 0L6.1 167.3c-4.7 4.7-4.7 12.3 0 17l209.4 209.4c4.7 4.7 12.3 4.7 17 0l209.4-209.4c4.7-4.7 4.7-12.3 0-17z" />
-            </svg>
-          </span>
-        </div>
-        <div class="m-select-custom--options">
-          {% for block in section.blocks %}
-            {%- liquid
-              assign tab_name = block.settings.title
-              assign current_collection = block.settings.collection
-              if block.settings.title == blank
-                assign tab_name = 'Tab ' | append: forloop.index
-                if collection != blank
-                  assign tab_name = current_collection.title
-                endif
-              endif
-            -%}
-            <div class="m-select-custom--option" data-value="{{ forloop.index0 }}">
-              {{ tab_name }}
-            </div>
-          {%- endfor -%}
-        </div>
-      </div>
-    </m-select-component>
-  {% endif %}
-{%- endcapture -%}
-<style>
-  #m-section--{{ section.id }} {
-    --column-gap: {{ section.settings.item_gap }}px;
-    --column-gap-mobile: {{ section.settings.item_gap_mobile }}px;
-    --row-gap: {{ section.settings.item_gap | plus: 10 }}px;
-    --items: {{ items_per_row }};
-    --section-padding-top: {{ section.settings.padding_top }}px;
-    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
-  }
-</style>
-<section
-  id="m-section--{{ section.id }}"
-  class="{{ classes }}"
->
-  <m-product-tabs
-    id="{{ section.id }}"
-    data-section-type="product-tabs"
-    data-enable-slider="{{ enable_slider }}"
-    data-mobile-disable-slider="{{ section.settings.mobile_disable_slider }}"
-    data-button-type="{{ button_type }}"
-    {% if enable_slider %}
-      data-show-pagination="{{ section.settings.show_pagination }}"
-      data-show-navigation="{{ section.settings.show_navigation }}"data-items="{{ items_per_row }}"
-    {% endif -%}
-  >
-    <div class="{{ container }} m-section-my m-section-py">
-      <div class="m-section__header m:text-{{ section.settings.header_alignment }}">
-        {% if section.settings.subheading != blank %}
-          <p class="m-section__subheading m:w-full{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-            {{ section.settings.subheading }}
-          </p>
-        {% endif %}
-
-        {% if tab_header == 'horizontal' %}
-          {% if section.settings.heading != blank %}
-            <h2 class="m-section__heading {{ section.settings.heading_size | default: 'h3' }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-              {{ section.settings.heading }}
-            </h2>
-          {% endif %}
-        {% else %}
-          <div class="m-section__heading {% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-            {% if section.settings.heading != blank %}
-              <h2 class="{{ section.settings.heading_size | default: 'h3' }}">{{ section.settings.heading }}&nbsp;</h2>
-            {% endif %}
-            {{ dropdown }}
-          </div>
-        {% endif %}
-
-        {% if section.settings.description != blank %}
-          <div class="m-section__description m:w-full{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-            {{ section.settings.description }}
-          </div>
-        {% endif %}
-{% comment %} 
-        {% if tab_header == 'horizontal' and section.blocks.size > 0 %}
-          <div class="m-section__tabs{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-            <div class="m-tabs__wrapper">
-              {% for block in section.blocks %}
-                {%- liquid
-                  assign tab_name = block.settings.title
-                  assign current_collection = block.settings.collection
-
-                  if block.settings.title == blank
-                    assign tab_name = 'Tab ' | append: forloop.index
-                    if collection != blank
-                      assign tab_name = current_collection.title
-                    endif
-                  endif
-                -%}
-                <a
-                  class="m-tab-header  bbbbbbbb"
-                  href="#product-tabs-{{ block.id }}"
-                  data-index="{{ forloop.index0 }}"
-                >
-                  {{- tab_name -}}
-                </a>
-              {% endfor %}
-            </div>
-            {{ dropdown }}
-          </div>
-        {% endif %}
-      
-       {% endcomment %}
-      
-      
-      
-      {% if tab_header == 'horizontal' and section.blocks.size > 0 %}
-  <div class="m-section__tabs{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-    <div class="m-tabs__wrapper">
-      {% for block in section.blocks %}
-        {%- liquid
-          assign tab_name = block.settings.title
-          assign current_collection = block.settings.collection
-          assign tab_icon = block.settings.tab_icon
-          assign tab_subtitle = block.settings.tab_subtitle
-          if block.settings.title == blank
-            assign tab_name = 'Tab ' | append: forloop.index
-            if collection != blank
-              assign tab_name = current_collection.title
-            endif
-          endif
-        -%}
-        <a
-          class="m-tab-header {% if tab_icon != blank or tab_subtitle != blank %} m-tab-header--rich{% endif %}"
-          href="#product-tabs-{{ block.id }}"
-          data-index="{{ forloop.index0 }}"
-        >
-          {% if tab_icon != blank or tab_subtitle != blank %}
-            {% if tab_icon != blank %}
-              <span class="m-tab-header__icon">
-                {{- tab_icon -}}
-              </span>
-            {% endif %}
-            <span class="m-tab-header__content">
-              <span class="m-tab-header__title">{{- tab_name -}}</span>
-              {% if tab_subtitle != blank %}
-                <span class="m-tab-header__subtitle">{{- tab_subtitle -}}</span>
-              {% endif %}
-            </span>
-          {% else %}
-            {{- tab_name -}}
-          {% endif %}
-        </a>
-      {% endfor %}
+            {{ block.settings.tab_label }}
+          </button>
+          {%- assign _tab_i = _tab_i | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
     </div>
-    {{ dropdown }}
   </div>
-{% endif %}
-      
-      
-      
-      
-      
-      
-      </div>
 
-      {% if section.blocks.size > 0 %}
-        <div class="m-product-tabs__content">
-          {% for block in section.blocks %}
-            {%- liquid
-              assign current_collection = collections[block.settings.collection]
-              if current_collection != blank and current_collection.products.size > items_per_row and enable_slider
-                assign enable_slider = true
-              endif
-            -%}
-            {%- paginate current_collection.products by product_limit -%}
-              <div
-                id="product-tabs-{{ block.id }}"
-                class="m-tab-content m-swiper-overflow"
-                {{ block.shopify_attributes }}
-                data-index="{{ forloop.index0 }}"
-                data-url="{{ current_collection.url }}"
-                data-total-pages="{{ paginate.pages }}"
-                data-page="{{ paginate.current_page }}"
-                data-total-items="{{ paginate.items }}"
-                data-enable-slide="{{ enable_slider }}"
-              >
-                <div class="m-product-list m-slider-control-hover-inside m-mixed-layout {% if mobile_disable_slider or enable_slider != true %} m-mixed-layout--mobile-grid{% if use_scroll_mobile %} m-mixed-layout--mobile-scroll{% endif %}{% endif %}">
-                  <div class="m-mixed-layout__wrapper{% if enable_slider %} swiper-container{% endif %}">
-                    <div
-                      class="m-mixed-layout__inner m:grid m:grid-2-cols md:m:grid-3-cols lg:m:grid-4-cols xl:m:grid-{{ section.settings.items_per_row }}-cols{% if enable_slider %} swiper-wrapper{% endif %}"
-                      data-products-container
-                    >
-                      {% for product in current_collection.products limit: product_limit %}
-                        {% if enable_slider %}
-                          <div class="swiper-slide m:column">
-                            {% liquid
-                              case card_style
-                                when '1'
-                                  render 'product-card-1', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect
-                                when '2'
-                                  render 'product-card-2', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect
-                                when '3'
-                                  render 'product-card-3', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect
-                                when '4'
-                                  render 'product-card-4', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect
-                                when '5'
-                                  render 'product-card-5', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect
-                              endcase
-                            %}
-                          </div>
-                        {% else %}
-                          {% liquid
-                            case card_style
-                              when '1'
-                                render 'product-card-1', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect, column_wrapper: true
-                              when '2'
-                                render 'product-card-2', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect, column_wrapper: true
-                              when '3'
-                                render 'product-card-3', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect, column_wrapper: true
-                              when '4'
-                                render 'product-card-4', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect, column_wrapper: true
-                              when '5'
-                                render 'product-card-5', product: product, image_ratio: image_ratio, show_vendor: show_vendor, index: forloop.index, animated: animated, animation_effect: animation_effect, column_wrapper: true
-                            endcase
-                          %}
-                        {% endif %}
-                      {% else %}
-                        {% for i in (1..product_limit) %}
-                          <div class="swiper-slide m:column m:text-{{ settings.pcard_alignment }}">
-                            <div
-                              class="m-product-card m-product-card--placeholder{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}"
-                              {% if animated %}
-                                data-cascade
-                                style="--animation-order: {{ forloop.index }};"
-                              {% endif %}
-                            >
-                              <div class="m-product-card__media" style="--aspect-ratio: 1/1;">
-                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                                {{ 'product-' | append: current | placeholder_svg_tag: 'm-placeholder-svg' }}
-                              </div>
-                              <div class="m-product-card__name{% if settings.uppercase_prd_name %} m:uppercase{% endif %}">
-                                {{ 'homepage.onboarding.product_title' | t }}
-                              </div>
-                              <div class="m-product-card__price">
-                                <p class="m-price">$19.99</p>
-                              </div>
-                            </div>
-                          </div>
-                        {% endfor %}
-                      {% endfor %}
+  <!-- Content Panels -->
+  <div class="pt-content" id="pt-content-{{ section.id }}">
+    {%- assign _panel_i = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- assign _bkey = forloop.index0 | append: "," -%}
+      {%- unless visible_blocks contains _bkey -%}{%- continue -%}{%- endunless -%}
+
+      <div
+        class="pt-panel {% if _panel_i == 0 %}active{% endif %}"
+        data-panel="{{ _panel_i }}"
+      >
+        {%- case block.type -%}
+
+          {%- when 'description_tab' -%}
+            {%- assign desc_desktop = product.metafields.custom.description_banner_desktop -%}
+            {%- assign desc_mobile  = product.metafields.custom.description_banner_mobile -%}
+
+            {%- if desc_desktop != blank -%}
+              <img src="{{ desc_desktop }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-desktop" loading="lazy">
+            {%- endif -%}
+            {%- if desc_mobile != blank -%}
+              <img src="{{ desc_mobile }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-mobile" loading="lazy">
+            {%- endif -%}
+
+          {%- when 'benefits_tab' -%}
+            {%- assign ben_desktop = product.metafields.custom.benefits_banner_desktop -%}
+            {%- assign ben_mobile  = product.metafields.custom.benefits_banner_mobile -%}
+
+            {%- if ben_desktop != blank -%}
+              <img src="{{ ben_desktop }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-desktop" loading="lazy">
+            {%- endif -%}
+            {%- if ben_mobile != blank -%}
+              <img src="{{ ben_mobile }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-mobile" loading="lazy">
+            {%- endif -%}
+
+          {%- when 'nutrients_tab' -%}
+            {%- assign nut_desktop = product.metafields.custom.nutrients_banner_desktop -%}
+            {%- assign nut_mobile  = product.metafields.custom.nutrients_banner_mobile -%}
+
+            {%- if nut_desktop != blank -%}
+              <img src="{{ nut_desktop }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-desktop" loading="lazy">
+            {%- endif -%}
+            {%- if nut_mobile != blank -%}
+              <img src="{{ nut_mobile }}" alt="{{ block.settings.tab_label }}" class="pt-banner-img pt-banner-mobile" loading="lazy">
+            {%- endif -%}
+
+          {%- when 'ingredients_tab' -%}
+            {%- assign ing_json_raw = product.metafields.custom.ingredients_json.value -%}
+
+            <div class="pt-ing-outer">
+              <div class="pt-ing-track" id="pt-ing-track-{{ section.id }}-{{ _panel_i }}">
+                {%- for item in ing_json_raw -%}
+                  <div class="pt-ing-card">
+                    {%- if item.image != blank -%}
+                      <div class="pt-ing-img-wrap">
+                        <img src="{{ item.image }}" alt="{{ item.title }}" class="pt-ing-img" loading="lazy">
+                      </div>
+                    {%- else -%}
+                      <div class="pt-ing-img-wrap pt-ing-img-placeholder"></div>
+                    {%- endif -%}
+                    <div class="pt-ing-body">
+                      <h3 class="pt-ing-title">{{ item.title }}</h3>
+                      <p class="pt-ing-desc">{{ item.description }}</p>
                     </div>
                   </div>
-                  {% if enable_slider %}
-                    {% if section.settings.show_navigation or section.settings.show_pagination %}
-                      {% render 'slider-controls',
-                        extra_classes: 'm:hidden',
-                        absolute: true,
-                        container: section.settings.container,
-                        show_nav: section.settings.show_navigation,
-                        show_pagination: section.settings.show_pagination,
-                        nav_class: 'm:hidden'
-                      %}
-                    {% endif %}
-                  {% endif %}
-                </div>
-                {% if section.settings.button_label != blank and section.settings.show_button == true %}
-                  {%- if button_type == 'load' and paginate.pages > 1 -%}
-                    <div class="m-product-tabs__load-more {{ button_loadmore_class }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-                      <button
-                        class="m-button {{ section.settings.button_style | replace: 'sf__btn-primary', 'm-button--primary' | replace: 'sf__btn-secondary', 'm-button--secondary' | replace: 'sf__btn-link', 'm-button--link' | replace: 'sf__btn-white', 'm-button--white' }} {{ section.settings.button_size }} m-spinner-button"
-                        data-load-more-product
-                      >
-                        <span class="m-spinner-icon">
-                          <svg
-                            class="animate-spin m-svg-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                        </span>
-                        <span>{{ section.settings.button_label }}</span>
+                {%- endfor -%}
+              </div>
+            </div>
+
+          {%- when 'how_to_use_tab' -%}
+            <div class="pt-how-inner">
+
+              <!-- Left: Video -->
+              <div class="pt-how-video-wrap">
+                {%- assign video_url = product.metafields.custom.how_to_use_video.value -%}
+
+                {%- if video_url != blank -%}
+                  {%- if video_url contains 'youtube' or video_url contains 'youtu.be' -%}
+                    {%- assign yt_id = video_url | split: 'v=' | last | split: '&' | first -%}
+                    {%- if video_url contains 'youtu.be/' -%}
+                      {%- assign yt_id = video_url | split: 'youtu.be/' | last | split: '?' | first -%}
+                    {%- endif -%}
+                    <div class="pt-video-thumb" data-yt-id="{{ yt_id }}">
+                      <img src="https://img.youtube.com/vi/{{ yt_id }}/maxresdefault.jpg" alt="How to use video" class="pt-video-poster" loading="lazy">
+                      <button class="pt-play-btn" aria-label="Play video">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="32" cy="32" r="32" fill="rgba(255,255,255,0.90)"/>
+                          <polygon points="26,20 50,32 26,44" fill="#e07b39"/>
+                        </svg>
+                      </button>
+                    </div>
+                  {%- else -%}
+                    <div class="pt-video-thumb pt-video-native">
+                      <video src="{{ video_url }}" class="pt-video-poster" playsinline></video>
+                      <button class="pt-play-btn" aria-label="Play video">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="32" cy="32" r="32" fill="rgba(255,255,255,0.90)"/>
+                          <polygon points="26,20 50,32 26,44" fill="#e07b39"/>
+                        </svg>
                       </button>
                     </div>
                   {%- endif -%}
-                  {% if button_type == 'link' %}
-                    <div class="m-product-tabs__load-more m:text-center{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
-                      <a
-                        class="m-button {{ section.settings.button_style | replace: 'sf__btn-primary', 'm-button--primary' | replace: 'sf__btn-secondary', 'm-button--secondary' | replace: 'sf__btn-link', 'm-button--link' | replace: 'sf__btn-white', 'm-button--white' }} {{ section.settings.button_size }}"
-                        href="{{ current_collection.url }}"
-                        data-load-more-product
-                      >
-                        <span>{{ section.settings.button_label }}</span>
-                      </a>
-                    </div>
-                  {% endif %}
-                {% endif %}
+                {%- endif -%}
               </div>
-            {%- endpaginate -%}
-          {% endfor %}
-        </div>
-      {% endif %}
-    </div>
-  </m-product-tabs>
-</section>
+
+              <!-- Right: Heading + Steps -->
+              <div class="pt-how-content">
+                <h2 class="pt-how-heading">How to Use ?</h2>
+
+                {%- assign steps_raw = product.metafields.custom.how_to_use_steps.value -%}
+
+                {%- if steps_raw != blank -%}
+                  <ol class="pt-steps-list">
+                    {%- assign steps = steps_raw | split: '|' -%}
+                    {%- for step in steps -%}
+                      {%- if step != blank -%}
+                        <li class="pt-step-item">
+                          <span class="pt-step-num">{{ forloop.index }}.</span>
+                          <span class="pt-step-text">{{ step | strip }}</span>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ol>
+                {%- endif -%}
+              </div>
+
+            </div>
+
+        {%- endcase -%}
+      </div>
+
+      {%- assign _panel_i = _panel_i | plus: 1 -%}
+    {%- endfor -%}
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('pt-section-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var tabs      = Array.from(sectionEl.querySelectorAll('.pt-tab'));
+  var panels    = Array.from(sectionEl.querySelectorAll('.pt-panel'));
+  var indicator = sectionEl.querySelector('.pt-tab-indicator');
+  var currentIdx = 0;
+
+  function moveIndicator(tab) {
+    if (!indicator || !tab) return;
+    indicator.style.left   = tab.offsetLeft + 'px';
+    indicator.style.width  = tab.offsetWidth + 'px';
+    indicator.style.height = tab.offsetHeight + 'px';
+    indicator.style.top    = tab.offsetTop + 'px';
+  }
+
+  function switchTab(newIdx, direction) {
+    if (newIdx === currentIdx || newIdx < 0 || newIdx >= tabs.length) return;
+
+    var oldPanel = panels[currentIdx];
+    var newPanel = panels[newIdx];
+    var slideOut = direction > 0 ? '-100%' : '100%';
+    var slideIn  = direction > 0 ? '100%'  : '-100%';
+
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    tabs[newIdx].classList.add('active');
+    moveIndicator(tabs[newIdx]);
+
+    oldPanel.style.transform  = 'translateX(' + slideOut + ')';
+    oldPanel.style.opacity    = '0';
+    oldPanel.style.transition = 'transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease';
+
+    newPanel.style.transform  = 'translateX(' + slideIn + ')';
+    newPanel.style.opacity    = '0';
+    newPanel.style.transition = 'none';
+    newPanel.classList.add('active');
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        newPanel.style.transition = 'transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.32s ease';
+        newPanel.style.transform  = 'translateX(0)';
+        newPanel.style.opacity    = '1';
+      });
+    });
+
+    setTimeout(function () {
+      oldPanel.classList.remove('active');
+      oldPanel.style.cssText = '';
+      newPanel.style.cssText = '';
+    }, 420);
+
+    currentIdx = newIdx;
+  }
+
+  tabs.forEach(function (tab, idx) {
+    tab.addEventListener('click', function () {
+      switchTab(idx, idx > currentIdx ? 1 : -1);
+    });
+  });
+
+  moveIndicator(tabs[0]);
+  window.addEventListener('resize', function () { moveIndicator(tabs[currentIdx]); });
+
+  // ── VIDEO: click thumbnail to load iframe / play native ──
+  sectionEl.querySelectorAll('.pt-video-thumb').forEach(function(thumb) {
+    thumb.addEventListener('click', function () {
+      var ytId = thumb.dataset.ytId;
+      if (ytId) {
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0&modestbranding=1';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.cssText = 'width:100%;height:100%;display:block;position:absolute;top:0;left:0;';
+        thumb.innerHTML = '';
+        thumb.style.paddingBottom = '0';
+        thumb.appendChild(iframe);
+      } else {
+        var vid = thumb.querySelector('video');
+        var btn = thumb.querySelector('.pt-play-btn');
+        if (vid) { vid.play(); if (btn) btn.style.display = 'none'; }
+      }
+    });
+  });
+    // ── MOBILE SCROLL LOCK ──
+  {% comment %} var totalTabs = tabs.length;
+  var allDone   = false;
+  var touchStartY = 0;
+
+  function handleScrollDown() {
+    if (currentIdx < totalTabs - 1) {
+      if (!locked) {
+        locked = true;
+        switchTab(currentIdx + 1, 1);
+        setTimeout(function () { locked = false; }, 650);
+      }
+      return true;
+    }
+    allDone = true;
+    return false;
+  }
+
+  function handleScrollUp() {
+    if (currentIdx > 0) {
+      allDone = false;
+      if (!locked) {
+        locked = true;
+        switchTab(currentIdx - 1, -1);
+        setTimeout(function () { locked = false; }, 650);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  sectionEl.addEventListener('wheel', function (e) {
+    if (window.innerWidth > 768) return;
+    if (allDone && e.deltaY > 0) return;
+    var intercepted = e.deltaY > 0 ? handleScrollDown() : handleScrollUp();
+    if (intercepted) e.preventDefault();
+  }, { passive: false });
+
+  sectionEl.addEventListener('touchstart', function (e) {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  sectionEl.addEventListener('touchmove', function (e) {
+    if (window.innerWidth > 768) return;
+    var deltaY = touchStartY - e.touches[0].clientY;
+    if (Math.abs(deltaY) < 40) return;
+    if (allDone && deltaY > 0) return;
+    var intercepted = deltaY > 0 ? handleScrollDown() : handleScrollUp();
+    if (intercepted) {
+      e.preventDefault();
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: false }); {% endcomment %}
+})();
+</script>
+
+{%- endif -%}
+
 {% schema %}
 {
-  "name": "Product tabs",
-  "class": "m-section-product-tabs",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
-  "settings": [
-    {
-      "type": "paragraph",
-      "content": "[Watch tutorial](https://foxecom.link/h0riBn)"
-    },
-    {
-      "type": "header",
-      "content": "Section header"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Product tabs"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "label": "Heading size",
-      "default": "h3",
-      "options": [
-        {
-          "label": "Medium",
-          "value": "h3"
-        },
-        {
-          "label": "Large",
-          "value": "h2"
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description"
-    },
-    {
-      "type": "select",
-      "id": "header_alignment",
-      "label": "Text alignment",
-      "default": "center",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        }
-      ]
-    },
-    {
-      "type": "header",
-      "content": "General"
-    },
-    {
-      "type": "select",
-      "id": "container",
-      "label": "Container type",
-      "default": "container-fluid",
-      "options": [
-        {
-          "value": "container-fluid",
-          "label": "Default"
-        },
-        {
-          "value": "w-full",
-          "label": "Full width"
-        },
-        {
-          "value": "container",
-          "label": "Use container box"
-        }
-      ]
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme"
-    },
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "select",
-      "id": "tab_header",
-      "label": "Tab header type",
-      "default": "horizontal",
-      "options": [
-        {
-          "value": "horizontal",
-          "label": "Horizontal"
-        },
-        {
-          "value": "select",
-          "label": "Title with select"
-        }
-      ]
-    },
-    {
-      "type": "range",
-      "id": "limit",
-      "label": "Products to show",
-      "min": 2,
-      "max": 30,
-      "step": 1,
-      "default": 4
-    },
-    {
-      "type": "checkbox",
-      "id": "show_button",
-      "label": "Show \"View all\" button",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "button_type",
-      "label": "Button type",
-      "options": [
-        {
-          "value": "link",
-          "label": "Link to collection page"
-        },
-        {
-          "value": "load",
-          "label": "Load more products"
-        }
-      ],
-      "default": "link"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "View all"
-    },
-    {
-      "type": "select",
-      "id": "button_style",
-      "label": "Button style",
-      "options": [
-        {
-          "value": "m-button--primary",
-          "label": "Primary button"
-        },
-        {
-          "value": "m-button--secondary",
-          "label": "Secondary button"
-        },
-        {
-          "value": "m-button--white",
-          "label": "White button"
-        },
-        {
-          "value": "m-button--link",
-          "label": "Underline button"
-        }
-      ],
-      "default": "m-button--primary"
-    },
-    {
-      "type": "select",
-      "id": "button_size",
-      "label": "Button size",
-      "options": [
-        {
-          "value": "m-button--small",
-          "label": "Button small"
-        },
-        {
-          "value": "",
-          "label": "Button medium"
-        },
-        {
-          "value": "m-button--large",
-          "label": "Button large"
-        }
-      ],
-      "default": ""
-    },
-    {
-      "type": "header",
-      "content": "Product card settings"
-    },
-    {
-      "type": "select",
-      "id": "pcard_layout",
-      "label": "Design layout",
-      "default": "",
-      "options": [
-        {
-          "value": "",
-          "label": "Use global settings"
-        },
-        {
-          "value": "1",
-          "label": "Style 1"
-        },
-        {
-          "value": "2",
-          "label": "Style 2"
-        },
-        {
-          "value": "3",
-          "label": "Style 3"
-        },
-        {
-          "value": "4",
-          "label": "Style 4"
-        },
-        {
-          "value": "5",
-          "label": "Style 5"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "pcard_image_ratio",
-      "label": "Image aspect ratio",
-      "default": "",
-      "options": [
-        {
-          "value": "",
-          "label": "Use global settings"
-        },
-        {
-          "value": "original",
-          "label": "Original aspect ratio"
-        },
-        {
-          "value": "1/1",
-          "label": "1:1"
-        },
-        {
-          "value": "3/4",
-          "label": "3:4"
-        },
-        {
-          "value": "4/3",
-          "label": "4:3"
-        },
-        {
-          "value": "16/9",
-          "label": "16:9"
-        }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show product vendors",
-      "default": false
-    },
-    {
-      "type": "header",
-      "content": "Grid settings"
-    },
-    {
-      "type": "range",
-      "id": "items_per_row",
-      "label": "Products per row",
-      "min": 2,
-      "max": 6,
-      "step": 1,
-      "default": 4
-    },
-    {
-      "type": "range",
-      "id": "item_gap",
-      "label": "Column gap",
-      "min": 0,
-      "max": 50,
-      "step": 2,
-      "default": 30,
-      "unit": "px"
-    },
-    {
-      "type": "header",
-      "content": "Slider settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_slider",
-      "label": "Enable slider",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_navigation",
-      "label": "Show navigation",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Show pagination",
-      "default": false
-    },
-    {
-      "type": "header",
-      "content": "Mobile settings"
-    },
-    {
-      "type": "checkbox",
-      "label": "Disable slider",
-      "id": "mobile_disable_slider",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "label": "Use horizontal scrollbar",
-      "id": "use_scroll_mobile",
-      "default": true,
-      "info": "Uncheck to display as grid, slider must be disabled"
-    },
-    {
-      "type": "range",
-      "id": "item_gap_mobile",
-      "label": "Column gap",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "default": 16,
-      "unit": "px"
-    },
-    {
-      "type": "header",
-      "content": "Section Padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding Top",
-      "default": 50,
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding Bottom",
-      "default": 50,
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px"
-    },
-    {
-      "type": "header",
-      "content": "Custom Attributes"
-    },
-    {
-      "type": "text",
-      "id": "custom_class",
-      "label": "Custom classes"
-    },
-    {
-      "type": "header",
-      "content": "Animations"
-    },
-    {
-      "type": "select",
-      "id": "animations",
-      "label": "Visible in the view animation",
-      "default": "inherit",
-      "options": [
-        {
-          "value": "inherit",
-          "label": "Inherit global setting"
-        },
-        {
-          "value": "fade-in",
-          "label": "Fade in"
-        },
-        {
-          "value": "fade-in-up",
-          "label": "Fade in up"
-        },
-        {
-          "value": "fade-in-left",
-          "label": "Fade in left"
-        },
-        {
-          "value": "fade-in-right",
-          "label": "Fade in right"
-        }
-      ]
-    }
-  ],
+  "name": "Product Tabs",
+  "tag": "section",
+  "class": "pt-section-outer",
+  "settings": [],
   "blocks": [
     {
-      "type": "tab",
-      "name": "Tab",
+      "type": "description_tab",
+      "name": "Description Tab",
       "settings": [
         {
           "type": "text",
-          "label": "Tab name",
-          "id": "title",
-          "info": "Leave it blank to use collection name"
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Description"
         },
         {
-  "type": "liquid",
-  "id": "tab_icon",
-  "label": "Tab icon (emoji)",
-},
-{
-  "type": "text",
-  "id": "tab_subtitle",
-  "label": "Tab subtitle",
-  "placeholder": "Fresh picks of the season"
-},
+          "type": "header",
+          "content": "Fallback Images (used when metafield is not set)"
+        },
         {
-          "type": "collection",
-          "label": "Collection",
-          "id": "collection"
+          "type": "paragraph",
+          "content": "Priority: product metafield 'custom.description_banner_desktop' → this image."
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Banner image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_mobile",
+          "label": "Banner image (Mobile) — falls back to desktop if empty"
+        }
+      ]
+    },
+    {
+      "type": "ingredients_tab",
+      "name": "Ingredients Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Ingredients"
+        },
+        {
+          "type": "header",
+          "content": "Ingredients Data"
+        },
+        {
+          "type": "paragraph",
+          "content": "Priority: product metafield 'custom.ingredients_json' (JSON type) → this field. JSON format: [{\"title\":\"Name\",\"description\":\"Info\",\"image\":\"https://...\"}]"
+        },
+        {
+          "type": "textarea",
+          "id": "ingredients_json",
+          "label": "Ingredients JSON (fallback)",
+          "default": "[{\"title\":\"Sea buckthorn Pulp 99.99%\",\"description\":\"An arsenal in the toolkit of traditional medicine, Himalayan Sea Buckthorn Juice contains the most amount of Vitamin C bioavailable naturally\",\"image\":\"\"},{\"title\":\"0.01% Permitted Class 2 Preservatives (E211)\",\"description\":\"E211 is a widely used antimicrobial food preservative and stabilizer in acidic foods (pH < 4.5), cosmetics, and medicines.\",\"image\":\"\"}]"
+        }
+      ]
+    },
+    {
+      "type": "benefits_tab",
+      "name": "Benefits Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Benefits"
+        },
+        {
+          "type": "header",
+          "content": "Fallback Images (used when metafield is not set)"
+        },
+        {
+          "type": "paragraph",
+          "content": "Priority: product metafield 'custom.benefits_banner_desktop' → this image."
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Banner image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_mobile",
+          "label": "Banner image (Mobile) — falls back to desktop if empty"
+        }
+      ]
+    },
+    {
+      "type": "nutrients_tab",
+      "name": "Nutrients Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Nutrients"
+        },
+        {
+          "type": "header",
+          "content": "Fallback Images (used when metafield is not set)"
+        },
+        {
+          "type": "paragraph",
+          "content": "Priority: product metafield 'custom.nutrients_banner_desktop' → this image."
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Banner image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_mobile",
+          "label": "Banner image (Mobile) — falls back to desktop if empty"
+        }
+      ]
+    },
+    {
+      "type": "how_to_use_tab",
+      "name": "How To Use Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "How to use"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "YouTube or video URL"
+        },
+        {
+          "type": "textarea",
+          "id": "steps",
+          "label": "Steps (separate with |)",
+          "default": "Take 50ml seabuckthorn Pulp|Add to 100ml normal lukewarm water & stir well|Drink daily for best results"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Product tabs",
-      "category": "Product",
-      "settings": {
-        "heading": "Product tabs"
-      },
+      "name": "Product Tabs",
       "blocks": [
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Tab 1"
-          }
-        },
-        {
-          "type": "tab",
-          "settings": {
-            "title": "Tab 2"
-          }
-        }
+        { "type": "description_tab",   "settings": { "tab_label": "Description" } },
+        { "type": "ingredients_tab",   "settings": { "tab_label": "Ingredients" } },
+        { "type": "benefits_tab",      "settings": { "tab_label": "Benefits" } },
+        { "type": "nutrients_tab",     "settings": { "tab_label": "Nutrients" } },
+        { "type": "how_to_use_tab",    "settings": { "tab_label": "How to use" } }
       ]
     }
   ]

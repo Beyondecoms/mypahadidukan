@@ -1,0 +1,234 @@
+.collection-circles-outer {
+  width: 100%;
+}
+
+.collection-circles-section {
+  padding: 3% 0 3%;
+  width: 100%;
+}
+
+.collection-circles-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  /* padding: 0 24px; */
+}
+
+/* ── SLIDER ROW (wraps arrows + slider) ── */
+.collection-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding:0px 10px;
+}
+
+/* ── ARROW BUTTONS ── */
+.collection-arrow {
+  display: none!important;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #1a6b4a;
+  background: #ffffff;
+  color: #1a6b4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  z-index: 2;
+}
+
+.collection-arrow:hover {
+  background: #1a6b4a;
+  color: #ffffff;
+}
+
+.collection-arrow.disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── SLIDER ── */
+.collection-slider {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+  padding-top:15px;
+  flex: 1;
+}
+
+.collection-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.collection-slide {
+  flex: 0 0 calc((100% - 150px) / 7);
+    scroll-snap-align: start;
+
+}
+
+/* ── CIRCLE ── */
+.collection-circle-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  align-items: center;
+  gap: 3px;
+}
+
+.collection-circle {
+  width: 90%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f5e6c8;
+}
+
+.collection-circle img,
+.collection-circle svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+/* ── GROW ON HOVER ── */
+.collection-circle-link:hover .collection-circle {
+  transform: scale(1.07);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.collection-circle-link:hover .collection-circle img {
+  transform: scale(1.05);
+}
+
+/* ── LABEL ── */
+.collection-label {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: var(--font-heading-family);
+    color: #231F20;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: .04em;
+    margin: 0;
+    font-variant: small-caps;
+}
+
+/* ── DOTS ── */
+.collection-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #d0cfc8;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, width 0.25s ease;
+}
+
+.dot.active {
+  background: #1a6b4a;
+  width: 28px;
+  border-radius: 999px;
+}
+@media (max-width: 600px) {
+  .collection-slider-row{
+    padding:0 3px 0 23px;
+  }
+  .collection-circle{
+    width: 100%;
+  }
+  /* Hide arrows on mobile to give full width to circles */
+  .collection-arrow {
+    display: none;
+  }
+
+  /* 3 circles using full slider width (no arrow gap to subtract) */
+  .collection-slide {
+    flex: 0 0 calc((100% - 61px) / 4);
+  }
+
+  .collection-circles-section {
+    padding: 20px 0 20px;
+  }
+
+  /* Add horizontal padding so circles don't touch screen edge */
+  .collection-slider {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .collection-label {
+    font-size: 10px;
+  }
+
+   .collection-dots {
+    display: flex;
+    gap: 0;
+    margin-top: 0px;
+    padding: 0 16px;
+    height: 3px;
+  }
+
+  .dot {
+    flex: 1;
+    height: 3px;
+    border-radius: 0;
+    background: #d0cfc8;
+    width: auto;
+    transition: background 0.3s ease;
+  }
+
+  .dot:first-child {
+    border-radius: 999px 0 0 999px;
+  }
+
+  .dot:last-child {
+    border-radius: 0 999px 999px 0;
+  }
+
+  .dot.active {
+    background: #1a6b4a;
+    width: auto;
+    border-radius: 0;
+  }
+
+  .dot.active:first-child {
+    border-radius: 999px 0 0 999px;
+  }
+
+  .dot.active:last-child {
+    border-radius: 0 999px 999px 0;
+  }
+}
+/* ── RESPONSIVE ──
+@media (max-width: 900px) {
+  .why-choose-tabs{
+    margin:0 auto;
+  }
+  .collection-slide {
+    flex: 0 0 calc((100% - 72px) / 5);
+  }
+
+  .collection-arrow {
+    width: 34px;
+    height: 34px;
+  }
+} */

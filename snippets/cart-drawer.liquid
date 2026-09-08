@@ -1,294 +1,654 @@
+{% comment %}
+  cart-drawer.liquid  (section id must be "cart-drawer" in Shopify)
+{% endcomment %}
+
+{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-{{ 'component-quantity-popover.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
-{% liquid
-  if linklists['gift-wrapping'].links != blank and linklists['gift-wrapping'].links.first.type == 'product_link'
-    assign gift_wrapping = linklists['gift-wrapping'].links.first
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{%- assign fbt_collection = collections[settings.cart_fbt_collection] -%}
 
-    assign gift_wrap_id = gift_wrapping.object.variants.first.id
-    assign gift_wraps_in_cart = 0
-    for item in cart.items
-      if item.id == gift_wrap_id
-        assign gift_wraps_in_cart = item.quantity
-        break
-      endif
-    endfor
-    assign items_in_cart = cart.item_count | minus: gift_wraps_in_cart
-  endif
-%}
+{%- comment -%} Price breakdown totals (server-side, initial render) {%- endcomment -%}
+{%- assign total_original = 0 -%}
+{%- for item in cart.items -%}
+  {%- assign item_orig = item.variant.compare_at_price | default: item.original_price -%}
+  {%- assign total_original = total_original | plus: item_orig | times: item.quantity -%}
+{%- endfor -%}
+{%- assign total_discount = total_original | minus: cart.total_price -%}
 
-<m-cart-drawer
-  id="MinimogCartDrawer"
-  class="m-cart-drawer"
->
-  <div class="m-cart-drawer__inner m:h-full m-gradient m-color-{{ settings.drawer_popup_color_scheme }}">
-    <button class="m-cart-drawer__close" aria-label="Close">
-      <svg
-        class="m-svg-icon--large"
-        fill="currentColor"
-        stroke="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 320 512"
-      >
-        <path d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"/>
-      </svg>
-    </button>
-    <div class="m:flex m:flex-col m:h-full" id="MinimogCartDrawerHeader">
-      <div class="m-cart-drawer__header">
-        <h3 class="m-cart-drawer__title m:text-xl md:m:text-2xl m:font-medium"><svg class="Icon Icon--bag " width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 5H12V4C12 2.93913 11.5786 1.92172 10.8284 1.17157C10.0783 0.421427 9.06087 0 8 0C6.93913 0 5.92172 0.421427 5.17157 1.17157C4.42143 1.92172 4 2.93913 4 4V5H1C0.734784 5 0.48043 5.10536 0.292893 5.29289C0.105357 5.48043 0 5.73478 0 6V17C0 17.7956 0.316071 18.5587 0.87868 19.1213C1.44129 19.6839 2.20435 20 3 20H13C13.7956 20 14.5587 19.6839 15.1213 19.1213C15.6839 18.5587 16 17.7956 16 17V6C16 5.73478 15.8946 5.48043 15.7071 5.29289C15.5196 5.10536 15.2652 5 15 5ZM6 4C6 3.46957 6.21071 2.96086 6.58579 2.58579C6.96086 2.21071 7.46957 2 8 2C8.53043 2 9.03914 2.21071 9.41421 2.58579C9.78929 2.96086 10 3.46957 10 4V5H6V4ZM14 17C14 17.2652 13.8946 17.5196 13.7071 17.7071C13.5196 17.8946 13.2652 18 13 18H3C2.73478 18 2.48043 17.8946 2.29289 17.7071C2.10536 17.5196 2 17.2652 2 17V7H4V8C4 8.26522 4.10536 8.51957 4.29289 8.70711C4.48043 8.89464 4.73478 9 5 9C5.26522 9 5.51957 8.89464 5.70711 8.70711C5.89464 8.51957 6 8.26522 6 8V7H10V8C10 8.26522 10.1054 8.51957 10.2929 8.70711C10.4804 8.89464 10.7348 9 11 9C11.2652 9 11.5196 8.89464 11.7071 8.70711C11.8946 8.51957 12 8.26522 12 8V7H14V17Z" fill="currentColor"></path>
-          </svg> YOUR CART</h3>
-        {% if template.name != 'cart' %}
-          <foxkit-cart-countdown></foxkit-cart-countdown>
-        {% endif %}
-        <foxkit-cart-goal></foxkit-cart-goal>
-         {% if settings.cbimage != blank %}
-        <div class="cartbanner"><img src="{{ settings.cbimage | img_url:'master' }}"></div>
-      {% endif %}
-      </div>
-      <m-cart-items
-        class="m-cart-drawer__body m-scrollbar--vertical m:flex m:flex-col m:flex-1"
-        id="MinimogCartDrawerBody"
-        data-section-name="cart-drawer"
-      >
-        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form" class="m:w-full" novalidate>
-          {%- if cart.items.size > 0 -%}
-            <div class="m-cart-drawer__items">
-              {% for item in cart.items %}
-                {% render 'cart-drawer-item',
-                  item: item,
-                  gift_wrap_id: gift_wrap_id,
-                  gift_wraps_in_cart: gift_wraps_in_cart,
-                  items_in_cart: items_in_cart
-                %}
-              {% endfor %}
+<div class="nc-drawer" id="nc-cart-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Shopping cart">
+
+  <div class="nc-overlay" id="nc-overlay"></div>
+
+  <div class="nc-panel" id="nc-panel">
+
+    {%- comment -%} ── HEADER ── {%- endcomment -%}
+    <div class="nc-header">
+<span class="nc-header__title">
+  Your Cart
+  <span id="nc-item-count">{%- unless cart == empty -%}({{ cart.item_count }}){%- endunless -%}</span>
+</span>
+      <button class="nc-header__close" id="nc-close-btn" aria-label="Close cart">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none">
+          <path d="M19.84 4.16a1.35 1.35 0 0 0-1.91 0L12 10.09 6.07 4.16a1.35 1.35 0 0 0-1.91 1.91L10.09 12l-5.93 5.93a1.35 1.35 0 0 0 1.91 1.91L12 13.91l5.93 5.93a1.35 1.35 0 0 0 1.91-1.91L13.91 12l5.93-5.93a1.35 1.35 0 0 0 0-1.91Z" fill="#231F20"/>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%}
+      ── REQUIRED WRAPPER ──
+      #CartDrawer + .drawer__inner are required by CartDrawerItems.getSectionsToRender()
+      The theme fetches ?section_id=cart-drawer and replaces .drawer__inner innerHTML.
+    {%- endcomment -%}
+    <div id="CartDrawer" style="display:contents;">
+      <div class="drawer__inner" style="display:contents;">
+
+        {%- comment -%} ── BODY ── {%- endcomment -%}
+        <div class="nc-body" id="nc-body">
+
+          {%- if cart == empty -%}
+            <div class="nc-empty">
+              <img src="{{ 'EmptyBox.png' | asset_url }}" alt="Empty cart">
+              <p class="nc-empty__text">Your Cart Is Empty</p>
+              <a href="{{ routes.all_products_collection_url }}" class="nc-btn-empty">
+                Continue Shopping
+              </a>
             </div>
+
           {%- else -%}
-            <div class="m-cart-drawer__empty">
-              {{ 'cart.general.empty' | t }}
-            </div>
-          {%- endif -%}
-        </form>
-         <div class="offersection">
-        <h3>Available offers for you (1)</h3>
-      <div class="discount-container">
-        {% if settings.offer1 != blank %}
-        <div class="discount-item">
-          <div class="discount-section">
-            <h3>{{ settings.offer1 }}</h3>
-            <p>{{ settings.offerdata1 }}</p>
-          </div>
-           <div class="codearea">
-          <input type="text" class="couponCode" value="{{ settings.couponcode1 }}" readonly>
-          <button class="copyButton">Copy</button>
-           </div>
-        </div>
-        {% endif %}
-{% if settings.offer2 != blank %}
-        <div class="discount-item">
-          <div class="discount-section">
-            <h3>{{ settings.offer2 }}</h3>
-            <p>{{ settings.offerdata2 }}</p>
-          </div>
-           <div class="codearea">
-          <input type="text" class="couponCode" value="{{ settings.couponcode2 }}" readonly>
-          <button class="copyButton">Copy</button>
-           </div>
-        </div>
-         {% endif %}
-{% if settings.offer3 != blank %}
-        <div class="discount-item">
-          <div class="discount-section">
-            <h3>{{ settings.offer3 }}</h3>
-            <p>{{ settings.offerdata3 }}</p>
-          </div>
-          <div class="codearea">
-          <input type="text" class="couponCode" value="{{ settings.couponcode3 }}" readonly>
-          <button class="copyButton">Copy</button>
-          </div>
-        </div>
-  {% endif %}
-      </div>
-      </div>
-      </m-cart-items>
-       {% render 'cart-upsale' %}
-      <div class="m-cart-drawer__footer" id="MinimogCartDrawerFooter">
-        <div class="m-cart-drawer__footer--wrapper{% if cart == empty %} m:hidden{% else %} m:block{% endif %}">
-          {% render 'cart-addons', form_id: 'cart-drawer-form' %}
-          <div class="m-cart-drawer__gift-wrapping">
-            <div class="m:hidden">{{ gift_wrapping.object.variants.first | json }}</div>
-            {%- if gift_wrapping != null -%}
-              <m-gift-wrapping-component
-                class="m-gift-wrapping"
-                data-gift-wrap-id="{{ gift_wrap_id }}"
-                data-gift-wrapping="{{ cart.attributes.gift-wrapping | escape }}"
-                cart-items-size="{{ cart.items.size }}"
-                gift-wraps-in-cart="{{ gift_wraps_in_cart }}"
-                items-in-cart="{{ items_in_cart }}"
-              >
-                <input
-                  id="m-gift-wrapping"
-                  type="checkbox"
-                  name="attributes[gift-wrapping]"
-                  value="yes"
-                  {% if gift_wraps_in_cart > 0 %}
-                    checked="checked"
-                  {% endif %}
-                  class="m:visually-hidden"
-                >
-                <label for="m-gift-wrapping" class="m-gift-wrapping--label">
-                  {%- capture gift_price -%}<strong class="m-gift-wrapping--price">{{ gift_wrapping.object.price | money }}</strong>{%- endcapture -%}
-                  <span class="m-gift-wrapping--text">
-                    {{- 'cart.general.gift_wrapping_html' | t: price: gift_price -}}
-                  </span>
-                  <div class="m-gift-wrapping--loading">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                  </div>
-                  <svg
-                    class="m-gift-wrapping--icon"
-                    viewBox="0 0 14 14"
-                    with="16"
-                    height="16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect x="0.5" y="0.5" width="13" height="13" stroke="currentColor"/>
-                    <path d="M3.5625 7.625L5.75 9.8125L10.75 4.8125" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </label>
-                {%- if gift_wraps_in_cart > 0 -%}
-                  <m-gift-note-component class="m-gift-wrapping--note">
-                    <textarea
-                      class="form-field"
-                      name="attributes[gift-note]"
-                      placeholder="{{ 'cart.general.gift_note_placeholder' | t }}"
-                    >{{ cart.attributes.gift-note }}</textarea>
-                  </m-gift-note-component>
-                {%- endif -%}
-              </m-gift-wrapping-component>
+
+            {%- if settings.cart_banner_image != blank -%}
+              <div class="nc-banner">
+                <img src="{{ settings.cart_banner_image | img_url: 'master' }}"
+                     alt="{{ settings.cart_banner_image.alt | default: 'Cart banner' }}"
+                     loading="eager">
+              </div>
             {%- endif -%}
-          </div>
-          <div class="m-cart__summary m-cart-drawer__summary">
-            <div data-foxkit-cart-summary></div>
-            <div data-minimog-cart-discounts>
-              {%- if cart.cart_level_discount_applications.size > 0 -%}
-                <ul class="m-cart__discount" role="list">
-                  {%- for discount in cart.cart_level_discount_applications -%}
-                    <li class="m-cart__discount--item m:justify-end m:items-center">
-                      <svg
-                        aria-hidden="true"
-                        width="20"
-                        height="20"
-                        focusable="false"
-                        role="presentation"
-                        viewBox="0 0 12 13"
-                      >
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7 .5h3a2 2 0 0 1 2 2v3a.995.995 0 0 1-.293.707l-6 6a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414l6-6A.995.995 0 0 1 7 .5zm2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" fill="currentColor"></path>
-                      </svg>
-                      <span>{{ discount.title | upcase }}&nbsp;(-{{ discount.total_allocated_amount | money }})</span>
-                    </li>
+
+            {%- comment -%}
+              ── CART ITEMS ──
+              id="CartDrawer-CartItems" → theme adds cart__items--disabled class here during loading.
+              cart-drawer-items custom element handles quantity change events via CartItems.onChange().
+            {%- endcomment -%}
+            <cart-drawer-items id="CartDrawer-CartItems">
+              <div class="nc-items">
+
+                {%- for item in cart.items -%}
+                  {%- assign discount_pct = 0 -%}
+                  {%- if item.variant.compare_at_price > item.final_price -%}
+                    {%- assign discount_pct = item.variant.compare_at_price | minus: item.final_price | times: 100 | divided_by: item.variant.compare_at_price | round -%}
+                  {%- endif -%}
+
+                  <div class="nc-item" id="CartDrawer-Item-{{ forloop.index }}">
+
+                    <div class="nc-item__img-wrap">
+                      <a href="{{ item.url }}">
+                        <img class="nc-item__img"
+                             src="{{ item.image | img_url: '200x' }}"
+                             alt="{{ item.image.alt | escape }}"
+                             loading="lazy" width="72" height="84">
+                      </a>
+                    </div>
+
+                    <div class="nc-item__info">
+
+                      <div class="nc-title-delete">
+                        <a href="{{ item.url }}" class="nc-item__name">{{ item.product.title }}</a>
+
+                        {%- comment -%}
+                          cart-remove-button: theme custom element.
+                          data-index = 1-based line number.
+                          Calls cartItems.updateQuantity(index, 0) on click.
+                        {%- endcomment -%}
+                        <cart-remove-button id="CartDrawer-Remove-{{ forloop.index }}"
+                                            data-index="{{ forloop.index }}">
+                          <button class="nc-item__delete" type="button"
+                                  aria-label="Remove {{ item.product.title | escape }}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                              <path d="M17.28 9.72 17.03 17.52A2.56 2.56 0 0 1 14.45 20H9.55A2.56 2.56 0 0 1 6.97 17.52L6.72 9.72a.65.65 0 0 1 1.3-.04l.26 7.8a1.28 1.28 0 0 0 1.27 1.22h4.9a1.28 1.28 0 0 0 1.27-1.22l.26-7.8a.65.65 0 0 1 1.3.04ZM18.14 7.12a.65.65 0 0 1-.65.65H6.51a.65.65 0 0 1 0-1.3h2a.96.96 0 0 0 .95-.87 1.93 1.93 0 0 1 3.84 0 .96.96 0 0 0 .95.87h2a.65.65 0 0 1 .65.65ZM11.09 16.24v-5.49a.65.65 0 1 0-1.3 0v5.49a.65.65 0 0 0 1.3 0Zm3.1 0v-5.49a.65.65 0 1 0-1.3 0v5.49a.65.65 0 0 0 1.3 0Z" fill="#231F20"/>
+                            </svg>
+                          </button>
+                        </cart-remove-button>
+                      </div>
+
+                      {%- unless item.product.has_only_default_variant -%}
+                        <div class="nc-item__variant">
+                          {%- for opt in item.options_with_values -%}
+                            {{ opt.name }}: {{ opt.value }}{%- unless forloop.last -%}, {%- endunless -%}
+                          {%- endfor -%}
+                        </div>
+                      {%- endunless -%}
+
+                      <div class="nc-item__price-row">
+                        <div class="nc-item__price-rows">
+                          <span class="nc-item__price-final">{{ item.final_price | money }}</span>
+                          {%- if item.variant.compare_at_price > item.final_price -%}
+                            <span class="nc-item__price-compare">{{ item.variant.compare_at_price | money }}</span>
+                            <span class="nc-item__badge">{{ discount_pct }}% off</span>
+                          {%- endif -%}
+                        </div>
+
+                        <div class="nc-item__controls">
+                          <div class="nc-item__qty">
+
+                            {%- comment -%}
+                              Minus button: reads the input value, decrements it, then fires
+                              a native "change" event — CartItems debounced onChange picks it up.
+                              Minimum value is 0 (triggers removal).
+                            {%- endcomment -%}
+                            <button type="button" class="nc-item__qty-btn"
+                                    aria-label="Decrease quantity"
+                                    data-index="{{ forloop.index }}"
+                                    onclick="(function(btn){
+                                      var inp = document.getElementById('Drawer-quantity-' + btn.dataset.index);
+                                      var v = Math.max(0, parseInt(inp.value || 1) - 1);
+                                      inp.value = v;
+                                      inp.dispatchEvent(new Event('change', {bubbles: true}));
+                                    })(this)">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5.28 11.13h13.44a.87.87 0 0 1 0 1.74H5.28a.87.87 0 0 1 0-1.74Z" fill="#242424" stroke="white" stroke-width="0.5"/>
+                              </svg>
+                            </button>
+
+                            {%- comment -%}
+                              Input ID format: "Drawer-quantity-N"
+                              data-index="N" is what CartItems.validateQuantity / updateQuantity use.
+                              name="updates[]" is required for the theme's cart change fetch body.
+                            {%- endcomment -%}
+                          {%- comment -%} AFTER {%- endcomment -%}
+                          <input id="Drawer-quantity-{{ forloop.index }}"
+                                class="nc-item__qty-num"
+                                type="number"
+                                value="{{ item.quantity }}"
+                                min="0"
+                                step="1"
+                                data-min="1"
+                                data-max="{{ item.variant.inventory_quantity }}"
+                                data-index="{{ forloop.index }}"
+                                name="updates[]"
+                                data-quantity-variant-id="{{ item.variant.id }}"
+                                aria-label="Quantity for {{ item.product.title | escape }}">
+
+                            <button type="button" class="nc-item__qty-btn"
+                                    aria-label="Increase quantity"
+                                    data-index="{{ forloop.index }}"
+                                    onclick="(function(btn){
+                                      var inp = document.getElementById('Drawer-quantity-' + btn.dataset.index);
+                                      inp.value = parseInt(inp.value || 0) + 1;
+                                      inp.dispatchEvent(new Event('change', {bubbles: true}));
+                                    })(this)">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 4.75a.69.69 0 0 1 .69.69v5.88h5.88a.69.69 0 0 1 0 1.38h-5.88v5.88a.69.69 0 0 1-1.38 0v-5.88H5.44a.69.69 0 0 1 0-1.38h5.88V5.44A.69.69 0 0 1 12 4.75Z" fill="#242424" stroke="white" stroke-width="0.5"/>
+                              </svg>
+                            </button>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      {%- comment -%} Per-line error slot — theme writes here on qty errors {%- endcomment -%}
+                      <p id="CartDrawer-LineItemError-{{ forloop.index }}"
+                         class="cart-item__error" role="alert"
+                         style="font-size:12px;color:#c0392b;margin-top:4px;min-height:0;">
+                        <span class="cart-item__error-text"></span>
+                      </p>
+
+                    </div>
+                  </div>
+                {%- endfor -%}
+
+              </div>
+
+              {%- comment -%} Accessibility live regions required by updateLiveRegions() {%- endcomment -%}
+              <p id="CartDrawer-LiveRegionText"
+                 class="visually-hidden" role="status"
+                 aria-live="polite" aria-hidden="true"></p>
+              <p id="CartDrawer-LineItemStatus"
+                 class="visually-hidden" role="status"
+                 aria-live="polite" aria-hidden="true">{{ 'accessibility.loading' | t }}</p>
+
+            </cart-drawer-items>
+
+            {%- comment -%} ── FBT ── {%- endcomment -%}
+            {%- if fbt_collection != blank and fbt_collection.products.size > 0 -%}
+              <div class="nc-fbt" id="nc-fbt-section">
+                <div class="nc-fbt__title">Frequently Brought Together</div>
+                <div class="nc-fbt__scroll" id="nc-fbt-scroll">
+                  {%- for product in fbt_collection.products -%}
+                    {%- assign variant = product.selected_or_first_available_variant -%}
+                    {%- assign in_cart = false -%}
+                    {%- for ci in cart.items -%}
+                      {%- if ci.product_id == product.id -%}{%- assign in_cart = true -%}{%- endif -%}
+                    {%- endfor -%}
+                    {%- unless in_cart -%}
+                      <div class="nc-fbt__card">
+                        <img class="nc-fbt__card-img"
+                             src="{{ product.featured_image | img_url: '120x' }}"
+                             alt="{{ product.featured_image.alt | escape }}"
+                             loading="lazy" width="52" height="60">
+                        <div class="nc-fbt__card-info">
+                          <div class="nc-fbt__card-name">{{ product.title }}</div>
+                          <div class="nc-fbt__card-prices">
+                            <div class="nc-fbt__card-price-row">
+                              <span class="nc-fbt__card-price">{{ variant.price | money }}</span>
+                              {%- if variant.compare_at_price > variant.price -%}
+                                <span class="nc-fbt__card-compare">{{ variant.compare_at_price | money }}</span>
+                              {%- endif -%}
+                            </div>
+                            <button class="nc-fbt__add-btn"
+                                    data-variant-id="{{ variant.id }}"
+                                    data-product-id="{{ product.id }}"
+                                    type="button">Add</button>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endunless -%}
                   {%- endfor -%}
-                </ul>
-              {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+
+          {%- endif -%}
+        </div>{%- comment -%} /nc-body {%- endcomment -%}
+
+        {%- comment -%} ── PRICE BREAKDOWN (outside scrollable body, above footer) ── {%- endcomment -%}
+        {%- unless cart == empty -%}
+        <div class="nc-price-breakdown" id="nc-price-breakdown">
+          <div class="nc-price-breakdown__body">
+            <div class="nc-price-row">
+              <span class="nc-price-row__label">MRP</span>
+              <span class="nc-price-row__val" id="nc-pb-mrp">{{ total_original | money }}</span>
             </div>
-            <div class="m-cart__subtotal m:flex m:justify-between" data-cart-subtotal>
-              <span class="m-cart__subtotal--label m:font-medium">{{ 'cart.general.subtotal' | t }}</span>
-              <span class="m-cart__subtotal--price m:font-medium" data-cart-subtotal-price>
-                {% if settings.currency_code_enabled %}
-                  {{ cart.total_price | money_with_currency }}
-                {% else %}
-                  {{ cart.total_price | money }}
-                {% endif %}
+            {%- if total_discount > 0 -%}
+            <div class="nc-price-row is-discount">
+              <span class="nc-price-row__label">Item Discount</span>
+              <span class="nc-price-row__val" id="nc-pb-disc">{{ total_discount | money }}</span>
+            </div>
+            {%- endif -%}
+            <div class="nc-price-row">
+              <span class="nc-price-row__label">Sub Total</span>
+              <span class="nc-price-row__val" id="nc-pb-sub">{{ cart.total_price | money }}</span>
+            </div>
+            <div class="nc-price-row is-total">
+              <span class="nc-price-row__label">Grand Total</span>
+              <span class="nc-price-row__val" id="nc-pb-grand">{{ cart.total_price | money }}</span>
+            </div>
+          </div>
+        </div>
+        {%- endunless -%}
+
+        {%- comment -%}
+          ── FOOTER ──
+          MUST keep class="cart-drawer__footer" — CartItems.onCartUpdate() finds and
+          replaces this element after every quantity change or item removal.
+        {%- endcomment -%}
+        <div class="cart-drawer__footer" id="nc-footer">
+          {%- if cart != empty -%}
+            <div class="nc-footer__summary">
+              <span class="nc-footer__summary-label">
+                Price (<span id="nc-summary-toggle">Summary</span>)
+              </span>
+              <span class="nc-footer__summary-price" id="nc-footer-total">
+                {{ cart.total_price | money }}
               </span>
             </div>
-          </div>
-          <div class="m:flex m:flex-col m:items-center">
-            {% assign show_terms = false %}
-            {% if settings.agree_text != blank and settings.show_agree_on_cart %}
-              <div class="m-terms-conditons">
-                <label class="form-field--checkbox">
-                  <input type="checkbox" name="agree_terms" value="yes" required>
-                  <span class="form-field--checkbox__label">{{ settings.agree_text }}</span>
-                  <span class="form-field--checkbox__icon">
-                    <svg
-                      class="m-svg-icon--medium"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                      focusable="false"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M18.5 1.5H1.5L1.5 18.5H18.5V1.5ZM1.5 0.5C0.947715 0.5 0.5 0.947715 0.5 1.5V18.5C0.5 19.0523 0.947715 19.5 1.5 19.5H18.5C19.0523 19.5 19.5 19.0523 19.5 18.5V1.5C19.5 0.947715 19.0523 0.5 18.5 0.5H1.5Z" fill-rule="evenodd" fill="currentColor"/>
-                      <path d="M14.9975 6.09084C15.201 6.27746 15.2147 6.59375 15.0281 6.79728L8.91631 13.4627C8.82231 13.5652 8.68987 13.6239 8.55079 13.6247C8.41172 13.6256 8.27857 13.5684 8.18335 13.4671L4.99513 10.0731C4.80606 9.87179 4.81596 9.55536 5.01723 9.3663C5.21849 9.17723 5.53492 9.18713 5.72399 9.3884L8.54335 12.3897L14.291 6.12145C14.4776 5.91791 14.7939 5.90421 14.9975 6.09084Z" fill="currentColor"/>
-                    </svg>
-                  </span>
-                </label>
-              </div>
-              {% assign show_terms = true %}
-            {% endif %}
-            <button
-              type="submit"
-              form="cart-drawer-form"
-              class="m-button m-button--primary m:w-full shopifycheckoutbtn"
-              name="checkout"
-              {% if show_terms %}
-                data-terms-action disabled
-              {% endif %}
-            >
-              <span>{{ 'cart.general.checkout' | t }}</span>
-            </button>
-            {% render 'gokwik-checkout' %}
-            {%- if settings.cart_drawer_show_accelerated_button and additional_checkout_buttons -%}
-              <div class="additional-checkout-buttons m:w-full">
-                {{ content_for_additional_checkout_buttons }}
-              </div>
-            {%- endif -%}
-            <a class="m-cart-drawer__link-to-cart m-button m-button--link" href="{{ routes.cart_url }}">
-              {{ 'cart.general.viewcart' | t }}
-            </a>
-          </div>
-          {% if settings.cart_drawer_trust_badge %}
-            <div class="m-cart__trust-badge">
-              <img
-                src="{{ settings.cart_drawer_trust_badge | image_url: width: 840 }}"
-                loading="lazy"
-                width="400"
-                height="100"
-                alt="Trust secure badge"
-              >
-            </div>
-          {% endif %}
+            {% comment %} <button type="button" class="nc-btn nc-btn--primary shopifycheckoutbtn" id="nc-checkout-btn" onclick="window.location.href='/checkout'">
+              Place Order
+            </button> {% endcomment %}
+             {% render 'gokwik-checkout' %}
+          {%- endif -%}
         </div>
-        <div class="m-cart__overlay"></div>
-      </div>
-    </div>
-  </div>
-</m-cart-drawer>
+
+      </div>{%- comment -%} /drawer__inner {%- endcomment -%}
+    </div>{%- comment -%} /CartDrawer {%- endcomment -%}
+
+  </div>{%- comment -%} /nc-panel {%- endcomment -%}
+</div>
+
+{%- comment -%} FBT data for JS {%- endcomment -%}
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".copyButton");
+  window.ncFbtProducts = [
+    {%- for product in fbt_collection.products -%}
+    {%- assign v = product.selected_or_first_available_variant -%}
+    {
+      id: {{ product.id }},
+      variantId: {{ v.id }},
+      title: {{ product.title | json }},
+      image: {{ product.featured_image | img_url: '120x' | json }},
+      price: {{ v.price | money | json }},
+      compareAtPrice: {{ v.compare_at_price | money | json }},
+      available: {{ product.available }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+  window.ncCartBannerUrl = {{ settings.cart_banner_image | img_url: 'master' | json }};
+</script>
 
-    buttons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const input = this.previousElementSibling; // Target the input field before button
-        input.select();
-        input.setSelectionRange(0, 99999); // For mobile compatibility
+<script>
+(function () {
+  'use strict';
 
-        navigator.clipboard.writeText(input.value)
-          .then(() => {
-            // Change button text temporarily
-            this.textContent = "Copied!";
-            setTimeout(() => {
-              this.textContent = "Copy";
-            }, 1500);
-          })
-          .catch(() => {
-            alert("Failed to copy. Please try manually.");
-          });
+  /* ────────────────────────────────────────────────────────────────────
+     PATCH CartDrawerItems AFTER cart.js defines it.
+     Fixes three issues:
+       1. getSectionsToRender() — points to #CartDrawer / .drawer__inner
+          so onCartUpdate() section-swap works correctly.
+       2. enableLoading() / disableLoading() — safe versions that don't
+          crash when .loading__spinner elements are absent (our custom UI).
+       3. resetQuantityInput() — handles our "Drawer-quantity-N" id format
+          in addition to the theme's default "Quantity-N" format.
+  ──────────────────────────────────────────────────────────────────── */
+  function patchCartDrawerItems() {
+    var Ctor = customElements.get('cart-drawer-items');
+    if (!Ctor) return false;
+
+    var proto = Ctor.prototype;
+
+    /* 1. Section targets for onCartUpdate() re-render */
+    proto.getSectionsToRender = function () {
+      return [
+        {
+          id:       'CartDrawer',
+          section:  'cart-drawer',
+          selector: '.drawer__inner',
+        },
+        {
+          id:       'cart-icon-bubble',
+          section:  'cart-icon-bubble',
+          selector: '.shopify-section',
+        },
+      ];
+    };
+
+    /* 2a. Safe enableLoading — won't throw on missing spinner elements */
+    proto.enableLoading = function (line) {
+      var items = document.getElementById('CartDrawer-CartItems');
+      if (items) items.classList.add('cart__items--disabled');
+      if (document.activeElement) document.activeElement.blur();
+      var status = document.getElementById('CartDrawer-LineItemStatus');
+      if (status) status.setAttribute('aria-hidden', 'false');
+    };
+
+    /* 2b. Safe disableLoading */
+    proto.disableLoading = function (line) {
+      var items = document.getElementById('CartDrawer-CartItems');
+      if (items) items.classList.remove('cart__items--disabled');
+    };
+
+    /* 3. resetQuantityInput — support "Drawer-quantity-N" id format */
+    var _origReset = proto.resetQuantityInput;
+    proto.resetQuantityInput = function (id) {
+      /* Try theme default first, then our custom id */
+      var input = this.querySelector('#Quantity-' + id)
+               || document.getElementById('Drawer-quantity-' + id);
+      if (input) {
+        input.value = input.getAttribute('value');
+        this.isEnterPressed = false;
+      }
+    };
+
+    return true;
+  }
+
+  /* Try immediately (if cart.js loaded sync), then wait for definition */
+  if (!patchCartDrawerItems()) {
+    if (customElements && customElements.whenDefined) {
+      customElements.whenDefined('cart-drawer-items').then(patchCartDrawerItems);
+    }
+  }
+
+
+  /* ── Drawer open / close ── */
+  var drawer   = document.getElementById('nc-cart-drawer');
+  var overlay  = document.getElementById('nc-overlay');
+  var closeBtn = document.getElementById('nc-close-btn');
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (overlay)  overlay.addEventListener('click', closeDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+  window.ncCartOpen  = openDrawer;
+  window.ncCartClose = closeDrawer;
+
+  /* ── Price-breakdown toggle ── */
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#nc-summary-toggle')) {
+      var pb = document.getElementById('nc-price-breakdown');
+      if (pb) pb.classList.toggle('is-open');
+    }
+  });
+
+  /* ── Open drawer on any cart-icon click ── */
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('[href="/cart"]')
+                || e.target.closest('[data-cart-toggle]')
+                || e.target.closest('.js-drawer-open-right')
+                || e.target.closest('.header-cart');
+    if (trigger && !e.target.closest('#nc-cart-drawer')) {
+      e.preventDefault();
+      openDrawer();
+    }
+  });
+  document.addEventListener('cart:open', openDrawer);
+
+  /* ──────────────────────────────────────────────────────────────────
+     PubSub listener — fires AFTER the theme's CartItems has already
+     re-rendered cart-drawer-items and .cart-drawer__footer via the
+     section-swap pipeline. We update the parts that live OUTSIDE
+     those two swap targets: price breakdown + header item-count badge.
+  ────────────────────────────────────────────────────────────────── */
+function registerCartUpdateListener() {
+  if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+    subscribe(PUB_SUB_EVENTS.cartUpdate, function (event) {
+      var cart = event && event.cartData;
+      if (!cart) return;
+      updateBadge(cart);
+      updatePriceBreakdown(cart);
+    });
+    return true;
+  }
+  return false;
+}
+
+if (!registerCartUpdateListener()) {
+  if (customElements && customElements.whenDefined) {
+    customElements.whenDefined('cart-drawer-items').then(registerCartUpdateListener);
+  }
+}
+
+  function updateBadge(cart) {
+    /* Header bubble */
+    var badge = document.getElementById('header-cart-count');
+    if (badge) {
+      badge.textContent = cart.item_count;
+      badge.style.display = cart.item_count > 0 ? '' : 'none';
+    }
+    /* Drawer header count */
+    var countEl = document.getElementById('nc-item-count');
+    if (countEl) countEl.textContent = '(' + cart.item_count + ')';
+  }
+
+  window.ncUpdatePriceBreakdown = function updatePriceBreakdown(cart) {  var totalOrig = 0;
+    var totalFinal = 0;
+
+    cart.items.forEach(function (item) {
+      totalOrig  += item.original_line_price;
+      totalFinal += item.final_line_price;
+    });
+
+    var disc = totalOrig - totalFinal;
+
+    setText('nc-pb-mrp', money(totalOrig));
+
+    var discRow = document.getElementById('nc-pb-disc');
+    if (discRow) {
+      var discParent = discRow.closest('.nc-price-row');
+      if (disc > 0) {
+        discRow.textContent = '-' + money(disc);
+        if (discParent) discParent.style.display = '';
+      } else {
+        discRow.textContent = '';
+        if (discParent) discParent.style.display = 'none';
+      }
+    }
+
+    setText('nc-pb-sub',   money(cart.total_price));
+    setText('nc-pb-grand', money(cart.total_price));
+    setText('nc-footer-total', money(cart.total_price));
+  }
+
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function money(cents) {
+    return '₹' + (cents / 100).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+  }
+
+  /* ── FBT add-to-cart ── */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.nc-fbt__add-btn');
+    if (!btn) return;
+
+    var variantId = parseInt(btn.dataset.variantId, 10);
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: 1,
+        sections: ['cart-drawer'],
+        sections_url: window.location.pathname
+      })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (addedItem) {
+
+      // Swap drawer sections
+      if (addedItem.sections && addedItem.sections['cart-drawer']) {
+        var html = new DOMParser().parseFromString(
+          addedItem.sections['cart-drawer'], 'text/html'
+        );
+
+        var newBody = html.querySelector('#nc-body');
+        var oldBody = document.querySelector('#nc-body');
+        if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+        var newBreakdown = html.querySelector('.nc-price-breakdown');
+        if (newBreakdown) {
+          var oldBreakdown = document.querySelector('.nc-price-breakdown');
+          if (oldBreakdown) {
+            oldBreakdown.replaceWith(newBreakdown);
+          } else {
+            var footer = document.querySelector('.cart-drawer__footer');
+            if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+          }
+        }
+
+        var newFooter = html.querySelector('.cart-drawer__footer');
+        var oldFooter = document.querySelector('.cart-drawer__footer');
+        if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+      }
+
+      // Remove the FBT card
+      var card = btn.closest('.nc-fbt__card');
+      if (card) card.remove();
+
+      var scroll = document.getElementById('nc-fbt-scroll');
+      if (scroll && scroll.querySelectorAll('.nc-fbt__card').length === 0) {
+        var sec = document.getElementById('nc-fbt-section');
+        if (sec) sec.style.display = 'none';
+      }
+
+      // Fetch full cart for badge + price breakdown update
+      fetch('/cart.js?t=' + Date.now(), {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        updateBadge(cart);
+        updatePriceBreakdown(cart);
+        if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: cart });
+        }
       });
+    })
+    .catch(function () {
+      btn.textContent = 'Add';
+      btn.disabled = false;
     });
   });
+
+  /* ── Checkout redirect ── */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('#nc-checkout-btn')) return;
+    var cur = window.location.pathname;
+    if (cur !== '/cart' && !cur.includes('checkout')) {
+      sessionStorage.setItem('nc_return_url', window.location.href);
+      sessionStorage.setItem('nc_went_checkout', '1');
+    }
+  });
+
+  if (window.location.pathname === '/cart' &&
+      sessionStorage.getItem('nc_went_checkout') === '1') {
+    var ret = sessionStorage.getItem('nc_return_url') || '/';
+    sessionStorage.removeItem('nc_return_url');
+    sessionStorage.removeItem('nc_went_checkout');
+    window.location.replace(ret);
+  }
+
+}());
+</script>
+<script>
+  (function () {
+    var target = document.querySelector('#CartDrawer');
+    if (!target) return;
+
+    new MutationObserver(function () {
+      fetch('/cart.js', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(function (r) {
+          return r.json();
+        })
+        .then(function (cart) {
+
+          // Drawer Count
+          var drawerCount = document.getElementById('nc-item-count');
+          if (drawerCount) {
+            drawerCount.textContent = '(' + cart.item_count + ')';
+          }
+
+          // Header Count
+          var headerCount = document.getElementById('header-cart-count');
+          if (headerCount) {
+            if (cart.item_count > 0) {
+              headerCount.textContent = cart.item_count;
+              headerCount.style.display = '';
+            } else {
+              headerCount.textContent = '0';
+              headerCount.style.display = 'none';
+            }
+          }
+
+        });
+    }).observe(target, {
+      childList: true,
+      subtree: true
+    });
+  })();
 </script>

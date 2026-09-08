@@ -1,0 +1,517 @@
+/* ── OUTER ── */
+.os-section-outer { width: 100%; }
+
+.os-section {
+  width: 100%;
+  padding: 72px 0 80px;
+}
+
+.os-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ══════════════════
+   HEADER
+══════════════════ */
+.os-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.os-header-left {
+  flex-shrink: 0;
+}
+
+.os-header-right {
+  max-width: 456px;
+  text-align: right;
+}
+
+/* Label */
+.os-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #e8754d;
+  text-transform: uppercase;
+  font-family: Inter,sans-serif;
+  margin-bottom: 12px;
+}
+
+/* Title */
+.os-title {
+  font-size: 70px;
+  font-weight: 400;
+  color:#0f6b5c;
+  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-variant: small-caps;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.os-title-accent {
+  font-style: italic;
+  color: #e8754d;
+  font-variant: normal;
+  font-weight: 500;
+  font-family: IM Fell English,Georgia,serif;
+}
+
+.os-title-dot {
+  color: #1a3a2a;
+  font-variant: normal;
+}
+
+/* Intro text */
+.os-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3a4a44;
+  margin: 0 0 12px;
+  font-family: Inter,sans-serif;
+}
+
+/* Meta row */
+.os-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.os-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #3a4a44;
+  font-family: var(--font-family-normal);
+}
+
+.os-meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e07b39;
+  flex-shrink: 0;
+}
+
+.os-meta-sep {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* ══════════════════
+   STORE GRID
+══════════════════ */
+.os-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ── CARD ── */
+.os-card {
+  background: #fff;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── IMAGE WRAP ── */
+.os-card-img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 260px;
+  flex-shrink: 0;
+}
+
+.os-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.os-card-img-wrap:hover .os-card-img {
+  transform: scale(1.04);
+}
+
+.os-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e0d8c8;
+}
+
+/* Dark gradient overlay */
+.os-card-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.55) 100%
+  );
+  z-index: 1;
+}
+
+/* Number + State pill */
+.os-card-pill {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #0a5246;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-normal);
+}
+
+.os-pill-sep { color: #aaa; }
+
+/* City + type overlay */
+.os-card-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  z-index: 2;
+}
+
+.os-card-city {
+  font-size: 40px;
+  font-weight: 400;
+  color: #f5f1e4;
+  margin: 0 0 2px;
+  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.os-card-type {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .22em;
+    color: #f7edb1;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+}
+
+/* Map pin */
+.os-card-pin {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  background: #f7edb1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease;
+}
+
+.os-card-pin:hover {
+  transform: scale(1.1);
+}
+
+/* ── CARD BODY ── */
+.os-card-body {
+  padding: 20px 30px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  background: #f5f1e4;
+}
+
+.os-card-name {
+    font-size: 24px;
+    font-weight: 400;
+    color: #0f6b5c;
+    margin: 0 0 6px;
+    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-variant: small-caps;
+    letter-spacing: .01em;
+}
+
+.os-card-address {
+    font-size: 14px;
+    color: #3a4a44;
+    line-height: 1.6;
+    margin: 0;
+    font-family: Inter, sans-serif;
+}
+
+.os-card-divider {
+  height: 1px;
+  background: #d9d2bd;
+  margin: 14px 0;
+}
+
+/* Hours + Phone */
+.os-card-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.os-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.os-info-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: #3a4a44;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+}
+
+.os-info-val {
+    font-size: 13px;
+    color: #1b2420;
+    font-family: Inter, sans-serif;
+}
+
+.os-info-phone {
+  font-size: 13px;
+  color: #0f6b5c;
+  text-decoration: none;
+  font-family: var(--font-family-normal);
+}
+
+.os-info-phone:hover { text-decoration: underline; }
+
+/* ── ACTION BUTTONS ── */
+.os-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.os-btn-directions {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #0f6b5c;
+  color: #f5f1e4;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--font-family-normal);
+  transition: background 0.2s ease;
+}
+
+.os-btn-directions:hover { background: #155c3e; }
+
+.os-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.os-btn-icon {
+    width: 52px;
+    height: 44px;
+    border-radius: 25px;
+    background: #f7edb1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a5246;
+    text-decoration: none;
+    transition: background .2s ease;
+    flex-shrink: 0;
+}
+
+.os-btn-icon:hover { background: #e8e0cc; }
+
+/* ══════════════════
+   COMING SOON BANNER
+══════════════════ */
+.os-soon-svg-left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
+.os-soon-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #ffffff59;
+  border: 1px dashed #d9d2bd;
+  padding: 20px 28px;
+}
+
+.os-soon-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.os-soon-label {
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    color: #e07b39;
+    text-transform: uppercase;
+    font-family: Inter, sans-serif;
+}
+
+.os-soon-cities {
+    font-size: 16px;
+    font-weight: 400;
+    color: #0f6b5c;
+    margin: 0;
+    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-variant: small-caps;
+    letter-spacing: .06em;
+}
+
+.os-soon-notify {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #0f6b5c;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  font-family: var(--font-family-normal);
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.os-soon-notify:hover { background: #155c3e; }
+/* ── STORES GRID — horizontal scroll when more than 2 ── */
+.os-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.os-grid::-webkit-scrollbar { display: none; }
+
+/* Each card — fixed width so they don't shrink */
+.os-card {
+  flex: 0 0 calc(50% - 12px);  /* 2 cards visible at a time */
+  scroll-snap-align: start;
+  min-width: 320px;
+}
+
+/* ── PROGRESS BAR below grid ── */
+.os-scroll-bar {
+  height: 3px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.os-scroll-bar-fill {
+  height: 100%;
+  background: #1a6b4a;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+  width: 50%;
+}
+
+/* ══════════════════
+   MOBILE
+══════════════════ */
+@media (max-width: 900px) {
+  .os-wrapper { padding: 0 20px; gap: 28px; }
+  .os-section { padding: 48px 0 56px; }
+
+  .os-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .os-header-right {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .os-meta-row { justify-content: flex-start; }
+
+  .os-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .os-title { font-size: clamp(36px, 10vw, 52px); }
+}
+
+@media (max-width: 600px) {
+  .os-wrapper { padding: 0 16px; }
+
+  .os-card-city { font-size: 22px; }
+
+  .os-card-info { grid-template-columns: 1fr; }
+
+  .os-soon-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .os-soon-notify { width: 50%; justify-content: center; }
+}
+/* ── MOBILE — 1 card visible ── */
+@media (max-width: 768px) {
+  .os-card {
+    flex: 0 0 85%;
+    min-width: 280px;
+  }
+}

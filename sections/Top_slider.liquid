@@ -1,0 +1,484 @@
+<style>
+  .slide {
+  position: relative;
+}
+@media (max-width: 768px) {
+
+  .slide-overlay-text {
+    bottom: 80px; /* thoda upar lao */
+    padding: 0 16px;
+  }
+
+  .slide-overlay-text h2 {
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 400;
+  }
+
+  .slide-overlay-text h2 strong {
+    display: block;   /* NEW LINE FOR IMPACT */
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .slide-overlay-text p {
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+
+}
+.slide-overlay-text {
+  position: absolute;
+  bottom: 23%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 4;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.slide-overlay-text h2 {
+  font-size: 56px;
+  font-weight: 400;
+  font-family: "Jost";
+  color: #ffffff;
+  margin: 0 0 12px;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.slide-overlay-text h2 strong {
+  font-weight: 700;
+}
+
+.slide-overlay-text p {
+  font-size: 20px;
+  color: #ffffff;
+    font-family: "Jost";
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .slide-overlay-text h2 {
+    font-size: 28px;
+  }
+  .slide-overlay-text p {
+    font-size: 14px;
+  }
+  .slide-overlay-text {
+    bottom: 50%;
+  }
+}
+  @media (min-width:767px) {
+    .button_slider{
+    display: none !important;
+  }
+  }
+  .slider-container {
+  position: relative;
+  z=0;
+  isolation: isolate;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0;
+}
+  .slider-wrapper {
+    display: flex;
+    transition: transform 0.6s ease;
+  }
+  .slide {
+  min-width: 100%;
+  transition: transform 0.6s ease;
+  flex-shrink: 0;
+  line-height: 0;
+  font-size: 0;
+}
+  .slide img, .slide video {
+    width: 100%;
+  }
+  .slider-dots_multiple_video {
+  position: absolute;
+  bottom: 9%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 5;
+}
+  .dot_multiple_video {
+    width: 12px;
+    height: 11px;
+    background-color: #EDEDED;
+    /* transform: rotate(45deg); */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    margin: 5px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .dot_multiple_video.active {
+    border-radius: 10px;
+    height: 10px;
+    width: 49px;
+    background: white;
+    display: inline-block;
+  }
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+   background: var(--primary-web-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    height:25px;
+    width:25px;
+    border-radius: 50%;
+    text-align: center;
+    /* font-size: smaller; */
+    font: icon;
+    /* display: none; */
+  }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+
+  .slide-image,
+.slide-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 90vh;
+}
+
+  .desktop {
+  display: block;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dot_multiple_video{
+    height: 8px;
+    width: 8px;
+  }
+  .dot_multiple_video.active {
+    height: 8px;
+    width: 20px;
+  }
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+  }
+
+</style>
+
+
+<div class="slider-container">
+  <div class="slider-wrapper">
+    {% assign first = true %}
+    {% for block in section.blocks %}
+    <div class="slide">
+  {% if block.type == 'video' %}
+    <a href="{{ block.settings.video2_link }}">
+      <video class="slide-image desktop" src="{{ block.settings.video_url.sources[1].url }}" autoplay playsinline muted loop></video>
+      <video class="slide-image mobile" src="{{ block.settings.video_mobile_url.sources[1].url }}" autoplay muted playsinline loop></video>
+    </a>
+    {% unless block.settings.overlay_heading == blank and block.settings.overlay_subtext == blank %}
+      <div class="slide-overlay-text">
+        {% unless block.settings.overlay_heading == blank %}
+          <h2>{{ block.settings.overlay_heading }}</h2>
+        {% endunless %}
+        {% unless block.settings.overlay_subtext == blank %}
+          <p>{{ block.settings.overlay_subtext }}</p>
+        {% endunless %}
+      </div>
+    {% endunless %}
+
+  {% elsif block.settings.image %}
+    <a href="{{ block.settings.image_link }}">
+      {% if first %}
+        <img class="slide-video desktop" src="{{ block.settings.image | img_url: 'master' }}" alt="Slide Image" loading="eager" fetchpriority="high">
+        <img class="slide-video mobile" src="{{ block.settings.mobile_image | img_url: 'master' }}" alt="Slide Image" loading="eager" fetchpriority="high">
+      {% else %}
+        <img class="slide-video desktop" src="{{ block.settings.image | img_url: 'master' }}" alt="Slide Image" loading="lazy" fetchpriority="low">
+        <img class="slide-video mobile" src="{{ block.settings.mobile_image | img_url: 'master' }}" alt="Slide Image" loading="lazy" fetchpriority="low">
+      {% endif %}
+    </a>
+    {% unless block.settings.overlay_heading == blank and block.settings.overlay_subtext == blank %}
+      <div class="slide-overlay-text">
+        {% unless block.settings.overlay_heading == blank %}
+          <h2>{{ block.settings.overlay_heading }}</h2>
+        {% endunless %}
+        {% unless block.settings.overlay_subtext == blank %}
+          <p>{{ block.settings.overlay_subtext }}</p>
+        {% endunless %}
+      </div>
+    {% endunless %}
+  {% endif %}
+
+  {% assign first = false %}
+</div>
+    {% endfor %}
+  </div>
+
+  <div class="slider-dots_multiple_video">
+    {% for block in section.blocks %}
+      <span class="dot_multiple_video" data-index="{{ forloop.index0 }}"></span>
+    {% endfor %}
+  </div>
+
+  <button class="button_slider prev">
+    <svg width="5" height="10" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.91031 9.67995L10.5201 16.8769C10.7913 17.1507 10.9434 17.5205 10.9434 17.9059C10.9434 18.2913 10.7913 18.6611 10.5201 18.9349C10.387 19.0701 10.2282 19.1775 10.0532 19.2508C9.87817 19.3241 9.6903 19.3618 9.50054 19.3618C9.31078 19.3618 9.12291 19.3241 8.94788 19.2508C8.77284 19.1775 8.61413 19.0701 8.48098 18.9349L0.421282 10.7111C0.150506 10.4366 -0.00130749 10.0666 -0.00130749 9.681C-0.00130749 9.29544 0.150506 8.92539 0.421282 8.65092L8.48098 0.427078C8.61413 0.291872 8.77284 0.184504 8.94788 0.111216C9.12291 0.0379257 9.31078 0.000183105 9.50054 0.000183105C9.6903 0.000183105 9.87817 0.0379257 10.0532 0.111216C10.2282 0.184504 10.387 0.291872 10.5201 0.427078C10.7913 0.700928 10.9434 1.07073 10.9434 1.45611C10.9434 1.84149 10.7913 2.21129 10.5201 2.48514L3.91031 9.67995Z" fill="white"/>
+    </svg>
+  </button>
+  <button class="button_slider next">
+    <svg width="5" height="10" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.01848 9.66181L0.422381 2.47981C0.151791 2.20653 0 1.83749 0 1.45291C0 1.06833 0.151791 0.699295 0.422381 0.426013C0.555255 0.291088 0.713638 0.183938 0.888313 0.110801C1.06299 0.0376641 1.25046 0 1.43983 0C1.6292 0 1.81667 0.0376641 1.99135 0.110801C2.16602 0.183938 2.32441 0.291088 2.45728 0.426013L10.5003 8.63281C10.7705 8.90672 10.922 9.276 10.922 9.66076C10.922 10.0455 10.7705 10.4148 10.5003 10.6887L2.45728 18.8955C2.32441 19.0304 2.16602 19.1376 1.99135 19.2107C1.81667 19.2839 1.6292 19.3215 1.43983 19.3215C1.25046 19.3215 1.06299 19.2839 0.888313 19.2107C0.713638 19.1376 0.555255 19.0304 0.422381 18.8955C0.151791 18.6222 0 18.2532 0 17.8686C0 17.484 0.151791 17.115 0.422381 16.8417L7.01848 9.66181Z" fill="white"/>
+    </svg>
+  </button>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot_multiple_video');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    let index = 0;
+    let startX = 0, currentX = 0;
+    let isDragging = false;
+    let moved = false;
+    let autoSlideInterval;
+
+    function updateSlider() {
+        sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+    }
+
+     function resetAutoSlide() {
+      autoSlide();
+     }
+
+    function nextSlide() {
+        index = (index + 1) % slides.length;
+        updateSlider();
+        resetAutoSlide(); 
+    }
+
+    function prevSlide() {
+        index = (index - 1 + slides.length) % slides.length;
+        updateSlider();
+        resetAutoSlide(); 
+    }
+    
+    function autoSlide() {
+    clearInterval(autoSlideInterval);
+    const currentSlide = slides[index];
+    const video = currentSlide.querySelector('video');
+
+    if (video) {
+        autoSlideInterval = setTimeout(()=>{
+          nextSlide()
+        }, video.duration*1000);
+    } else {
+        autoSlideInterval = setTimeout(() => {
+            nextSlide();
+        }, 10000);
+    }
+}
+
+    function handleTouchStart(event) {
+    startX = event.touches[0].clientX;
+    isDragging = false;
+    moved = false;
+    clearInterval(autoSlideInterval); 
+}
+
+    function handleTouchMove(event) {
+        currentX = event.touches[0].clientX;
+        if (Math.abs(startX - currentX) > 10) { 
+            isDragging = true;
+            moved = true;
+        }
+    }
+
+    function handleTouchEnd() {
+    if (moved) {
+        let diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    }
+    resetAutoSlide(); 
+   }
+
+   function handleMouseDown(event) {
+    event.preventDefault();
+    isDragging = false;
+    moved = false;
+    startX = event.clientX;
+    sliderWrapper.style.cursor = "grabbing";
+    clearInterval(autoSlideInterval); 
+   }
+
+    function handleMouseMove(event) {
+        if (event.buttons === 0) return; 
+        currentX = event.clientX;
+        if (Math.abs(startX - currentX) > 10) { 
+            isDragging = true;
+            moved = true;
+        }
+    }
+
+    function handleMouseUp(event) {
+    event.preventDefault();
+    sliderWrapper.style.cursor = "grab";
+    if (moved) {
+        let diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    }
+    resetAutoSlide(); 
+   }
+
+    slides.forEach(slide => {
+        slide.addEventListener("click", function(event) {
+            if (isDragging) {
+                event.preventDefault(); 
+            } else {
+                const anchor = slide.querySelector("a");
+                if (anchor) {
+                    window.location.href = anchor.href;
+                }
+            }
+        });
+    });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            index = parseInt(this.dataset.index);
+            updateSlider();
+            resetAutoSlide(); 
+        });
+    });
+
+    sliderWrapper.addEventListener('touchstart', handleTouchStart);
+    sliderWrapper.addEventListener('touchmove', handleTouchMove);
+    sliderWrapper.addEventListener('touchend', handleTouchEnd);
+
+    sliderWrapper.addEventListener('mousedown', handleMouseDown);
+    sliderWrapper.addEventListener('mousemove', handleMouseMove);
+    sliderWrapper.addEventListener('mouseup', handleMouseUp);
+    sliderWrapper.addEventListener('mouseleave', handleMouseUp);
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    function updateSlider() {
+    sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[index]) dots[index].classList.add('active');
+
+    // Hide left button on first slide
+    if (index === 0) {
+        prevBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'block';
+    }
+
+    // Hide right button on last slide
+    if (index === slides.length - 1) {
+        nextBtn.style.display = 'none';
+    } else {
+        nextBtn.style.display = 'block';
+    }
+}
+updateSlider();
+
+    autoSlide(); 
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Video Link",
+          "info": "Add the URL to redirect when the video is clicked"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video_url",
+          "label": "Desktop Video"
+        },
+        {
+          "type": "video",
+          "id": "video_mobile_url",
+          "label": "Mobile Video"
+        },
+        {
+          "type": "url",
+          "id": "video2_link",
+          "label": "Video Link",
+          "info": "Add the URL to redirect when the video is clicked"
+        },
+        {
+          "type": "textarea",
+          "id": "overlay_heading",
+          "label": "Overlay Heading",
+          "info": "Use **bold** to bold a word e.g. Improve **Strength** Naturally"
+        },
+        {
+          "type": "text",
+          "id": "overlay_subtext",
+          "label": "Overlay Subtext"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

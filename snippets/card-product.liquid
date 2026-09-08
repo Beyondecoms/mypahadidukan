@@ -1,0 +1,288 @@
+{% comment %}
+  Renders a product card matching the visual style of the Product Slider's .ps-card.
+
+  Accepts:
+  - card_product: {Object} product object (required)
+  - media_aspect_ratio: {String} 'square' | 'portrait' | 'adapt' (default: 'square')
+  - image_shape: {String} 'default' | 'arch' | 'blob' | 'chevronleft' | 'chevronright' |
+                 'diamond' | 'parallelogram' | 'round' (default: 'default')
+  - show_secondary_image: {Boolean} swap to product's 2nd image on hover
+  - show_vendor: {Boolean} show product vendor above the title
+  - show_rating: {Boolean} show star rating row
+  - lazy_load: {Boolean} use lazy loading for the product image
+  - skip_styles: {Boolean} don't print the <style> tag (use when rendering many
+                 cards in a loop / grid so the CSS is only output once)
+
+  Usage:
+  {% render 'card-product',
+    card_product: item,
+    media_aspect_ratio: section.settings.image_ratio,
+    image_shape: section.settings.image_shape,
+    show_secondary_image: section.settings.show_secondary_image,
+    show_vendor: section.settings.show_vendor,
+    show_rating: section.settings.show_rating,
+    lazy_load: lazy_load,
+    skip_styles: skip_card_product_styles
+  %}
+{% endcomment %}
+
+{%- unless skip_styles -%}
+  {{ 'card-product.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- liquid
+  assign product = card_product
+  assign ratio_class = 'cp-ratio--square'
+  if media_aspect_ratio == 'portrait'
+    assign ratio_class = 'cp-ratio--portrait'
+  elsif media_aspect_ratio == 'adapt'
+    assign ratio_class = 'cp-ratio--adapt'
+  endif
+
+  assign shape_class = ''
+  if image_shape != blank and image_shape != 'default'
+    assign shape_class = 'cp-shape--' | append: image_shape
+  endif
+
+  assign first_image = product.featured_media.preview_image | default: product.featured_image
+  assign second_image = product.media[1].preview_image
+
+  assign cp_rating = product.metafields.reviews.rating.value | default: 4.8
+  assign cp_rating_float = cp_rating | append: '' | plus: 0.0
+  assign cp_rating_int = cp_rating_float | floor
+  assign cp_rating_dec = cp_rating_float | minus: cp_rating_int
+  assign cp_partial_star = cp_rating_int | plus: 1
+  assign cp_dec_width = cp_rating_dec | times: 100 | round
+
+  assign cp_variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign loading_attr = 'lazy'
+  if lazy_load == false
+    assign loading_attr = 'eager'
+  endif
+-%}
+
+<div class="cp-card{% if show_secondary_image and second_image %} cp-card--has-secondary{% endif %}">
+
+  <button
+    type="button"
+    aria-label="Add to Wishlist"
+    class="swym-button swym-add-to-wishlist-view-product cp-wishlist product_{{ product.id }}"
+    data-with-epi="true"
+    data-swaction="addToWishlist"
+    data-product-id="{{ product.id }}"
+    data-variant-id="{{ cp_variant.id }}"
+    data-product-url="{{ shop.url | append: product.url }}">
+  </button>
+
+  {%- if product.metafields.custom.badge != blank -%}
+    <span class="cp-badge">{{ product.metafields.custom.badge }}</span>
+  {%- endif -%}
+
+  <a href="{{ product.url }}" class="cp-img-wrap {{ ratio_class }} {{ shape_class }}">
+    {%- if first_image -%}
+      <img
+        class="cp-img cp-img--primary"
+        src="{{ first_image | image_url: width: 600 }}"
+        srcset="{{ first_image | image_url: width: 300 }} 300w, {{ first_image | image_url: width: 600 }} 600w, {{ first_image | image_url: width: 900 }} 900w"
+        sizes="(min-width: 900px) 25vw, 50vw"
+        alt="{{ first_image.alt | default: product.title | escape }}"
+        loading="{{ loading_attr }}"
+        width="{{ first_image.width }}"
+        height="{{ first_image.height }}">
+    {%- else -%}
+      <div class="cp-img cp-img--placeholder">{{ 'product-1' | placeholder_svg_tag: 'cp-placeholder-svg' }}</div>
+    {%- endif -%}
+
+    {%- if show_secondary_image and second_image -%}
+      <img
+        class="cp-img cp-img--secondary"
+        src="{{ second_image | image_url: width: 600 }}"
+        srcset="{{ second_image | image_url: width: 300 }} 300w, {{ second_image | image_url: width: 600 }} 600w, {{ second_image | image_url: width: 900 }} 900w"
+        sizes="(min-width: 900px) 25vw, 50vw"
+        alt="{{ second_image.alt | default: product.title | escape }}"
+        loading="lazy"
+        width="{{ second_image.width }}"
+        height="{{ second_image.height }}">
+    {%- endif -%}
+  </a>
+
+  {%- if product.compare_at_price > product.price -%}
+    <div class="cp-discount-bar">
+      {{ section.settings.discount_text | default: 'Extra 10% Discount at Checkout' }}
+    </div>
+  {%- endif -%}
+
+  <div class="cp-info">
+    {%- if show_vendor and product.vendor != blank -%}
+      <p class="cp-vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+
+    <a href="{{ product.url }}" class="cp-title">{{ product.title | truncate: 35 }}</a>
+
+    {%- if cp_variant.title != 'Default Title' -%}
+      <p class="cp-variant">{{ cp_variant.title }}</p>
+    {%- endif -%}
+
+    {%- if show_rating -%}
+              {%- assign ps_rating = product.metafields.reviews.rating.value | default: 4.8 -%}
+              {%- assign ps_rating_float = ps_rating | append: '' | plus: 0.0 -%}
+              {%- assign ps_rating_int = ps_rating_float | floor -%}
+              {%- assign ps_rating_dec = ps_rating_float | minus: ps_rating_int -%}
+              {%- assign ps_partial_star = ps_rating_int | plus: 1 -%}
+              {%- assign ps_dec_width = ps_rating_dec | times: 100 | round -%}
+
+              <div class="cp-stars">
+                {%- for i in (1..5) -%}
+                  {%- if i <= ps_rating_int -%}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- elsif i == ps_partial_star and ps_dec_width > 0 -%}
+                    <span style="position:relative;display:inline-block;width:16px;height:16px;vertical-align:middle;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="position:absolute;left:0;top:0;display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      <span style="position:absolute;left:0;top:0;overflow:hidden;width:{{ ps_dec_width }}%;height:100%;display:block;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      </span>
+                    </span>
+                  {%- else -%}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="display:block;vertical-align:middle;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  {%- endif -%}
+                {%- endfor -%}
+                <span class="cp-rating-score">{{ ps_rating_float | round: 1 }}</span>
+              </div>
+    {%- endif -%}
+
+    <div class="cp-price-row">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="cp-compare">₹{{ product.compare_at_price | money_without_currency }}</span>
+      {%- endif -%}
+      <span class="cp-price">₹{{ product.price | money_without_currency }}</span>
+      {%- if product.compare_at_price > product.price -%}
+        {%- assign cp_discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+        <span class="cp-off">{{ cp_discount }}%off</span>
+      {%- endif -%}
+    </div>
+
+    {%- if product.available -%}
+      <button class="cp-atc" data-variant-id="{{ cp_variant.id }}">
+        Add To Cart
+      </button>
+    {%- else -%}
+      <button class="cp-atc cp-atc--oos" disabled>
+        Out of Stock
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+<script>
+document.addEventListener('click', async function (e) {
+  const btn = e.target.closest('.cp-atc');
+
+  if (!btn || btn.disabled) return;
+
+  e.preventDefault();
+
+  const variantId = btn.dataset.variantId;
+
+  if (!variantId) {
+    console.error('Variant ID not found');
+    return;
+  }
+
+  const originalText = btn.textContent;
+
+  btn.disabled = true;
+  btn.textContent = 'Adding...';
+
+  try {
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: 1,
+        sections: ['cart-drawer'],
+        sections_url: window.location.pathname
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    const data = await response.json();
+
+    if (data.sections && data.sections['cart-drawer']) {
+
+      const parser = new DOMParser();
+      const html = parser.parseFromString(
+        data.sections['cart-drawer'],
+        'text/html'
+      );
+
+      // Replace drawer body
+      const newBody = html.querySelector('#nc-body');
+      const oldBody = document.querySelector('#nc-body');
+      if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+      // Replace breakdown
+      const newBreakdown = html.querySelector('.nc-price-breakdown');
+      const oldBreakdown = document.querySelector('.nc-price-breakdown');
+
+      if (newBreakdown) {
+        if (oldBreakdown) {
+          oldBreakdown.replaceWith(newBreakdown);
+        } else {
+          const footer = document.querySelector('.cart-drawer__footer');
+          if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+        }
+      }
+
+      // Replace footer
+      const newFooter = html.querySelector('.cart-drawer__footer');
+      const oldFooter = document.querySelector('.cart-drawer__footer');
+      if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+    }
+
+    // Open drawer
+    const drawer = document.querySelector('#nc-cart-drawer');
+
+    if (drawer) {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Refresh cart count
+    const cart = await fetch('/cart.js').then(r => r.json());
+
+    if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      publish(PUB_SUB_EVENTS.cartUpdate, {
+        source: 'card-product',
+        cartData: cart
+      });
+    }
+
+    if (typeof window.ncUpdatePriceBreakdown === 'function') {
+      window.ncUpdatePriceBreakdown(cart);
+    }
+
+    btn.textContent = 'Added ✓';
+
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 1200);
+
+  } catch (err) {
+    console.error(err);
+    btn.textContent = 'Error';
+
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 1500);
+  }
+});
+</script>
