@@ -21,6 +21,13 @@
       {{ section.settings.heading_after_italic }}
     </h2>
 
+    <!-- DESCRIPTION -->
+    {% if section.settings.description != blank %}
+      <div class="team-description rte" style="color: {{ section.settings.description_color }};">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
     <!-- TEAM GRID -->
     <div class="team-grid">
       {% for block in section.blocks %}
@@ -117,6 +124,12 @@
       "default": "#5a5a5a"
     },
     {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#3a4a44"
+    },
+    {
       "type": "header",
       "content": "Label"
     },
@@ -147,6 +160,16 @@
       "id": "heading_after_italic",
       "label": "Heading — Text After Italic",
       "default": "obsession."
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>We agree on almost everything, the four of us.</p><p>That farmers deserve better. That purity should mean something. That the mountains make the best food in India. That it's stuck in villages nobody reaches.</p><p>The last part, though, we flatly refused to accept, and that's how all of this began.</p>"
     },
     {
       "type": "header",
