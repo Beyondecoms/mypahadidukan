@@ -15,8 +15,8 @@
         "1621243260e1af0c20-2": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/Ghee--desktop.jpg",
-            "mb_background": "shopify://shop_images/ghee-mobile-800x1000.jpg",
+            "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
+            "mb_background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -45,7 +45,7 @@
         "slider_item_4PAGkD": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/1611x1052_resize_jpg.jpg",
+            "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0_1.png",
             "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
             "content_in_container": true,
             "content_position": "left middle",
@@ -74,6 +74,7 @@
         },
         "1621243260e1af0c20-0": {
           "type": "slider_item",
+          "disabled": true,
           "settings": {
             "background": "shopify://shop_images/oil-final.jpg",
             "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
@@ -104,6 +105,7 @@
         },
         "1621243260e1af0c20-1": {
           "type": "slider_item",
+          "disabled": true,
           "settings": {
             "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
             "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
@@ -225,7 +227,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/festivities_card.jpg",
+            "image": "shopify://shop_images/gifting.png",
             "image_by_url": "",
             "link": "https://mypahadidukan.com/collections/all-products/gifting"
           }
@@ -234,7 +236,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_1.png",
+            "image": "shopify://shop_images/sea_buckthorn_c93ce86d-6fae-4af0-92bf-9926fb14226f.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-seabuckthorn"
           }
@@ -243,7 +245,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_mask-group.png",
+            "image": "shopify://shop_images/beverages.png",
             "image_by_url": "",
             "link": "shopify://collections/pahadi-wellness"
           }
@@ -252,7 +254,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_mask-group_1.png",
+            "image": "shopify://shop_images/jam.png",
             "image_by_url": "",
             "link": "shopify://collections/jams-spreads-preserves"
           }
@@ -261,7 +263,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_2.png",
+            "image": "shopify://shop_images/dry_frutis.png",
             "image_by_url": "",
             "link": "shopify://collections/dry-fruits"
           }
@@ -270,7 +272,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_mask-group_2.png",
+            "image": "shopify://shop_images/wellness.png",
             "image_by_url": "",
             "link": "shopify://collections/natural-beverages"
           }
@@ -279,7 +281,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/Link_mask-group_3.png",
+            "image": "shopify://shop_images/honey_1.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-honey"
           }
@@ -337,7 +339,7 @@
         "slider_item_eKW7Yg": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/Ghee--desktop.jpg",
+            "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0_1.png",
             "mb_background": "shopify://shop_images/ghee-mobile-800x1000.jpg",
             "content_in_container": false,
             "content_position": "left middle",
@@ -367,7 +369,7 @@
         "slider_item_VYNjw6": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/1611x1052_resize_jpg.jpg",
+            "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
             "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
             "content_in_container": true,
             "content_position": "left middle",
@@ -396,6 +398,7 @@
         },
         "slider_item_pXqeWJ": {
           "type": "slider_item",
+          "disabled": true,
           "settings": {
             "background": "shopify://shop_images/oil-final.jpg",
             "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
@@ -426,6 +429,7 @@
         },
         "slider_item_9BfAWf": {
           "type": "slider_item",
+          "disabled": true,
           "settings": {
             "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
             "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
@@ -526,7 +530,7 @@
         "slider_item_yGfpHw"
       ],
       "custom_css": [
-        ".m-section.m-slider.m-slideshow-section.m-slider--fullscreen.m-slider--content-stack.sf-home__slideshow{margin-top: 20px;}"
+        ".m-section.m-slider.m-slideshow-section.m-slider--fullscreen.m-slider--content-stack.sf-home__slideshow {margin-top: 20px;}"
       ],
       "settings": {
         "container": "container",
@@ -550,7 +554,7 @@
           "type": "category",
           "settings": {
             "title": "Juices",
-            "image": "shopify://shop_images/Pure_natural_Seabuckthorn_card.jpg",
+            "image": "shopify://shop_images/juice_s.png",
             "collection": "pure-seabuckthorn",
             "product_list": []
           }
@@ -559,7 +563,7 @@
           "type": "category",
           "settings": {
             "title": "Oils",
-            "image": "shopify://shop_images/oil-final.jpg",
+            "image": "shopify://shop_images/oils.png",
             "collection": "all-products",
             "product_list": []
           }
@@ -567,27 +571,36 @@
         "cat_3": {
           "type": "category",
           "settings": {
-            "title": "Ghee",
-            "image": "shopify://shop_images/pure_ghee_card.jpg",
-            "collection": "pahadi-ghee",
+            "title": "Dried Berry",
+            "image": "shopify://shop_images/dried_berry_s.png",
+            "collection": "dry-fruits",
             "product_list": []
           }
         },
         "cat_4": {
           "type": "category",
           "settings": {
-            "title": "Root Powders",
-            "image": "shopify://shop_images/dry_fruits_card.jpg",
-            "collection": "dry-fruits",
+            "title": "Herbs",
+            "image": "shopify://shop_images/herbs.png",
+            "collection": "himalayan-herbs",
             "product_list": []
           }
         },
         "cat_5": {
           "type": "category",
           "settings": {
-            "title": "Oils",
-            "image": "shopify://shop_images/pahadi_wellness_card_9702268b-68ab-4fc4-ba0c-04aacc3c050f.jpg",
-            "collection": "pahadi-wellness",
+            "title": "Dry Fruits",
+            "image": "shopify://shop_images/dry_fruits.png",
+            "collection": "dry-fruits",
+            "product_list": []
+          }
+        },
+        "category_zERkxB": {
+          "type": "category",
+          "settings": {
+            "title": "Teas",
+            "image": "shopify://shop_images/teas.png",
+            "collection": "refreshing-teas",
             "product_list": []
           }
         }
@@ -597,7 +610,8 @@
         "cat_2",
         "cat_3",
         "cat_4",
-        "cat_5"
+        "cat_5",
+        "category_zERkxB"
       ],
       "settings": {
         "heading": "Fastest Selling",
@@ -1254,7 +1268,7 @@
         "spotlight_item_kaTUap": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Ellipse_51.png",
+            "image": "shopify://shop_images/Saffron.png",
             "image_by_url": "",
             "title": "Saffron",
             "link": ""
@@ -1263,7 +1277,7 @@
         "spotlight_item_TJ8QGU": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Ellipse_54.png",
+            "image": "shopify://shop_images/Chamomile.png",
             "image_by_url": "",
             "title": "Chamomile",
             "link": ""
@@ -1272,7 +1286,7 @@
         "spotlight_item_AiMtWN": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Ellipse_55.png",
+            "image": "shopify://shop_images/Shilajit.png",
             "image_by_url": "",
             "title": "Shilajit",
             "link": ""
@@ -1281,7 +1295,7 @@
         "spotlight_item_gpbMEw": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/6b12922c86d1c4ae9f8ad54b51e38c4fcf325036.png",
+            "image": "shopify://shop_images/Lavender.png",
             "image_by_url": "",
             "title": "Lavender",
             "link": ""
@@ -1290,7 +1304,7 @@
         "spotlight_item_MgBryF": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Ellipse_53.png",
+            "image": "shopify://shop_images/Sea_Buckthorn_1.png",
             "image_by_url": "",
             "title": "Sea Buckthorn",
             "link": ""
@@ -1299,18 +1313,9 @@
         "spotlight_item_VcA48D": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Ellipse_56.png",
+            "image": "shopify://shop_images/Honey_2.png",
             "image_by_url": "",
             "title": "Honey",
-            "link": ""
-          }
-        },
-        "spotlight_item_Hc9GNT": {
-          "type": "spotlight_item",
-          "settings": {
-            "image": "shopify://shop_images/Frame_322.png",
-            "image_by_url": "",
-            "title": "Juice",
             "link": ""
           }
         }
@@ -1321,8 +1326,7 @@
         "spotlight_item_AiMtWN",
         "spotlight_item_gpbMEw",
         "spotlight_item_MgBryF",
-        "spotlight_item_VcA48D",
-        "spotlight_item_Hc9GNT"
+        "spotlight_item_VcA48D"
       ],
       "name": "This Season Spotlight (Section 6)",
       "settings": {
@@ -1379,11 +1383,11 @@
         "reviews_text": "More than 1,00,00 5 star reviews",
         "headline_text": "More than 10 Lakh products sold, and just as many lives changed.",
         "banner_bg": "#b85338",
-        "banner_text_color": "#FFFFFF",
+        "banner_text_color": "#ffffff",
         "banner_radius": 20,
         "available_heading": "Also available on:",
-        "available_heading_color": "#1F2937",
-        "bg_color": "#FFFFFF",
+        "available_heading_color": "#1f2937",
+        "bg_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 48
       }
@@ -1450,11 +1454,11 @@
       "settings": {
         "heading": "Don't just take our word for it",
         "subheading": "We have you so we are blessed!",
-        "heading_color": "#1F2937",
-        "subheading_color": "#4B5563",
-        "bg_color": "#FFFFFF",
-        "card_bg": "#FFFFFF",
-        "card_border": "#EAD8C7",
+        "heading_color": "#1f2937",
+        "subheading_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "card_bg": "#ffffff",
+        "card_border": "#ead8c7",
         "show_arrows": true,
         "desktop_cards": 4,
         "mobile_cards": 1,
@@ -1474,7 +1478,7 @@
         "text": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.",
         "button_text": "ABOUT US",
         "button_link": "",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "banner_radius": 22,
         "desktop_height": 480,
         "mobile_height": 380,
@@ -1638,14 +1642,14 @@
         "subheading": "",
         "heading_color": "#000000",
         "subheading_color": "#555555",
-        "card_bg": "#FFF6D6",
-        "card_text_color": "#2C221E",
+        "card_bg": "#fff6d6",
+        "card_text_color": "#2c221e",
         "card_radius": 16,
-        "outlet_color": "#1F2937",
-        "read_time_color": "#6B7280",
+        "outlet_color": "#1f2937",
+        "read_time_color": "#6b7280",
         "desktop_columns": 4,
         "card_gap": 20,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -1822,7 +1826,7 @@
           "type": "recipe_item",
           "settings": {
             "title": "Seabuckthorn lemonade",
-            "image": "shopify://shop_images/Rectangle_46.png",
+            "image": "shopify://shop_images/Frame_911.png",
             "image_url": "",
             "link": ""
           }
@@ -1831,7 +1835,7 @@
           "type": "recipe_item",
           "settings": {
             "title": "Dried Fruits Salad",
-            "image": "shopify://shop_images/Rectangle_46_1.png",
+            "image": "shopify://shop_images/Frame_912.png",
             "image_url": "",
             "link": ""
           }
@@ -1840,7 +1844,7 @@
           "type": "recipe_item",
           "settings": {
             "title": "Smoothie",
-            "image": "shopify://shop_images/Rectangle_46_2.png",
+            "image": "shopify://shop_images/Frame_914.png",
             "image_url": "",
             "link": ""
           }
@@ -1849,7 +1853,7 @@
           "type": "recipe_item",
           "settings": {
             "title": "Dried Fruits Salad",
-            "image": "shopify://shop_images/Rectangle_46_1.png",
+            "image": "shopify://shop_images/Frame_913.png",
             "image_url": "",
             "link": ""
           }
@@ -1866,13 +1870,13 @@
         "heading": "Superfood Recipes",
         "subheading": "Enjoy these recipes from our team and happy customers",
         "heading_color": "#000000",
-        "subheading_color": "#4B5563",
-        "title_color": "#1F2937",
+        "subheading_color": "#4b5563",
+        "title_color": "#1f2937",
         "aspect_ratio": "1/1",
         "card_radius": 24,
         "desktop_columns": 4,
         "card_gap": 24,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -1974,12 +1978,12 @@
         "comp_brand_name": "My Pahadi Dukan",
         "comp_others_name": "Others",
         "comp_pill_bg": "#346357",
-        "comp_pill_color": "#FFFFFF",
+        "comp_pill_color": "#ffffff",
         "faq_heading": "Things People Ask Us",
-        "faq_card_bg": "#FFFDF0",
+        "faq_card_bg": "#fffdf0",
         "faq_button_text": "Read More",
         "faq_button_link": "",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 48,
         "padding_bottom": 48
       }
