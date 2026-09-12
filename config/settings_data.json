@@ -232,6 +232,16 @@
           "swym_variant_selector_create_list_placeholder_text": "Enter wish list name",
           "swym_variant_selector_create_list_title": "Name Your Wishlist"
         }
+      },
+      "1870902268962047653": {
+        "type": "shopify://apps/yourlio-ai/blocks/chat_widget/c229e2b7-7884-431d-b2a5-5c24c39cbcf1",
+        "disabled": false,
+        "settings": {}
+      },
+      "6362728350820064966": {
+        "type": "shopify://apps/yourlio-ai/blocks/tracker/c229e2b7-7884-431d-b2a5-5c24c39cbcf1",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
