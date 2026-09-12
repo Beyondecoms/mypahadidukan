@@ -3343,3 +3343,36 @@ body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+5):
     transform: translateY(-40px) !important;
   }
 }
+
+/* Swym Wishlist Icon Color Styling (#ba5d37 stroke outline & active fill) */
+.swym-wishlist-collections-v2-container button svg path,
+.swym-wishlist-collections-v2-container button svg,
+button.swym-wishlist-collections-v2 svg path,
+button.swym-wishlist-collections-v2 svg,
+.swym-wishlist-collections-v2 svg path,
+.swym-wishlist-collections-v2 svg,
+button.swym-button svg path,
+.swym-add-to-wishlist svg path,
+.swym-wishlist-button svg path {
+  stroke: #ba5d37 !important;
+  fill: none !important;
+  transition: fill 0.2s ease, stroke 0.2s ease !important;
+}
+
+.swym-wishlist-collections-v2-container button[aria-pressed="true"] svg path,
+.swym-wishlist-collections-v2-container button.swym-added svg path,
+.swym-wishlist-collections-v2-container button.active svg path,
+.swym-wishlist-collections-v2-container button.is-active svg path,
+button.swym-wishlist-collections-v2[aria-pressed="true"] svg path,
+button.swym-wishlist-collections-v2.swym-added svg path,
+button.swym-wishlist-collections-v2.active svg path,
+button.swym-wishlist-collections-v2.is-active svg path,
+button.swym-button[aria-pressed="true"] svg path,
+button.swym-button.swym-added svg path,
+.swym-add-to-wishlist[aria-pressed="true"] svg path,
+.swym-add-to-wishlist.swym-added svg path,
+.swym-wishlist-button[aria-pressed="true"] svg path,
+.swym-wishlist-button.swym-added svg path {
+  stroke: #ba5d37 !important;
+  fill: #ba5d37 !important;
+}

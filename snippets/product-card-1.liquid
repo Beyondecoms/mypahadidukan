@@ -336,6 +336,7 @@
           endif
         %}
 
+        {% comment %}
         {%- if show_wishlist_button -%}
           {% assign wishlist_app = settings.wishlist_app %}
           {% if wishlist_app == 'growave' %}
@@ -360,6 +361,7 @@
             %}
           {% endif %}
         {%- endif -%}
+        {% endcomment %}
 
         {%- for tooltip in tooltip_items -%}
           {%- assign settings_key = 'show_' | append: tooltip | append: '_button' | replace: 'add-to-cart', 'cart' -%}
@@ -524,6 +526,7 @@
               endif
             %}
 
+            {% comment %}
             {%- if show_wishlist_button -%}
               {% assign wishlist_app = settings.wishlist_app %}
               {% if wishlist_app == 'growave' %}
@@ -548,6 +551,7 @@
                 %}
               {% endif %}
             {%- endif -%}
+            {% endcomment %}
 
             {%- for tooltip in tooltip_items -%}
               {%- assign settings_key = 'show_'

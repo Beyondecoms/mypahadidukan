@@ -19,7 +19,7 @@ class Wishlist {
       count: '.m-wishlist-count'
     }
     this.products = Array.from(new Set(Array.from(JSON.parse(localStorage.getItem(this.storageKey)) || [])))
-    this.isWishlistPage = MinimogSettings.template === this.pageTemplate
+    this.isWishlistPage = (MinimogSettings.template && MinimogSettings.template.includes('wishlist')) || (MinimogSettings.requestPath && MinimogSettings.requestPath.includes('/pages/wishlist')) || window.location.pathname.includes('/pages/wishlist')
     this.init()
   }
 

@@ -150,7 +150,7 @@
                             <span class="custom-section-7__badge-save">{{ section.settings.badge_fallback_text | default: 'SAVE 14%' }}</span>
                           {%- endif -%}
 
-                          {%- if show_wishlist -%}
+                          {% comment %} {%- if show_wishlist -%}
                             <button
                               type="button"
                               class="custom-section-7__action-btn custom-section-7__wishlist-btn m-wishlist-button"
@@ -162,7 +162,7 @@
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                               </svg>
                             </button>
-                          {%- endif -%}
+                          {%- endif -%} {% endcomment %}
 
                           <a href="{{ product.url }}" class="custom-section-7__image-link" aria-label="{{ product.title }}">
                             {%- if product.featured_media != blank -%}

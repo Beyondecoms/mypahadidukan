@@ -325,6 +325,7 @@
       </span>
     {%- endif -%}
 
+    {% comment %}
     {%- if show_wishlist_button -%}
       <div class="m-product-card__action m-product-card__action--top m:hidden md:m:flex">
         {% assign wishlist_app = settings.wishlist_app %}
@@ -349,6 +350,7 @@
         {% endif %}
       </div>
     {%- endif -%}
+    {% endcomment %}
     {%- if show_cart_button or show_compare_button or show_quickview_button or show_wishlist_button -%}
       <div class="m-product-card__action m-product-card__addons m:flex">
         {% liquid
@@ -508,6 +510,7 @@
               endif
             %}
 
+            {% comment %}
             {%- if show_wishlist_button -%}
               {% assign wishlist_app = settings.wishlist_app %}
               {% if wishlist_app == 'growave' %}
@@ -532,6 +535,7 @@
                 %}
               {% endif %}
             {%- endif -%}
+            {% endcomment %}
 
             {%- for tooltip in tooltip_items -%}
               {%- assign settings_key = 'show_'

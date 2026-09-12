@@ -279,7 +279,8 @@
       </span>
     {% endif %}
 
-    <!-- Top-right Wishlist Icon -->
+    {% comment %}
+    <!-- Top-right Wishlist Icon (Disabled - using app wishlist) -->
     {%- if show_wishlist_button -%}
       <div class="m-product-card__wishlist-btn">
         {% assign wishlist_app = settings.wishlist_app %}
@@ -299,6 +300,7 @@
         {% endif %}
       </div>
     {%- endif -%}
+    {% endcomment %}
 
     <!-- Quick view icon (bottom right of image) -->
     {%- if show_quickview_button -%}
