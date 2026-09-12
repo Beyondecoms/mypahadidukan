@@ -187,9 +187,37 @@
           "position_offset": "40px 40px"
         }
       },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": true,
+        "settings": {}
+      },
+      "5530246297231961265": {
+        "type": "shopify://apps/yourtoken-loyalty/blocks/app-embed/019b3be8-f559-70af-9e2e-d3b502d6f55f",
+        "disabled": false,
+        "settings": {}
+      },
+      "2734250573734242505": {
+        "type": "shopify://apps/wishlist-plus/blocks/storefront-ui-elements/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
+        "disabled": false,
+        "settings": {
+          "enable_variant_selector": false,
+          "swym_add_to_wishlist_title_color": "#333",
+          "swym_variant_selector_font_size_1": 14,
+          "swym_variant_selector_popup_bg_color": "#fff",
+          "swym_variant_selector_section_heading_color": "#000",
+          "swym_variant_selector_section_heading_font_size_2": 12,
+          "swym_variant_selector_choose_create_text": "Choose or Create new wishlist",
+          "swym_variant_selector_wishlist_btn_bg_color": "#292929",
+          "swym_variant_selector_wishlist_btn_color": "#fff",
+          "swym_variant_selector_product_detail_font_color": "#fff",
+          "swym_variant_selector_create_list_placeholder_text": "Enter wish list name",
+          "swym_variant_selector_create_list_title": "Name Your Wishlist"
+        }
+      },
       "5946647744298494267": {
         "type": "shopify://apps/wishlist-plus/blocks/wishlist-app-embed/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-        "disabled": true,
+        "disabled": false,
         "settings": {
           "show_ui": true,
           "storefront_layout_enabled": false,
@@ -203,16 +231,6 @@
           "storefront_layout_drawer_position": "left",
           "storefront_layout_as_section_page": ""
         }
-      },
-      "855628211100114053": {
-        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": true,
-        "settings": {}
-      },
-      "5530246297231961265": {
-        "type": "shopify://apps/yourtoken-loyalty/blocks/app-embed/019b3be8-f559-70af-9e2e-d3b502d6f55f",
-        "disabled": false,
-        "settings": {}
       }
     },
     "color_schemes": {
