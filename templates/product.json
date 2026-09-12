@@ -67,14 +67,6 @@
             "card_mobile_width": 110
           }
         },
-        "stackback_subscriptions_more_react_purchase_options_test_wtA9BD": {
-          "type": "shopify://apps/stackback-subscriptions-more/blocks/react-purchase-options-test/019b4b9b-83ea-7131-957e-bce5135363da",
-          "settings": {
-            "hide_prepaid": false,
-            "hide_payg": false,
-            "hide_auto_debit": false
-          }
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -211,7 +203,6 @@
         "price",
         "custom_liquid_YwQ9iR",
         "variant_picker",
-        "stackback_subscriptions_more_react_purchase_options_test_wtA9BD",
         "buy_buttons",
         "offers_DyUaHC",
         "custom_liquid_jpdXn4",
