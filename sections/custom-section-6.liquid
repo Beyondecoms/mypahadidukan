@@ -73,17 +73,16 @@
                     loading="lazy"
                     class="custom-section-6__image"
                     alt="{{ block_title | default: 'Spotlight Product' | escape }}"
-                    width="400"
-                    height="auto"
                   >
                 {%- elsif block_image != blank -%}
                   {{
                     block_image
-                    | image_url: width: 450
+                    | image_url: width: 800
                     | image_tag:
                       loading: 'lazy',
                       class: 'custom-section-6__image',
-                      widths: '160, 240, 320, 450',
+                      widths: '400, 600, 800, 1000, 1200',
+                      sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 250px',
                       alt: block_title | default: block_image.alt | default: 'Spotlight Product'
                   }}
                 {%- else -%}
@@ -151,6 +150,17 @@
     font-family: inherit;
   }
 
+
+@media only screen and (max-width: 749px){
+   #custom-section-6-{{ section.id }}{
+   padding-top: 20px;
+   padding-bottom: 20px;
+   }
+ }
+
+
+  
+
   #custom-section-6-{{ section.id }} * {
     box-sizing: border-box;
   }
@@ -165,7 +175,7 @@
 
   #custom-section-6-{{ section.id }} .custom-section-6__header {
     text-align: center;
-    margin-bottom: 28px;
+    /* margin-bottom: 28px; */
   }
 
   #custom-section-6-{{ section.id }} .custom-section-6__heading {
@@ -248,6 +258,7 @@
     object-position: center bottom;
     display: block;
     transition: transform 0.32s ease;
+    image-rendering: -webkit-optimize-contrast;
   }
 
   #custom-section-6-{{ section.id }} .custom-section-6__card:hover .custom-section-6__image {
@@ -348,7 +359,7 @@
       padding: 0 12px;
     }
     #custom-section-6-{{ section.id }} .custom-section-6__header {
-      margin-bottom: 18px;
+      /* margin-bottom: 18px; */
     }
     #custom-section-6-{{ section.id }} .custom-section-6__heading {
       font-size: 18px;

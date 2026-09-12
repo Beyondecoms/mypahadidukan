@@ -66,7 +66,8 @@
           {%- endform -%}
         </product-form>
       {% else %}
-        {% if settings.select_option_button_action == 'popup' %}
+        {% assign select_option_action = settings.select_option_button_action | default: 'popup' %}
+        {% if select_option_action == 'popup' %}
           <product-form class="m-product-form m:w-full" data-product-id="{{ product.id }}">
             <input hidden name="id" required value="{{ variant_id }}" data-selected-variant="{{ selected_variant_id }}">
             <button

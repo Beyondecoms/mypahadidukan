@@ -149,11 +149,11 @@
           {%- endif -%}
 
           {%- if faq_button_text != blank -%}
-            <div class="custom-section-13__faq-footer">
+            {% comment %} <div class="custom-section-13__faq-footer">
               <a href="{{ faq_button_link | default: '#' }}" class="custom-section-13__faq-btn">
                 {{ faq_button_text }}
               </a>
-            </div>
+            </div> {% endcomment %}
           {%- endif -%}
         </div>
       </div>
@@ -172,6 +172,13 @@
     box-sizing: border-box;
     font-family: inherit;
   }
+@media only screen and (max-width: 749px){
+ #custom-section-13-{{ section.id }}{
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+ }
+}
+
 
   #custom-section-13-{{ section.id }} * {
     box-sizing: border-box;

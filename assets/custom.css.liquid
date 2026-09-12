@@ -976,6 +976,48 @@ button#ProductSubmitButton-template--24668427977010__main {
 .drawer_item .m-product-card__name {
     font-size: 12px;
 }
+
+.shop-by-category__heading,
+.custom-section-3__heading,
+.custom-section-4__heading,
+h2.m-section__heading.h3,
+.custom-section-5__heading,
+.custom-section-7__heading,
+.custom-section-6__heading,
+.custom-section-8__available-heading,
+.t-heading,
+.m-section__heading h3,
+.custom-section-11__heading,
+.h2.m-section__heading.h3,
+h2.m-section__heading.h3{
+  font-size: 24px !important;
+  font-weight: 600 !important;
+}
+
+@media only screen and (max-width: 749px){
+  .shop-by-category__heading,
+.custom-section-3__heading,
+.custom-section-4__heading,
+h2.m-section__heading.h3,
+.custom-section-5__heading,
+.custom-section-7__heading,
+.custom-section-6__heading,
+.custom-section-8__available-heading,
+.t-heading,
+.m-section__heading h3,
+.custom-section-11__heading,
+.h2.m-section__heading.h3,
+h2.m-section__heading.h3{
+  font-size: 24px !important;
+  font-weight: 600 !important;
+}
+}
+ 
+
+
+
+
+
 @media screen and (min-width: 640px) {
     .m-cart-item__info.m-cart-drawer-item__info {
         padding-left: 16px;
@@ -989,7 +1031,7 @@ span.m-product-card__tag-name.m-product-tag.m-product-tag--hot.m-gradient.m-colo
 }
 
 h2.m-section__heading.h3 {
-    color: #c0503b;
+    color: #000000;
    text-transform: uppercase;
 }
 
@@ -1979,8 +2021,8 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
 
 #MainProduct-quick-view__content .m-product-option--node:hover,
 .m-product-option--node:hover {
-  border-color: var(--qv-primary) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  /* border-color: var(--qv-primary) !important; */
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important; */
 }
 
 #MainProduct-quick-view__content .m-product-option--node.m-product-option--node-active,
@@ -3069,7 +3111,7 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
    as a single card-sized item
    ============================================================ */
 .m-collection-offer-banner {
-  /* inherits m:w-6/12 md:m:w-4/12 from m-product-item — no width override needed */
+  display: none !important;
 }
 
 .m-collection-offer-banner__link {
@@ -3121,6 +3163,15 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
   display: block;
 }
 
+/* Desktop — 4-column product grid layout */
+@media screen and (min-width: 768px) {
+  .m-collection-products .m-product-item:not(.m-collection-inline-icon-box-row) {
+    width: 25% !important;
+    max-width: 25% !important;
+    flex: 0 0 25% !important;
+  }
+}
+
 /* Mobile — match the 2-column card layout */
 @media screen and (max-width: 767px) {
   .m-collection-offer-banner__link {
@@ -3141,4 +3192,85 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
     box-sizing: border-box !important;
     grid-column: 1 / -1 !important;
   }
+}
+
+/* Product Page Variant Cards Layout: 
+   - 1 to 4 variants: Single horizontal row
+   - 5+ variants: 2 per row (50% grid)
+*/
+
+body .m-product-option--button .m-product-option--node__label {
+  padding: 8px 6px !important;
+  height: auto !important;
+  min-height: 105px !important;
+}
+
+/* Base flex container */
+body .m-product-option--content,
+body .m-product-option--content.m\:inline-flex.m\:flex-wrap {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+/* SINGLE ROW (<= 4 items) */
+body .m-product-option--content.m-product-option--single-row,
+body .m-product-option--content[data-values-count="1"],
+body .m-product-option--content[data-values-count="2"],
+body .m-product-option--content[data-values-count="3"],
+body .m-product-option--content[data-values-count="4"],
+body .m-product-option--content:has(.m-product-option--node:nth-last-child(-n+4):first-child) {
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  gap: 10px !important;
+  column-gap: 10px !important;
+  row-gap: 0 !important;
+  padding-bottom: 6px !important;
+}
+
+body .m-product-option--content.m-product-option--single-row::-webkit-scrollbar {
+  display: none !important;
+}
+
+body .m-product-option--content.m-product-option--single-row .m-product-option--node,
+body .m-product-option--content[data-values-count="1"] .m-product-option--node,
+body .m-product-option--content[data-values-count="2"] .m-product-option--node,
+body .m-product-option--content[data-values-count="3"] .m-product-option--node,
+body .m-product-option--content[data-values-count="4"] .m-product-option--node,
+body .m-product-option--content:has(.m-product-option--node:nth-last-child(-n+4):first-child) .m-product-option--node {
+  flex: 1 1 0px !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  scroll-snap-align: start !important;
+}
+
+/* TWO PER ROW (> 4 items) */
+body .m-product-option--content.m-product-option--two-per-row,
+body .m-product-option--content[data-values-count="5"],
+body .m-product-option--content[data-values-count="6"],
+body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+5):first-child) {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  gap: 12px !important;
+  column-gap: 12px !important;
+  row-gap: 14px !important;
+  padding-bottom: 0 !important;
+}
+
+body .m-product-option--content.m-product-option--two-per-row .m-product-option--node,
+body .m-product-option--content[data-values-count="5"] .m-product-option--node,
+body .m-product-option--content[data-values-count="6"] .m-product-option--node,
+body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+5):first-child) .m-product-option--node {
+  flex: 0 0 calc(50% - 6px) !important;
+  width: calc(50% - 6px) !important;
+  max-width: calc(50% - 6px) !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
 }

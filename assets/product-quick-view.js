@@ -85,15 +85,23 @@ class QuickView {
     this.isOpen = false;
   }
 
+  // Public open method
+  open(productHandle) {
+    if (productHandle) this.loadProductQuickView(productHandle);
+  }
+
   // Toggle loading spinner on the target element
   toggleLoading(isLoading) {
-    if (isLoading) {
+    if (isLoading && this.target) {
       this.target.classList.add("m-spinner-loading");
-    } else {
+    } else if (this.target) {
       this.target.classList.remove("m-spinner-loading");
     }
   }
 }
 
 // Initialize the QuickView instance
-MinimogTheme.ProductQuickView = new QuickView();
+const quickViewInstance = new QuickView();
+MinimogTheme.ProductQuickView = quickViewInstance;
+MinimogTheme.QuickView = quickViewInstance;
+

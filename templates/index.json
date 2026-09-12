@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
-            "mb_background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
+            "mb_background": "shopify://shop_images/mobile_banner.png",
             "content_in_container": false,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -46,7 +46,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0_1.png",
-            "mb_background": "shopify://shop_images/SQUASH_800x1000_000ad44d-e467-41ab-b58f-486300686f1d.jpg",
+            "mb_background": "shopify://shop_images/mobile_banner_1.png",
             "content_in_container": true,
             "content_position": "left middle",
             "text_alignment": "left",
@@ -74,10 +74,9 @@
         },
         "1621243260e1af0c20-0": {
           "type": "slider_item",
-          "disabled": true,
           "settings": {
-            "background": "shopify://shop_images/oil-final.jpg",
-            "mb_background": "shopify://shop_images/OIL_800x1000_cf018889-be4a-4b20-89a3-72cf1375c30d.jpg",
+            "background": "shopify://shop_images/shop_by_brand_7272550a-12c1-4e74-9e25-ce5001810e21.png",
+            "mb_background": "shopify://shop_images/mobile_banner_2.png",
             "content_in_container": true,
             "content_position": "right bottom",
             "text_alignment": "center",
@@ -247,7 +246,7 @@
             "title": "",
             "image": "shopify://shop_images/beverages.png",
             "image_by_url": "",
-            "link": "shopify://collections/pahadi-wellness"
+            "link": "shopify://collections/natural-beverages"
           }
         },
         "category_4": {
@@ -270,6 +269,7 @@
         },
         "category_6": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "title": "",
             "image": "shopify://shop_images/wellness.png",
@@ -292,7 +292,7 @@
             "title": "",
             "image": "shopify://shop_images/Link_1.png",
             "image_by_url": "",
-            "link": "shopify://collections/pahadi-ghee"
+            "link": "shopify://collections/pahadi-wellness"
           }
         },
         "category_9": {
@@ -301,7 +301,7 @@
             "title": "",
             "image": "shopify://shop_images/Link_mask-group_1.png",
             "image_by_url": "",
-            "link": "shopify://collections/spices-herbs"
+            "link": "shopify://collections/pahadi-ghee"
           }
         }
       },
@@ -529,6 +529,7 @@
         "slider_item_YFBBeX",
         "slider_item_yGfpHw"
       ],
+      "disabled": true,
       "custom_css": [
         ".m-section.m-slider.m-slideshow-section.m-slider--fullscreen.m-slider--content-stack.sf-home__slideshow {margin-top: 20px;}"
       ],
@@ -554,17 +555,45 @@
           "type": "category",
           "settings": {
             "title": "Juices",
-            "image": "shopify://shop_images/juice_s.png",
-            "collection": "pure-seabuckthorn",
+            "image": "shopify://shop_images/juices.png",
+            "collection": "fruity-juice-squash",
             "product_list": []
           }
         },
         "cat_2": {
           "type": "category",
+          "disabled": true,
           "settings": {
-            "title": "Oils",
-            "image": "shopify://shop_images/oils.png",
-            "collection": "all-products",
+            "title": "Squashes",
+            "image": "shopify://shop_images/squash_more.png",
+            "collection": "fruity-juice-squash",
+            "product_list": []
+          }
+        },
+        "category_zERkxB": {
+          "type": "category",
+          "settings": {
+            "title": "Ghee",
+            "image": "shopify://shop_images/Ghee_1.png",
+            "collection": "a2-cow-ghee",
+            "product_list": []
+          }
+        },
+        "category_TBjpi3": {
+          "type": "category",
+          "settings": {
+            "title": "Spices & Herbs",
+            "image": "shopify://shop_images/spices.png",
+            "collection": "spices-herbs",
+            "product_list": []
+          }
+        },
+        "category_7BdG9F": {
+          "type": "category",
+          "settings": {
+            "title": "Honey",
+            "image": "shopify://shop_images/herbs_honey.png",
+            "collection": "pure-honey",
             "product_list": []
           }
         },
@@ -579,6 +608,7 @@
         },
         "cat_4": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "title": "Herbs",
             "image": "shopify://shop_images/herbs.png",
@@ -588,19 +618,11 @@
         },
         "cat_5": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "title": "Dry Fruits",
             "image": "shopify://shop_images/dry_fruits.png",
             "collection": "dry-fruits",
-            "product_list": []
-          }
-        },
-        "category_zERkxB": {
-          "type": "category",
-          "settings": {
-            "title": "Teas",
-            "image": "shopify://shop_images/teas.png",
-            "collection": "refreshing-teas",
             "product_list": []
           }
         }
@@ -608,17 +630,19 @@
       "block_order": [
         "cat_1",
         "cat_2",
+        "category_zERkxB",
+        "category_TBjpi3",
+        "category_7BdG9F",
         "cat_3",
         "cat_4",
-        "cat_5",
-        "category_zERkxB"
+        "cat_5"
       ],
       "settings": {
         "heading": "Fastest Selling",
         "collection": "by-my-pahadi-dukan",
         "product_list": [],
-        "products_to_show": 4,
-        "desktop_products": 3,
+        "products_to_show": 24,
+        "desktop_products": 4,
         "mobile_products": 2,
         "card_gap": 14,
         "show_category_nav": true,
@@ -648,64 +672,58 @@
     "custom_section_4_Gy6H39": {
       "type": "custom-section-4",
       "blocks": {
+        "item_KyHqJA": {
+          "type": "item",
+          "disabled": true,
+          "settings": {
+            "product": ""
+          }
+        },
         "item_njRFmG": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "sea-buckthorn-pulp-juice-rich-in-vitamin-c-omega-3-6-7-and-9-and-antioxidants-my-pahadi-dukan-copy"
           }
         },
         "item_8PEYzG": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "buy-buransh-squash-online"
           }
         },
         "item_q6dWkc": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "buy-pure-kashmiri-saffron-online"
           }
         },
         "item_eUB3Xa": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "buy-kashmiri-walnuts-online"
           }
         },
         "item_GjadqL": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "sea-buckthorn-berries"
           }
         },
         "item_CarCj3": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "afghani-pahadi-hing-my-pahadi-dukan"
           }
         },
         "item_DzLwcr": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "seabuckthorn-oil-vitamin-c-serum"
           }
         }
       },
       "block_order": [
+        "item_KyHqJA",
         "item_njRFmG",
         "item_8PEYzG",
         "item_q6dWkc",
@@ -727,7 +745,7 @@
         "desktop_items": 6,
         "mobile_card_width": 110,
         "padding_top": 12,
-        "padding_bottom": 12
+        "padding_bottom": 40
       }
     },
     "custom_section_4_9W6QM6": {
@@ -736,57 +754,43 @@
         "item_3rdTCJ": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "lakadong-turmeric-100gms-8-10-curcumin"
           }
         },
         "item_Afra3H": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "birds-eye-chilli-powder"
           }
         },
         "item_7njLa6": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "heavenly-hing-sil-batta-salt"
           }
         },
         "item_fwTJBQ": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "kinnauri-rajma-kidney-beans-zangti"
           }
         },
         "item_CkDKca": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "kashmiri-himalayan-garlic-lehsun-with-single-clove-ek-kali"
           }
         },
         "item_436WtQ": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "pahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan"
           }
         },
         "item_bM78tH": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
-            "title": "Lorem",
-            "link": ""
+            "product": "multi-flora-honey-from-lahaul-spiti-my-pahadi-dukan"
           }
         }
       },
@@ -802,7 +806,7 @@
       "name": "New to My Pahadi Dukan? Start Here",
       "settings": {
         "heading": "",
-        "subheading": "Rich in Omega 3, 6, 12",
+        "subheading": "Kitchen Staples",
         "bg_color": "#ffffff",
         "heading_color": "#1f2937",
         "label_color": "#111827",
@@ -812,7 +816,7 @@
         "desktop_items": 6,
         "mobile_card_width": 110,
         "padding_top": 12,
-        "padding_bottom": 12
+        "padding_bottom": 40
       }
     },
     "16225125199f82d8fe": {
@@ -1029,9 +1033,9 @@
             "image_by_url": "",
             "thumbnail": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
             "thumbnail_by_url": "",
-            "products_text": "100 Products",
+            "products_text": "52 Products",
             "button_text": "Shop Now",
-            "link": ""
+            "link": "https://mypahadidukan.com/collections/vendors?q=My%20Pahadi%20Dukan"
           }
         },
         "brand_card_9pRtYw": {
@@ -1040,16 +1044,15 @@
             "badge_text": "Immunity Boost",
             "badge_bg": "#ffffff6b",
             "badge_color": "#1f2937",
-            "title": "Planet Mushroom",
+            "title": "Sakya",
             "title_color": "#1f2937",
             "card_bg": "#82c4eb",
-            "image": "shopify://shop_images/1398ea2cb459faf697e23850ec99ed39936adde5.png",
+            "image": "shopify://shop_images/teas-removebg-preview.png",
             "image_by_url": "",
-            "thumbnail": "shopify://shop_images/695768f470d2dfe7d3eba3c65a5874112904e5fc.png",
             "thumbnail_by_url": "",
-            "products_text": "100 Products",
+            "products_text": "36 Products",
             "button_text": "Shop Now",
-            "link": ""
+            "link": "https://mypahadidukan.com/collections/vendors?q=Saakya"
           }
         },
         "brand_card_xaXiJW": {
@@ -1058,16 +1061,15 @@
             "badge_text": "Daily Nutrition",
             "badge_bg": "#ffffff6b",
             "badge_color": "#1f2937",
-            "title": "Bilona",
+            "title": " Pahari Haat",
             "title_color": "#1f2937",
             "card_bg": "#fee79a",
-            "image": "shopify://shop_images/f4e498cf5c896c2014f5ca9d152b3bf26ea1972d.png",
+            "image": "shopify://shop_images/HimalayanSichuanPepper10-removebg-preview.png",
             "image_by_url": "",
-            "thumbnail": "shopify://shop_images/b93e4ea0e5c5c43e26802801f8ba2a0f6d112611.png",
             "thumbnail_by_url": "",
-            "products_text": "100 Products",
+            "products_text": "34 Products",
             "button_text": "Shop Now",
-            "link": ""
+            "link": "https://mypahadidukan.com/collections/vendors?q=Pahari%20Haat"
           }
         }
       },
@@ -1163,6 +1165,7 @@
         "spotlight_item_XcM9zy",
         "spotlight_item_3EyC3f"
       ],
+      "disabled": true,
       "name": "This Season Spotlight (Section 6)",
       "settings": {
         "heading": "This Season Spotlight",
@@ -1205,16 +1208,16 @@
         "category_tab_L3enYC": {
           "type": "category_tab",
           "settings": {
-            "title": "Curcumin",
-            "collection": "curated-basket",
+            "title": "Combos",
+            "collection": "combos",
             "product_list": []
           }
         },
         "category_tab_VAY9hR": {
           "type": "category_tab",
           "settings": {
-            "title": "Ashwagandha",
-            "collection": "all-products",
+            "title": "Himalayan Herbs",
+            "collection": "himalayan-herbs",
             "product_list": []
           }
         }
@@ -1271,7 +1274,7 @@
             "image": "shopify://shop_images/Saffron.png",
             "image_by_url": "",
             "title": "Saffron",
-            "link": ""
+            "link": "https://mypahadidukan.com/products/buy-pure-kashmiri-saffron-online"
           }
         },
         "spotlight_item_TJ8QGU": {
@@ -1280,7 +1283,7 @@
             "image": "shopify://shop_images/Chamomile.png",
             "image_by_url": "",
             "title": "Chamomile",
-            "link": ""
+            "link": "https://mypahadidukan.com/products/himalayan-pure-chamomile"
           }
         },
         "spotlight_item_AiMtWN": {
@@ -1289,7 +1292,7 @@
             "image": "shopify://shop_images/Shilajit.png",
             "image_by_url": "",
             "title": "Shilajit",
-            "link": ""
+            "link": "shopify://products/buy-shilajit-online"
           }
         },
         "spotlight_item_gpbMEw": {
@@ -1298,7 +1301,7 @@
             "image": "shopify://shop_images/Lavender.png",
             "image_by_url": "",
             "title": "Lavender",
-            "link": ""
+            "link": "shopify://products/combo-lavender-oil-rosemary-oil-lemongrass-oil"
           }
         },
         "spotlight_item_MgBryF": {
@@ -1307,7 +1310,7 @@
             "image": "shopify://shop_images/Sea_Buckthorn_1.png",
             "image_by_url": "",
             "title": "Sea Buckthorn",
-            "link": ""
+            "link": "shopify://collections/pure-seabuckthorn"
           }
         },
         "spotlight_item_VcA48D": {
@@ -1316,7 +1319,7 @@
             "image": "shopify://shop_images/Honey_2.png",
             "image_by_url": "",
             "title": "Honey",
-            "link": ""
+            "link": "shopify://collections/pure-honey"
           }
         }
       },
@@ -1341,7 +1344,7 @@
         "card_gap": 16,
         "card_radius": 22,
         "padding_top": 48,
-        "padding_bottom": 48
+        "padding_bottom": 0
       }
     },
     "custom_section_8_AtY7dF": {
@@ -1381,7 +1384,7 @@
       "settings": {
         "show_stars": true,
         "reviews_text": "More than 1,00,00 5 star reviews",
-        "headline_text": "More than 10 Lakh products sold, and just as many lives changed.",
+        "headline_text": "More than 10 Lakh products sold, and just as many lives impacted",
         "banner_bg": "#b85338",
         "banner_text_color": "#ffffff",
         "banner_radius": 20,
@@ -1450,6 +1453,7 @@
         "testimonial_e7H6ND",
         "testimonial_XYJJji"
       ],
+      "disabled": true,
       "name": "Customer Reviews (Section 9)",
       "settings": {
         "heading": "Don't just take our word for it",
@@ -1468,16 +1472,147 @@
         "padding_bottom": 48
       }
     },
+    "1789131572f8a921ff": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_medals_nfyg3c": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_F39NKa": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_medals_nfyg3c",
+        "judge_me_reviews_preview_badge_F39NKa"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "header_alignment": "center",
+        "container": "container",
+        "background_color": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": ""
+      }
+    },
+    "testimonials_GtpdYD": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_YLKLM6": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Love it",
+            "description": "<p>I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukaan. You can literally feel the energy kick in a few days. Love that it’s sourced straight from the mountains</p>",
+            "footer": "<p>Jayant</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": "buy-shilajit-online"
+          }
+        },
+        "testimonial_wcwzNV": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Great Products",
+            "description": "<p>The Himalayan mushroom blend is now part of my daily routine. My focus and sleep have both improved. Plus, it’s comforting to know it’s 100% natural and traditionally sourced.</p>",
+            "footer": "<p>Rohit</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": "black-fungus-mushrooms-100gms-planet-mushroom"
+          }
+        },
+        "testimonial_ztEGDP": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Awesome",
+            "description": "<p>I started taking their Moringa capsules for general wellness and it’s made a noticeable difference in my energy levels and digestion. Super fresh and no aftertaste. Highly recommend!</p>",
+            "footer": "<p>Divya</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": "himalayan-moringa-leaf-powder"
+          }
+        },
+        "testimonial_w6fngi": {
+          "type": "testimonial",
+          "settings": {
+            "title": "My fav Store",
+            "description": "<p>After a month of using My Pahadi Dukaan’s Ashwagandha, my stress is more manageable and I sleep deeper. The quality is top-notch — you can tell it's not mass-produced</p>",
+            "footer": "<p>Aditya</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": "ashwagandha-root-powder-80gms-ayantara"
+          }
+        },
+        "testimonial_8PwQCB": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "title": "Love it so much",
+            "description": "<p>\"Short dress in a printed viscose weave with a round neckline, opening with a button at the back of the Seams with small frill trims at the waist and on the sleeves and skirt. Unlined.\"</p>",
+            "footer": "<p>Dean D. US</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": ""
+          }
+        },
+        "testimonial_MFcjBb": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "title": "Love it so much",
+            "description": "<p>\"Short dress in a printed viscose weave with a round neckline, opening with a button at the back of the Seams with small frill trims at the waist and on the sleeves and skirt. Unlined.\"</p>",
+            "footer": "<p>Dean D. US</p>",
+            "image_text": "",
+            "image_link": "",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_YLKLM6",
+        "testimonial_wcwzNV",
+        "testimonial_ztEGDP",
+        "testimonial_w6fngi",
+        "testimonial_8PwQCB",
+        "testimonial_MFcjBb"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "heading": "What People Are Saying",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "container": "w-full",
+        "color_scheme": "",
+        "design": "testimonials-1",
+        "show_stars": true,
+        "autorotate": false,
+        "show_navigation": false,
+        "show_pagination": true,
+        "star_color": "#000",
+        "item_color_scheme": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
     "custom_section_10_BQ8drw": {
       "type": "custom-section-10",
       "name": "Philosophy Banner (Section 10)",
       "settings": {
-        "image": "shopify://shop_images/dfb433064e16adc63307002b423910c6ee9123d7.png",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_11_2026_04_58_07_PM_1.png",
         "image_by_url": "",
         "heading": "The Philosophy rooted in the Mountains",
         "text": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.",
         "button_text": "ABOUT US",
-        "button_link": "",
+        "button_link": "https://mypahadidukan.com/pages/about",
         "bg_color": "#ffffff",
         "banner_radius": 22,
         "desktop_height": 480,
@@ -1592,41 +1727,56 @@
         "press_item_airH4f": {
           "type": "press_item",
           "settings": {
-            "quote_text": "There's macaron towers and pesto babkas to treats from the mountains up North",
+            "quote_text": "My Pahadi Dukan Brings Authentic Himalayan Flavours to Festive Celebrations",
             "outlet_name": "The Hindu",
             "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/THE-HINDU-Logo_4.webp",
             "logo_url": "",
-            "link": ""
+            "link": "https://www.thehindu.com/life-and-style/food/unboxing-cheer-diwali-hampers-2021-laduree-la-folie-bombay-sweet-shop-pumpkin-tales-royce-gift/article37263786.ece"
           }
         },
         "press_item_N9waCW": {
           "type": "press_item",
           "settings": {
             "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
-            "outlet_name": "The Hindu",
+            "outlet_name": "Entrepreneur India",
             "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/20250528075003-Ent-Logo-India-Logo-Black-1.svg",
             "logo_url": "",
-            "link": ""
+            "link": "https://india.entrepreneur.com/news-and-trends/my-pahadi-dukan-and-iyaso-secure-early-stage-funding/488854"
           }
         },
         "press_item_gBUJpw": {
           "type": "press_item",
           "settings": {
-            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
-            "outlet_name": "The Hindu",
+            "quote_text": "Meet the Next-Gen Apple Sellers of Himachal Pradesh Thriving in the Digital Marketplace",
+            "outlet_name": "Outlook",
             "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/image_796.png",
             "logo_url": "",
-            "link": ""
+            "link": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024"
           }
         },
         "press_item_WBW79T": {
           "type": "press_item",
           "settings": {
-            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
-            "outlet_name": "The Hindu",
+            "quote_text": "My Pahadi Dukan: Empowering Himalayan Businesses Through E-Commerce",
+            "outlet_name": "Homegrown",
             "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/homegrown_brand_logo.png",
             "logo_url": "",
-            "link": ""
+            "link": "https://homegrown.co.in/homegrown-explore/from-kashmir-to-ladakh-4-startups-from-the-indian-mountains-supporting-local-communities"
+          }
+        },
+        "press_item_C7e3yH": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "My Pahadi Dukaan: How This Startup Is Helping Himalayan Farmers",
+            "outlet_name": "Zee Business Hindi",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/zee_business_hindi_logo.jpg",
+            "logo_url": "",
+            "link": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162"
           }
         }
       },
@@ -1634,7 +1784,8 @@
         "press_item_airH4f",
         "press_item_N9waCW",
         "press_item_gBUJpw",
-        "press_item_WBW79T"
+        "press_item_WBW79T",
+        "press_item_C7e3yH"
       ],
       "name": "Custom Section 11",
       "settings": {
@@ -1642,13 +1793,16 @@
         "subheading": "",
         "heading_color": "#000000",
         "subheading_color": "#555555",
+        "enable_carousel": true,
+        "show_arrows": true,
+        "logo_shape": "rounded",
+        "desktop_columns": 4,
+        "card_gap": 20,
         "card_bg": "#fff6d6",
         "card_text_color": "#2c221e",
         "card_radius": 16,
         "outlet_color": "#1f2937",
         "read_time_color": "#6b7280",
-        "desktop_columns": 4,
-        "card_gap": 20,
         "bg_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 40
@@ -1813,7 +1967,7 @@
         "use_scroll_mobile": true,
         "use_grid_column_mb": true,
         "enable_scroller": false,
-        "padding_top": 24,
+        "padding_top": 44,
         "padding_bottom": 44,
         "custom_class": "mobilw3",
         "animations": "inherit"
@@ -1865,6 +2019,7 @@
         "recipe_item_pXK4gh",
         "recipe_item_KmmzXE"
       ],
+      "disabled": true,
       "name": "Custom Section 12",
       "settings": {
         "heading": "Superfood Recipes",
@@ -1887,7 +2042,7 @@
         "comparison_row_bertzD": {
           "type": "comparison_row",
           "settings": {
-            "feature_text": "Fresh Ingredients",
+            "feature_text": "Sourced direct from farmers",
             "brand_check": true,
             "others_check": false
           }
@@ -1895,7 +2050,7 @@
         "comparison_row_jnLMPE": {
           "type": "comparison_row",
           "settings": {
-            "feature_text": "Evidence based formulation",
+            "feature_text": "Traceable to the batch",
             "brand_check": true,
             "others_check": false
           }
@@ -1903,7 +2058,7 @@
         "comparison_row_CMj4NP": {
           "type": "comparison_row",
           "settings": {
-            "feature_text": "Lab Tested",
+            "feature_text": "Published third-party lab reports",
             "brand_check": true,
             "others_check": false
           }
@@ -1911,7 +2066,7 @@
         "comparison_row_UjEA6d": {
           "type": "comparison_row",
           "settings": {
-            "feature_text": "Loerm Ipsum",
+            "feature_text": "Screened for heavy metals & adulterants",
             "brand_check": true,
             "others_check": false
           }
@@ -1919,7 +2074,7 @@
         "comparison_row_CEtrHN": {
           "type": "comparison_row",
           "settings": {
-            "feature_text": "Loerm Ipsum",
+            "feature_text": "Fair price paid to the grower",
             "brand_check": true,
             "others_check": false
           }
@@ -1928,35 +2083,56 @@
           "type": "faq_item",
           "settings": {
             "question": "Are your products really sourced from the Himalayas?",
-            "answer": "Yes, all our products are directly sourced from local Himalayan farmers and wild crafters."
+            "answer": "Yes. Every product we sell is sourced directly from farmers, self-help groups, and cooperatives across nine Himalayan states — including Kashmir, Ladakh, Himachal Pradesh, Uttarakhand, Sikkim, and Meghalaya — as well as Bhutan. We work source-to-shelf, which means we know exactly where each batch comes from. No middlemen, no mystery sourcing."
           }
         },
         "faq_item_8YnbDh": {
           "type": "faq_item",
           "settings": {
             "question": "How do you verify purity and authenticity?",
-            "answer": "We conduct rigorous third-party lab testing and maintain full supply chain transparency."
+            "answer": "Every batch goes through rigorous lab testing before it reaches you. We believe purity should be something you can verify, not just something we claim — so our products are tested for active compounds, contaminants, and adulteration depending on the category. We'd rather show you the process than ask you to take our word for it."
           }
         },
         "faq_item_ph3XB9": {
           "type": "faq_item",
           "settings": {
             "question": "How is Kashmiri Saffron different from regular saffron?",
-            "answer": "Kashmiri saffron has higher crocin levels, distinct aroma, and deep red stigmas."
+            "answer": "Real saffron has a distinct colour, aroma, and slightly bitter taste — qualities that cheap imitations (often mixed with dyed look-alikes like Gardenia flower) just can't replicate. To make sure you're getting the real thing, we send our saffron to an independent, government-accredited lab for testing before it's sold. Our latest batch passed all purity and quality checks under India's official food safety standards (FSSAI), confirming it's authentic, high-grade Kashmiri saffron — not a diluted substitute."
           }
         },
         "faq_item_bGjx6i": {
           "type": "faq_item",
           "settings": {
             "question": "What makes your Shilajit different from other brands?",
-            "answer": "Our Shilajit is purified using traditional Ayurvedic methods and tested for heavy metals."
+            "answer": "Most shilajit sold online isn't sourced from Ladakh at all, despite the label. Ours is — harvested from high-altitude rocks in the Ladakh region, then purified using traditional methods to remove impurities while preserving its mineral content. It's 100% pure resin, with no additives or fillers, which is why it's earned recognition as an Amazon's Choice product."
           }
         },
         "faq_item_cjx6ic": {
           "type": "faq_item",
           "settings": {
             "question": "Are your products organic and chemical-free?",
-            "answer": "Yes, 100% natural, organic, and free from any synthetic additives or preservatives."
+            "answer": "Yes — our products are grown and processed without synthetic chemicals, following traditional Pahadi methods used by mountain communities for generations. We work directly with growers who avoid chemical fertilizers and pesticides, so what you're getting is as close to unprocessed and natural as it gets."
+          }
+        },
+        "faq_item_tPGXJd": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you test for heavy metals and contaminants?",
+            "answer": "Yes. Categories like Shilajit, A2 Ghee, and spices are particularly prone to contamination or adulteration, so we prioritize lab testing for heavy metals and other contaminants in these products specifically. This testing happens before a batch is approved for sale, not after complaints come in."
+          }
+        },
+        "faq_item_NCNtjd": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where can I see lab reports and quality certificates?",
+            "answer": "We publish third-party lab test reports for key products like our Kashmiri Saffron, tested by independent, ISO-certified labs such as FARE Labs. We're adding more batch-wise reports as products are tested — you'll find these on the relevant product pages so you can verify for yourself."
+          }
+        },
+        "faq_item_pHGJU7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do you support the farmers you source from?",
+            "answer": "We work directly with farmers, women's collectives, and cooperatives across the Himalayan region, cutting out middlemen so producers earn a fairer share of what their goods sell for. We're also part of the Ministry of Commerce's One District One Product programme, working alongside institutions like IIM Kashipur and IIT Mandi to build a more sustainable supply chain for mountain communities."
           }
         }
       },
@@ -1970,7 +2146,10 @@
         "faq_item_8YnbDh",
         "faq_item_ph3XB9",
         "faq_item_bGjx6i",
-        "faq_item_cjx6ic"
+        "faq_item_cjx6ic",
+        "faq_item_tPGXJd",
+        "faq_item_NCNtjd",
+        "faq_item_pHGJU7"
       ],
       "name": "Custom Section 13",
       "settings": {
@@ -1981,7 +2160,7 @@
         "comp_pill_color": "#ffffff",
         "faq_heading": "Things People Ask Us",
         "faq_card_bg": "#fffdf0",
-        "faq_button_text": "Read More",
+        "faq_button_text": "",
         "faq_button_link": "",
         "bg_color": "#ffffff",
         "padding_top": 48,
@@ -2036,6 +2215,8 @@
     "custom_section_6_FRXrMV",
     "custom_section_8_AtY7dF",
     "custom_section_9_KPmxyY",
+    "1789131572f8a921ff",
+    "testimonials_GtpdYD",
     "custom_section_10_BQ8drw",
     "icon_box_xXQGRt",
     "custom_section_11_pKXFKg",

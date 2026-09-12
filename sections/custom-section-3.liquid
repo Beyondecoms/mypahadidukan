@@ -259,6 +259,7 @@
                               data-variant-id="{{ current_variant.id }}"
                               data-product-id="{{ product.id }}"
                               data-product-url="{{ product.url }}"
+                              data-product-handle="{{ product.handle }}"
                               data-has-multiple-variants="{% if product.has_only_default_variant %}false{% else %}true{% endif %}"
                               {% unless product.available %}disabled{% endunless %}
                             >
@@ -414,6 +415,11 @@
     position: relative;
     box-sizing: border-box;
     font-family: inherit;
+  }
+  @media only screen and (max-width: 749px){
+    #custom-section-3-{{ section.id }}{
+  padding-top:30px;
+    }
   }
 
   #custom-section-3-{{ section.id }} * {
@@ -597,12 +603,12 @@
     display: none;
   }
 
-  @media only screen and (max-width: 768px){
-    #custom-section-3-{{ section.id }} .custom-section-3__slide {
-      flex: 0 0 calc((100% - (var(--cs3-desktop-products) - 0.5) * var(--cs3-gap)) / var(--cs3-desktop-products));
-      min-width: 0;
-      scroll-snap-align: start;
-    }
+  #custom-section-3-{{ section.id }} .custom-section-3__slide {
+    flex: 0 0 calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
+    width: calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
+    max-width: calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
+    min-width: 0;
+    scroll-snap-align: start;
   }
 
 
@@ -969,7 +975,9 @@
   /* Responsive Adjustments */
   @media (max-width: 1200px) {
     #custom-section-3-{{ section.id }} .custom-section-3__slide {
-      flex: 0 0 calc((100% - 3.5 * var(--cs3-gap)) / 4.2);
+      flex: 0 0 calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
+      width: calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
+      max-width: calc((100% - (var(--cs3-desktop-products) - 1) * var(--cs3-gap)) / var(--cs3-desktop-products));
     }
   }
 
@@ -978,11 +986,15 @@
       font-size: 11.5px;
       color: #4B5563;
     }
+    #custom-section-3-{{ section.id }} .custom-section-3__track {
+      gap: 10px !important;
+    }
     #custom-section-3-{{ section.id }} .custom-section-3__slide {
-      flex: 0 0 70% !important;
-      width: 70% !important;
-      min-width: 70% !important;
-      max-width: 70% !important;
+      flex: 0 0 calc((100% - 10px) / 2) !important;
+      width: calc((100% - 10px) / 2) !important;
+      min-width: 0 !important;
+      max-width: 50% !important;
+      scroll-snap-align: start;
     }
     #custom-section-3-{{ section.id }} .custom-section-3__heading {
       font-size: 22px;
@@ -995,7 +1007,7 @@
 
   @media (max-width: 767px) {
     #custom-section-3-{{ section.id }} .custom-section-3__container {
-      padding: 0 12px;
+      padding: 0 10px;
     }
     #custom-section-3-{{ section.id }} .custom-section-3__heading {
       font-size: 20px;
@@ -1018,6 +1030,7 @@
       gap: 6px;
       padding: 4px 6px 10px 6px;
       text-align: center;
+      flex: 0 0 23%;
     }
     #custom-section-3-{{ section.id }} .custom-section-3__category-icon {
       width: 48px;
@@ -1030,11 +1043,15 @@
       font-weight: 600;
       white-space: nowrap;
     }
+    #custom-section-3-{{ section.id }} .custom-section-3__track {
+      gap: 10px !important;
+      padding: 6px 2px 14px 2px;
+    }
     #custom-section-3-{{ section.id }} .custom-section-3__slide {
-      flex: 0 0 70% !important;
-      width: 70% !important;
-      min-width: 70% !important;
-      max-width: 70% !important;
+      flex: 0 0 calc((100% - 10px) / 2) !important;
+      width: calc((100% - 10px) / 2) !important;
+      min-width: 0 !important;
+      max-width: 50% !important;
       scroll-snap-align: start;
     }
     #custom-section-3-{{ section.id }} .custom-section-3__arrow {
@@ -1271,8 +1288,15 @@
           var variantId = btn.getAttribute('data-variant-id');
 
           if (hasMultipleVariants) {
-            if (window.MinimogTheme && window.MinimogTheme.QuickView && handle) {
-              window.MinimogTheme.QuickView.open(handle);
+            var quickViewInstance = window.MinimogTheme && (window.MinimogTheme.ProductQuickView || window.MinimogTheme.QuickView);
+            if (quickViewInstance && handle) {
+              if (typeof quickViewInstance.open === 'function') {
+                quickViewInstance.open(handle);
+              } else if (typeof quickViewInstance.loadProductQuickView === 'function') {
+                quickViewInstance.loadProductQuickView(handle);
+              } else if (productUrl) {
+                window.location.href = productUrl;
+              }
             } else if (productUrl) {
               window.location.href = productUrl;
             }

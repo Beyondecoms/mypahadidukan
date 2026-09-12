@@ -239,7 +239,7 @@
         "grid_layout": "grid",
         "grid_columns": "4",
         "show_columns_switcher": false,
-        "pagination_limit": 11,
+        "pagination_limit": 12,
         "paginate_type": "paginate",
         "show_sorting": true,
         "show_filter": true,

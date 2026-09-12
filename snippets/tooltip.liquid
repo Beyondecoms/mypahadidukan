@@ -51,7 +51,8 @@
         endcapture
       endif
 
-      if product.has_only_default_variant == false and settings.select_option_button_action == 'popup'
+      assign select_option_action = settings.select_option_button_action | default: 'popup'
+      if product.has_only_default_variant == false and select_option_action == 'popup'
         assign class = 'm-product-quickview-button m-spinner-button'
       endif
 
@@ -135,7 +136,8 @@
       data-product-handle="{{ product.handle }}"
       aria-label="{{ content }}"
     >
-      {% if settings.select_option_button_action == 'popup' %}
+      {% assign select_option_action = settings.select_option_button_action | default: 'popup' %}
+      {% if select_option_action == 'popup' %}
         <span class="m-spinner-icon">
           <svg
             class="animate-spin m-svg-icon--medium"

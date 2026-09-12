@@ -227,123 +227,127 @@
     </div>
   {% endif %}
 
-  <button type="button" class="important-info-trigger" aria-haspopup="dialog" aria-controls="important-info-modal">
-    <span class="warning-icon-wrapper">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-      </svg>
-    </span>
-    <span class="warning-text">Important Information Before You Buy</span>
-    <span class="chevron-wrapper">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </span>
-  </button>
+  {% assign important_info = product.metafields.custom.important_information.value | default: product.metafields.custom.important_information %}
+  {% assign important_info_text = important_info | strip_html | strip %}
+  {% if important_info != blank and important_info_text != blank %}
+    <button type="button" class="important-info-trigger" aria-haspopup="dialog" aria-controls="important-info-modal">
+      <span class="warning-icon-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </span>
+      <span class="warning-text">Important Information Before You Buy</span>
+      <span class="chevron-wrapper">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E67E22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
+    </button>
 
-  <div id="important-info-modal" class="important-info-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="important-info-modal-title">
-    <div class="important-info-modal-container" role="document">
-      <button type="button" class="important-info-modal-close" aria-label="Close modal">&times;</button>
-      <div class="important-info-modal-content">
-        <h2 id="important-info-modal-title" class="important-info-modal-title">Important Information Before You Buy</h2>
-        <div class="important-info-modal-body">
-<p>{{ product.metafields.custom.important_information }}</p>
+    <div id="important-info-modal" class="important-info-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="important-info-modal-title">
+      <div class="important-info-modal-container" role="document">
+        <button type="button" class="important-info-modal-close" aria-label="Close modal">&times;</button>
+        <div class="important-info-modal-content">
+          <h2 id="important-info-modal-title" class="important-info-modal-title">Important Information Before You Buy</h2>
+          <div class="important-info-modal-body">
+            {{ important_info }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    (function() {
-      var lastFocusedElement = null;
+    <script>
+      (function() {
+        var lastFocusedElement = null;
 
-      function getModal() {
-        return document.getElementById('important-info-modal');
-      }
-
-      function getFocusableElements(modal) {
-        var focusableString = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        return Array.prototype.slice.call(modal.querySelectorAll(focusableString));
-      }
-
-      function openModal() {
-        var modal = getModal();
-        if (!modal) return;
-        lastFocusedElement = document.activeElement;
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        
-        var focusable = getFocusableElements(modal);
-        if (focusable.length > 0) {
-          focusable[0].focus();
-        }
-        document.addEventListener('keydown', handleKeyDown);
-      }
-
-      function closeModal() {
-        var modal = getModal();
-        if (!modal) return;
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        if (lastFocusedElement) {
-          lastFocusedElement.focus();
-        }
-        document.removeEventListener('keydown', handleKeyDown);
-      }
-
-      function handleKeyDown(e) {
-        var modal = getModal();
-        if (!modal || modal.getAttribute('aria-hidden') === 'true') return;
-
-        if (e.key === 'Escape' || e.keyCode === 27) {
-          closeModal();
-          return;
+        function getModal() {
+          return document.getElementById('important-info-modal');
         }
 
-        if (e.key === 'Tab' || e.keyCode === 9) {
+        function getFocusableElements(modal) {
+          var focusableString = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+          return Array.prototype.slice.call(modal.querySelectorAll(focusableString));
+        }
+
+        function openModal() {
+          var modal = getModal();
+          if (!modal) return;
+          lastFocusedElement = document.activeElement;
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          
           var focusable = getFocusableElements(modal);
-          if (focusable.length === 0) {
-            e.preventDefault();
+          if (focusable.length > 0) {
+            focusable[0].focus();
+          }
+          document.addEventListener('keydown', handleKeyDown);
+        }
+
+        function closeModal() {
+          var modal = getModal();
+          if (!modal) return;
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+          document.removeEventListener('keydown', handleKeyDown);
+        }
+
+        function handleKeyDown(e) {
+          var modal = getModal();
+          if (!modal || modal.getAttribute('aria-hidden') === 'true') return;
+
+          if (e.key === 'Escape' || e.keyCode === 27) {
+            closeModal();
             return;
           }
-          var first = focusable[0];
-          var last = focusable[focusable.length - 1];
-          if (e.shiftKey) {
-            if (document.activeElement === first) {
-              last.focus();
+
+          if (e.key === 'Tab' || e.keyCode === 9) {
+            var focusable = getFocusableElements(modal);
+            if (focusable.length === 0) {
               e.preventDefault();
+              return;
             }
-          } else {
-            if (document.activeElement === last) {
-              first.focus();
-              e.preventDefault();
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+              }
+            } else {
+              if (document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+              }
             }
           }
         }
-      }
 
-      document.addEventListener('click', function(e) {
-        if (e.target.closest('.important-info-trigger')) {
-          e.preventDefault();
-          openModal();
-          return;
-        }
+        document.addEventListener('click', function(e) {
+          if (e.target.closest('.important-info-trigger')) {
+            e.preventDefault();
+            openModal();
+            return;
+          }
 
-        if (e.target.closest('.important-info-modal-close')) {
-          e.preventDefault();
-          closeModal();
-          return;
-        }
+          if (e.target.closest('.important-info-modal-close')) {
+            e.preventDefault();
+            closeModal();
+            return;
+          }
 
-        var modal = getModal();
-        if (modal && e.target === modal) {
-          closeModal();
-        }
-      });
-    })();
-  </script>
+          var modal = getModal();
+          if (modal && e.target === modal) {
+            closeModal();
+          }
+        });
+      })();
+    </script>
+  {% endif %}
 {% endif %}
 
 {% comment %} Disclaimer for SBT Oil {% endcomment %}
@@ -1171,6 +1175,59 @@
 {% endif %}
 
         </product-form>
+
+        {% if product.handle == 'sea-buckthorn-juice' %}
+          <a
+            href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9763470/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="scientific-research-link"
+          >
+            <span class="scientific-research-text">OUR SCIENTIFIC-BACKED RESEARCH PAPERS</span>
+            <svg class="scientific-research-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+
+          <style>
+            .scientific-research-link {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+              margin-top: 16px;
+              padding: 10px 0;
+              text-decoration: none;
+              color: #4A5229;
+              font-weight: 700;
+              font-size: 14px;
+              letter-spacing: 0.03em;
+              transition: opacity 0.2s ease, color 0.2s ease;
+            }
+            .scientific-research-link:hover {
+              opacity: 0.85;
+              color: #2E3618;
+            }
+            .scientific-research-text {
+              text-decoration: underline;
+              text-underline-offset: 4px;
+              text-decoration-thickness: 1.5px;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 1.3;
+            }
+            .scientific-research-arrow {
+              flex-shrink: 0;
+              margin-left: 8px;
+            }
+            @media (max-width: 640px) {
+              .scientific-research-text {
+                font-size: 12.5px;
+              }
+            }
+          </style>
+        {% endif %}
         <link
           rel="stylesheet"
           href="{{ 'pickup-availability.css' | asset_url }}"

@@ -52,12 +52,28 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size"
+            "size_title": "Size",
+            "tbspn_svg_icon": "",
+            "card_border_radius": 10,
+            "card_border_thickness": 1,
+            "card_selected_border_color": "#f58220",
+            "card_spacing": 12,
+            "card_image_size": 80,
+            "card_show_compare_price": true,
+            "card_show_discount": true,
+            "card_show_image": true,
+            "card_show_checkmark": true,
+            "card_desktop_cards_per_row": 3,
+            "card_mobile_width": 110
           }
         },
         "stackback_subscriptions_more_react_purchase_options_test_wtA9BD": {
           "type": "shopify://apps/stackback-subscriptions-more/blocks/react-purchase-options-test/019b4b9b-83ea-7131-957e-bce5135363da",
-          "settings": {}
+          "settings": {
+            "hide_prepaid": false,
+            "hide_payg": false,
+            "hide_auto_debit": false
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -143,7 +159,8 @@
             "heading3": "Icon 3",
             "icon3": "shopify://shop_images/icon_weight__managem.svg",
             "heading4": "Icon 4",
-            "icon4": "shopify://shop_images/icon_hart__helth.svg"
+            "icon4": "shopify://shop_images/icon_hart__helth.svg",
+            "heading5": "Icon 5"
           }
         },
         "custom_liquid_UAfqy3": {
@@ -165,7 +182,7 @@
           "type": "custom_liquid",
           "name": "Tabs",
           "settings": {
-            "custom_liquid": "<style>\n\n</style>\n<div class=\"accordion\">\n  <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Description</div>\n    <div class=\"accordion-content\">{{ product.description }}</div>\n  </div>\n {% for variant in product.variants %}\n    {% assign mytitle  = variant.title %}\n  {% endfor %}\n  {% unless mytitle == 'Default Title' %}\n  <div class=\"accordion-item {{mytitle}}\" >\n    <div class=\"accordion-header\">Additional Information</div>\n    <div class=\"accordion-content\">{% if isProductDefault %}{% continue %}{% endif -%}\n              <div class=\"t4s-tab-wrapper{{class_first_tab}}\" data-t4s-tab-wrapper>\n                <a id=\"t44_{{bk_id}}\" href=\"#{{tab_id}}\" rel=\"nofollow\" class=\"t4s-tab__title t4s-fwm t4s-ch\" data-t4s-tab-item data-no-instant><span class=\"t4s-tab__text\">{{bk_stts.title | escape}}</span><span class=\"t4s-tab__icon\"></span></a>\n                <div id=\"{{tab_id}}\" class=\"t4s-tab-content{{class_first_tab}}\" data-t4s-tab-content>\n                  <table class=\"t4s-pr_attrs\">\n                    <tbody>\n                      {%- for product_option in product.options_with_values -%}\n                      <tr class=\"t4s-attr_pa_{{product_option.name | handle }}\">\n                        <th class=\"t4s-attr__label\">{{ product_option.name }}</th>\n                        <td class=\"t4s-attr__value\">\n                          <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {% endunless %}{% endfor %}</p>\n                        </td>\n                      </tr>\n                      {%- endfor -%}\n                    </tbody>\n                  </table>\n                </div>\n             </div>\n             {%- assign forloop_first = false %}{% assign isEmty = false -%}</div>\n  </div>\n  {% endunless %}\n  {% if product.metafields.custom.ingredient != blank %}\n  <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Ingredient</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.ingredient | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.health_benefits != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Health benefits</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.health_benefits | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.nutrient != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Nutrient</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.nutrient | metafield_tag }}</div>\n  </div>\n  {% endif %}\n   {% if product.metafields.custom.how_to_use != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">How to Use</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.how_to_use | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.faqs != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Faqs</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.faqs | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  <!-- <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Reviews</div>\n    <div class=\"accordion-content\"> \n  <div style='clear:both'></div> \n  <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'> \n    {{ product.metafields.judgeme.widget }} \n  </div> \n</div> -->\n  </div>\n</div>"
+            "custom_liquid": "<style>\n\n</style>\n<div class=\"accordion\">\n  <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Description</div>\n    <div class=\"accordion-content\">{{ product.description }}</div>\n  </div>\n {% for variant in product.variants %}\n    {% assign mytitle  = variant.title %}\n  {% endfor %}\n  {% unless mytitle == 'Default Title' %}\n  <div class=\"accordion-item {{mytitle}}\" >\n    <div class=\"accordion-header\">Additional Information</div>\n    <div class=\"accordion-content\">{% if isProductDefault %}{% continue %}{% endif -%}\n              <div class=\"t4s-tab-wrapper{{class_first_tab}}\" data-t4s-tab-wrapper>\n                <a id=\"t44_{{bk_id}}\" href=\"#{{tab_id}}\" rel=\"nofollow\" class=\"t4s-tab__title t4s-fwm t4s-ch\" data-t4s-tab-item data-no-instant><span class=\"t4s-tab__text\">{{bk_stts.title | escape}}</span><span class=\"t4s-tab__icon\"></span></a>\n                <div id=\"{{tab_id}}\" class=\"t4s-tab-content{{class_first_tab}}\" data-t4s-tab-content>\n                  <table class=\"t4s-pr_attrs\">\n                    <tbody>\n                      {%- for product_option in product.options_with_values -%}\n                      <tr class=\"t4s-attr_pa_{{product_option.name | handle }}\">\n                        <th class=\"t4s-attr__label\">{{ product_option.name }}</th>\n                        <td class=\"t4s-attr__value\">\n                          <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {% endunless %}{% endfor %}</p>\n                        </td>\n                      </tr>\n                      {%- endfor -%}\n                    </tbody>\n                  </table>\n                </div>\n             </div>\n             {%- assign forloop_first = false %}{% assign isEmty = false -%}</div>\n  </div>\n  {% endunless %}\n  {% if product.metafields.custom.ingredient != blank %}\n  <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Ingredient</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.ingredient | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.health_benefits != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Health benefits</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.health_benefits | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.nutrient != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Nutrient</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.nutrient | metafield_tag }}</div>\n  </div>\n  {% endif %}\n   {% if product.metafields.custom.how_to_use != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">How to Use</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.how_to_use | metafield_tag }}</div>\n  </div>\n  {% endif %}\n  {% if product.metafields.custom.faqs != blank %}\n      <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Faqs</div>\n    <div class=\"accordion-content\">{{ product.metafields.custom.faqs | metafield_tag }}</div>\n  </div>\n  {% endif %}\n\n\n{% if product.metafields.custom.manufacturing_details != blank %}\n  <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Manufacturing Details</div>\n    <div class=\"accordion-content\">\n      \n      <img\n        src=\"https://cdn.shopify.com/s/files/1/0746/0952/5042/files/fssai-logo-png_seeklogo-304263_1.png?v=1787831586\"\n        alt=\"FSSAI Logo\"\n        style=\"display:block; width:80px; height:auto; margin-bottom:12px;\"\n      >\n\n      {{ product.metafields.custom.manufacturing_details | metafield_tag }}\n      \n    </div>\n  </div>\n{% endif %}\n\n\n  <!-- <div class=\"accordion-item\">\n    <div class=\"accordion-header\">Reviews</div>\n    <div class=\"accordion-content\"> \n  <div style='clear:both'></div> \n  <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'> \n    {{ product.metafields.judgeme.widget }} \n  </div> \n</div> -->\n  </div>\n</div>"
           }
         },
         "trust_badge_NyBMd4": {

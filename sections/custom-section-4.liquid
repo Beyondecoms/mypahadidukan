@@ -45,46 +45,43 @@
     <div class="custom-section-4__track-wrapper">
       <div class="custom-section-4__track">
         {%- for block in section.blocks -%}
-          {%- liquid
-            assign block_image = block.settings.image
-            assign block_title = block.settings.title
-            assign block_link = block.settings.link
-          -%}
-          <div class="custom-section-4__item" {{ block.shopify_attributes }}>
-            {%- if block_link != blank -%}
-              <a href="{{ block_link }}" class="custom-section-4__link" aria-label="{{ block_title | escape }}">
-            {%- else -%}
-              <div class="custom-section-4__link">
-            {%- endif -%}
+          {%- assign product = block.settings.product -%}
+          {%- if product != blank -%}
+            <div class="custom-section-4__item" {{ block.shopify_attributes }}>
+              <a href="{{ product.url }}" class="custom-section-4__link" aria-label="{{ product.title | escape }}">
+                <div class="custom-section-4__image-box">
+                  {%- if product.featured_image != blank -%}
+                    {{
+                      product.featured_image
+                      | image_url: width: 600
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'custom-section-4__image',
+                        widths: '120, 180, 240, 360, 600',
+                        alt: product.title | escape
+                    }}
+                  {%- else -%}
+                    <div class="custom-section-4__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'custom-section-4__placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
 
-              <div class="custom-section-4__image-box">
-                {%- if block_image != blank -%}
-                  {{
-                    block_image
-                    | image_url: width: 360
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'custom-section-4__image',
-                      widths: '120, 180, 240, 360',
-                      alt: block_title | default: block_image.alt | default: 'Product'
-                  }}
-                {%- else -%}
+                <span class="custom-section-4__label">{{ product.title }}</span>
+              </a>
+            </div>
+          {%- elsif request.design_mode -%}
+            <div class="custom-section-4__item" {{ block.shopify_attributes }}>
+              <div class="custom-section-4__link">
+                <div class="custom-section-4__image-box">
                   <div class="custom-section-4__placeholder">
                     {{ 'product-1' | placeholder_svg_tag: 'custom-section-4__placeholder-svg' }}
                   </div>
-                {%- endif -%}
+                </div>
+                <span class="custom-section-4__label">Select product</span>
               </div>
-
-              {%- if block_title != blank -%}
-                <span class="custom-section-4__label">{{ block_title }}</span>
-              {%- endif -%}
-
-            {%- if block_link != blank -%}
-              </a>
-            {%- else -%}
-              </div>
-            {%- endif -%}
-          </div>
+            </div>
+          {%- endif -%}
         {%- else -%}
           {%- for i in (1..8) -%}
             <div class="custom-section-4__item">
@@ -94,7 +91,7 @@
                     {{ 'product-1' | placeholder_svg_tag: 'custom-section-4__placeholder-svg' }}
                   </div>
                 </div>
-                <span class="custom-section-4__label">Lorem</span>
+                <span class="custom-section-4__label">Select product</span>
               </div>
             </div>
           {%- endfor -%}
@@ -113,6 +110,11 @@
     position: relative;
     box-sizing: border-box;
     font-family: inherit;
+  }
+  @media only screen and (max-width: 749px){
+      #custom-section-4-{{ section.id }} {
+   padding-bottom: 30px;
+  }
   }
 
   #custom-section-4-{{ section.id }} * {
@@ -411,23 +413,12 @@
   "blocks": [
     {
       "type": "item",
-      "name": "Block",
+      "name": "Product",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Label text",
-          "default": "Lorem"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link (optional)"
+          "type": "product",
+          "id": "product",
+          "label": "Select product"
         }
       ]
     }
@@ -437,52 +428,28 @@
       "name": "New to My Pahadi Dukan? Start Here",
       "blocks": [
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         },
         {
-          "type": "item",
-          "settings": {
-            "title": "Lorem"
-          }
+          "type": "item"
         }
       ]
     }
