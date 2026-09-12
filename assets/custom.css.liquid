@@ -2691,9 +2691,9 @@ div#Inventory-product-quickview{
     padding: 16px;
     border-radius: 14px;
   }
-  .m-slide__bg img{
+  /* .m-slide__bg img{
     object-fit: initial !important;
-  }
+  } */
 }
 
 /* Desktop Only: Align Quantity, Add to Cart, and Buy It Now in one row */
@@ -3273,4 +3273,73 @@ body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+5):
   max-width: calc(50% - 6px) !important;
   min-width: 0 !important;
   box-sizing: border-box !important;
+}
+
+/* Mobile Hero Slideshow CTA Button Overlay (2rem from bottom of image) */
+@media screen and (max-width: 767px) {
+  .sf-home__slideshow .m-slide__wrapper {
+    position: absolute !important;
+    top: -2rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 2rem !important;
+  }
+  .sf-home__slideshow .m-slide__content {
+    width: auto !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  .sf-home__slideshow .m-richtext__button {
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+  .sf-home__slideshow .m-slider-controls {
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    z-index: 25 !important;
+    margin: 0 !important;
+  }
+  .sf-home__slideshow .swiper-pagination {
+    position: relative !important;
+    width: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Hero Slideshow CTA Button Styling (Client Feedback: White background, slightly less rounded edges, moved up) */
+.sf-home__slideshow .m-slide__button-first,
+.sf-home__slideshow .m-slide__button a {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1px solid #FFFFFF !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  padding: 12px 28px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.25s ease !important;
+}
+
+.sf-home__slideshow .m-slide__button-first:hover,
+.sf-home__slideshow .m-slide__button a:hover {
+  background-color: #F3F3F3 !important;
+  color: #000000 !important;
+  border-color: #F3F3F3 !important;
+}
+
+@media screen and (min-width: 768px) {
+  .sf-home__slideshow .m-slide__content {
+    transform: translateY(-40px) !important;
+  }
 }

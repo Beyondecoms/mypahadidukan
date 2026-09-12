@@ -15,20 +15,20 @@
         "1621243260e1af0c20-2": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0.png",
+            "background": "shopify://shop_images/hf_20260908_100243_5c28cd17-3676-4935-93d2-4cc80c204305_1_3.png",
             "mb_background": "shopify://shop_images/mobile_banner.png",
             "content_in_container": false,
-            "content_position": "left middle",
-            "text_alignment": "left",
+            "content_position": "center bottom",
+            "text_alignment": "center",
             "text_size": "large",
             "text_color": "black",
             "subheading": "",
             "title": "",
             "description": "",
             "image_link": "https://mypahadidukan.com/products/pahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "sf__btn-secondary",
+            "button_text": "SHOP NOW",
+            "button_link": "https://mypahadidukan.com/products/pahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan",
+            "button_style": "sf__btn-white",
             "button_size": "",
             "second_button_text": "",
             "second_button_link": "",
@@ -48,17 +48,17 @@
             "background": "shopify://shop_images/slider_image_1621243260e1af0c20-0_1.png",
             "mb_background": "shopify://shop_images/mobile_banner_1.png",
             "content_in_container": true,
-            "content_position": "left middle",
-            "text_alignment": "left",
+            "content_position": "center bottom",
+            "text_alignment": "center",
             "text_size": "large",
             "text_color": "black",
             "subheading": "",
             "title": "",
             "description": "",
             "image_link": "https://mypahadidukan.com/collections/natural-beverages",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "sf__btn-secondary",
+            "button_text": "SHOP NOW",
+            "button_link": "https://mypahadidukan.com/collections/natural-beverages",
+            "button_style": "sf__btn-white",
             "button_size": "",
             "second_button_text": "",
             "second_button_link": "",
@@ -78,17 +78,17 @@
             "background": "shopify://shop_images/shop_by_brand_7272550a-12c1-4e74-9e25-ce5001810e21.png",
             "mb_background": "shopify://shop_images/mobile_banner_2.png",
             "content_in_container": true,
-            "content_position": "right bottom",
+            "content_position": "center bottom",
             "text_alignment": "center",
             "text_size": "large",
             "text_color": "black",
             "subheading": "",
             "title": "",
             "description": "",
-            "image_link": "https://mypahadidukan.com/products/combo-lavender-oil-rosemary-oil-lemongrass-oil",
-            "button_text": "",
-            "button_link": "shopify://pages/special-sale",
-            "button_style": "m-button--white",
+            "image_link": "https://mypahadidukan.com/products/buy-shilajit-online",
+            "button_text": "Shop Now",
+            "button_link": "https://mypahadidukan.com/products/buy-shilajit-online",
+            "button_style": "m-button--primary",
             "button_size": "",
             "second_button_text": "",
             "second_button_link": "",
@@ -104,12 +104,11 @@
         },
         "1621243260e1af0c20-1": {
           "type": "slider_item",
-          "disabled": true,
           "settings": {
-            "background": "shopify://shop_images/heeng_website_banner_re-size.jpg",
-            "mb_background": "shopify://shop_images/heeng_mobile_banner_jpg.jpg",
+            "background": "shopify://shop_images/shop_by_brand.jpg",
+            "mb_background": "shopify://shop_images/mobile_banner_4.png",
             "content_in_container": false,
-            "content_position": "left middle",
+            "content_position": "center bottom",
             "text_alignment": "left",
             "text_size": "large",
             "text_color": "black",
@@ -117,9 +116,9 @@
             "title": "",
             "description": "",
             "image_link": "https://mypahadidukan.com/products/afghani-pahadi-hing-my-pahadi-dukan",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "sf__btn-secondary",
+            "button_text": "SHOP NOW",
+            "button_link": "https://mypahadidukan.com/products/afghani-pahadi-hing-my-pahadi-dukan",
+            "button_style": "m-button--primary",
             "button_size": "",
             "second_button_text": "",
             "second_button_link": "",
@@ -127,8 +126,8 @@
             "second_button_size": "",
             "show_footer": false,
             "footer_alignment": "end",
-            "footer_text": "The ReCotton Tee",
-            "footer_button": "Shop Now",
+            "footer_text": "",
+            "footer_button": "",
             "footer_link": "",
             "enable_preload_image": true
           }
@@ -214,7 +213,7 @@
         "show_arrows": false,
         "autorotate": true,
         "autorotate_speed": 4,
-        "use_content_above": false,
+        "use_content_above": true,
         "custom_class": "sf-home__slideshow",
         "animations": "inherit"
       }
@@ -1209,8 +1208,25 @@
           "type": "category_tab",
           "settings": {
             "title": "Combos",
-            "collection": "combos",
-            "product_list": []
+            "collection": "",
+            "product_list": [
+              "combo-lakadong-turmeric-ing-makhir-ginger",
+              "combo-lakadong-turmeric-kashmiri-red-chilli-powder",
+              "combo-lavender-oil-rosemary-oil-lemongrass-oil",
+              "combo-multi-flora-honey-ing-makhir-ginger",
+              "combo-pack-passion-fruit-black-tea-rhododendron-green-tea-50g-each-saakya",
+              "combo-pack-rose-chamomile-white-tea-25g-blue-pea-flower-green-tea-50g-saakya",
+              "combo-pack-red-wine-black-tea-tulsi-lemongrass-green-tea-50g-each-saakya",
+              "combo-sea-buckthorn-pulp-juice-buransh-rhododendron-squash",
+              "combo-strawberry-lime-squash-buransh-rhododendron-squash",
+              "five-elements-incense-collection-clove-juniper-oud-pine-sandalwood-saakya",
+              "saakya-passion-fruit-aam-panna-concentrate-combo-pack-of-2",
+              "grounding-ritual-pack-clove-juniper-oud-incense-sticks-22-sticks-each-saakya",
+              "saakya-luxury-passion-fruit-lemonade-concentrate-squash-combo-pack-of-2",
+              "sacred-forest-ritual-pack-pine-sandalwood-clove-incense-sticks-combo",
+              "combo-seabuckhorn-pulp-oil-berries-my-pahadi-dukan",
+              "valentine-special-combo-deal"
+            ]
           }
         },
         "category_tab_VAY9hR": {
@@ -1274,7 +1290,7 @@
             "image": "shopify://shop_images/Saffron.png",
             "image_by_url": "",
             "title": "Saffron",
-            "link": "https://mypahadidukan.com/products/buy-pure-kashmiri-saffron-online"
+            "link": "/search?type=product&q=Saffron"
           }
         },
         "spotlight_item_TJ8QGU": {
@@ -1283,7 +1299,7 @@
             "image": "shopify://shop_images/Chamomile.png",
             "image_by_url": "",
             "title": "Chamomile",
-            "link": "https://mypahadidukan.com/products/himalayan-pure-chamomile"
+            "link": "/search?type=product&q=Chamomile"
           }
         },
         "spotlight_item_AiMtWN": {
@@ -1292,7 +1308,7 @@
             "image": "shopify://shop_images/Shilajit.png",
             "image_by_url": "",
             "title": "Shilajit",
-            "link": "shopify://products/buy-shilajit-online"
+            "link": "/search?type=product&q=Shilajit"
           }
         },
         "spotlight_item_gpbMEw": {
@@ -1301,7 +1317,7 @@
             "image": "shopify://shop_images/Lavender.png",
             "image_by_url": "",
             "title": "Lavender",
-            "link": "shopify://products/combo-lavender-oil-rosemary-oil-lemongrass-oil"
+            "link": "/search?type=product&q=Lavender"
           }
         },
         "spotlight_item_MgBryF": {
@@ -1310,7 +1326,7 @@
             "image": "shopify://shop_images/Sea_Buckthorn_1.png",
             "image_by_url": "",
             "title": "Sea Buckthorn",
-            "link": "shopify://collections/pure-seabuckthorn"
+            "link": "/search?type=product&q=Sea+Buckthorn"
           }
         },
         "spotlight_item_VcA48D": {
@@ -1319,7 +1335,7 @@
             "image": "shopify://shop_images/Honey_2.png",
             "image_by_url": "",
             "title": "Honey",
-            "link": "shopify://collections/pure-honey"
+            "link": "/search?type=product&q=Honey"
           }
         }
       },

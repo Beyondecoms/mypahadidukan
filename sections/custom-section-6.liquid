@@ -56,7 +56,20 @@
             assign block_image = block.settings.image
             assign block_image_url = block.settings.image_by_url
             assign block_title = block.settings.title
-            assign block_link = block.settings.link
+            assign raw_link = block.settings.link
+
+            if block_title != blank
+              assign search_query = block_title | url_encode
+              assign search_link = '/search?type=product&q=' | append: search_query
+            else
+              assign search_link = ''
+            endif
+
+            if raw_link == blank or raw_link contains '/products/' or raw_link contains '/collections/all/'
+              assign block_link = search_link
+            else
+              assign block_link = raw_link
+            endif
           -%}
 
           <div class="custom-section-6__item" {{ block.shopify_attributes }}>
@@ -108,7 +121,7 @@
           {%- assign default_labels = 'Juice,Dried Fruits,Oils,Juice,Dried Fruits,Teas' | split: ',' -%}
           {%- for label in default_labels -%}
             <div class="custom-section-6__item">
-              <div class="custom-section-6__card">
+              <a href="/search?type=product&q={{ label | url_encode }}" class="custom-section-6__card" aria-label="{{ label | escape }}">
                 <div class="custom-section-6__media-box">
                   <div class="custom-section-6__placeholder">
                     {{ 'product-1' | placeholder_svg_tag: 'custom-section-6__placeholder-svg' }}
@@ -117,7 +130,7 @@
                 <div class="custom-section-6__label-box">
                   <span class="custom-section-6__label">{{ label }}</span>
                 </div>
-              </div>
+              </a>
             </div>
           {%- endfor -%}
         {%- endfor -%}
