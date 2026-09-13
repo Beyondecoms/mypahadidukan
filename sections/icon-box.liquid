@@ -14,13 +14,6 @@
   -webkit-overflow-scrolling:touch;
   padding-bottom:10px;
 }
- 
-@media only screen and (max-width: 749px){
-      #m-section--{{ section.id }} .shop-region__grid{
-    gap:0px !important
-    }
-  }
-
 
 #m-section--{{ section.id }} .shop-region__grid::-webkit-scrollbar{
   height:6px;
@@ -40,18 +33,21 @@
   #m-section--{{ section.id }} .shop-region__column{
     flex:0 0 30%;
   }
-  #m-section--{{ section.id }} .shop-region__card{
-    height: auto !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+  .shop-region__card{
+    height: 50% !important;
+  padding: 0 !important;
   }
-  #m-section--{{ section.id }} .shop-region__grid{
+  .shop-region__grid{
     gap: 8px !important;
   }
-  #m-section--{{ section.id }} .m-icon-box__icon{
+  .shop-region__card{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  }
+  .m-icon-box__icon{
     width: 120px !important;
+    
   }
 }
 {% endif %}
@@ -168,6 +164,7 @@
 
   #m-section--{{ section.id }} .shop-region__shell {
     position: relative;
+    padding-top: 8px;
   }
 
   #m-section--{{ section.id }} .shop-region__shell::before {
@@ -182,7 +179,7 @@
   }
 
   #m-section--{{ section.id }} .shop-region__header {
-    /* margin-bottom: 28px; */
+    margin-bottom: 28px;
   }
 
   #m-section--{{ section.id }} .shop-region__header .m-section-header,
@@ -320,7 +317,7 @@
 
   @media (max-width: 749px) {
     #m-section--{{ section.id }} .shop-region__header {
-      /* margin-bottom: 18px; */
+      margin-bottom: 18px;
     }
 
     #m-section--{{ section.id }} .shop-region__card {

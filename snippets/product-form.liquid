@@ -334,7 +334,7 @@
             type="submit"
             name="add"
             class="m-add-to-cart m-spinner-button m-button {{ btn_class }}"
-            data-atc-text="Add To Cart"
+            data-atc-text="{{ 'products.product.add_to_cart' | t }}"
             {% unless variant_available %}
               disabled
             {% endunless %}
@@ -352,7 +352,7 @@
             </span>
             <span class="m-add-to-cart--text">
               {% if product.selected_or_first_available_variant.available %}
-                Add To Cart
+                {{ 'products.product.add_to_cart' | t }}
               {% else %}
                 {{ 'products.product.sold_out' | t }}
               {% endif %}

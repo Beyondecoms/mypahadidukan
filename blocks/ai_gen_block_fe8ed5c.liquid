@@ -1,0 +1,375 @@
+{% doc %}
+  @prompt
+    Create a Collection FAQ accordion section that reads from a metaobject reference list metafield on the collection. The metaobject type is "faqs_collection_page" with two fields: "question" (single line text) and "answer" (rich text). The section should display an accordion where each FAQ item expands/collapses on click, showing the question as the header and the rich text answer as the body. Style it with a clean, premium natural/mountain brand aesthetic using the theme's CSS variables for colors. Include a customizable section heading. Use accessible aria attributes and smooth open/close behavior with vanilla JavaScript., when there are no FAQs for a collection this section should remain hidden on that collection
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% if collection.metafields.custom.faqs != blank %}
+  {% style %}
+    .ai-collection-faq-{{ ai_gen_id }} {
+      display: block;
+      width: 100%;
+      padding: 40px 20px;
+      background-color: {{ block.settings.background_color }};
+    }
+
+    .ai-collection-faq__container-{{ ai_gen_id }} {
+      max-width: {{ block.settings.container_max_width }}px;
+      margin: 0 auto;
+    }
+
+    .ai-collection-faq__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size }}px;
+      color: {{ block.settings.heading_color }};
+      margin: 0 0 32px;
+      text-align: {{ block.settings.heading_alignment }};
+      font-weight: 600;
+    }
+
+    .ai-collection-faq__list-{{ ai_gen_id }} {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ai-collection-faq__item-{{ ai_gen_id }} {
+      border-bottom: 1px solid {{ block.settings.border_color }};
+    }
+
+    .ai-collection-faq__item-{{ ai_gen_id }}:last-child {
+      border-bottom: none;
+    }
+
+    .ai-collection-faq__question-{{ ai_gen_id }} {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 40px 20px 0;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: {{ block.settings.question_size }}px;
+      color: {{ block.settings.question_color }};
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .ai-collection-faq__question-{{ ai_gen_id }}:hover {
+      color: {{ block.settings.question_hover_color }};
+    }
+
+    .ai-collection-faq__question-{{ ai_gen_id }}:focus-visible {
+      outline: 2px solid {{ block.settings.question_color }};
+      outline-offset: 2px;
+    }
+
+    .ai-collection-faq__icon-{{ ai_gen_id }} {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+      color: {{ block.settings.icon_color }};
+    }
+
+    .ai-collection-faq__question-{{ ai_gen_id }}[aria-expanded="true"] .ai-collection-faq__icon-{{ ai_gen_id }} {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .ai-collection-faq__answer-{{ ai_gen_id }} {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0;
+    }
+
+    .ai-collection-faq__answer-{{ ai_gen_id }}.active {
+      max-height: 1000px;
+      padding: 0 0 20px 0;
+    }
+
+    .ai-collection-faq__answer-content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.answer_size }}px;
+      color: {{ block.settings.answer_color }};
+      line-height: 1.6;
+    }
+
+    .ai-collection-faq__answer-content-{{ ai_gen_id }} p {
+      margin: 0 0 12px;
+    }
+
+    .ai-collection-faq__answer-content-{{ ai_gen_id }} p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media screen and (max-width: 749px) {
+      .ai-collection-faq-{{ ai_gen_id }} {
+        padding: 30px 16px;
+      }
+
+      .ai-collection-faq__heading-{{ ai_gen_id }} {
+        font-size: calc({{ block.settings.heading_size }}px * 0.8);
+        margin-bottom: 24px;
+      }
+
+      .ai-collection-faq__question-{{ ai_gen_id }} {
+        font-size: calc({{ block.settings.question_size }}px * 0.9);
+        padding: 16px 32px 16px 0;
+      }
+
+      .ai-collection-faq__answer-content-{{ ai_gen_id }} {
+        font-size: calc({{ block.settings.answer_size }}px * 0.9);
+      }
+    }
+  {% endstyle %}
+
+  <collection-faq-{{ ai_gen_id }} class="ai-collection-faq-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+    <div class="ai-collection-faq__container-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-collection-faq__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+
+      <ul class="ai-collection-faq__list-{{ ai_gen_id }}" role="list">
+        {% assign faqs = collection.metafields.custom.faqs.value %}
+{% if faqs != blank %}
+  {% for faq in faqs %}
+  <li class="ai-collection-faq__item-{{ ai_gen_id }}">
+    <button
+      class="ai-collection-faq__question-{{ ai_gen_id }}"
+      aria-expanded="false"
+      aria-controls="faq-answer-{{ ai_gen_id }}-{{ forloop.index }}"
+      type="button"
+    >
+      <span>{{ faq.question.value }}</span>
+      <svg class="ai-collection-faq__icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+    <div
+      class="ai-collection-faq__answer-{{ ai_gen_id }}"
+      id="faq-answer-{{ ai_gen_id }}-{{ forloop.index }}"
+      role="region"
+    >
+      <div class="ai-collection-faq__answer-content-{{ ai_gen_id }}">
+        {{ faq.answers.value | newline_to_br }}
+      </div>
+    </div>
+  </li>
+{% endfor %}
+{% endif %}
+
+
+
+      </ul>
+    </div>
+  </collection-faq-{{ ai_gen_id }}>
+
+  <script>
+    (function() {
+      class CollectionFaq{{ ai_gen_id }} extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.questions = this.querySelectorAll('.ai-collection-faq__question-{{ ai_gen_id }}');
+          this.setupEventListeners();
+        }
+
+        setupEventListeners() {
+          this.questions.forEach((question) => {
+            question.addEventListener('click', () => {
+              const isExpanded = question.getAttribute('aria-expanded') === 'true';
+              const answer = question.nextElementSibling;
+
+              if (isExpanded) {
+                this.closeAnswer(question, answer);
+              } else {
+                if (!{{ block.settings.allow_multiple_open }}) {
+                  this.closeAllAnswers();
+                }
+                this.openAnswer(question, answer);
+              }
+            });
+
+            question.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                question.click();
+              }
+            });
+          });
+        }
+
+        openAnswer(question, answer) {
+          question.setAttribute('aria-expanded', 'true');
+          answer.classList.add('active');
+        }
+
+        closeAnswer(question, answer) {
+          question.setAttribute('aria-expanded', 'false');
+          answer.classList.remove('active');
+        }
+
+        closeAllAnswers() {
+          this.questions.forEach((q) => {
+            const a = q.nextElementSibling;
+            this.closeAnswer(q, a);
+          });
+        }
+      }
+
+      customElements.define('collection-faq-{{ ai_gen_id }}', CollectionFaq{{ ai_gen_id }});
+    })();
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection FAQ accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple_open",
+      "label": "Allow multiple items open",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container max width",
+      "min": 600,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "question_hover_color",
+      "label": "Question hover",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#EEEEEE"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#222222"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "label": "Question size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "label": "Answer size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection FAQ accordion"
+    }
+  ]
+}
+{% endschema %}

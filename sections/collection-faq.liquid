@@ -1,0 +1,83 @@
+{% comment %}
+  Collection FAQ Accordion Section
+  Metaobject type: faqs_collection_page
+  Fields: question (single_line_text), answer (rich_text)
+{% endcomment %}
+
+{%- if collection.metafields.custom.faqs != blank -%}
+  <div class="faq-section" id="collection-faq">
+    <div class="faq-container">
+      <h2 class="faq-heading">{{ section.settings.heading | default: 'Frequently Asked Questions' }}</h2>
+
+      {%- for faq_ref in collection.metafields.custom.faqs.value -%}
+        {%- assign faq = faq_ref.value -%}
+        <div class="faq-item">
+          <button
+            class="faq-question"
+            aria-expanded="false"
+            aria-controls="faq-answer-{{ forloop.index }}"
+          >
+            <span>{{ faq.question.value }}</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="faq-icon-plus" d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path class="faq-icon-minus" d="M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div
+            class="faq-answer"
+            id="faq-answer-{{ forloop.index }}"
+            hidden
+          >
+            <div class="faq-answer-inner">
+              {{ faq.answer.value }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('.faq-question').forEach(function(button) {
+  button.addEventListener('click', function() {
+    var expanded = this.getAttribute('aria-expanded') === 'true';
+    var answerId = this.getAttribute('aria-controls');
+    var answer = document.getElementById(answerId);
+
+    // Close all others
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      var id = btn.getAttribute('aria-controls');
+      document.getElementById(id).hidden = true;
+    });
+
+    // Toggle current
+    if (!expanded) {
+      this.setAttribute('aria-expanded', 'true');
+      answer.hidden = false;
+    }
+  });
+});
+
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection FAQs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection FAQs"
+    }
+  ]
+}
+{% endschema %}

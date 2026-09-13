@@ -148,10 +148,9 @@ observer.observe(document.body, {
 </script>
 
 {% style %}
-.splide__slide .swym-wishlist-collections-v2-container{
-   display: none !important;
+button.swym-wishlist-collections-v2{
+display: none;
 }
-
   body {
   overflow: clip !important;
 }
@@ -164,12 +163,6 @@ observer.observe(document.body, {
 .m-product-card__action svg{
       width: 29px;
     height: 15px;
-}
-.swym-atw-button-container.consent-given.default-position{
-  display: none !important;
-}
-.lc-single-product .swym-wishlist-collections-v2-container{
-  display: none !important;
 }
 .m-menu-badge--sale {
   display: inline-flex;
@@ -204,9 +197,8 @@ observer.observe(document.body, {
     box-shadow: 0 0 0 0 rgba(255,59,48,0);
   }
 }
-
-
 @media only screen and (min-width: 768px){
+
 .m-product-form--wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -223,9 +215,6 @@ observer.observe(document.body, {
     max-width: 140px; /* adjust if needed */
 }
 
-#QuantityForm-product-quickview .m-product-form--wrapper .m-add-to-cart{
- flex: -1 !important;
-}
 .m-product-form--wrapper .m-add-to-cart {
     flex: 1;
     width: calc(50% - 6px);
@@ -253,6 +242,9 @@ observer.observe(document.body, {
 .template-product .m-product-option--label{
   margin-bottom: 1rem;
 }
+
+
+
   
 .desktop-pincode.mobile-hide-reviews-hide .jdgm-widget.jdgm-widget{
   display: none !important;
@@ -276,19 +268,7 @@ body .main-product__block.main-product__block-price{
   .desktop-pincode.below-product-title{
     display:none !important;
   }
-  .m-icon-box-section .m-section__header.m\:text-center{
-    margin-bottom: 0 !important;
-  }
-  .m-section-py{
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
-  }
-  .shop-region__grid.m\:grid.m\:grid-2-cols.md\:m\:grid-2-cols.lg\:m\:grid-5-cols{
-    gap: 0 !important;
-  }
 }
-
-
 {% endstyle %}
 
 

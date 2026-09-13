@@ -109,14 +109,13 @@
     assign show_compare_button = settings.show_compare_button
   endif
 
-  assign current_variant = product.selected_or_first_available_variant
-  assign preview_image = current_variant.featured_image | default: current_variant.featured_media.preview_image | default: current_variant.image | default: product.featured_image | default: product.featured_media.preview_image | default: product.media[0].preview_image
+  assign preview_image = product.media[0].preview_image
   if section.settings.change_product_variant_on_fitlering == true and product.selected_variant.image != null
     assign preview_image = product.selected_variant.image
   endif
 
   if image_ratio == 'original'
-    assign image_ratio = preview_image.aspect_ratio | default: product.media[0].aspect_ratio | default: '1/1'
+    assign image_ratio = product.media[0].aspect_ratio | default: '1/1'
   endif
 
   assign second_image = ''
@@ -154,6 +153,7 @@
     assign fetchpriority = 'high'
   endif
 %}
+
 {%- if column_wrapper -%}<div class="m:column">{%- endif -%}
 <div
   class="{{ product_card_classes }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}"
@@ -272,477 +272,353 @@
         {% endif %}
       {% endif %}
     </a>
-
-    <!-- Top-left Discount Badge -->
-    {% if on_sale %}
-      <span class="m-product-card__discount-badge">
-        SAVE {{ discount }}%
-      </span>
-    {% endif %}
-
-    <!-- Top-right Wishlist Icon -->
-    {%- if show_wishlist_button -%}
-      <div class="m-product-card__wishlist-btn">
-        {% assign wishlist_app = settings.wishlist_app %}
-        {% if wishlist_app == 'growave' %}
-          <div class="m-tooltip m-wishlist-button m-button--icon m-tooltip--style-1 m-tooltip--left">
-            <span class="m-tooltip-icon m:block">
-              {% capture the_snippet_fave_icon %}{% render 'ssw-widget-faveicon' with product.id %}{% endcapture %}
-              {% unless the_snippet_fave_icon contains 'Liquid error' %}
-                {{ the_snippet_fave_icon }}
-              {% else %}
-                {% render 'mm-ssw-widget-faveicon' with product.id %}
-              {% endunless %}
+    <div class="m-product-card__tags">
+      {% if settings.show_badge_sale %}
+        {% for tag in product.tags %}
+          {% if tag contains 'tag__' %}
+            {%- liquid
+              assign tag_content = tag | split: '__' | last
+              assign type = tag_content | split: '_' | first
+              assign tag_name = tag_content | split: '_' | last
+              assign color_scheme_class = 'm-gradient m-color-'
+              case type
+                when 'sale':
+                  assign color_scheme_class = color_scheme_class | append: settings.sale_badge_color_scheme
+                when 'new':
+                  assign color_scheme_class = color_scheme_class | append: settings.new_badge_color_scheme
+                when 'hot':
+                  assign color_scheme_class = color_scheme_class | append: settings.hot_badge_color_scheme
+              endcase
+            -%}
+            <span class="m-product-card__tag-name 79t78t87t87t m-product-tag m-product-tag--{{ type }} {{ color_scheme_class }}">
+              {{- tag_name -}}
             </span>
-          </div>
-        {% else %}
-          {% render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--left' %}
-        {% endif %}
-      </div>
-    {%- endif -%}
-
-    <!-- Quick view icon (bottom right of image) -->
-    {%- if show_quickview_button -%}
-      <div class="m-product-card__quickview-btn">
-        {% render 'tooltip', type: 'quickview', section: section, product: product, class_name: 'm-tooltip--top' %}
-      </div>
-    {%- endif -%}
-  </div>
-
-  <div class="m-product-card__content m:text-{{ pcard_alignment }}">
-    <!-- 6. REVIEWS -->
-    {% if settings.show_review_badge %}
-      <div class="m-product-card__reviews m:text-color-body">
-        {% render 'product-reviews-app__badge', product: product %}
-      </div>
-    {% endif %}
-
-    <!-- 7. VENDOR -->
-    {%- if product.vendor != blank -%}
-      <span class="m-product-card__vendor">{{ product.vendor }}</span>
-    {%- endif -%}
-
-    <!-- 8. PRODUCT TITLE -->
-    {% if show_title == true %}
-      <h3 class="m-product-card__title">
-        <a href="{{ product_url }}" class="m-product-card__name{% if settings.uppercase_prd_name %} m:uppercase{% endif %}">
-          {{ product.title }}
-        </a>
-      </h3>
-    {% endif %}
-
-    <!-- 9. PRODUCT DESCRIPTION -->
-    {%- if show_desc -%}
-      {%- assign short_desc = product.metafields.custom.one_liner | default: product.description | strip_html | truncatewords: 10, '...' -%}
-      {%- if short_desc != blank -%}
-        <div class="m-product-card__description">
-          {{ short_desc }}
-        </div>
-      {%- endif -%}
-    {%- endif -%}
-
-    <!-- 10. SIZE / QUANTITY -->
-    {% liquid
-      assign variant_size = ''
-      for option in product.options_with_values
-        assign downcased_name = option.name | downcase
-        if downcased_name contains 'size' or downcased_name contains 'weight' or downcased_name contains 'quantity' or downcased_name contains 'volume' or downcased_name contains 'pack'
-          assign variant_size = product.selected_or_first_available_variant.options[forloop.index0]
-          break
-        endif
-      endfor
-    %}
-    {% if variant_size != blank %}
-      <div class="m-product-card__size">
-        {{ variant_size }}
-      </div>
-    {% endif %}
-
-    <!-- 11. PRICE and 12. COUPON / OFFER ROW -->
-    <div class="m-product-card__price-row">
-      <div class="m-product-card__price">
-        {% render 'product-prices', product: product, is_product_card: true %}
-      </div>
-
-      {% if product.available and product.metafields.custom.offer_on_the_card != blank %}
-        {% unless product.id == 8304817176882 %}
-          {% assign offer_text = product.metafields.custom.offer_on_the_card | strip %}
-          {% assign offer_parts = offer_text | split: ' ' %}
-          {% assign offer_code = offer_parts.first | upcase %}
-          {% assign offer_msg = offer_text | remove_first: offer_code | strip | downcase | capitalize %}
-          
-          {% assign is_pahari_haat = false %}
-          {% if product.title contains 'Pahari Haat' %}
-            {% assign is_pahari_haat = true %}
           {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% assign custom_badge_class = 'm-product-card__tag-name m-product-tag m-product-tag--preorder m-gradient m-color-'
+        | append: settings.preorder_badge_color_scheme
+      %}
+      {% capture foxkit_preorder_badge %}{% render 'foxkit-preorder-badge', product: product, static: true, custom_class: custom_badge_class %}{% endcapture %}
+      {% unless foxkit_preorder_badge contains 'Liquid error' %}
+        {{ foxkit_preorder_badge }}
+      {% endunless %}
+ 
+    </div>
+    {%- if settings.show_badge_soldout -%}
+      <span
+        class="m-product-tag m-product-tag--soldout m-gradient m-color-{{ settings.soldout_badge_color_scheme }}"
+        {% unless sold_out %}
+          style="display: none;"
+        {% endunless %}
+      >
+        {{- 'products.product.sold_out' | t -}}
+      </span>
+    {%- endif -%}
 
-          {% if is_pahari_haat %}
-            <div class="meta-offer-list meta-offer-list--haat {% if product.title contains 'Pahari Haat' %}pahari-haat{% endif %}">
-              <span class="meta-offer-msg meta-offer-msg--haat">
-                {{ offer_text }}
+         {% if show_on_sale_badge %}
+        <span class="m-product-card__tag-name yfuykfkufyuk m-product-tag m-product-tag--sale m-gradient m-color-{{ settings.sale_badge_color_scheme }}">
+          {%- if settings.on_sale_badge == 'show_text' -%}
+            {{ 'products.product.on_sale' | t }}
+          {%- elsif settings.on_sale_badge == 'show_percentage' -%}
+            {{ discount | append: '%' | prepend: '-' }}
+          {%- endif -%}
+        </span>
+      {% endif %}
+
+    {%- if show_quickview_button or show_wishlist_button or show_compare_button -%}
+      <div class="m-product-card__action m-product-card__addons m:display-flex">
+        {% liquid
+          assign tooltips = 'compare,quickview'
+          assign tooltip_items = tooltips | split: ','
+        %}
+
+        {%- if show_wishlist_button -%}
+          {% assign wishlist_app = settings.wishlist_app %}
+          {% if wishlist_app == 'growave' %}
+            <div class="m-tooltip m-wishlist-button m-button--icon m-tooltip--style-1 m-tooltip--top">
+              <span class="m-tooltip-icon m:block">
+                {% comment %} theme-check-disable {% endcomment %}
+                {% capture the_snippet_fave_icon %}{% render 'ssw-widget-faveicon' with product.id %}{% endcapture %}
+                {% unless the_snippet_fave_icon contains 'Liquid error' %}
+                  {{ the_snippet_fave_icon }}
+                {% else %}
+                  {% render 'mm-ssw-widget-faveicon' with product.id %}
+                {% endunless %}
+                {% comment %} theme-check-enable {% endcomment %}
               </span>
+              <div class="m-tooltip__content " data-revert-text="">
+                {{ 'products.product.add_to_wishlist' | t }}
+              </div>
             </div>
           {% else %}
-            <div class="meta-offer-list">
-              <span class="meta-offer-msg">{{ offer_msg }}</span>
-              <span class="meta-offer-code">{{ offer_code }}</span>
-            </div>
+            {% liquid
+              render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--top'
+            %}
           {% endif %}
-        {% endunless %}
-      {% endif %}
-    </div>
+        {%- endif -%}
 
-    <!-- Variant Option swatches if configured -->
-    {% if product.has_only_default_variant == false and show_variant_options %}
-      {% render 'product-card-option',
-        product: product,
-        show_variant_options: show_variant_options,
-        pcard_alignment: pcard_alignment,
-        context: context
-      %}
-    {% endif %}
-
-    <!-- 13. ADD TO CART BUTTON -->
-    {%- if show_cart_button -%}
-      <div class="m-product-card__atc-wrapper">
-        {% render 'product-card-quick-add-btn', product: product, quick_add_text: quick_add_text, section: section %}
+        {%- for tooltip in tooltip_items -%}
+          {%- assign settings_key = 'show_' | append: tooltip | append: '_button' | replace: 'add-to-cart', 'cart' -%}
+          {%- if [settings_key] -%}
+            {% render 'tooltip', type: tooltip, section: section, product: product, class_name: 'm-tooltip--top' %}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     {%- endif -%}
+
+    {% liquid
+      assign metafields_time = product.metafields.global.minimog_countdown
+      if settings.show_countdown and metafields_time != blank
+        render 'countdown-timer', time: metafields_time, separator: false, short_label: true, extra_classes: 'm-product-card__countdown m:hidden'
+      endif
+    %}
   </div>
+  <div class="m-product-card__content m:text-{{ pcard_alignment }}">
+    <div class="m-product-card__info">
+      {%- if show_vendor -%}
+        <span class="m-product-card__vendor">{{ product.vendor }}</span>
+      {%- endif -%}
+      {% if show_title == true %}
+        <h3 class="m-product-card__title">
+          <a
+            href="{{ product_url }}"
+            class="m-product-card__name{% if settings.uppercase_prd_name %} m:uppercase{% endif %}"
+          >
+            {{ product.title }}
+          </a>
+        </h3>
+      {% endif %}
+      {% comment %} <div class="product-subheading">
+    {{ product.metafields.custom.one_liner }}
+  </div> {% endcomment %}
+      {% if settings.show_review_badge %}
+        <div class="m-product-card__reviews m:text-color-body">
+          {% render 'product-reviews-app__badge', product: product %}
+        </div>
+      {% endif %}
 
+      <div class="m-product-card__price">
+        {% render 'product-prices', product: product, is_product_card: true %}
+        {% comment %} {% if product.metafields.custom.offer_on_the_card != blank %}<div class=cardoffer><img src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/discount.png?v=1754907129"> {{ product.metafields.custom.offer_on_the_card }}</div>{% endif %} {% endcomment %}
+
+      </div>
+
+
+
+
+      {% if product.has_only_default_variant == false and show_variant_options %}
+        {% render 'product-card-option',
+          product: product,
+          show_variant_options: show_variant_options,
+          pcard_alignment: pcard_alignment,
+          context: context
+        %}
+      {% endif %}
+      {%- if show_inventory and selected_variant.inventory_management != blank -%}
+        {%- liquid
+          assign inventory_threshold = settings.low_inventory_threshold
+          assign show_inventory_count = settings.show_inventory_count
+          assign inventory_visibility = settings.inventory_visibility
+          assign inventory_hide_backordered = settings.inventory_hide_backordered
+
+          assign total = 0
+          assign inventory_policy = ''
+          for variant in product.variants
+            if variant.inventory_quantity > 0
+              assign total = total | plus: variant.inventory_quantity
+            endif
+            if variant.inventory_policy == 'continue'
+              assign inventory_policy = 'continue'
+            endif
+          endfor
+
+          if total <= 0
+            if inventory_policy == 'continue'
+              assign status = 'backordered'
+            elsif product.available
+              assign status = 'instock'
+            else
+              assign status = 'outofstock'
+            endif
+          elsif total <= inventory_threshold
+            assign status = 'low'
+          else
+            assign status = 'normal'
+          endif
+
+          assign show = false
+          if inventory_visibility == 'always'
+            assign show = true
+            if status == 'backordered' and inventory_hide_backordered
+              assign show = false
+            endif
+          else
+            if status == 'low'
+              assign show = true
+            endif
+          endif
+
+          if status == 'outofstock'
+            assign show = false
+          endif
+
+          assign show_inventory_number = true
+          if show_inventory_count == 'never' or total <= 0 or show_inventory_count == 'low_inventory' and status != 'low'
+            assign show_inventory_number = false
+          endif
+        -%}
+        {%- if show == true -%}
+          <div class="m-product-inventory m-product-card__inventory m:text-sm" data-status="{{ status }}">
+            <div class="m-product-inventory__inner">
+              <span class="m-product-inventory__text">
+                <span class="m-product-inventory__pin"></span>
+                <span class="m-product-inventory__status">
+                  {% liquid
+                    case status
+                      when 'backordered'
+                        render 'new-locale', key: 'products.product.backordered'
+                      when 'low'
+                        if show_inventory_number
+                          render 'new-locale', key: 'products.product.inventory_low_quantity_html', param: '{{ quantity }}', value: total
+                        else
+                          render 'new-locale', key: 'products.product.low_stock'
+                        endif
+                      else
+                        if show_inventory_number
+                          render 'new-locale', key: 'products.product.inventory_quantity_html', param: '{{ quantity }}', value: total
+                        else
+                          echo 'products.product.in_stock' | t
+                        endif
+                    endcase
+                  %}
+                </span>
+              </span>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+
+{% if product.available %}
+  {% if product.metafields.custom.offer_on_the_card != blank %}
+    {% unless product.id == 8304817176882 %}
+
+      {% assign offer_text = product.metafields.custom.offer_on_the_card | strip %}
+      {% assign offer_parts = offer_text | split: ' ' %}
+      {% assign offer_code = offer_parts.first | upcase %}
+      {% assign offer_msg = offer_text | remove_first: offer_code | strip | downcase | capitalize %}
+
+      {% assign is_pahari_haat = false %}
+      {% if product.title contains 'Pahari Haat' %}
+        {% assign is_pahari_haat = true %}
+      {% endif %}
+
+      {% if is_pahari_haat %}
+
+        <div class="meta-offer-list meta-offer-list--haat {% if product.title contains 'Pahari Haat' %}pahari-haat{% endif %}">
+          <span class="meta-offer-msg meta-offer-msg--haat">
+            {{ offer_text }}
+          </span>
+        </div>
+
+      {% else %}
+
+        <div class="meta-offer-list">
+          <span class="meta-offer-code">
+            {{ offer_code }}
+          </span>
+
+          <span class="meta-offer-msg">
+            {{ offer_msg }}
+          </span>
+        </div>
+
+      {% endif %}
+      
+
+    {% endunless %}
+  {% else %}
+      <div class="meta-offer-placeholder"></div>
+  {% endif %}
+{% endif %}
+
+
+<!-- DEBUG: has_only_default_variant={{ product.has_only_default_variant }} | sold_out={{ sold_out }} -->
+
+
+
+
+
+    
+    {%- if sold_out == false and show_cart_button -%}
+      {% render 'product-card-quick-add-btn', product: product, quick_add_text: quick_add_text, section: section %}
+    {%- endif -%}
+
+    <div class="m-product-card__content-footer">
+      {%- if show_desc -%}
+        <div class="m-product-card__description">
+          {{ product.description | strip_html | truncatewords: 15, '...' }}
+        </div>
+      {%- endif -%}
+      {%- if show_quickview_button or show_wishlist_button or show_compare_button or show_cart_button -%}
+        <div class="m-product-card__action">
+          {% render 'product-card-quick-add-btn', product: product, quick_add_text: quick_add_text, section: section %}
+          <div class="m-product-card__action-icons">
+            {% liquid
+              assign tooltips = 'compare,quickview,'
+              assign tooltip_items = tooltips | split: ','
+
+              if show_cart_button
+                render 'tooltip', type: 'add-to-cart', section: section, product: product, class_name: 'm-tooltip--top m-product-card__atc-button'
+              endif
+            %}
+
+            {%- if show_wishlist_button -%}
+              {% assign wishlist_app = settings.wishlist_app %}
+              {% if wishlist_app == 'growave' %}
+                <div class="m-tooltip m-wishlist-button m-button--icon m-tooltip--style-1 m-tooltip--top">
+                  <span class="m-tooltip-icon m:block">
+                    {% comment %} theme-check-disable {% endcomment %}
+                    {% capture the_snippet_fave_icon %}{% render 'ssw-widget-faveicon' with product.id %}{% endcapture %}
+                    {% unless the_snippet_fave_icon contains 'Liquid error' %}
+                      {{ the_snippet_fave_icon }}
+                    {% else %}
+                      {% render 'mm-ssw-widget-faveicon' with product.id %}
+                    {% endunless %}
+                    {% comment %} theme-check-enable {% endcomment %}
+                  </span>
+                  <div class="m-tooltip__content " data-revert-text="">
+                    {{ 'products.product.add_to_wishlist' | t }}
+                  </div>
+                </div>
+              {% else %}
+                {% liquid
+                  render 'tooltip', type: 'wishlist', product: product, class_name: 'm-tooltip--top'
+                %}
+              {% endif %}
+            {%- endif -%}
+
+            {%- for tooltip in tooltip_items -%}
+              {%- assign settings_key = 'show_'
+                | append: tooltip
+                | append: '_button'
+                | replace: 'add-to-cart', 'cart'
+              -%}
+              {%- if [settings_key] -%}
+                {% render 'tooltip', type: tooltip, section: section, product: product, class_name: 'm-tooltip--top' %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
   <input hidden name="id" required value="{{ variant_id }}" data-selected-variant="{{ selected_variant_id }}">
-
-  <style>
-    .m-product-card--style-4 {
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      height: 100% !important;
-      background: #ffffff !important;
-      border: 1px solid #d1d1d1 !important;
-      border-radius: 20px !important;
-      padding: 0 !important;
-      overflow: hidden !important;
-      box-shadow: 0 0 1px 1px #f3f3f3 !important;
-      box-sizing: border-box !important;
-      transition: all 0.25s ease !important;
-    }
-    .m-product-card--style-4:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__media {
-      position: relative !important;
-      overflow: hidden !important;
-      border-radius: 0 !important;
-      background-color: #ffffff !important;
-      margin-bottom: 12px !important;
-      aspect-ratio: 1/1 !important;
-      width: 100% !important;
-    }
-    .m-product-card--style-4 .m-product-card__media img {
-      object-fit: contain !important;
-      width: 100% !important;
-      height: 100% !important;
-      padding: 0px !important;
-      box-sizing: border-box !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__content {
-      display: flex !important;
-      flex-direction: column !important;
-      flex: 1 !important;
-      justify-content: flex-start !important;
-      gap: 6px !important;
-      min-height: auto !important;
-      padding: 0 15px 15px 15px !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__discount-badge {
-      position: absolute !important;
-      top: 10px !important;
-      left: 10px !important;
-      background: #e8513f !important;
-      color: #ffffff !important;
-      font-size: 11px !important;
-      font-weight: 700 !important;
-      padding: 4px 10px !important;
-      border-radius: 99px !important;
-      text-transform: uppercase !important;
-      z-index: 10 !important;
-      line-height: normal !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn {
-      position: absolute !important;
-      top: 12px !important;
-      right: 12px !important;
-      z-index: 10 !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__quickview-btn {
-      position: absolute !important;
-      bottom: 12px !important;
-      right: 12px !important;
-      z-index: 10 !important;
-    }
-
-    /* Transparent Overlay Icons (No backgrounds or circular borders) */
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-tooltip,
-    .m-product-card--style-4 .m-product-card__quickview-btn .m-tooltip {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      width: auto !important;
-      height: auto !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-tooltip-icon,
-    .m-product-card--style-4 .m-product-card__quickview-btn .m-tooltip-icon {
-      color: #c0503b !important;
-      display: block !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.added-to-wishlist .m-tooltip-icon,
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.active .m-tooltip-icon,
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.is-active .m-tooltip-icon {
-      display: none !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.added-to-wishlist .m-tooltip-icon--active,
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.active .m-tooltip-icon--active,
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.is-active .m-tooltip-icon--active {
-      display: block !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn svg,
-    .m-product-card--style-4 .m-product-card__quickview-btn svg {
-      width: 24px !important;
-      height: 24px !important;
-      stroke: #c0503b !important;
-      fill: none !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__wishlist-btn .m-wishlist-button.added-to-wishlist svg {
-      fill: #c0503b !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__reviews {
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      color: #666 !important;
-      margin: 0 !important;
-      height: auto !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 4px !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__vendor {
-      font-size: 13px !important;
-      color: #ba5d37 !important;
-      font-weight: 600 !important;
-      margin: 0 !important;
-      line-height: 1.2 !important;
-      text-transform: capitalize !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__title {
-      margin: 0 !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__name {
-      font-size: 15px !important;
-      font-weight: 700 !important;
-      color: #222 !important;
-      line-height: 1.3 !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 4 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden !important;
-      height: 4em !important;
-      text-decoration: none !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__description {
-      font-size: 13px !important;
-      color: #666666 !important;
-      line-height: 1.4 !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden !important;
-      margin: 0 !important;
-      height: 2.8em !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__size {
-      font-size: 13px !important;
-      color: #888888 !important;
-      font-weight: 500 !important;
-      margin: 0 !important;
-      line-height: 1.2 !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__price-row {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      width: 100% !important;
-      margin-top: auto !important;
-      margin-bottom: 8px !important;
-      gap: 8px !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__price {
-      display: flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-    }
-
-    /* Selling price — regular product (no sale) */
-    .m-product-card--style-4 .m-product-card__price span.m-price-item.m-price-item--regular {
-      color: #00584b !important;
-      font-size: 16px !important;
-      font-weight: 800 !important;
-    }
-
-    /* Selling price — on-sale product (actual current price) */
-    .m-product-card--style-4 .m-product-card__price .m-price__sale span.m-price-item.m-price-item--sale {
-      color: #00584b !important;
-      font-size: 16px !important;
-      font-weight: 800 !important;
-    }
-
-    /* Compare-at / struck-through original price (inside .m-price__sale) */
-    .m-product-card--style-4 .m-product-card__price .m-price__sale s.m-price-item.m-price-item--regular {
-      color: #999999 !important;
-      font-size: 13px !important;
-      font-weight: 500 !important;
-      text-decoration: line-through !important;
-    }
-
-    .m-product-card--style-4 .meta-offer-list {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: flex-end !important;
-      justify-content: center !important;
-      background: linear-gradient(to right, rgba(253, 232, 229, 0), rgba(253, 232, 229, 1)) !important;
-      border: none !important;
-      border-radius: 0 !important;
-      padding: 4px 8px 4px 16px !important;
-      box-sizing: border-box !important;
-      line-height: 1.2 !important;
-      gap: 2px !important;
-      max-width: 50% !important;
-      width: auto !important;
-      overflow: visible !important;
-    }
-
-    .m-product-card--style-4 .meta-offer-list span {
-      background: transparent !important;
-      border: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      display: block !important;
-      white-space: nowrap !important;
-      justify-content: flex-end !important;
-      width: auto !important;
-      height: auto !important;
-      box-shadow: none !important;
-      text-transform: none !important;
-    }
-
-    .m-product-card--style-4 .meta-offer-msg {
-      font-size: 11px !important;
-      font-weight: 600 !important;
-      color: #111111 !important;
-      text-align: right !important;
-    }
-
-    .m-product-card--style-4 .meta-offer-code {
-      font-size: 11px !important;
-      font-weight: 700 !important;
-      color: #c0503b !important;
-      text-align: right !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__atc-wrapper {
-      margin-top: auto !important;
-      width: 100% !important;
-    }
-
-    /* ATC Pill Button */
-    .m-product-card--style-4 .m-product-card__atc-wrapper button,
-    .m-product-card--style-4 .m-product-card__atc-wrapper a,
-    .m-product-card--style-4 .m-product-card__atc-wrapper .m-add-to-cart {
-      width: 100% !important;
-      background-color: #c0503b !important;
-      color: #ffffff !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
-      text-transform: capitalize !important;
-      border-radius: 30px !important;
-      padding: 10px 24px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      border: none !important;
-      height: 44px !important;
-      box-shadow: none !important;
-    }
-
-    .m-product-card--style-4 .m-product-card__atc-wrapper svg {
-      display: none !important; /* Hide cart icon */
-    }
-
-    .m-product-card--style-4 .m-product-card__atc-wrapper button[disabled],
-    .m-product-card--style-4 .m-product-card__atc-wrapper button.disabled {
-      background-color: #cccccc !important;
-      color: #888888 !important;
-      cursor: not-allowed !important;
-    }
-
-    @media screen and (max-width: 767px) {
-      .m-product-card--style-4 {
-        padding: 0 !important;
-        border-radius: 10px !important;
-      }
-      .m-product-card--style-4 .m-product-card__content {
-        padding: 0 10px 10px 10px !important;
-      }
-      .m-product-card--style-4 .m-product-card__media {
-        margin-bottom: 8px !important;
-      }
-      .m-product-card--style-4 .m-product-card__name {
-        font-size: 13px !important;
-      }
-      .m-product-card--style-4 .m-product-card__description {
-        font-size: 11px !important;
-      }
-      .m-product-card--style-4 .m-product-card__price span.m-price-item.m-price-item--regular {
-        font-size: 14px !important;
-      }
-      .m-product-card--style-4 .m-product-card__price span.m-price-item.compare-at {
-        font-size: 12px !important;
-      }
-      .m-product-card--style-4 .m-product-card__discount-badge {
-        font-size: 9px !important;
-        padding: 2px 6px !important;
-      }
-      .m-product-card--style-4 .m-product-card__atc-wrapper button,
-      .m-product-card--style-4 .m-product-card__atc-wrapper a {
-        font-size: 13px !important;
-        padding: 8px 16px !important;
-        height: 38px !important;
-      }
-    }
-  </style>
 </div>
+<!-- .m-product-card -->
 {%- if column_wrapper -%}
   </div>
+  <!-- .m:column -->
 {%- endif -%}

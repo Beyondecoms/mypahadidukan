@@ -109,14 +109,13 @@
     assign show_compare_button = settings.show_compare_button
   endif
 
-  assign current_variant = product.selected_or_first_available_variant
-  assign preview_image = current_variant.featured_image | default: current_variant.featured_media.preview_image | default: current_variant.image | default: product.featured_image | default: product.featured_media.preview_image | default: product.media[0].preview_image
+  assign preview_image = product.media[0].preview_image
   if section.settings.change_product_variant_on_fitlering == true and product.selected_variant.image != null
     assign preview_image = product.selected_variant.image
   endif
 
   if image_ratio == 'original'
-    assign image_ratio = preview_image.aspect_ratio | default: product.media[0].aspect_ratio | default: '1/1'
+    assign image_ratio = product.media[0].aspect_ratio | default: '1/1'
   endif
 
   assign second_image = ''
@@ -511,7 +510,6 @@
               endif
             %}
 
-            {% comment %}
             {%- if show_wishlist_button -%}
               {% assign wishlist_app = settings.wishlist_app %}
               {% if wishlist_app == 'growave' %}
@@ -536,7 +534,6 @@
                 %}
               {% endif %}
             {%- endif -%}
-            {% endcomment %}
 
             {%- for tooltip in tooltip_items -%}
               {%- assign settings_key = 'show_'
