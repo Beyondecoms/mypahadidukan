@@ -148,6 +148,10 @@ observer.observe(document.body, {
 </script>
 
 {% style %}
+.splide__slide .swym-wishlist-collections-v2-container{
+   display: none !important;
+}
+
   body {
   overflow: clip !important;
 }
@@ -161,7 +165,12 @@ observer.observe(document.body, {
       width: 29px;
     height: 15px;
 }
-
+.swym-atw-button-container.consent-given.default-position{
+  display: none !important;
+}
+.lc-single-product .swym-wishlist-collections-v2-container{
+  display: none !important;
+}
 .m-menu-badge--sale {
   display: inline-flex;
   align-items: center;
@@ -214,6 +223,9 @@ observer.observe(document.body, {
     max-width: 140px; /* adjust if needed */
 }
 
+#QuantityForm-product-quickview .m-product-form--wrapper .m-add-to-cart{
+ flex: -1 !important;
+}
 .m-product-form--wrapper .m-add-to-cart {
     flex: 1;
     width: calc(50% - 6px);

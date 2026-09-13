@@ -1,5 +1,6 @@
 {% liquid
-  assign preview_image = product.media[0].preview_image
+  assign current_variant = product.selected_or_first_available_variant
+  assign preview_image = current_variant.featured_media.preview_image | default: current_variant.image | default: product.featured_media.preview_image | default: product.media[0].preview_image
   assign second_image = ''
   if settings.show_second_img and product.images.size > 1 and product.images[1] != blank
     assign second_image = product.images[1]

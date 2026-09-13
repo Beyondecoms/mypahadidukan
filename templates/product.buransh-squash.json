@@ -53,12 +53,20 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "size_title": "Size"
+            "size_title": "Size",
+            "tbspn_svg_icon": "",
+            "card_border_radius": 10,
+            "card_border_thickness": 1,
+            "card_selected_border_color": "#f58220",
+            "card_spacing": 12,
+            "card_image_size": 80,
+            "card_show_compare_price": true,
+            "card_show_discount": true,
+            "card_show_image": true,
+            "card_show_checkmark": true,
+            "card_desktop_cards_per_row": 3,
+            "card_mobile_width": 110
           }
-        },
-        "stackback_subscriptions_more_react_purchase_options_test_aAxBGK": {
-          "type": "shopify://apps/stackback-subscriptions-more/blocks/react-purchase-options-test/019b4b9b-83ea-7131-957e-bce5135363da",
-          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -132,7 +140,8 @@
             "heading3": "Icon 3",
             "icon3": "shopify://shop_images/icon_weight__managem.svg",
             "heading4": "Icon 4",
-            "icon4": "shopify://shop_images/icon_hart__helth.svg"
+            "icon4": "shopify://shop_images/icon_hart__helth.svg",
+            "heading5": "Icon 5"
           }
         },
         "custom_liquid_UAfqy3": {
@@ -172,7 +181,6 @@
         "price",
         "image_6WPi9d",
         "variant_picker",
-        "stackback_subscriptions_more_react_purchase_options_test_aAxBGK",
         "buy_buttons",
         "custom_liquid_H4LUbL",
         "custom_liquid_3zNzzn",

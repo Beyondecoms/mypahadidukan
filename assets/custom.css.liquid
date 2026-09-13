@@ -563,7 +563,7 @@ button.m-product-form.m\:w-full.m-product-quickview-button.m-spinner-button.m-bu
     gap: 10px;
     padding: 10px;
     justify-content: center;
-        background: #e8513f;
+        background: #c0503b;
     color: white;
     border-color: transparent;
 }
@@ -1348,7 +1348,7 @@ shopify-accelerated-checkout {
 
 /* Badge base */
 .premium-badge {
-  font-size: 8px;
+  font-size: 6px;
   padding: 4px 4px;
   border-radius: 20px;
   font-weight: 600;
@@ -1452,18 +1452,19 @@ shopify-accelerated-checkout {
    ============================================ */
 
 /* ─── CSS Variables (scoped within quickview) ─── */
+/* ─── CSS Variables (scoped within quickview) ─── */
 .m-product-quickview--info {
-  --qv-primary: #2D6A4F;
-  --qv-primary-dark: #1B4332;
-  --qv-primary-light: #40916C;
-  --qv-accent: #E76F51;
-  --qv-accent-hover: #D45A3C;
+  --qv-primary: #18332e;
+  --qv-primary-dark: #18332e;
+  --qv-primary-light: #366864;
+  --qv-accent: #F58220;
+  --qv-accent-hover: #d36d13;
   --qv-gold: #D4A574;
-  --qv-bg: #FAFAF8;
+  --qv-bg: #ffffff;
   --qv-card-bg: #FFFFFF;
-  --qv-text-primary: #1A1A1A;
-  --qv-text-secondary: #6B7280;
-  --qv-text-muted: #9CA3AF;
+  --qv-text-primary: #18332e;
+  --qv-text-secondary: #222222;
+  --qv-text-muted: #999999;
   --qv-border: #E5E7EB;
   --qv-border-light: #F3F4F6;
   --qv-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -1479,11 +1480,9 @@ shopify-accelerated-checkout {
 
 /* ─── Main Quickview Container ─── */
 .m-product-quickview--info {
-  background: var(--qv-bg);
+  background: #ffffff !important;
   padding: 0;
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--qv-primary-light) transparent;
 }
 
 .m-product-quickview--info::-webkit-scrollbar {
@@ -1495,51 +1494,45 @@ shopify-accelerated-checkout {
 }
 
 .m-product-quickview--info::-webkit-scrollbar-thumb {
-  background: var(--qv-primary-light);
+  background: #366864;
   border-radius: 10px;
 }
 
 /* ─── Product Info Wrapper ─── */
 .m-product-quickview--info .m-product-info--wrapper {
-  padding: 28px 32px;
+  padding: 24px;
   max-width: 100%;
 }
 
-/* ─── Product Title ─── */
+/* ─── Product Title - Matches Product Page ─── */
 .m-product-quickview--info .main-product__block-title {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
-.m-product-quickview--info .m-product-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--qv-text-primary);
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
+.m-product-quickview--info .m-product-title,
 .m-product-quickview--info .m-product-title a {
-  color: inherit;
-  text-decoration: none;
-  transition: var(--qv-transition);
-  background: linear-gradient(135deg, var(--qv-primary) 0%, var(--qv-primary-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  color: #18332e !important;
+  text-decoration: none !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  margin: 0;
+  letter-spacing: -0.01em;
 }
 
 .m-product-quickview--info .m-product-title a:hover {
   opacity: 0.8;
 }
 
-/* ─── Price Section ─── */
+/* ─── Price Section - Matches Product Page ─── */
 .m-product-quickview--info .main-product__block-price {
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 }
 
 .m-product-quickview--info .m-price {
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 
@@ -1552,167 +1545,68 @@ shopify-accelerated-checkout {
 
 .m-product-quickview--info .m-price-item--sale {
   font-size: 1.5rem !important;
-  font-weight: 800 !important;
-  color: var(--qv-primary) !important;
-  letter-spacing: -0.03em;
+  font-weight: 700 !important;
+  color: #18332e !important;
+  letter-spacing: normal !important;
 }
 
 a.m-product-card__link.m\:block.m\:w-full.restock-rocket-collection-rendered [style*='--aspect-ratio']:before{
-padding-top: calc(100% / (0.0001 + var(--aspect-ratio, 16 / 3)));
+padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
 }
 .template-collection a.m-product-card__link.m\:block.m\:w-full.restock-rocket-collection-rendered [style*='--aspect-ratio']:before{
-padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
+padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
 }
 
-
 .m-product-quickview--info .main-product__block+.main-product__block{
- margin-top: 20px !important; 
+ margin-top: 16px !important; 
 }
 
 .m-product-quickview--info .m-price-item--regular s {
-  font-size: 1.25rem;
-  color: var(--qv-text-muted);
-  text-decoration: none;
-  position: relative;
+  font-size: 1.25rem !important;
+  color: #999999 !important;
+  text-decoration: line-through !important;
 }
 
 .m-product-quickview--info .m-price-item--regular s::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  background: var(--qv-accent);
-  transform: rotate(-5deg);
+  display: none !important;
 }
 
-.m-product-quickview--info .m-price__badge-sale {
-  animation: qv-pulse-badge 2s infinite;
-}
-
-.m-product-quickview--info .m-product-tag--sale {
-  background: linear-gradient(135deg, var(--qv-accent) 0%, var(--qv-accent-hover) 100%) !important;
-  color: white !important;
-  border-radius: 50px !important;
-  font-size: 0.875rem !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  box-shadow: 0 4px 14px rgba(231, 111, 81, 0.4) !important;
-}
-.m-product-quickview--info span.vertas{
-   font-size: 10px;
-}
-@keyframes qv-pulse-badge {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* ─── Description ─── */
+/* ─── Description - Matches Product Page ─── */
 .m-product-quickview--info .main-product__block-description {
-  font-size: 9px;
-  line-height: 0;
-  color: var(--qv-text-secondary);
-  margin-bottom: 5px;
-  padding: 10px;
-  background: var(--qv-card-bg);
-  border-radius: var(--qv-radius-md);
-  border: 1px solid var(--qv-border-light);
-  box-shadow: var(--qv-shadow-sm);
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: #555555 !important;
+  margin-bottom: 12px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .m-product-quickview--info .m-product-quickview--viewmore {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
-  color: var(--qv-primary);
+  margin-top: 6px;
+  color: #ba5d37 !important;
   font-weight: 600;
   text-decoration: none;
-  transition: var(--qv-transition);
 }
 
-.m-product-quickview--info .m-product-quickview--viewmore::after {
-  content: '→';
-  transition: var(--qv-transition);
-}
-
-.m-product-quickview--info .m-product-quickview--viewmore:hover {
-  color: var(--qv-primary-dark);
-  gap: 10px;
-}
-
-/* ─── Inventory Status ─── */
-.m-product-quickview--info .main-product__block-inventory_status {
-  margin-bottom: 5px;
-}
-.m-product-quickview--info .option-label--title{
-  font-size: 12px;
-}
-
-.m-product-quickview--info .m-product-option--label{
- margin-top: 0px;
- margin-bottom: 0px;
-}
-
-
-.template-product .m-product-option--label{
-  margin-bottom: 18px;
-}
-
-.m-product-quickview--info .m-product-inventory {
-  padding: 5px;
-  background: #F0FDF4;
-  border-radius: var(--qv-radius-sm);
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid #BBF7D0;
-}
-
-.m-product-quickview--info .m-product-inventory__text {
-  display: flex;
-  align-items: center;
- padding-left: 0 !important;
-  gap: 14px;
-}
-
-.m-product-quickview--info .m-product-inventory__pin {
-  width: 10px;
-  height: 10px;
-  background: #22C55E;
-  top: 5px;
-  border-radius: 50%;
-  position: relative;
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
-  animation: qv-pulse-green 2s infinite;
-}
-
-@keyframes qv-pulse-green {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2); }
-  50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.1); }
-}
-
-.m-product-quickview--info .m-product-inventory__status {
-  font-weight: 600;
-  color: #15803D;
-  font-size: 12px;
-}
-
-/* ─── Variant Picker ─── */
-
+/* ─── Variant Option Label - Matches Product Page ─── */
 .m-product-quickview--info .option-label--title {
-  color: var(--qv-text-secondary);
-  font-weight: 500;
+  color: #222222 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
 }
 
 .m-product-quickview--info .option-label--selected {
-  color: var(--qv-primary);
-  font-weight: 700;
-  background: #F0FDF4;
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.875rem;
+  color: #18332e !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 14px !important;
 }
 
 /* ─── Variant Nodes (Cards) ─── */
@@ -1785,7 +1679,7 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
 }
 
 .m-product-quickview--info .m-quantity__input {
-  width: 60px;
+  width: 36px;
   height: 100%;
   border: none;
   text-align: center;
@@ -1861,7 +1755,6 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
   box-shadow: 0 4px 14px rgba(27, 67, 50, 0.3) !important;
   width: 100% !important;
   margin-top: 12px !important;
-  text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
 }
 
@@ -1906,7 +1799,7 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
   margin-bottom: 5px;
 }
   .m-product-quickview--media.m\:w-full.md\:m\:w-1\/2 [style*='--aspect-ratio']:before{
-           padding-top: calc(60% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio, 1 / 8))));
+           padding-top: calc(60% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio, 1 / 8)))) !important;
   }
   div#Inventory-product-quickview{
     position: absolute;
@@ -1975,7 +1868,7 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
 
 /* ─── Accessibility ─── */
 .m-product-quickview--info .m-product-option__input:focus + .m-product-option--node__label {
-  outline: 3px solid var(--qv-primary);
+  /* outline: 3px solid var(--qv-primary); */
   outline-offset: 2px;
 }
 
@@ -1983,7 +1876,7 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
 .m-product-quickview--info .m-add-to-cart:focus,
 .m-product-quickview--info .shopify-payment-button__button--unbranded:focus,
 .m-product-quickview--info #gokwik-buy-now:focus {
-  outline: 3px solid var(--qv-primary);
+  /* outline: 3px solid var(--qv-primary); */
   outline-offset: 2px;
 }
 
@@ -2006,7 +1899,7 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3)));
 #MainProduct-quick-view__content .m-product-option--node,
 .m-product-option--node {
   background: #ffffff !important;
-  border: 1px solid #e5e7eb !important;
+
   border-radius: 8px !important;
   padding: 8px !important;
   max-width: 45% !important;
@@ -2939,7 +2832,7 @@ div#Inventory-product-quickview{
 }
 m-recently-viewed [style*='--aspect-ratio']:before,
 product-recommendations [style*='--aspect-ratio']:before{
-padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio, 6 / 5))));
+padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio, 6 / 5)))) !important;
     
 }
 
@@ -3228,8 +3121,8 @@ body .m-product-option--content:has(.m-product-option--node:nth-last-child(-n+4)
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
-  gap: 10px !important;
-  column-gap: 10px !important;
+  gap: 12px !important;
+  column-gap: 12px !important;
   row-gap: 0 !important;
   padding-bottom: 6px !important;
 }
@@ -3246,7 +3139,7 @@ body .m-product-option--content[data-values-count="4"] .m-product-option--node,
 body .m-product-option--content:has(.m-product-option--node:nth-last-child(-n+4):first-child) .m-product-option--node {
   flex: 1 1 0px !important;
   width: auto !important;
-  max-width: none !important;
+  max-width: 220px !important;
   min-width: 0 !important;
   scroll-snap-align: start !important;
 }
@@ -3270,13 +3163,29 @@ body .m-product-option--content[data-values-count="6"] .m-product-option--node,
 body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+5):first-child) .m-product-option--node {
   flex: 0 0 calc(50% - 6px) !important;
   width: calc(50% - 6px) !important;
-  max-width: calc(50% - 6px) !important;
+  max-width: 220px !important;
   min-width: 0 !important;
   box-sizing: border-box !important;
 }
-m-slideshow .swym-wishlist-collections-v2-container{
- display: none;
+
+/* Hide unwanted Swym Wishlist icons in section headers/subheadings and slideshows (keep visible on product cards) */
+m-slideshow .swym-wishlist-collections-v2-container,
+.m-slideshow .swym-wishlist-collections-v2-container,
+.sf-home__slideshow .swym-wishlist-collections-v2-container,
+.custom-section-4__container > .swym-wishlist-collections-v2-container,
+.custom-section-4__subheading-wrap .swym-wishlist-collections-v2-container {
+  display: none !important;
 }
+
+/* Ensure wishlist heart icon is visible on product cards */
+.m-product-card .m-product-card__wishlist-btn,
+.m-product-card .swym-wishlist-collections-v2-container,
+.m-product-card .m-wishlist-button {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 
 /* Mobile Hero Slideshow CTA Button Overlay (2rem from bottom of image) */
 @media screen and (max-width: 767px) {
@@ -3380,3 +3289,440 @@ button.swym-button.swym-added svg path,
   fill: #ba5d37 !important;
 }
 
+/* Universal Product Card Consistency Across Homepage, Collection, Category & Search Pages */
+.m-product-card .m-product-card__vendor,
+.m-product-card--style-4 .m-product-card__vendor,
+.m-product-card__vendor {
+  font-size: 13px !important;
+  color: #ba5d37 !important;
+  font-weight: 600 !important;
+  margin: 0 0 2px 0 !important;
+  line-height: 1.2 !important;
+  text-transform: capitalize !important;
+}
+
+.m-product-card .m-product-card__name,
+.m-product-card--style-4 .m-product-card__name,
+.m-product-card__title a {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #222222 !important;
+  line-height: 1.3 !important;
+  text-transform: none !important;
+}
+
+.m-product-card .m-product-card__atc-wrapper button,
+.m-product-card .m-product-card__atc-wrapper a,
+.m-product-card .m-product-card__atc-button,
+.m-product-card--style-4 .m-product-card__atc-wrapper button,
+.m-product-card--style-4 .m-product-card__atc-wrapper a {
+  background-color: #c0503b !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+  border-radius: 30px !important;
+}
+
+.m-product-card .m-product-card__media img,
+.m-product-card--style-4 .m-product-card__media img,
+.m-product-card__main-image img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.variant-scroll-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Hide PDP Wishlist Button beside Quantity / Buy Form */
+.m-product-form--wrapper .swym-button-wpr,
+.m-product-form--wrapper .swym-btn-container,
+.m-product-form--wrapper .swym-add-to-wishlist-pdp,
+.m-product-form--wrapper button.swym-button,
+.m-product-form .swym-button-wpr,
+.m-product-form .swym-btn-container,
+.m-product-form .swym-add-to-wishlist-pdp,
+.m-product-form button.swym-button,
+.main-product__block .swym-button-wpr,
+.main-product__block .swym-btn-container,
+.main-product__block .swym-add-to-wishlist-pdp,
+.main-product__block button.swym-button,
+form[action*="/cart/add"] .swym-button-wpr,
+form[action*="/cart/add"] .swym-btn-container,
+form[action*="/cart/add"] .swym-add-to-wishlist,
+form[action*="/cart/add"] button.swym-button,
+.swym-button-wpr {
+  display: none !important;
+}
+
+/* Hide unwanted Swym Wishlist icons in custom sections, category grids, subheadings, and slideshows */
+m-slideshow .swym-wishlist-collections-v2-container,
+.m-slideshow .swym-wishlist-collections-v2-container,
+.sf-home__slideshow .swym-wishlist-collections-v2-container,
+[class*="custom-section-"] .swym-wishlist-collections-v2-container,
+[class*="custom-section-"] .swym-wishlist-collections-v2,
+.custom-section-4 .swym-wishlist-collections-v2-container,
+.custom-section-4__container > .swym-wishlist-collections-v2-container,
+.custom-section-4__subheading-wrap > .swym-wishlist-collections-v2-container,
+.custom-section-3 .swym-wishlist-collections-v2-container,
+.custom-section-7 .swym-wishlist-collections-v2-container,
+.custom-section-10 .swym-wishlist-collections-v2-container,
+.custom-section-11 .swym-wishlist-collections-v2-container {
+  display: none !important;
+}
+
+
+/* Mobile Hero Slideshow CTA Button Overlay (2rem from bottom of image) */
+@media screen and (max-width: 767px) {
+  .sf-home__slideshow .m-slide__wrapper {
+    position: absolute !important;
+    top: -2rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 2rem !important;
+  }
+  .sf-home__slideshow .m-slide__content {
+    width: auto !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  .sf-home__slideshow .m-richtext__button {
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+  .sf-home__slideshow .m-slider-controls {
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    z-index: 25 !important;
+    margin: 0 !important;
+  }
+  .sf-home__slideshow .swiper-pagination {
+    position: relative !important;
+    width: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Hero Slideshow CTA Button Styling (Client Feedback: White background, slightly less rounded edges, moved up) */
+.sf-home__slideshow .m-slide__button-first,
+.sf-home__slideshow .m-slide__button a {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1px solid #FFFFFF !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  padding: 12px 28px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.25s ease !important;
+}
+
+.sf-home__slideshow .m-slide__button-first:hover,
+.sf-home__slideshow .m-slide__button a:hover {
+  background-color: #F3F3F3 !important;
+  color: #000000 !important;
+  border-color: #F3F3F3 !important;
+}
+
+@media screen and (min-width: 768px) {
+  .sf-home__slideshow .m-slide__content {
+    transform: translateY(-40px) !important;
+  }
+}
+
+/* Swym Wishlist Icon Color Styling (#ba5d37 stroke outline & active fill) */
+.swym-wishlist-collections-v2-container button svg path,
+.swym-wishlist-collections-v2-container button svg,
+button.swym-wishlist-collections-v2 svg path,
+button.swym-wishlist-collections-v2 svg,
+.swym-wishlist-collections-v2 svg path,
+.swym-wishlist-collections-v2 svg,
+button.swym-button svg path,
+.swym-add-to-wishlist svg path,
+.swym-wishlist-button svg path {
+  stroke: #ba5d37 !important;
+  fill: none !important;
+  transition: fill 0.2s ease, stroke 0.2s ease !important;
+}
+
+.swym-wishlist-collections-v2-container button[aria-pressed="true"] svg path,
+.swym-wishlist-collections-v2-container button.swym-added svg path,
+.swym-wishlist-collections-v2-container button.active svg path,
+.swym-wishlist-collections-v2-container button.is-active svg path,
+button.swym-wishlist-collections-v2[aria-pressed="true"] svg path,
+button.swym-wishlist-collections-v2.swym-added svg path,
+button.swym-wishlist-collections-v2.active svg path,
+button.swym-wishlist-collections-v2.is-active svg path,
+button.swym-button[aria-pressed="true"] svg path,
+button.swym-button.swym-added svg path,
+.swym-add-to-wishlist[aria-pressed="true"] svg path,
+.swym-add-to-wishlist.swym-added svg path,
+.swym-wishlist-button[aria-pressed="true"] svg path,
+.swym-wishlist-button.swym-added svg path {
+  stroke: #ba5d37 !important;
+  fill: #ba5d37 !important;
+}
+
+/* Universal Product Card Consistency Across Homepage, Collection, Category & Search Pages */
+.m-product-card .m-product-card__vendor,
+.m-product-card--style-4 .m-product-card__vendor,
+.m-product-card__vendor {
+  font-size: 13px !important;
+  color: #ba5d37 !important;
+  font-weight: 600 !important;
+  margin: 0 0 2px 0 !important;
+  line-height: 1.2 !important;
+  text-transform: capitalize !important;
+}
+
+.m-product-card .m-product-card__name,
+.m-product-card--style-4 .m-product-card__name,
+.m-product-card__title a {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #222222 !important;
+  line-height: 1.3 !important;
+  text-transform: none !important;
+}
+
+.m-product-card .m-product-card__atc-wrapper button,
+.m-product-card .m-product-card__atc-wrapper a,
+.m-product-card .m-product-card__atc-button,
+.m-product-card--style-4 .m-product-card__atc-wrapper button,
+.m-product-card--style-4 .m-product-card__atc-wrapper a {
+  background-color: #c0503b !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+  border-radius: 30px !important;
+}
+
+.m-product-card .m-product-card__media img,
+.m-product-card--style-4 .m-product-card__media img,
+.m-product-card__main-image img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.variant-scroll-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Hide PDP Wishlist Button beside Quantity / Buy Form */
+.m-product-form--wrapper .swym-button-wpr,
+.m-product-form--wrapper .swym-btn-container,
+.m-product-form--wrapper .swym-add-to-wishlist-pdp,
+.m-product-form--wrapper button.swym-button,
+.m-product-form .swym-button-wpr,
+.m-product-form .swym-btn-container,
+.m-product-form .swym-add-to-wishlist-pdp,
+.m-product-form button.swym-button,
+.main-product__block .swym-button-wpr,
+.main-product__block .swym-btn-container,
+.main-product__block .swym-add-to-wishlist-pdp,
+.main-product__block button.swym-button,
+form[action*="/cart/add"] .swym-button-wpr,
+form[action*="/cart/add"] .swym-btn-container,
+form[action*="/cart/add"] .swym-add-to-wishlist,
+form[action*="/cart/add"] button.swym-button,
+.swym-button-wpr {
+  display: none !important;
+}
+
+/* Fix Quick view tooltip overflow on product cards */
+.m-product-card__quickview-btn .m-tooltip__content,
+.m-product-card .m-product-card__quickview-btn .m-tooltip__content,
+.m-product-card--style-4 .m-product-card__quickview-btn .m-tooltip__content,
+.m-product-card .m-product-card__media .m-tooltip--top .m-tooltip__content {
+  left: auto !important;
+  right: 0 !important;
+  transform: none !important;
+  white-space: nowrap !important;
+}
+
+.m-product-card:hover .m-product-card__quickview-btn .m-tooltip:hover .m-tooltip__content,
+.m-product-card--style-4:hover .m-product-card__quickview-btn .m-tooltip:hover .m-tooltip__content,
+.m-product-card__quickview-btn .m-tooltip:hover .m-tooltip__content,
+.m-product-card .m-product-card__media .m-tooltip--top:hover .m-tooltip__content {
+  transform: translateY(-4px) !important;
+}
+
+.m-product-card__quickview-btn .m-tooltip__content::after,
+.m-product-card .m-product-card__quickview-btn .m-tooltip__content::after,
+.m-product-card--style-4 .m-product-card__quickview-btn .m-tooltip__content::after,
+.m-product-card .m-product-card__media .m-tooltip--top .m-tooltip__content::after {
+  left: auto !important;
+  right: 8px !important;
+  transform: none !important;
+}
+
+/* Force Title Case for Add To Cart buttons across PDP and product cards */
+.m-add-to-cart,
+.m-add-to-cart--text,
+.m-product-quickview-button,
+.m-product-quickview-button span,
+.m-product-card__action-wrapper button,
+.m-product-card__action-wrapper a,
+.m-product-card__action-wrapper span,
+.m-product-card__atc-wrapper button,
+.m-product-card__atc-wrapper a,
+.m-product-card__atc-wrapper span,
+.m-product-card__action button,
+.m-product-card__action a,
+.m-product-card__action span,
+button[name="add"],
+.product-card-form button,
+.product-card-form a,
+.search-card-btn {
+  text-transform: capitalize !important;
+}
+
+/* ==========================================================================
+   Swym Wishlist Page Brand Styling (https://mypahadidukan.com/pages/wishlist)
+   ========================================================================== */
+
+/* 1. Wishlist Header Navigation Tabs (Wishlist / Saved for Later) */
+#swym-wishlist-render-container .swym-tab-nav,
+.swym-wishlist-detail-header .swym-tab-nav,
+.swym-nav-tab,
+.swym-tab-item,
+[data-tab-name] {
+  border-radius: 6px !important;
+  transition: all 0.25s ease !important;
+}
+
+/* Active Tab (Solid Brand Color #ba5d37) */
+#swym-wishlist-render-container .swym-tab-nav .swym-is-active,
+#swym-wishlist-render-container .swym-nav-tab.swym-is-active,
+.swym-wishlist-detail-header .swym-is-active,
+.swym-nav-tab.swym-is-active,
+.swym-nav-tab.swym-active,
+.swym-tab-item.active,
+.swym-tab-item.swym-is-active,
+button.swym-is-active,
+div.swym-is-active {
+  background-color: #ba5d37 !important;
+  color: #ffffff !important;
+  border-color: #ba5d37 !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 12px rgba(186, 93, 55, 0.25) !important;
+}
+
+#swym-wishlist-render-container .swym-tab-nav .swym-is-active *,
+.swym-nav-tab.swym-is-active * {
+  color: #ffffff !important;
+}
+
+/* Inactive Tabs */
+#swym-wishlist-render-container .swym-nav-tab:not(.swym-is-active),
+.swym-nav-tab:not(.swym-is-active),
+.swym-tab-item:not(.active) {
+  background-color: #f9f9f9 !important;
+  color: #333333 !important;
+  border: 1px solid #e2e2e2 !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+}
+
+#swym-wishlist-render-container .swym-nav-tab:not(.swym-is-active):hover,
+.swym-nav-tab:not(.swym-is-active):hover {
+  background-color: #f0f0f0 !important;
+  color: #ba5d37 !important;
+  border-color: #ba5d37 !important;
+}
+
+/* 2. Wishlist Product Card Add to Cart Buttons */
+#swym-wishlist-render-container .swym-add-to-cart-btn,
+#swym-wishlist-render-container button.swym-button,
+.swym-wishlist-detail-content .swym-add-to-cart-btn,
+.swym-wishlist-grid .swym-add-to-cart-btn,
+.swym-wishlist-card .swym-add-to-cart-btn,
+button.swym-add-to-cart-btn,
+.swym-add-to-cart-btn,
+.swym-value-btn,
+.swym-card-btn {
+  background-color: #ba5d37 !important;
+  color: #ffffff !important;
+  border: 1px solid #ba5d37 !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: capitalize !important;
+  padding: 10px 18px !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 3px 8px rgba(186, 93, 55, 0.2) !important;
+  cursor: pointer !important;
+}
+
+#swym-wishlist-render-container .swym-add-to-cart-btn:hover,
+#swym-wishlist-render-container button.swym-button:hover,
+.swym-wishlist-detail-content .swym-add-to-cart-btn:hover,
+.swym-wishlist-grid .swym-add-to-cart-btn:hover,
+.swym-wishlist-card .swym-add-to-cart-btn:hover,
+button.swym-add-to-cart-btn:hover,
+.swym-add-to-cart-btn:hover,
+.swym-value-btn:hover,
+.swym-card-btn:hover {
+  background-color: #9c2810 !important;
+  border-color: #9c2810 !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 14px rgba(156, 40, 16, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Added to Cart State on Wishlist Page */
+#swym-wishlist-render-container .swym-added,
+#swym-wishlist-render-container .swym-added-to-cart,
+.swym-add-to-cart-btn.swym-added,
+.swym-add-to-cart-btn.swym-added-to-cart,
+button.swym-add-to-cart-btn.swym-added {
+  background-color: #9c2810 !important;
+  border-color: #9c2810 !important;
+  color: #ffffff !important;
+}
+
+/* 3. Product Prices on Wishlist Page */
+#swym-wishlist-render-container .swym-product-final-price,
+#swym-wishlist-render-container .swym-product-price,
+.swym-wishlist-grid .swym-product-final-price,
+.swym-wishlist-card .swym-product-final-price,
+.swym-product-final-price,
+.swym-product-price {
+  color: #ba5d37 !important;
+  font-weight: 700 !important;
+}
+
+/* 4. Delete / Remove Icon Hover Effect */
+#swym-wishlist-render-container .swym-delete-btn:hover,
+#swym-wishlist-render-container .swym-remove-btn:hover,
+.swym-wishlist-grid .swym-delete-btn:hover,
+.swym-delete-btn:hover,
+.swym-remove-btn:hover {
+  color: #ba5d37 !important;
+  opacity: 1 !important;
+}

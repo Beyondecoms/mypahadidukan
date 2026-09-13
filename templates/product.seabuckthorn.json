@@ -575,6 +575,7 @@
     },
     "image_with_text_2_nck6xV": {
       "type": "image-with-text-2",
+      "disabled": true,
       "name": "Image with text overlay",
       "settings": {
         "color_scheme": "",
@@ -608,6 +609,7 @@
     },
     "image_with_text_2_KViYE9": {
       "type": "image-with-text-2",
+      "disabled": true,
       "name": "Image with text overlay",
       "settings": {
         "color_scheme": "",

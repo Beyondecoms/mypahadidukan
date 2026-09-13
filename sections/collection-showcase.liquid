@@ -151,7 +151,8 @@
                         {% for product in collection.products limit: product_to_show %}
                           <div class="swiper-slide m:column">
                             {% liquid
-                              assign preview_image = product.media[0].preview_image
+                              assign current_variant = product.selected_or_first_available_variant
+                              assign preview_image = current_variant.featured_media.preview_image | default: current_variant.image | default: product.featured_media.preview_image | default: product.media[0].preview_image
                               assign asp_rat = pcard_image_ratio | default: preview_image.aspect_ratio
                               if asp_rat == 'original'
                                 assign asp_rat = preview_image.aspect_ratio

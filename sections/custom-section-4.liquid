@@ -167,6 +167,9 @@
     gap: var(--cs4-gap);
     width: 100%;
   }
+  .custom-section-4__item .swym-wishlist-collections-v2-container{
+     display: none !important;
+  }
 
   #custom-section-4-{{ section.id }} .custom-section-4__item {
     flex: 1 1 0;
@@ -240,11 +243,14 @@
     line-height: 1.25;
     color: var(--cs4-label-color);
     text-align: center;
-    display: block;
-    width: 100%;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
   }
 
   @media (max-width: 991px) {

@@ -157,6 +157,24 @@
           assign discount_amount = resolved_variant.compare_at_price | minus: resolved_variant.price
           assign discount_percent = discount_amount | times: 100 | divided_by: resolved_variant.compare_at_price | round
         endif
+
+        assign variant_badge = resolved_variant.metafields.custom.badge_text.value | default: resolved_variant.metafields.custom.badge_text | default: resolved_variant.metafields.custom.variant_badge.value | default: resolved_variant.metafields.custom.variant_badge | default: resolved_variant.metafields.custom.tag.value | default: resolved_variant.metafields.custom.tag | default: resolved_variant.metafields.custom.badge.value | default: resolved_variant.metafields.custom.badge | default: resolved_variant.metafields.custom.pack_title.value | default: resolved_variant.metafields.custom.pack_title | default: resolved_variant.metafields.theme.badge.value | default: resolved_variant.metafields.theme.badge
+        if variant_badge == blank
+          assign val_lc = value | downcase
+          if val_lc contains '300ml' or val_lc contains '1 x 300'
+            assign variant_badge = '30 Days Pack'
+          elsif val_lc contains '600ml' or val_lc contains '2 x 300'
+            assign variant_badge = '2 Months Pack'
+          elsif val_lc contains '1200ml' or val_lc contains '4 x 300'
+            assign variant_badge = '4 Months Pack'
+          elsif val_lc contains '10g'
+            assign variant_badge = 'Trial Pack'
+          elsif val_lc contains '40g'
+            assign variant_badge = 'Bestseller'
+          elsif val_lc contains '60g'
+            assign variant_badge = 'Value for Money'
+          endif
+        endif
       -%}
       <div
         class="m-product-option--node{% if option_disabled %} m-product-option--node__unavailable{% endif %}{% if value.selected %} m-product-option--node__selected{% endif %}"
@@ -180,7 +198,10 @@
           {% endif %}
           {{ input_dataset }}
         >
-        <label for="{{ input_id }}" class="rich-variant-card{% if product.vendor != 'My Pahadi Dukan' %} rich-variant-card--simple{% endif %}" data-option-type="{{ picker_type }}">
+        <label for="{{ input_id }}" class="rich-variant-card{% if product.vendor != 'My Pahadi Dukan' %} rich-variant-card--simple{% endif %}{% if variant_badge != blank %} has-badge{% endif %}" data-option-type="{{ picker_type }}">
+          {%- if variant_badge != blank -%}
+            <span class="vertas">{{ variant_badge }}</span>
+          {%- endif -%}
           {%- if card_show_checkmark and value.selected -%}
             <span class="rich-variant-card__checkmark">
               <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
@@ -216,12 +237,12 @@
 
             <div class="rich-variant-card__pricing">
               <span class="rich-variant-card__price">
-                {{ resolved_variant.price | money | replace: '.00', '' }}
+                {{ resolved_variant.price | money | replace: '.00', '' | replace: '₹ ', '₹' }}
               </span>
               {%- if product.vendor == 'My Pahadi Dukan' -%}
                 {%- if card_show_compare_price and has_discount -%}
                   <span class="rich-variant-card__compare-price">
-                    {{ resolved_variant.compare_at_price | money | replace: '.00', '' }}
+                    {{ resolved_variant.compare_at_price | money | replace: '.00', '' | replace: '₹ ', '₹' }}
                   </span>
                 {%- endif -%}
               {%- endif -%}
@@ -458,7 +479,7 @@
             justify-content: flex-start !important;
             border: var(--card-border-thickness, 1px) solid #e5e5e5 !important;
             border-radius: var(--card-border-radius, 16px) !important;
-            padding: 20px !important;
+            padding: 16px !important;
             background-color: #fff !important;
             cursor: pointer !important;
             position: relative !important;
@@ -466,6 +487,33 @@
             min-height: 194px !important;
             height: auto !important;
             width: 100% !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+          }
+
+          .rich-variant-card.has-badge {
+            padding-top: 0 !important;
+          }
+
+          span.vertas {
+            background-color: #366864 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 13px !important;
+            line-height: 1.2 !important;
+            padding: 6px 8px !important;
+            height: 32px !important;
+            width: calc(100% + 32px) !important;
+            margin-left: -16px !important;
+            margin-right: -16px !important;
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            position: relative !important;
+            z-index: 1 !important;
             box-sizing: border-box !important;
           }
 
@@ -496,6 +544,7 @@
           .m-product-option--node__selected .rich-variant-card,
           .m-product-option__input:checked + .rich-variant-card {
             border-color: var(--card-selected-border-color, #F58220) !important;
+            border-width: 2px !important;
             background-color: rgba(245, 130, 32, 0.03) !important; /* Subtle orange/primary highlight */
             box-shadow: 0 4px 12px rgba(245, 130, 32, 0.08) !important;
           }
@@ -503,11 +552,11 @@
           /* Checkmark styling */
           .rich-variant-card__checkmark {
             position: absolute !important;
-            top: 2px !important;
-            right: 2px !important;
+            top: 4px !important;
+            right: 4px !important;
             width: 22px !important;
             height: 22px !important;
-            z-index: 2 !important;
+            z-index: 10 !important;
           }
 
           /* Image wrapper */
@@ -588,7 +637,7 @@
             }
 
             .m-product-option--node {
-              flex: 0 0 125px !important;
+              flex: 0 0 135px !important;
               scroll-snap-align: start !important;
               height: auto !important;
             }
@@ -602,6 +651,16 @@
               flex-direction: column !important;
               align-items: center !important;
               justify-content: flex-start !important;
+            }
+
+            .rich-variant-card.has-badge {
+              padding-top: 0 !important;
+            }
+
+            .rich-variant-card.has-badge span.vertas {
+              width: calc(100% + 24px) !important;
+              margin-left: -12px !important;
+              margin-right: -12px !important;
             }
 
             .rich-variant-card__image-wrapper {
