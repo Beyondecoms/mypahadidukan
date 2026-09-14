@@ -64,6 +64,15 @@
               <h1 class="m-product-title">
                 <a href="{{ product.url }}">{{ product.title }}</a>
               </h1>
+              {% if product.metafields.custom.product_highlights != blank %}
+                <div class="product-highlights">
+                  {% for highlight in product.metafields.custom.product_highlights.value %}
+                    <span class="product-highlight-item">
+                      {{ highlight }}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
           </div>
           <div class="main-product__block main-product__block-price" id="Price-{{ section.id }}" role="status">
@@ -74,11 +83,12 @@
               sale_badge_type: 'text',
               price_text_size: 'm:text-xl md:m:text-2xl'
             %}
+            <p class="tax-c">MRP Inclusive of all taxes</p>
           </div>
           <div class="main-product__block main-product__block-description">
-            {{ product.description | strip_html | truncatewords: 15 }}
+            <p>{{ product.description | strip_html | truncatewords: 20 }}</p>
             <a class="m-product-quickview--viewmore m:block" href="{{ product.url }}">
-              {{- 'products.product.view_details' | t -}}
+              {{- 'products.product.view_details' | t -}} &rarr;
             </a>
           </div>
 
