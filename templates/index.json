@@ -1381,21 +1381,11 @@
             "alt_text": "Flipkart",
             "link": ""
           }
-        },
-        "marketplace_XrhBw7": {
-          "type": "marketplace",
-          "disabled": true,
-          "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703",
-            "alt_text": "Amazon",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "marketplace_ERrqGn",
-        "marketplace_yaUGzH",
-        "marketplace_XrhBw7"
+        "marketplace_yaUGzH"
       ],
       "name": "Social Proof & Marketplaces (Section 8)",
       "settings": {
