@@ -147,7 +147,7 @@
           assign card_show_checkmark = true
         endif
         if card_image_size == null
-          assign card_image_size = 80
+          assign card_image_size = 300
         endif
 
         assign variant_image = resolved_variant.image | default: resolved_variant.featured_media | default: resolved_variant.featured_image | default: product.featured_media | default: product.featured_image
@@ -198,7 +198,16 @@
           {% endif %}
           {{ input_dataset }}
         >
-        <label for="{{ input_id }}" class="rich-variant-card{% if product.vendor != 'My Pahadi Dukan' %} rich-variant-card--simple{% endif %}{% if variant_badge != blank %} has-badge{% endif %}" data-option-type="{{ picker_type }}">
+        {%- liquid
+          assign val_dc = value | downcase
+          assign is_multi_pack = false
+          if val_dc contains 'pack' or val_dc contains 'bottle' or val_dc contains 'x ' or val_dc contains '1200ml' or val_dc contains '600ml' or val_dc contains '900ml'
+            unless val_dc contains '1 x' or val_dc contains '1x' or val_dc contains '1 bottle'
+              assign is_multi_pack = true
+            endunless
+          endif
+        -%}
+        <label for="{{ input_id }}" class="rich-variant-card{% if is_multi_pack %} is-multi-pack{% endif %}{% if product.vendor != 'My Pahadi Dukan' %} rich-variant-card--simple{% endif %}{% if variant_badge != blank %} has-badge{% else %} no-badge{% endif %}" data-option-type="{{ picker_type }}" data-multi-pack="{% if is_multi_pack %}true{% else %}false{% endif %}">
           {%- if variant_badge != blank -%}
             <span class="vertas">{{ variant_badge }}</span>
           {%- endif -%}
@@ -218,8 +227,7 @@
                   src="{{ variant_image | image_url: width: card_image_size }}"
                   alt="{{ value | escape }}"
                   loading="lazy"
-                  width="{{ card_image_size }}"
-                  height="{{ card_image_size }}"
+                  crossorigin="anonymous"
                   class="rich-variant-card__image"
                 >
               </div>
@@ -440,13 +448,33 @@
 {%- endfor -%}
 
         <style>
-          .m-product-option--content {
-            display: grid !important;
-            grid-template-columns: repeat(var(--card-desktop-cards-per-row, 3), minmax(220px, 1fr)) !important;
-            gap: var(--card-spacing, 20px) !important;
+          .m-product-option--content:not(.m-product-option--carousel) {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            gap: var(--card-spacing, 12px) !important;
             width: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
+          }
+
+          .m-product-option--carousel {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            gap: 12px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 4px !important;
+          }
+
+          .m-product-option--carousel .m-product-option--node {
+            flex: 0 0 152px !important;
+            width: 152px !important;
+            min-width: 152px !important;
+            max-width: 152px !important;
+            box-sizing: border-box !important;
           }
 
           .m-product-option--node {
@@ -477,44 +505,54 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: flex-start !important;
-            border: var(--card-border-thickness, 1px) solid #e5e5e5 !important;
+            border: 2px solid var(--card-border-color, #E5E7EB) !important;
             border-radius: var(--card-border-radius, 16px) !important;
-            padding: 16px !important;
+            padding: 38px 12px 14px 12px !important;
             background-color: #fff !important;
             cursor: pointer !important;
             position: relative !important;
             transition: all 0.2s ease-in-out !important;
             min-height: 194px !important;
-            height: auto !important;
+            height: 100% !important;
             width: 100% !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
           }
 
-          .rich-variant-card.has-badge {
-            padding-top: 0 !important;
-          }
-
-          span.vertas {
+          /* Absolute badge header across the top of the card */
+          span.vertas,
+          .rich-variant-card span.vertas,
+          .rich-variant-card.has-badge span.vertas {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            height: 28px !important;
+            margin: 0 !important;
+            padding: 0 8px !important;
             background-color: #366864 !important;
             color: #ffffff !important;
             font-weight: 700 !important;
-            font-size: 13px !important;
-            line-height: 1.2 !important;
-            padding: 6px 8px !important;
-            height: 32px !important;
-            width: calc(100% + 32px) !important;
-            margin-left: -16px !important;
-            margin-right: -16px !important;
-            margin-top: 0 !important;
-            margin-bottom: 12px !important;
+            font-size: 11.5px !important;
+            line-height: 28px !important;
+            letter-spacing: 0.2px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             text-align: center !important;
-            position: relative !important;
-            z-index: 1 !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            z-index: 2 !important;
             box-sizing: border-box !important;
+            border-top-left-radius: 14px !important;
+            border-top-right-radius: 14px !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
           }
 
           /* Simple Design for other vendors */
@@ -559,20 +597,46 @@
             z-index: 10 !important;
           }
 
-          /* Image wrapper */
+          /* Image wrapper - fixed consistent area */
           .rich-variant-card__image-wrapper {
-            width: var(--card-image-size, 90px) !important;
-            height: var(--card-image-size, 90px) !important;
+            width: 100% !important;
+            height: 100px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            margin-bottom: 16px !important;
+            overflow: hidden !important;
+            margin-bottom: 12px !important;
+            padding: 0 !important;
+            flex-shrink: 0 !important;
+            box-sizing: border-box !important;
           }
 
           .rich-variant-card__image {
             width: 100% !important;
             height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
             object-fit: contain !important;
+            object-position: center !important;
+            display: block !important;
+            margin: auto !important;
+            transition: transform 0.2s ease !important;
+          }
+
+          .rich-variant-card__image[src*="Ghee_1"],
+          .rich-variant-card__image[src*="ghee_1"],
+          .rich-variant-card__image[src*="Ghee-1"],
+          .rich-variant-card__image[src*="ghee-1"],
+          .rich-variant-card__image[src*="mockup1"],
+          .rich-variant-card__image[src*="Mockup1"],
+          .rich-variant-card__image[src*="ghee_1" i] {
+            transform: scale(2.05) !important;
+            transform-origin: center center !important;
+          }
+
+          .rich-variant-card.is-multi-pack .rich-variant-card__image,
+          .rich-variant-card[data-multi-pack="true"] .rich-variant-card__image {
+            transform: none !important;
           }
 
           .rich-variant-card__content {
@@ -643,36 +707,51 @@
             }
 
             .rich-variant-card {
-              padding: 12px !important;
+              padding: 32px 8px 10px 8px !important;
               border-radius: 16px !important;
               min-height: 170px !important;
-              height: auto !important;
+              height: 100% !important;
               display: flex !important;
               flex-direction: column !important;
               align-items: center !important;
               justify-content: flex-start !important;
             }
 
-            .rich-variant-card.has-badge {
-              padding-top: 0 !important;
-            }
-
+            span.vertas,
+            .rich-variant-card span.vertas,
             .rich-variant-card.has-badge span.vertas {
-              width: calc(100% + 24px) !important;
-              margin-left: -12px !important;
-              margin-right: -12px !important;
+              height: 24px !important;
+              font-size: 10.5px !important;
+              line-height: 24px !important;
+              padding: 0 6px !important;
+              width: 100% !important;
+              margin: 0 !important;
+              border-top-left-radius: 14px !important;
+              border-top-right-radius: 14px !important;
             }
 
             .rich-variant-card__image-wrapper {
-              width: 50px !important;
-              height: 50px !important;
+              width: 100% !important;
+              height: 80px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              overflow: hidden !important;
               margin-bottom: 8px !important;
+              padding: 0 !important;
+              flex-shrink: 0 !important;
+              box-sizing: border-box !important;
             }
 
             .rich-variant-card__image {
               width: 100% !important;
               height: 100% !important;
+              max-width: 100% !important;
+              max-height: 100% !important;
               object-fit: contain !important;
+              object-position: center !important;
+              display: block !important;
+              margin: auto !important;
             }
 
             .rich-variant-card__title {

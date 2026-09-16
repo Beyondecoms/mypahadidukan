@@ -69,17 +69,22 @@
                     loading="lazy"
                     class="shop-by-category__card-img"
                     alt="{{ block_title | default: 'Category' }}"
-                    width="200"
-                    height="200"
+                    width="400"
+                    height="400"
                   >
                 {%- elsif block_image != blank -%}
+                  {%- capture image_sizes -%}
+                    (max-width: 767px) calc((100vw - 32px) / {{ mobile_cards }}), calc(1360px / {{ desktop_cards }})
+                  {%- endcapture -%}
+                  {%- assign image_sizes = image_sizes | strip -%}
                   {{
                     block_image
-                    | image_url: width: 300
+                    | image_url: width: 800
                     | image_tag:
                       loading: 'lazy',
                       class: 'shop-by-category__card-img',
-                      widths: '150, 200, 300',
+                      widths: '180, 240, 320, 400, 500, 600, 720, 900, 1080, 1200',
+                      sizes: image_sizes,
                       alt: block_title | default: 'Category'
                   }}
                 {%- else -%}
@@ -264,6 +269,7 @@
 
   #shop-by-category-{{ section.id }} .shop-by-category__card-img {
     width: 100%;
+    height: auto;
     object-fit: cover;
     object-position: center;
     display: block;

@@ -1,33 +1,52 @@
 {% comment %}
   Render the dedicated Product Certificate block
 {% endcomment %}
-{% assign lab_reports = product.metafields.custom.lab_report_link.value %}
-{% assign reports_count = lab_reports.size %}
+{% liquid
+  assign lab_reports = product.metafields.custom.lab_report_link.value | default: product.metafields.custom.lab_report_link
+  if lab_reports == blank
+    assign lab_reports = product.metafields.custom.lab_report_links.value | default: product.metafields.custom.lab_report_links
+  endif
+  if lab_reports == blank
+    assign lab_reports = product.metafields.custom.lab_reports.value | default: product.metafields.custom.lab_reports
+  endif
 
-{% comment %} Temporary debug check {% endcomment %}
-<!-- DEBUG: {{ product.metafields.custom.lab_report_link }} -->
-<!-- DEBUG VALUE: {{ product.metafields.custom.lab_report_link.value | json }} -->
+  assign reports_count = 0
+  for link in lab_reports
+    assign r_url = link.url | default: link
+    if r_url != blank
+      assign reports_count = reports_count | plus: 1
+    endif
+  endfor
 
-{% if lab_reports != blank %}
+  if reports_count == 0 and block.settings.pdf_url != blank
+    assign reports_count = 1
+  endif
+%}
+
+{% if lab_reports != blank or block.settings.pdf_url != blank %}
   {% if reports_count > 1 %}
-    {% comment %} RENDER MULTIPLE REPORTS POPUP TRIGGER LAYOUT {% endcomment %}
+    {% comment %} MULTIPLE REPORTS: Clicking card opens popup modal {% endcomment %}
     <div class="lab-certificate-wrapper" {{ block.shopify_attributes }}>
-      <h4 class="lab-certificate__heading">CERTIFICATE</h4>
+      <h4 class="lab-certificate__heading">{{ block.settings.heading | default: 'CERTIFICATE' }}</h4>
 
-      <div class="lab-certificate__card">
+      <div class="lab-certificate__card js-open-reports-modal" role="button" tabindex="0" aria-haspopup="dialog" aria-label="View Certificates">
         <div class="lab-certificate__left">
-          <img 
-            src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/lab-tested_icon_ab628022-9076-49e0-b1c7-7437b71236b8.svg?v=1782807472" 
-            alt="Lab Tested" 
-            class="lab-certificate__stamp-img" 
-            loading="lazy" 
-            width="70" 
-            height="70"
-          >
+          {%- if block.settings.icon != blank -%}
+            <img src="{{ block.settings.icon | image_url: width: 140 }}" alt="Lab Verification" class="lab-certificate__stamp-img" loading="lazy" width="70" height="70">
+          {%- else -%}
+            <img 
+              src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/lab-tested_icon_ab628022-9076-49e0-b1c7-7437b71236b8.svg?v=1782807472" 
+              alt="Lab Tested" 
+              class="lab-certificate__stamp-img" 
+              loading="lazy" 
+              width="70" 
+              height="70"
+            >
+          {%- endif -%}
         </div>
 
         <div class="lab-certificate__right">
-          <div class="lab-certificate__title">Lab Tested & Verified</div>
+          <div class="lab-certificate__title">{{ block.settings.subtitle | default: 'Lab Tested & Verified' }}</div>
           
           <div class="lab-certificate__badges">
             <span class="lab-badge lab-badge--purity">
@@ -46,33 +65,41 @@
 
           <div class="lab-certificate__reports">
             <div class="lab-certificate__link-row">
-              <a href="#" class="lab-certificate__link js-open-reports-modal">
-                View Authenticity Report &nbsp;&rarr;
-              </a>
+              <span class="lab-certificate__link">
+                {{ block.settings.title | default: 'View Authenticity Report' }} &nbsp;&rarr;
+              </span>
             </div>
           </div>
         </div>
       </div>
+      {%- if block.settings.bottom_text != blank -%}
+        <p class="lab-certificate__bottom-text">{{ block.settings.bottom_text }}</p>
+      {%- endif -%}
     </div>
 
     {% comment %} Modal Popup Dialog HTML {% endcomment %}
-    <div id="lab-reports-modal" class="lab-reports-modal-overlay" style="display: none;">
+    <div id="lab-reports-modal" class="lab-reports-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="lab-reports-modal-title">
       <div class="lab-reports-modal-content">
         <button type="button" class="lab-reports-modal-close" aria-label="Close modal">&times;</button>
-        <h3 class="lab-reports-modal-title">Lab Reports</h3>
+        <h3 id="lab-reports-modal-title" class="lab-reports-modal-title">Lab Reports</h3>
         <p class="lab-reports-modal-subtitle">Select a report to view</p>
         
         <div class="lab-reports-modal-grid">
           {% for link in lab_reports %}
-            {% if link.url != blank %}
-              <div class="lab-reports-modal-item" data-url="{{ link.url }}">
+            {% assign link_url = link.url | default: link %}
+            {% assign link_title = link.text | default: link.label | default: link.title | default: link.name %}
+            {% if link_title == blank %}
+              {% assign link_title = 'Report ' | append: forloop.index %}
+            {% endif %}
+            {% if link_url != blank %}
+              <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer" class="lab-reports-modal-item" data-url="{{ link_url }}">
                 <div class="lab-reports-modal-icon-circle">
                   <img 
                     src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/lab-tested_icon_ab628022-9076-49e0-b1c7-7437b71236b8.svg?v=1782807472" 
                     alt="Lab Icon" 
                     class="lab-reports-modal-icon" 
-                    width="40" 
-                    height="40"
+                    width="32" 
+                    height="32"
                     loading="lazy"
                   >
                   <div class="lab-reports-modal-arrow">
@@ -82,8 +109,8 @@
                     </svg>
                   </div>
                 </div>
-                <span class="lab-reports-modal-label">{{ link.text }}</span>
-              </div>
+                <span class="lab-reports-modal-label">{{ link_title }}</span>
+              </a>
             {% endif %}
           {% endfor %}
         </div>
@@ -92,77 +119,115 @@
 
     {% comment %} Popup Trigger and Click Actions Javascript {% endcomment %}
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const trigger = document.querySelector('.js-open-reports-modal');
-        const modal = document.getElementById('lab-reports-modal');
-        const closeBtn = document.querySelector('.lab-reports-modal-close');
-        
-        if (!trigger || !modal) return;
+      (function() {
+        function initLabReportsModal() {
+          const triggers = document.querySelectorAll('.js-open-reports-modal');
+          const modal = document.getElementById('lab-reports-modal');
+          const closeBtn = document.querySelector('.lab-reports-modal-close');
+          
+          if (!modal || triggers.length === 0) return;
 
-        function openModal() {
-          modal.classList.add('is-active');
-          document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-          modal.classList.remove('is-active');
-          document.body.style.overflow = '';
-        }
-
-        trigger.addEventListener('click', function(e) {
-          e.preventDefault();
-          openModal();
-        });
-
-        if (closeBtn) {
-          closeBtn.addEventListener('click', closeModal);
-        }
-
-        modal.addEventListener('click', function(e) {
-          if (e.target === modal) {
-            closeModal();
+          // Reposition modal under body so it never gets clipped by parent container
+          if (modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
           }
-        });
 
-        document.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape' && modal.classList.contains('is-active')) {
-            closeModal();
+          function openModal() {
+            modal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
           }
-        });
 
-        const items = modal.querySelectorAll('.lab-reports-modal-item');
-        items.forEach(item => {
-          item.addEventListener('click', function() {
-            const url = this.getAttribute('data-url');
-            closeModal();
-            if (url) {
-              window.open(url, '_blank', 'noopener,noreferrer');
-            }
+          function closeModal() {
+            modal.classList.remove('is-active');
+            document.body.style.overflow = '';
+          }
+
+          triggers.forEach(trigger => {
+            if (trigger._hasModalHandler) return;
+            trigger._hasModalHandler = true;
+            trigger.addEventListener('click', function(e) {
+              e.preventDefault();
+              openModal();
+            });
+            trigger.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal();
+              }
+            });
           });
-        });
-      });
+
+          if (closeBtn && !closeBtn._hasCloseHandler) {
+            closeBtn._hasCloseHandler = true;
+            closeBtn.addEventListener('click', closeModal);
+          }
+
+          if (!modal._hasOverlayHandler) {
+            modal._hasOverlayHandler = true;
+            modal.addEventListener('click', function(e) {
+              if (e.target === modal) {
+                closeModal();
+              }
+            });
+          }
+
+          if (!document._hasReportsEscHandler) {
+            document._hasReportsEscHandler = true;
+            document.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+                closeModal();
+              }
+            });
+          }
+
+          const items = modal.querySelectorAll('.lab-reports-modal-item');
+          items.forEach(item => {
+            if (item._hasItemHandler) return;
+            item._hasItemHandler = true;
+            item.addEventListener('click', function(e) {
+              const url = this.getAttribute('data-url') || this.getAttribute('href');
+              closeModal();
+              if (url && url !== '#') {
+                window.open(url, '_blank', 'noopener,noreferrer');
+              }
+            });
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initLabReportsModal);
+        } else {
+          initLabReportsModal();
+        }
+        document.addEventListener('shopify:section:load', initLabReportsModal);
+      })();
     </script>
   {% else %}
-    {% comment %} RENDER SINGLE HORIZONTAL CARD LAYOUT (SEABUCKTHORN / SINGLE LINK) {% endcomment %}
+    {% comment %} SINGLE REPORT: Direct link layout {% endcomment %}
     {% assign single_link = lab_reports | first %}
-    {% if single_link.url != blank %}
+    {% assign single_url = single_link.url | default: single_link | default: block.settings.pdf_url %}
+    {% if single_url != blank %}
       <div class="lab-certificate-wrapper" {{ block.shopify_attributes }}>
-        <h4 class="lab-certificate__heading">CERTIFICATE</h4>
+        <h4 class="lab-certificate__heading">{{ block.settings.heading | default: 'CERTIFICATE' }}</h4>
 
-        <div class="lab-certificate__card">
+        <a href="{{ single_url }}" target="_blank" rel="noopener" class="lab-certificate__card">
           <div class="lab-certificate__left">
-            <img 
-              src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/lab-tested_icon_ab628022-9076-49e0-b1c7-7437b71236b8.svg?v=1782807472" 
-              alt="Lab Tested" 
-              class="lab-certificate__stamp-img" 
-              loading="lazy" 
-              width="70" 
-              height="70"
-            >
+            {%- if block.settings.icon != blank -%}
+              <img src="{{ block.settings.icon | image_url: width: 140 }}" alt="Lab Verification" class="lab-certificate__stamp-img" loading="lazy" width="70" height="70">
+            {%- else -%}
+              <img 
+                src="https://cdn.shopify.com/s/files/1/0746/0952/5042/files/lab-tested_icon_ab628022-9076-49e0-b1c7-7437b71236b8.svg?v=1782807472" 
+                alt="Lab Tested" 
+                class="lab-certificate__stamp-img" 
+                loading="lazy" 
+                width="70" 
+                height="70"
+              >
+            {%- endif -%}
           </div>
 
           <div class="lab-certificate__right">
-            <div class="lab-certificate__title">Lab Tested & Verified</div>
+            <div class="lab-certificate__title">{{ block.settings.subtitle | default: 'Lab Tested & Verified' }}</div>
             
             <div class="lab-certificate__badges">
               <span class="lab-badge lab-badge--purity">
@@ -181,13 +246,16 @@
 
             <div class="lab-certificate__reports">
               <div class="lab-certificate__link-row">
-                <a href="{{ single_link.url }}" target="_blank" rel="noopener" class="lab-certificate__link">
-                  View Authenticity Report &nbsp;&rarr;
-                </a>
+                <span class="lab-certificate__link">
+                  {{ block.settings.title | default: 'View Authenticity Report' }} &nbsp;&rarr;
+                </span>
               </div>
             </div>
           </div>
-        </div>
+        </a>
+        {%- if block.settings.bottom_text != blank -%}
+          <p class="lab-certificate__bottom-text">{{ block.settings.bottom_text }}</p>
+        {%- endif -%}
       </div>
     {% endif %}
   {% endif %}
@@ -201,7 +269,7 @@
 
     /* Single Card Design CSS */
     .lab-certificate__heading {
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 700 !important;
       color: #222 !important;
       margin: 0 0 12px 0 !important;
@@ -216,49 +284,49 @@
       background-color: #fafbf9 !important;
       border: 1px solid #e2ebd5 !important;
       border-radius: 22px !important;
-      padding: 28px !important;
+      padding: 24px !important;
       width: 100% !important;
       box-sizing: border-box !important;
-      gap: 24px !important;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-
-    a.lab-certificate__card {
+      gap: 20px !important;
       text-decoration: none !important;
       color: inherit !important;
+      cursor: pointer !important;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      outline: none !important;
     }
 
     .lab-certificate__card:hover {
-      background-color: #f4f6f1 !important;
-      border-color: #d1dbbf !important;
+      background-color: #f4f7f0 !important;
+      border-color: #2b5b3c !important;
       transform: translateY(-2px) !important;
-      box-shadow: 0 6px 15px rgba(162, 185, 134, 0.12) !important;
+      box-shadow: 0 6px 18px rgba(43, 91, 60, 0.1) !important;
     }
 
     .lab-certificate__left {
-      flex: 0 0 70px !important;
+      flex: 0 0 64px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
     }
 
     .lab-certificate__stamp-img {
-      width: 70px !important;
-      height: 70px !important;
+      width: 64px !important;
+      height: 64px !important;
       object-fit: contain !important;
+      display: block !important;
     }
 
     .lab-certificate__right {
       flex: 1 !important;
       display: flex !important;
       flex-direction: column !important;
-      gap: 12px !important;
+      gap: 10px !important;
       text-align: left !important;
     }
 
     .lab-certificate__title {
-      font-size: 22px !important;
-      font-weight: 600 !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
       color: #111 !important;
       margin: 0 !important;
       line-height: 1.3 !important;
@@ -274,9 +342,9 @@
       display: inline-flex !important;
       align-items: center !important;
       gap: 6px !important;
-      padding: 6px 12px !important;
+      padding: 5px 12px !important;
       border-radius: 999px !important;
-      font-size: 14px !important;
+      font-size: 13.5px !important;
       font-weight: 600 !important;
       line-height: 1.2 !important;
     }
@@ -326,8 +394,8 @@
     .lab-certificate__reports {
       display: flex !important;
       flex-direction: column !important;
-      gap: 8px !important;
-      margin-top: 4px !important;
+      gap: 6px !important;
+      margin-top: 2px !important;
     }
 
     .lab-certificate__link-row {
@@ -335,8 +403,8 @@
     }
 
     .lab-certificate__link {
-      font-size: 16px !important;
-      font-weight: 600 !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
       color: #2b5b3c !important;
       text-decoration: underline !important;
       text-underline-offset: 4px !important;
@@ -344,65 +412,91 @@
       display: inline-block !important;
     }
 
-    .lab-certificate__link:hover {
+    .lab-certificate__card:hover .lab-certificate__link {
       color: #1b3d26 !important;
     }
 
     /* Modal dialog overlay styles */
     .lab-reports-modal-overlay {
       position: fixed !important;
-      inset: 0 !important;
-      z-index: 10000 !important;
-      background: rgba(0,0,0,0.5) !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 999999 !important;
+      background: rgba(0, 0, 0, 0.6) !important;
       display: none !important;
       align-items: center !important;
       justify-content: center !important;
       backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+      padding: 16px !important;
+      box-sizing: border-box !important;
+      opacity: 0;
+      transition: opacity 0.25s ease !important;
     }
 
     .lab-reports-modal-overlay.is-active {
       display: flex !important;
+      opacity: 1 !important;
     }
 
     .lab-reports-modal-content {
       background: #ffffff !important;
       border-radius: 22px !important;
-      padding: 32px !important;
-      width: 90% !important;
+      padding: 32px 28px !important;
+      width: 100% !important;
       max-width: 440px !important;
       position: relative !important;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
       box-sizing: border-box !important;
       text-align: center !important;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .lab-reports-modal-overlay.is-active .lab-reports-modal-content {
+      transform: scale(1);
     }
 
     .lab-reports-modal-close {
       position: absolute !important;
-      top: 16px !important;
-      right: 20px !important;
-      font-size: 28px !important;
+      top: 14px !important;
+      right: 18px !important;
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 24px !important;
       font-weight: 400 !important;
       border: none !important;
-      background: transparent !important;
+      background: #f4f4f4 !important;
+      border-radius: 50% !important;
       cursor: pointer !important;
-      color: #999 !important;
+      color: #555 !important;
       line-height: 1 !important;
-      transition: color 0.2s !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.2s ease !important;
+      outline: none !important;
     }
 
     .lab-reports-modal-close:hover {
-      color: #333 !important;
+      background: #e5e5e5 !important;
+      color: #111 !important;
+      transform: rotate(90deg) !important;
     }
 
     .lab-reports-modal-title {
-      font-size: 24px !important;
+      font-size: 22px !important;
       font-weight: 700 !important;
-      color: #222 !important;
-      margin: 0 0 4px 0 !important;
+      color: #111 !important;
+      margin: 0 0 6px 0 !important;
     }
 
     .lab-reports-modal-subtitle {
-      font-size: 14px !important;
+      font-size: 13.5px !important;
       color: #666 !important;
       margin: 0 0 24px 0 !important;
     }
@@ -410,82 +504,124 @@
     .lab-reports-modal-grid {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 20px !important;
+      gap: 16px !important;
     }
 
     .lab-reports-modal-item {
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
+      text-decoration: none !important;
+      color: inherit !important;
       cursor: pointer !important;
-      transition: transform 0.2s !important;
+      padding: 16px 10px !important;
+      border-radius: 16px !important;
+      background: #fafbf9 !important;
+      border: 1px solid #e2ebd5 !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
 
     .lab-reports-modal-item:hover {
-      transform: translateY(-2px) !important;
+      transform: translateY(-3px) !important;
+      border-color: #2b5b3c !important;
+      background: #f3f7f0 !important;
+      box-shadow: 0 6px 16px rgba(43, 91, 60, 0.12) !important;
     }
 
     .lab-reports-modal-icon-circle {
-      width: 70px !important;
-      height: 70px !important;
+      width: 56px !important;
+      height: 56px !important;
       border-radius: 50% !important;
-      background: #fafbf9 !important;
-      border: 1px solid #e2ebd5 !important;
+      background: #ffffff !important;
+      border: 1px solid #d4e3c3 !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       position: relative !important;
-      margin-bottom: 8px !important;
+      margin-bottom: 10px !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
     }
 
     .lab-reports-modal-icon {
-      width: 40px !important;
-      height: 40px !important;
+      width: 32px !important;
+      height: 32px !important;
       object-fit: contain !important;
     }
 
     .lab-reports-modal-arrow {
       position: absolute !important;
-      bottom: 0px !important;
-      right: 0px !important;
+      bottom: -2px !important;
+      right: -2px !important;
       width: 20px !important;
       height: 20px !important;
       border-radius: 50% !important;
-      background-color: #3b6b2e !important;
-      border: 1.5px solid #fff !important;
+      background-color: #2b5b3c !important;
+      border: 2px solid #ffffff !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      color: #fff !important;
+      color: #ffffff !important;
     }
 
     .lab-reports-modal-label {
-      font-size: 13px !important;
+      font-size: 13.5px !important;
       font-weight: 600 !important;
-      color: #333 !important;
+      color: #222222 !important;
       text-align: center !important;
-      max-width: 90px !important;
       line-height: 1.3 !important;
+      margin-top: 2px !important;
+      word-break: break-word !important;
+    }
+
+    .lab-reports-modal-item:hover .lab-reports-modal-label {
+      color: #2b5b3c !important;
     }
 
     @media screen and (max-width: 767px) {
       .lab-certificate__card {
-        padding: 18px !important;
-        gap: 16px !important;
+        padding: 16px !important;
+        gap: 14px !important;
       }
       .lab-certificate__left {
-        flex: 0 0 55px !important;
+        flex: 0 0 50px !important;
       }
       .lab-certificate__stamp-img {
-        width: 55px !important;
-        height: 55px !important;
+        width: 50px !important;
+        height: 50px !important;
       }
       .lab-certificate__title {
-        font-size: 17px !important;
+        font-size: 16px !important;
       }
       .lab-badge {
         font-size: 11px !important;
-        padding: 4px 8px !important;
+        padding: 3px 8px !important;
+      }
+      .lab-reports-modal-content {
+        padding: 24px 18px !important;
+      }
+      .lab-reports-modal-title {
+        font-size: 19px !important;
+      }
+      .lab-reports-modal-subtitle {
+        font-size: 12.5px !important;
+        margin-bottom: 16px !important;
+      }
+      .lab-reports-modal-grid {
+        gap: 12px !important;
+      }
+      .lab-reports-modal-item {
+        padding: 12px 6px !important;
+      }
+      .lab-reports-modal-icon-circle {
+        width: 48px !important;
+        height: 48px !important;
+      }
+      .lab-reports-modal-icon {
+        width: 26px !important;
+        height: 26px !important;
+      }
+      .lab-reports-modal-label {
+        font-size: 12px !important;
       }
     }
   </style>

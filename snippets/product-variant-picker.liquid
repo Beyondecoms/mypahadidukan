@@ -97,22 +97,60 @@
               </button>
             {% endif %}
           </div>
-          <div class="m-product-option--content m:inline-flex m:flex-wrap">
-            {%- case picker_type -%}
-              {% when 'dropdown', 'swatch_dropdown' %}
-                <select
-                  id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                  name="options[{{ option.name | escape }}]"
-                  form="{{ product_form_id }}"
-                >
+          {%- if option.values.size > 3 and picker_type != 'dropdown' and picker_type != 'swatch_dropdown' -%}
+            <variant-carousel class="m-variant-carousel" data-values-count="{{ option.values.size }}">
+              <button
+                type="button"
+                class="m-variant-carousel__btn m-variant-carousel__btn--prev"
+                aria-label="Previous variants"
+                disabled
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <div
+                class="m-product-option--content m-product-option--carousel m:inline-flex"
+                data-values-count="{{ option.values.size }}"
+              >
+                {%- case picker_type -%}
+                  {% when 'swatch_color' %}
+                    {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
+                  {% else %}
+                    {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
+                {%- endcase -%}
+              </div>
+              <button
+                type="button"
+                class="m-variant-carousel__btn m-variant-carousel__btn--next"
+                aria-label="Next variants"
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </variant-carousel>
+          {%- else -%}
+            <div
+              class="m-product-option--content m-product-option--static m:inline-flex"
+              data-values-count="{{ option.values.size }}"
+            >
+              {%- case picker_type -%}
+                {% when 'dropdown', 'swatch_dropdown' %}
+                  <select
+                    id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                    name="options[{{ option.name | escape }}]"
+                    form="{{ product_form_id }}"
+                  >
+                    {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
+                  </select>
+                {% when 'swatch_color' %}
                   {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-                </select>
-              {% when 'swatch_color' %}
-                {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-              {% else %}
-                {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
-            {%- endcase -%}
-          </div>
+                {% else %}
+                  {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
+              {%- endcase -%}
+            </div>
+          {%- endif -%}
           {% if is_size and product.vendor == 'My Pahadi Dukan' %}
             {%- assign custom_svg = '' -%}
             {%- if block and block.settings.tbspn_svg_icon != blank -%}
@@ -172,4 +210,5 @@
   <script type="application/json" data-selected-variant>
     {{ product.selected_or_first_available_variant | json }}
   </script>
+  <script src="{{ 'variant-carousel.js' | asset_url }}" defer="defer"></script>
 </variant-picker>

@@ -77,6 +77,16 @@
             "show_gift_card_recipient": true
           }
         },
+        "lab_certificate_pFhhMr": {
+          "type": "lab_certificate",
+          "settings": {
+            "heading": "Certificate",
+            "title": "View Authenticity Report",
+            "subtitle": "Lab Tested & Verified",
+            "pdf_url": "",
+            "bottom_text": "Each batch is independently tested for purity."
+          }
+        },
         "custom_liquid_H4LUbL": {
           "type": "custom_liquid",
           "settings": {
@@ -182,6 +192,7 @@
         "image_6WPi9d",
         "variant_picker",
         "buy_buttons",
+        "lab_certificate_pFhhMr",
         "custom_liquid_H4LUbL",
         "custom_liquid_3zNzzn",
         "custom_text_abR3zj",

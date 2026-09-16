@@ -110,6 +110,17 @@
             "show_gift_card_recipient": true
           }
         },
+        "lab_certificate_QRHkGD": {
+          "type": "lab_certificate",
+          "settings": {
+            "heading": "Certificate",
+            "title": "View Authenticity Report",
+            "subtitle": "Lab Tested & Verified",
+            "pdf_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/sbt_report_22_may_2026.pdf?v=1779429459",
+            "bottom_text": "",
+            "icon": "shopify://shop_images/Group_8.png"
+          }
+        },
         "shiprocket_promise_promise_widget_yVTddn": {
           "type": "shopify://apps/shiprocket-promise/blocks/promise_widget/c8f3f033-bec6-4084-8d6a-4d05e2a5ba32",
           "settings": {}
@@ -129,17 +140,6 @@
             "offername4": "",
             "offercontent4": "",
             "offercode4": ""
-          }
-        },
-        "lab_certificate_QRHkGD": {
-          "type": "lab_certificate",
-          "settings": {
-            "heading": "Certificate",
-            "title": "View Authenticity Report",
-            "subtitle": "Lab Tested & Verified",
-            "pdf_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/sbt_report_22_may_2026.pdf?v=1779429459",
-            "bottom_text": "",
-            "icon": "shopify://shop_images/Group_8.png"
           }
         },
         "custom_liquid_x8cdpA": {
@@ -322,9 +322,9 @@
         "variant_picker",
         "custom_liquid_CNzAAw",
         "buy_buttons",
+        "lab_certificate_QRHkGD",
         "shiprocket_promise_promise_widget_yVTddn",
         "offers_tpeHga",
-        "lab_certificate_QRHkGD",
         "custom_liquid_x8cdpA",
         "icons_WMCNhw",
         "ingredients_labels_Br8bBP",

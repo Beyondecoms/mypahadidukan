@@ -142,6 +142,18 @@
   }
 }
 
+/* Hide/Lower sticky bar z-index when Quick View or Modal is open */
+body.m-modal-open .m-mobile-sticky-bar,
+html.m-modal-open .m-mobile-sticky-bar,
+body.prevent-scroll .m-mobile-sticky-bar,
+html.prevent-scroll .m-mobile-sticky-bar,
+body:has(product-info[data-view-mode="quick-view"]) .m-mobile-sticky-bar,
+html:has(product-info[data-view-mode="quick-view"]) .m-mobile-sticky-bar,
+body:has(.m-product-quickview) .m-mobile-sticky-bar,
+html:has(.m-product-quickview) .m-mobile-sticky-bar {
+  z-index: 99 !important;
+}
+
 /* ── Item wrapper ── */
 .m-mobile-sticky-bar--item {
   flex: 1 !important;

@@ -225,7 +225,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/gifting.png",
+            "image": "shopify://shop_images/gifting_1d5ed5ef-c4db-4219-91af-3a2fa2ce3729.png",
             "image_by_url": "",
             "link": "https://mypahadidukan.com/collections/all-products/gifting"
           }
@@ -234,7 +234,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/sea_buckthorn_c93ce86d-6fae-4af0-92bf-9926fb14226f.png",
+            "image": "shopify://shop_images/sea_buckthorn_62de5b85-4e58-4a26-9db3-7ab85c333cb8.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-seabuckthorn"
           }
@@ -243,7 +243,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/beverages.png",
+            "image": "shopify://shop_images/beverages_1ea44f05-27be-4e8f-8b07-2dad11412228.png",
             "image_by_url": "",
             "link": "shopify://collections/natural-beverages"
           }
@@ -252,7 +252,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/jam.png",
+            "image": "shopify://shop_images/jam_c14de5af-1185-4c50-be3b-1892a32ec867.png",
             "image_by_url": "",
             "link": "shopify://collections/jams-spreads-preserves"
           }
@@ -261,7 +261,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/dry_frutis.png",
+            "image": "shopify://shop_images/dry_frutis_2dd37b2c-408d-43dc-b817-e5e9c3edc095.png",
             "image_by_url": "",
             "link": "shopify://collections/dry-fruits"
           }
@@ -280,7 +280,7 @@
           "type": "category",
           "settings": {
             "title": "",
-            "image": "shopify://shop_images/honey_1.png",
+            "image": "shopify://shop_images/honey.png",
             "image_by_url": "",
             "link": "shopify://collections/pure-honey"
           }
@@ -1022,13 +1022,13 @@
         "brand_card_HX6ii9": {
           "type": "brand_card",
           "settings": {
-            "badge_text": "Daily Nutrition",
+            "badge_text": "",
             "badge_bg": "#ffffff6b",
             "badge_color": "#1f2937",
-            "title": "My Pahadi Dukan",
+            "title": "",
             "title_color": "#1f2937",
-            "card_bg": "#f59e0b",
-            "image": "shopify://shop_images/3f9efea017f44d2c2748aa26d46913ba57eccce8.png",
+            "card_bg": "#FFFFFF",
+            "image": "shopify://shop_images/Frame_911_2a23f900-795b-4512-a412-ab07f1039692.png",
             "image_by_url": "",
             "thumbnail": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
             "thumbnail_by_url": "",
@@ -1040,13 +1040,13 @@
         "brand_card_9pRtYw": {
           "type": "brand_card",
           "settings": {
-            "badge_text": "Immunity Boost",
+            "badge_text": "",
             "badge_bg": "#ffffff6b",
             "badge_color": "#1f2937",
-            "title": "Sakya",
+            "title": "",
             "title_color": "#1f2937",
-            "card_bg": "#82c4eb",
-            "image": "shopify://shop_images/teas-removebg-preview.png",
+            "card_bg": "#FFFFFF",
+            "image": "shopify://shop_images/Frame_914_ebb6f30c-ac2e-45b2-a7d0-95d6379db7ed.png",
             "image_by_url": "",
             "thumbnail_by_url": "",
             "products_text": "36 Products",
@@ -1287,7 +1287,7 @@
         "spotlight_item_kaTUap": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Saffron.png",
+            "image": "shopify://shop_images/Saffron_7739b611-5cde-4dac-a6b6-4eba63f4cfd5.png",
             "image_by_url": "",
             "title": "Saffron",
             "link": "/search?type=product&q=Saffron"
@@ -1296,7 +1296,7 @@
         "spotlight_item_TJ8QGU": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Chamomile.png",
+            "image": "shopify://shop_images/Chamomile_da849b1c-99f0-4a39-aad6-7c582cc663f0.png",
             "image_by_url": "",
             "title": "Chamomile",
             "link": "/search?type=product&q=Chamomile"
@@ -1305,7 +1305,7 @@
         "spotlight_item_AiMtWN": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Shilajit.png",
+            "image": "shopify://shop_images/Shilajit_7f5124d8-004e-4f67-907e-61e815fd0e5e.png",
             "image_by_url": "",
             "title": "Shilajit",
             "link": "/search?type=product&q=Shilajit"
@@ -1314,7 +1314,7 @@
         "spotlight_item_gpbMEw": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Lavender.png",
+            "image": "shopify://shop_images/Lavender_e2c7f1d9-3348-4cba-8b3b-2b6865b1bd30.png",
             "image_by_url": "",
             "title": "Lavender",
             "link": "/search?type=product&q=Lavender"
@@ -1323,7 +1323,7 @@
         "spotlight_item_MgBryF": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Sea_Buckthorn_1.png",
+            "image": "shopify://shop_images/Sea_Buckthorn_c277ca68-2b81-4ad1-a833-4e13804e04a3.png",
             "image_by_url": "",
             "title": "Sea Buckthorn",
             "link": "/search?type=product&q=Sea+Buckthorn"
@@ -1332,7 +1332,7 @@
         "spotlight_item_VcA48D": {
           "type": "spotlight_item",
           "settings": {
-            "image": "shopify://shop_images/Honey_2.png",
+            "image": "shopify://shop_images/Honey_8abb35d0-6f3b-4add-80e6-1e827ea5110e.png",
             "image_by_url": "",
             "title": "Honey",
             "link": "/search?type=product&q=Honey"
@@ -1614,7 +1614,7 @@
       "type": "custom-section-10",
       "name": "Philosophy Banner (Section 10)",
       "settings": {
-        "image": "shopify://shop_images/DSC04769_1.png",
+        "image": "shopify://shop_images/Frame_936.jpg",
         "image_by_url": "",
         "heading": "The Philosophy rooted in the Mountains",
         "text": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.",
