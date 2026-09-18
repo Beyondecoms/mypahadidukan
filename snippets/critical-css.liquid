@@ -154,6 +154,13 @@
     width: 100%;
     height: 100%;
   }
+  .m-product-card [style*='--aspect-ratio'] > *:first-child,
+  .m-product-card__media img,
+  .m-product-card__main-image img,
+  .m-product-card .m-image img,
+  .m-product-card--style-4 .m-product-card__media img {
+    object-fit: contain !important;
+  }
   [style*='--aspect-ratio']:before {
     padding-top: calc(100% / (0.0001 + var(--aspect-ratio, 16/9)));
   }

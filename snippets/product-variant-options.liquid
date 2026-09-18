@@ -161,18 +161,28 @@
         assign variant_badge = resolved_variant.metafields.custom.badge_text.value | default: resolved_variant.metafields.custom.badge_text | default: resolved_variant.metafields.custom.variant_badge.value | default: resolved_variant.metafields.custom.variant_badge | default: resolved_variant.metafields.custom.tag.value | default: resolved_variant.metafields.custom.tag | default: resolved_variant.metafields.custom.badge.value | default: resolved_variant.metafields.custom.badge | default: resolved_variant.metafields.custom.pack_title.value | default: resolved_variant.metafields.custom.pack_title | default: resolved_variant.metafields.theme.badge.value | default: resolved_variant.metafields.theme.badge
         if variant_badge == blank
           assign val_lc = value | downcase
-          if val_lc contains '300ml' or val_lc contains '1 x 300'
-            assign variant_badge = '30 Days Pack'
-          elsif val_lc contains '600ml' or val_lc contains '2 x 300'
-            assign variant_badge = '2 Months Pack'
-          elsif val_lc contains '1200ml' or val_lc contains '4 x 300'
-            assign variant_badge = '4 Months Pack'
-          elsif val_lc contains '10g'
-            assign variant_badge = 'Trial Pack'
-          elsif val_lc contains '40g'
-            assign variant_badge = 'Bestseller'
-          elsif val_lc contains '60g'
-            assign variant_badge = 'Value for Money'
+          if product.handle contains 'saffron'
+            if val_lc contains '0.5'
+              assign variant_badge = 'Trial Pack'
+            elsif val_lc contains 'pack of 2' or val_lc contains '2 (2g' or val_lc contains '2gms'
+              assign variant_badge = 'Most Loved'
+            elsif val_lc contains 'pack of 10' or val_lc contains '10 (10g' or val_lc contains '10gms'
+              assign variant_badge = 'Value for Money'
+            endif
+          else
+            if val_lc contains '300ml' or val_lc contains '1 x 300'
+              assign variant_badge = '30 Days Pack'
+            elsif val_lc contains '600ml' or val_lc contains '2 x 300'
+              assign variant_badge = '2 Months Pack'
+            elsif val_lc contains '1200ml' or val_lc contains '4 x 300'
+              assign variant_badge = '4 Months Pack'
+            elsif val_lc contains '0.5' or val_lc contains '10g'
+              assign variant_badge = 'Trial Pack'
+            elsif val_lc contains '40g'
+              assign variant_badge = 'Bestseller'
+            elsif val_lc contains '60g'
+              assign variant_badge = 'Value for Money'
+            endif
           endif
         endif
       -%}
@@ -606,7 +616,7 @@
             justify-content: center !important;
             overflow: hidden !important;
             margin-bottom: 12px !important;
-            padding: 0 !important;
+            padding: 6px 4px 2px 4px !important;
             flex-shrink: 0 !important;
             box-sizing: border-box !important;
           }
@@ -630,7 +640,7 @@
           .rich-variant-card__image[src*="mockup1"],
           .rich-variant-card__image[src*="Mockup1"],
           .rich-variant-card__image[src*="ghee_1" i] {
-            transform: scale(2.05) !important;
+            transform: scale(1.42) !important;
             transform-origin: center center !important;
           }
 

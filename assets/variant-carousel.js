@@ -249,7 +249,7 @@ if (!customElements.get('variant-carousel')) {
               let scale = 0.85 / contentH;
               const maxScaleByW = 0.95 / contentW;
               scale = Math.min(scale, maxScaleByW);
-              scale = Math.max(1.0, Math.min(2.1, scale));
+              scale = Math.max(1.0, Math.min(1.45, scale));
               if (scale > 1.05) {
                 img.style.transform = `scale(${scale.toFixed(2)})`;
                 img.style.transformOrigin = 'center center';

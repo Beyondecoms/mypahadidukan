@@ -151,8 +151,11 @@ h2.m-section__heading.h3.m-scroll-trigger.animate--fade-in-up{
   justify-content: space-around;
 }
 /* Scoped to main product block only — does NOT affect Recently Viewed / product-card-4 */
-body.template-product .main-product__block .m-price-item--sale{
+body.template-product .main-product__block .m-price-item--sale,
+body.template-product .main-product__block .m-price__regular .m-price-item--regular {
   font-size: 24px !important;
+  font-weight: 900 !important;
+  color: #e94e4e !important;
 }
 span.m-product-card__tag-name.yfuykfkufyuk.m-product-tag.m-product-tag--sale.m-gradient.m-color-badge-sale{
   font-size: 14px !important;
@@ -1239,21 +1242,28 @@ shopify-accelerated-checkout {
   align-items: center;
 }
 
-/* 💰 SALE PRICE (Main Price) */
+/* 💰 MAIN PRODUCT PRICE (Both Regular Price & Sale Price) */
 /* Scoped to main product block only — does NOT affect Recently Viewed / product-card-4 */
-.template-product .main-product__block .m-price-item--sale {
+.template-product .main-product__block .m-price-item--sale,
+.template-product .main-product__block .m-price__regular .m-price-item--regular,
+.main-product__block .m-price-item--sale,
+.main-product__block .m-price__regular .m-price-item--regular {
   font-size: 28px !important;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  font-weight: 900 !important;
+  color: #e94e4e !important;
+  letter-spacing: 0.5px !important;
 }
 
-/* 💸 ORIGINAL PRICE (Strike) */
+/* 💸 ORIGINAL PRICE (Strike-through when on sale) */
 .m-price-item--regular s,
-.m-price__sale .m-price-item--regular {
-  color: #999;
-  font-size: 16px;
-  margin-left: 6px;
+.m-price__sale .m-price-item--regular,
+.main-product__block .m-price__sale .m-price-item--regular {
+  color: #999 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  margin-left: 6px !important;
   position: relative;
+  letter-spacing: normal !important;
 }
 
 /* Smooth strike effect */
@@ -1281,7 +1291,8 @@ shopify-accelerated-checkout {
 }
 
 /* 🧠 Hover subtle effect */
-.m-price:hover .m-price-item--sale {
+.m-price:hover .m-price-item--sale,
+.m-price:hover .m-price__regular .m-price-item--regular {
   transform: scale(1.05);
   transition: 0.2s ease;
 }
@@ -1289,12 +1300,18 @@ shopify-accelerated-checkout {
 /* 📱 Mobile Optimization */
 @media (max-width: 768px) {
   /* Scoped to main product block only — product cards keep their card-level font-size */
-  .main-product__block .m-price-item--sale {
-    font-size: 22px !important;
+  .main-product__block .m-price-item--sale,
+  .main-product__block .m-price__regular .m-price-item--regular {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    color: #e94e4e !important;
   }
 
-  .m-price__sale .m-price-item--regular {
-    font-size: 14px;
+  .m-price__sale .m-price-item--regular,
+  .main-product__block .m-price__sale .m-price-item--regular {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #999 !important;
   }
 
   .m-price__badge-sale .m-product-tag {
@@ -3193,7 +3210,7 @@ body .rich-variant-card__image-wrapper,
   justify-content: center !important;
   overflow: hidden !important;
   margin-bottom: 12px !important;
-  padding: 0 !important;
+  padding: 6px 4px 2px 4px !important;
   flex-shrink: 0 !important;
   box-sizing: border-box !important;
 }
@@ -3220,7 +3237,7 @@ body .rich-variant-card__image,
 .rich-variant-card__image[src*="mockup1"],
 .rich-variant-card__image[src*="Mockup1"],
 .rich-variant-card__image[src*="ghee_1" i] {
-  transform: scale(2.05) !important;
+  transform: scale(1.42) !important;
   transform-origin: center center !important;
 }
 
@@ -3407,6 +3424,7 @@ body .m-product-option--content[data-values-count="1"] .m-product-option--node {
     width: 100% !important;
     height: 80px !important;
     margin-bottom: 8px !important;
+    padding: 4px 2px 2px 2px !important;
   }
 
   .rich-variant-card:not(.rich-variant-card--simple),
@@ -3515,6 +3533,14 @@ m-slideshow .swym-wishlist-collections-v2-container,
   .sf-home__slideshow .m-slide__content {
     transform: translateY(-40px) !important;
   }
+}
+
+/* Ensure hero banner images and videos align to top so top details/badges are not cut off */
+.sf-home__slideshow .m-slide__bg img,
+.sf-home__slideshow .m-slide__bg video,
+.m-slideshow-section .m-slide__bg img,
+.m-slideshow-section .m-slide__bg video {
+  object-position: top center !important;
 }
 
 /* Swym Wishlist Icon Color Styling (#ba5d37 stroke outline & active fill) */
