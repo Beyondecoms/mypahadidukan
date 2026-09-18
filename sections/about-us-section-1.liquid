@@ -1,0 +1,564 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign bg_top = section.settings.bg_top | default: '#FFFFFF'
+  assign bg_cards_area = section.settings.bg_cards_area | default: '#F7F3EB'
+  assign heading_color = section.settings.heading_color | default: '#1F2937'
+  assign body_color = section.settings.body_color | default: '#4B5563'
+  assign card_bg = section.settings.card_bg | default: '#FFFFFF'
+  assign card_heading_color = section.settings.card_heading_color | default: '#1F2937'
+  assign card_text_color = section.settings.card_text_color | default: '#4B5563'
+  assign card_radius = section.settings.card_radius | default: 8
+
+  assign desktop_padding_top = section.settings.desktop_padding_top | default: 60
+  assign desktop_padding_bottom = section.settings.desktop_padding_bottom | default: 56
+  assign cards_padding_top = section.settings.cards_padding_top | default: 56
+  assign cards_padding_bottom = section.settings.cards_padding_bottom | default: 64
+
+  assign mobile_padding_top = section.settings.mobile_padding_top | default: 40
+  assign mobile_padding_bottom = section.settings.mobile_padding_bottom | default: 36
+  assign cards_mobile_padding_top = section.settings.cards_mobile_padding_top | default: 36
+  assign cards_mobile_padding_bottom = section.settings.cards_mobile_padding_bottom | default: 44
+-%}
+
+<div
+  id="about-us-section-1-{{ section.id }}"
+  class="about-us-section-1"
+  style="
+    --aus1-bg-top: {{ bg_top }};
+    --aus1-bg-cards: {{ bg_cards_area }};
+    --aus1-heading-color: {{ heading_color }};
+    --aus1-body-color: {{ body_color }};
+    --aus1-card-bg: {{ card_bg }};
+    --aus1-card-heading-color: {{ card_heading_color }};
+    --aus1-card-text-color: {{ card_text_color }};
+    --aus1-card-radius: {{ card_radius }}px;
+    --aus1-pt: {{ desktop_padding_top }}px;
+    --aus1-pb: {{ desktop_padding_bottom }}px;
+    --aus1-pt-mb: {{ mobile_padding_top }}px;
+    --aus1-pb-mb: {{ mobile_padding_bottom }}px;
+    --aus1-cards-pt: {{ cards_padding_top }}px;
+    --aus1-cards-pb: {{ cards_padding_bottom }}px;
+    --aus1-cards-pt-mb: {{ cards_mobile_padding_top }}px;
+    --aus1-cards-pb-mb: {{ cards_mobile_padding_bottom }}px;
+  "
+>
+  <!-- 1. TOP WELCOME CONTENT AREA -->
+  <div class="about-us-section-1__top">
+    <div class="about-us-section-1__top-container">
+      {%- if heading != blank -%}
+        <h2 class="about-us-section-1__heading">{{ heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if description != blank -%}
+        <div class="about-us-section-1__description rte">
+          {%- if description contains '<p>' -%}
+            {{ description }}
+          {%- else -%}
+            <p>{{ description }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- 2. VISION + MISSION CARDS AREA -->
+  <div class="about-us-section-1__cards-area">
+    <div class="about-us-section-1__cards-container">
+      {%- if section.blocks.size > 0 -%}
+        <div class="about-us-section-1__cards-grid">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign block_heading = block.settings.heading
+              assign block_description = block.settings.description
+            -%}
+            <div class="about-us-section-1__card" {{ block.shopify_attributes }}>
+              <div class="about-us-section-1__card-inner">
+                {%- if block_heading != blank -%}
+                  <h3 class="about-us-section-1__card-heading">{{ block_heading | escape }}</h3>
+                {%- endif -%}
+                {%- if block_description != blank -%}
+                  <div class="about-us-section-1__card-description">
+                    <p>{{ block_description }}</p>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  #about-us-section-1-{{ section.id }} {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #about-us-section-1-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  /* --- TOP CONTENT AREA --- */
+  #about-us-section-1-{{ section.id }} .about-us-section-1__top {
+    background-color: var(--aus1-bg-top);
+    padding-top: var(--aus1-pt);
+    padding-bottom: var(--aus1-pb);
+    width: 100%;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__top-container {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__heading {
+    margin: 0 0 20px 0;
+    font-size: 34px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--aus1-heading-color);
+    letter-spacing: -0.01em;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__description {
+    color: var(--aus1-body-color);
+    font-size: 16.5px;
+    line-height: 1.8;
+    max-width: 890px;
+    margin: 0 auto;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__description p {
+    margin: 0 0 16px 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- VISION + MISSION CARDS AREA --- */
+  #about-us-section-1-{{ section.id }} .about-us-section-1__cards-area {
+    background-color: var(--aus1-bg-cards);
+    padding-top: var(--aus1-cards-pt);
+    padding-bottom: var(--aus1-cards-pb);
+    width: 100%;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__cards-container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    align-items: stretch;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card {
+    background-color: var(--aus1-card-bg);
+    border-radius: var(--aus1-card-radius);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    min-height: 220px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card-inner {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card-heading {
+    margin: 0 0 14px 0;
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 700;
+    color: var(--aus1-card-heading-color);
+    letter-spacing: -0.01em;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card-description {
+    color: var(--aus1-card-text-color);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card-description p {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* --- RESPONSIVE / MOBILE STYLES --- */
+  @media screen and (max-width: 991px) {
+    #about-us-section-1-{{ section.id }} .about-us-section-1__heading {
+      font-size: 28px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__description {
+      font-size: 15.5px;
+      line-height: 1.75;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__cards-grid {
+      gap: 24px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__card {
+      padding: 38px 28px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #about-us-section-1-{{ section.id }} .about-us-section-1__top {
+      padding-top: var(--aus1-pt-mb);
+      padding-bottom: var(--aus1-pb-mb);
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__top-container {
+      padding: 0 18px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__heading {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__description {
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__cards-area {
+      padding-top: var(--aus1-cards-pt-mb);
+      padding-bottom: var(--aus1-cards-pb-mb);
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__cards-container {
+      padding: 0 18px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__cards-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__card {
+      padding: 32px 20px;
+      min-height: auto;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__card-heading {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__card-description {
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About Us Section 1",
+  "tag": "section",
+  "class": "about-us-section-1-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top Content Area"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome to My Pahadi Dukan"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>"
+    },
+    {
+      "type": "color",
+      "id": "bg_top",
+      "label": "Top area background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F2937"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "header",
+      "content": "Vision & Mission Area"
+    },
+    {
+      "type": "color",
+      "id": "bg_cards_area",
+      "label": "Cards area background",
+      "default": "#F7F3EB"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_heading_color",
+      "label": "Card heading color",
+      "default": "#1F2937"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top area padding top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Top area padding bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "cards_padding_top",
+      "label": "Cards area padding top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "cards_padding_bottom",
+      "label": "Cards area padding bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top area mobile padding top",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Top area mobile padding bottom",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "cards_mobile_padding_top",
+      "label": "Cards area mobile padding top",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "cards_mobile_padding_bottom",
+      "label": "Cards area mobile padding bottom",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vision",
+      "name": "Vision Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our Vision"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
+        }
+      ]
+    },
+    {
+      "type": "mission",
+      "name": "Mission Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our Mission"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Custom Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Card description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Section 1",
+      "settings": {
+        "heading": "Welcome to My Pahadi Dukan",
+        "description": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>",
+        "bg_top": "#FFFFFF",
+        "bg_cards_area": "#F7F3EB",
+        "heading_color": "#1F2937",
+        "body_color": "#4B5563",
+        "card_bg": "#FFFFFF",
+        "card_heading_color": "#1F2937",
+        "card_text_color": "#4B5563",
+        "card_radius": 8,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 56,
+        "cards_padding_top": 56,
+        "cards_padding_bottom": 64,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 36,
+        "cards_mobile_padding_top": 36,
+        "cards_mobile_padding_bottom": 44
+      },
+      "blocks": [
+        {
+          "type": "vision",
+          "settings": {
+            "heading": "Our Vision",
+            "description": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
+          }
+        },
+        {
+          "type": "mission",
+          "settings": {
+            "heading": "Our Mission",
+            "description": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

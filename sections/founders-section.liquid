@@ -1,0 +1,562 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign heading_color = section.settings.heading_color | default: '#111827'
+  assign subheading = section.settings.subheading
+  assign subheading_color = section.settings.subheading_color | default: '#4B5563'
+  assign bg_color = section.settings.bg_color | default: '#FFFFFF'
+
+  assign avatar_size = section.settings.avatar_size | default: 195
+  assign columns_desktop = section.settings.columns_desktop | default: 4
+  assign columns_mobile = section.settings.columns_mobile | default: '2'
+
+  assign desktop_padding_top = section.settings.desktop_padding_top | default: 64
+  assign desktop_padding_bottom = section.settings.desktop_padding_bottom | default: 72
+  assign mobile_padding_top = section.settings.mobile_padding_top | default: 40
+  assign mobile_padding_bottom = section.settings.mobile_padding_bottom | default: 48
+-%}
+
+<div
+  id="founders-section-{{ section.id }}"
+  class="founders-section"
+  style="
+    --fs-bg: {{ bg_color }};
+    --fs-heading-color: {{ heading_color }};
+    --fs-subheading-color: {{ subheading_color }};
+    --fs-avatar-size: {{ avatar_size }}px;
+    --fs-cols-desktop: {{ columns_desktop }};
+    --fs-pt: {{ desktop_padding_top }}px;
+    --fs-pb: {{ desktop_padding_bottom }}px;
+    --fs-pt-mb: {{ mobile_padding_top }}px;
+    --fs-pb-mb: {{ mobile_padding_bottom }}px;
+  "
+>
+  <div class="founders-section__container">
+    <!-- Section Header -->
+    {%- if heading != blank or subheading != blank -%}
+      <div class="founders-section__header">
+        {%- if heading != blank -%}
+          <h2 class="founders-section__heading">{{ heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if subheading != blank -%}
+          <div class="founders-section__subheading">
+            <p>{{ subheading }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Founders Grid -->
+    {%- if section.blocks.size > 0 -%}
+      <div class="founders-section__grid founders-section__grid--mb-{{ columns_mobile }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign founder_image = block.settings.image
+            assign founder_image_url = block.settings.image_by_url
+            assign founder_name = block.settings.name
+            assign founder_role = block.settings.role
+            assign founder_link = block.settings.link
+          -%}
+
+          <div class="founders-section__card" {{ block.shopify_attributes }}>
+            {%- if founder_link != blank -%}
+              <a href="{{ founder_link }}" class="founders-section__link" aria-label="{{ founder_name | escape }}">
+            {%- else -%}
+              <div class="founders-section__item-content">
+            {%- endif -%}
+
+              <!-- Circular Avatar -->
+              <div class="founders-section__avatar-box">
+                {%- if founder_image_url != blank -%}
+                  <img
+                    src="{{ founder_image_url }}"
+                    loading="lazy"
+                    class="founders-section__avatar-img"
+                    alt="{{ founder_name | default: 'Founder' | escape }}"
+                    width="400"
+                    height="400"
+                  >
+                {%- elsif founder_image != blank -%}
+                  {{
+                    founder_image
+                    | image_url: width: 600
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'founders-section__avatar-img',
+                      widths: '200, 300, 400, 600',
+                      sizes: '(max-width: 640px) 160px, 220px',
+                      alt: founder_name | default: founder_image.alt | default: 'Founder'
+                  }}
+                {%- else -%}
+                  <div class="founders-section__avatar-placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'founders-section__placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <!-- Name & Role -->
+              <div class="founders-section__info">
+                {%- if founder_name != blank -%}
+                  <h3 class="founders-section__name">{{ founder_name | escape }}</h3>
+                {%- endif -%}
+
+                {%- if founder_role != blank -%}
+                  <span class="founders-section__role">{{ founder_role | escape }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- if founder_link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #founders-section-{{ section.id }} {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--fs-bg);
+    padding-top: var(--fs-pt);
+    padding-bottom: var(--fs-pb);
+    font-family: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #founders-section-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* --- HEADER --- */
+  #founders-section-{{ section.id }} .founders-section__header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 52px auto;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__heading {
+    margin: 0 0 14px 0;
+    font-size: 32px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--fs-heading-color);
+    letter-spacing: -0.01em;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__subheading {
+    color: var(--fs-subheading-color);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__subheading p {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* --- FOUNDERS GRID --- */
+  #founders-section-{{ section.id }} .founders-section__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--fs-cols-desktop), minmax(0, 1fr));
+    gap: 36px 28px;
+    align-items: start;
+    justify-content: center;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__link,
+  #founders-section-{{ section.id }} .founders-section__item-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* --- CIRCULAR AVATAR --- */
+  #founders-section-{{ section.id }} .founders-section__avatar-box {
+    width: var(--fs-avatar-size);
+    height: var(--fs-avatar-size);
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px auto;
+    position: relative;
+    background-color: #F3F4F6;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__card:hover .founders-section__avatar-box {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  #founders-section-{{ section.id }} .founders-section__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__card:hover .founders-section__avatar-img {
+    transform: scale(1.05);
+  }
+
+  #founders-section-{{ section.id }} .founders-section__avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E5E7EB;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__placeholder-svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.5;
+  }
+
+  /* --- INFO (NAME & ROLE) --- */
+  #founders-section-{{ section.id }} .founders-section__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__name {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.01em;
+  }
+
+  #founders-section-{{ section.id }} .founders-section__role {
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: #4B5563;
+    font-weight: 400;
+  }
+
+  /* --- RESPONSIVE BREAKPOINTS --- */
+  @media screen and (max-width: 1024px) {
+    #founders-section-{{ section.id }} .founders-section__avatar-box {
+      width: clamp(140px, 18vw, var(--fs-avatar-size));
+      height: clamp(140px, 18vw, var(--fs-avatar-size));
+    }
+  }
+
+  @media screen and (max-width: 840px) {
+    #founders-section-{{ section.id }} .founders-section__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 20px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__avatar-box {
+      width: clamp(130px, 28vw, 170px);
+      height: clamp(130px, 28vw, 170px);
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    #founders-section-{{ section.id }} {
+      padding-top: var(--fs-pt-mb);
+      padding-bottom: var(--fs-pb-mb);
+    }
+
+    #founders-section-{{ section.id }} .founders-section__container {
+      padding: 0 16px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__header {
+      margin-bottom: 32px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__heading {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__subheading {
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__grid--mb-1 {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__grid--mb-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 14px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__avatar-box {
+      width: 130px;
+      height: 130px;
+      margin-bottom: 14px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__name {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    #founders-section-{{ section.id }} .founders-section__role {
+      font-size: 13.5px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Founders Section",
+  "tag": "section",
+  "class": "founders-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A Word from the Founders"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111827"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "This was my true calling during one of my travels to the mountains in North India. I was astounded by the amount of natural products and how little we know about these amazing."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "header",
+      "content": "Appearance & Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size",
+      "label": "Desktop avatar diameter",
+      "min": 120,
+      "max": 240,
+      "step": 5,
+      "unit": "px",
+      "default": 195
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 Column"
+        },
+        {
+          "value": "2",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Padding top",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Padding bottom",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "founder",
+      "name": "Founder",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Founder photo"
+        },
+        {
+          "type": "text",
+          "id": "image_by_url",
+          "label": "Photo by URL (optional)",
+          "info": "Direct CDN image link"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Founder Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role / Designation",
+          "default": "Founder"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Profile link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founders Section",
+      "settings": {
+        "heading": "A Word from the Founders",
+        "subheading": "This was my true calling during one of my travels to the mountains in North India. I was astounded by the amount of natural products and how little we know about these amazing.",
+        "bg_color": "#FFFFFF",
+        "avatar_size": 195,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "desktop_padding_top": 64,
+        "desktop_padding_bottom": 72,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 48
+      },
+      "blocks": [
+        {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/himanshu-dua-photo_445a831d-28ad-4c95-9ea8-c0f03133acff.webp",
+            "name": "Himanshu Dua",
+            "role": "Founder"
+          }
+        },
+        {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/shubham-tandon-photo_54197803-76cd-4361-b192-08920b9d0874.webp",
+            "name": "Shubham Tandon",
+            "role": "Founder"
+          }
+        },
+        {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/anas-zubair-photo-e1642674316423_0c2d677e-8a16-4535-b1e4-d7d3231bac4b.webp",
+            "name": "Mohd Anas Zubair",
+            "role": "Founder"
+          }
+        },
+        {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/rohan-sehgal-photo_b3a471cb-ad05-4e57-b682-bfb33fcf74de.webp",
+            "name": "Rohan Sehgal",
+            "role": "Founder"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

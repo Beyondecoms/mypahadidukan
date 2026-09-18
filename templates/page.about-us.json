@@ -1,1 +1,1137 @@
-{"sections":{"main":{"type":"page-about-us","disabled":true,"settings":{}},"custom_content_mX4rYA":{"type":"custom-content","blocks":{"video_33PE3y":{"type":"video","settings":{"video_type":"external","video_link":"https:\/\/www.youtube.com\/watch?v=rA_YDjk0Ddk&t=2s","ratio":"21:9","image":"shopify:\/\/shop_images\/rA_YDjk0Ddk-SD.jpg","video_title":"","text_size":"medium","text_color":"white","play_style":"solid","play_size":"medium","autoplay":false,"loop":false,"muted":false,"show_controls":false,"width":"100%","alignment":"start","block_custom_class":"","animations":"inherit"}},"liquid_kDK7nY":{"type":"liquid","settings":{"custom_liquid":"<h2>Our Vision<\/h2>\n<p>\nOur founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods.<br><br>\n\nBut these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation.<br><br>\n\nThis helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income.<br><br>\n\nQuality products and solid on-ground impact! This is what we stand for in a nutshell.\n<\/p>","width":"50%","block_custom_class":"","animations":"inherit"}},"liquid_bUqrNT":{"type":"liquid","settings":{"custom_liquid":"<h2>Our Mission<\/h2>\n<p>\nWe are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.\n<\/p>\n\n<br>\n\n<h2>Our Values<\/h2>\n<ul>\n  <li>Transparency<\/li>\n  <li>Quality<\/li>\n  <li>Purity<\/li>\n  <li>Authenticity<\/li>\n  <li>Customer Service<\/li>\n<\/ul>","width":"50%","block_custom_class":"","animations":"inherit"}},"text_zPPWXf":{"type":"text","disabled":true,"settings":{"title":"Our Vision","subheading":"","text":"<p><br\/><br\/><br\/><br\/><br\/><br\/>Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.<br\/><br\/><\/p>","width":"50%","alignment":"start","align_text":"left","text_size":"medium","text_color":"inherit","button_label":"","button_link":"","button_style":"m-button--primary","button_size":"","block_custom_class":"","animations":"inherit"}},"text_7pdxVU":{"type":"text","disabled":true,"settings":{"title":"Our Mission","subheading":"","text":"<p>We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.<br\/><\/p><h2>Our Values<\/h2><ul><li>Transparency<\/li><li>Quality<\/li><li>Purity<\/li><li>Authenticity<\/li><li>Customer Service<\/li><\/ul>","width":"50%","alignment":"center","align_text":"left","text_size":"medium","text_color":"inherit","button_label":"","button_link":"","button_style":"m-button--primary","button_size":"","block_custom_class":"","animations":"inherit"}}},"block_order":["video_33PE3y","liquid_kDK7nY","liquid_bUqrNT","text_zPPWXf","text_7pdxVU"],"name":"Custom content","settings":{"heading":"","heading_size":"h3","subheading":"","description":"","header_alignment":"center","container":"container","color_scheme":"","content_color_scheme":"","enable_parallax":false,"parallax_direction":"vertical","gap":30,"gap_mobile":16,"use_scroll_mobile":false,"padding_top":50,"padding_bottom":50,"enable_preload_image":false,"custom_class":""}},"icon_box_N44GR8":{"type":"icon-box","blocks":{"iconbox_ENyh49":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/himanshu-dua-photo_445a831d-28ad-4c95-9ea8-c0f03133acff.webp","image_by_url":"","title":"Himanshu Dua","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_RfwnJp":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/shubham-tandon-photo_54197803-76cd-4361-b192-08920b9d0874.webp","image_by_url":"","title":"Shubham Tandon","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_am3tnk":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/anas-zubair-photo-e1642674316423_0c2d677e-8a16-4535-b1e4-d7d3231bac4b.webp","image_by_url":"","title":"Mohd Anas Zubair","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_TjjHHU":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/rohan-sehgal-photo_b3a471cb-ad05-4e57-b682-bfb33fcf74de.webp","image_by_url":"","title":"Rohan Sehgal","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}}},"block_order":["iconbox_ENyh49","iconbox_RfwnJp","iconbox_am3tnk","iconbox_TjjHHU"],"custom_css":["responsive-image.m-image.m\\:w-full.m-image-loaded {width: 100%; height: 380px; object-fit: cover;}",".m-icon-box__inner.m\\:flex-col.m\\:items-center {background: #ddb786; padding: 5px 5px; border-radius: 10px;}"],"name":"Featured promotion","settings":{"container":"container","color_scheme":"","heading":"Meet The Team","heading_size":"h3","subheading":"","description":"","header_alignment":"center","item_per_row":4,"item_gap":30,"item_gap_mobile":10,"card_style":"vertical","image_max_width":"","content_alignment":"center","hover_effect":"scaling-up","enable_slider":false,"show_pagination":false,"show_navigation":false,"use_scroll_mobile":false,"use_grid_column_mb":true,"padding_top":50,"padding_bottom":50,"custom_class":"","animations":"inherit"}},"icon_box_QDyUzB":{"type":"icon-box","blocks":{"iconbox_HXVgLk":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/OYO_Logo_Square.jpg","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_HmLReh":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/catalyst_1.png","image_by_url":"","title":"IIT Mandi Catalyst","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_YxHFBm":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/IIM_Kashipur_Logo_square.jpg","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_iWFLX6":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/meity_Logo_square.jpg","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_RQFFER":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/ministry_of_agriculture_Logo_square.jpg","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}}},"block_order":["iconbox_HXVgLk","iconbox_HmLReh","iconbox_YxHFBm","iconbox_iWFLX6","iconbox_RQFFER"],"custom_css":["@media (min-width: 1024px) {.lg\\:m\\:grid-5-cols {grid-template-columns: repeat(5, minmax(0, 1fr)); }}"],"name":"Featured promotion","settings":{"container":"container","color_scheme":"","heading":"Supported By","heading_size":"h3","subheading":"","description":"","header_alignment":"center","item_per_row":5,"item_gap":30,"item_gap_mobile":10,"card_style":"vertical","image_max_width":"120px","content_alignment":"center","hover_effect":"scaling-up","enable_slider":false,"show_pagination":false,"show_navigation":false,"use_scroll_mobile":false,"use_grid_column_mb":true,"padding_top":50,"padding_bottom":50,"custom_class":"","animations":"inherit"}},"icon_box_W88UaR":{"type":"icon-box","blocks":{"iconbox_mNRmn9":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/Outlook-Logo.webp","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_ti4yiG":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/devdiscourse_logo-002.webp","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_KFKnQ4":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/Free_Press_Logo_White_on_Red_33__1.webp","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_Mr4AfH":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/THE-HINDU-Logo_4.webp","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}},"iconbox_VGLgaf":{"type":"iconbox","settings":{"card_color_scheme":"","image":"shopify:\/\/shop_images\/business-standard-logo.webp","image_by_url":"","title":"","description":"","link":"","button_label":"","button_link":"","button_style":"m-button--link","button_size":""}}},"block_order":["iconbox_mNRmn9","iconbox_ti4yiG","iconbox_KFKnQ4","iconbox_Mr4AfH","iconbox_VGLgaf"],"name":"Featured promotion","settings":{"container":"container-fluid","color_scheme":"","heading":"Fatured In","heading_size":"h3","subheading":"","description":"","header_alignment":"center","item_per_row":5,"item_gap":30,"item_gap_mobile":10,"card_style":"vertical","image_max_width":"","content_alignment":"center","hover_effect":"scaling-up","enable_slider":false,"show_pagination":false,"show_navigation":false,"use_scroll_mobile":false,"use_grid_column_mb":true,"padding_top":50,"padding_bottom":50,"custom_class":"","animations":"inherit"}},"video_megPC6":{"type":"video","name":"Video","settings":{"container":"container","color_scheme":"","video_type":"external","video_link":"https:\/\/www.youtube.com\/watch?v=l2UO56rAZHc&list=TLGGg8ZNuEhoAGcwMTA3MjAyNQ","ratio":"16:9","image":"shopify:\/\/shop_images\/l2UO56rAZHc-HD.jpg","video_title":"","text_size":"medium","text_color":"inherit","play_style":"solid","play_size":"medium","width":"","autoplay":false,"loop":false,"muted":false,"show_controls":false,"padding_top":50,"padding_bottom":50,"custom_class":"","animations":"inherit"}},"rich_text_YA3fjj":{"type":"rich-text","blocks":{"heading_xHgXMV":{"type":"heading","settings":{"heading":"Thanks for dropping by! We keep on adding new products every week, so do come back!","heading_size":"h2"}},"text_EKJCXC":{"type":"text","disabled":true,"settings":{"text":"<p>Pair text with an image to focus on your chosen product, collection, or blog post.<br> Add details on availability, style, or even provide a review.<\/p>"}},"button_y96re4":{"type":"button","settings":{"button_label":"Go to Shop","button_link":"shopify:\/\/collections","button_style":"m-button--white","button_size":""}}},"block_order":["heading_xHgXMV","text_EKJCXC","button_y96re4"],"name":"Rich text","settings":{"container":"container","color_scheme":"scheme-09e5b5b4-774c-4b6c-8025-416ced49cc74","content_alignment":"center","padding_top":52,"padding_bottom":52,"custom_class":"","animations":"inherit"}},"custom-content":{"type":"custom-content","blocks":{"be5d2488-3c71-471f-bb75-dbccb6970cb0":{"type":"image","settings":{"link":"","width":"100%","alignment":"center","block_custom_class":"","animations":"inherit","enable_preload_image":false}},"f5e88f1f-ff68-4d03-b686-0cb9fe62fab1":{"type":"text","settings":{"title":"<h4 class=\"about__block-heading\">It pains me physically to see woman victimized,<br> rendered pathetic by fashion.<\/h4>\n<p class=\"about__block-subheading\">Awkwardness gives me great comfort. I’ve never been cool, but I’ve felt cool. I’ve been in the<br> cool place, but I wasn’t really cool – I was trying to pass for hip or cool.<\/p>","subheading":"","text":"<p>A girl should be two things: classy and fabulous. I am convinced that there can be luxury in simplicity. I wanted to dress the woman who lives and works, not the woman in a painting. It’s hard to balance everything. It’s always challenging. My relationships with producers or photographers – these are relationships that took years. I can’t get sucked into that celebrity thing, because I think it’s just crass. My aim is to make the poor look rich and the rich look poor. Vanity is the healthiest thing in life. I believe that my clothes can give people a better image of themselves – that it can increase their feelings of confidence and happiness. You can hide so much behind theatrics, and I don’t need to do that any more. I don’t really know how to do casual clothes.<\/p>","width":"100%","alignment":"center","align_text":"center","text_size":"medium","text_color":"black","button_label":"","button_link":"","button_style":"m-button--primary","button_size":"","block_custom_class":"sf__about-block sf__about-block-text sf__about-block-text-1","animations":"inherit"}},"4e1fb14f-ef60-4693-b6a2-2b26063e1b70":{"type":"image","settings":{"link":"","width":"50%","alignment":"center","block_custom_class":"","animations":"inherit","enable_preload_image":false}},"9a3a8077-de29-4141-9162-b9484d4a85f8":{"type":"html","settings":{"code":"<div class=\"sf__about-custom-list\">\n  <h3>We are proudly<br> Australian.<\/h3>\n  <ul>\n    <li>\n      <span><img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0561\/2742\/2636\/files\/icon1.svg?v=1627616411\"><\/span>\n      <div class=\"rte\">\n          <h4>Soft Fabric<\/h4>\n          <p class=\"text-color-subtext\">Get complimentary ground shipping on every<br> order.Don’t love it? Send it back, on us.<\/p>\n      <\/div>\n    <\/li>\n    <li>\n      <span><img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0561\/2742\/2636\/files\/icon2_daf1b6c2-ef2e-416c-ae6a-a7ddd145b6c5.svg?v=1627616411\"><\/span>\n      <div class=\"rte\">\n          <h4>Lightweight<\/h4>\n          <p class=\"text-color-subtext\">Join Minimog Rewards to earn gift cards<br>\nand enjoy exclusive member benefits.<\/p>\n      <\/div>\n    <\/li>\n    <li>\n      <span><img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0561\/2742\/2636\/files\/icon3.svg?v=1627616411\"><\/span>\n      <div class=\"rte\">\n          <h4>All Day Comfort<\/h4>\n          <p class=\"text-color-subtext\">We believe getting dressed should be the<br> easiest part of your day.<\/p>\n      <\/div>\n    <\/li>\n  <\/ul>\n<\/div>","width":"50%","block_custom_class":"sf__about-custom-html","animations":"inherit"}},"28e3ce35-e364-43f3-ba87-18b633233063":{"type":"text","settings":{"title":"<h4 class=\"about__block-heading\">The world needs to move fast to make a meaningful<br> difference in the fight against climate change.<\/h4>","subheading":"","text":"<p>A girl should be two things: classy and fabulous. I am convinced that there can be luxury in simplicity. I wanted to dress the woman who lives and works, not the woman in a painting. It’s hard to balance everything. It’s always challenging. My relationships with producers or photographers – these are relationships that took years. I can’t get sucked into that celebrity thing, because I think it’s just crass. My aim is to make the poor look rich and the rich look poor. Vanity is the healthiest thing in life. I believe that my clothes can give people a better image of themselves – that it can increase their feelings of confidence and happiness. You can hide so much behind theatrics, and I don’t need to do that any more. I don’t really know how to do casual clothes.<\/p>","width":"100%","alignment":"center","align_text":"center","text_size":"medium","text_color":"black","button_label":"","button_link":"","button_style":"m-button--primary","button_size":"","block_custom_class":"sf__about-block sf__about-block-text sf__about-block-text-2","animations":"inherit"}},"c6a8b57f-c54c-43f1-9771-9ea5d88a2f36":{"type":"text","settings":{"title":"Our Team","subheading":"","text":"","width":"100%","alignment":"center","align_text":"center","text_size":"medium","text_color":"black","button_label":"","button_link":"","button_style":"m-button--primary","button_size":"","block_custom_class":"sf__about-custom-heading","animations":"inherit"}},"859f4ef2-676f-4587-9ae8-3a19ffa439dd":{"type":"image_card","settings":{"width":"33%","color_scheme":"","content_position":"bottom_left","content_alignment":"left","text_size":"medium","text_color":"black","link":"","title":"Edward Lindgren","subtitle":"<span class=\"text-color-subtext\">CHIEF OPERATING OFFICER<\/span>","description":"","button_label":"","button_style":"m-button--primary","button_size":"","button_fixed":false,"use_content_above":false,"block_custom_class":"sf__about-card-custom","animations":"inherit","enable_preload_image":false}},"a1a4a67f-c83f-4629-a006-e44f56c80bf5":{"type":"image_card","settings":{"width":"33%","color_scheme":"","content_position":"bottom_left","content_alignment":"left","text_size":"medium","text_color":"black","link":"","title":"Chineze Afamefuna","subtitle":"<span class=\"text-color-subtext\">MARKETING<\/span>","description":"","button_label":"","button_style":"m-button--primary","button_size":"","button_fixed":false,"use_content_above":false,"block_custom_class":"sf__about-card-custom","animations":"inherit","enable_preload_image":false}},"dc4597e9-ca80-4d0f-9e30-ff28c96dd3aa":{"type":"image_card","settings":{"width":"33%","color_scheme":"","content_position":"bottom_left","content_alignment":"left","text_size":"medium","text_color":"black","link":"","title":"Nado Husa","subtitle":"<span class=\"text-color-subtext\">CO-FOUNDER<\/span>","description":"","button_label":"","button_style":"m-button--primary","button_size":"","button_fixed":false,"use_content_above":false,"block_custom_class":"sf__about-card-custom","animations":"inherit","enable_preload_image":false}}},"block_order":["be5d2488-3c71-471f-bb75-dbccb6970cb0","f5e88f1f-ff68-4d03-b686-0cb9fe62fab1","4e1fb14f-ef60-4693-b6a2-2b26063e1b70","9a3a8077-de29-4141-9162-b9484d4a85f8","28e3ce35-e364-43f3-ba87-18b633233063","c6a8b57f-c54c-43f1-9771-9ea5d88a2f36","859f4ef2-676f-4587-9ae8-3a19ffa439dd","a1a4a67f-c83f-4629-a006-e44f56c80bf5","dc4597e9-ca80-4d0f-9e30-ff28c96dd3aa"],"disabled":true,"custom_css":["@media (min-width: 1280px) {#m-custom__block--9a3a8077-de29-4141-9162-b9484d4a85f8 {padding-left: 100px; }}"],"settings":{"heading":"","heading_size":"h3","subheading":"","description":"","header_alignment":"center","container":"container","color_scheme":"","content_color_scheme":"","enable_parallax":false,"parallax_direction":"vertical","gap":30,"gap_mobile":16,"use_scroll_mobile":false,"padding_top":0,"padding_bottom":0,"enable_preload_image":false,"custom_class":"m-about-page"}}},"order":["main","custom_content_mX4rYA","icon_box_N44GR8","icon_box_QDyUzB","icon_box_W88UaR","video_megPC6","rich_text_YA3fjj","custom-content"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-about-us",
+      "disabled": true,
+      "settings": {}
+    },
+    "slider_Bf7tmi": {
+      "type": "slider",
+      "blocks": {
+        "slider_item_cdPg7X": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/B2_Desktop.jpg",
+            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
+            "content_in_container": false,
+            "content_position": "center middle",
+            "text_alignment": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "New Collection",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
+        "slider_item_tJdzXj": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/B2_Desktop.jpg",
+            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
+            "content_in_container": false,
+            "content_position": "center middle",
+            "text_alignment": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "New Collection",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
+        "slider_item_cjTPFg": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/B2_Desktop.jpg",
+            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
+            "content_in_container": false,
+            "content_position": "center middle",
+            "text_alignment": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "New Collection",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        }
+      },
+      "block_order": [
+        "slider_item_cdPg7X",
+        "slider_item_tJdzXj",
+        "slider_item_cjTPFg"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "container": "w-full",
+        "slideshow_height": "adapt",
+        "show_overlay": false,
+        "dots_position": "bottom",
+        "dots_color": "dark",
+        "show_dots": true,
+        "show_arrows": false,
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "use_content_above": false,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "about_us_section_1_CrMYRe": {
+      "type": "about-us-section-1",
+      "blocks": {
+        "vision_pF3Dyn": {
+          "type": "vision",
+          "settings": {
+            "heading": "Our Vision",
+            "description": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
+          }
+        },
+        "mission_hGJnTL": {
+          "type": "mission",
+          "settings": {
+            "heading": "Our Mission",
+            "description": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+          }
+        }
+      },
+      "block_order": [
+        "vision_pF3Dyn",
+        "mission_hGJnTL"
+      ],
+      "name": "About Us Section 1",
+      "settings": {
+        "heading": "Welcome to My Pahadi Dukan",
+        "description": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>",
+        "bg_top": "#ffffff",
+        "heading_color": "#1f2937",
+        "body_color": "#4b5563",
+        "bg_cards_area": "#f7f3eb",
+        "card_bg": "#ffffff",
+        "card_heading_color": "#1f2937",
+        "card_text_color": "#4b5563",
+        "card_radius": 8,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 56,
+        "cards_padding_top": 56,
+        "cards_padding_bottom": 64,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 36,
+        "cards_mobile_padding_top": 36,
+        "cards_mobile_padding_bottom": 44
+      }
+    },
+    "fun_points_zQrzrj": {
+      "type": "fun-points",
+      "blocks": {
+        "slide_GnbJr6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/B3_Desktop.jpg",
+            "image_by_url": "",
+            "mobile_image": "shopify://shop_images/B4_Mobile.jpg",
+            "alt_text": "Health is not just an option - Point 1",
+            "link": ""
+          }
+        },
+        "slide_pAyfd3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/B1_Desktop.jpg",
+            "image_by_url": "",
+            "mobile_image": "shopify://shop_images/B1_Mobile.jpg",
+            "alt_text": "Health is not just an option - Point 2",
+            "link": ""
+          }
+        },
+        "slide_hGayGU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/B4_Desktop.jpg",
+            "image_by_url": "",
+            "mobile_image": "shopify://shop_images/B3_Mobile.jpg",
+            "alt_text": "Health is not just an option - Point 3",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_GnbJr6",
+        "slide_pAyfd3",
+        "slide_hGayGU"
+      ],
+      "name": "Fun Points",
+      "settings": {
+        "badge_text": "Our Philosophy in 5 fun points!",
+        "badge_bg": "#fef3c7",
+        "badge_color": "#92400e",
+        "heading": "Health is not just an option",
+        "heading_color": "#c0503b",
+        "subheading": "It’s a journey to self-love and feeling well from day one",
+        "subheading_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "card_radius": 18,
+        "show_arrows": true,
+        "show_dots": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "founders_section_DnYHDr": {
+      "type": "founders-section",
+      "blocks": {
+        "founder_km89db": {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/himanshu-dua-photo_445a831d-28ad-4c95-9ea8-c0f03133acff.webp",
+            "image_by_url": "",
+            "name": "Himanshu Dua",
+            "role": "Founder",
+            "link": ""
+          }
+        },
+        "founder_amAKcP": {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/shubham-tandon-photo_54197803-76cd-4361-b192-08920b9d0874.webp",
+            "image_by_url": "",
+            "name": "Shubham Tandon",
+            "role": "Founder",
+            "link": ""
+          }
+        },
+        "founder_c4gGcg": {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/anas-zubair-photo-e1642674316423_0c2d677e-8a16-4535-b1e4-d7d3231bac4b.webp",
+            "image_by_url": "",
+            "name": "Mohd Anas Zubair",
+            "role": "Founder",
+            "link": ""
+          }
+        },
+        "founder_zmYUzy": {
+          "type": "founder",
+          "settings": {
+            "image": "shopify://shop_images/rohan-sehgal-photo_b3a471cb-ad05-4e57-b682-bfb33fcf74de.webp",
+            "image_by_url": "",
+            "name": "Rohan Sehgal",
+            "role": "Founder",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "founder_km89db",
+        "founder_amAKcP",
+        "founder_c4gGcg",
+        "founder_zmYUzy"
+      ],
+      "name": "Founders Section",
+      "settings": {
+        "heading": "A Word from the Founders",
+        "heading_color": "#111827",
+        "subheading": "This was my true calling during one of my travels to the mountains in North India. I was astounded by the amount of natural products and how little we know about these amazing.",
+        "subheading_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "avatar_size": 195,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "desktop_padding_top": 64,
+        "desktop_padding_bottom": 72,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 48
+      }
+    },
+    "custom_section_11": {
+      "type": "custom-section-11",
+      "blocks": {
+        "press_item_airH4f": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "My Pahadi Dukan Brings Authentic Himalayan Flavours to Festive Celebrations",
+            "outlet_name": "The Hindu",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/THE-HINDU-Logo_4.webp",
+            "logo_url": "",
+            "link": "https://www.thehindu.com/life-and-style/food/unboxing-cheer-diwali-hampers-2021-laduree-la-folie-bombay-sweet-shop-pumpkin-tales-royce-gift/article37263786.ece"
+          }
+        },
+        "press_item_N9waCW": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "My Pahadi Dukan Secures Funding to Scale Himalayan Wellness Offerings",
+            "outlet_name": "Entrepreneur India",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/20250528075003-Ent-Logo-India-Logo-Black-1.svg",
+            "logo_url": "",
+            "link": "https://india.entrepreneur.com/news-and-trends/my-pahadi-dukan-and-iyaso-secure-early-stage-funding/488854"
+          }
+        },
+        "press_item_gBUJpw": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "Meet the Next-Gen Apple Sellers of Himachal Pradesh Thriving in the Digital Marketplace",
+            "outlet_name": "Outlook",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/image_796.png",
+            "logo_url": "",
+            "link": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024"
+          }
+        },
+        "press_item_WBW79T": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "My Pahadi Dukan: Empowering Himalayan Businesses Through E-Commerce",
+            "outlet_name": "Homegrown",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/homegrown_brand_logo.png",
+            "logo_url": "",
+            "link": "https://homegrown.co.in/homegrown-explore/from-kashmir-to-ladakh-4-startups-from-the-indian-mountains-supporting-local-communities"
+          }
+        },
+        "press_item_C7e3yH": {
+          "type": "press_item",
+          "settings": {
+            "quote_text": "My Pahadi Dukaan: How This Startup Is Helping Himalayan Farmers",
+            "outlet_name": "Zee Business Hindi",
+            "read_time": "2 min read",
+            "logo_image": "shopify://shop_images/zee_business_hindi_logo.jpg",
+            "logo_url": "",
+            "link": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162"
+          }
+        }
+      },
+      "block_order": [
+        "press_item_airH4f",
+        "press_item_N9waCW",
+        "press_item_gBUJpw",
+        "press_item_WBW79T",
+        "press_item_C7e3yH"
+      ],
+      "name": "Featured in",
+      "settings": {
+        "heading": "Featured in",
+        "subheading": "",
+        "heading_color": "#000000",
+        "subheading_color": "#555555",
+        "enable_carousel": true,
+        "show_arrows": true,
+        "logo_shape": "circle",
+        "desktop_columns": 4,
+        "card_gap": 20,
+        "card_bg": "#fff6d6",
+        "card_text_color": "#2c221e",
+        "card_radius": 16,
+        "outlet_color": "#1f2937",
+        "read_time_color": "#6b7280",
+        "bg_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "icon_box_QDyUzB": {
+      "type": "icon-box",
+      "blocks": {
+        "iconbox_HXVgLk": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/OYO_Logo_Square.jpg",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_HmLReh": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/catalyst_1.png",
+            "image_by_url": "",
+            "title": "IIT Mandi Catalyst",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_YxHFBm": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/IIM_Kashipur_Logo_square.jpg",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_iWFLX6": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/meity_Logo_square.jpg",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_RQFFER": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/ministry_of_agriculture_Logo_square.jpg",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "iconbox_HXVgLk",
+        "iconbox_HmLReh",
+        "iconbox_YxHFBm",
+        "iconbox_iWFLX6",
+        "iconbox_RQFFER"
+      ],
+      "custom_css": [
+        "@media (min-width: 1024px) {.lg\\:m\\:grid-5-cols {grid-template-columns: repeat(5, minmax(0, 1fr)); }}"
+      ],
+      "name": "Featured promotion",
+      "settings": {
+        "container": "container",
+        "color_scheme": "",
+        "heading": "Supported By",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "item_per_row": 5,
+        "item_gap": 30,
+        "item_gap_mobile": 10,
+        "card_style": "vertical",
+        "image_max_width": "120px",
+        "content_alignment": "center",
+        "hover_effect": "scaling-up",
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "use_scroll_mobile": false,
+        "use_grid_column_mb": true,
+        "enable_scroller": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "video_image_split_8pFyFV": {
+      "type": "video-image-split",
+      "name": "Video & Health Split",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=l2UO56rAZHc",
+        "play_btn_color": "#E53935",
+        "card_bg": "#FFF5D5",
+        "card_heading": "Your first step to good health",
+        "card_description": "Read up on health concerns, trusted ingredients and proven solutions",
+        "heading_color": "#1F2937",
+        "text_color": "#4B5563",
+        "card_link": "",
+        "card_button_text": "",
+        "desktop_layout": "video_left",
+        "container_width": "standard",
+        "corner_radius": 16,
+        "bg_color": "#FFFFFF",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "custom_content_mX4rYA": {
+      "type": "custom-content",
+      "blocks": {
+        "video_33PE3y": {
+          "type": "video",
+          "settings": {
+            "video_type": "external",
+            "video_link": "https://www.youtube.com/watch?v=rA_YDjk0Ddk&t=2s",
+            "ratio": "21:9",
+            "image": "shopify://shop_images/rA_YDjk0Ddk-SD.jpg",
+            "video_title": "",
+            "text_size": "medium",
+            "text_color": "white",
+            "play_style": "solid",
+            "play_size": "medium",
+            "autoplay": false,
+            "loop": false,
+            "muted": false,
+            "show_controls": false,
+            "width": "100%",
+            "alignment": "start",
+            "block_custom_class": "",
+            "animations": "inherit"
+          }
+        },
+        "liquid_kDK7nY": {
+          "type": "liquid",
+          "settings": {
+            "custom_liquid": "<h2>Our Vision</h2>\n<p>\nOur founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods.<br><br>\n\nBut these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation.<br><br>\n\nThis helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income.<br><br>\n\nQuality products and solid on-ground impact! This is what we stand for in a nutshell.\n</p>",
+            "width": "50%",
+            "block_custom_class": "",
+            "animations": "inherit"
+          }
+        },
+        "liquid_bUqrNT": {
+          "type": "liquid",
+          "settings": {
+            "custom_liquid": "<h2>Our Mission</h2>\n<p>\nWe are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.\n</p>\n\n<br>\n\n<h2>Our Values</h2>\n<ul>\n  <li>Transparency</li>\n  <li>Quality</li>\n  <li>Purity</li>\n  <li>Authenticity</li>\n  <li>Customer Service</li>\n</ul>",
+            "width": "50%",
+            "block_custom_class": "",
+            "animations": "inherit"
+          }
+        },
+        "text_zPPWXf": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Our Vision",
+            "subheading": "",
+            "text": "<p><br/><br/><br/><br/><br/><br/>Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.<br/><br/></p>",
+            "width": "50%",
+            "alignment": "start",
+            "align_text": "left",
+            "text_size": "medium",
+            "text_color": "inherit",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "block_custom_class": "",
+            "animations": "inherit"
+          }
+        },
+        "text_7pdxVU": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "Our Mission",
+            "subheading": "",
+            "text": "<p>We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all.<br/></p><h2>Our Values</h2><ul><li>Transparency</li><li>Quality</li><li>Purity</li><li>Authenticity</li><li>Customer Service</li></ul>",
+            "width": "50%",
+            "alignment": "center",
+            "align_text": "left",
+            "text_size": "medium",
+            "text_color": "inherit",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "block_custom_class": "",
+            "animations": "inherit"
+          }
+        }
+      },
+      "block_order": [
+        "video_33PE3y",
+        "liquid_kDK7nY",
+        "liquid_bUqrNT",
+        "text_zPPWXf",
+        "text_7pdxVU"
+      ],
+      "name": "Custom content",
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "container": "container",
+        "color_scheme": "",
+        "content_color_scheme": "",
+        "enable_parallax": false,
+        "parallax_direction": "vertical",
+        "gap": 30,
+        "gap_mobile": 16,
+        "use_scroll_mobile": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "enable_preload_image": false,
+        "custom_class": ""
+      }
+    },
+    "icon_box_N44GR8": {
+      "type": "icon-box",
+      "blocks": {
+        "iconbox_ENyh49": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/himanshu-dua-photo_445a831d-28ad-4c95-9ea8-c0f03133acff.webp",
+            "image_by_url": "",
+            "title": "Himanshu Dua",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_RfwnJp": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/shubham-tandon-photo_54197803-76cd-4361-b192-08920b9d0874.webp",
+            "image_by_url": "",
+            "title": "Shubham Tandon",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_am3tnk": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/anas-zubair-photo-e1642674316423_0c2d677e-8a16-4535-b1e4-d7d3231bac4b.webp",
+            "image_by_url": "",
+            "title": "Mohd Anas Zubair",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_TjjHHU": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/rohan-sehgal-photo_b3a471cb-ad05-4e57-b682-bfb33fcf74de.webp",
+            "image_by_url": "",
+            "title": "Rohan Sehgal",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "iconbox_ENyh49",
+        "iconbox_RfwnJp",
+        "iconbox_am3tnk",
+        "iconbox_TjjHHU"
+      ],
+      "custom_css": [
+        "responsive-image.m-image.m\\:w-full.m-image-loaded {width: 100%; height: 380px; object-fit: cover;}",
+        ".m-icon-box__inner.m\\:flex-col.m\\:items-center {background: #ddb786; padding: 5px 5px; border-radius: 10px;}"
+      ],
+      "name": "Featured promotion",
+      "settings": {
+        "container": "container",
+        "color_scheme": "",
+        "heading": "Meet The Team",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "item_per_row": 4,
+        "item_gap": 30,
+        "item_gap_mobile": 10,
+        "card_style": "vertical",
+        "image_max_width": "",
+        "content_alignment": "center",
+        "hover_effect": "scaling-up",
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "use_scroll_mobile": false,
+        "use_grid_column_mb": true,
+        "enable_scroller": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "icon_box_W88UaR": {
+      "type": "icon-box",
+      "blocks": {
+        "iconbox_mNRmn9": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/Outlook-Logo.webp",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_ti4yiG": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/devdiscourse_logo-002.webp",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_KFKnQ4": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/Free_Press_Logo_White_on_Red_33__1.webp",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_Mr4AfH": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/THE-HINDU-Logo_4.webp",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "iconbox_VGLgaf": {
+          "type": "iconbox",
+          "settings": {
+            "card_color_scheme": "",
+            "image": "shopify://shop_images/business-standard-logo.webp",
+            "image_by_url": "",
+            "title": "",
+            "description": "",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "iconbox_mNRmn9",
+        "iconbox_ti4yiG",
+        "iconbox_KFKnQ4",
+        "iconbox_Mr4AfH",
+        "iconbox_VGLgaf"
+      ],
+      "name": "Featured promotion",
+      "settings": {
+        "container": "container-fluid",
+        "color_scheme": "",
+        "heading": "Fatured In",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "item_per_row": 5,
+        "item_gap": 30,
+        "item_gap_mobile": 10,
+        "card_style": "vertical",
+        "image_max_width": "",
+        "content_alignment": "center",
+        "hover_effect": "scaling-up",
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "use_scroll_mobile": false,
+        "use_grid_column_mb": true,
+        "enable_scroller": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "video_megPC6": {
+      "type": "video",
+      "name": "Video",
+      "settings": {
+        "container": "container",
+        "color_scheme": "",
+        "video_type": "external",
+        "video_link": "https://www.youtube.com/watch?v=l2UO56rAZHc&list=TLGGg8ZNuEhoAGcwMTA3MjAyNQ",
+        "ratio": "16:9",
+        "image": "shopify://shop_images/l2UO56rAZHc-HD.jpg",
+        "video_title": "",
+        "text_size": "medium",
+        "text_color": "inherit",
+        "play_style": "solid",
+        "play_size": "medium",
+        "width": "",
+        "autoplay": false,
+        "loop": false,
+        "muted": false,
+        "show_controls": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "rich_text_YA3fjj": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xHgXMV": {
+          "type": "heading",
+          "settings": {
+            "heading": "Thanks for dropping by! We keep on adding new products every week, so do come back!",
+            "heading_size": "h2"
+          }
+        },
+        "text_EKJCXC": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post.<br> Add details on availability, style, or even provide a review.</p>"
+          }
+        },
+        "button_y96re4": {
+          "type": "button",
+          "settings": {
+            "button_label": "Go to Shop",
+            "button_link": "shopify://collections",
+            "button_style": "m-button--white",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_xHgXMV",
+        "text_EKJCXC",
+        "button_y96re4"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "container": "container",
+        "color_scheme": "scheme-09e5b5b4-774c-4b6c-8025-416ced49cc74",
+        "content_alignment": "center",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    },
+    "custom-content": {
+      "type": "custom-content",
+      "blocks": {
+        "be5d2488-3c71-471f-bb75-dbccb6970cb0": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "width": "100%",
+            "alignment": "center",
+            "block_custom_class": "",
+            "animations": "inherit",
+            "enable_preload_image": false
+          }
+        },
+        "f5e88f1f-ff68-4d03-b686-0cb9fe62fab1": {
+          "type": "text",
+          "settings": {
+            "title": "<h4 class=\"about__block-heading\">It pains me physically to see woman victimized,<br> rendered pathetic by fashion.</h4>\n<p class=\"about__block-subheading\">Awkwardness gives me great comfort. I’ve never been cool, but I’ve felt cool. I’ve been in the<br> cool place, but I wasn’t really cool – I was trying to pass for hip or cool.</p>",
+            "subheading": "",
+            "text": "<p>A girl should be two things: classy and fabulous. I am convinced that there can be luxury in simplicity. I wanted to dress the woman who lives and works, not the woman in a painting. It’s hard to balance everything. It’s always challenging. My relationships with producers or photographers – these are relationships that took years. I can’t get sucked into that celebrity thing, because I think it’s just crass. My aim is to make the poor look rich and the rich look poor. Vanity is the healthiest thing in life. I believe that my clothes can give people a better image of themselves – that it can increase their feelings of confidence and happiness. You can hide so much behind theatrics, and I don’t need to do that any more. I don’t really know how to do casual clothes.</p>",
+            "width": "100%",
+            "alignment": "center",
+            "align_text": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "block_custom_class": "sf__about-block sf__about-block-text sf__about-block-text-1",
+            "animations": "inherit"
+          }
+        },
+        "4e1fb14f-ef60-4693-b6a2-2b26063e1b70": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "width": "50%",
+            "alignment": "center",
+            "block_custom_class": "",
+            "animations": "inherit",
+            "enable_preload_image": false
+          }
+        },
+        "9a3a8077-de29-4141-9162-b9484d4a85f8": {
+          "type": "html",
+          "settings": {
+            "code": "<div class=\"sf__about-custom-list\">\n  <h3>We are proudly<br> Australian.</h3>\n  <ul>\n    <li>\n      <span><img src=\"https://cdn.shopify.com/s/files/1/0561/2742/2636/files/icon1.svg?v=1627616411\"></span>\n      <div class=\"rte\">\n          <h4>Soft Fabric</h4>\n          <p class=\"text-color-subtext\">Get complimentary ground shipping on every<br> order.Don’t love it? Send it back, on us.</p>\n      </div>\n    </li>\n    <li>\n      <span><img src=\"https://cdn.shopify.com/s/files/1/0561/2742/2636/files/icon2_daf1b6c2-ef2e-416c-ae6a-a7ddd145b6c5.svg?v=1627616411\"></span>\n      <div class=\"rte\">\n          <h4>Lightweight</h4>\n          <p class=\"text-color-subtext\">Join Minimog Rewards to earn gift cards<br>\nand enjoy exclusive member benefits.</p>\n      </div>\n    </li>\n    <li>\n      <span><img src=\"https://cdn.shopify.com/s/files/1/0561/2742/2636/files/icon3.svg?v=1627616411\"></span>\n      <div class=\"rte\">\n          <h4>All Day Comfort</h4>\n          <p class=\"text-color-subtext\">We believe getting dressed should be the<br> easiest part of your day.</p>\n      </div>\n    </li>\n  </ul>\n</div>",
+            "width": "50%",
+            "block_custom_class": "sf__about-custom-html",
+            "animations": "inherit"
+          }
+        },
+        "28e3ce35-e364-43f3-ba87-18b633233063": {
+          "type": "text",
+          "settings": {
+            "title": "<h4 class=\"about__block-heading\">The world needs to move fast to make a meaningful<br> difference in the fight against climate change.</h4>",
+            "subheading": "",
+            "text": "<p>A girl should be two things: classy and fabulous. I am convinced that there can be luxury in simplicity. I wanted to dress the woman who lives and works, not the woman in a painting. It’s hard to balance everything. It’s always challenging. My relationships with producers or photographers – these are relationships that took years. I can’t get sucked into that celebrity thing, because I think it’s just crass. My aim is to make the poor look rich and the rich look poor. Vanity is the healthiest thing in life. I believe that my clothes can give people a better image of themselves – that it can increase their feelings of confidence and happiness. You can hide so much behind theatrics, and I don’t need to do that any more. I don’t really know how to do casual clothes.</p>",
+            "width": "100%",
+            "alignment": "center",
+            "align_text": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "block_custom_class": "sf__about-block sf__about-block-text sf__about-block-text-2",
+            "animations": "inherit"
+          }
+        },
+        "c6a8b57f-c54c-43f1-9771-9ea5d88a2f36": {
+          "type": "text",
+          "settings": {
+            "title": "Our Team",
+            "subheading": "",
+            "text": "",
+            "width": "100%",
+            "alignment": "center",
+            "align_text": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "block_custom_class": "sf__about-custom-heading",
+            "animations": "inherit"
+          }
+        },
+        "859f4ef2-676f-4587-9ae8-3a19ffa439dd": {
+          "type": "image_card",
+          "settings": {
+            "width": "33%",
+            "color_scheme": "",
+            "content_position": "bottom_left",
+            "content_alignment": "left",
+            "text_size": "medium",
+            "text_color": "black",
+            "link": "",
+            "title": "Edward Lindgren",
+            "subtitle": "<span class=\"text-color-subtext\">CHIEF OPERATING OFFICER</span>",
+            "description": "",
+            "button_label": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "button_fixed": false,
+            "use_content_above": false,
+            "block_custom_class": "sf__about-card-custom",
+            "animations": "inherit",
+            "enable_preload_image": false
+          }
+        },
+        "a1a4a67f-c83f-4629-a006-e44f56c80bf5": {
+          "type": "image_card",
+          "settings": {
+            "width": "33%",
+            "color_scheme": "",
+            "content_position": "bottom_left",
+            "content_alignment": "left",
+            "text_size": "medium",
+            "text_color": "black",
+            "link": "",
+            "title": "Chineze Afamefuna",
+            "subtitle": "<span class=\"text-color-subtext\">MARKETING</span>",
+            "description": "",
+            "button_label": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "button_fixed": false,
+            "use_content_above": false,
+            "block_custom_class": "sf__about-card-custom",
+            "animations": "inherit",
+            "enable_preload_image": false
+          }
+        },
+        "dc4597e9-ca80-4d0f-9e30-ff28c96dd3aa": {
+          "type": "image_card",
+          "settings": {
+            "width": "33%",
+            "color_scheme": "",
+            "content_position": "bottom_left",
+            "content_alignment": "left",
+            "text_size": "medium",
+            "text_color": "black",
+            "link": "",
+            "title": "Nado Husa",
+            "subtitle": "<span class=\"text-color-subtext\">CO-FOUNDER</span>",
+            "description": "",
+            "button_label": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "button_fixed": false,
+            "use_content_above": false,
+            "block_custom_class": "sf__about-card-custom",
+            "animations": "inherit",
+            "enable_preload_image": false
+          }
+        }
+      },
+      "block_order": [
+        "be5d2488-3c71-471f-bb75-dbccb6970cb0",
+        "f5e88f1f-ff68-4d03-b686-0cb9fe62fab1",
+        "4e1fb14f-ef60-4693-b6a2-2b26063e1b70",
+        "9a3a8077-de29-4141-9162-b9484d4a85f8",
+        "28e3ce35-e364-43f3-ba87-18b633233063",
+        "c6a8b57f-c54c-43f1-9771-9ea5d88a2f36",
+        "859f4ef2-676f-4587-9ae8-3a19ffa439dd",
+        "a1a4a67f-c83f-4629-a006-e44f56c80bf5",
+        "dc4597e9-ca80-4d0f-9e30-ff28c96dd3aa"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "@media (min-width: 1280px) {#m-custom__block--9a3a8077-de29-4141-9162-b9484d4a85f8 {padding-left: 100px; }}"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "container": "container",
+        "color_scheme": "",
+        "content_color_scheme": "",
+        "enable_parallax": false,
+        "parallax_direction": "vertical",
+        "gap": 30,
+        "gap_mobile": 16,
+        "use_scroll_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "enable_preload_image": false,
+        "custom_class": "m-about-page"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slider_Bf7tmi",
+    "about_us_section_1_CrMYRe",
+    "fun_points_zQrzrj",
+    "founders_section_DnYHDr",
+    "custom_section_11",
+    "icon_box_QDyUzB",
+    "video_image_split_8pFyFV",
+    "custom_content_mX4rYA",
+    "icon_box_N44GR8",
+    "icon_box_W88UaR",
+    "video_megPC6",
+    "rich_text_YA3fjj",
+    "custom-content"
+  ]
+}

@@ -1,0 +1,679 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color | default: '#FFFFFF'
+  assign padding_top = section.settings.padding_top | default: 40
+  assign padding_bottom = section.settings.padding_bottom | default: 40
+  assign corner_radius = section.settings.corner_radius | default: 16
+  assign container_width = section.settings.container_width | default: 'container'
+  assign desktop_layout = section.settings.desktop_layout | default: 'video_left'
+
+  assign play_btn_color = section.settings.play_btn_color | default: '#E53935'
+  assign video_url = section.settings.video_url
+  assign hosted_video = section.settings.hosted_video
+  assign video_cover = section.settings.video_cover_image
+
+  assign card_bg = section.settings.card_bg | default: '#FFF5D5'
+  assign card_image = section.settings.card_image
+  assign card_heading = section.settings.card_heading | default: 'Your first step to good health'
+  assign card_description = section.settings.card_description | default: 'Read up on health concerns, trusted ingredients and proven solutions'
+  assign heading_color = section.settings.heading_color | default: '#1F2937'
+  assign text_color = section.settings.text_color | default: '#4B5563'
+  assign card_link = section.settings.card_link
+  assign card_button_text = section.settings.card_button_text
+-%}
+
+<div
+  id="video-image-split-{{ section.id }}"
+  class="vis-section"
+  style="
+    --vis-bg: {{ bg_color }};
+    --vis-pt: {{ padding_top }}px;
+    --vis-pb: {{ padding_bottom }}px;
+    --vis-radius: {{ corner_radius }}px;
+    --vis-card-bg: {{ card_bg }};
+    --vis-play-color: {{ play_btn_color }};
+    --vis-heading-color: {{ heading_color }};
+    --vis-text-color: {{ text_color }};
+  "
+>
+  <div class="vis-container {% if container_width == 'compact' %}vis-container--compact{% elsif container_width == 'full' %}vis-container--full{% endif %}">
+    <div class="vis-grid {% if desktop_layout == 'video_right' %}vis-grid--reverse{% endif %}">
+      
+      <!-- LEFT COLUMN: Video Player / Card -->
+      <div class="vis-col vis-col--video">
+        <div class="vis-video-card" data-video-url="{{ video_url | escape }}">
+          
+          <!-- Poster / Cover Layer -->
+          <div class="vis-poster">
+            {%- if video_cover != blank -%}
+              {{
+                video_cover
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'vis-poster-img',
+                  widths: '400, 600, 800, 1200',
+                  alt: 'Video cover thumbnail'
+              }}
+            {%- else -%}
+              <img
+                src="{{ 'health-video-thumbnail.png' | asset_url }}"
+                loading="lazy"
+                class="vis-poster-img"
+                alt="Health Video Thumbnail"
+              >
+            {%- endif -%}
+
+            <!-- Play Button -->
+            <button
+              type="button"
+              class="vis-play-btn"
+              aria-label="Play video"
+            >
+              <span class="vis-play-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <!-- Video Player Container (Injected on play) -->
+          <div class="vis-player-wrapper" style="display: none;">
+            {%- if hosted_video != blank -%}
+              {{ hosted_video | video_tag: autoplay: false, loop: false, controls: true, class: 'vis-hosted-video' }}
+            {%- endif -%}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Content Card with Image and Text -->
+      <div class="vis-col vis-col--content">
+        {%- if card_link != blank and card_button_text == blank -%}
+          <a href="{{ card_link }}" class="vis-card vis-card--clickable">
+        {%- else -%}
+          <div class="vis-card">
+        {%- endif -%}
+
+          <!-- Left Image Inside Card -->
+          <div class="vis-card-image-wrap">
+            {%- if card_image != blank -%}
+              {{
+                card_image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'vis-card-img',
+                  widths: '200, 400, 600, 800',
+                  alt: card_heading | escape
+              }}
+            {%- else -%}
+              <img
+                src="{{ 'health-card-image.png' | asset_url }}"
+                loading="lazy"
+                class="vis-card-img"
+                alt="Fresh healthy nutrition"
+              >
+            {%- endif -%}
+          </div>
+
+          <!-- Right Content Inside Card -->
+          <div class="vis-card-content">
+            {%- if card_heading != blank -%}
+              <h3 class="vis-card-heading">{{ card_heading }}</h3>
+            {%- endif -%}
+
+            {%- if card_description != blank -%}
+              <p class="vis-card-description">{{ card_description }}</p>
+            {%- endif -%}
+
+            {%- if card_button_text != blank and card_link != blank -%}
+              <a href="{{ card_link }}" class="vis-card-btn">
+                {{ card_button_text }}
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+
+        {%- if card_link != blank and card_button_text == blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  #video-image-split-{{ section.id }} {
+    background-color: var(--vis-bg);
+    padding-top: var(--vis-pt);
+    padding-bottom: var(--vis-pb);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  #video-image-split-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #video-image-split-{{ section.id }} .vis-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #video-image-split-{{ section.id }} .vis-container--compact {
+    max-width: 1140px;
+  }
+
+  #video-image-split-{{ section.id }} .vis-container--full {
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  /* 2-Column Responsive Grid */
+  #video-image-split-{{ section.id }} .vis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  #video-image-split-{{ section.id }} .vis-grid--reverse {
+    direction: rtl;
+  }
+  #video-image-split-{{ section.id }} .vis-grid--reverse > * {
+    direction: ltr;
+  }
+
+  #video-image-split-{{ section.id }} .vis-col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* LEFT VIDEO CARD */
+  #video-image-split-{{ section.id }} .vis-video-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    background-color: #0d0d0d;
+    border-radius: var(--vis-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    aspect-ratio: 16 / 9;
+  }
+
+  #video-image-split-{{ section.id }} .vis-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  #video-image-split-{{ section.id }} .vis-poster-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #video-image-split-{{ section.id }} .vis-video-card:hover .vis-poster-img {
+    transform: scale(1.02);
+  }
+
+  /* Centered Play Button */
+  #video-image-split-{{ section.id }} .vis-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background-color: var(--vis-play-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px rgba(229, 57, 53, 0.45);
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+    z-index: 3;
+    padding: 0;
+  }
+
+  #video-image-split-{{ section.id }} .vis-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.12);
+    box-shadow: 0 6px 26px rgba(229, 57, 53, 0.6), 0 0 0 8px rgba(229, 57, 53, 0.2);
+  }
+
+  #video-image-split-{{ section.id }} .vis-play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3px;
+  }
+
+  #video-image-split-{{ section.id }} .vis-player-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    background-color: #000000;
+  }
+
+  #video-image-split-{{ section.id }} .vis-player-wrapper iframe,
+  #video-image-split-{{ section.id }} .vis-hosted-video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* RIGHT CONTENT CARD */
+  #video-image-split-{{ section.id }} .vis-card {
+    background-color: var(--vis-card-bg);
+    border-radius: var(--vis-radius);
+    padding: 24px 28px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card--clickable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-image-wrap {
+    flex: 0 0 42%;
+    max-width: 240px;
+    aspect-ratio: 1 / 1;
+    border-radius: calc(var(--vis-radius) - 2px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card:hover .vis-card-img {
+    transform: scale(1.04);
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-heading {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--vis-heading-color);
+    margin: 0 0 12px 0;
+    font-family: inherit;
+    letter-spacing: -0.01em;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-description {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--vis-text-color);
+    margin: 0;
+    font-family: inherit;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vis-heading-color);
+    text-decoration: none;
+    transition: gap 0.2s ease, opacity 0.2s ease;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-btn:hover {
+    gap: 12px;
+    opacity: 0.85;
+  }
+
+  /* Responsive Breakpoints */
+  @media only screen and (max-width: 991px) {
+    #video-image-split-{{ section.id }} .vis-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card {
+      padding: 22px;
+      gap: 20px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-image-wrap {
+      flex: 0 0 38%;
+      max-width: 200px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-heading {
+      font-size: 22px;
+    }
+  }
+
+  @media only screen and (max-width: 580px) {
+    #video-image-split-{{ section.id }} {
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-container {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card {
+      flex-direction: row;
+      align-items: center;
+      padding: 16px;
+      gap: 16px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-image-wrap {
+      flex: 0 0 110px;
+      max-width: 110px;
+      height: 110px;
+      border-radius: 12px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-heading {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-description {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    #video-image-split-{{ section.id }} .vis-play-btn {
+      width: 48px;
+      height: 48px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    function initSection() {
+      var section = document.getElementById('video-image-split-{{ section.id }}');
+      if (!section) return;
+
+      var videoCard = section.querySelector('.vis-video-card');
+      if (!videoCard) return;
+
+      var poster = videoCard.querySelector('.vis-poster');
+      var playBtn = videoCard.querySelector('.vis-play-btn');
+      var playerWrapper = videoCard.querySelector('.vis-player-wrapper');
+      var videoUrl = (videoCard.getAttribute('data-video-url') || '').trim();
+      var hostedVideo = playerWrapper ? playerWrapper.querySelector('.vis-hosted-video') : null;
+
+      function startVideo() {
+        if (!playerWrapper) return;
+        poster.style.display = 'none';
+        playerWrapper.style.display = 'block';
+
+        if (hostedVideo) {
+          hostedVideo.play();
+          return;
+        }
+
+        // If videoUrl provided or default fallback video
+        var url = videoUrl || 'https://www.youtube.com/watch?v=l2UO56rAZHc';
+        var embedUrl = '';
+
+        // Match YouTube
+        var ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+        if (ytMatch && ytMatch[1]) {
+          embedUrl = 'https://www.youtube-nocookie.com/embed/' + ytMatch[1] + '?autoplay=1&rel=0&modestbranding=1';
+        } else {
+          // Match Vimeo
+          var vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+          if (vimeoMatch && vimeoMatch[1]) {
+            embedUrl = 'https://player.vimeo.com/video/' + vimeoMatch[1] + '?autoplay=1';
+          }
+        }
+
+        if (embedUrl) {
+          playerWrapper.innerHTML = '<iframe src="' + embedUrl + '" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        } else if (url) {
+          // Direct mp4 fallback
+          playerWrapper.innerHTML = '<video src="' + url + '" controls autoplay style="width:100%; height:100%;"></video>';
+        }
+      }
+
+      if (poster) {
+        poster.addEventListener('click', startVideo);
+      }
+      if (playBtn) {
+        playBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          startVideo();
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSection);
+    } else {
+      initSection();
+    }
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') {
+        initSection();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Video & Health Split",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left: Video Settings"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "YouTube or Vimeo URL",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=l2UO56rAZHc"
+    },
+    {
+      "type": "video",
+      "id": "hosted_video",
+      "label": "Or Shopify-Hosted Video (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_cover_image",
+      "label": "Video Cover / Thumbnail Image"
+    },
+    {
+      "type": "color",
+      "id": "play_btn_color",
+      "label": "Play Button Color",
+      "default": "#E53935"
+    },
+    {
+      "type": "header",
+      "content": "Right: Card Settings"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#FFF5D5"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image",
+      "label": "Card Image"
+    },
+    {
+      "type": "text",
+      "id": "card_heading",
+      "label": "Card Heading",
+      "default": "Your first step to good health"
+    },
+    {
+      "type": "textarea",
+      "id": "card_description",
+      "label": "Card Description",
+      "default": "Read up on health concerns, trusted ingredients and proven solutions"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1F2937"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description Color",
+      "default": "#4B5563"
+    },
+    {
+      "type": "url",
+      "id": "card_link",
+      "label": "Card Link URL (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "card_button_text",
+      "label": "Card Button Text (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop Layout",
+      "options": [
+        {
+          "value": "video_left",
+          "label": "Video Left, Card Right"
+        },
+        {
+          "value": "video_right",
+          "label": "Card Left, Video Right"
+        }
+      ],
+      "default": "video_left"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container Width",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard (1320px)"
+        },
+        {
+          "value": "compact",
+          "label": "Compact (1140px)"
+        },
+        {
+          "value": "full",
+          "label": "Full Width"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner Radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video & Health Split"
+    }
+  ]
+}
+{% endschema %}
