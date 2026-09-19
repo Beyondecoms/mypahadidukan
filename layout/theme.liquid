@@ -76,6 +76,27 @@
       render 'style-tags'
     -%}
 
+    {%- if template.name == 'index' -%}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ 'B3_Mobile.jpg' | file_img_url: '600x' }}"
+        imagesrcset="{{ 'B3_Mobile.jpg' | file_img_url: '400x' }} 400w, {{ 'B3_Mobile.jpg' | file_img_url: '600x' }} 600w, {{ 'B3_Mobile.jpg' | file_img_url: '800x' }} 800w, {{ 'B3_Mobile.jpg' | file_img_url: '1000x' }} 1000w"
+        imagesizes="100vw"
+        media="(max-width: 767px)"
+        fetchpriority="high"
+      >
+      <link
+        rel="preload"
+        as="image"
+        href="{{ 'B4_Desktop.jpg' | file_img_url: '1600x' }}"
+        imagesrcset="{{ 'B4_Desktop.jpg' | file_img_url: '1000x' }} 1000w, {{ 'B4_Desktop.jpg' | file_img_url: '1400x' }} 1400w, {{ 'B4_Desktop.jpg' | file_img_url: '1800x' }} 1800w, {{ 'B4_Desktop.jpg' | file_img_url: '2200x' }} 2200w"
+        imagesizes="100vw"
+        media="(min-width: 768px)"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+
     <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'theme-global.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations != 'none' -%}
@@ -135,16 +156,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "8x9jole9hq");
-
-
-    const observer = new MutationObserver(() => {
-  document.body.style.overflow = "clip";
-});
-
-observer.observe(document.body, {
-  attributes: true,
-  attributeFilter: ["style"]
-});
 </script>
 
 {% style %}
@@ -152,8 +163,8 @@ observer.observe(document.body, {
    display: none !important;
 }
 
-  body {
-  overflow: clip !important;
+html, body {
+  overflow-x: clip;
 }
 .m-product-card svg{
   color: #c0503b;
@@ -388,17 +399,19 @@ body .main-product__block.main-product__block-price{
   $(this).siblings('.m-megamenu-mobile').toggleClass('active');
 });
 document.addEventListener('DOMContentLoaded', function () {
+  {% if template.name == 'product' %}
+  let attempts = 0;
   function updateBuyNowText() {
     const buyNowButton = document.querySelector('.shopify-payment-button__button');
     if (buyNowButton) {
-      buyNowButton.textContent = 'Buy Now'; // change to your desired text
-    } else {
-      // Retry in case the button hasn't rendered yet
+      buyNowButton.textContent = 'Buy Now';
+    } else if (attempts++ < 15) {
       setTimeout(updateBuyNowText, 300);
     }
   }
 
   updateBuyNowText();
+  {% endif %}
 });
 
 </script>

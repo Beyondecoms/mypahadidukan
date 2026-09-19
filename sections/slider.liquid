@@ -159,7 +159,7 @@
                           assign image_height = block.settings.background.width | divided_by: block.settings.background.aspect_ratio | round
                           assign loading = 'lazy'
                           assign fetchpriority = 'low'
-                          if forloop.index == 1 and section.index < 2 or enable_preload_image
+                          if forloop.first or enable_preload_image
                             assign loading = 'eager'
                             assign fetchpriority = 'high'
                           endif
@@ -169,7 +169,8 @@
                           {%- if block.settings.mb_background -%}
                             <source
                               media="(max-width: 767px)"
-                              srcset="{{ block.settings.mb_background | image_url: width: '400x' }} 400w, {{ block.settings.mb_background | image_url: width: '600x' }} 600w, {{ block.settings.mb_background | image_url: width: '800x' }} 800w, {{ block.settings.mb_background | image_url: width: '1000x' }} 1000w"
+                              srcset="{{ block.settings.mb_background | image_url: width: 400 }} 400w, {{ block.settings.mb_background | image_url: width: 600 }} 600w, {{ block.settings.mb_background | image_url: width: 800 }} 800w, {{ block.settings.mb_background | image_url: width: 1000 }} 1000w"
+                              sizes="100vw"
                               width="{{ block.settings.mb_background.width }}"
                               height="{{ block.settings.mb_background.height }}"
                             >

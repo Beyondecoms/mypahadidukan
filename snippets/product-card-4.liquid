@@ -28,8 +28,8 @@
     assign show_title = false
   endif
 
-  if image_ratio == null or image_ratio == blank
-    assign image_ratio = settings.pcard_image_ratio | default: '1/1'
+  if image_ratio == null or image_ratio == blank or image_ratio == '3/4'
+    assign image_ratio = '1/1'
   endif
 
   if image_ratio == 'original'
@@ -89,8 +89,8 @@
   endif
 
   assign pcard_default_image = settings.pcard_default_image
-  if image_ratio == null or image_ratio == blank
-    assign image_ratio = settings.pcard_image_ratio | default: '1/1'
+  if image_ratio == null or image_ratio == blank or image_ratio == '3/4'
+    assign image_ratio = '1/1'
   endif
 
   if show_cart_button == null
@@ -177,10 +177,7 @@
         {% unless show_video %}
           <div class="m-product-card__main-image">
             {%- liquid
-              assign asp_rat = image_ratio | default: preview_image.aspect_ratio
-              if asp_rat == 'original'
-                assign asp_rat = preview_image.aspect_ratio
-              endif
+              assign asp_rat = '1/1'
               assign alt = alt | default: preview_image.alt | escape
             -%}
             {%- capture sizes -%}(min-width: {{ settings.container_width }}px) {{ settings.container_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
@@ -202,10 +199,7 @@
           {%- if second_image != blank -%}
             <div class="m-product-card__hover-image">
               {%- liquid
-                assign asp_rat = image_ratio | default: second_image.aspect_ratio
-                if asp_rat == 'original'
-                  assign asp_rat = second_image.aspect_ratio
-                endif
+                assign asp_rat = '1/1'
                 assign alt = alt | default: second_image.alt | escape
               -%}
               {%- capture sizes -%}(min-width: {{ settings.container_width }}px) {{ settings.container_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
@@ -245,10 +239,7 @@
       {% else %}
         {% if pcard_default_image != blank %}
           {%- liquid
-            assign asp_rat = image_ratio | default: pcard_default_image.aspect_ratio
-            if asp_rat == 'original'
-              assign asp_rat = pcard_default_image.aspect_ratio
-            endif
+            assign asp_rat = '1/1'
             assign alt = alt | default: pcard_default_image.alt | escape
           -%}
           {%- capture sizes -%}(min-width: {{ settings.container_width }}px) {{ settings.container_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
@@ -441,10 +432,27 @@
       aspect-ratio: 1/1 !important;
       width: 100% !important;
     }
-    .m-product-card--style-4 .m-product-card__media img {
-      object-fit: contain !important;
+    .m-product-card--style-4 .m-product-card__link,
+    .m-product-card--style-4 .m-product-card__main-image,
+    .m-product-card--style-4 .m-image {
       width: 100% !important;
       height: 100% !important;
+      display: block !important;
+      aspect-ratio: 1/1 !important;
+      position: relative !important;
+    }
+    .m-product-card--style-4 responsive-image.m-image:before,
+    .m-product-card--style-4 [style*='--aspect-ratio']:before {
+      padding-top: 100% !important;
+    }
+    .m-product-card--style-4 .m-product-card__media img {
+      object-fit: contain !important;
+      object-position: center !important;
+      width: 100% !important;
+      height: 100% !important;
+      top: 0 !important;
+      left: 0 !important;
+      position: absolute !important;
       padding: 0px !important;
       box-sizing: border-box !important;
     }
