@@ -13,12 +13,29 @@
 
   assign card_bg = section.settings.card_bg | default: '#FFF5D5'
   assign card_image = section.settings.card_image
-  assign card_heading = section.settings.card_heading | default: 'Your first step to good health'
-  assign card_description = section.settings.card_description | default: 'Read up on health concerns, trusted ingredients and proven solutions'
+
+  assign card_heading = section.settings.card_heading
+  if card_heading == blank or card_heading == 'Your first step to good health'
+    assign card_heading = 'From the Mountains, With a Story'
+  endif
+
+  assign card_description = section.settings.card_description
+  if card_description == blank or card_description == 'Read up on health concerns, trusted ingredients and proven solutions'
+    assign card_description = 'Discover thoughtfully sourced Himalayan products rooted in tradition, authenticity, and the people behind them. Every product brings you a little closer to the mountains and the communities that make them special.'
+  endif
+
   assign heading_color = section.settings.heading_color | default: '#1F2937'
   assign text_color = section.settings.text_color | default: '#4B5563'
+
   assign card_link = section.settings.card_link
+  if card_link == blank
+    assign card_link = routes.all_products_collection_url | default: '/collections/all'
+  endif
+
   assign card_button_text = section.settings.card_button_text
+  if card_button_text == blank
+    assign card_button_text = 'Shop Now →'
+  endif
 -%}
 
 <div
@@ -112,7 +129,7 @@
                 src="{{ 'health-card-image.png' | asset_url }}"
                 loading="lazy"
                 class="vis-card-img"
-                alt="Fresh healthy nutrition"
+                alt="{{ card_heading | escape }}"
               >
             {%- endif -%}
           </div>
@@ -120,7 +137,7 @@
           <!-- Right Content Inside Card -->
           <div class="vis-card-content">
             {%- if card_heading != blank -%}
-              <h3 class="vis-card-heading">{{ card_heading }}</h3>
+              <h3 class="vis-card-heading">{{ card_heading | escape }}</h3>
             {%- endif -%}
 
             {%- if card_description != blank -%}
@@ -128,12 +145,17 @@
             {%- endif -%}
 
             {%- if card_button_text != blank and card_link != blank -%}
-              <a href="{{ card_link }}" class="vis-card-btn">
-                {{ card_button_text }}
-                <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                </svg>
-              </a>
+              {%- assign clean_btn_text = card_button_text | remove: '→' | remove: '&rarr;' | strip -%}
+              <div class="vis-card-btn-wrap">
+                <a href="{{ card_link }}" class="vis-card-btn" aria-label="{{ card_button_text | escape }}">
+                  <span class="vis-card-btn-text">{{ clean_btn_text }}</span>
+                  <span class="vis-card-btn-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                  </span>
+                </a>
+              </div>
             {%- endif -%}
           </div>
 
@@ -293,12 +315,12 @@
   #video-image-split-{{ section.id }} .vis-card {
     background-color: var(--vis-card-bg);
     border-radius: var(--vis-radius);
-    padding: 24px 28px;
+    padding: 28px 30px;
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 26px;
+    gap: 28px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
     text-decoration: none;
@@ -312,12 +334,13 @@
   }
 
   #video-image-split-{{ section.id }} .vis-card-image-wrap {
-    flex: 0 0 42%;
-    max-width: 240px;
+    flex: 0 0 38%;
+    max-width: 220px;
     aspect-ratio: 1 / 1;
     border-radius: calc(var(--vis-radius) - 2px);
     overflow: hidden;
     position: relative;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   }
 
   #video-image-split-{{ section.id }} .vis-card-img {
@@ -338,10 +361,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
   }
 
   #video-image-split-{{ section.id }} .vis-card-heading {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 1.25;
     color: var(--vis-heading-color);
@@ -351,53 +375,89 @@
   }
 
   #video-image-split-{{ section.id }} .vis-card-description {
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 14.5px;
+    line-height: 1.6;
     color: var(--vis-text-color);
     margin: 0;
     font-family: inherit;
   }
 
+  #video-image-split-{{ section.id }} .vis-card-btn-wrap {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+  }
+
   #video-image-split-{{ section.id }} .vis-card-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 18px;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 26px;
+    background-color: var(--vis-heading-color, #1F2937);
+    color: #FFFFFF;
     font-size: 14px;
     font-weight: 600;
-    color: var(--vis-heading-color);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    transition: gap 0.2s ease, opacity 0.2s ease;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(31, 41, 55, 0.16);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.25s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
   }
 
   #video-image-split-{{ section.id }} .vis-card-btn:hover {
-    gap: 12px;
-    opacity: 0.85;
+    background-color: #000000;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-btn-text {
+    display: inline-block;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease;
+  }
+
+  #video-image-split-{{ section.id }} .vis-card-btn:hover .vis-card-btn-arrow {
+    transform: translateX(4px);
   }
 
   /* Responsive Breakpoints */
-  @media only screen and (max-width: 991px) {
+  @media only screen and (max-width: 1024px) and (min-width: 641px) {
     #video-image-split-{{ section.id }} .vis-grid {
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 22px;
     }
 
     #video-image-split-{{ section.id }} .vis-card {
-      padding: 22px;
-      gap: 20px;
+      padding: 24px 26px;
+      gap: 22px;
     }
 
     #video-image-split-{{ section.id }} .vis-card-image-wrap {
-      flex: 0 0 38%;
-      max-width: 200px;
+      flex: 0 0 34%;
+      max-width: 190px;
     }
 
     #video-image-split-{{ section.id }} .vis-card-heading {
       font-size: 22px;
     }
+
+    #video-image-split-{{ section.id }} .vis-card-description {
+      font-size: 14px;
+      line-height: 1.55;
+    }
   }
 
-  @media only screen and (max-width: 580px) {
+  @media only screen and (max-width: 640px) {
     #video-image-split-{{ section.id }} {
       padding-top: 24px;
       padding-bottom: 24px;
@@ -408,28 +468,48 @@
       padding-right: 16px;
     }
 
+    #video-image-split-{{ section.id }} .vis-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
     #video-image-split-{{ section.id }} .vis-card {
-      flex-direction: row;
-      align-items: center;
-      padding: 16px;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 20px 18px;
       gap: 16px;
     }
 
     #video-image-split-{{ section.id }} .vis-card-image-wrap {
-      flex: 0 0 110px;
-      max-width: 110px;
-      height: 110px;
+      width: 100%;
+      max-width: 100%;
+      height: 190px;
+      aspect-ratio: 16 / 9;
+      flex: none;
       border-radius: 12px;
     }
 
     #video-image-split-{{ section.id }} .vis-card-heading {
-      font-size: 17px;
-      margin-bottom: 6px;
+      font-size: 19px;
+      line-height: 1.3;
+      margin-bottom: 8px;
     }
 
     #video-image-split-{{ section.id }} .vis-card-description {
-      font-size: 13px;
-      line-height: 1.4;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-btn-wrap {
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    #video-image-split-{{ section.id }} .vis-card-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px 20px;
+      font-size: 14px;
     }
 
     #video-image-split-{{ section.id }} .vis-play-btn {
@@ -563,13 +643,13 @@
       "type": "text",
       "id": "card_heading",
       "label": "Card Heading",
-      "default": "Your first step to good health"
+      "default": "From the Mountains, With a Story"
     },
     {
       "type": "textarea",
       "id": "card_description",
       "label": "Card Description",
-      "default": "Read up on health concerns, trusted ingredients and proven solutions"
+      "default": "Discover thoughtfully sourced Himalayan products rooted in tradition, authenticity, and the people behind them. Every product brings you a little closer to the mountains and the communities that make them special."
     },
     {
       "type": "color",
@@ -584,14 +664,15 @@
       "default": "#4B5563"
     },
     {
-      "type": "url",
-      "id": "card_link",
-      "label": "Card Link URL (Optional)"
-    },
-    {
       "type": "text",
       "id": "card_button_text",
-      "label": "Card Button Text (Optional)"
+      "label": "Button Text",
+      "default": "Shop Now →"
+    },
+    {
+      "type": "url",
+      "id": "card_link",
+      "label": "Button Link"
     },
     {
       "type": "header",

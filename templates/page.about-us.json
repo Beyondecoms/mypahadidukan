@@ -132,29 +132,29 @@
     "about_us_section_1_CrMYRe": {
       "type": "about-us-section-1",
       "blocks": {
-        "vision_pF3Dyn": {
-          "type": "vision",
-          "settings": {
-            "heading": "Our Vision",
-            "description": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
-          }
-        },
         "mission_hGJnTL": {
           "type": "mission",
           "settings": {
             "heading": "Our Mission",
-            "description": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+            "description": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all."
+          }
+        },
+        "values_x9Kp2L": {
+          "type": "values",
+          "settings": {
+            "heading": "Our Vision",
+            "values_list": "Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods.\n\nBut these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation.\n\nThis helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income.\n\nQuality products and solid on-ground impact! This is what we stand for in a nutshell."
           }
         }
       },
       "block_order": [
-        "vision_pF3Dyn",
-        "mission_hGJnTL"
+        "mission_hGJnTL",
+        "values_x9Kp2L"
       ],
       "name": "About Us Section 1",
       "settings": {
         "heading": "Welcome to My Pahadi Dukan",
-        "description": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>",
+        "description": "<p><strong>My Pahadi Dukan</strong> brings the authentic taste, traditions, and craftsmanship of the Himalayas closer to you. We work with passionate local entrepreneurs and communities to bring you indigenous, high-quality, and unadulterated products sourced directly from the mountains.</p><p>Our aim is to create a trusted connection between Himalayan producers and conscious consumers across India—making authentic Himalayan products more accessible while ensuring better opportunities and income for the people who create them.</p><p>Rooted in <strong>transparency, quality, purity, authenticity, and customer service</strong>, we believe every product should carry the true essence of its origin. From the mountains to your doorstep, <strong>My Pahadi Dukan is committed to bringing you genuine Himalayan goodness with purpose and integrity.</strong></p>",
         "bg_top": "#ffffff",
         "heading_color": "#1f2937",
         "body_color": "#4b5563",
@@ -287,7 +287,7 @@
       "settings": {
         "heading": "A Word from the Founders",
         "heading_color": "#111827",
-        "subheading": "This was my true calling during one of my travels to the mountains in North India. I was astounded by the amount of natural products and how little we know about these amazing.",
+        "subheading": "We didn’t set out to simply build a marketplace. We set out to build a connection.\nA connection between the people who grow and make products in the mountains and the people who value authenticity.\n\nMy Pahadi Dukan is our journey to make that connection real—honestly, transparently, and with the people behind every product at the heart of it.",
         "subheading_color": "#4b5563",
         "bg_color": "#ffffff",
         "avatar_size": 195,
@@ -508,18 +508,18 @@
       "name": "Video & Health Split",
       "settings": {
         "video_url": "https://www.youtube.com/watch?v=l2UO56rAZHc",
-        "play_btn_color": "#E53935",
-        "card_bg": "#FFF5D5",
-        "card_heading": "Your first step to good health",
-        "card_description": "Read up on health concerns, trusted ingredients and proven solutions",
-        "heading_color": "#1F2937",
-        "text_color": "#4B5563",
+        "play_btn_color": "#e53935",
+        "card_bg": "#fff5d5",
+        "card_heading": "From the Mountains, With a Story",
+        "card_description": "Explore authentic products sourced directly from the mountains, with purity, authenticity, and purpose at their core.",
+        "heading_color": "#1f2937",
+        "text_color": "#4b5563",
         "card_link": "",
         "card_button_text": "",
         "desktop_layout": "video_left",
         "container_width": "standard",
         "corner_radius": 16,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -615,6 +615,7 @@
         "text_zPPWXf",
         "text_7pdxVU"
       ],
+      "disabled": true,
       "name": "Custom content",
       "settings": {
         "heading": "",
@@ -706,6 +707,7 @@
         "iconbox_am3tnk",
         "iconbox_TjjHHU"
       ],
+      "disabled": true,
       "custom_css": [
         "responsive-image.m-image.m\\:w-full.m-image-loaded {width: 100%; height: 380px; object-fit: cover;}",
         ".m-icon-box__inner.m\\:flex-col.m\\:items-center {background: #ddb786; padding: 5px 5px; border-radius: 10px;}"
@@ -824,6 +826,7 @@
         "iconbox_Mr4AfH",
         "iconbox_VGLgaf"
       ],
+      "disabled": true,
       "name": "Featured promotion",
       "settings": {
         "container": "container-fluid",
@@ -854,6 +857,7 @@
     },
     "video_megPC6": {
       "type": "video",
+      "disabled": true,
       "name": "Video",
       "settings": {
         "container": "container",
@@ -910,6 +914,7 @@
         "text_EKJCXC",
         "button_y96re4"
       ],
+      "disabled": true,
       "name": "Rich text",
       "settings": {
         "container": "container",

@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <!-- 2. VISION + MISSION CARDS AREA -->
+  <!-- 2. VISION + MISSION + VALUES CARDS AREA -->
   <div class="about-us-section-1__cards-area">
     <div class="about-us-section-1__cards-container">
       {%- if section.blocks.size > 0 -%}
@@ -72,15 +72,43 @@
               assign block_heading = block.settings.heading
               assign block_description = block.settings.description
             -%}
-            <div class="about-us-section-1__card" {{ block.shopify_attributes }}>
+            <div class="about-us-section-1__card about-us-section-1__card--{{ block.type }}" {{ block.shopify_attributes }}>
               <div class="about-us-section-1__card-inner">
                 {%- if block_heading != blank -%}
                   <h3 class="about-us-section-1__card-heading">{{ block_heading | escape }}</h3>
                 {%- endif -%}
-                {%- if block_description != blank -%}
-                  <div class="about-us-section-1__card-description">
-                    <p>{{ block_description }}</p>
-                  </div>
+
+                {%- if block.type == 'values' -%}
+                  {%- assign values_content = block.settings.values_list | default: block_description -%}
+                  {%- if values_content != blank -%}
+                    <ul class="about-us-section-1__values-list">
+                      {%- assign val_lines = values_content | newline_to_br | split: '<br />' -%}
+                      {%- for val_line in val_lines -%}
+                        {%- assign clean_val = val_line | strip | remove: '<ul>' | remove: '</ul>' | remove: '<li>' | remove: '</li>' | remove: '<p>' | remove: '</p>' | strip -%}
+                        {%- if clean_val != blank -%}
+                          <li class="about-us-section-1__value-item">
+                            {% comment %} <span class="about-us-section-1__value-bullet">
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="10" cy="10" r="10" fill="#EBF4EC"/>
+                                <path d="M6 10.2L8.7 12.9L14 7.5" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </span> {% endcomment %}
+                            <span class="about-us-section-1__value-text">{{ clean_val }}</span>
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                {%- else -%}
+                  {%- if block_description != blank -%}
+                    <div class="about-us-section-1__card-description">
+                      {%- if block_description contains '<p>' -%}
+                        {{ block_description }}
+                      {%- else -%}
+                        <p>{{ block_description | newline_to_br }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
             </div>
@@ -166,7 +194,7 @@
 
   #about-us-section-1-{{ section.id }} .about-us-section-1__cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat({{ section.blocks.size | at_most: 3 | at_least: 1 }}, 1fr);
     gap: 32px;
     align-items: stretch;
   }
@@ -208,19 +236,53 @@
     letter-spacing: -0.01em;
   }
 
-  #about-us-section-1-{{ section.id }} .about-us-section-1__card-description {
+    #about-us-section-1-{{ section.id }} .about-us-section-1__card-description {
     color: var(--aus1-card-text-color);
     font-size: 15.5px;
     line-height: 1.65;
   }
 
   #about-us-section-1-{{ section.id }} .about-us-section-1__card-description p {
-    margin: 0;
+    margin: 0 0 12px 0;
     color: inherit;
     font-size: inherit;
     line-height: inherit;
     overflow-wrap: break-word;
     word-break: break-word;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__card-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- VALUES LIST STYLING --- */
+  #about-us-section-1-{{ section.id }} .about-us-section-1__values-list {
+    list-style: none;
+    padding: 0;
+    margin: 4px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    width: fit-content;
+    text-align: left;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__value-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--aus1-card-text-color);
+    font-size: 15.5px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  #about-us-section-1-{{ section.id }} .about-us-section-1__value-bullet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   /* --- RESPONSIVE / MOBILE STYLES --- */
@@ -235,6 +297,7 @@
     }
 
     #about-us-section-1-{{ section.id }} .about-us-section-1__cards-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
 
@@ -291,6 +354,14 @@
       font-size: 14.5px;
       line-height: 1.6;
     }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__values-list {
+      gap: 10px;
+    }
+
+    #about-us-section-1-{{ section.id }} .about-us-section-1__value-item {
+      font-size: 14.5px;
+    }
   }
 </style>
 
@@ -314,7 +385,7 @@
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>"
+      "default": "<p>Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>"
     },
     {
       "type": "color",
@@ -465,7 +536,6 @@
     {
       "type": "vision",
       "name": "Vision Card",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -477,14 +547,13 @@
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
+          "default": "Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell."
         }
       ]
     },
     {
       "type": "mission",
       "name": "Mission Card",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -496,7 +565,26 @@
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+          "default": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all."
+        }
+      ]
+    },
+    {
+      "type": "values",
+      "name": "Values Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our Values"
+        },
+        {
+          "type": "textarea",
+          "id": "values_list",
+          "label": "Values List (one per line)",
+          "default": "Transparency\nQuality\nPurity\nAuthenticity\nCustomer Service",
+          "info": "Enter each value on a new line."
         }
       ]
     },
@@ -524,7 +612,7 @@
       "name": "About Us Section 1",
       "settings": {
         "heading": "Welcome to My Pahadi Dukan",
-        "description": "<p>To our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>",
+        "description": "<p>Our founders are avid travellers. And travelling over the years, they frequently came across many small businesses selling indigenous, organic and unadulterated goods. But these gems were tucked away in the mountains. We aim to provide a platform for all these budding entrepreneurs to connect with people throughout the length and breadth of the nation. This helps our eco-conscious buyers get high-quality products at affordable prices. And the absence of intermediaries increases our sellers’ income. Quality products and solid on-ground impact! This is what we stand for in a nutshell.</p>",
         "bg_top": "#FFFFFF",
         "bg_cards_area": "#F7F3EB",
         "heading_color": "#1F2937",
@@ -544,17 +632,17 @@
       },
       "blocks": [
         {
-          "type": "vision",
-          "settings": {
-            "heading": "Our Vision",
-            "description": "To bridge the gap between incredible local products and the people who’re looking for truly authentic products"
-          }
-        },
-        {
           "type": "mission",
           "settings": {
             "heading": "Our Mission",
-            "description": "To give emerging businesses a platform to reach customers across the country while making high-quality, authentic products more accessible to conscious customers"
+            "description": "We are building the world's first source-to-table Premium Himalayan brand that makes high-quality and authentic Himalayan produce accessible to all."
+          }
+        },
+        {
+          "type": "values",
+          "settings": {
+            "heading": "Our Values",
+            "values_list": "Transparency\nQuality\nPurity\nAuthenticity\nCustomer Service"
           }
         }
       ]
