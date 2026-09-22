@@ -465,6 +465,7 @@
         "video_url": "https://www.youtube.com/watch?v=l2UO56rAZHc",
         "play_btn_color": "#e53935",
         "card_bg": "#fff5d5",
+        "card_image": "shopify://shop_images/Section_10.jpg",
         "card_heading": "From the Mountains, With a Story",
         "card_description": "Explore authentic products sourced directly from the mountains, with purity, authenticity, and purpose at their core.",
         "heading_color": "#1f2937",
