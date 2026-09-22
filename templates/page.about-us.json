@@ -20,68 +20,8 @@
         "slider_item_cdPg7X": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/B2_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
-            "content_in_container": false,
-            "content_position": "center middle",
-            "text_alignment": "center",
-            "text_size": "medium",
-            "text_color": "black",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "image_link": "",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "m-button--primary",
-            "button_size": "",
-            "second_button_text": "",
-            "second_button_link": "",
-            "second_button_style": "m-button--primary",
-            "second_button_size": "",
-            "show_footer": false,
-            "footer_alignment": "end",
-            "footer_text": "New Collection",
-            "footer_button": "Shop Now",
-            "footer_link": "",
-            "enable_preload_image": false
-          }
-        },
-        "slider_item_tJdzXj": {
-          "type": "slider_item",
-          "settings": {
-            "background": "shopify://shop_images/B2_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
-            "content_in_container": false,
-            "content_position": "center middle",
-            "text_alignment": "center",
-            "text_size": "medium",
-            "text_color": "black",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "image_link": "",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "m-button--primary",
-            "button_size": "",
-            "second_button_text": "",
-            "second_button_link": "",
-            "second_button_style": "m-button--primary",
-            "second_button_size": "",
-            "show_footer": false,
-            "footer_alignment": "end",
-            "footer_text": "New Collection",
-            "footer_button": "Shop Now",
-            "footer_link": "",
-            "enable_preload_image": false
-          }
-        },
-        "slider_item_cjTPFg": {
-          "type": "slider_item",
-          "settings": {
-            "background": "shopify://shop_images/B2_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
+            "background": "shopify://shop_images/Hero_Banner_2.jpg",
+            "mb_background": "shopify://shop_images/Hero_Banner_2.jpg",
             "content_in_container": false,
             "content_position": "center middle",
             "text_alignment": "center",
@@ -109,9 +49,7 @@
         }
       },
       "block_order": [
-        "slider_item_cdPg7X",
-        "slider_item_tJdzXj",
-        "slider_item_cjTPFg"
+        "slider_item_cdPg7X"
       ],
       "name": "Slideshow",
       "settings": {
@@ -179,9 +117,8 @@
         "slide_GnbJr6": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/B3_Desktop.jpg",
+            "image": "shopify://shop_images/Customer_Service.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/B4_Mobile.jpg",
             "alt_text": "Health is not just an option - Point 1",
             "link": ""
           }
@@ -189,9 +126,8 @@
         "slide_pAyfd3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/B1_Desktop.jpg",
+            "image": "shopify://shop_images/Quality.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/B1_Mobile.jpg",
             "alt_text": "Health is not just an option - Point 2",
             "link": ""
           }
@@ -199,9 +135,26 @@
         "slide_hGayGU": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/B4_Desktop.jpg",
+            "image": "shopify://shop_images/Purity.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/B3_Mobile.jpg",
+            "alt_text": "Health is not just an option - Point 3",
+            "link": ""
+          }
+        },
+        "slide_LKBPez": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Transparency.jpg",
+            "image_by_url": "",
+            "alt_text": "Health is not just an option - Point 3",
+            "link": ""
+          }
+        },
+        "slide_bhyaTY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Authenticity.jpg",
+            "image_by_url": "",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -210,7 +163,9 @@
       "block_order": [
         "slide_GnbJr6",
         "slide_pAyfd3",
-        "slide_hGayGU"
+        "slide_hGayGU",
+        "slide_LKBPez",
+        "slide_bhyaTY"
       ],
       "name": "Fun Points",
       "settings": {
@@ -514,8 +469,8 @@
         "card_description": "Explore authentic products sourced directly from the mountains, with purity, authenticity, and purpose at their core.",
         "heading_color": "#1f2937",
         "text_color": "#4b5563",
-        "card_link": "",
         "card_button_text": "",
+        "card_link": "",
         "desktop_layout": "video_left",
         "container_width": "standard",
         "corner_radius": 16,
