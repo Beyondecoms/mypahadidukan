@@ -21,7 +21,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/Hero_Banner_2.jpg",
-            "mb_background": "shopify://shop_images/Hero_Banner_2.jpg",
+            "mb_background": "shopify://shop_images/Hero_Banner_Mobile_50cd7a9f-bedc-41c7-bc84-8eefadd40e3b.jpg",
             "content_in_container": false,
             "content_position": "center middle",
             "text_alignment": "center",
@@ -119,6 +119,7 @@
           "settings": {
             "image": "shopify://shop_images/Customer_Service.jpg",
             "image_by_url": "",
+            "mobile_image": "shopify://shop_images/Customer_Service_e01c5b2c-e730-4638-9397-a8a1c7e7e93a.jpg",
             "alt_text": "Health is not just an option - Point 1",
             "link": ""
           }
@@ -128,6 +129,7 @@
           "settings": {
             "image": "shopify://shop_images/Quality.jpg",
             "image_by_url": "",
+            "mobile_image": "shopify://shop_images/Quality_3e6e1999-da1c-4527-b857-e5d288bfc874.jpg",
             "alt_text": "Health is not just an option - Point 2",
             "link": ""
           }
@@ -137,6 +139,7 @@
           "settings": {
             "image": "shopify://shop_images/Purity.jpg",
             "image_by_url": "",
+            "mobile_image": "shopify://shop_images/Purity_4fed3d14-e08e-418b-b010-2ae3e433dacd.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -146,6 +149,7 @@
           "settings": {
             "image": "shopify://shop_images/Transparency.jpg",
             "image_by_url": "",
+            "mobile_image": "shopify://shop_images/Transparency_da2900a8-9835-4077-b819-1e03817bdeed.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -155,6 +159,7 @@
           "settings": {
             "image": "shopify://shop_images/Authenticity.jpg",
             "image_by_url": "",
+            "mobile_image": "shopify://shop_images/Authenticity_5b98e214-c71c-4795-9f8c-7510f14ca709.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
