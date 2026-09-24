@@ -42,7 +42,7 @@
           </svg> {% endcomment %}
              <img src="https://cdn.shopify.com/s/files/1/0718/1195/7046/files/cart-removebg-preview.png?v=1757503244" alt="bottom cart icon">
 
-          <m-cart-count class="msb--badge{% if cart == empty %} m:hidden{% endif %}">
+          <m-cart-count class="m-cart-count-bubble m-cart-count msb--badge{% if cart == empty %} m:hidden{% endif %}" data-cart-count>
             {%- if cart.item_count < 100 -%}{{- cart.item_count -}}{%- else -%}99+{%- endif -%}
           </m-cart-count>
           <span>Cart</span>
@@ -249,6 +249,12 @@ m-search-popup.m-mobile-sticky-bar--item > .msb--link {
   z-index: 1 !important;
 }
 
+.msb--badge.m\:hidden,
+.msb--badge[hidden],
+m-cart-count.msb--badge.m\:hidden {
+  display: none !important;
+}
+
 /* ── Wishlist badge ── */
 .m-wishlist-count {
   position: absolute !important;
@@ -308,10 +314,137 @@ m-search-popup.m-mobile-sticky-bar--item {
     });
     observer.observe(headerSearch, { attributes: true, attributeFilter: ['open'] });
   }
+
+  function updateAllCartBadges(count) {
+    var num = parseInt(count, 10);
+    if (isNaN(num)) num = 0;
+    var displayText = num < 100 ? String(num) : '99+';
+    var isHidden = num <= 0;
+
+    var msbBadges = document.querySelectorAll('.m-mobile-sticky-bar .msb--badge, .m-mobile-sticky-bar m-cart-count');
+    msbBadges.forEach(function(badge) {
+      badge.textContent = displayText;
+      if (isHidden) {
+        badge.classList.add('m:hidden');
+      } else {
+        badge.classList.remove('m:hidden');
+      }
+    });
+
+    var msbLinks = document.querySelectorAll('.m-mobile-sticky-bar .m-cart-icon-bubble');
+    msbLinks.forEach(function(link) {
+      link.setAttribute('aria-label', num + ' items in cart');
+    });
+  }
+
+  function fetchLatestCart() {
+    fetch('/cart.js', { credentials: 'same-origin' })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Network response not ok');
+        return res.json();
+      })
+      .then(function(cart) {
+        if (cart && typeof cart.item_count !== 'undefined') {
+          updateAllCartBadges(cart.item_count);
+        }
+      })
+      .catch(function() {});
+  }
+
+  function syncFromHeaderBadge() {
+    var headerBadge = document.querySelector('header m-cart-count, .m-header m-cart-count, .m-header .m-cart-count-bubble, .m-header .m-cart-count');
+    if (!headerBadge) {
+      headerBadge = document.querySelector('.m-cart-icon-bubble:not(.msb--link) m-cart-count, .m-cart-icon-bubble:not(.msb--link) .m-cart-count');
+    }
+    if (!headerBadge) return;
+
+    var text = (headerBadge.textContent || headerBadge.innerText || '').trim();
+    var num = parseInt(text, 10);
+    var isHidden = headerBadge.classList.contains('m:hidden') || isNaN(num) || num <= 0;
+
+    var msbBadges = document.querySelectorAll('.m-mobile-sticky-bar .msb--badge, .m-mobile-sticky-bar m-cart-count');
+    msbBadges.forEach(function(badge) {
+      if (isHidden) {
+        badge.textContent = isNaN(num) ? '0' : String(num);
+        badge.classList.add('m:hidden');
+      } else {
+        badge.textContent = text;
+        badge.classList.remove('m:hidden');
+      }
+    });
+  }
+
+  function initStickyBarCartSync() {
+    syncFromHeaderBadge();
+
+    // Observe header cart badge for changes
+    var headerBadge = document.querySelector('header m-cart-count, .m-header m-cart-count, .m-header .m-cart-count-bubble, .m-header .m-cart-count');
+    if (!headerBadge) {
+      headerBadge = document.querySelector('.m-cart-icon-bubble:not(.msb--link) m-cart-count, .m-cart-icon-bubble:not(.msb--link) .m-cart-count');
+    }
+    if (headerBadge) {
+      var headerObserver = new MutationObserver(function() {
+        syncFromHeaderBadge();
+      });
+      headerObserver.observe(headerBadge, {
+        childList: true,
+        characterData: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'style', 'hidden']
+      });
+    }
+
+    // Direct cart events
+    ['cart:updated', 'cart:refresh', 'cart:item-added', 'minimog:cart:item-added', 'm:cart:item-added', 'product-ajax:added'].forEach(function(evtName) {
+      document.addEventListener(evtName, function(e) {
+        if (e && e.detail && e.detail.cart && typeof e.detail.cart.item_count !== 'undefined') {
+          updateAllCartBadges(e.detail.cart.item_count);
+        } else {
+          fetchLatestCart();
+        }
+      });
+    });
+
+    if (window.MinimogEvents && window.MinimogTheme && window.MinimogTheme.pubSubEvents) {
+      try {
+        window.MinimogEvents.subscribe(window.MinimogTheme.pubSubEvents.cartUpdate, function(data) {
+          if (data && data.cart && typeof data.cart.item_count !== 'undefined') {
+            updateAllCartBadges(data.cart.item_count);
+          } else {
+            fetchLatestCart();
+          }
+        });
+      } catch (e) {}
+    }
+
+    // Intercept cart fetch calls
+    var origFetch = window.fetch;
+    if (origFetch && !window._msbFetchPatched) {
+      window._msbFetchPatched = true;
+      window.fetch = function() {
+        var args = arguments;
+        var url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url ? args[0].url : '');
+        var promise = origFetch.apply(this, args);
+        if (url && (url.indexOf('/cart/add') !== -1 || url.indexOf('/cart/change') !== -1 || url.indexOf('/cart/clear') !== -1 || url.indexOf('/cart/update') !== -1)) {
+          promise.then(function() {
+            setTimeout(fetchLatestCart, 150);
+            setTimeout(fetchLatestCart, 600);
+          }).catch(function() {});
+        }
+        return promise;
+      };
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSearchBtn);
+    document.addEventListener('DOMContentLoaded', function() {
+      initSearchBtn();
+      initStickyBarCartSync();
+    });
   } else {
     initSearchBtn();
+    initStickyBarCartSync();
   }
 })();
 </script>

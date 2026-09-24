@@ -2393,15 +2393,46 @@ if (!customElements.get("m-cart-count")) {
     }
 
     onCartUpdate(event) {
-      if (event.cart.errors) return;
-      const sectionToRender = new DOMParser().parseFromString(event.cart.sections[this.sectionName], 'text/html');
-      this.onUpdate(sectionToRender);
+      if (!event || !event.cart || event.cart.errors) return;
+      if (event.cart.sections && event.cart.sections[this.sectionName]) {
+        try {
+          const sectionToRender = new DOMParser().parseFromString(event.cart.sections[this.sectionName], 'text/html');
+          const countElem = sectionToRender.querySelector('.m-cart-count');
+          if (countElem) {
+            this.onUpdate(sectionToRender);
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      if (typeof event.cart.item_count !== 'undefined') {
+        const count = event.cart.item_count;
+        this.innerText = count < 100 ? count : '99+';
+        const method = count === 0 ? 'add' : 'remove';
+        this.classList[method]('m:hidden');
+      } else {
+        fetch(window.MinimogSettings ? window.MinimogSettings.routes.cart + '.js' : '/cart.js')
+          .then(res => res.json())
+          .then(cart => {
+            if (cart && typeof cart.item_count !== 'undefined') {
+              const count = cart.item_count;
+              this.innerText = count < 100 ? count : '99+';
+              const method = count === 0 ? 'add' : 'remove';
+              this.classList[method]('m:hidden');
+            }
+          })
+          .catch(() => {});
+      }
     }
 
     onUpdate(section) {
-      this.innerText = section.querySelector('.m-cart-count').innerText;
-      const method = this.itemCount === 0 ? 'add' : 'remove';
-      this.classList[method]('m:hidden');
+      const countElem = section && section.querySelector ? section.querySelector('.m-cart-count') : null;
+      if (countElem) {
+        this.innerText = countElem.innerText;
+        const method = this.itemCount === 0 ? 'add' : 'remove';
+        this.classList[method]('m:hidden');
+      }
     }
   }
   customElements.define('m-cart-count', MCartCount);
