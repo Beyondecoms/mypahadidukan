@@ -247,6 +247,16 @@
   .m-sticky-addtocart button[name="add"] * {
     color: #ffffff !important;
   }
+
+  /* Vendor Badge - remove border, background, and horizontal padding */
+  .mpd-vendor-badge,
+  .mpd-vendor-badge--card {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 {%- endstyle -%}
 
 {% if request.path == '/challenge' %}

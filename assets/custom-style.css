@@ -141,6 +141,8 @@
 .mpd-vendor-badge {
   text-decoration: none;
   margin-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Minimal Style (Matches image: Vendor Name >) */
