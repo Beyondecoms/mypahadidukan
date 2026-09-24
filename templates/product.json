@@ -27,6 +27,17 @@
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
+        "vendor_badge_zYHnxf": {
+          "type": "vendor_badge",
+          "settings": {
+            "show_badge": true,
+            "badge_style": "minimal",
+            "eyebrow_text": "Official Store",
+            "show_icon": false,
+            "show_arrow": true,
+            "custom_link": ""
+          }
+        },
         "badge_ChqgGj": {
           "type": "badge",
           "settings": {}
@@ -202,6 +213,7 @@
       },
       "block_order": [
         "judge_me_reviews_preview_badge_KaNw4T",
+        "vendor_badge_zYHnxf",
         "badge_ChqgGj",
         "title",
         "price",
