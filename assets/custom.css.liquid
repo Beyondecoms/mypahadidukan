@@ -114,10 +114,10 @@ button.m-product-form.m\:w-full.m-product-quickview-button.m-spinner-button.m-bu
 }
 
 button.m-add-to-cart.m-spinner-button.m\:w-full.m-button.m-button--secondary{
-    background:#c0503b;
-  font-size:15px;
-    color: white;
-    border-color: transparent;
+    background:#e8513f !important;
+    font-size:15px;
+    color: white !important;
+    border-color: transparent !important;
 }
 
 h2.m-section__heading.h3.m-scroll-trigger.animate--fade-in-up{
@@ -566,14 +566,14 @@ button.m-product-form.m\:w-full.m-product-quickview-button.m-spinner-button.m-bu
   display:none;
 }
 .m-product-form .m-add-to-cart {
-      display: flex;
+    display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px;
     justify-content: center;
-        background: #c0503b;
-    color: white;
-    border-color: transparent;
+    background: #e8513f !important;
+    color: white !important;
+    border-color: #e8513f !important;
 }
 button.m-product-form {
     display: flex;
@@ -4369,3 +4369,40 @@ html, body {
   box-shadow: none !important;
 }
 
+/* Add To Cart Buttons Color #e8513f across PDP & Sticky Add To Cart */
+.m-product-form .m-add-to-cart,
+.main-product__block-buy_buttons .m-add-to-cart,
+.m-sticky-addtocart .m-add-to-cart,
+.m-sticky-addtocart button[name="add"],
+.m-product-form button[name="add"],
+button[name="add"].m-add-to-cart,
+.m-add-to-cart.m-button--primary,
+.m-add-to-cart.m-button--secondary {
+  background-color: #e8513f !important;
+  background: #e8513f !important;
+  color: #ffffff !important;
+  border-color: #e8513f !important;
+}
+
+.m-product-form .m-add-to-cart:hover,
+.main-product__block-buy_buttons .m-add-to-cart:hover,
+.m-sticky-addtocart .m-add-to-cart:hover,
+.m-sticky-addtocart button[name="add"]:hover,
+.m-product-form button[name="add"]:hover,
+button[name="add"].m-add-to-cart:hover,
+.m-add-to-cart.m-button--primary:hover,
+.m-add-to-cart.m-button--secondary:hover {
+  background-color: #d4402e !important;
+  background: #d4402e !important;
+  color: #ffffff !important;
+  border-color: #d4402e !important;
+}
+
+.m-product-form .m-add-to-cart *,
+.main-product__block-buy_buttons .m-add-to-cart *,
+.m-sticky-addtocart .m-add-to-cart *,
+.m-sticky-addtocart button[name="add"] *,
+.m-product-form button[name="add"] *,
+button[name="add"].m-add-to-cart * {
+  color: #ffffff !important;
+}

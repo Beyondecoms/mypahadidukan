@@ -140,6 +140,7 @@
 /* MPD Vendor Badge */
 .mpd-vendor-badge {
   text-decoration: none;
+  margin-bottom: 0 !important;
 }
 
 /* Minimal Style (Matches image: Vendor Name >) */
@@ -252,3 +253,45 @@
   max-height: 17px !important;
   display: block;
 }
+
+/* Add To Cart Buttons Color #e8513f across PDP & Sticky Add To Cart */
+.m-add-to-cart,
+button[name="add"],
+.m-product-form .m-add-to-cart,
+.main-product__block-buy_buttons .m-add-to-cart,
+.m-sticky-addtocart .m-add-to-cart,
+.m-sticky-addtocart button[name="add"],
+.m-product-form button[name="add"],
+button[name="add"].m-add-to-cart,
+.m-add-to-cart.m-button--primary,
+.m-add-to-cart.m-button--secondary,
+.m-button.m-add-to-cart {
+  background-color: #e8513f !important;
+  background: #e8513f !important;
+  color: #ffffff !important;
+  border-color: #e8513f !important;
+}
+
+.m-add-to-cart:hover,
+button[name="add"]:hover,
+.m-product-form .m-add-to-cart:hover,
+.main-product__block-buy_buttons .m-add-to-cart:hover,
+.m-sticky-addtocart .m-add-to-cart:hover,
+.m-sticky-addtocart button[name="add"]:hover,
+.m-product-form button[name="add"]:hover,
+button[name="add"].m-add-to-cart:hover,
+.m-add-to-cart.m-button--primary:hover,
+.m-add-to-cart.m-button--secondary:hover,
+.m-button.m-add-to-cart:hover {
+  background-color: #d4402e !important;
+  background: #d4402e !important;
+  color: #ffffff !important;
+  border-color: #d4402e !important;
+}
+
+.m-add-to-cart *,
+button[name="add"] *,
+.m-sticky-addtocart .m-add-to-cart *,
+.m-sticky-addtocart button[name="add"] * {
+  color: #ffffff !important;
+}
