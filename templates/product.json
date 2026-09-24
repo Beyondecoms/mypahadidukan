@@ -792,6 +792,7 @@
     },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
         "container": "container-fluid",
         "color_scheme": "",
