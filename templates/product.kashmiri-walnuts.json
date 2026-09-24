@@ -39,6 +39,7 @@
         },
         "badge_ChqgGj": {
           "type": "badge",
+          "disabled": true,
           "settings": {}
         },
         "title": {
