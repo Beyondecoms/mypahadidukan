@@ -287,6 +287,7 @@
         },
         "category_8": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "title": "",
             "image": "shopify://shop_images/Link_1.png",
@@ -296,6 +297,7 @@
         },
         "category_9": {
           "type": "category",
+          "disabled": true,
           "settings": {
             "title": "",
             "image": "shopify://shop_images/Link_mask-group_1.png",
