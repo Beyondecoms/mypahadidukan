@@ -184,14 +184,14 @@
             <responsive-image class="m-image" style="--aspect-ratio: {{ asp_rat }}">
               {{
                 preview_image
-                | image_url: width: 1100
+                | image_url: width: 535
                 | image_tag:
                   loading: loading,
                   fetchpriority: fetchpriority,
                   class: 'm:w-full m:h-full',
                   alt: alt,
                   sizes: sizes,
-                  widths: '165, 360, 535, 750, 940, 1100'
+                  widths: '165, 330, 535, 750'
               }}
             </responsive-image>
           </div>
@@ -206,14 +206,14 @@
               <responsive-image class="m-image" style="--aspect-ratio: {{ asp_rat }}">
                 {{
                   second_image
-                  | image_url: width: 1100
+                  | image_url: width: 535
                   | image_tag:
-                    loading: loading,
-                    fetchpriority: fetchpriority,
+                    loading: 'lazy',
+                    fetchpriority: 'low',
                     class: 'm:w-full m:h-full',
                     alt: alt,
                     sizes: sizes,
-                    widths: '165, 360, 535, 750, 940, 1100'
+                    widths: '165, 330, 535, 750'
                 }}
               </responsive-image>
             </div>
@@ -546,7 +546,14 @@
       height: auto !important;
       display: flex !important;
       align-items: center !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
       gap: 4px !important;
+    }
+    .m-product-card--style-4 .m-product-card__reviews * {
+      white-space: nowrap !important;
+      flex-wrap: nowrap !important;
     }
 
     .m-product-card--style-4 .m-product-card__vendor {
@@ -719,18 +726,88 @@
       .m-product-card--style-4 {
         padding: 0 !important;
         border-radius: 10px !important;
+        height: 100% !important;
       }
       .m-product-card--style-4 .m-product-card__content {
         padding: 0 10px 10px 10px !important;
+        flex: 1 1 auto !important;
       }
       .m-product-card--style-4 .m-product-card__media {
         margin-bottom: 8px !important;
       }
       .m-product-card--style-4 .m-product-card__name {
         font-size: 13px !important;
+        line-height: 1.3 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        height: 3.8em !important;
+        max-height: 3.8em !important;
       }
       .m-product-card--style-4 .m-product-card__description {
         font-size: 11px !important;
+        line-height: 1.3 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        height: 2.6em !important;
+      }
+      .m-product-card--style-4 .m-product-card__price-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        gap: 4px !important;
+        width: 100% !important;
+      }
+      .m-product-card--style-4 .m-product-card__price {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+      }
+      .m-product-card--style-4 .meta-offer-list {
+        max-width: 100% !important;
+        width: auto !important;
+        align-items: flex-start !important;
+        background: #fde8e5 !important;
+        padding: 3px 8px !important;
+        border-radius: 6px !important;
+        margin-top: 2px !important;
+      }
+      .m-product-card--style-4 .meta-offer-list span {
+        white-space: nowrap !important;
+        text-align: left !important;
+      }
+      .m-product-card--style-4 .meta-offer-msg,
+      .m-product-card--style-4 .meta-offer-code {
+        text-align: left !important;
+        font-size: 10px !important;
+      }
+      .m-product-card--style-4 .m-product-card__reviews {
+        font-size: 11px !important;
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
+        overflow: hidden !important;
+      }
+      .m-product-card--style-4 .m-product-card__reviews * {
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
+        font-size: 11px !important;
+      }
+      .m-product-card--style-4 .m-product-card__reviews .jdgm-prev-badge {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 3px !important;
+      }
+      .m-product-card--style-4 .m-product-card__reviews .jdgm-prev-badge__text {
+        white-space: nowrap !important;
+        font-size: 11px !important;
+        display: inline-block !important;
       }
       .m-product-card--style-4 .m-product-card__price span.m-price-item.m-price-item--regular {
         font-size: 14px !important;

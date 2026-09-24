@@ -52,6 +52,7 @@ class MCartDrawer extends HTMLElement {
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     this.classList.add("m-cart-drawer--active");
+    document.body.classList.add("cart-drawer-open");
     document.documentElement.classList.add("prevent-scroll");
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -67,6 +68,7 @@ class MCartDrawer extends HTMLElement {
     this.style.setProperty("--translate-x", "100%");
     setTimeout(() => {
       this.classList.remove("m-cart-drawer--active");
+      document.body.classList.remove("cart-drawer-open");
       document.documentElement.classList.remove("prevent-scroll");
     }, 300);
   }

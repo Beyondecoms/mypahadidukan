@@ -179,8 +179,13 @@ body .m-product-card__tag-name{
     width: 100% !important;
 }
   .m-main-product--wrapper.m\:flex.m\:flex-wrap {
-    margin: 0 -16px !important;
+    margin: 0 0 !important;
 }
+
+.m-main-product--info.m\:column.m\:w-full.md\:m\:w-1\/2{
+  padding: 0px;
+}
+
   .m-product-media--slider__pagination.swiper-pagination.m\:w-full.\!md\:m\:hidden.swiper-pagination-clickable.swiper-pagination-bullets {
     position: absolute;
     bottom: 0;
@@ -1032,10 +1037,14 @@ h2.m-section__heading.h3{
 span.m-product-card__tag-name.m-product-tag.m-product-tag--hot.m-gradient.m-color-badge-hot {
     background: #c0503b !important;
 }
+.lab-certificate__bottom-text{
+  margin-top: 1rem;
+}
 
 h2.m-section__heading.h3 {
     color: #000000;
-   text-transform: uppercase;
+    margin-bottom: 1rem;
+   text-transform: capitalize;
 }
 
 .m-footer--middle::after {
@@ -1717,23 +1726,72 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
   outline: none;
 }
 
-/* ─── Add to Cart Button ─── */
-.m-product-quickview--info .m-add-to-cart {
-  position: relative;
-  overflow: hidden;
-  color: white !important;
+/* ─── Quick View Buttons (Identical Sizing & Alignment) ─── */
+.m-product-quickview--info .m-add-to-cart,
+.m-product-quickview--info #gokwik-buy-now,
+.m-product-quickview .m-add-to-cart,
+.m-product-quickview #gokwik-buy-now,
+#MainProduct-quick-view__content .m-add-to-cart,
+#MainProduct-quick-view__content #gokwik-buy-now,
+#product-form-product-quickview .m-add-to-cart,
+#product-form-product-quickview #gokwik-buy-now {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
   border: none !important;
-  border-radius: var(--qv-radius-md) !important;
+  border-radius: 14px !important;
   font-size: 1.0625rem !important;
   font-weight: 700 !important;
-  cursor: pointer;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
   transition: var(--qv-transition);
-  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.3) !important;
-  text-transform: none !important;
-  letter-spacing: 0.01em !important;
 }
 
-.m-product-quickview--info .m-add-to-cart::before {
+.m-product-quickview--info .m-add-to-cart *,
+.m-product-quickview--info #gokwik-buy-now *,
+.m-product-quickview .m-add-to-cart *,
+.m-product-quickview #gokwik-buy-now *,
+#MainProduct-quick-view__content .m-add-to-cart *,
+#MainProduct-quick-view__content #gokwik-buy-now *,
+#product-form-product-quickview .m-add-to-cart *,
+#product-form-product-quickview #gokwik-buy-now * {
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+/* Hide Shopify native checkout button to prevent duplicate Buy It Now buttons */
+.m-product-form--wrapper .m-product-dynamic-checkout,
+.m-product-quickview--info .m-product-dynamic-checkout,
+.m-product-quickview .m-product-dynamic-checkout,
+#MainProduct-quick-view__content .m-product-dynamic-checkout,
+#product-form-product-quickview .m-product-dynamic-checkout {
+  display: none !important;
+}
+
+.m-product-quickview--info .m-add-to-cart,
+.m-product-quickview .m-add-to-cart,
+#MainProduct-quick-view__content .m-add-to-cart,
+#product-form-product-quickview .m-add-to-cart {
+  position: relative;
+  overflow: hidden;
+  background-color: #ba5d37 !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(186, 93, 55, 0.3) !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+  order: 2 !important;
+}
+
+.m-product-quickview--info .m-add-to-cart::before,
+.m-product-quickview .m-add-to-cart::before,
+#MainProduct-quick-view__content .m-add-to-cart::before,
+#product-form-product-quickview .m-add-to-cart::before {
   content: '';
   position: absolute;
   top: 0;
@@ -1744,35 +1802,47 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
   transition: 0.5s;
 }
 
-.m-product-quickview--info .m-add-to-cart:hover {
+.m-product-quickview--info .m-add-to-cart:hover,
+.m-product-quickview .m-add-to-cart:hover,
+#MainProduct-quick-view__content .m-add-to-cart:hover,
+#product-form-product-quickview .m-add-to-cart:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(45, 106, 79, 0.4) !important;
+  box-shadow: 0 8px 25px rgba(186, 93, 55, 0.4) !important;
 }
 
-.m-product-quickview--info .m-add-to-cart:hover::before {
+.m-product-quickview--info .m-add-to-cart:hover::before,
+.m-product-quickview .m-add-to-cart:hover::before,
+#MainProduct-quick-view__content .m-add-to-cart:hover::before,
+#product-form-product-quickview .m-add-to-cart:hover::before {
   left: 100%;
 }
 
-.m-product-quickview--info .m-add-to-cart:active {
+.m-product-quickview--info .m-add-to-cart:active,
+.m-product-quickview .m-add-to-cart:active,
+#MainProduct-quick-view__content .m-add-to-cart:active,
+#product-form-product-quickview .m-add-to-cart:active {
   transform: translateY(0);
 }
 
 /* ─── Buy It Now Buttons ─── */
-.m-product-quickview--info .shopify-payment-button__button--unbranded,
-.m-product-quickview--info #gokwik-buy-now {
-  background: linear-gradient(135deg, var(--qv-primary-dark) 0%, var(--qv-primary) 100%) !important;
+.m-product-quickview--info #gokwik-buy-now,
+.m-product-quickview #gokwik-buy-now,
+#MainProduct-quick-view__content #gokwik-buy-now,
+#product-form-product-quickview #gokwik-buy-now {
+  background: linear-gradient(135deg, var(--qv-primary-dark, #18332e) 0%, var(--qv-primary, #18332e) 100%) !important;
   color: white !important;
-  border: none !important;
-  border-radius: var(--qv-radius-md) !important;
-  padding: 14px 32px !important;
-  font-size: 1.0625rem !important;
-  font-weight: 700 !important;
-  cursor: pointer;
-  transition: var(--qv-transition);
   box-shadow: 0 4px 14px rgba(27, 67, 50, 0.3) !important;
-  width: 100% !important;
-  margin-top: 12px !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  order: 3 !important;
+}
+
+.m-product-quickview--info #gokwik-buy-now:hover,
+.m-product-quickview #gokwik-buy-now:hover,
+#MainProduct-quick-view__content #gokwik-buy-now:hover,
+#product-form-product-quickview #gokwik-buy-now:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(27, 67, 50, 0.4) !important;
 }
 
 .m-product-title a {
@@ -1809,8 +1879,12 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
 
 /* ─── Responsive Design ─── */
 @media (max-width: 768px) {
+  .main-product__block-variant_picker .m-variant-carousel,
+  .m-product-option--content.m-product-option--carousel.m\:inline-flex.has-group-badges{
+    margin-bottom: 0px !important;
+  }
   .m-product-quickview--info .m-product-info--wrapper {
-    padding: 20px 16px calc(90px + env(safe-area-inset-bottom)) 16px !important;
+    padding: 16px 16px 20px 16px !important;
   }
 .m-product-quickview--info .main-product__block-title{
   margin-bottom: 5px;
@@ -1849,14 +1923,53 @@ padding-top: calc(75% / (0.0001 + var(--aspect-ratio, 16 / 3))) !important;
     min-height: 110px;
   }
 
-  .m-product-quickview--info .m-product-form--wrapper {
+  .m-product-quickview--info .m-product-form--wrapper,
+  .m-product-quickview .m-product-form--wrapper,
+  #product-form-product-quickview .m-product-form--wrapper {
     flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  .m-product-quickview--info .m-product-form--input,
+  .m-product-quickview .m-product-form--input,
+  #product-form-product-quickview .m-product-form--input {
+    order: 1 !important;
+    margin-bottom: 12px !important;
   }
 
   .m-product-quickview--info .m-add-to-cart,
-  .m-product-quickview--info .shopify-payment-button__button--unbranded,
-  .m-product-quickview--info #gokwik-buy-now {
+  .m-product-quickview .m-add-to-cart,
+  #MainProduct-quick-view__content .m-add-to-cart,
+  #product-form-product-quickview .m-add-to-cart {
+    order: 2 !important;
     width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .m-product-quickview--info #gokwik-buy-now,
+  .m-product-quickview #gokwik-buy-now,
+  #MainProduct-quick-view__content #gokwik-buy-now,
+  #product-form-product-quickview #gokwik-buy-now {
+    order: 3 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    box-sizing: border-box !important;
+    margin-top: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
 
@@ -2658,7 +2771,10 @@ div#Inventory-product-quickview{
   }
 
   /* Scoped Quick View button alignment on desktop */
-  .m-product-quickview--info .m-product-form--wrapper {
+  .m-product-quickview--info .m-product-form--wrapper,
+  .m-product-quickview .m-product-form--wrapper,
+  #MainProduct-quick-view__content .m-product-form--wrapper,
+  #product-form-product-quickview .m-product-form--wrapper {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
@@ -2666,43 +2782,61 @@ div#Inventory-product-quickview{
     flex-wrap: nowrap !important;
   }
 
-  .m-product-quickview--info .m-product-form--input {
+  .m-product-quickview--info .m-product-form--input,
+  .m-product-quickview .m-product-form--input,
+  #MainProduct-quick-view__content .m-product-form--input,
+  #product-form-product-quickview .m-product-form--input {
     flex: 0 0 90px !important;
     width: 90px !important;
     margin: 0 !important;
+    order: 1 !important;
   }
 
-  .m-product-quickview--info .m-quantity {
+  .m-product-quickview--info .m-quantity,
+  .m-product-quickview .m-quantity,
+  #MainProduct-quick-view__content .m-quantity,
+  #product-form-product-quickview .m-quantity {
     height: 48px !important;
     margin: 0 !important;
   }
 
-  .m-product-quickview--info .m-add-to-cart {
+  .m-product-quickview--info .m-add-to-cart,
+  .m-product-quickview .m-add-to-cart,
+  #MainProduct-quick-view__content .m-add-to-cart,
+  #product-form-product-quickview .m-add-to-cart {
     flex: 1 !important;
     height: 48px !important;
     min-height: 48px !important;
+    max-height: 48px !important;
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 16px !important;
+    order: 2 !important;
   }
 
-  .m-product-quickview--info .m-product-dynamic-checkout {
+  .m-product-quickview--info .m-product-dynamic-checkout,
+  .m-product-quickview .m-product-dynamic-checkout,
+  #MainProduct-quick-view__content .m-product-dynamic-checkout,
+  #product-form-product-quickview .m-product-dynamic-checkout {
+    display: none !important;
+  }
+
+  .m-product-quickview--info #gokwik-buy-now,
+  .m-product-quickview #gokwik-buy-now,
+  #MainProduct-quick-view__content #gokwik-buy-now,
+  #product-form-product-quickview #gokwik-buy-now {
     flex: 1 !important;
-    margin: 0 !important;
-    width: auto !important;
-  }
-
-  .m-product-quickview--info .shopify-payment-button__button--unbranded,
-  .m-product-quickview--info #gokwik-buy-now {
     height: 48px !important;
     min-height: 48px !important;
+    max-height: 48px !important;
     margin-top: 0 !important; /* Remove top margin on desktop */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 16px !important;
+    order: 3 !important;
   }
 }
 
@@ -2714,7 +2848,7 @@ div#Inventory-product-quickview{
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
-  margin: 15px 0 !important;
+  margin: 0px 0 !important;
   color: #E8513F !important;
   font-size: 16px;
   font-weight: 600;
@@ -2912,9 +3046,40 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
   We just let our wrapper sit naturally — it's zero-size since the wishlist inside is absolute.
   Share button is hidden on desktop.
 */
-.main-product__block .m-product-title-actions {
-  /* no position — let wishlist child's own position:absolute handle desktop placement */
-  display: contents; /* wrapper is invisible on desktop, children render as-is */
+.main-product__block .product-block-group--title {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  padding-right: 0 !important; /* override desktop padding-right:48px */
+  gap: 12px !important;
+  width: 100% !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+/* Title fills the left */
+.main-product__block .product-block-group--title > h1.m-product-title,
+.main-product__block .product-block-group--title > h2.m-product-title {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin-right: 0 !important;
+  display: block !important;
+}
+
+/* Actions & Wishlist wrapper: relative flex container on right, never absolute */
+.main-product__block .product-block-group--title .m-product-title-actions,
+.main-product__block .product-block-group--title .m-product-wishlist {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 4px !important;
 }
 
 .main-product__block .m-product-share-btn {
@@ -2923,46 +3088,9 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
 
 /* ── Mobile only (max-width: 767px) ── */
 @media screen and (max-width: 767px) {
-
-  /* Title row: flex — title left, icons right */
-  .main-product__block .product-vendor-my-pahadi-dukan.product-block-group--title {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    flex-wrap: wrap !important;
-    padding-right: 0 !important; /* override desktop padding-right:48px */
-  }
-
-  /* Title fills the left */
-  .main-product__block .product-vendor-my-pahadi-dukan.product-block-group--title > h1.m-product-title,
-  .main-product__block .product-vendor-my-pahadi-dukan.product-block-group--title > h2.m-product-title {
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    margin-right: 12px !important;
-    display: block !important; /* override theme's inline-block on mobile */
-  }
-
-  /* Actions wrapper: visible flex row on mobile */
-  .main-product__block .product-vendor-my-pahadi-dukan .m-product-title-actions {
-    display: flex !important;   /* override display:contents */
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 14px !important;
-    flex-shrink: 0 !important;
-    margin-top: 4px !important;
-    position: static !important;
-  }
-
-  /* Override theme's position:absolute on the wishlist div inside our wrapper */
-  .main-product__block .product-vendor-my-pahadi-dukan .m-product-title-actions .m-product-wishlist {
-    position: static !important;
-    display: block !important;
-  }
-
   /* Strip decoration from the wishlist button/tooltip on mobile */
-  .main-product__block .product-vendor-my-pahadi-dukan .m-product-title-actions .m-product-wishlist .m-tooltip,
-  .main-product__block .product-vendor-my-pahadi-dukan .m-product-title-actions .m-product-wishlist button {
+  .main-product__block .product-block-group--title .m-product-wishlist .m-tooltip,
+  .main-product__block .product-block-group--title .m-product-wishlist button {
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -2979,7 +3107,7 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
   }
 
   /* Show share button on mobile — bare icon */
-  .main-product__block .product-vendor-my-pahadi-dukan .m-product-share-btn {
+  .main-product__block .m-product-share-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2994,7 +3122,7 @@ padding-top: calc(78% / (0.0001 + var(--aspect-ratio-mobile, var(--aspect-ratio,
   }
 
   /* Highlights wrap to a new row below title + icons */
-  .main-product__block .product-vendor-my-pahadi-dukan.product-block-group--title .product-highlights {
+  .main-product__block .product-block-group--title .product-highlights {
     flex-basis: 100%;
     order: 10;
     margin-top: 8px;
@@ -3185,15 +3313,49 @@ body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+4):
   flex-direction: column !important;
 }
 
-/* Ensure rich variant card stretches full height */
+/* Ensure rich variant card stretches full height across all grids and carousels */
+.m-product-option--content {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.m-product-option--node {
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+}
+
+.rich-variant-card,
 .m-variant-carousel .rich-variant-card,
-body .m-product-option--carousel .rich-variant-card {
+body .m-product-option--carousel .rich-variant-card,
+.m-product-option--node .rich-variant-card,
+.m-product-option--node__label {
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
+  box-sizing: border-box !important;
 }
 
+.rich-variant-card__content,
+.m-variant-carousel .rich-variant-card__content,
+body .m-product-option--carousel .rich-variant-card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+}
+
+.rich-variant-card__title {
+  min-height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.rich-variant-card__pricing,
 .m-variant-carousel .rich-variant-card__pricing,
 body .m-product-option--carousel .rich-variant-card__pricing {
   margin-top: auto !important;
@@ -3204,46 +3366,31 @@ body .rich-variant-card__image-wrapper,
 .m-variant-carousel .rich-variant-card__image-wrapper,
 .rich-variant-card .rich-variant-card__image-wrapper {
   width: 100% !important;
-  height: 100px !important;
+  height: 90px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   overflow: hidden !important;
-  margin-bottom: 12px !important;
-  padding: 6px 4px 2px 4px !important;
+  margin-bottom: 8px !important;
+  padding: 4px !important;
   flex-shrink: 0 !important;
   box-sizing: border-box !important;
+  background: transparent !important;
 }
 
 body .rich-variant-card__image,
 .m-variant-carousel .rich-variant-card__image,
 .rich-variant-card .rich-variant-card__image {
-  width: 100% !important;
-  height: 100% !important;
+  width: auto !important;
+  height: auto !important;
   max-width: 100% !important;
   max-height: 100% !important;
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
   margin: auto !important;
-  transition: transform 0.2s ease !important;
-}
-
-/* Ensure variant images with excessive canvas whitespace padding match visual jar height immediately */
-.rich-variant-card__image[src*="Ghee_1"],
-.rich-variant-card__image[src*="ghee_1"],
-.rich-variant-card__image[src*="Ghee-1"],
-.rich-variant-card__image[src*="ghee-1"],
-.rich-variant-card__image[src*="mockup1"],
-.rich-variant-card__image[src*="Mockup1"],
-.rich-variant-card__image[src*="ghee_1" i] {
-  transform: scale(1.42) !important;
-  transform-origin: center center !important;
-}
-
-.rich-variant-card.is-multi-pack .rich-variant-card__image,
-.rich-variant-card[data-multi-pack="true"] .rich-variant-card__image {
   transform: none !important;
+  transition: transform 0.2s ease !important;
 }
 
 /* All rich variant cards have uniform padding and identical vertical baseline */
@@ -3396,13 +3543,50 @@ body .m-product-option--content[data-values-count="1"] .m-product-option--node {
 
 /* MOBILE RESPONSIVE (< 768px) */
 @media screen and (max-width: 767px) {
+  body .m-product-option--content,
+  body .m-product-option--content.m-product-option--static,
+  body .m-product-option--content.m-product-option--carousel,
+  body .m-product-option--content[data-values-count],
+  body .m-product-option--content.m\:inline-flex {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    gap: 10px !important;
+    column-gap: 10px !important;
+    padding: 6px 2px 10px 2px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body .m-product-option--content::-webkit-scrollbar {
+    display: none !important;
+  }
+
   .m-variant-carousel .m-product-option--node,
   body .m-product-option--carousel .m-product-option--node,
-  body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+4):first-child) .m-product-option--node {
+  body .m-product-option--static .m-product-option--node,
+  body .m-product-option--content[data-values-count="2"] .m-product-option--node,
+  body .m-product-option--content[data-values-count="3"] .m-product-option--node,
+  body .m-product-option--content:has(.m-product-option--node:nth-last-child(n+2):first-child) .m-product-option--node {
     flex: 0 0 135px !important;
     width: 135px !important;
     min-width: 135px !important;
     max-width: 135px !important;
+    scroll-snap-align: start !important;
+    box-sizing: border-box !important;
+  }
+
+  body .m-product-option--content[data-values-count="1"] .m-product-option--node {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 220px !important;
   }
 
   .m-variant-carousel__btn {
@@ -4013,3 +4197,166 @@ button.swym-add-to-cart-btn.swym-added {
   color: #ba5d37 !important;
   opacity: 1 !important;
 }
+
+/* Lower chat widget z-index ONLY when Cart Drawer (YT Cart app or theme cart) is open */
+body.cart-drawer-open div#chat-widget,
+body:has(#yt-cart-shell-overlay:not([style*="display: none"]):not([style*="display:none"])) div#chat-widget,
+body:has(#yt-cart-shell-overlay[style*="display: block"]) div#chat-widget,
+body:has(#yt-cart-shell-overlay[style*="display:block"]) div#chat-widget,
+body:has(#yt-cart-shell-overlay[style*="display: flex"]) div#chat-widget,
+body:has(#yt-cart-shell-overlay[style*="display:flex"]) div#chat-widget,
+body:has(#yt-cart-shell-drawer[style*="translateX(0px)"]) div#chat-widget,
+body:has(#yt-cart-shell-drawer[style*="translateX(0)"]) div#chat-widget,
+body:has(m-cart-drawer.m-cart-drawer--active) div#chat-widget,
+body:has(.m-cart-drawer--active) div#chat-widget,
+html.prevent-scroll div#chat-widget {
+  z-index: 1 !important;
+}
+
+.m-sticky-addtocart {
+  z-index: 9999999 !important;
+}
+
+/* Ensure equal height for product cards in Swiper sliders on Mobile & Desktop */
+.swiper-wrapper {
+  display: flex !important;
+}
+
+.swiper-slide {
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.swiper-slide > .m-product-card,
+.swiper-slide > div > .m-product-card,
+.swiper-slide > div > div > .m-product-card,
+.m-product-card {
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.m-product-card .m-product-card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  justify-content: flex-start !important;
+}
+
+.m-product-card .m-product-card__price-row {
+  margin-top: auto !important;
+}
+
+.m-product-card .m-product-card__atc-wrapper {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+@media screen and (max-width: 767px) {
+  /* Hide slider floating side arrows on mobile so product cards are not overlapped */
+  .m-slider-controls__button--next,
+  .m-slider-controls__button--prev,
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+
+  /* Prevent price and offer badge overlap on mobile screens */
+  .m-product-card .m-product-card__price-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+
+  .m-product-card .m-product-card__price {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .m-product-card .meta-offer-list {
+    max-width: 100% !important;
+    width: auto !important;
+    align-items: flex-start !important;
+    background: #fde8e5 !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    margin-top: 2px !important;
+  }
+
+  .m-product-card .meta-offer-list span {
+    white-space: nowrap !important;
+    text-align: left !important;
+  }
+
+  .m-product-card .meta-offer-msg,
+  .m-product-card .meta-offer-code {
+    text-align: left !important;
+    font-size: 10px !important;
+  }
+
+  /* Force single line review badge on mobile */
+  .m-product-card__reviews,
+  .m-product-card__reviews *,
+  .jdgm-prev-badge,
+  .jdgm-prev-badge * {
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+    font-size: 11px !important;
+  }
+  .jdgm-prev-badge {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+  }
+  /* Product title 3-line clamp on mobile */
+  .m-product-card__name,
+  .m-product-card .m-product-card__name {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    height: 3.8em !important;
+    max-height: 3.8em !important;
+  }
+}
+
+/* Hide shopify-pc__banner for initial 10 seconds */
+body:not(.show-pc-banner) #shopify-pc__banner,
+body:not(.show-pc-banner) .shopify-pc__banner,
+#shopify-pc__banner:not(.show-banner),
+.shopify-pc__banner:not(.show-banner) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Prevent horizontal page overflow on mobile devices */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+.template-product .m-main-product,
+.template-product .m-main-product--wrapper,
+.template-product .m-product-form,
+.template-product .m-product-option,
+.template-product .main-product__blocks {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+
+
+
+

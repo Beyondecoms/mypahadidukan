@@ -287,6 +287,11 @@ body .main-product__block.main-product__block-price{
   .desktop-pincode.below-product-title{
     display:none !important;
   }
+  
+  body .m-product-quickview--info .m-product-option--static{
+    column-gap: 0px !important;
+  }
+  
   .m-icon-box-section .m-section__header.m\:text-center{
     margin-bottom: 0 !important;
   }
@@ -357,7 +362,7 @@ body .main-product__block.main-product__block-price{
     {%- if settings.enable_cart_drawer and template != 'cart' -%}
       {% render 'cart-drawer' %}
     {%- endif -%}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer="defer"></script>
 
 <script>
   $(document).ready(function() {
@@ -450,11 +455,82 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+<script>
+(function() {
+  function checkCartDrawerState() {
+    var ytOverlay = document.getElementById('yt-cart-shell-overlay');
+    var ytDrawer = document.getElementById('yt-cart-shell-drawer');
+    var mDrawer = document.querySelector('m-cart-drawer.m-cart-drawer--active');
+    
+    var isOpen = false;
+    
+    if (ytOverlay) {
+      var display = window.getComputedStyle(ytOverlay).display;
+      if (display !== 'none' && display !== '') {
+        isOpen = true;
+      }
+    }
+    if (ytDrawer) {
+      var displayDrawer = window.getComputedStyle(ytDrawer).display;
+      var transform = window.getComputedStyle(ytDrawer).transform;
+      if (displayDrawer !== 'none' && !ytDrawer.style.transform.includes('100%')) {
+        if (ytDrawer.style.transform.includes('0px') || ytDrawer.style.display === 'block' || (ytOverlay && window.getComputedStyle(ytOverlay).display !== 'none')) {
+          isOpen = true;
+        }
+      }
+    }
+    if (mDrawer) {
+      isOpen = true;
+    }
+
+    if (isOpen) {
+      document.body.classList.add('cart-drawer-open');
+    } else {
+      document.body.classList.remove('cart-drawer-open');
+    }
+  }
+
+  var ticking = false;
+  var observer = new MutationObserver(function() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(function() {
+        checkCartDrawerState();
+        ticking = false;
+      });
+    }
+  });
+
+  if (document.body) {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+  }
+  document.addEventListener('DOMContentLoaded', checkCartDrawerState);
+})();
 </script>
+{%- render "ecom_footer"-%}
 
+  <script>
+    (function() {
+      setTimeout(function() {
+        document.body.classList.add('show-pc-banner');
+        var pcBanners = document.querySelectorAll('#shopify-pc__banner, .shopify-pc__banner');
+        pcBanners.forEach(function(el) {
+          el.classList.add('show-banner');
+          el.style.setProperty('display', 'block', 'important');
+          el.style.setProperty('opacity', '1', 'important');
+          el.style.setProperty('visibility', 'visible', 'important');
+          el.style.setProperty('pointer-events', 'auto', 'important');
+        });
+      }, 10000);
+    })();
+  </script>
+
+  {% section 'whatsapp-float' %}
   
-  {%- render "ecom_footer"-%}
-
-   {% section 'whatsapp-float' %}
 </body>
 </html>

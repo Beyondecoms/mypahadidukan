@@ -117,9 +117,9 @@
         "slide_GnbJr6": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Customer_Service.jpg",
+            "image": "shopify://shop_images/Transparency_912befe6-cfd0-47d7-a2f4-e3af7ea4f2db.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/Customer_Service_e01c5b2c-e730-4638-9397-a8a1c7e7e93a.jpg",
+            "mobile_image": "shopify://shop_images/Transparency_17ce7f66-dcb2-403c-ab50-af7f4268e4c1.jpg",
             "alt_text": "Health is not just an option - Point 1",
             "link": ""
           }
@@ -127,9 +127,9 @@
         "slide_pAyfd3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Quality.jpg",
+            "image": "shopify://shop_images/Quality_ccc3f6a8-7aea-4645-bfde-d894dd396f7b.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/Quality_3e6e1999-da1c-4527-b857-e5d288bfc874.jpg",
+            "mobile_image": "shopify://shop_images/Quality_c12e781e-886c-4861-874a-ab2e184ec49d.jpg",
             "alt_text": "Health is not just an option - Point 2",
             "link": ""
           }
@@ -137,9 +137,9 @@
         "slide_hGayGU": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Purity.jpg",
+            "image": "shopify://shop_images/Purity_fc92ea51-b8fc-4a86-8ba0-5f08b0637734.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/Purity_4fed3d14-e08e-418b-b010-2ae3e433dacd.jpg",
+            "mobile_image": "shopify://shop_images/Purity_be91c211-8f90-4705-a7b7-6e7845dda8c9.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -147,9 +147,9 @@
         "slide_LKBPez": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Transparency.jpg",
+            "image": "shopify://shop_images/Authenticity_1909a1ee-c85a-49c2-a380-1eaaa27da177.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/Transparency_da2900a8-9835-4077-b819-1e03817bdeed.jpg",
+            "mobile_image": "shopify://shop_images/Authenticity_7c1e2340-2178-4115-a1af-8470ace8dced.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -157,9 +157,9 @@
         "slide_bhyaTY": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Authenticity.jpg",
+            "image": "shopify://shop_images/Customer_Service_c6a4d52b-60dd-4802-b472-4415a6504ac9.jpg",
             "image_by_url": "",
-            "mobile_image": "shopify://shop_images/Authenticity_5b98e214-c71c-4795-9f8c-7510f14ca709.jpg",
+            "mobile_image": "shopify://shop_images/Customer_Service_5e52e214-8228-4aee-ae88-9ce4e6f89525.jpg",
             "alt_text": "Health is not just an option - Point 3",
             "link": ""
           }
@@ -187,10 +187,10 @@
         "show_dots": true,
         "autoplay": false,
         "autoplay_speed": 5,
-        "desktop_padding_top": 60,
-        "desktop_padding_bottom": 60,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 10,
+        "mobile_padding_bottom": 10
       }
     },
     "founders_section_DnYHDr": {
@@ -253,10 +253,10 @@
         "avatar_size": 195,
         "columns_desktop": 4,
         "columns_mobile": "2",
-        "desktop_padding_top": 64,
-        "desktop_padding_bottom": 72,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 48
+        "desktop_padding_top": 20,
+        "desktop_padding_bottom": 20,
+        "mobile_padding_top": 10,
+        "mobile_padding_bottom": 10
       }
     },
     "custom_section_11": {
@@ -342,8 +342,8 @@
         "outlet_color": "#1f2937",
         "read_time_color": "#6b7280",
         "bg_color": "#ffffff",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "icon_box_QDyUzB": {
@@ -1082,6 +1082,22 @@
         "enable_preload_image": false,
         "custom_class": "m-about-page"
       }
+    },
+    "shop_best_sellers_1": {
+      "type": "shop-best-sellers",
+      "settings": {
+        "heading": "Shop Best Sellers",
+        "collection": "by-my-pahadi-dukan",
+        "product_list": [],
+        "products_to_show": 15,
+        "desktop_products": 5,
+        "card_gap": 14,
+        "atc_bg_color": "#ba5d37",
+        "price_color": "#1b4d3e",
+        "vendor_color": "#ba5d37",
+        "padding_top": 40,
+        "padding_bottom": 50
+      }
     }
   },
   "order": [
@@ -1098,6 +1114,7 @@
     "icon_box_W88UaR",
     "video_megPC6",
     "rich_text_YA3fjj",
-    "custom-content"
+    "custom-content",
+    "shop_best_sellers_1"
   ]
 }

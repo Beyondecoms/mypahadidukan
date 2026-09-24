@@ -100,9 +100,9 @@
                   <h3 class="founders-section__name">{{ founder_name | escape }}</h3>
                 {%- endif -%}
 
-                {%- if founder_role != blank -%}
+                {% comment %} {%- if founder_role != blank -%}
                   <span class="founders-section__role">{{ founder_role | escape }}</span>
-                {%- endif -%}
+                {%- endif -%} {% endcomment %}
               </div>
 
             {%- if founder_link != blank -%}
@@ -152,7 +152,7 @@
     margin: 0 0 14px 0;
     font-size: 32px;
     line-height: 1.25;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--fs-heading-color);
     letter-spacing: -0.01em;
   }
@@ -260,7 +260,7 @@
     margin: 0 0 6px 0;
     font-size: 18px;
     line-height: 1.35;
-    font-weight: 700;
+    font-weight: 600;
     color: #111827;
     letter-spacing: -0.01em;
   }

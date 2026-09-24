@@ -189,14 +189,14 @@
             <responsive-image class="m-image" style="--aspect-ratio: {{ asp_rat }}">
               {{
                 preview_image
-                | image_url: width: 1100
+                | image_url: width: 535
                 | image_tag:
                   loading: loading,
                   fetchpriority: fetchpriority,
                   class: 'm:w-full m:h-full',
                   alt: alt,
                   sizes: sizes,
-                  widths: '165, 360, 535, 750, 940, 1100'
+                  widths: '165, 330, 535, 750'
               }}
             </responsive-image>
           </div>
@@ -214,14 +214,14 @@
               <responsive-image class="m-image" style="--aspect-ratio: {{ asp_rat }}">
                 {{
                   second_image
-                  | image_url: width: 1100
+                  | image_url: width: 535
                   | image_tag:
-                    loading: loading,
-                    fetchpriority: fetchpriority,
+                    loading: 'lazy',
+                    fetchpriority: 'low',
                     class: 'm:w-full m:h-full',
                     alt: alt,
                     sizes: sizes,
-                    widths: '165, 360, 535, 750, 940, 1100'
+                    widths: '165, 330, 535, 750'
                 }}
               </responsive-image>
             </div>

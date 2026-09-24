@@ -169,8 +169,28 @@
             elsif val_lc contains 'pack of 10' or val_lc contains '10 (10g' or val_lc contains '10gms'
               assign variant_badge = 'Value for Money'
             endif
+          elsif product.handle contains 'ghee'
+            if val_lc contains '250'
+              assign variant_badge = 'Trial pack'
+            elsif val_lc contains '1l' or val_lc contains '1 l'
+              assign variant_badge = 'Best for families'
+            elsif val_lc contains '4l' or val_lc contains '4 l'
+              assign variant_badge = 'Value for money'
+            endif
           else
-            if val_lc contains '300ml' or val_lc contains '1 x 300'
+            if val_lc contains '100g' or val_lc contains '100 g' or val_lc contains '100gms' or val_lc contains '100 gms'
+              assign variant_badge = 'Trial pack'
+            elsif val_lc contains '250g' or val_lc contains '250 g' or val_lc contains '250gms' or val_lc contains '250 gms'
+              assign variant_badge = 'Most bought'
+            elsif val_lc contains '1kg' or val_lc contains '1 kg'
+              assign variant_badge = 'Value for money'
+            elsif val_lc contains '250ml' or val_lc contains '250 ml'
+              assign variant_badge = 'Trial pack'
+            elsif val_lc contains '4l' or val_lc contains '4 l'
+              assign variant_badge = 'Value for money'
+            elsif val_lc contains '1l' or val_lc contains '1 l'
+              assign variant_badge = 'Best for families'
+            elsif val_lc contains '300ml' or val_lc contains '1 x 300'
               assign variant_badge = '30 Days Pack'
             elsif val_lc contains '600ml' or val_lc contains '2 x 300'
               assign variant_badge = '2 Months Pack'
@@ -610,43 +630,29 @@
           /* Image wrapper - fixed consistent area */
           .rich-variant-card__image-wrapper {
             width: 100% !important;
-            height: 100px !important;
+            height: 90px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             overflow: hidden !important;
-            margin-bottom: 12px !important;
-            padding: 6px 4px 2px 4px !important;
+            margin-bottom: 8px !important;
+            padding: 4px !important;
             flex-shrink: 0 !important;
             box-sizing: border-box !important;
+            background: transparent !important;
           }
 
           .rich-variant-card__image {
-            width: 100% !important;
-            height: 100% !important;
+            width: auto !important;
+            height: auto !important;
             max-width: 100% !important;
             max-height: 100% !important;
             object-fit: contain !important;
             object-position: center !important;
             display: block !important;
             margin: auto !important;
-            transition: transform 0.2s ease !important;
-          }
-
-          .rich-variant-card__image[src*="Ghee_1"],
-          .rich-variant-card__image[src*="ghee_1"],
-          .rich-variant-card__image[src*="Ghee-1"],
-          .rich-variant-card__image[src*="ghee-1"],
-          .rich-variant-card__image[src*="mockup1"],
-          .rich-variant-card__image[src*="Mockup1"],
-          .rich-variant-card__image[src*="ghee_1" i] {
-            transform: scale(1.42) !important;
-            transform-origin: center center !important;
-          }
-
-          .rich-variant-card.is-multi-pack .rich-variant-card__image,
-          .rich-variant-card[data-multi-pack="true"] .rich-variant-card__image {
             transform: none !important;
+            transition: transform 0.2s ease !important;
           }
 
           .rich-variant-card__content {
@@ -655,6 +661,7 @@
             align-items: center !important;
             text-align: center !important;
             width: 100% !important;
+            flex: 1 1 auto !important;
           }
 
           .rich-variant-card__title {
@@ -663,6 +670,11 @@
             color: #333 !important;
             margin-bottom: 8px !important;
             line-height: 1.4 !important;
+            min-height: 34px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
           }
 
           .rich-variant-card__discount {
@@ -699,10 +711,12 @@
               flex-wrap: nowrap !important;
               overflow-x: auto !important;
               scroll-snap-type: x mandatory !important;
-              gap: 12px !important;
-              padding: 8px 4px !important;
+              gap: 8px !important;
+              padding: 8px 0 !important;
               margin: 0 !important;
-              width: auto !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              box-sizing: border-box !important;
               -webkit-overflow-scrolling: touch !important;
             }
             
@@ -712,8 +726,12 @@
 
             .m-product-option--node {
               flex: 0 0 135px !important;
+              width: 135px !important;
+              min-width: 135px !important;
+              max-width: 135px !important;
               scroll-snap-align: start !important;
               height: auto !important;
+              box-sizing: border-box !important;
             }
 
             .rich-variant-card {
@@ -770,7 +788,10 @@
               line-height: 1.2 !important;
               text-align: center !important;
               margin-bottom: 4px !important;
-              display: -webkit-box !important;
+              min-height: 32px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
               -webkit-line-clamp: 2 !important;
               -webkit-box-orient: vertical !important;
               overflow: hidden !important;

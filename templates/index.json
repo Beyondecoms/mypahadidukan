@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/B4_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B3_Mobile.jpg",
+            "mb_background": "shopify://shop_images/B3_Mobile_1.jpg",
             "content_in_container": false,
             "content_position": "center bottom",
             "text_alignment": "center",
@@ -46,7 +46,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/B1_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B1_Mobile.jpg",
+            "mb_background": "shopify://shop_images/B1_Mobile_1.jpg",
             "content_in_container": true,
             "content_position": "center bottom",
             "text_alignment": "center",
@@ -76,7 +76,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/B3_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B4_Mobile.jpg",
+            "mb_background": "shopify://shop_images/B4_Mobile_1.jpg",
             "content_in_container": false,
             "content_position": "center bottom",
             "text_alignment": "left",
@@ -106,7 +106,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/B2_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B2_Mobile.jpg",
+            "mb_background": "shopify://shop_images/B2_Mobile_1.jpg",
             "content_in_container": true,
             "content_position": "center bottom",
             "text_alignment": "center",
@@ -316,7 +316,7 @@
         "category_9"
       ],
       "settings": {
-        "heading": "SHOP BY CATEGORY",
+        "heading": "Shop By Category",
         "bg_color": "#faf3e8",
         "heading_color": "#ba5d37",
         "card_bg": "#fdeedc",
@@ -992,7 +992,7 @@
       "settings": {
         "container": "container-fluid",
         "color_scheme": "scheme-3b07efb0-c8d0-4e7a-8fa5-2ae991d6716e",
-        "heading": "SHOP BY REGION",
+        "heading": "Shop By Region",
         "heading_size": "h3",
         "subheading": "",
         "description": "",
@@ -1030,7 +1030,6 @@
             "card_bg": "#ffffff",
             "image": "shopify://shop_images/Frame_911_2a23f900-795b-4512-a412-ab07f1039692.png",
             "image_by_url": "",
-            "thumbnail": "shopify://shop_images/ec21f050f1d5a98916e77fb59055f43cb346b285.png",
             "thumbnail_by_url": "",
             "products_text": "52 Products",
             "button_text": "Shop Now",
@@ -1079,7 +1078,7 @@
       ],
       "name": "Shop by Brand (Section 5)",
       "settings": {
-        "heading": "Shop by Brand",
+        "heading": "Shop By Brand",
         "heading_color": "#1f2937",
         "bg_color": "#ffffff",
         "card_radius": 28,
@@ -1369,7 +1368,8 @@
         "marketplace_ERrqGn": {
           "type": "marketplace",
           "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/amazon_logo.png?v=1721059703",
+            "image": "shopify://shop_images/amazon_logo_e073b706-78bc-40d9-9b90-5c4e24f3891e.png",
+            "image_url": "",
             "alt_text": "Amazon",
             "link": "https://www.amazon.in/stores/MyPahadiDukanMPD/page/79708463-0344-4BBE-B2EA-DB3DCE3E6898?lp_asin=B0D2B4VDP5&ref_=ast_bln&store_ref=bl_ast_dp_brandlogo_sto"
           }
@@ -1377,7 +1377,8 @@
         "marketplace_yaUGzH": {
           "type": "marketplace",
           "settings": {
-            "image_url": "https://cdn.shopify.com/s/files/1/0746/0952/5042/files/48c3a84cedd2cc03dda46fc273a18f395f24d959.png?v=1788241897",
+            "image": "shopify://shop_images/Flipkart_logo.png",
+            "image_url": "",
             "alt_text": "Flipkart",
             "link": ""
           }
@@ -1395,7 +1396,7 @@
         "banner_bg": "#b85338",
         "banner_text_color": "#ffffff",
         "banner_radius": 20,
-        "available_heading": "Also available on:",
+        "available_heading": "Also Available On:",
         "available_heading_color": "#1f2937",
         "bg_color": "#ffffff",
         "padding_top": 40,
@@ -1704,7 +1705,7 @@
       "settings": {
         "container": "container-fluid",
         "color_scheme": "default",
-        "heading": "WHY US?",
+        "heading": "Why Us?",
         "heading_size": "h3",
         "subheading": "",
         "description": "",
@@ -1956,7 +1957,7 @@
       "settings": {
         "container": "container-fluid",
         "color_scheme": "",
-        "heading": "SUPPORTED BY",
+        "heading": "Supported By",
         "heading_size": "h3",
         "subheading": "",
         "description": "",

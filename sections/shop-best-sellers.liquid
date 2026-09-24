@@ -1,0 +1,579 @@
+{% comment %}
+  Shop Best Sellers Section
+{% endcomment %}
+{%- liquid
+  assign heading = section.settings.heading | default: 'Shop Best Sellers'
+  assign selected_collection = collections[section.settings.collection]
+  assign selected_product_list = section.settings.product_list
+  assign products_to_show = section.settings.products_to_show | default: 15
+  assign desktop_products = section.settings.desktop_products | default: 5
+  assign mobile_products = section.settings.mobile_products | default: 1.8
+  assign card_gap = section.settings.card_gap | default: 14
+  assign padding_top = section.settings.padding_top | default: 40
+  assign padding_bottom = section.settings.padding_bottom | default: 50
+
+  assign products = blank
+  if selected_product_list != blank and selected_product_list.count > 0
+    assign products = selected_product_list
+  elsif selected_collection != blank and selected_collection.products.size > 0
+    assign products = selected_collection.products
+  endif
+
+  assign atc_bg_color = section.settings.atc_bg_color | default: '#BA5D37'
+  assign price_color = section.settings.price_color | default: '#1B4D3E'
+  assign vendor_color = section.settings.vendor_color | default: '#BA5D37'
+  assign vendor_text = section.settings.vendor_text | default: 'My Pahadi Dukan'
+  assign promo_discount_text = section.settings.promo_discount_text | default: 'Extra 10% off'
+  assign promo_coupon_code = section.settings.promo_coupon_code | default: 'SUMMER10'
+  assign default_subtitle = section.settings.default_subtitle | default: 'Vitamin C, Omega 3,6,7 and 9 and Antioxidants'
+  assign default_quantity = section.settings.default_quantity | default: '300 ml'
+-%}
+
+<div
+  id="shop-best-sellers-{{ section.id }}"
+  class="shop-best-sellers"
+  style="
+    --sbs-pt: {{ padding_top }}px;
+    --sbs-pb: {{ padding_bottom }}px;
+    --sbs-desktop-products: {{ desktop_products }};
+    --sbs-mobile-products: {{ mobile_products }};
+    --sbs-gap: {{ card_gap }}px;
+    --sbs-atc-bg: {{ atc_bg_color }};
+    --sbs-price-color: {{ price_color }};
+    --sbs-vendor-color: {{ vendor_color }};
+  "
+>
+  <div class="shop-best-sellers__container">
+    {%- if heading != blank -%}
+      <div class="shop-best-sellers__header">
+        <h2 class="shop-best-sellers__heading">{{ heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="shop-best-sellers__carousel-wrap" data-sbs-carousel-wrap>
+      <button
+        type="button"
+        class="shop-best-sellers__arrow shop-best-sellers__arrow--prev"
+        aria-label="Previous products"
+        data-sbs-arrow="prev"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="shop-best-sellers__track-container">
+        <div class="shop-best-sellers__track" data-sbs-track>
+          {%- if products != blank and products.size > 0 -%}
+            {%- for product in products limit: products_to_show -%}
+              <div class="shop-best-sellers__slide">
+                {% render 'product-card-4', product: product, section: section, image_ratio: '1/1' %}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="shop-best-sellers__slide">
+                <div class="shop-best-sellers__card">
+                  <div class="shop-best-sellers__media-wrap">
+                    <span class="shop-best-sellers__badge-save">SAVE 14%</span>
+                    <button type="button" class="shop-best-sellers__icon-btn shop-best-sellers__icon-btn--wishlist" aria-label="Add to wishlist">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
+                    <button type="button" class="shop-best-sellers__icon-btn shop-best-sellers__icon-btn--quickview" aria-label="Quick view">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    </button>
+                    <div class="shop-best-sellers__img-placeholder">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  </div>
+                  <div class="shop-best-sellers__card-body">
+                    <div class="shop-best-sellers__rating-row">
+                      <div class="shop-best-sellers__stars">
+                        {%- for s in (1..5) -%}
+                          <svg class="shop-best-sellers__star" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        {%- endfor -%}
+                      </div>
+                      <span class="shop-best-sellers__rating-score">4.5</span>
+                      <span class="shop-best-sellers__reviews-count">| 1745 Reviews</span>
+                    </div>
+                    <div class="shop-best-sellers__vendor">{{ vendor_text }}</div>
+                    <h3 class="shop-best-sellers__title">Sea Buckthorn Pulp (Juice)</h3>
+                    <div class="shop-best-sellers__desc">{{ default_subtitle }}</div>
+                    <div class="shop-best-sellers__meta-row">
+                      <span class="shop-best-sellers__quantity">{{ default_quantity }}</span>
+                      <div class="shop-best-sellers__promo-badge">
+                        <span class="shop-best-sellers__promo-text">{{ promo_discount_text }}</span>
+                        <span class="shop-best-sellers__promo-code">{{ promo_coupon_code }}</span>
+                      </div>
+                    </div>
+                    <div class="shop-best-sellers__price-row">
+                      <span class="shop-best-sellers__price-current">Rs. 775</span>
+                      <span class="shop-best-sellers__price-compare">Rs. 899</span>
+                    </div>
+                    <div class="shop-best-sellers__atc-wrap">
+                      <button type="button" class="shop-best-sellers__atc-button">
+                        <span class="shop-best-sellers__atc-text">Add to cart</span>
+                        <svg class="shop-best-sellers__atc-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="shop-best-sellers__arrow shop-best-sellers__arrow--next"
+        aria-label="Next products"
+        data-sbs-arrow="next"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #shop-best-sellers-{{ section.id }} {
+    padding-top: var(--sbs-pt);
+    padding-bottom: var(--sbs-pb);
+    background-color: #ffffff;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    font-family: inherit;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__container {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__heading {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__carousel-wrap {
+    position: relative;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__track-container {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -4px;
+    padding: 4px 4px 12px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__track-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__track {
+    display: flex;
+    gap: var(--sbs-gap);
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__slide {
+    flex: 0 0 calc((100% - (var(--sbs-desktop-products) - 1) * var(--sbs-gap)) / var(--sbs-desktop-products));
+    width: calc((100% - (var(--sbs-desktop-products) - 1) * var(--sbs-gap)) / var(--sbs-desktop-products));
+    max-width: calc((100% - (var(--sbs-desktop-products) - 1) * var(--sbs-gap)) / var(--sbs-desktop-products));
+    box-sizing: border-box;
+  }
+
+  /* Demo Card Styling */
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__media-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #fdfaf6;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__badge-save {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e53935;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__icon-btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e53935;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__icon-btn--wishlist {
+    top: 10px;
+    right: 10px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__icon-btn--quickview {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__img-placeholder {
+    width: 75%;
+    height: 75%;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__rating-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__stars {
+    display: flex;
+    color: #f59e0b;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__star {
+    width: 12px;
+    height: 12px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__rating-score {
+    font-weight: 700;
+    color: #374151;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__reviews-count {
+    color: #6b7280;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__vendor {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sbs-vendor-color);
+    margin-bottom: 4px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__desc {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__quantity {
+    color: #9ca3af;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__promo-badge {
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    margin-top: auto;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__price-current {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sbs-price-color);
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__price-compare {
+    font-size: 12px;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__atc-button {
+    width: 100%;
+    height: 38px;
+    background-color: var(--sbs-atc-bg);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__atc-button:hover {
+    filter: brightness(0.92);
+  }
+
+  /* Navigation Arrows */
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow {
+    position: absolute;
+    top: 25%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2c2c2c;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow:hover {
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow--prev {
+    left: -12px;
+  }
+
+  #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow--next {
+    right: -12px;
+  }
+
+  @media (max-width: 991px) {
+    #shop-best-sellers-{{ section.id }} .shop-best-sellers__slide {
+      flex: 0 0 calc((100% - (var(--sbs-mobile-products) - 1) * var(--sbs-gap)) / var(--sbs-mobile-products));
+      width: calc((100% - (var(--sbs-mobile-products) - 1) * var(--sbs-gap)) / var(--sbs-mobile-products));
+      max-width: calc((100% - (var(--sbs-mobile-products) - 1) * var(--sbs-gap)) / var(--sbs-mobile-products));
+    }
+
+    #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow {
+      top: 25%;
+    }
+
+    #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow--prev {
+      left: 2px;
+    }
+
+    #shop-best-sellers-{{ section.id }} .shop-best-sellers__arrow--next {
+      right: 2px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sectionEl = document.getElementById('shop-best-sellers-{{ section.id }}');
+    if (!sectionEl) return;
+
+    var container = sectionEl.querySelector('[data-sbs-track]').parentElement;
+    var prevBtn = sectionEl.querySelector('[data-sbs-arrow="prev"]');
+    var nextBtn = sectionEl.querySelector('[data-sbs-arrow="next"]');
+
+    if (prevBtn && container) {
+      prevBtn.addEventListener('click', function() {
+        container.scrollBy({ left: -320, behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn && container) {
+      nextBtn.addEventListener('click', function() {
+        container.scrollBy({ left: 320, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shop Best Sellers",
+  "tag": "section",
+  "class": "section-shop-best-sellers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Product List"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "desktop_products",
+      "label": "Desktop products per row",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap (px)",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "atc_bg_color",
+      "label": "Add to Cart button background",
+      "default": "#BA5D37"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#1B4D3E"
+    },
+    {
+      "type": "color",
+      "id": "vendor_color",
+      "label": "Vendor text color",
+      "default": "#BA5D37"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (px)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (px)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop Best Sellers"
+    }
+  ]
+}
+{% endschema %}

@@ -97,7 +97,7 @@
               </button>
             {% endif %}
           </div>
-          {%- if option.values.size > 3 and picker_type != 'dropdown' and picker_type != 'swatch_dropdown' -%}
+          {%- if option.values.size > 2 and picker_type != 'dropdown' and picker_type != 'swatch_dropdown' -%}
             <variant-carousel class="m-variant-carousel" data-values-count="{{ option.values.size }}">
               <button
                 type="button"
