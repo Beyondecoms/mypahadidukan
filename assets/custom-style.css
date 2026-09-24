@@ -182,17 +182,13 @@
   align-items: center;
   gap: 10px;
   padding: 10px 14px 10px 10px;
-  border: 1.5px solid rgba(0, 0, 0, 0.10);
   border-radius: 12px;
-  background: #ffffff;
   margin: 4px 0 12px;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  transition: transform 0.18s ease;
   max-width: 260px;
   width: fit-content;
 }
 .mpd-vendor-badge--card:hover {
-  border-color: rgba(0, 0, 0, 0.22);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
 }
 .mpd-vendor-badge--card .mpd-vendor-icon {
