@@ -1176,9 +1176,16 @@
 
         </product-form>
 
+        {% assign research_url = '' %}
         {% if product.handle == 'sea-buckthorn-juice' %}
+          {% assign research_url = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9763470/' %}
+        {% elsif product.handle == 'combo-sea-buckthorn-pulp-juice-buransh-rhododendron-squash' or product.handle == 'buy-buransh-squash-online' or product.handle == 'combo-strawberry-lime-squash-buransh-rhododendron-squash' %}
+          {% assign research_url = 'https://www.tandfonline.com/doi/abs/10.1080/07391102.2021.2021287?journalCode=tbsd20' %}
+        {% endif %}
+
+        {% if research_url != blank %}
           <a
-            href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9763470/"
+            href="{{ research_url }}"
             target="_blank"
             rel="noopener noreferrer"
             class="scientific-research-link"
