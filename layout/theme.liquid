@@ -371,10 +371,23 @@ body .main-product__block.main-product__block-price{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer="defer"></script>
 
 <script>
-  $(document).ready(function() {
-    $('a.mobile-menu.js-drawer-open-left-link').on('click', function(e) {
-      e.preventDefault(); // Optional: prevent default link behavior
-      $('.m-hamburger-box').trigger('click');
+  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+      var target = e.target.closest('a.mobile-menu, .js-drawer-open-left-link');
+      if (target) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.activeMegamenuInstance) {
+          if (window.activeMegamenuInstance.open) {
+            window.activeMegamenuInstance.closeMobileMenu();
+          } else {
+            window.activeMegamenuInstance.openMobileMenu();
+          }
+        } else {
+          var burger = document.querySelector('.m-hamburger-box');
+          if (burger) burger.click();
+        }
+      }
     });
   });
 </script>
