@@ -16,9 +16,8 @@
       "blocks": {
         "announcement_BCWkkM": {
           "type": "announcement",
-          "disabled": true,
           "settings": {
-            "message": "NOTICE: Transport Union strike from 21st - 23rd May, Orders might get delayed",
+            "message": "NOTICE: Due to Gandhi Jayanti Holiday on 2nd October, Orders will be shipped from 3rd October.",
             "message_link": ""
           }
         },
