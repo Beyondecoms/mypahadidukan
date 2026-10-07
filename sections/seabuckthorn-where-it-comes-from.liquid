@@ -1,0 +1,166 @@
+{{ 'section-seabuckthorn-m6.css' | asset_url | stylesheet_tag }}
+
+<div class="sb-m6-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="sb-m6-container">
+    
+    <!-- Top Meta Row -->
+    <div class="sb-m6-top-bar">
+      <span class="sb-m6-module-badge">{{ section.settings.module_tag }}</span>
+      {%- if section.settings.design_tag != blank -%}
+        <span class="sb-m6-pill-badge" style="background-color: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">{{ section.settings.design_tag }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Header Section -->
+    <div class="sb-m6-header">
+      <h2 class="sb-m6-title" style="color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="sb-m6-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Full Bleed Banner & Story Card -->
+    <div class="sb-m6-banner-card">
+      <div class="sb-m6-banner-image-wrap">
+        {%- if section.settings.harvest_image != blank -%}
+          <img src="{{ section.settings.harvest_image | image_url: width: 1400 }}" alt="{{ section.settings.heading }}" loading="lazy" width="1400" height="400">
+        {%- else -%}
+          <div class="sb-m6-banner-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <p style="margin: 10px 0 0 0; font-weight: 700; font-size: 1.1rem;">Full-bleed Harvest Photography (Ladakh, 3,000m)</p>
+          </div>
+        {%- endif -%}
+        <div class="sb-m6-stamp-overlay">
+          <span>{{ section.settings.stamp_text }}</span>
+        </div>
+      </div>
+
+      <!-- Story Paragraphs -->
+      <div class="sb-m6-story-body">
+        <div class="sb-m6-story-block">
+          <p>{{ section.settings.para_1 }}</p>
+        </div>
+        <div class="sb-m6-story-block">
+          <p>{{ section.settings.para_2 }}</p>
+        </div>
+        <div class="sb-m6-story-block">
+          <p>{{ section.settings.para_3 }}</p>
+        </div>
+        <div class="sb-m6-story-block">
+          <p>{{ section.settings.para_4 }}</p>
+        </div>
+      </div>
+
+      <!-- Facts Ticker Footer -->
+      <div class="sb-m6-facts-bar">
+        <div class="sb-m6-fact-item"><span class="sb-m6-fact-bullet">●</span> Ladakh</div>
+        <div class="sb-m6-fact-item"><span class="sb-m6-fact-bullet">●</span> September</div>
+        <div class="sb-m6-fact-item"><span class="sb-m6-fact-bullet">●</span> 3 Weeks Only</div>
+        <div class="sb-m6-fact-item"><span class="sb-m6-fact-bullet">●</span> 9 in 10 of India's Berries</div>
+        <div class="sb-m6-fact-item"><span class="sb-m6-fact-bullet">●</span> Same-Day Processing</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "M6 - Where it comes from",
+  "tag": "section",
+  "class": "section-sb-m6",
+  "settings": [
+    {
+      "type": "text",
+      "id": "module_tag",
+      "label": "Module Tag",
+      "default": "M6 · Picked with a stick, off a thorn bush"
+    },
+    {
+      "type": "text",
+      "id": "design_tag",
+      "label": "Design Badge",
+      "default": "copy-led"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "PICKED WITH A STICK, OFF A THORN BUSH"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Ladakh, 3 weeks every September"
+    },
+    {
+      "type": "image_picker",
+      "id": "harvest_image",
+      "label": "Harvest Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "stamp_text",
+      "label": "Stamp Logo Overlay",
+      "default": "Ladakh Wild Harvest"
+    },
+    {
+      "type": "textarea",
+      "id": "para_1",
+      "label": "Story Paragraph 1",
+      "default": "Nobody planted sea buckthorn here. It came up on its own along the riverbeds, the way it has for as long as anyone can remember, and Ladakh has ended up with about 9 of every 10 sea buckthorn berries in India."
+    },
+    {
+      "type": "textarea",
+      "id": "para_2",
+      "label": "Story Paragraph 2",
+      "default": "Picking it is nobody's favourite job. The bush is armed - long thorns, set close - so you don't reach into it. You spread a cloth on the ground, take a stick to the branches, and let the berries come down on their own."
+    },
+    {
+      "type": "textarea",
+      "id": "para_3",
+      "label": "Story Paragraph 3",
+      "default": "Then you hurry. They bruise within hours, so whatever comes down in the morning is pressed by evening. September is the whole season. Miss it and then it’s the next year."
+    },
+    {
+      "type": "textarea",
+      "id": "para_4",
+      "label": "Story Paragraph 4",
+      "default": "And nobody is out there spraying a wild bush by a river at 3,000 metres. There's no one to do it."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fffbef"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1c1918"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Pill Badge BG",
+      "default": "#008b75"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Pill Badge Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "M6 - Where it comes from"
+    }
+  ]
+}
+{% endschema %}

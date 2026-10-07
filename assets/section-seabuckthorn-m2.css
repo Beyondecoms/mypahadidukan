@@ -1,0 +1,344 @@
+/* Section M2 - What's in my bottle */
+.sb-m2-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m2-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m2-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sb-m2-module-badge {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #008b75;
+}
+
+.sb-m2-pill-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 24px;
+  background-color: #008b75;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sb-m2-header {
+  margin-bottom: 32px;
+}
+
+.sb-m2-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #1c1918;
+  margin: 0 0 10px 0;
+  line-height: 1.15;
+}
+
+.sb-m2-subtitle {
+  font-size: 1.45rem;
+  color: #ee5922;
+  margin: 0;
+  font-weight: 700;
+}
+
+.sb-m2-card-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m2-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Glass Diagram */
+.sb-m2-diagram-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-m2-glass-container {
+  width: 160px;
+  height: 260px;
+  position: relative;
+  border: 4px solid #008b75;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  background: rgba(0, 139, 117, 0.04);
+  padding: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 139, 117, 0.1);
+}
+
+.sb-m2-glass-rim {
+  position: absolute;
+  top: 0;
+  left: -4px;
+  right: -4px;
+  height: 8px;
+  border: 4px solid #008b75;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  background: rgba(0, 139, 117, 0.15);
+}
+
+.sb-m2-glass-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+}
+
+.sb-m2-liquid-pulp {
+  flex: 1;
+  background: linear-gradient(180deg, #f97316 0%, #ee5922 60%, #c2410c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.sb-m2-pulp-texture {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.35;
+}
+
+.sb-m2-liquid-sheen {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 14px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+  border-radius: 6px;
+}
+
+.sb-m2-sliver-layer {
+  height: 6px;
+  background: #facc15;
+  border-top: 1px solid rgba(0,0,0,0.15);
+  position: relative;
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+}
+
+.sb-m2-glass-label {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  color: #555555;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.sb-m2-callouts-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Bracket Connector Layout */
+.sb-m2-bracket-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.sb-m2-bracket-graphic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sb-m2-callout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sb-m2-callout {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1c1918;
+}
+
+.sb-m2-callout-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.sb-m2-ingredient-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #1c1918;
+}
+
+.sb-m2-dot {
+  color: #888888;
+  font-size: 1.25rem;
+}
+
+.sb-m2-percentage {
+  font-weight: 800;
+  color: #ee5922;
+  font-size: 1.25rem;
+}
+
+.sb-m2-callout-preservative {
+  color: #333333;
+  font-size: 1.25rem;
+}
+
+.sb-m2-prefix,
+.sb-m2-suffix {
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+.sb-m2-percentage-highlight {
+  font-weight: 800;
+  color: #008b75;
+  font-style: normal;
+  font-size: 1.25rem;
+}
+
+/* Parchment Card */
+.sb-m2-parchment-card {
+  margin-top: 10px;
+  background-color: #fffbef;
+  color: #1c1918;
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  border: 1.5px solid #e7ded0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.sb-m2-parchment-stamp {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #008b75;
+  opacity: 0.8;
+}
+
+.sb-m2-parchment-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 14px 0;
+  color: #008b75;
+  font-family: Georgia, serif;
+}
+
+.sb-m2-parchment-body p {
+  margin: 0 0 14px 0;
+  line-height: 1.7;
+  font-size: 1.15rem;
+  color: #2b2825;
+}
+
+.sb-m2-parchment-body p:last-child {
+  margin-bottom: 0;
+  font-weight: 700;
+  color: #1c1918;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m2-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m2-header {
+    margin-bottom: 20px !important;
+  }
+  .sb-m2-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m2-subtitle {
+    font-size: 1.15rem !important;
+  }
+  .sb-m2-card-wrapper {
+    padding: 20px 12px !important;
+    border-radius: 16px !important;
+  }
+  .sb-m2-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .sb-m2-glass-container {
+    width: 140px !important;
+    height: 220px !important;
+  }
+  .sb-m2-bracket-container {
+    gap: 8px !important;
+  }
+  .sb-m2-callout-items {
+    gap: 16px !important;
+  }
+  .sb-m2-callout {
+    font-size: 0.95rem !important;
+  }
+  .sb-m2-callout-text {
+    font-size: 0.95rem !important;
+    gap: 5px !important;
+  }
+  .sb-m2-ingredient-name,
+  .sb-m2-percentage,
+  .sb-m2-percentage-highlight,
+  .sb-m2-prefix,
+  .sb-m2-suffix,
+  .sb-m2-dot {
+    font-size: 0.95rem !important;
+  }
+  .sb-m2-parchment-card {
+    padding: 18px 14px !important;
+    border-radius: 12px !important;
+  }
+  .sb-m2-parchment-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 10px !important;
+  }
+  .sb-m2-parchment-body p {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 10px !important;
+  }
+}

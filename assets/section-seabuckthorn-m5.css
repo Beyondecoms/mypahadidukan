@@ -1,0 +1,172 @@
+/* Section M5 - The honest warning */
+.sb-m5-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m5-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m5-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+.sb-m5-module-badge {
+  display: none !important;
+}
+
+.sb-m5-pill-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 24px;
+  background-color: #ee5922;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sb-m5-card-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m5-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  align-items: center;
+}
+
+.sb-m5-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sb-m5-header-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ee5922;
+  margin: 0;
+}
+
+.sb-m5-main-heading {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  color: #1c1918;
+  margin: 0 0 8px 0;
+  line-height: 1.15;
+}
+
+.sb-m5-quote {
+  font-size: 1.35rem;
+  line-height: 1.65;
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: #008b75;
+  border-left: 4px solid #008b75;
+  padding-left: 20px;
+  margin: 12px 0;
+}
+
+.sb-m5-body-text {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #333333;
+}
+
+.sb-m5-handwritten {
+  font-family: 'Caveat', cursive, Georgia, serif;
+  font-size: 1.75rem;
+  color: #ee5922;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* Image Column */
+.sb-m5-image-col {
+  width: 100%;
+}
+
+.sb-m5-photo-box {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid #e7ded0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff8e8;
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.sb-m5-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sb-m5-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff3d6 0%, #fee2e2 100%);
+  color: #7c2d12;
+}
+
+.sb-m5-photo-caption {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #555555;
+  text-align: center;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m5-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m5-card-wrapper {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+  }
+  .sb-m5-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .sb-m5-main-heading {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m5-header-title {
+    font-size: 1.15rem !important;
+  }
+  .sb-m5-quote {
+    font-size: 1.15rem !important;
+    padding-left: 14px !important;
+  }
+  .sb-m5-body-text {
+    font-size: 1rem !important;
+  }
+}

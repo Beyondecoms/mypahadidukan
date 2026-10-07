@@ -1,0 +1,27 @@
+/* Component List Social */
+.list-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-social__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-social__link {
+  display: inline-flex;
+  padding: 0.5rem;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.list-social__link .icon {
+  height: 1.8rem;
+  width: 1.8rem;
+}

@@ -1,0 +1,193 @@
+{{ 'section-seabuckthorn-m4.css' | asset_url | stylesheet_tag }}
+
+<div class="sb-m4-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="sb-m4-container">
+    
+    <!-- Top Meta Row -->
+    <div class="sb-m4-top-bar">
+      <span class="sb-m4-module-badge">{{ section.settings.module_tag }}</span>
+      {%- if section.settings.design_tag != blank -%}
+        <span class="sb-m4-pill-badge" style="background-color: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">{{ section.settings.design_tag }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Header Section -->
+    <div class="sb-m4-header">
+      <h2 class="sb-m4-title" style="color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+    </div>
+
+    <!-- Postcard Carousel / Grid Cards -->
+    <div class="sb-m4-cards-wrapper">
+      {%- for block in section.blocks -%}
+        <div class="sb-m4-card" style="background-color: {{ section.settings.card_bg }}; color: {{ section.settings.card_text_color }};" {{ block.shopify_attributes }}>
+          <div class="sb-m4-card-header">
+            <span class="sb-m4-cross">✕</span>
+            <h3 class="sb-m4-card-title">{{ block.settings.title }}</h3>
+          </div>
+          <div class="sb-m4-card-body">
+            <p>{{ block.settings.content }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <!-- Marquee Ticker Banner -->
+    {%- if section.settings.marquee_text != blank -%}
+      <div class="sb-m4-marquee-outer" style="background-color: {{ section.settings.marquee_bg }}; color: {{ section.settings.marquee_text_color }};">
+        <div class="sb-m4-marquee-track">
+          {%- for i in (1..4) -%}
+            <div class="sb-m4-marquee-item">
+              <span>{{ section.settings.marquee_text }}</span>
+              <span class="sb-m4-marquee-dot">•</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "M4 - What's not in bottle",
+  "tag": "section",
+  "class": "section-sb-m4",
+  "settings": [
+    {
+      "type": "text",
+      "id": "module_tag",
+      "label": "Module Tag",
+      "default": "M4 · What's not in my bottle"
+    },
+    {
+      "type": "text",
+      "id": "design_tag",
+      "label": "Design Badge",
+      "default": "design-led"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "WHAT'S NOT IN MY BOTTLE"
+    },
+    {
+      "type": "text",
+      "id": "marquee_text",
+      "label": "Marquee Ticker Text",
+      "default": "No sugar · No water · No colour · No added flavour · No \"Himalayan\" that isn't"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fffbef"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1c1918"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#1c1918"
+    },
+    {
+      "type": "color",
+      "id": "marquee_bg",
+      "label": "Marquee BG Color",
+      "default": "#008b75"
+    },
+    {
+      "type": "color",
+      "id": "marquee_text_color",
+      "label": "Marquee Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Pill Badge BG",
+      "default": "#008b75"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Pill Badge Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "What's NOT in card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Name",
+          "default": "Added sugar"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Description",
+          "default": "The fastest way to make this taste nice. Also the fastest way to make it pointless."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "M4 - What's not in bottle",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Added sugar",
+            "content": "The fastest way to make this taste nice. Also the fastest way to make it pointless."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Water",
+            "content": "A lot of \"juice\" is one part pulp to four parts water. This is the pulp. You add the water."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Added colour",
+            "content": "The orange is just the berry."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Flavouring",
+            "content": "Natural, nature-identical or otherwise."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Concentrate from elsewhere",
+            "content": "Nothing here was dried out in another country and reconstituted."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

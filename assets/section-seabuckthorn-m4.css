@@ -1,0 +1,186 @@
+/* Section M4 - What's not in my bottle */
+.sb-m4-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m4-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m4-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+.sb-m4-module-badge {
+  display: none !important;
+}
+
+.sb-m4-pill-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 24px;
+  background-color: #008b75;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sb-m4-header {
+  margin-bottom: 32px;
+}
+
+.sb-m4-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #1c1918;
+  margin: 0;
+  line-height: 1.15;
+}
+
+/* Cards Carousel / Grid */
+.sb-m4-cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.sb-m4-card {
+  background-color: #ffffff;
+  color: #1c1918;
+  border-radius: 16px;
+  padding: 28px 22px;
+  border: 1.5px solid #e7ded0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.sb-m4-card:hover {
+  transform: translateY(-4px);
+  border-color: #ee5922;
+  box-shadow: 0 10px 24px rgba(238, 89, 34, 0.14);
+}
+
+.sb-m4-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sb-m4-cross {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #dc2626;
+  line-height: 1;
+}
+
+.sb-m4-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1c1918;
+  margin: 0;
+}
+
+.sb-m4-card-body {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: #333333;
+}
+
+/* Marquee Ticker Banner */
+.sb-m4-marquee-outer {
+  background-color: #008b75;
+  color: #ffffff;
+  border-radius: 30px;
+  padding: 14px 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 139, 117, 0.15);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.sb-m4-marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: sb-m4-marquee 28s linear infinite;
+  gap: 36px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.sb-m4-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sb-m4-marquee-dot {
+  color: #facc15;
+  font-size: 1.3rem;
+}
+
+@keyframes sb-m4-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MOBILE RESPONSIVE STYLES (ALWAYS PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m4-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m4-header {
+    margin-bottom: 20px !important;
+  }
+  .sb-m4-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m4-cards-wrapper {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 20px !important;
+  }
+  .sb-m4-card {
+    width: 100% !important;
+    padding: 20px 16px !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+  }
+  .sb-m4-card-title {
+    font-size: 1.15rem !important;
+  }
+  .sb-m4-card-body {
+    font-size: 1.02rem !important;
+    line-height: 1.6 !important;
+  }
+  .sb-m4-marquee-outer {
+    padding: 12px 0 !important;
+    border-radius: 24px !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%) !important;
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%) !important;
+  }
+  .sb-m4-marquee-track {
+    font-size: 0.9rem !important;
+    gap: 20px !important;
+  }
+}

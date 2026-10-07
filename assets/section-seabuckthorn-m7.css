@@ -1,0 +1,151 @@
+/* Section M7 - You'll see bits at the bottom */
+.sb-m7-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m7-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m7-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sb-m7-module-badge {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #008b75;
+}
+
+.sb-m7-pill-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 24px;
+  background-color: #008b75;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sb-m7-card-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m7-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.sb-m7-photo-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid #e7ded0;
+  background-color: #fff8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sb-m7-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sb-m7-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  color: #008b75;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.sb-m7-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sb-m7-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #1c1918;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.sb-m7-subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #008b75;
+  font-style: italic;
+  margin: 0;
+}
+
+.sb-m7-body {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #2b2825;
+}
+
+.sb-m7-shake-note {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #ee5922;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m7-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m7-card-wrapper {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+  }
+  .sb-m7-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .sb-m7-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m7-subtitle {
+    font-size: 1.15rem !important;
+  }
+  .sb-m7-body {
+    font-size: 1rem !important;
+  }
+  .sb-m7-shake-note {
+    font-size: 1.15rem !important;
+  }
+}

@@ -1,0 +1,827 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "product_main_wbYeCL": {
+      "type": "product-main",
+      "blocks": {
+        "badge_kK9xE3": {
+          "type": "badge",
+          "settings": {
+            "label": "Boosts Immunity",
+            "icon": "shopify://shop_images/Vector_2.png",
+            "bg_color": "#025b4e",
+            "text_color": "#ffffff"
+          }
+        },
+        "badge_ezJHwR": {
+          "type": "badge",
+          "settings": {
+            "label": "No Added Color",
+            "icon": "shopify://shop_images/Vector_3.png",
+            "bg_color": "#9b4a26",
+            "text_color": "#ffffff"
+          }
+        },
+        "badge_8hyGzb": {
+          "type": "badge",
+          "settings": {
+            "label": "No Added Sugar",
+            "icon": "shopify://shop_images/Vector_4.png",
+            "bg_color": "#6e4a72",
+            "text_color": "#ffffff"
+          }
+        },
+        "mini_review_D7EFk7": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Raja Kumar",
+            "rating": 5,
+            "review": "Great Results, Loved it!"
+          }
+        },
+        "mini_review_VRqcxN": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Priya",
+            "rating": 5,
+            "review": "Awesome Taste fr..!"
+          }
+        },
+        "mini_review_Qx9jt9": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Raja Kumar",
+            "rating": 3,
+            "review": "Great Results, Love"
+          }
+        },
+        "trust_icon_hpHGUe": {
+          "type": "trust_icon",
+          "settings": {
+            "icon": "shopify://shop_images/sugar.png",
+            "label": "No Added Sugar"
+          }
+        },
+        "trust_icon_zLKAYb": {
+          "type": "trust_icon",
+          "settings": {
+            "icon": "shopify://shop_images/Leaves.png",
+            "label": "No Preservatives 100% Natural"
+          }
+        },
+        "trust_icon_aUVeGG": {
+          "type": "trust_icon",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_2147227997.png",
+            "label": "No Added Color"
+          }
+        },
+        "offer_G48RVH": {
+          "type": "offer",
+          "settings": {
+            "offer_text": "Get a <span>EXTRA 10% Off</span> on a Cart value of Rs2199",
+            "coupon_code": "<span>SUMMER10</span>"
+          }
+        },
+        "offer_eVncRJ": {
+          "type": "offer",
+          "settings": {
+            "offer_text": "Buy <span>2</span> Get <span>1 Free</span> on a Seabuckthorn pulp",
+            "coupon_code": "<span>BUY310</span>"
+          }
+        },
+        "offer_e7gK9e": {
+          "type": "offer",
+          "settings": {
+            "offer_text": "Get a<span> EXTRA 10% Off </span>on a Cart value of Rs2199",
+            "coupon_code": "<span>SUMMER10</span>"
+          }
+        }
+      },
+      "block_order": [
+        "badge_kK9xE3",
+        "badge_ezJHwR",
+        "badge_8hyGzb",
+        "mini_review_D7EFk7",
+        "mini_review_VRqcxN",
+        "mini_review_Qx9jt9",
+        "trust_icon_hpHGUe",
+        "trust_icon_zLKAYb",
+        "trust_icon_aUVeGG",
+        "offer_G48RVH",
+        "offer_eVncRJ",
+        "offer_e7gK9e"
+      ],
+      "name": "Product Main",
+      "settings": {
+        "ingredients_text": "Not recommended for pregnant or breastfeeding women, individuals with low blood pressure, or those with a vitamin C allergy or vitamin K deficiency.",
+        "additional_info_text": "Not recommended for pregnant or breastfeeding women, individuals with low blood pressure, or those with a vitamin C allergy or vitamin K deficiency."
+      }
+    },
+    "section_trust_badges_xPyreK": {
+      "type": "section-trust-badges",
+      "blocks": {
+        "badge_8rirVA": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2.png",
+            "title": "100% Natural",
+            "subtitle": "From Pahadi Region"
+          }
+        },
+        "badge_NE4kM3": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
+            "title": "100k+",
+            "subtitle": "Trusted Customers"
+          }
+        },
+        "badge_4jVrya": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
+            "title": "Lab Tested",
+            "subtitle": "From Lorem Ipsum"
+          }
+        },
+        "badge_HHhEKd": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_3.png",
+            "title": "Fssai Approved",
+            "subtitle": "Lorem Ipsum Lorem"
+          }
+        }
+      },
+      "block_order": [
+        "badge_8rirVA",
+        "badge_NE4kM3",
+        "badge_4jVrya",
+        "badge_HHhEKd"
+      ],
+      "name": "Trust Badges",
+      "settings": {
+        "section_style": "tb-section",
+        "bg_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m2": {
+      "type": "seabuckthorn-whats-in-bottle",
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "heading": "WHAT'S IN MY BOTTLE",
+        "subheading": "One ingredient. This won't take long.",
+        "diagram_label": "",
+        "ingredient_1_name": "WILD SEA BUCKTHORN BERRIES",
+        "ingredient_1_pct": "99.99%",
+        "ingredient_2_prefix": "and this bit —",
+        "ingredient_2_pct": "0.01%",
+        "ingredient_2_suffix": "— is E211",
+        "parchment_title": "About that 0.01%",
+        "parchment_para1": "Pressed berry with nothing added to it spoils in about a week. E211 is a permitted preservative, it's in there at one part in ten thousand, and it's the reason this bottle can reach Chennai instead of only Leh.",
+        "parchment_para2": "We could have rounded up and called it 100% pure. Plenty of bottles on the internet do.",
+        "parchment_para3": "We'd rather you knew what the hundredth of a percent was.",
+        "bg_color": "#fffbef",
+        "card_wrapper_bg": "#ffffff",
+        "card_border_color": "#e7ded0",
+        "heading_color": "#1c1918",
+        "parchment_bg": "#fffbef",
+        "parchment_text_color": "#1c1918",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m3": {
+      "type": "seabuckthorn-omega-7",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "num": "①",
+            "title": "WHAT IS IT?",
+            "content": "A fatty acid. Most people have heard of omega-3. Almost nobody has heard of this one. It's also in mother's milk, oddly enough.",
+            "highlight_text": "Highlight Subtext"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "num": "②",
+            "title": "WHY IS IT RARE?",
+            "content": "Barely any plant makes it. Commercially, it usually comes from fish or from macadamia nuts. Sea buckthorn is the exception.",
+            "highlight_text": "Highlight Subtext"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "num": "③",
+            "title": "HOW MUCH IS IN HERE?",
+            "content": "1,560 mg per 100 ml. That's more omega-7 than omega-3, 6 and 9 combined.",
+            "highlight_text": "Highlight Subtext"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "num": "④",
+            "title": "SO WHY ISN'T IT EVERYWHERE?",
+            "content": "Because the berry is a pain. It grows high up, it grows on thorns, and there are about 3 weeks a year to get it down.",
+            "highlight_text": "Sugar water with a mountain on the label is a lot easier to make."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "subtitle": "THE ONE YOU CAN'T GET ANYWHERE ELSE",
+        "heading": "Meet omega-7",
+        "bg_color": "#fffbef",
+        "heading_color": "#1c1918",
+        "subtitle_color": "#ee5922",
+        "card_bg": "#ffffff",
+        "card_text_color": "#1c1918",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m4": {
+      "type": "seabuckthorn-whats-not-in-bottle",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Added sugar",
+            "content": "The fastest way to make this taste nice. Also the fastest way to make it pointless."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Water",
+            "content": "A lot of \"juice\" is one part pulp to four parts water. This is the pulp. You add the water."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "Added colour",
+            "content": "The orange is just the berry."
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "title": "Flavouring",
+            "content": "Natural, nature-identical or otherwise."
+          }
+        },
+        "card_5": {
+          "type": "card",
+          "settings": {
+            "title": "Concentrate from elsewhere",
+            "content": "Nothing here was dried out in another country and reconstituted."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5"
+      ],
+      "settings": {
+        "module_tag": "What's not in my bottle",
+        "design_tag": "",
+        "heading": "WHAT'S NOT IN MY BOTTLE",
+        "marquee_text": "No sugar · No water · No colour · No added flavour · No \"Himalayan\" that isn't",
+        "bg_color": "#fffbef",
+        "heading_color": "#1c1918",
+        "card_bg": "#ffffff",
+        "card_text_color": "#1c1918",
+        "marquee_bg": "#008b75",
+        "marquee_text_color": "#ffffff",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m5": {
+      "type": "seabuckthorn-honest-warning",
+      "settings": {
+        "module_tag": "M5 · Let's be honest — this is not a nice drink",
+        "design_tag": "",
+        "header_title": "LET'S BE HONEST",
+        "main_heading": "You might not love the drink right away!",
+        "quote_text": "Sea buckthorn is sour. Properly sour - nearer to unripe citrus than to juice. The first spoonful makes most people's face do something.",
+        "body_para1": "Nothing is wrong with your bottle. There's just no sugar in it to hide behind.",
+        "body_para2": "One tablespoon in a glass of warm water is how most people take it. Add honey if you like.",
+        "handwritten_note": "We won't be offended.",
+        "photo_caption": "Real first-sip reaction",
+        "bg_color": "#fffbef",
+        "card_bg": "#ffffff",
+        "card_border_color": "#e7ded0",
+        "badge_bg": "#ee5922",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m6": {
+      "type": "seabuckthorn-where-it-comes-from",
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "heading": "PICKED WITH A STICK, OFF A THORN BUSH",
+        "subtitle": "Ladakh, 3 weeks every September",
+        "stamp_text": "Ladakh Wild Harvest",
+        "para_1": "Nobody planted sea buckthorn here. It came up on its own along the riverbeds, the way it has for as long as anyone can remember, and Ladakh has ended up with about 9 of every 10 sea buckthorn berries in India.",
+        "para_2": "Picking it is nobody's favourite job. The bush is armed - long thorns, set close - so you don't reach into it. You spread a cloth on the ground, take a stick to the branches, and let the berries come down on their own.",
+        "para_3": "Then you hurry. They bruise within hours, so whatever comes down in the morning is pressed by evening. September is the whole season. Miss it and then it’s the next year.",
+        "para_4": "And nobody is out there spraying a wild bush by a river at 3,000 metres. There's no one to do it.",
+        "bg_color": "#fffbef",
+        "heading_color": "#1c1918",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m7": {
+      "type": "seabuckthorn-bits-at-bottom",
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "heading": "YOU'LL SEE BITS AT THE BOTTOM",
+        "subtitle": "This is the good news",
+        "para_1": "That's the berry, doing what berries do.",
+        "para_2": "Leave the bottle standing and it settles. A little sediment, the odd fragment of seed.",
+        "shake_text": "Shake it and it all comes back.",
+        "bg_color": "#fffbef",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m8": {
+      "type": "seabuckthorn-batch-tested",
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "heading": "EVERY BATCH TESTED. REPORT PUBLISHED.",
+        "description": "Every batch is tested at an NABL-accredited lab before it goes on sale - before listing, not after complaints.",
+        "btn_label": "Read the latest batch report",
+        "report_url": "",
+        "bg_color": "#fffbef",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "seabuckthorn_m9": {
+      "type": "seabuckthorn-how-to-drink",
+      "settings": {
+        "module_tag": "",
+        "heading": "HOW TO DRINK IT",
+        "subtitle": "ONE SPOON. THAT'S THE WHOLE INSTRUCTION.",
+        "step_text": "10 ml into a glass of warm water. Stir.",
+        "timing_text": "Best to have it in the morning. But nothing bad happens at 4pm either.",
+        "bg_color": "#fffbef"
+      }
+    },
+    "seabuckthorn_m10": {
+      "type": "seabuckthorn-what-it-costs",
+      "settings": {
+        "module_tag": "",
+        "para_1": "1 tablespoon makes a glass, and there are 30 in a bottle. That's the honest way to look at the price of a pulp.",
+        "para_2": "Ladakh gets one harvest a year, picked over 3 weeks, and then freighted down from 3,500 metres. There's no second crop to cover a bad one.",
+        "para_3": "We'd rather show you that sum than print \"premium\" on the label and hope nobody asks.",
+        "bg_color": "#fffbef"
+      }
+    },
+    "seabuckthorn_m11": {
+      "type": "seabuckthorn-faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Why is it so sour? Is my bottle off?",
+            "answer": "It's meant to taste like that. Sea buckthorn is a sharp, tart berry to begin with, and there's no sugar in this bottle to round it off. Most people mix a spoon into warm water and add a little honey the first few times."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this a juice I can just drink?",
+            "answer": "No, it's thick pulp, and drinking it straight is a bit much. One tablespoon (10 ml) goes into a glass of water. A 300 ml bottle makes about 30 glasses."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "There's stuff settled at the bottom. Is that normal?",
+            "answer": "Completely. Whole pressed berry separates when it sits, and you'll sometimes find a fragment of seed in there. Give it a shake before you pour."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Why is there a preservative if it's pure?",
+            "answer": "Because pressed berry with nothing in it keeps for about a week. The bottle is 99.99% sea buckthorn pulp and 0.01% E211, a permitted Class 2 preservative. That's the whole ingredient list."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I know it's really from Ladakh?",
+            "answer": "Ladakh sea buckthorn carries a GI tag of its own, granted in 2023 - a government confirmation of origin rather than a claim we're making. Ours is wild-harvested from high altitude in Ladakh and Spiti, and every batch is lab-tested with the report published on this page."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "How much vitamin C is actually in it?",
+            "answer": "322 mg per 100 ml, tested. A 10 ml serving works out to roughly half an adult's recommended daily intake."
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "What's the difference between the pulp and the oil?",
+            "answer": "The pulp is pressed from the whole berry and carries the vitamin C. The oil is extracted from the seed or the pulp and concentrates the fatty acids instead. Different products, different jobs."
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does it last?",
+            "answer": "Unopened, check the date on the bottle. Once opened, refrigerate and finish within four weeks."
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "Can everyone drink this?",
+            "answer": "It's a food, not a supplement or a treatment, and we're not going to pretend otherwise. Anyone with a vitamin C allergy should skip it. If you're pregnant, breastfeeding or on medication, have a word with your doctor first."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9"
+      ],
+      "settings": {
+        "module_tag": "",
+        "design_tag": "",
+        "heading": "FREQUENTLY ASKED QUESTIONS",
+        "bg_color": "#fffbef",
+        "heading_color": "#1c1918",
+        "badge_bg": "#008b75",
+        "badge_color": "#ffffff"
+      }
+    },
+    "product_tabs_PVmzYe": {
+      "type": "product-tabs",
+      "blocks": {
+        "description_tab_FMWTxP": {
+          "type": "description_tab",
+          "settings": {
+            "tab_label": "Description",
+            "banner_image": "shopify://shop_images/LTD_TURMERIC_A_DESKTOP_2.jpg",
+            "banner_image_mobile": "shopify://shop_images/Beni_3669039a-2b61-4909-b56f-da3f2d49937f.png"
+          }
+        },
+        "benefits_tab_aPehcG": {
+          "type": "benefits_tab",
+          "settings": {
+            "tab_label": "Benefits",
+            "banner_image": "shopify://shop_images/LTD_TURMERIC_A_DESKTOP_4.jpg",
+            "banner_image_mobile": "shopify://shop_images/IMG_0443_1.png"
+          }
+        },
+        "ingredients_tab_kdnBDT": {
+          "type": "ingredients_tab",
+          "settings": {
+            "tab_label": "Ingredients",
+            "ingredients_json": "[{\"title\":\"Sea buckthorn Pulp 99.99%\",\"description\":\"An arsenal in the toolkit of traditional medicine, Himalayan Sea Buckthorn Juice contains the most amount of Vitamin C bioavailable naturally\",\"image\":\"\"},{\"title\":\"0.01% Permitted Class 2 Preservatives (E211)\",\"description\":\"E211 is a widely used antimicrobial food preservative and stabilizer in acidic foods (pH < 4.5), cosmetics, and medicines.\",\"image\":\"\"}]"
+          }
+        },
+        "nutrients_tab_NwC9fK": {
+          "type": "nutrients_tab",
+          "settings": {
+            "tab_label": "Nutrients",
+            "banner_image": "shopify://shop_images/image_875.png",
+            "banner_image_mobile": "shopify://shop_images/IMG_0443_1.png"
+          }
+        },
+        "how_to_use_tab_6LkRyQ": {
+          "type": "how_to_use_tab",
+          "settings": {
+            "tab_label": "How to use",
+            "video_url": "https://youtu.be/H4S8_xgQR4k?si=RpFDF0iwJLxMJDj5",
+            "steps": "Take 50ml seabuckthorn Pulp|Add to 100ml normal lukewarm water & stir well|Drink daily for best results"
+          }
+        }
+      },
+      "block_order": [
+        "description_tab_FMWTxP",
+        "benefits_tab_aPehcG",
+        "ingredients_tab_kdnBDT",
+        "nutrients_tab_NwC9fK",
+        "how_to_use_tab_6LkRyQ"
+      ],
+      "name": "Product Tabs",
+      "settings": {}
+    },
+    "watch_and_buy_YMy6WU": {
+      "type": "watch-and-buy",
+      "blocks": {
+        "reelcart_video_carousel_3qCqAy": {
+          "type": "shopify://apps/reelcart/blocks/video-carousel/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
+          "settings": {
+            "selected_campaign_title": "Homepage MPD",
+            "is_collection_carousel": false,
+            "section_bg": "rgba(0,0,0,0)",
+            "title_color": "#6c7278",
+            "title_bg": "rgba(0,0,0,0)",
+            "section_title": "",
+            "section_subtitle": "",
+            "horizontal_alignment": "center",
+            "card_details": "product-info",
+            "show_scroll_arrows": true,
+            "show_view_count": true,
+            "video_card_width": 280,
+            "video_card_width_mobile": 200,
+            "video_card_height": 460,
+            "video_card_height_mobile": 330,
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_show_price": true,
+            "phone_show_image": true,
+            "phone_show_title": false,
+            "phone_show_price": false,
+            "caption_text_alignment": "left",
+            "caption_fontsize": 12,
+            "caption_padding": 20,
+            "caption_color_background": "linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)",
+            "username_visibility": false
+          }
+        }
+      },
+      "block_order": [
+        "reelcart_video_carousel_3qCqAy"
+      ],
+      "name": "Watch & Buy",
+      "settings": {
+        "section_style": "wab-section",
+        "title": "What Our Customer Says About us ?",
+        "title_color": "#333333",
+        "bg_color": "#ffffff"
+      }
+    },
+    "1778497472dee03f86": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_enjTW3": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_enjTW3"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "product_slider_recommendation_tPXdUp": {
+      "type": "product-slider-recommendation",
+      "name": "Product Recommendations",
+      "settings": {
+        "title": "You May Also Like",
+        "fallback_collection": "all-products",
+        "show_secondary_image": true,
+        "products_to_show": 8,
+        "discount_text": "Extra 10% Discount at Checkout",
+        "bg_color": "#ffffff"
+      }
+    },
+    "product_slider_PkTbzU": {
+      "type": "product-slider",
+      "disabled": true,
+      "name": "Product Slider",
+      "settings": {
+        "title": "You May Also Like",
+        "show_secondary_image": true,
+        "collection": "best-selling",
+        "products_to_show": 8,
+        "discount_text": "Extra 10% Discount at Checkout",
+        "bg_color": "#ffffff"
+      }
+    },
+    "faq_pdp_section_39rxGY": {
+      "type": "faq-pdp-section",
+      "name": "FAQ Section",
+      "settings": {
+        "title": "Any Last Questions ?",
+        "image": "shopify://shop_images/Frame_2147228047.png",
+        "bg_color": "#fffbef"
+      }
+    },
+    "product_story_Cxw8pt": {
+      "type": "product-story",
+      "blocks": {
+        "stat_378cGz": {
+          "type": "stat",
+          "settings": {
+            "number": "221",
+            "label_top": "Products",
+            "label_bottom": "All Products"
+          }
+        },
+        "stat_WdQBKC": {
+          "type": "stat",
+          "settings": {
+            "number": "48+",
+            "label_top": "Products",
+            "label_bottom": "New Launch"
+          }
+        },
+        "stat_XiYj9x": {
+          "type": "stat",
+          "settings": {
+            "number": "221",
+            "label_top": "Value",
+            "label_bottom": "Lorem Ipsum"
+          }
+        }
+      },
+      "block_order": [
+        "stat_378cGz",
+        "stat_WdQBKC",
+        "stat_XiYj9x"
+      ],
+      "name": "Product Story",
+      "settings": {
+        "bg_color": "#fdf6e3",
+        "bg_image": "shopify://shop_images/Frame_2147227905.png",
+        "bg_image_mobile": "shopify://shop_images/Frame_2147227326.png",
+        "philosophy_title": "The Philosophy rooted in mountain",
+        "philosophy_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.",
+        "team_image": "shopify://shop_images/Frame_22166.png",
+        "media_title": "In the Media",
+        "media_logo_1": "shopify://shop_images/image_795.png",
+        "media_link_1": "",
+        "media_logo_2": "shopify://shop_images/image_798.png",
+        "media_link_2": "",
+        "media_logo_3": "shopify://shop_images/image_794.png",
+        "media_link_3": "",
+        "media_logo_4": "shopify://shop_images/Frame_2147227897.png",
+        "media_link_4": "",
+        "media_logo_5": "shopify://shop_images/image_799.png",
+        "media_link_5": "",
+        "media_logo_6": "shopify://shop_images/image_796.png",
+        "media_link_6": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "product_main_wbYeCL",
+    "section_trust_badges_xPyreK",
+    "seabuckthorn_m2",
+    "seabuckthorn_m3",
+    "seabuckthorn_m4",
+    "seabuckthorn_m5",
+    "seabuckthorn_m6",
+    "seabuckthorn_m7",
+    "seabuckthorn_m8",
+    "seabuckthorn_m9",
+    "seabuckthorn_m10",
+    "seabuckthorn_m11",
+    "product_tabs_PVmzYe",
+    "watch_and_buy_YMy6WU",
+    "1778497472dee03f86",
+    "product_slider_recommendation_tPXdUp",
+    "product_slider_PkTbzU",
+    "faq_pdp_section_39rxGY",
+    "product_story_Cxw8pt"
+  ]
+}

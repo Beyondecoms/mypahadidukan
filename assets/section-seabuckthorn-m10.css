@@ -1,0 +1,84 @@
+/* Section M10 - What it costs */
+.sb-m10-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m10-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m10-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sb-m10-module-badge {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #008b75;
+}
+
+.sb-m10-card-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m10-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #1c1918;
+  margin: 0 0 20px 0;
+  line-height: 1.15;
+}
+
+.sb-m10-price-highlight {
+  color: #008b75;
+}
+
+.sb-m10-body p {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #2b2825;
+  margin: 0 0 18px 0;
+}
+
+.sb-m10-body p:last-child {
+  margin-bottom: 0;
+  font-weight: 700;
+  color: #1c1918;
+  font-size: 1.3rem;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m10-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m10-card-wrapper {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+  }
+  .sb-m10-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 14px !important;
+  }
+  .sb-m10-body p {
+    font-size: 1rem !important;
+    margin-bottom: 12px !important;
+  }
+  .sb-m10-body p:last-child {
+    font-size: 1.1rem !important;
+  }
+}

@@ -246,6 +246,7 @@
       {
         "type": "select",
         "id": "envType",
+        "label": "Select Environment",
         "options": [
           {
             "value": "qa",

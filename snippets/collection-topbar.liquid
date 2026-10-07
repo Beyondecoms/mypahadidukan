@@ -24,11 +24,6 @@
     <p class="collection-count productCount">
       ({{ collection.products_count }} products)
     </p>
-    {%- if collection.metafields.custom.collection_top_description != blank -%}
-      <div class="collection-top-description rte">
-        {{ collection.metafields.custom.collection_top_description | metafield_tag }}
-      </div>
-    {%- endif -%}
     <div class="sort-status-message" style="display:none;"></div>
   </div>
 
@@ -59,12 +54,6 @@
       ({{ collection.products_count }} products)
     </p>
 
-    {%- if collection.metafields.custom.collection_top_description != blank -%}
-      <div class="collection-top-description rte">
-        {{ collection.metafields.custom.collection_top_description | metafield_tag }}
-      </div>
-    {%- endif -%}
-
     <div class="sort-status-message" style="display:none;"></div>
   </div>
 
@@ -88,6 +77,18 @@
   </div>
 
 </div>
+
+<!-- COLLECTION DESCRIPTION BELOW FILTERS FULL WIDTH -->
+{%- if collection.metafields.custom.collection_top_description != blank -%}
+  <div class="collection-top-description rte">
+    {{ collection.metafields.custom.collection_top_description | metafield_tag }}
+  </div>
+{%- elsif collection.description != blank -%}
+  <div class="collection-top-description rte">
+    {{ collection.description }}
+  </div>
+{%- endif -%}
+
 
 <style>
   .filter-btn {
@@ -179,8 +180,11 @@
     line-height: 1.6;
     color: #4a4a4a;
     text-align: center;
-    margin-top: 6px;
-    max-width: 750px;
+    margin: 16px auto 24px auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 15px;
   }
 
   .collection-top-description p {
@@ -239,26 +243,27 @@
       font-size: 14px;
     }
 
-    .mobile-heading-row .collection-top-description {
-      flex-basis: 100%;
+    .collection-top-description {
       width: 100%;
-      font-size: 13px;
+      max-width: 100%;
+      box-sizing: border-box;
+      font-size: 13.5px;
       line-height: 1.5;
       color: #4a4a4a;
-      padding: 0 10px;
-      margin-top: 6px;
+      padding: 0 15px;
+      margin: 16px auto 16px auto;
       text-align: center;
     }
 
-    .mobile-heading-row .collection-top-description p {
+    .collection-top-description p {
       margin: 0 0 6px 0;
     }
 
-    .mobile-heading-row .collection-top-description p:last-child {
+    .collection-top-description p:last-child {
       margin-bottom: 0;
     }
 
-    .mobile-heading-row .collection-top-description a {
+    .collection-top-description a {
       color: var(--primary-web-color, #048E79);
       text-decoration: underline;
     }

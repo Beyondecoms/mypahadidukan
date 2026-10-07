@@ -1,0 +1,236 @@
+/* Section M9 - How to drink it */
+.sb-m9-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m9-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m9-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sb-m9-module-badge {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #008b75;
+}
+
+.sb-m9-card-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m9-header {
+  margin-bottom: 32px;
+}
+
+.sb-m9-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #1c1918;
+  margin: 0 0 8px 0;
+  line-height: 1.15;
+}
+
+.sb-m9-subtitle {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ee5922;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* Graphic + 30-Glass Stamp Counter Grid */
+.sb-m9-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 44px;
+}
+
+.sb-m9-graphic-box {
+  background-color: #fff8e8;
+  border: 1.5px solid #e7ded0;
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sb-m9-graphic-svg {
+  width: 200px;
+  height: 150px;
+  margin-bottom: 16px;
+}
+
+.sb-m9-instruction-step {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #008b75;
+  margin-bottom: 8px;
+}
+
+.sb-m9-instruction-timing {
+  font-size: 1.15rem;
+  color: #333333;
+  font-weight: 600;
+}
+
+/* 30-Glass Stamp Sheet Grid */
+.sb-m9-stamp-sheet {
+  background-color: #faf5eb;
+  border: 2px dashed #008b75;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+}
+
+.sb-m9-stamp-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #008b75;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.04em;
+}
+
+.sb-m9-glasses-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.sb-m9-glass-icon {
+  width: 28px;
+  height: 38px;
+  border: 2px solid #008b75;
+  border-radius: 2px 2px 5px 5px;
+  background-color: transparent;
+  position: relative;
+  margin: 0 auto;
+}
+
+.sb-m9-glass-icon.filled {
+  background-color: #ee5922;
+  border-color: #ee5922;
+  box-shadow: 0 0 10px rgba(238, 89, 34, 0.5);
+}
+
+.sb-m9-stamp-footer {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1c1918;
+  text-align: center;
+}
+
+/* 3 Postcard Cards + Storage Card */
+.sb-m9-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.sb-m9-recipe-card {
+  background-color: #fffbef;
+  border: 1.5px solid #e7ded0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.sb-m9-recipe-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1c1918;
+  margin: 0 0 8px 0;
+}
+
+.sb-m9-recipe-desc {
+  font-size: 1.15rem;
+  color: #333333;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.sb-m9-storage-card {
+  background-color: #fff3e6;
+  border: 1.5px solid #ee5922;
+  border-radius: 16px;
+  padding: 24px;
+  color: #7c2d12;
+  font-size: 1.18rem;
+  line-height: 1.65;
+}
+
+.sb-m9-storage-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  color: #ee5922;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m9-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m9-card-wrapper {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+  }
+  .sb-m9-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m9-subtitle {
+    font-size: 1.15rem !important;
+  }
+  .sb-m9-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+  }
+  .sb-m9-graphic-box {
+    padding: 20px 14px !important;
+  }
+  .sb-m9-graphic-svg {
+    width: 150px !important;
+    height: 110px !important;
+  }
+  .sb-m9-stamp-sheet {
+    padding: 16px 12px !important;
+  }
+  .sb-m9-glasses-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 6px !important;
+  }
+  .sb-m9-cards-row {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .sb-m9-recipe-card,
+  .sb-m9-storage-card {
+    padding: 18px 14px !important;
+  }
+}

@@ -1,0 +1,70 @@
+{{ 'section-seabuckthorn-m10.css' | asset_url | stylesheet_tag }}
+
+<div class="sb-m10-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="sb-m10-container">
+    
+    <!-- Top Meta Row -->
+    <div class="sb-m10-top-bar">
+      <span class="sb-m10-module-badge">{{ section.settings.module_tag }}</span>
+    </div>
+
+    <!-- Main Card Box -->
+    <div class="sb-m10-card-wrapper">
+      <h2 class="sb-m10-title">
+        ₹775 A BOTTLE. <span class="sb-m10-price-highlight">ABOUT ₹26 A GLASS.</span>
+      </h2>
+
+      <div class="sb-m10-body">
+        <p>{{ section.settings.para_1 }}</p>
+        <p>{{ section.settings.para_2 }}</p>
+        <p><strong>{{ section.settings.para_3 }}</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "M10 - What it costs",
+  "tag": "section",
+  "class": "section-sb-m10",
+  "settings": [
+    {
+      "type": "text",
+      "id": "module_tag",
+      "label": "Module Tag",
+      "default": "M10 · ₹775 = ~₹26 a glass"
+    },
+    {
+      "type": "textarea",
+      "id": "para_1",
+      "label": "Paragraph 1",
+      "default": "1 tablespoon makes a glass, and there are 30 in a bottle. That's the honest way to look at the price of a pulp."
+    },
+    {
+      "type": "textarea",
+      "id": "para_2",
+      "label": "Paragraph 2",
+      "default": "Ladakh gets one harvest a year, picked over 3 weeks, and then freighted down from 3,500 metres. There's no second crop to cover a bad one."
+    },
+    {
+      "type": "textarea",
+      "id": "para_3",
+      "label": "Paragraph 3",
+      "default": "We'd rather show you that sum than print \"premium\" on the label and hope nobody asks."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fffbef"
+    }
+  ],
+  "presets": [
+    {
+      "name": "M10 - What it costs"
+    }
+  ]
+}
+{% endschema %}

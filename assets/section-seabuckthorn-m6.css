@@ -1,0 +1,195 @@
+/* Section M6 - Where it comes from */
+.sb-m6-section {
+  padding: 10px 10px;
+  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fffbef;
+  color: #1c1918;
+  overflow: hidden;
+}
+
+.sb-m6-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m6-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sb-m6-module-badge {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #008b75;
+}
+
+.sb-m6-pill-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 24px;
+  background-color: #008b75;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sb-m6-header {
+  margin-bottom: 28px;
+}
+
+.sb-m6-title {
+  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #1c1918;
+  margin: 0 0 6px 0;
+  line-height: 1.15;
+}
+
+.sb-m6-subtitle {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ee5922;
+  margin: 0;
+}
+
+/* Full-bleed Banner */
+.sb-m6-banner-card {
+  background-color: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m6-banner-image-wrap {
+  width: 100%;
+  height: 380px;
+  position: relative;
+  background-color: #008b75;
+  overflow: hidden;
+}
+
+.sb-m6-banner-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sb-m6-banner-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #008b75 0%, #025b4e 100%);
+  color: #ffffff;
+  padding: 24px;
+  text-align: center;
+}
+
+.sb-m6-stamp-overlay {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px dashed #008b75;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #008b75;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Story Content Body */
+.sb-m6-story-body {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.sb-m6-story-block {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #333333;
+}
+
+.sb-m6-story-block strong {
+  color: #1c1918;
+  font-weight: 800;
+}
+
+/* Bottom Ticker / Tagline */
+.sb-m6-facts-bar {
+  background-color: #fff8e8;
+  border-top: 1.5px solid #e7ded0;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #008b75;
+  letter-spacing: 0.02em;
+}
+
+.sb-m6-fact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sb-m6-fact-bullet {
+  color: #ee5922;
+  font-size: 1.2rem;
+}
+
+/* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
+@media only screen and (max-width: 749px) {
+  .sb-m6-section {
+    padding: 20px 12px !important;
+  }
+  .sb-m6-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+  .sb-m6-subtitle {
+    font-size: 1.15rem !important;
+  }
+  .sb-m6-banner-image-wrap {
+    height: 220px !important;
+  }
+  .sb-m6-stamp-overlay {
+    top: 14px !important;
+    right: 14px !important;
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+  }
+  .sb-m6-story-body {
+    grid-template-columns: 1fr !important;
+    padding: 20px 14px !important;
+    gap: 16px !important;
+  }
+  .sb-m6-story-block {
+    font-size: 1rem !important;
+  }
+  .sb-m6-facts-bar {
+    padding: 14px 14px !important;
+    font-size: 0.95rem !important;
+    gap: 10px !important;
+    justify-content: flex-start !important;
+  }
+}

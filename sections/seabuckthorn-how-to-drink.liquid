@@ -1,0 +1,124 @@
+{{ 'section-seabuckthorn-m9.css' | asset_url | stylesheet_tag }}
+
+<div class="sb-m9-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="sb-m9-container">
+    
+    <!-- Top Meta Row -->
+    <div class="sb-m9-top-bar">
+      <span class="sb-m9-module-badge">{{ section.settings.module_tag }}</span>
+    </div>
+
+    <!-- Main Card Box -->
+    <div class="sb-m9-card-wrapper">
+      <div class="sb-m9-header">
+        <h2 class="sb-m9-title">{{ section.settings.heading }}</h2>
+        <h3 class="sb-m9-subtitle">{{ section.settings.subtitle }}</h3>
+      </div>
+
+      <!-- Hero Graphic + 30-Glass Stamp Sheet Grid -->
+      <div class="sb-m9-hero-grid">
+        <!-- Hero Graphic -->
+        <div class="sb-m9-graphic-box">
+          <svg class="sb-m9-graphic-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Glass -->
+            <rect x="110" y="35" width="45" height="70" rx="4" stroke="#008B75" stroke-width="2.5" fill="rgba(0, 139, 117, 0.05)"/>
+            <path d="M112 70 Q132 68 153 70 L153 102 C153 103 151 104 150 104 L115 104 C113 104 112 103 112 102 Z" fill="#EE5922"/>
+            <!-- Spoon -->
+            <path d="M30 40 Q70 30 115 50" stroke="#1C1918" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="118" cy="52" rx="14" ry="8" fill="#EE5922" stroke="#1C1918" stroke-width="2"/>
+            <!-- Arrow -->
+            <path d="M105 45 Q120 40 125 58" stroke="#EE5922" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+          </svg>
+          <div class="sb-m9-instruction-step">{{ section.settings.step_text }}</div>
+          <div class="sb-m9-instruction-timing">{{ section.settings.timing_text }}</div>
+        </div>
+
+        <!-- 30-Glass Stamp Sheet Grid -->
+        <div class="sb-m9-stamp-sheet">
+          <div class="sb-m9-stamp-title">30 glasses in a bottle</div>
+          <div class="sb-m9-glasses-grid">
+            {%- for i in (1..30) -%}
+              <div class="sb-m9-glass-icon {% if i == 1 %}filled{% endif %}" title="Glass {{ i }}"></div>
+            {%- endfor -%}
+          </div>
+          <div class="sb-m9-stamp-footer">That's the one you had this morning</div>
+        </div>
+      </div>
+
+      <!-- 3 Recipe Postcards -->
+      <div class="sb-m9-cards-row">
+        <div class="sb-m9-recipe-card">
+          <h4 class="sb-m9-recipe-title">In room temperature</h4>
+          <p class="sb-m9-recipe-desc">How most people take it</p>
+        </div>
+        <div class="sb-m9-recipe-card">
+          <h4 class="sb-m9-recipe-title">Through yoghurt</h4>
+          <p class="sb-m9-recipe-desc">Thicker, less sharp</p>
+        </div>
+        <div class="sb-m9-recipe-card">
+          <h4 class="sb-m9-recipe-title">In a smoothie</h4>
+          <p class="sb-m9-recipe-desc">To balance the sourness</p>
+        </div>
+      </div>
+
+      <!-- Storage Card -->
+      <div class="sb-m9-storage-card">
+        <h4 class="sb-m9-storage-title">Storage</h4>
+        <p style="margin:0;">Cool, dark, dry. Once you open it, keep it in the fridge and finish it within four weeks. Shake before pouring.</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "M9 - How to drink it",
+  "tag": "section",
+  "class": "section-sb-m9",
+  "settings": [
+    {
+      "type": "text",
+      "id": "module_tag",
+      "label": "Module Tag",
+      "default": "M9 · How to drink it"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "HOW TO DRINK IT"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "ONE SPOON. THAT'S THE WHOLE INSTRUCTION."
+    },
+    {
+      "type": "text",
+      "id": "step_text",
+      "label": "Instruction Step",
+      "default": "10 ml into a glass of warm water. Stir."
+    },
+    {
+      "type": "text",
+      "id": "timing_text",
+      "label": "Timing Text",
+      "default": "Best to have it in the morning. But nothing bad happens at 4pm either."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fffbef"
+    }
+  ],
+  "presets": [
+    {
+      "name": "M9 - How to drink it"
+    }
+  ]
+}
+{% endschema %}

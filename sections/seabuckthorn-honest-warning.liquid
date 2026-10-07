@@ -1,0 +1,169 @@
+{{ 'section-seabuckthorn-m5.css' | asset_url | stylesheet_tag }}
+
+<div class="sb-m5-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="sb-m5-container">
+    
+    <!-- Top Meta Row -->
+    <div class="sb-m5-top-bar">
+      <span class="sb-m5-module-badge">{{ section.settings.module_tag }}</span>
+      {%- if section.settings.design_tag != blank -%}
+        <span class="sb-m5-pill-badge" style="background-color: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">{{ section.settings.design_tag }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Main Card Box -->
+    <div class="sb-m5-card-wrapper" style="background-color: {{ section.settings.card_bg }}; border-color: {{ section.settings.card_border_color }};">
+      <div class="sb-m5-grid">
+        
+        <!-- Content Column -->
+        <div class="sb-m5-content-col">
+          {%- if section.settings.header_title != blank -%}
+            <h4 class="sb-m5-header-title">{{ section.settings.header_title }}</h4>
+          {%- endif -%}
+          <h2 class="sb-m5-main-heading">{{ section.settings.main_heading }}</h2>
+          
+          <div class="sb-m5-quote">
+            "{{ section.settings.quote_text }}"
+          </div>
+
+          <div class="sb-m5-body-text">
+            <p>{{ section.settings.body_para1 }}</p>
+            <p>{{ section.settings.body_para2 }}</p>
+          </div>
+
+          {%- if section.settings.handwritten_note != blank -%}
+            <div class="sb-m5-handwritten">
+              <em>{{ section.settings.handwritten_note }}</em>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Image Column -->
+        <div class="sb-m5-image-col">
+          <div class="sb-m5-photo-box">
+            {%- if section.settings.photo != blank -%}
+              <img src="{{ section.settings.photo | image_url: width: 600 }}" alt="{{ section.settings.main_heading }}" loading="lazy" width="600" height="450">
+            {%- else -%}
+              <div class="sb-m5-photo-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <p style="margin: 8px 0 0 0; font-weight: 700; font-size: 0.9rem;">Real first-sip wince photo</p>
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.photo_caption != blank -%}
+            <div class="sb-m5-photo-caption">{{ section.settings.photo_caption }}</div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "M5 - The honest warning",
+  "tag": "section",
+  "class": "section-sb-m5",
+  "settings": [
+    {
+      "type": "text",
+      "id": "module_tag",
+      "label": "Module Tag",
+      "default": "M5 · Let's be honest — this is not a nice drink"
+    },
+    {
+      "type": "text",
+      "id": "design_tag",
+      "label": "Design Badge",
+      "default": "hero moment"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Header Tagline",
+      "default": "LET'S BE HONEST"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "You might not love the drink right away!"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote Text",
+      "default": "Sea buckthorn is sour. Properly sour - nearer to unripe citrus than to juice. The first spoonful makes most people's face do something."
+    },
+    {
+      "type": "textarea",
+      "id": "body_para1",
+      "label": "Body Paragraph 1",
+      "default": "Nothing is wrong with your bottle. There's just no sugar in it to hide behind."
+    },
+    {
+      "type": "textarea",
+      "id": "body_para2",
+      "label": "Body Paragraph 2",
+      "default": "One tablespoon in a glass of warm water is how most people take it. Add honey if you like."
+    },
+    {
+      "type": "text",
+      "id": "handwritten_note",
+      "label": "Handwritten Note",
+      "default": "We won't be offended."
+    },
+    {
+      "type": "image_picker",
+      "id": "photo",
+      "label": "Wince Photo"
+    },
+    {
+      "type": "text",
+      "id": "photo_caption",
+      "label": "Photo Caption",
+      "default": "Real first-sip reaction"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fffbef"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e7ded0"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Pill Badge BG",
+      "default": "#ee5922"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Pill Badge Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "M5 - The honest warning"
+    }
+  ]
+}
+{% endschema %}
