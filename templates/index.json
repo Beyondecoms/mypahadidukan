@@ -686,6 +686,12 @@
             "product": "sea-buckthorn-juice"
           }
         },
+        "item_ajzMUk": {
+          "type": "item",
+          "settings": {
+            "product": "seabuckthorn-oil-capsules"
+          }
+        },
         "item_8PEYzG": {
           "type": "item",
           "settings": {
@@ -726,6 +732,7 @@
       "block_order": [
         "item_KyHqJA",
         "item_njRFmG",
+        "item_ajzMUk",
         "item_8PEYzG",
         "item_q6dWkc",
         "item_eUB3Xa",
