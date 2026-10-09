@@ -50,9 +50,9 @@
         "container": "container",
         "sidebar_show": false,
         "sidebar_position": "right_column",
-        "design": "layout1",
-        "blog_show_breadcrumb": false,
-        "blog_show_author": true,
+        "design": "layout2",
+        "blog_show_breadcrumb": true,
+        "blog_show_author": false,
         "blog_show_date": true,
         "blog_show_tags": false,
         "blog_show_social": true,
@@ -63,6 +63,14 @@
         "article_show_date": false,
         "article_show_excerpt": false,
         "article_show_button": false
+      }
+    },
+    "article_author_custom_NxpeVq": {
+      "type": "article-author-custom",
+      "name": "Article authors",
+      "settings": {
+        "heading": "About the author",
+        "show_more_link": true
       }
     },
     "faq_new_RDj6qR": {
@@ -110,14 +118,6 @@
         "pd_tb": "",
         "mg_mb": ",,30px,",
         "pd_mb": ""
-      }
-    },
-    "article_author_custom_NxpeVq": {
-      "type": "article-author-custom",
-      "name": "Article authors",
-      "settings": {
-        "heading": "About the author",
-        "show_more_link": true
       }
     }
   },
