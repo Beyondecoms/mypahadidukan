@@ -1,1 +1,41 @@
-   {% render 'article-authors-inline', article: article, heading: 'About the author' %}
+{%- comment -%}
+  One author card. Used by sections/article-author-custom.liquid
+  Usage: {% render 'author-card-custom', author: author, show_link: true %}
+{%- endcomment -%}
+
+{%- if author != blank -%}
+  {%- assign author_url = author.system.url -%}
+  <div class="author-card">
+    {%- if author.photo.value != blank -%}
+      {%- if author_url != blank -%}<a href="{{ author_url }}">{%- endif -%}
+      {{
+        author.photo.value
+        | image_url: width: 240, height: 240, crop: 'center'
+        | image_tag: loading: 'lazy', alt: author.name.value, class: 'author-card__photo', width: 96, height: 96
+      }}
+      {%- if author_url != blank -%}</a>{%- endif -%}
+    {%- endif -%}
+
+    <div class="author-card__body">
+      <p class="author-card__name">
+        {%- if author_url != blank -%}
+          <a href="{{ author_url }}">{{ author.name.value }}</a>
+        {%- else -%}
+          {{ author.name.value }}
+        {%- endif -%}
+      </p>
+
+      {%- if author.role.value != blank -%}
+        <p class="author-card__role">{{ author.role.value }}</p>
+      {%- endif -%}
+
+      {%- if author.bio.value != blank -%}
+        <div class="author-card__bio rte">{{ author.bio | metafield_tag }}</div>
+      {%- endif -%}
+
+      {%- if show_link and author_url != blank -%}
+        <a href="{{ author_url }}" class="author-card__more">More from {{ author.name.value }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
