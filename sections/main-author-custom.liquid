@@ -1,94 +1,302 @@
 {%- comment -%}
-  Author profile page. Used on the Author metaobject template
-  (URL: /pages/author/<handle>). Shows the author's details and their posts.
+  Author profile page (Metaobjects → Author template, URL /pages/author/<handle>).
+  Built from the theme's own pieces: section wrapper, breadcrumb, article
+  typography and the 'article-card' grid used by the blog and related posts.
+  Lists posts whose article.metafields.custom.author points to this author
+  (works for a single reference or a list).
 {%- endcomment -%}
 
-{%- assign author = metaobject -%}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'blog-post.css' | asset_url | stylesheet_tag }}
 
-<div class="author-page container">
-  <header class="author-page__header">
-    {%- if author.photo.value != blank -%}
-      {{
-        author.photo.value
-        | image_url: width: 400, height: 400, crop: 'center'
-        | image_tag: alt: author.name.value, class: 'author-page__photo', width: 160, height: 160
-      }}
-    {%- endif -%}
-    <div>
-      <h1 class="author-page__name">{{ author.name.value }}</h1>
-      {%- if author.role.value != blank -%}
-        <p class="author-page__role">{{ author.role.value }}</p>
-      {%- endif -%}
-      {%- if author.bio.value != blank -%}
-        <div class="author-page__bio rte">{{ author.bio | metafield_tag }}</div>
-      {%- endif -%}
-      
-    </div>
-  </header>
+{%- liquid
+  assign author = metaobject
+  assign blog = section.settings.blog
 
-  {%- assign blog = section.settings.blog -%}
-  {%- if blog != blank -%}
-    <h2 class="author-page__posts-heading h3">Posts by {{ author.name.value }}</h2>
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+  endif
 
-    {%- assign found = 0 -%}
-    <ul class="author-posts" role="list">
-      {%- paginate blog.articles by 250 -%}
-               {%- for post in blog.articles -%}
-          {%- assign post_author = post.metafields.custom.author.value -%}
-          {%- if post_author.system.id == author.system.id -%}
-            {%- assign found = found | plus: 1 -%}
-            <li class="author-post">
-              {%- if post.image -%}
-                <a href="{{ post.url }}" class="author-post__image-link">
-                  {{ post.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: post.title, class: 'author-post__image' }}
-                </a>
-              {%- endif -%}
-              <div>
-                <a href="{{ post.url }}" class="author-post__title">{{ post.title }}</a>
-                <p class="author-post__date">{{ post.published_at | date: '%b %d, %Y' }}</p>
-                {%- if post.excerpt != blank -%}
-                  <p class="author-post__excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-                {%- endif -%}
-              </div>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- endpaginate -%}
-    </ul>
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
 
-    {%- if found == 0 -%}
-      <p class="author-page__empty">No posts yet.</p>
-    {%- endif -%}
-  {%- endif -%}
-</div>
+  assign classes = 'm-section m-author-page m-gradient m-color-' | append: section.settings.color_scheme
+-%}
 
-{% stylesheet %}
-  .author-page { margin-top: 4rem; margin-bottom: 6rem; max-width: 96rem; }
-  .author-page__header { display: flex; gap: 3rem; align-items: flex-start; margin-bottom: 4rem; }
-  .author-page__photo { width: 16rem; height: 16rem; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-  .author-page__name { margin: 0 0 0.4rem; }
-  .author-page__role { margin: 0 0 1.2rem; opacity: 0.7; }
-  .author-posts { list-style: none; padding: 0; margin: 0; display: grid; gap: 2.4rem; }
-  .author-post { display: grid; grid-template-columns: 20rem 1fr; gap: 2rem; align-items: start; }
-  .author-post__image { width: 100%; height: auto; border-radius: 0.8rem; display: block; }
-  .author-post__title { font-size: 1.8rem; font-weight: 600; text-decoration: none; color: inherit; }
-  .author-post__date { margin: 0.4rem 0; opacity: 0.6; font-size: 1.3rem; }
-  .author-post__excerpt { margin: 0; }
-  @media screen and (max-width: 749px) {
-    .author-page__header { flex-direction: column; align-items: center; text-align: center; }
-    .author-page__header .author-social { justify-content: center; }
-    .author-post { grid-template-columns: 1fr; }
+<style>
+  #m-author-page-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --column-gap: {{ section.settings.column_gap }}px;
+    --column-gap-mobile: {{ section.settings.mobile_gap }}px;
+    --row-gap: {{ section.settings.column_gap | plus: 10 }}px;
   }
-{% endstylesheet %}
+  #m-author-page-{{ section.id }} .m-author-page__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 56px;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__photo {
+    width: {{ section.settings.photo_size }}px;
+    height: {{ section.settings.photo_size }}px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 20px;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__role {
+    margin: 0 0 8px;
+    font-size: 15px;
+    opacity: 0.7;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__name {
+    margin: 0 0 16px;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__bio p:last-child {
+    margin-bottom: 0;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__posts-heading {
+    text-align: center;
+    margin: 0 0 32px;
+  }
+  #m-author-page-{{ section.id }} .m-author-page__empty {
+    text-align: center;
+    opacity: 0.7;
+  }
+</style>
+
+<section
+  id="m-author-page-{{ section.id }}"
+  class="{{ classes }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="{{ container }} m-section-my m-section-py">
+    {%- if section.settings.show_breadcrumb -%}
+      {% render 'breadcrumb', justify: 'center' %}
+    {%- endif -%}
+
+    <div class="m-author-page__profile{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+      {%- if author.photo.value != blank -%}
+        {{
+          author.photo.value
+          | image_url: width: 480, height: 480, crop: 'center'
+          | image_tag: alt: author.name.value, class: 'm-author-page__photo'
+        }}
+      {%- endif -%}
+
+      {%- if author.role.value != blank -%}
+        <p class="m-author-page__role">{{ author.role.value }}</p>
+      {%- endif -%}
+
+      <h1 class="m-author-page__name m-article__title">{{ author.name.value }}</h1>
+
+      {%- if author.bio.value != blank -%}
+        <div class="m-author-page__bio rte">{{ author.bio | metafield_tag }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if blog != blank -%}
+      <h2 class="m-author-page__posts-heading m-related-posts__heading">
+        {{ section.settings.posts_heading | replace: '[name]', author.name.value }}
+      </h2>
+
+      {%- assign found = 0 -%}
+      <div class="m-mixed-layout">
+        <div class="m-mixed-layout__inner m:grid m:grid-1-cols md:m:grid-2-cols lg:m:grid-{{ section.settings.column }}-cols">
+          {%- paginate blog.articles by 250 -%}
+            {%- for post in blog.articles -%}
+              {%- liquid
+                assign post_field = post.metafields.custom.author
+                assign is_match = false
+                if post_field.type contains 'list'
+                  for a in post_field.value
+                    if a.system.id == author.system.id
+                      assign is_match = true
+                      break
+                    endif
+                  endfor
+                elsif post_field.value.system.id == author.system.id
+                  assign is_match = true
+                endif
+              -%}
+              {%- if is_match -%}
+                {%- assign found = found | plus: 1 -%}
+                <div class="m:column">
+                  {% render 'article-card',
+                    article: post,
+                    view: 'grid',
+                    content_align: section.settings.article_align_content,
+                    article_show_date: section.settings.article_show_date,
+                    article_show_tags: section.settings.article_show_tags,
+                    article_show_excerpt: section.settings.article_show_excerpt,
+                    article_show_button: section.settings.article_show_button,
+                    animated: animated,
+                    animation_effect: animation_effect
+                  %}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        </div>
+      </div>
+
+      {%- if found == 0 -%}
+        <p class="m-author-page__empty">No posts yet.</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Author page",
   "settings": [
     {
-      "type": "blog",
+      "type": "header",
+      "content": "General"
+    },
+    {
       "id": "blog",
+      "type": "blog",
       "label": "Blog to list posts from"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "photo_size",
+      "label": "Photo size",
+      "min": 80,
+      "max": 240,
+      "step": 8,
+      "default": 160,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "posts_heading",
+      "label": "Posts heading",
+      "default": "Posts by [name]",
+      "info": "[name] is replaced with the author's name"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        { "value": "container-fluid", "label": "Default" },
+        { "value": "w-full", "label": "Full width" },
+        { "value": "container", "label": "Use container box" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Post grid"
+    },
+    {
+      "type": "range",
+      "id": "column",
+      "label": "Posts per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Column gap on mobile",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "article_align_content",
+      "label": "Card content alignment",
+      "default": "text-left",
+      "options": [
+        { "label": "Left", "value": "text-left" },
+        { "label": "Center", "value": "text-center" },
+        { "label": "Right", "value": "text-right" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "article_show_date",
+      "label": "Show published date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "article_show_tags",
+      "label": "Show tags",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "article_show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "article_show_button",
+      "label": "Show read more link",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "default": 40,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
     }
   ],
   "presets": [
