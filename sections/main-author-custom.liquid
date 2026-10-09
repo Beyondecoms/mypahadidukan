@@ -34,7 +34,7 @@
     <ul class="author-posts" role="list">
       {%- paginate blog.articles by 250 -%}
         {%- for post in blog.articles -%}
-          {%- assign post_authors = post.metafields.custom.authors.value -%}
+          {%- assign post_authors = post.metafields.custom.author.value -%}
           {%- for a in post_authors -%}
             {%- if a.system.id == author.system.id -%}
               {%- assign found = found | plus: 1 -%}
