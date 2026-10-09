@@ -1,0 +1,101 @@
+{%- comment -%}
+  Author profile page. Used on the Author metaobject template
+  (URL: /pages/author/<handle>). Shows the author's details and their posts.
+{%- endcomment -%}
+
+{%- assign author = metaobject -%}
+
+<div class="author-page page-width">
+  <header class="author-page__header">
+    {%- if author.photo.value != blank -%}
+      {{
+        author.photo.value
+        | image_url: width: 400, height: 400, crop: 'center'
+        | image_tag: alt: author.name.value, class: 'author-page__photo', width: 160, height: 160
+      }}
+    {%- endif -%}
+    <div>
+      <h1 class="author-page__name">{{ author.name.value }}</h1>
+      {%- if author.role.value != blank -%}
+        <p class="author-page__role">{{ author.role.value }}</p>
+      {%- endif -%}
+      {%- if author.bio.value != blank -%}
+        <div class="author-page__bio rte">{{ author.bio | metafield_tag }}</div>
+      {%- endif -%}
+      {% render 'author-social', author: author %}
+    </div>
+  </header>
+
+  {%- assign blog = section.settings.blog -%}
+  {%- if blog != blank -%}
+    <h2 class="author-page__posts-heading h3">Posts by {{ author.name.value }}</h2>
+
+    {%- assign found = 0 -%}
+    <ul class="author-posts" role="list">
+      {%- paginate blog.articles by 250 -%}
+        {%- for post in blog.articles -%}
+          {%- assign post_authors = post.metafields.custom.authors.value -%}
+          {%- for a in post_authors -%}
+            {%- if a.system.id == author.system.id -%}
+              {%- assign found = found | plus: 1 -%}
+              <li class="author-post">
+                {%- if post.image -%}
+                  <a href="{{ post.url }}" class="author-post__image-link">
+                    {{ post.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: post.title, class: 'author-post__image' }}
+                  </a>
+                {%- endif -%}
+                <div>
+                  <a href="{{ post.url }}" class="author-post__title">{{ post.title }}</a>
+                  <p class="author-post__date">{{ post.published_at | time_tag: format: 'date' }}</p>
+                  {%- if post.excerpt != blank -%}
+                    <p class="author-post__excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                  {%- endif -%}
+                </div>
+              </li>
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      {%- endpaginate -%}
+    </ul>
+
+    {%- if found == 0 -%}
+      <p class="author-page__empty">No posts yet.</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .author-page { margin-top: 4rem; margin-bottom: 6rem; max-width: 96rem; }
+  .author-page__header { display: flex; gap: 3rem; align-items: flex-start; margin-bottom: 4rem; }
+  .author-page__photo { width: 16rem; height: 16rem; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+  .author-page__name { margin: 0 0 0.4rem; }
+  .author-page__role { margin: 0 0 1.2rem; opacity: 0.7; }
+  .author-posts { list-style: none; padding: 0; margin: 0; display: grid; gap: 2.4rem; }
+  .author-post { display: grid; grid-template-columns: 20rem 1fr; gap: 2rem; align-items: start; }
+  .author-post__image { width: 100%; height: auto; border-radius: 0.8rem; display: block; }
+  .author-post__title { font-size: 1.8rem; font-weight: 600; text-decoration: none; color: inherit; }
+  .author-post__date { margin: 0.4rem 0; opacity: 0.6; font-size: 1.3rem; }
+  .author-post__excerpt { margin: 0; }
+  @media screen and (max-width: 749px) {
+    .author-page__header { flex-direction: column; align-items: center; text-align: center; }
+    .author-page__header .author-social { justify-content: center; }
+    .author-post { grid-template-columns: 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Author page",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog to list posts from"
+    }
+  ],
+  "presets": [
+    { "name": "Author page" }
+  ]
+}
+{% endschema %}
