@@ -12,7 +12,7 @@
       <h2 class="article-authors__heading h4">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
-    {%- for author in authors -%}
+    {%- assign author = authors -%}
       {%- assign author_url = author.system.url -%}
       <div class="author-card">
         {%- if author.photo.value != blank -%}
@@ -50,7 +50,7 @@
           {%- endif -%}
         </div>
       </div>
-    {%- endfor -%}
+  
   </div>
 {%- endif -%}
 
