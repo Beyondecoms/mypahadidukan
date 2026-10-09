@@ -4,7 +4,7 @@
   Add it to the blog post template in the theme editor, below the post content.
 {%- endcomment -%}
 
-{%- assign authors = article.metafields.custom.authors.value -%}
+{%- assign authors = article.metafields.custom.author.value -%}
 
 {%- if authors != blank -%}
   <div class="article-authors page-width">
@@ -43,6 +43,7 @@
           {%- endif -%}
 
           
+        
 
           {%- if author_url != blank and section.settings.show_more_link -%}
             <a href="{{ author_url }}" class="author-card__more">More from {{ author.name.value }} &rarr;</a>
