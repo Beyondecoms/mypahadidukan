@@ -33,14 +33,25 @@
     {%- assign found = 0 -%}
     <ul class="author-posts" role="list">
       {%- paginate blog.articles by 250 -%}
-        {%- for post in blog.articles -%}
+               {%- for post in blog.articles -%}
           {%- assign post_author = post.metafields.custom.author.value -%}
-{%- if post_author.system.id == author.system.id -%}
-  {%- assign found = found | plus: 1 -%}
-  <li class="author-post">
-    ... keep the existing <li> contents as they are ...
-  </li>
-{%- endif -%}
+          {%- if post_author.system.id == author.system.id -%}
+            {%- assign found = found | plus: 1 -%}
+            <li class="author-post">
+              {%- if post.image -%}
+                <a href="{{ post.url }}" class="author-post__image-link">
+                  {{ post.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: post.title, class: 'author-post__image' }}
+                </a>
+              {%- endif -%}
+              <div>
+                <a href="{{ post.url }}" class="author-post__title">{{ post.title }}</a>
+                <p class="author-post__date">{{ post.published_at | date: '%b %d, %Y' }}</p>
+                {%- if post.excerpt != blank -%}
+                  <p class="author-post__excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endif -%}
         {%- endfor -%}
       {%- endpaginate -%}
     </ul>
