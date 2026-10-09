@@ -13,7 +13,7 @@
       "type": "main-author-custom",
       "name": "Author page",
       "settings": {
-        "blog": ""
+        "blog": "info"
       }
     }
   },
