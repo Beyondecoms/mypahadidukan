@@ -33,18 +33,11 @@
             "truncate": "15",
             "truncate_last_symbols": "..."
           }
-        },
-        "36be080e-5b28-4b62-b5a9-478c96b656e7": {
-          "type": "tags",
-          "settings": {
-            "title": "Tags"
-          }
         }
       },
       "block_order": [
         "50469c40-b191-4cca-ac7c-6a6cd0c7b8b4",
-        "bb3e6ad7-c917-47d9-9bce-5edf5ff286f6",
-        "36be080e-5b28-4b62-b5a9-478c96b656e7"
+        "bb3e6ad7-c917-47d9-9bce-5edf5ff286f6"
       ],
       "settings": {
         "container": "container",
@@ -67,10 +60,18 @@
     },
     "article_author_custom_NxpeVq": {
       "type": "article-author-custom",
+      "disabled": true,
       "name": "Article authors",
       "settings": {
         "heading": "About the author",
-        "show_more_link": true
+        "heading_size": "h3",
+        "subheading": "",
+        "header_alignment": "left",
+        "container": "container-fluid",
+        "color_scheme": "",
+        "show_more_link": true,
+        "padding_top": 30,
+        "padding_bottom": 30
       }
     },
     "faq_new_RDj6qR": {
