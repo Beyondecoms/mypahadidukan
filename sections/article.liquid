@@ -132,7 +132,7 @@
                 </a>
               {% endif %}
             </div>
-
+               {% render 'article-authors-inline', article: article, heading: 'About the author' %}  
             {%- comment -%}Related Posts{%- endcomment -%}
             {% if section.settings.show_related_articles %}
               <div class="m-related-posts">
