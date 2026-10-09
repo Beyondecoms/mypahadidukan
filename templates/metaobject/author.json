@@ -8,6 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "main_author_custom_JK7fDf": {
+      "type": "main-author-custom",
+      "name": "Author page",
+      "settings": {
+        "blog": ""
+      }
+    }
+  },
+  "order": [
+    "main_author_custom_JK7fDf"
+  ]
 }
