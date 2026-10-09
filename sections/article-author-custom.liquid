@@ -42,7 +42,7 @@
             <div class="author-card__bio rte">{{ author.bio | metafield_tag }}</div>
           {%- endif -%}
 
-          {% render 'author-social', author: author %}
+          
 
           {%- if author_url != blank and section.settings.show_more_link -%}
             <a href="{{ author_url }}" class="author-card__more">More from {{ author.name.value }} &rarr;</a>
