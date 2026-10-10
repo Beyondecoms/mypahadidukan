@@ -12,6 +12,36 @@
     "1621243260e1af0c20": {
       "type": "slider",
       "blocks": {
+        "slider_item_GbXMyh": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/SBT_CAPSULE_Desktop_5_Large_9cfaa456-7847-493f-842c-dc4cb9e6e94c.jpg",
+            "mb_background": "shopify://shop_images/SBT_CAPSULE_Mobile_Large_5a6fe842-b694-4f6b-afc1-e1faa7c08326.jpg",
+            "content_in_container": false,
+            "content_position": "center middle",
+            "text_alignment": "center",
+            "text_size": "medium",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "shopify://products/seabuckthorn-oil-capsules",
+            "button_text": "",
+            "button_link": "",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "New Collection",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
         "1621243260e1af0c20-2": {
           "type": "slider_item",
           "settings": {
@@ -132,37 +162,6 @@
             "enable_preload_image": true
           }
         },
-        "slider_item_GbXMyh": {
-          "type": "slider_item",
-          "disabled": true,
-          "settings": {
-            "background": "shopify://shop_images/3_PRODUCTS.jpg",
-            "mb_background": "shopify://shop_images/Seabuckthorn_pulp_banner.jpg",
-            "content_in_container": false,
-            "content_position": "center middle",
-            "text_alignment": "center",
-            "text_size": "medium",
-            "text_color": "black",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "image_link": "shopify://collections/best-selling",
-            "button_text": "",
-            "button_link": "",
-            "button_style": "m-button--primary",
-            "button_size": "",
-            "second_button_text": "",
-            "second_button_link": "",
-            "second_button_style": "m-button--primary",
-            "second_button_size": "",
-            "show_footer": false,
-            "footer_alignment": "end",
-            "footer_text": "New Collection",
-            "footer_button": "Shop Now",
-            "footer_link": "",
-            "enable_preload_image": false
-          }
-        },
         "slider_item_TbJyji": {
           "type": "slider_item",
           "disabled": true,
@@ -196,11 +195,11 @@
         }
       },
       "block_order": [
+        "slider_item_GbXMyh",
         "1621243260e1af0c20-2",
         "slider_item_4PAGkD",
         "1621243260e1af0c20-1",
         "1621243260e1af0c20-0",
-        "slider_item_GbXMyh",
         "slider_item_TbJyji"
       ],
       "settings": {
