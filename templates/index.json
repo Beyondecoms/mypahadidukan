@@ -72,8 +72,39 @@
             "enable_preload_image": true
           }
         },
+        "1621243260e1af0c20-0": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/B2_Desktop.jpg",
+            "mb_background": "shopify://shop_images/B2_Mobile_1.jpg",
+            "content_in_container": true,
+            "content_position": "center bottom",
+            "text_alignment": "center",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "shopify://products/afghani-pahadi-hing-my-pahadi-dukan",
+            "button_text": "",
+            "button_link": "shopify://products/afghani-pahadi-hing-my-pahadi-dukan",
+            "button_style": "m-button--primary",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": true
+          }
+        },
         "slider_item_4PAGkD": {
           "type": "slider_item",
+          "disabled": true,
           "settings": {
             "background": "shopify://shop_images/B1_Desktop.jpg",
             "mb_background": "shopify://shop_images/B1_Mobile_1.jpg",
@@ -132,36 +163,6 @@
             "enable_preload_image": true
           }
         },
-        "1621243260e1af0c20-0": {
-          "type": "slider_item",
-          "settings": {
-            "background": "shopify://shop_images/B2_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B2_Mobile_1.jpg",
-            "content_in_container": true,
-            "content_position": "center bottom",
-            "text_alignment": "center",
-            "text_size": "large",
-            "text_color": "black",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "image_link": "shopify://products/afghani-pahadi-hing-my-pahadi-dukan",
-            "button_text": "",
-            "button_link": "shopify://products/afghani-pahadi-hing-my-pahadi-dukan",
-            "button_style": "m-button--primary",
-            "button_size": "",
-            "second_button_text": "",
-            "second_button_link": "",
-            "second_button_style": "m-button--primary",
-            "second_button_size": "",
-            "show_footer": false,
-            "footer_alignment": "end",
-            "footer_text": "The ReCotton Tee",
-            "footer_button": "Shop Now",
-            "footer_link": "",
-            "enable_preload_image": true
-          }
-        },
         "slider_item_TbJyji": {
           "type": "slider_item",
           "disabled": true,
@@ -197,9 +198,9 @@
       "block_order": [
         "slider_item_GbXMyh",
         "1621243260e1af0c20-2",
+        "1621243260e1af0c20-0",
         "slider_item_4PAGkD",
         "1621243260e1af0c20-1",
-        "1621243260e1af0c20-0",
         "slider_item_TbJyji"
       ],
       "settings": {
