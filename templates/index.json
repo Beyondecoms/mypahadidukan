@@ -15,7 +15,7 @@
         "slider_item_GbXMyh": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/SBT_CAPSULE_Desktop_5_Large_9cfaa456-7847-493f-842c-dc4cb9e6e94c.jpg",
+            "background": "shopify://shop_images/SBT_Desktop_jpg.jpg",
             "mb_background": "shopify://shop_images/SBT_CAPSULE_Mobile_Large_5a6fe842-b694-4f6b-afc1-e1faa7c08326.jpg",
             "content_in_container": false,
             "content_position": "center middle",
@@ -25,7 +25,7 @@
             "subheading": "",
             "title": "",
             "description": "",
-            "image_link": "shopify://products/seabuckthorn-oil-capsules",
+            "image_link": "shopify://collections/pure-seabuckthorn",
             "button_text": "",
             "button_link": "",
             "button_style": "m-button--primary",
