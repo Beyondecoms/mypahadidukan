@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/SBT_Desktop_jpg.jpg",
-            "mb_background": "shopify://shop_images/SBT_CAPSULE_Mobile_Large_5a6fe842-b694-4f6b-afc1-e1faa7c08326.jpg",
+            "mb_background": "shopify://shop_images/SBT_M_jpg.jpg",
             "content_in_container": false,
             "content_position": "center middle",
             "text_alignment": "center",
@@ -106,8 +106,8 @@
           "type": "slider_item",
           "disabled": true,
           "settings": {
-            "background": "shopify://shop_images/B1_Desktop.jpg",
-            "mb_background": "shopify://shop_images/B1_Mobile_1.jpg",
+            "background": "shopify://shop_images/Honey_Desktop_1_jpg.jpg",
+            "mb_background": "shopify://shop_images/Honey_M_jpg.jpg",
             "content_in_container": true,
             "content_position": "center bottom",
             "text_alignment": "center",
@@ -118,7 +118,7 @@
             "description": "",
             "image_link": "https://mypahadidukan.com/collections/natural-beverages",
             "button_text": "",
-            "button_link": "https://mypahadidukan.com/collections/natural-beverages",
+            "button_link": "shopify://collections/pure-honey",
             "button_style": "sf__btn-white",
             "button_size": "",
             "second_button_text": "",
