@@ -42,6 +42,36 @@
             "enable_preload_image": false
           }
         },
+        "slider_item_4PAGkD": {
+          "type": "slider_item",
+          "settings": {
+            "background": "shopify://shop_images/Honey_Desktop_1_jpg.jpg",
+            "mb_background": "shopify://shop_images/Honey_M_jpg.jpg",
+            "content_in_container": true,
+            "content_position": "center bottom",
+            "text_alignment": "center",
+            "text_size": "large",
+            "text_color": "black",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "image_link": "shopify://collections/pure-honey",
+            "button_text": "",
+            "button_link": "shopify://collections/pure-honey",
+            "button_style": "sf__btn-white",
+            "button_size": "",
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_style": "m-button--primary",
+            "second_button_size": "",
+            "show_footer": false,
+            "footer_alignment": "end",
+            "footer_text": "The ReCotton Tee",
+            "footer_button": "Shop Now",
+            "footer_link": "",
+            "enable_preload_image": false
+          }
+        },
         "1621243260e1af0c20-2": {
           "type": "slider_item",
           "settings": {
@@ -100,37 +130,6 @@
             "footer_button": "Shop Now",
             "footer_link": "",
             "enable_preload_image": true
-          }
-        },
-        "slider_item_4PAGkD": {
-          "type": "slider_item",
-          "disabled": true,
-          "settings": {
-            "background": "shopify://shop_images/Honey_Desktop_1_jpg.jpg",
-            "mb_background": "shopify://shop_images/Honey_M_jpg.jpg",
-            "content_in_container": true,
-            "content_position": "center bottom",
-            "text_alignment": "center",
-            "text_size": "large",
-            "text_color": "black",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "image_link": "https://mypahadidukan.com/collections/natural-beverages",
-            "button_text": "",
-            "button_link": "shopify://collections/pure-honey",
-            "button_style": "sf__btn-white",
-            "button_size": "",
-            "second_button_text": "",
-            "second_button_link": "",
-            "second_button_style": "m-button--primary",
-            "second_button_size": "",
-            "show_footer": false,
-            "footer_alignment": "end",
-            "footer_text": "The ReCotton Tee",
-            "footer_button": "Shop Now",
-            "footer_link": "",
-            "enable_preload_image": false
           }
         },
         "1621243260e1af0c20-1": {
@@ -197,9 +196,9 @@
       },
       "block_order": [
         "slider_item_GbXMyh",
+        "slider_item_4PAGkD",
         "1621243260e1af0c20-2",
         "1621243260e1af0c20-0",
-        "slider_item_4PAGkD",
         "1621243260e1af0c20-1",
         "slider_item_TbJyji"
       ],
