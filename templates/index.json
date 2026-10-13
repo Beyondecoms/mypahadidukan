@@ -16,7 +16,7 @@
           "type": "slider_item",
           "settings": {
             "background": "shopify://shop_images/SBT_Desktop_jpg.jpg",
-            "mb_background": "shopify://shop_images/SBT_M_jpg.jpg",
+            "mb_background": "shopify://shop_images/SBT_M.jpg_1.jpg",
             "content_in_container": false,
             "content_position": "center middle",
             "text_alignment": "center",
