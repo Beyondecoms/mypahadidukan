@@ -1,68 +1,81 @@
 {{ 'section-seabuckthorn-m5.css' | asset_url | stylesheet_tag }}
 
-<div class="sb-m5-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+{%- liquid
+  assign m5_eyebrow = product.metafields.custom.m5_eyebrow.value
+  assign m5_heading = product.metafields.custom.m5_heading.value
+  assign m5_quote = product.metafields.custom.m5_quote.value
+  assign m5_desc = product.metafields.custom.m5_description.value
+  assign m5_usage = product.metafields.custom.m5_usage_text.value
+  assign m5_highlight = product.metafields.custom.m5_highlight_text.value
+  assign m5_image = product.metafields.custom.m5_image.value | default: product.metafields.custom.m5_image
+  assign m5_caption = product.metafields.custom.m5_image_caption.value
+  assign m5_alt = m5_caption | default: m5_heading | default: product.title | escape
+
+  assign has_content = false
+  if m5_eyebrow != blank or m5_heading != blank or m5_quote != blank or m5_desc != blank or m5_usage != blank or m5_highlight != blank or m5_image != blank
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+<div class="sb-m5-section" style="{% if section.settings.bg_color != blank %}background-color: {{ section.settings.bg_color }};{% endif %}">
   <div class="sb-m5-container">
-    
-    <!-- Top Meta Row -->
-    <div class="sb-m5-top-bar">
-      <span class="sb-m5-module-badge">{{ section.settings.module_tag }}</span>
-      {%- if section.settings.design_tag != blank -%}
-        <span class="sb-m5-pill-badge" style="background-color: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">{{ section.settings.design_tag }}</span>
-      {%- endif -%}
-    </div>
 
     <!-- Main Card Box -->
     <div class="sb-m5-card-wrapper" style="background-color: {{ section.settings.card_bg }}; border-color: {{ section.settings.card_border_color }};">
-      <div class="sb-m5-grid">
+      <div class="sb-m5-grid" style="{% if m5_image == blank %}grid-template-columns: 1fr;{% endif %}">
         
         <!-- Content Column -->
         <div class="sb-m5-content-col">
-          {%- if section.settings.header_title != blank -%}
-            <h4 class="sb-m5-header-title">{{ section.settings.header_title }}</h4>
+          {%- if m5_eyebrow != blank -%}
+            <h4 class="sb-m5-header-title">{{ m5_eyebrow }}</h4>
           {%- endif -%}
-          <h2 class="sb-m5-main-heading">{{ section.settings.main_heading }}</h2>
+          {%- if m5_heading != blank -%}
+            <h2 class="sb-m5-main-heading">{{ m5_heading | newline_to_br }}</h2>
+          {%- endif -%}
           
-          <div class="sb-m5-quote">
-            "{{ section.settings.quote_text }}"
-          </div>
+          {%- if m5_quote != blank -%}
+            <div class="sb-m5-quote">
+              "{{ m5_quote | newline_to_br }}"
+            </div>
+          {%- endif -%}
 
-          <div class="sb-m5-body-text">
-            <p>{{ section.settings.body_para1 }}</p>
-            <p>{{ section.settings.body_para2 }}</p>
-          </div>
+          {%- if m5_desc != blank or m5_usage != blank -%}
+            <div class="sb-m5-body-text">
+              {%- if m5_desc != blank -%}
+                <p>{{ m5_desc | newline_to_br }}</p>
+              {%- endif -%}
+              {%- if m5_usage != blank -%}
+                <p>{{ m5_usage | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
 
-          {%- if section.settings.handwritten_note != blank -%}
+          {%- if m5_highlight != blank -%}
             <div class="sb-m5-handwritten">
-              <em>{{ section.settings.handwritten_note }}</em>
+              <em>{{ m5_highlight | newline_to_br }}</em>
             </div>
           {%- endif -%}
         </div>
 
-        <!-- Image Column -->
-        <div class="sb-m5-image-col">
-          <div class="sb-m5-photo-box">
-            {%- if section.settings.photo != blank -%}
-              <img src="{{ section.settings.photo | image_url: width: 600 }}" alt="{{ section.settings.main_heading }}" loading="lazy" width="600" height="450">
-            {%- else -%}
-              <div class="sb-m5-photo-placeholder">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                  <circle cx="12" cy="13" r="4"/>
-                </svg>
-                <p style="margin: 8px 0 0 0; font-weight: 700; font-size: 0.9rem;">Real first-sip wince photo</p>
-              </div>
+        <!-- Image Column (Only if image is present) -->
+        {%- if m5_image != blank -%}
+          <div class="sb-m5-image-col">
+            <div class="sb-m5-photo-box">
+              {{ m5_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: m5_alt, width: 600, height: 450 }}
+            </div>
+            {%- if m5_caption != blank -%}
+              <div class="sb-m5-photo-caption">{{ m5_caption }}</div>
             {%- endif -%}
           </div>
-          {%- if section.settings.photo_caption != blank -%}
-            <div class="sb-m5-photo-caption">{{ section.settings.photo_caption }}</div>
-          {%- endif -%}
-        </div>
+        {%- endif -%}
 
       </div>
     </div>
 
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -70,65 +83,6 @@
   "tag": "section",
   "class": "section-sb-m5",
   "settings": [
-    {
-      "type": "text",
-      "id": "module_tag",
-      "label": "Module Tag",
-      "default": "M5 · Let's be honest — this is not a nice drink"
-    },
-    {
-      "type": "text",
-      "id": "design_tag",
-      "label": "Design Badge",
-      "default": "hero moment"
-    },
-    {
-      "type": "text",
-      "id": "header_title",
-      "label": "Header Tagline",
-      "default": "LET'S BE HONEST"
-    },
-    {
-      "type": "text",
-      "id": "main_heading",
-      "label": "Main Heading",
-      "default": "You might not love the drink right away!"
-    },
-    {
-      "type": "textarea",
-      "id": "quote_text",
-      "label": "Quote Text",
-      "default": "Sea buckthorn is sour. Properly sour - nearer to unripe citrus than to juice. The first spoonful makes most people's face do something."
-    },
-    {
-      "type": "textarea",
-      "id": "body_para1",
-      "label": "Body Paragraph 1",
-      "default": "Nothing is wrong with your bottle. There's just no sugar in it to hide behind."
-    },
-    {
-      "type": "textarea",
-      "id": "body_para2",
-      "label": "Body Paragraph 2",
-      "default": "One tablespoon in a glass of warm water is how most people take it. Add honey if you like."
-    },
-    {
-      "type": "text",
-      "id": "handwritten_note",
-      "label": "Handwritten Note",
-      "default": "We won't be offended."
-    },
-    {
-      "type": "image_picker",
-      "id": "photo",
-      "label": "Wince Photo"
-    },
-    {
-      "type": "text",
-      "id": "photo_caption",
-      "label": "Photo Caption",
-      "default": "Real first-sip reaction"
-    },
     {
       "type": "color",
       "id": "bg_color",
@@ -146,18 +100,6 @@
       "id": "card_border_color",
       "label": "Card Border Color",
       "default": "#e7ded0"
-    },
-    {
-      "type": "color",
-      "id": "badge_bg",
-      "label": "Pill Badge BG",
-      "default": "#ee5922"
-    },
-    {
-      "type": "color",
-      "id": "badge_color",
-      "label": "Pill Badge Text Color",
-      "default": "#ffffff"
     }
   ],
   "presets": [

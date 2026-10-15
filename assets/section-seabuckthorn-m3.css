@@ -1,7 +1,7 @@
 /* Section M3 - Meet omega-7 */
 .sb-m3-section {
   padding: 10px 10px;
-  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body-family);
   background-color: #fffbef;
   color: #1c1918;
   overflow: hidden;
@@ -39,6 +39,7 @@
 }
 
 .sb-m3-subtitle {
+  font-family: var(--font-heading-family);
   font-size: 1.35rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -48,6 +49,7 @@
 }
 
 .sb-m3-title {
+  font-family: var(--font-heading-family);
   font-size: clamp(2.6rem, 5.5vw, 3.8rem);
   font-weight: 900;
   letter-spacing: -0.01em;
@@ -128,6 +130,7 @@
 }
 
 .sb-m3-card-title {
+  font-family: var(--font-heading-family);
   font-size: 1.2rem;
   font-weight: 800;
   text-transform: uppercase;

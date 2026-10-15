@@ -1,7 +1,7 @@
 /* Section M11 - FAQs */
 .sb-m11-section {
   padding: 10px 10px;
-  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body-family);
   background-color: #fffbef;
   color: #1c1918;
   overflow: hidden;
@@ -42,6 +42,7 @@
 }
 
 .sb-m11-title {
+  font-family: var(--font-heading-family);
   font-size: clamp(2.6rem, 5.5vw, 3.8rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -79,6 +80,7 @@
   align-items: center;
   justify-content: space-between;
   text-align: left;
+  font-family: inherit;
   font-size: 1.3rem;
   font-weight: 800;
   color: #1c1918;

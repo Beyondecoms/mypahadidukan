@@ -1,371 +1,899 @@
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 
-<article class="article-template">
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when '@app' -%}
-        <div class="page-width page-width--narrow">
-          {% render block %}
+{%- liquid
+  # Category determination
+  assign category_val = article.metafields.custom.blog_category.value | default: article.metafields.custom.blog_category
+  if category_val.name != blank
+    assign blog_category = category_val.name
+  elsif category_val != blank
+    assign blog_category = category_val
+  elsif article.tags.first != blank
+    assign blog_category = article.tags.first
+  else
+    assign blog_category = blog.title
+  endif
+
+  # Author determination from metafield custom.author or custom.blog_author
+  assign author_obj = article.metafields.custom.author.value | default: article.metafields.custom.author | default: article.metafields.custom.blog_author.value | default: article.metafields.custom.blog_author
+  
+  assign author_name = ''
+  if author_obj.name != blank
+    assign author_name = author_obj.name
+  elsif author_obj.title != blank
+    assign author_name = author_obj.title
+  elsif author_obj.author_name != blank
+    assign author_name = author_obj.author_name
+  elsif author_obj != blank and author_obj.name == blank and author_obj != article.author
+    assign author_name = author_obj
+  else
+    assign author_name = article.author
+  endif
+
+  assign author_photo = author_obj.photo | default: author_obj.image | default: author_obj.author_photo | default: author_obj.avatar
+  assign author_bio = author_obj.bio | default: author_obj.description | default: author_obj.about | default: author_obj.author_bio
+  assign author_designation = author_obj.designation | default: author_obj.role | default: author_obj.title
+  assign author_profile_url = author_obj.profile_url | default: author_obj.link | default: author_obj.url
+
+  # Reading Time Calculation (approx 200 words per minute)
+  assign word_count = article.content | strip_html | split: ' ' | size
+  assign calc_reading_time = word_count | divided_by: 200
+  if calc_reading_time < 1
+    assign calc_reading_time = 1
+  endif
+  assign reading_time = article.metafields.custom.reading_time.value | default: article.metafields.custom.reading_time | default: calc_reading_time
+
+  # Mid-article CTA (Only from metafields)
+  assign cta_obj = article.metafields.custom.blog_cta.value | default: article.metafields.custom.blog_cta | default: article.metafields.custom.cta.value | default: article.metafields.custom.cta
+  assign cta_heading = cta_obj.heading | default: cta_obj.title
+  assign cta_description = cta_obj.description | default: cta_obj.text
+  assign cta_btn_text = cta_obj.button_text | default: cta_obj.btn_label | default: 'Shop now'
+  assign cta_btn_link = cta_obj.button_link | default: cta_obj.btn_url
+  assign cta_product = cta_obj.product_reference.value | default: cta_obj.product_reference
+  assign cta_image = cta_obj.image | default: cta_obj.photo
+
+  if cta_product != blank
+    if cta_heading == blank
+      assign cta_heading = cta_product.title
+    endif
+    if cta_btn_link == blank
+      assign cta_btn_link = cta_product.url
+    endif
+    if cta_image == blank and cta_product.featured_image != blank
+      assign cta_image = cta_product.featured_image
+    endif
+  endif
+
+  # Product Showcase (Only from metafields)
+  assign showcase_products = article.metafields.custom.blog_products.value | default: article.metafields.custom.blog_products | default: article.metafields.custom.products.value | default: article.metafields.custom.products
+
+  # Frequently asked questions from custom.faqs or custom.blog_faqs
+  assign blog_faqs = article.metafields.custom.faqs.value | default: article.metafields.custom.faqs | default: article.metafields.custom.blog_faqs.value | default: article.metafields.custom.blog_faqs
+
+  # Related Articles (Select up to 3 relevant articles)
+  assign related_limit = 3
+  assign related_count = 0
+  assign explicit_related = article.metafields.custom.related_articles.value | default: article.metafields.custom.related_articles
+  assign related_handles_str = ''
+-%}
+
+{%- comment -%} 1. Explicit related articles {%- endcomment -%}
+{%- if explicit_related != blank and explicit_related.size > 0 -%}
+  {%- for rel in explicit_related -%}
+    {%- if rel.id != article.id and related_count < related_limit -%}
+      {%- if related_handles_str == '' -%}
+        {%- assign related_handles_str = rel.handle -%}
+      {%- else -%}
+        {%- assign related_handles_str = related_handles_str | append: ',' | append: rel.handle -%}
+      {%- endif -%}
+      {%- assign related_count = related_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} 2. Match by category or tags {%- endcomment -%}
+{%- if related_count < related_limit -%}
+  {%- for other in blog.articles -%}
+    {%- if other.id != article.id -%}
+      {%- unless related_handles_str contains other.handle -%}
+        {%- assign is_match = false -%}
+        {%- assign other_cat = other.metafields.custom.blog_category.value | default: other.metafields.custom.blog_category -%}
+        {%- if other_cat != blank and other_cat == blog_category -%}
+          {%- assign is_match = true -%}
+        {%- endif -%}
+        {%- for tag in article.tags -%}
+          {%- if other.tags contains tag -%}
+            {%- assign is_match = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if is_match and related_count < related_limit -%}
+          {%- if related_handles_str == '' -%}
+            {%- assign related_handles_str = other.handle -%}
+          {%- else -%}
+            {%- assign related_handles_str = related_handles_str | append: ',' | append: other.handle -%}
+          {%- endif -%}
+          {%- assign related_count = related_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} 3. Fill remaining from blog.articles {%- endcomment -%}
+{%- if related_count < related_limit -%}
+  {%- for other in blog.articles -%}
+    {%- if other.id != article.id and related_count < related_limit -%}
+      {%- unless related_handles_str contains other.handle -%}
+        {%- if related_handles_str == '' -%}
+          {%- assign related_handles_str = other.handle -%}
+        {%- else -%}
+          {%- assign related_handles_str = related_handles_str | append: ',' | append: other.handle -%}
+        {%- endif -%}
+        {%- assign related_count = related_count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign related_handles = related_handles_str | split: ',' -%}
+
+<article class="article-page" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-page__container">
+    <div class="article-page__narrow">
+
+      <!-- Breadcrumb -->
+      <nav class="article-breadcrumb" aria-label="Breadcrumb">
+        <ol class="article-breadcrumb__list">
+          <li class="article-breadcrumb__item">
+            <a href="{{ routes.root_url }}">Home</a>
+          </li>
+          <li class="article-breadcrumb__separator" aria-hidden="true">/</li>
+          <li class="article-breadcrumb__item">
+            <a href="{{ blog.url }}">{{ blog.title }}</a>
+          </li>
+          {%- if blog_category != blank and blog_category != blog.title -%}
+            <li class="article-breadcrumb__separator" aria-hidden="true">/</li>
+            <li class="article-breadcrumb__item">
+              <span class="article-breadcrumb__cat">{{ blog_category }}</span>
+            </li>
+          {%- endif -%}
+          <li class="article-breadcrumb__separator" aria-hidden="true">/</li>
+          <li class="article-breadcrumb__item article-breadcrumb__item--current" aria-current="page">
+            <span>{{ article.title }}</span>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Article Hero / Header -->
+      <header class="article-hero">
+        {%- if blog_category != blank -%}
+          <div class="article-hero__category">
+            <span class="article-badge">{{ blog_category }}</span>
+          </div>
+        {%- endif -%}
+
+        <h1 class="article-hero__title" itemprop="headline">
+          {{ article.title | escape }}
+        </h1>
+
+        <div class="article-hero__meta">
+          {%- if author_name != blank -%}
+            <div class="article-hero__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+              {%- if author_photo != blank -%}
+                <img
+                  src="{{ author_photo | image_url: width: 80, height: 80, crop: 'center' }}"
+                  alt="{{ author_name | escape }}"
+                  class="article-hero__author-avatar"
+                  width="38"
+                  height="38"
+                  loading="eager"
+                >
+              {%- else -%}
+                <span class="article-hero__author-initial" aria-hidden="true">
+                  {{ author_name | slice: 0, 1 | upcase }}
+                </span>
+              {%- endif -%}
+              <span class="article-hero__author-name" itemprop="name">{{ author_name }}</span>
+            </div>
+            <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
+          {%- endif -%}
+
+          <time class="article-hero__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
+            {{ article.published_at | date: '%B %d, %Y' }}
+          </time>
+
+          <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
+          <span class="article-hero__reading-time">{{ reading_time }} min read</span>
         </div>
-      {%- when 'featured_image' -%}
+
         {%- if article.image -%}
-          <div
-            class="article-template__hero-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-            {{ block.shopify_attributes }}
-          >
-            <div
-              class="article-template__hero-{{ block.settings.image_height }} media"
-              {% if block.settings.image_height == 'adapt' and article.image %}
-                style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"
-              {% endif %}
-            >
+          <div class="article-hero__media-wrap">
+            <div class="article-hero__media" style="aspect-ratio: 16 / 9;">
               <img
                 srcset="
-                  {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
+                  {% if article.image.width >= 375 %}{{ article.image | image_url: width: 375 }} 375w,{% endif %}
+                  {% if article.image.width >= 550 %}{{ article.image | image_url: width: 550 }} 550w,{% endif %}
                   {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
                   {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
                   {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
-                  {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
-                  {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
                   {{ article.image | image_url }} {{ article.image.width }}w
                 "
-                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
+                sizes="(min-width: 1200px) 820px, (min-width: 750px) 90vw, 100vw"
                 src="{{ article.image | image_url: width: 1100 }}"
                 loading="eager"
                 fetchpriority="high"
+                decoding="async"
                 width="{{ article.image.width }}"
                 height="{{ article.image.height }}"
-                alt="{{ article.image.alt | escape }}"
+                alt="{{ article.image.alt | default: article.title | escape }}"
+                class="article-hero__img"
+                itemprop="image"
               >
             </div>
-          </div>
-        {%- endif -%}
-
-      {%- when 'title' -%}
-        <header
-          class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          <h1
-            class="article-template__title"
-          >
-            {{ article.title | escape }}
-          </h1>
-          {%- if block.settings.blog_show_date -%}
-            <span class="circle-divider caption-with-letter-spacing">
-              {{- article.published_at | time_tag: format: 'date' -}}
-            </span>
-          {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span class="caption-with-letter-spacing">
-              <span>{{ article.author }}</span>
-            </span>
-          {%- endif -%}
-        </header>
-
-      {%- when 'content' -%}
-        <div
-          class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          {{ article.content }}
-        </div>
-
-      {%- when 'share' -%}
-        <div
-          class="article-template__social-sharing page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          {% assign share_url = request.origin | append: article.url %}
-          {% render 'share-button', block: block, share_link: share_url %}
-        </div>
-    {%- endcase -%}
-  {%- endfor -%}
-
-  <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
-      <span class="icon-wrap">
-        <span class="svg-wrapper">
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
-        </span>
-      </span>
-      {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
-    </a>
-  </div>
-  {%- if blog.comments_enabled? -%}
-    <div class="article-template__comment-wrapper background-secondary">
-      <div
-        id="comments"
-        class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      >
-        {%- if article.comments_count > 0 -%}
-          {%- assign anchorId = '#Comments-' | append: article.id -%}
-
-          <h2 id="Comments-{{ article.id }}" tabindex="-1">
-            {{ 'blogs.article.comments' | t: count: article.comments_count }}
-          </h2>
-          {% paginate article.comments by 5 %}
-            <div class="article-template__comments">
-              {%- if comment.status == 'pending' and comment.content -%}
-                <article id="{{ comment.id }}" class="article-template__comments-comment">
-                  {{ comment.content }}
-                  <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span>
-                  </footer>
-                </article>
-              {%- endif -%}
-
-              {%- for comment in article.comments -%}
-                <article id="{{ comment.id }}" class="article-template__comments-comment">
-                  {{ comment.content }}
-                  <footer class="right">
-                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span
-                    ><span class="caption-with-letter-spacing">
-                      {{- comment.created_at | time_tag: format: 'date' -}}
-                    </span>
-                  </footer>
-                </article>
-              {%- endfor -%}
-              {% render 'pagination', paginate: paginate, anchor: anchorId %}
-            </div>
-          {% endpaginate %}
-        {%- endif -%}
-        {% form 'new_comment', article %}
-          {%- liquid
-            assign post_message = 'blogs.article.success'
-            if blog.moderated? and comment.status == 'unapproved'
-              assign post_message = 'blogs.article.success_moderated'
-            endif
-          -%}
-          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
-          {%- if form.errors -%}
-            <div class="form__message" role="alert">
-              <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>
-                <span class="svg-wrapper">
-                  {{- 'icon-error.svg' | inline_asset_content -}}
-                </span>
-                {{ 'templates.contact.form.error_heading' | t }}
-              </h3>
-            </div>
-            <ul class="form-status-list caption-large">
-              {%- for field in form.errors -%}
-                <li>
-                  <a href="#CommentForm-{{ field }}" class="link">
-                    {%- if form.errors.translated_fields[field] contains 'author' -%}
-                      {{ 'blogs.article.name' | t }}
-                    {%- elsif form.errors.translated_fields[field] contains 'body' -%}
-                      {{ 'blogs.article.message' | t }}
-                    {%- else -%}
-                      {{ form.errors.translated_fields[field] }}
-                    {%- endif -%}
-                    {{ form.errors.messages[field] }}
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          {%- elsif form.posted_successfully? -%}
-            <div class="form-status-list form__message" role="status">
-              <h3 class="form-status" tabindex="-1" autofocus>
-                <span class="svg-wrapper">
-                  {{- 'icon-success.svg' | inline_asset_content -}}
-                </span>
-                {{ post_message | t }}
-              </h3>
-            </div>
-          {%- endif -%}
-
-          <div
-            {% if blog.moderated? == false %}
-              class="article-template__comments-fields"
-            {% endif %}
-          >
-            <div class="article-template__comment-fields">
-              <div class="field field--with-error">
-                <input
-                  type="text"
-                  name="comment[author]"
-                  id="CommentForm-author"
-                  class="field__input"
-                  autocomplete="name"
-                  value="{{ form.author }}"
-                  aria-required="true"
-                  required
-                  {% if form.errors contains 'author' %}
-                    aria-invalid="true"
-                    aria-describedby="CommentForm-author-error"
-                  {% endif %}
-                  placeholder="{{ 'blogs.article.name' | t }}"
-                >
-                <label class="field__label" for="CommentForm-author">
-                  {{- 'blogs.article.name' | t }}
-                  <span aria-hidden="true">*</span></label
-                >
-                {%- if form.errors contains 'author' -%}
-                  <small id="CommentForm-author-error">
-                    <span class="form__message">
-                      <span class="svg-wrapper">
-                        {{- 'icon-error.svg' | inline_asset_content -}}
-                      </span>
-                      {{- 'blogs.article.name' | t }}
-                      {{ form.errors.messages.author }}.</span
-                    >
-                  </small>
-                {%- endif -%}
-              </div>
-              <div class="field field--with-error">
-                <input
-                  type="email"
-                  name="comment[email]"
-                  id="CommentForm-email"
-                  autocomplete="email"
-                  class="field__input"
-                  value="{{ form.email }}"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  aria-required="true"
-                  required
-                  {% if form.errors contains 'email' %}
-                    aria-invalid="true"
-                    aria-describedby="CommentForm-email-error"
-                  {% endif %}
-                  placeholder="{{ 'blogs.article.email' | t }}"
-                >
-                <label class="field__label" for="CommentForm-email">
-                  {{- 'blogs.article.email' | t }}
-                  <span aria-hidden="true">*</span></label
-                >
-                {%- if form.errors contains 'email' -%}
-                  <small id="CommentForm-email-error">
-                    <span class="form__message">
-                      <span class="svg-wrapper">
-                        {{- 'icon-error.svg' | inline_asset_content -}}
-                      </span>
-                      {{- 'blogs.article.email' | t }}
-                      {{ form.errors.messages.email }}.</span
-                    >
-                  </small>
-                {%- endif -%}
-              </div>
-            </div>
-            <div class="field field--with-error">
-              <textarea
-                rows="5"
-                name="comment[body]"
-                id="CommentForm-body"
-                class="text-area field__input"
-                aria-required="true"
-                required
-                {% if form.errors contains 'body' %}
-                  aria-invalid="true"
-                  aria-describedby="CommentForm-body-error"
-                {% endif %}
-                placeholder="{{ 'blogs.article.message' | t }}"
-              >{{ form.body }}</textarea>
-              <label class="form__label field__label" for="CommentForm-body">
-                {{- 'blogs.article.message' | t }}
-                <span aria-hidden="true">*</span></label
-              >
-            </div>
-            {%- if form.errors contains 'body' -%}
-              <small id="CommentForm-body-error">
-                <span class="form__message">
-                  <span class="svg-wrapper">
-                    {{- 'icon-error.svg' | inline_asset_content -}}
-                  </span>
-                  {{- 'blogs.article.message' | t }}
-                  {{ form.errors.messages.body }}.</span
-                >
-              </small>
+            {%- if article.image.alt != blank and article.image.alt != article.title -%}
+              <div class="article-hero__caption">{{ article.image.alt }}</div>
             {%- endif -%}
           </div>
-          {%- if blog.moderated? -%}
-            <p class="article-template__comment-warning caption">{{ 'blogs.article.moderated' | t }}</p>
+        {%- endif -%}
+      </header>
+
+      <!-- Introduction (if article.excerpt is set) -->
+      {%- if article.excerpt != blank -%}
+        <div class="article-intro">
+          {{ article.excerpt }}
+        </div>
+      {%- endif -%}
+
+      <!-- Table of Contents (Automatically generated from H2 headings & placed right after intro) -->
+      <nav id="article-toc" class="article-toc" aria-label="Table of contents" style="display: none;">
+        <div class="article-toc__header">
+          <span class="article-toc__title">In this article</span>
+          <button
+            type="button"
+            class="article-toc__toggle"
+            aria-expanded="true"
+            aria-controls="article-toc-list"
+            aria-label="Toggle table of contents"
+          >
+            <span class="article-toc__toggle-text">Hide</span>
+            <svg class="article-toc__toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+        <ol id="article-toc-list" class="article-toc__list"></ol>
+      </nav>
+
+      <!-- Main Article Content -->
+      <div class="article-content-body rte" itemprop="articleBody">
+        {{ article.content }}
+      </div>
+
+      <!-- Mid-Article Contextual CTA (Only if configured in metafields) -->
+      {%- if cta_heading != blank or cta_product != blank -%}
+        <aside class="article-mid-cta" aria-label="Featured recommendation">
+          <div class="article-mid-cta__inner">
+            <div class="article-mid-cta__content">
+              <span class="article-mid-cta__badge">Try it yourself</span>
+              {%- if cta_heading != blank -%}
+                <h3 class="article-mid-cta__heading">{{ cta_heading }}</h3>
+              {%- endif -%}
+              {%- if cta_description != blank -%}
+                <p class="article-mid-cta__desc">{{ cta_description }}</p>
+              {%- endif -%}
+              {%- if cta_btn_link != blank -%}
+                <a href="{{ cta_btn_link }}" class="article-mid-cta__btn">
+                  {{ cta_btn_text }}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              {%- endif -%}
+            </div>
+            {%- if cta_image != blank -%}
+              <div class="article-mid-cta__media">
+                <img
+                  src="{{ cta_image | image_url: width: 320 }}"
+                  alt="{{ cta_heading | default: 'Recommendation' | escape }}"
+                  loading="lazy"
+                  width="140"
+                  height="140"
+                  class="article-mid-cta__img"
+                >
+              </div>
+            {%- endif -%}
+          </div>
+        </aside>
+      {%- endif -%}
+
+      <!-- Product Showcase Cards (Only if custom.blog_products is populated) -->
+      {%- if showcase_products != blank and showcase_products.size > 0 -%}
+        <section class="article-product-showcase" aria-label="Featured products">
+          <div class="article-product-showcase__header">
+            <span class="article-section-eyebrow">Himalayan essentials</span>
+            <h2 class="article-product-showcase__title">Featured in this article</h2>
+          </div>
+          <div class="article-product-showcase__grid">
+            {%- for prod in showcase_products -%}
+              {%- if prod != blank and prod.title != blank -%}
+                <div class="article-product-card">
+                  <a href="{{ prod.url }}" class="article-product-card__img-wrap">
+                    {%- if prod.featured_image != blank -%}
+                      <img
+                        src="{{ prod.featured_image | image_url: width: 450 }}"
+                        srcset="{{ prod.featured_image | image_url: width: 300 }} 300w, {{ prod.featured_image | image_url: width: 450 }} 450w"
+                        sizes="(min-width: 900px) 280px, 80vw"
+                        alt="{{ prod.title | escape }}"
+                        class="article-product-card__img"
+                        loading="lazy"
+                        width="280"
+                        height="280"
+                      >
+                    {%- else -%}
+                      <div class="article-product-card__placeholder"></div>
+                    {%- endif -%}
+                  </a>
+                  <div class="article-product-card__body">
+                    <h3 class="article-product-card__title">
+                      <a href="{{ prod.url }}">{{ prod.title }}</a>
+                    </h3>
+                    <div class="article-product-card__pricing">
+                      <span class="article-product-card__price">{{ prod.price | money }}</span>
+                      {%- if prod.compare_at_price > prod.price -%}
+                        <span class="article-product-card__compare-price">{{ prod.compare_at_price | money }}</span>
+                      {%- endif -%}
+                    </div>
+                    {%- if prod.description != blank -%}
+                      <p class="article-product-card__info">
+                        {{ prod.description | strip_html | truncate: 85 }}
+                      </p>
+                    {%- endif -%}
+                    <div class="article-product-card__actions">
+                      {%- if prod.available -%}
+                        <button
+                          type="button"
+                          class="article-product-card__btn-cart"
+                          data-variant-id="{{ prod.selected_or_first_available_variant.id }}"
+                        >
+                          Add to cart
+                        </button>
+                      {%- else -%}
+                        <button type="button" class="article-product-card__btn-cart" disabled>
+                          Sold out
+                        </button>
+                      {%- endif -%}
+                      <a href="{{ prod.url }}" class="article-product-card__link-view">
+                        View product &rarr;
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </section>
+      {%- endif -%}
+
+      <!-- Author Profile Block (Only if author_name or author_bio exists) -->
+      {%- if author_name != blank or author_bio != blank -%}
+        <section class="article-author-section" aria-label="Author profile">
+          <div class="article-author-card">
+            <div class="article-author-card__avatar-wrap">
+              {%- if author_photo != blank -%}
+                <img
+                  src="{{ author_photo | image_url: width: 160, height: 160, crop: 'center' }}"
+                  alt="{{ author_name | escape }}"
+                  class="article-author-card__avatar"
+                  width="76"
+                  height="76"
+                  loading="lazy"
+                >
+              {%- elsif author_name != blank -%}
+                <div class="article-author-card__avatar article-author-card__avatar--initial" aria-hidden="true">
+                  {{ author_name | slice: 0, 1 | upcase }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="article-author-card__content">
+              <div class="article-author-card__header">
+                <div>
+                  <span class="article-author-card__label">Written by</span>
+                  {%- if author_name != blank -%}
+                    <h3 class="article-author-card__name">{{ author_name }}</h3>
+                  {%- endif -%}
+                  {%- if author_designation != blank -%}
+                    <span class="article-author-card__designation">{{ author_designation }}</span>
+                  {%- endif -%}
+                </div>
+                {%- if author_profile_url != blank -%}
+                  <a href="{{ author_profile_url }}" class="article-author-card__link">View profile &rarr;</a>
+                {%- endif -%}
+              </div>
+              {%- if author_bio != blank -%}
+                <p class="article-author-card__bio">{{ author_bio }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+
+      <!-- Frequently Asked Questions (From custom.faqs or custom.blog_faqs) -->
+      {%- if blog_faqs != blank and blog_faqs.size > 0 -%}
+        <section class="article-faq-section" aria-label="Frequently asked questions">
+          <div class="article-faq-section__header">
+            <span class="article-section-eyebrow">Clear answers</span>
+            <h2 class="article-faq-section__title">Frequently asked questions</h2>
+          </div>
+
+          <div class="article-faq-list">
+            {%- for item in blog_faqs -%}
+              {%- assign faq = item.value | default: item -%}
+              {%- assign faq_question = faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+              {%- assign faq_answer = faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+              {%- if faq_question != blank and faq_answer != blank -%}
+                <div class="article-faq-item">
+                  <button
+                    type="button"
+                    class="article-faq-item__question"
+                    aria-expanded="false"
+                    aria-controls="faq-ans-{{ forloop.index }}"
+                  >
+                    <span>{{ faq_question }}</span>
+                    <span class="article-faq-item__icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19" class="faq-icon-v"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                    </span>
+                  </button>
+                  <div id="faq-ans-{{ forloop.index }}" class="article-faq-item__answer" hidden>
+                    <div class="article-faq-item__answer-inner">
+                      {{ faq_answer }}
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </section>
+
+        <!-- FAQ Structured Data (Generated safely from visible FAQs) -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {%- assign faq_first = true -%}
+            {%- for item in blog_faqs -%}
+              {%- assign faq = item.value | default: item -%}
+              {%- assign faq_question = faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+              {%- assign faq_answer = faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+              {%- if faq_question != blank and faq_answer != blank -%}
+                {%- unless faq_first -%},{%- endunless -%}
+                {
+                  "@type": "Question",
+                  "name": {{ faq_question | json }},
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ faq_answer | strip_html | json }}
+                  }
+                }
+                {%- assign faq_first = false -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }
+        </script>
+      {%- endif -%}
+
+      <!-- App blocks -->
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="article-app-block" {{ block.shopify_attributes }}>
+            {% render block %}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div><!-- /.article-page__narrow -->
+
+    <!-- Related Articles Section (Wide layout) -->
+    {%- if related_handles.size > 0 -%}
+      <section class="article-related-section" aria-label="Related articles">
+        <div class="article-related-section__header">
+          <span class="article-section-eyebrow">Continue reading</span>
+          <h2 class="article-related-section__title">Related articles</h2>
+        </div>
+
+        <div class="article-related-grid">
+          {%- for handle in related_handles -%}
+            {%- assign rel_article = articles[handle] -%}
+            {%- if rel_article != blank and rel_article.title != blank -%}
+              {%- liquid
+                assign rel_cat_val = rel_article.metafields.custom.blog_category.value | default: rel_article.metafields.custom.blog_category
+                if rel_cat_val.name != blank
+                  assign rel_category = rel_cat_val.name
+                elsif rel_cat_val != blank
+                  assign rel_category = rel_cat_val
+                elsif rel_article.tags.first != blank
+                  assign rel_category = rel_article.tags.first
+                else
+                  assign rel_category = blog.title
+                endif
+              -%}
+              <article class="article-related-card">
+                <a href="{{ rel_article.url }}" class="article-related-card__media">
+                  {%- if rel_article.image != blank -%}
+                    <img
+                      src="{{ rel_article.image | image_url: width: 600 }}"
+                      srcset="{{ rel_article.image | image_url: width: 350 }} 350w, {{ rel_article.image | image_url: width: 600 }} 600w"
+                      sizes="(min-width: 900px) 33vw, 85vw"
+                      alt="{{ rel_article.title | escape }}"
+                      loading="lazy"
+                      width="360"
+                      height="225"
+                      class="article-related-card__img"
+                    >
+                  {%- else -%}
+                    <div class="article-related-card__placeholder"></div>
+                  {%- endif -%}
+                  <span class="article-related-card__badge">{{ rel_category }}</span>
+                </a>
+                <div class="article-related-card__body">
+                  <time class="article-related-card__date" datetime="{{ rel_article.published_at | date: '%Y-%m-%d' }}">
+                    {{ rel_article.published_at | date: '%b %d, %Y' }}
+                  </time>
+                  <h3 class="article-related-card__title">
+                    <a href="{{ rel_article.url }}">{{ rel_article.title }}</a>
+                  </h3>
+                  {%- if rel_article.excerpt_or_content != blank -%}
+                    <p class="article-related-card__excerpt">
+                      {{ rel_article.excerpt_or_content | strip_html | truncate: 110 }}
+                    </p>
+                  {%- endif -%}
+                  <a href="{{ rel_article.url }}" class="article-related-card__link">
+                    Read article
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+
+    <!-- Preserved Comments Section -->
+    {%- if blog.comments_enabled? -%}
+      <div class="article-comments-section" id="comments">
+        {%- if article.comments_count > 0 -%}
+          <h2>{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+          {% paginate article.comments by 5 %}
+            {%- for comment in article.comments -%}
+              <article class="article-comments-item" id="{{ comment.id }}">
+                {{ comment.content }}
+                <footer>
+                  <small><strong>{{ comment.author }}</strong> &bull; {{ comment.created_at | date: '%B %d, %Y' }}</small>
+                </footer>
+              </article>
+            {%- endfor -%}
+            {%- if paginate.pages > 1 -%}
+              {% render 'pagination', paginate: paginate %}
+            {%- endif -%}
+          {% endpaginate %}
+        {%- endif -%}
+
+        {% form 'new_comment', article %}
+          <h3>{{ 'blogs.article.comment_form_title' | t }}</h3>
+          {%- if form.posted_successfully? -%}
+            <p class="form__message" role="status">
+              {{ 'blogs.article.success' | t }}
+            </p>
           {%- endif -%}
-          <input type="submit" class="button" value="{{ 'blogs.article.post' | t }}">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <input type="text" name="comment[author]" placeholder="{{ 'blogs.article.name' | t }}" required value="{{ form.author }}" style="padding: 10px 14px; border-radius: 8px; border: 1.5px solid #e7ded0;">
+            <input type="email" name="comment[email]" placeholder="{{ 'blogs.article.email' | t }}" required value="{{ form.email }}" style="padding: 10px 14px; border-radius: 8px; border: 1.5px solid #e7ded0;">
+          </div>
+          <textarea name="comment[body]" rows="4" placeholder="{{ 'blogs.article.message' | t }}" required style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1.5px solid #e7ded0; margin-bottom: 16px;">{{ form.body }}</textarea>
+          <button type="submit" class="button" style="background: #008b75; color: #fff; padding: 10px 24px; border-radius: 20px; border: none; cursor: pointer;">
+            {{ 'blogs.article.post' | t }}
+          </button>
         {% endform %}
       </div>
-    </div>
-  {%- endif -%}
+    {%- endif -%}
+
+  </div><!-- /.article-page__container -->
 </article>
 
+<!-- Article Structured Data -->
 <script type="application/ld+json">
   {{ article | structured_data }}
 </script>
 
+<!-- Interactive Logic for TOC, FAQs, and Product Add to Cart -->
+<script>
+(function() {
+  'use strict';
+
+  function initBlogArticle() {
+    // 1. Table of Contents Generator
+    var contentEl = document.querySelector('.article-content-body');
+    var tocEl = document.getElementById('article-toc');
+    var tocList = document.getElementById('article-toc-list');
+    var tocToggle = document.querySelector('.article-toc__toggle');
+
+    if (contentEl && tocEl && tocList) {
+      // Find direct H2 elements inside article content
+      var h2Elements = contentEl.querySelectorAll('h2');
+      if (h2Elements.length >= 2) {
+        // Move TOC immediately before the first H2 (right after introduction)
+        var firstH2 = h2Elements[0];
+        if (firstH2 && firstH2.parentNode) {
+          firstH2.parentNode.insertBefore(tocEl, firstH2);
+        }
+
+        tocList.innerHTML = '';
+        var existingIds = {};
+
+        h2Elements.forEach(function(h2, index) {
+          var text = (h2.textContent || '').trim();
+          if (!text) return;
+
+          // Generate or preserve ID
+          var id = h2.id;
+          if (!id) {
+            id = text.toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)/g, '');
+            if (!id) id = 'section-' + (index + 1);
+
+            // Handle duplicates
+            if (existingIds[id]) {
+              existingIds[id]++;
+              id = id + '-' + existingIds[id];
+            } else {
+              existingIds[id] = 1;
+            }
+            h2.id = id;
+          }
+
+          var li = document.createElement('li');
+          li.className = 'article-toc__item';
+
+          var a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = text;
+          a.setAttribute('data-target-id', id);
+
+          // Smooth scrolling with offset for sticky header
+          a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.getElementById(id);
+            if (target) {
+              var offset = 90;
+              var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+              window.scrollTo({ top: top, behavior: 'smooth' });
+              history.pushState(null, null, '#' + id);
+            }
+          });
+
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
+
+        tocEl.style.display = 'block';
+
+        // Toggle Collapse on Mobile/Desktop
+        if (tocToggle) {
+          tocToggle.addEventListener('click', function() {
+            var isHidden = tocList.hasAttribute('hidden');
+            if (isHidden) {
+              tocList.removeAttribute('hidden');
+              tocToggle.setAttribute('aria-expanded', 'true');
+              var textSpan = tocToggle.querySelector('.article-toc__toggle-text');
+              if (textSpan) textSpan.textContent = 'Hide';
+            } else {
+              tocList.setAttribute('hidden', '');
+              tocToggle.setAttribute('aria-expanded', 'false');
+              var textSpan = tocToggle.querySelector('.article-toc__toggle-text');
+              if (textSpan) textSpan.textContent = 'Show';
+            }
+          });
+        }
+
+        // Active heading scrollspy
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                var activeId = entry.target.id;
+                var links = tocList.querySelectorAll('.article-toc__item');
+                links.forEach(function(item) {
+                  var link = item.querySelector('a');
+                  if (link && link.getAttribute('data-target-id') === activeId) {
+                    item.classList.add('is-active');
+                  } else {
+                    item.classList.remove('is-active');
+                  }
+                });
+              }
+            });
+          }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+          h2Elements.forEach(function(h2) {
+            observer.observe(h2);
+          });
+        }
+      }
+    }
+
+    // 2. FAQ Accordion Handler
+    var faqQuestions = document.querySelectorAll('.article-faq-item__question');
+    faqQuestions.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.article-faq-item');
+        var answer = item.querySelector('.article-faq-item__answer');
+        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          item.classList.remove('is-open');
+          answer.setAttribute('hidden', '');
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-open');
+          answer.removeAttribute('hidden');
+        }
+      });
+    });
+
+    // 3. Product Showcase Add to Cart Integration
+    var cartBtns = document.querySelectorAll('.article-product-card__btn-cart');
+    cartBtns.forEach(function(btn) {
+      btn.addEventListener('click', async function(e) {
+        e.preventDefault();
+        var variantId = btn.getAttribute('data-variant-id');
+        if (!variantId) return;
+
+        var origText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Adding...';
+
+        try {
+          var response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: 1,
+              sections: ['cart-drawer'],
+              sections_url: window.location.pathname
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
+
+          var data = await response.json();
+
+          if (data.sections && data.sections['cart-drawer']) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(data.sections['cart-drawer'], 'text/html');
+
+            var newBody = doc.querySelector('#nc-body');
+            var oldBody = document.querySelector('#nc-body');
+            if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+            var newBreakdown = doc.querySelector('.nc-price-breakdown');
+            var oldBreakdown = document.querySelector('.nc-price-breakdown');
+            if (newBreakdown && oldBreakdown) {
+              oldBreakdown.replaceWith(newBreakdown);
+            }
+
+            var newFooter = doc.querySelector('.cart-drawer__footer');
+            var oldFooter = document.querySelector('.cart-drawer__footer');
+            if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+          }
+
+          var drawer = document.querySelector('#nc-cart-drawer');
+          if (drawer) {
+            drawer.classList.add('is-open');
+            drawer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+
+          btn.textContent = 'Added ✓';
+          setTimeout(function() {
+            btn.disabled = false;
+            btn.textContent = origText;
+          }, 2000);
+        } catch (err) {
+          console.error('Error adding to cart:', err);
+          btn.disabled = false;
+          btn.textContent = origText;
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlogArticle);
+  } else {
+    initBlogArticle();
+  }
+})();
+</script>
+
 {% schema %}
 {
-  "name": "t:sections.main-article.name",
+  "name": "Blog article",
   "tag": "section",
   "class": "section",
+  "settings": [],
   "blocks": [
     {
       "type": "@app"
     },
     {
       "type": "featured_image",
-      "name": "t:sections.main-article.blocks.featured_image.name",
+      "name": "Featured image",
       "limit": 1,
       "settings": [
         {
           "type": "select",
           "id": "image_height",
           "options": [
-            {
-              "value": "adapt",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
-            },
-            {
-              "value": "small",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
-            },
-            {
-              "value": "medium",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
-            },
-            {
-              "value": "large",
-              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
-            }
+            { "value": "adapt", "label": "Adapt to image" },
+            { "value": "small", "label": "Small" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "large", "label": "Large" }
           ],
           "default": "adapt",
-          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label"
+          "label": "Image height"
         }
       ]
     },
     {
       "type": "title",
-      "name": "t:sections.main-article.blocks.title.name",
+      "name": "Title",
       "limit": 1,
       "settings": [
         {
           "type": "checkbox",
           "id": "blog_show_date",
           "default": true,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+          "label": "Show date"
         },
         {
           "type": "checkbox",
           "id": "blog_show_author",
           "default": false,
-          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+          "label": "Show author"
         }
       ]
     },
     {
       "type": "content",
-      "name": "t:sections.main-article.blocks.content.name",
+      "name": "Content",
       "limit": 1
     },
     {
       "type": "share",
-      "name": "t:sections.main-article.blocks.share.name",
-      "limit": 2,
+      "name": "Share",
+      "limit": 1,
       "settings": [
         {
           "type": "text",
           "id": "share_label",
-          "label": "t:sections.main-article.blocks.share.settings.text.label",
-          "default": "t:sections.main-article.blocks.share.settings.text.default"
+          "label": "Share label",
+          "default": "Share"
         }
       ]
     }

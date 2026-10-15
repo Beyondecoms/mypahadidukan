@@ -1,28 +1,92 @@
 {{ 'section-seabuckthorn-m10.css' | asset_url | stylesheet_tag }}
 
-<div class="sb-m10-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+<!-- NAMESPACES_TEST:
+custom_count: {{ product.metafields.custom.size }}
+my_fields_count: {{ product.metafields.my_fields.size }}
+facts_count: {{ product.metafields.facts.size }}
+seabuckthorn_count: {{ product.metafields.seabuckthorn.size }}
+global_count: {{ product.metafields.global.size }}
+
+KEYS_TEST:
+custom.m10_price_heading: {{ product.metafields.custom.m10_price_heading.value | default: product.metafields.custom.m10_price_heading }}
+custom.m10_price_description: {{ product.metafields.custom.m10_price_description.value | default: product.metafields.custom.m10_price_description }}
+custom.m10_price_harvest_text: {{ product.metafields.custom.m10_price_harvest_text.value | default: product.metafields.custom.m10_price_harvest_text }}
+custom.m10_price_highlight: {{ product.metafields.custom.m10_price_highlight.value | default: product.metafields.custom.m10_price_highlight }}
+custom.m10_final_highlight: {{ product.metafields.custom.m10_final_highlight.value | default: product.metafields.custom.m10_final_highlight }}
+custom.m10_heading: {{ product.metafields.custom.m10_heading.value | default: product.metafields.custom.m10_heading }}
+custom.m10_description: {{ product.metafields.custom.m10_description.value | default: product.metafields.custom.m10_description }}
+custom.m10_harvest_text: {{ product.metafields.custom.m10_harvest_text.value | default: product.metafields.custom.m10_harvest_text }}
+custom.m10_highlight: {{ product.metafields.custom.m10_highlight.value | default: product.metafields.custom.m10_highlight }}
+custom.price_heading: {{ product.metafields.custom.price_heading.value | default: product.metafields.custom.price_heading }}
+custom.price_description: {{ product.metafields.custom.price_description.value | default: product.metafields.custom.price_description }}
+-->
+
+{%- liquid
+  assign m10_heading_raw = product.metafields.custom.m10_price_heading.value | default: product.metafields.custom.m10_price_heading
+  assign m10_highlight_raw = product.metafields.custom.m10_price_highlight.value | default: product.metafields.custom.m10_price_highlight
+
+  assign heading_highlight = ''
+  if m10_highlight_raw != blank and m10_highlight_raw.size <= 40
+    assign heading_highlight = m10_highlight_raw | strip
+  endif
+
+  assign clean_heading_prefix = m10_heading_raw | strip
+  if heading_highlight != blank and clean_heading_prefix contains heading_highlight
+    assign heading_parts = clean_heading_prefix | split: heading_highlight
+    assign clean_heading_prefix = heading_parts[0] | strip
+  endif
+
+  assign m10_desc = product.metafields.custom.m10_price_description.value | default: product.metafields.custom.m10_price_description
+  assign m10_harvest = product.metafields.custom.m10_price_harvest_text.value | default: product.metafields.custom.m10_price_harvest_text
+
+  assign m10_final_highlight = product.metafields.custom.m10_final_highlight.value | default: product.metafields.custom.m10_price_final_highlight.value | default: product.metafields.custom.m10_final_highlight | default: product.metafields.custom.m10_price_final_highlight
+  if m10_final_highlight == blank and m10_highlight_raw != blank and m10_highlight_raw != heading_highlight
+    assign m10_final_highlight = m10_highlight_raw
+  endif
+
+  assign has_content = false
+  if clean_heading_prefix != blank or heading_highlight != blank or m10_desc != blank or m10_harvest != blank or m10_final_highlight != blank
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+<div class="sb-m10-section" style="background-color: {{ section.settings.bg_color | default: '#fffbef' }};">
   <div class="sb-m10-container">
     
     <!-- Top Meta Row -->
-    <div class="sb-m10-top-bar">
-      <span class="sb-m10-module-badge">{{ section.settings.module_tag }}</span>
-    </div>
+    {%- if section.settings.module_tag != blank -%}
+      <div class="sb-m10-top-bar">
+        <span class="sb-m10-module-badge">{{ section.settings.module_tag }}</span>
+      </div>
+    {%- endif -%}
 
     <!-- Main Card Box -->
     <div class="sb-m10-card-wrapper">
-      <h2 class="sb-m10-title">
-        ₹775 A BOTTLE. <span class="sb-m10-price-highlight">ABOUT ₹26 A GLASS.</span>
-      </h2>
+      {%- if clean_heading_prefix != blank or heading_highlight != blank -%}
+        <h2 class="sb-m10-title">
+          {{ clean_heading_prefix }}{% if heading_highlight != blank %} <span class="sb-m10-price-highlight">{{ heading_highlight }}</span>{% endif %}
+        </h2>
+      {%- endif -%}
 
-      <div class="sb-m10-body">
-        <p>{{ section.settings.para_1 }}</p>
-        <p>{{ section.settings.para_2 }}</p>
-        <p><strong>{{ section.settings.para_3 }}</strong></p>
-      </div>
+      {%- if m10_desc != blank or m10_harvest != blank or m10_final_highlight != blank -%}
+        <div class="sb-m10-body">
+          {%- if m10_desc != blank -%}
+            <p>{{ m10_desc | newline_to_br }}</p>
+          {%- endif -%}
+          {%- if m10_harvest != blank -%}
+            <p>{{ m10_harvest | newline_to_br }}</p>
+          {%- endif -%}
+          {%- if m10_final_highlight != blank -%}
+            <p><strong>{{ m10_final_highlight | newline_to_br }}</strong></p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
 
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -31,28 +95,14 @@
   "class": "section-sb-m10",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Content is dynamically loaded from product metafields (custom.m10_price_*). If values are empty, they will not be shown."
+    },
+    {
       "type": "text",
       "id": "module_tag",
       "label": "Module Tag",
-      "default": "M10 · ₹775 = ~₹26 a glass"
-    },
-    {
-      "type": "textarea",
-      "id": "para_1",
-      "label": "Paragraph 1",
-      "default": "1 tablespoon makes a glass, and there are 30 in a bottle. That's the honest way to look at the price of a pulp."
-    },
-    {
-      "type": "textarea",
-      "id": "para_2",
-      "label": "Paragraph 2",
-      "default": "Ladakh gets one harvest a year, picked over 3 weeks, and then freighted down from 3,500 metres. There's no second crop to cover a bad one."
-    },
-    {
-      "type": "textarea",
-      "id": "para_3",
-      "label": "Paragraph 3",
-      "default": "We'd rather show you that sum than print \"premium\" on the label and hope nobody asks."
+      "default": "M10 · What it costs"
     },
     {
       "type": "color",

@@ -1,7 +1,7 @@
 /* Section M4 - What's not in my bottle */
 .sb-m4-section {
   padding: 10px 10px;
-  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body-family);
   background-color: #fffbef;
   color: #1c1918;
   overflow: hidden;
@@ -39,6 +39,7 @@
 }
 
 .sb-m4-title {
+  font-family: var(--font-heading-family);
   font-size: clamp(2.6rem, 5.5vw, 3.8rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -89,6 +90,7 @@
 }
 
 .sb-m4-card-title {
+  font-family: var(--font-heading-family);
   font-size: 1.25rem;
   font-weight: 800;
   color: #1c1918;

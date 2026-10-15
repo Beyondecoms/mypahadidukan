@@ -1,7 +1,7 @@
 /* Section M2 - What's in my bottle */
 .sb-m2-section {
   padding: 10px 10px;
-  font-family: 'Archivo', var(--font-body-family), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-body-family);
   background-color: #fffbef;
   color: #1c1918;
   overflow: hidden;
@@ -42,6 +42,7 @@
 }
 
 .sb-m2-title {
+  font-family: var(--font-heading-family);
   font-size: clamp(2.6rem, 5.5vw, 3.8rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -52,6 +53,7 @@
 }
 
 .sb-m2-subtitle {
+  font-family: var(--font-heading-family);
   font-size: 1.45rem;
   color: #ee5922;
   margin: 0;
@@ -156,6 +158,30 @@
   color: #555555;
   letter-spacing: 0.05em;
   font-weight: 600;
+}
+
+.sb-m2-grid.sb-m2-grid--no-image {
+  grid-template-columns: 1fr;
+}
+
+/* Product Metafield Image */
+.sb-m2-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 220px;
+  height: 280px;
+}
+
+.sb-m2-product-img {
+  max-width: 100%;
+  max-height: 280px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.08));
 }
 
 .sb-m2-callouts-col {
@@ -264,7 +290,7 @@
   font-weight: 800;
   margin: 0 0 14px 0;
   color: #008b75;
-  font-family: Georgia, serif;
+  font-family: var(--font-heading-family);
 }
 
 .sb-m2-parchment-body p {
@@ -274,7 +300,8 @@
   color: #2b2825;
 }
 
-.sb-m2-parchment-body p:last-child {
+.sb-m2-parchment-body p:last-child,
+.sb-m2-parchment-highlight {
   margin-bottom: 0;
   font-weight: 700;
   color: #1c1918;
@@ -306,6 +333,13 @@
   .sb-m2-glass-container {
     width: 140px !important;
     height: 220px !important;
+  }
+  .sb-m2-image-wrapper {
+    max-width: 160px !important;
+    height: 220px !important;
+  }
+  .sb-m2-product-img {
+    max-height: 220px !important;
   }
   .sb-m2-bracket-container {
     gap: 8px !important;
