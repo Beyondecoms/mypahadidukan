@@ -16,6 +16,7 @@
       "blocks": {
         "announcement_BCWkkM": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "message": "NOTICE: Due to Gandhi Jayanti Holiday on 2nd October, Orders will be shipped from 3rd October.",
             "message_link": ""
@@ -54,14 +55,6 @@
     "annoucement": {
       "type": "annoucement",
       "blocks": {
-        "item_dGj4GU": {
-          "type": "item",
-          "disabled": true,
-          "settings": {
-            "message": "Fresh batch in progress Seabuckthorn Pulp: Orders will be dispatched on Tuesday (24th March).",
-            "message_link": "shopify://products/buy-shilajit-online"
-          }
-        },
         "item_6Ycmkw": {
           "type": "item",
           "settings": {
@@ -78,7 +71,6 @@
         }
       },
       "block_order": [
-        "item_dGj4GU",
         "item_6Ycmkw",
         "item_LDTDcA"
       ],
