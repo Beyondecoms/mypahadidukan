@@ -1306,6 +1306,15 @@
             "link": "/search?type=product&q=Saffron"
           }
         },
+        "spotlight_item_jWj9Je": {
+          "type": "spotlight_item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp-Image-2022-12-22-at-5.22.22-PM-1.webp",
+            "image_by_url": "",
+            "title": "Pine nuts",
+            "link": "/search?type=product&q=pine+nuts"
+          }
+        },
         "spotlight_item_TJ8QGU": {
           "type": "spotlight_item",
           "settings": {
@@ -1354,6 +1363,7 @@
       },
       "block_order": [
         "spotlight_item_kaTUap",
+        "spotlight_item_jWj9Je",
         "spotlight_item_TJ8QGU",
         "spotlight_item_AiMtWN",
         "spotlight_item_gpbMEw",
