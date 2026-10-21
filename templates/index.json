@@ -764,6 +764,12 @@
             "product": "lakadong-turmeric-100gms-8-10-curcumin"
           }
         },
+        "item_wyzbb4": {
+          "type": "item",
+          "settings": {
+            "product": "buy-pine-nuts-online-india"
+          }
+        },
         "item_Afra3H": {
           "type": "item",
           "settings": {
@@ -803,6 +809,7 @@
       },
       "block_order": [
         "item_3rdTCJ",
+        "item_wyzbb4",
         "item_Afra3H",
         "item_7njLa6",
         "item_fwTJBQ",
