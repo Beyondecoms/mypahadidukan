@@ -1,47 +1,16 @@
 {{ 'section-seabuckthorn-m3.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign m3_eyebrow = product.metafields.custom.m3_section_eyebrow.value
-  assign m3_heading = product.metafields.custom.m3_section_heading.value
+  assign m3_eyebrow = product.metafields.custom.m3_section_eyebrow.value | default: product.metafields.custom.m3_section_eyebrow
+  assign m3_heading = product.metafields.custom.m3_section_heading.value | default: product.metafields.custom.m3_section_heading
 
-  assign m3_card_1_title = product.metafields.custom.m3_card_1_title.value
-  assign m3_card_1_desc = product.metafields.custom.m3_card_1_description.value
-  assign m3_card_1_highlight = product.metafields.custom.m3_card_1_highlight.value
+  assign m3_images = product.metafields.custom.m3_image.value | default: product.metafields.custom.m3_image | default: product.metafields.custom.m3_images.value | default: product.metafields.custom.m3_images | default: product.metafields.custom['m3_image'].value | default: product.metafields.custom['m3_image'] | default: product.metafields.custom['m3_images'].value | default: product.metafields.custom['m3_images']
 
-  assign m3_card_2_title = product.metafields.custom.m3_card_2_title.value
-  assign m3_card_2_desc = product.metafields.custom.m3_card_2_description.value
-  assign m3_card_2_highlight = product.metafields.custom.m3_card_2_highlight.value
-
-  assign m3_card_3_title = product.metafields.custom.m3_card_3_title.value
-  assign m3_card_3_desc = product.metafields.custom.m3_card_3_description.value
-  assign m3_card_3_highlight = product.metafields.custom.m3_card_3_highlight.value
-
-  assign m3_card_4_title = product.metafields.custom.m3_card_4_title.value
-  assign m3_card_4_desc = product.metafields.custom.m3_card_4_description.value
-  assign m3_card_4_highlight = product.metafields.custom.m3_card_4_highlight.value
-
-  assign has_card_1 = false
-  if m3_card_1_title != blank or m3_card_1_desc != blank or m3_card_1_highlight != blank
-    assign has_card_1 = true
-  endif
-
-  assign has_card_2 = false
-  if m3_card_2_title != blank or m3_card_2_desc != blank or m3_card_2_highlight != blank
-    assign has_card_2 = true
-  endif
-
-  assign has_card_3 = false
-  if m3_card_3_title != blank or m3_card_3_desc != blank or m3_card_3_highlight != blank
-    assign has_card_3 = true
-  endif
-
-  assign has_card_4 = false
-  if m3_card_4_title != blank or m3_card_4_desc != blank or m3_card_4_highlight != blank
-    assign has_card_4 = true
-  endif
-
+  assign m3_first = m3_images | first
   assign has_cards = false
-  if has_card_1 or has_card_2 or has_card_3 or has_card_4
+  if m3_first != blank
+    assign has_cards = true
+  elsif m3_images != blank and m3_images.src != blank or m3_images.width != blank
     assign has_cards = true
   endif
 
@@ -67,138 +36,36 @@
       </div>
     {%- endif -%}
 
-    <!-- 4 Cards Grid -->
+    <!-- Cards Grid -->
     {%- if has_cards -%}
       <div class="sb-m3-cards-grid">
-        
-        <!-- Card 1 -->
-        {%- if has_card_1 -%}
-          <div class="sb-m3-card" style="background-color: {{ section.settings.card_bg }}; color: {{ section.settings.card_text_color }};">
-            <!-- Card Header (Number + Title + Stamp Motif) -->
-            <div class="sb-m3-card-header">
-              <div class="sb-m3-card-header-text">
-                <span class="sb-m3-num">①</span>
-                {%- if m3_card_1_title != blank -%}
-                  <h3 class="sb-m3-card-title">{{ m3_card_1_title }}</h3>
-                {%- endif -%}
-              </div>
-              <div class="sb-m3-card-stamp">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Card Body -->
-            {%- if m3_card_1_desc != blank or m3_card_1_highlight != blank -%}
-              <div class="sb-m3-card-body">
-                {%- if m3_card_1_desc != blank -%}
-                  <p>{{ m3_card_1_desc | newline_to_br }}</p>
-                {%- endif -%}
-                {%- if m3_card_1_highlight != blank -%}
-                  <p class="sb-m3-highlight-text">{{ m3_card_1_highlight | newline_to_br }}</p>
-                {%- endif -%}
+        {%- if m3_first != blank -%}
+          {%- for image in m3_images limit: 4 -%}
+            {%- if image != blank -%}
+              {%- assign img_alt = image.alt | default: m3_heading | default: product.title | escape -%}
+              <div class="sb-m3-card sb-m3-card--image" style="background-color: {{ section.settings.card_bg }};">
+                {{ image | image_url: width: 1200 | image_tag: 
+                  loading: 'lazy', 
+                  alt: img_alt,
+                  class: 'sb-m3-card-img',
+                  widths: '300, 450, 600, 800, 1000, 1200',
+                  sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 50vw, 25vw'
+                }}
               </div>
             {%- endif -%}
+          {%- endfor -%}
+        {%- elsif m3_images.src != blank or m3_images.width != blank -%}
+          {%- assign img_alt = m3_images.alt | default: m3_heading | default: product.title | escape -%}
+          <div class="sb-m3-card sb-m3-card--image" style="background-color: {{ section.settings.card_bg }};">
+            {{ m3_images | image_url: width: 1200 | image_tag: 
+              loading: 'lazy', 
+              alt: img_alt,
+              class: 'sb-m3-card-img',
+              widths: '300, 450, 600, 800, 1000, 1200',
+              sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 50vw, 25vw'
+            }}
           </div>
         {%- endif -%}
-
-        <!-- Card 2 -->
-        {%- if has_card_2 -%}
-          <div class="sb-m3-card" style="background-color: {{ section.settings.card_bg }}; color: {{ section.settings.card_text_color }};">
-            <!-- Card Header (Number + Title + Stamp Motif) -->
-            <div class="sb-m3-card-header">
-              <div class="sb-m3-card-header-text">
-                <span class="sb-m3-num">②</span>
-                {%- if m3_card_2_title != blank -%}
-                  <h3 class="sb-m3-card-title">{{ m3_card_2_title }}</h3>
-                {%- endif -%}
-              </div>
-              <div class="sb-m3-card-stamp">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Card Body -->
-            {%- if m3_card_2_desc != blank or m3_card_2_highlight != blank -%}
-              <div class="sb-m3-card-body">
-                {%- if m3_card_2_desc != blank -%}
-                  <p>{{ m3_card_2_desc | newline_to_br }}</p>
-                {%- endif -%}
-                {%- if m3_card_2_highlight != blank -%}
-                  <p class="sb-m3-highlight-text">{{ m3_card_2_highlight | newline_to_br }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        <!-- Card 3 -->
-        {%- if has_card_3 -%}
-          <div class="sb-m3-card" style="background-color: {{ section.settings.card_bg }}; color: {{ section.settings.card_text_color }};">
-            <!-- Card Header (Number + Title + Stamp Motif) -->
-            <div class="sb-m3-card-header">
-              <div class="sb-m3-card-header-text">
-                <span class="sb-m3-num">③</span>
-                {%- if m3_card_3_title != blank -%}
-                  <h3 class="sb-m3-card-title">{{ m3_card_3_title }}</h3>
-                {%- endif -%}
-              </div>
-              <div class="sb-m3-card-stamp">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Card Body -->
-            {%- if m3_card_3_desc != blank or m3_card_3_highlight != blank -%}
-              <div class="sb-m3-card-body">
-                {%- if m3_card_3_desc != blank -%}
-                  <p>{{ m3_card_3_desc | newline_to_br }}</p>
-                {%- endif -%}
-                {%- if m3_card_3_highlight != blank -%}
-                  <p class="sb-m3-highlight-text">{{ m3_card_3_highlight | newline_to_br }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        <!-- Card 4 -->
-        {%- if has_card_4 -%}
-          <div class="sb-m3-card" style="background-color: {{ section.settings.card_bg }}; color: {{ section.settings.card_text_color }};">
-            <!-- Card Header (Number + Title + Stamp Motif) -->
-            <div class="sb-m3-card-header">
-              <div class="sb-m3-card-header-text">
-                <span class="sb-m3-num">④</span>
-                {%- if m3_card_4_title != blank -%}
-                  <h3 class="sb-m3-card-title">{{ m3_card_4_title }}</h3>
-                {%- endif -%}
-              </div>
-              <div class="sb-m3-card-stamp">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Card Body -->
-            {%- if m3_card_4_desc != blank or m3_card_4_highlight != blank -%}
-              <div class="sb-m3-card-body">
-                {%- if m3_card_4_desc != blank -%}
-                  <p>{{ m3_card_4_desc | newline_to_br }}</p>
-                {%- endif -%}
-                {%- if m3_card_4_highlight != blank -%}
-                  <p class="sb-m3-highlight-text">{{ m3_card_4_highlight | newline_to_br }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
       </div>
     {%- endif -%}
 

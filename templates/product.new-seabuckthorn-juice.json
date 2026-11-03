@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -297,50 +288,6 @@
     },
     "seabuckthorn_m3": {
       "type": "seabuckthorn-omega-7",
-      "blocks": {
-        "card_1": {
-          "type": "card",
-          "settings": {
-            "num": "①",
-            "title": "WHAT IS IT?",
-            "content": "A fatty acid. Most people have heard of omega-3. Almost nobody has heard of this one. It's also in mother's milk, oddly enough.",
-            "highlight_text": "Highlight Subtext"
-          }
-        },
-        "card_2": {
-          "type": "card",
-          "settings": {
-            "num": "②",
-            "title": "WHY IS IT RARE?",
-            "content": "Barely any plant makes it. Commercially, it usually comes from fish or from macadamia nuts. Sea buckthorn is the exception.",
-            "highlight_text": "Highlight Subtext"
-          }
-        },
-        "card_3": {
-          "type": "card",
-          "settings": {
-            "num": "③",
-            "title": "HOW MUCH IS IN HERE?",
-            "content": "1,560 mg per 100 ml. That's more omega-7 than omega-3, 6 and 9 combined.",
-            "highlight_text": "Highlight Subtext"
-          }
-        },
-        "card_4": {
-          "type": "card",
-          "settings": {
-            "num": "④",
-            "title": "SO WHY ISN'T IT EVERYWHERE?",
-            "content": "Because the berry is a pain. It grows high up, it grows on thorns, and there are about 3 weeks a year to get it down.",
-            "highlight_text": "Sugar water with a mountain on the label is a lot easier to make."
-          }
-        }
-      },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4"
-      ],
       "settings": {
         "module_tag": "",
         "design_tag": "",
@@ -357,50 +304,6 @@
     },
     "seabuckthorn_m4": {
       "type": "seabuckthorn-whats-not-in-bottle",
-      "blocks": {
-        "card_1": {
-          "type": "card",
-          "settings": {
-            "title": "Added sugar",
-            "content": "The fastest way to make this taste nice. Also the fastest way to make it pointless."
-          }
-        },
-        "card_2": {
-          "type": "card",
-          "settings": {
-            "title": "Water",
-            "content": "A lot of \"juice\" is one part pulp to four parts water. This is the pulp. You add the water."
-          }
-        },
-        "card_3": {
-          "type": "card",
-          "settings": {
-            "title": "Added colour",
-            "content": "The orange is just the berry."
-          }
-        },
-        "card_4": {
-          "type": "card",
-          "settings": {
-            "title": "Flavouring",
-            "content": "Natural, nature-identical or otherwise."
-          }
-        },
-        "card_5": {
-          "type": "card",
-          "settings": {
-            "title": "Concentrate from elsewhere",
-            "content": "Nothing here was dried out in another country and reconstituted."
-          }
-        }
-      },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4",
-        "card_5"
-      ],
       "settings": {
         "module_tag": "What's not in my bottle",
         "design_tag": "",
@@ -486,7 +389,7 @@
       "type": "seabuckthorn-how-to-drink",
       "settings": {
         "module_tag": "",
-        "heading": "HOW TO DRINK IT",
+        "heading": "How to Take It",
         "subtitle": "ONE SPOON. THAT'S THE WHOLE INSTRUCTION.",
         "step_text": "10 ml into a glass of warm water. Stir.",
         "timing_text": "Best to have it in the morning. But nothing bad happens at 4pm either.",
@@ -505,82 +408,6 @@
     },
     "seabuckthorn_m11": {
       "type": "seabuckthorn-faqs",
-      "blocks": {
-        "faq_1": {
-          "type": "faq",
-          "settings": {
-            "question": "Why is it so sour? Is my bottle off?",
-            "answer": "It's meant to taste like that. Sea buckthorn is a sharp, tart berry to begin with, and there's no sugar in this bottle to round it off. Most people mix a spoon into warm water and add a little honey the first few times."
-          }
-        },
-        "faq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "Is this a juice I can just drink?",
-            "answer": "No, it's thick pulp, and drinking it straight is a bit much. One tablespoon (10 ml) goes into a glass of water. A 300 ml bottle makes about 30 glasses."
-          }
-        },
-        "faq_3": {
-          "type": "faq",
-          "settings": {
-            "question": "There's stuff settled at the bottom. Is that normal?",
-            "answer": "Completely. Whole pressed berry separates when it sits, and you'll sometimes find a fragment of seed in there. Give it a shake before you pour."
-          }
-        },
-        "faq_4": {
-          "type": "faq",
-          "settings": {
-            "question": "Why is there a preservative if it's pure?",
-            "answer": "Because pressed berry with nothing in it keeps for about a week. The bottle is 99.99% sea buckthorn pulp and 0.01% E211, a permitted Class 2 preservative. That's the whole ingredient list."
-          }
-        },
-        "faq_5": {
-          "type": "faq",
-          "settings": {
-            "question": "How do I know it's really from Ladakh?",
-            "answer": "Ladakh sea buckthorn carries a GI tag of its own, granted in 2023 - a government confirmation of origin rather than a claim we're making. Ours is wild-harvested from high altitude in Ladakh and Spiti, and every batch is lab-tested with the report published on this page."
-          }
-        },
-        "faq_6": {
-          "type": "faq",
-          "settings": {
-            "question": "How much vitamin C is actually in it?",
-            "answer": "322 mg per 100 ml, tested. A 10 ml serving works out to roughly half an adult's recommended daily intake."
-          }
-        },
-        "faq_7": {
-          "type": "faq",
-          "settings": {
-            "question": "What's the difference between the pulp and the oil?",
-            "answer": "The pulp is pressed from the whole berry and carries the vitamin C. The oil is extracted from the seed or the pulp and concentrates the fatty acids instead. Different products, different jobs."
-          }
-        },
-        "faq_8": {
-          "type": "faq",
-          "settings": {
-            "question": "How long does it last?",
-            "answer": "Unopened, check the date on the bottle. Once opened, refrigerate and finish within four weeks."
-          }
-        },
-        "faq_9": {
-          "type": "faq",
-          "settings": {
-            "question": "Can everyone drink this?",
-            "answer": "It's a food, not a supplement or a treatment, and we're not going to pretend otherwise. Anyone with a vitamin C allergy should skip it. If you're pregnant, breastfeeding or on medication, have a word with your doctor first."
-          }
-        }
-      },
-      "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5",
-        "faq_6",
-        "faq_7",
-        "faq_8",
-        "faq_9"
-      ],
       "settings": {
         "module_tag": "",
         "design_tag": "",

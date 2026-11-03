@@ -68,6 +68,35 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
+/* Image-Only Mode: Full width images without card padding */
+.sb-m2-card-wrapper.sb-m2-image-only {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.sb-m2-fullwidth-image-wrapper {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  display: block;
+  line-height: 0;
+}
+
+.sb-m2-fullwidth-image-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.sb-m2-fullwidth-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
 .sb-m2-grid {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -190,6 +219,32 @@
   gap: 20px;
 }
 
+
+.sb-m2-callouts-col--image {
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.sb-m2-callout-image-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sb-m2-callout-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 16px;
+}
+
 /* Bracket Connector Layout */
 .sb-m2-bracket-container {
   display: flex;
@@ -307,6 +362,36 @@
   color: #1c1918;
 }
 
+/* Bottom Banner (custom.m2_image_3) */
+.sb-m2-banner-wrapper {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.sb-m2-card-wrapper > .sb-m2-banner-wrapper:first-child {
+  margin-top: 0;
+}
+
+.sb-m2-banner-item {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-m2-banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
 /* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
 @media only screen and (max-width: 749px) {
   .sb-m2-section {
@@ -325,6 +410,16 @@
   .sb-m2-card-wrapper {
     padding: 20px 12px !important;
     border-radius: 16px !important;
+  }
+  .sb-m2-card-wrapper.sb-m2-image-only {
+    padding: 0 !important;
+  }
+  .sb-m2-fullwidth-image-wrapper {
+    margin-bottom: 16px !important;
+    border-radius: 12px !important;
+  }
+  .sb-m2-fullwidth-img {
+    border-radius: 12px !important;
   }
   .sb-m2-grid {
     grid-template-columns: 1fr !important;
@@ -374,5 +469,13 @@
     font-size: 1rem !important;
     line-height: 1.6 !important;
     margin-bottom: 10px !important;
+  }
+  .sb-m2-banner-wrapper {
+    margin-top: 20px !important;
+    gap: 14px !important;
+  }
+  .sb-m2-banner-item,
+  .sb-m2-banner-img {
+    border-radius: 12px !important;
   }
 }

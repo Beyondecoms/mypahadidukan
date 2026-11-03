@@ -14,7 +14,7 @@
     background-image: var(--cr-bg-mobile), var(--cr-bg-desktop);
   }
 }
-
+  
 .cr-wrapper {
   margin: 0 auto;
 }

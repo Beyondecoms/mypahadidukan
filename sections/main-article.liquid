@@ -1,82 +1,138 @@
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  # Category determination
-  assign category_val = article.metafields.custom.blog_category.value | default: article.metafields.custom.blog_category
-  if category_val.name != blank
-    assign blog_category = category_val.name
-  elsif category_val != blank
-    assign blog_category = category_val
-  elsif article.tags.first != blank
-    assign blog_category = article.tags.first
-  else
-    assign blog_category = blog.title
+  # ─────────────────────────────────────────────────────
+  # 1. BLOG CATEGORY — existing: custom.blog_category (single line text)
+  # ─────────────────────────────────────────────────────
+  assign blog_category_raw = article.metafields.custom.blog_category
+  assign blog_category = blog_category_raw.value | default: blog_category_raw
+  if blog_category == blank
+    assign blog_category = article.tags.first | default: blog.title
   endif
 
-  # Author determination from metafield custom.author or custom.blog_author
-  assign author_obj = article.metafields.custom.author.value | default: article.metafields.custom.author | default: article.metafields.custom.blog_author.value | default: article.metafields.custom.blog_author
-  
+  # ── Client Category Normalization ──
+  # Info -> Product guides | Travel -> Origins | Health and Wellness -> Use & care | Recipes
+  assign cat_check = blog_category | downcase | strip
+  if cat_check == 'info'
+    assign blog_category = 'Product guides'
+  elsif cat_check == 'travel'
+    assign blog_category = 'Origins'
+  elsif cat_check == 'health and wellness' or cat_check == 'health & wellness' or cat_check == 'wellness'
+    assign blog_category = 'Use & care'
+  endif
+
+  # ─────────────────────────────────────────────────────
+  # 2. AUTHOR — existing: custom.author (metaobject)
+  # ─────────────────────────────────────────────────────
+  assign author_obj = article.metafields.custom.author.value
   assign author_name = ''
-  if author_obj.name != blank
-    assign author_name = author_obj.name
-  elsif author_obj.title != blank
-    assign author_name = author_obj.title
-  elsif author_obj.author_name != blank
-    assign author_name = author_obj.author_name
-  elsif author_obj != blank and author_obj.name == blank and author_obj != article.author
-    assign author_name = author_obj
-  else
+  if author_obj != blank
+    assign author_name = author_obj.name | default: author_obj.title | default: author_obj.author_name
+    assign author_photo = author_obj.photo | default: author_obj.image | default: author_obj.author_image | default: author_obj.avatar
+    assign author_bio = author_obj.bio | default: author_obj.description | default: author_obj.about | default: author_obj.author_bio
+    assign author_designation = author_obj.designation | default: author_obj.role | default: author_obj.position | default: author_obj.job_title
+    assign author_profile_url = author_obj.profile_url | default: author_obj.link | default: author_obj.url | default: author_obj.website
+  endif
+  if author_name == blank
     assign author_name = article.author
+    assign author_photo = blank
+    assign author_bio = blank
+    assign author_designation = blank
+    assign author_profile_url = blank
   endif
 
-  assign author_photo = author_obj.photo | default: author_obj.image | default: author_obj.author_photo | default: author_obj.avatar
-  assign author_bio = author_obj.bio | default: author_obj.description | default: author_obj.about | default: author_obj.author_bio
-  assign author_designation = author_obj.designation | default: author_obj.role | default: author_obj.title
-  assign author_profile_url = author_obj.profile_url | default: author_obj.link | default: author_obj.url
-
-  # Reading Time Calculation (approx 200 words per minute)
-  assign word_count = article.content | strip_html | split: ' ' | size
-  assign calc_reading_time = word_count | divided_by: 200
-  if calc_reading_time < 1
-    assign calc_reading_time = 1
-  endif
-  assign reading_time = article.metafields.custom.reading_time.value | default: article.metafields.custom.reading_time | default: calc_reading_time
-
-  # Mid-article CTA (Only from metafields)
-  assign cta_obj = article.metafields.custom.blog_cta.value | default: article.metafields.custom.blog_cta | default: article.metafields.custom.cta.value | default: article.metafields.custom.cta
-  assign cta_heading = cta_obj.heading | default: cta_obj.title
-  assign cta_description = cta_obj.description | default: cta_obj.text
-  assign cta_btn_text = cta_obj.button_text | default: cta_obj.btn_label | default: 'Shop now'
-  assign cta_btn_link = cta_obj.button_link | default: cta_obj.btn_url
-  assign cta_product = cta_obj.product_reference.value | default: cta_obj.product_reference
-  assign cta_image = cta_obj.image | default: cta_obj.photo
-
-  if cta_product != blank
-    if cta_heading == blank
-      assign cta_heading = cta_product.title
-    endif
-    if cta_btn_link == blank
-      assign cta_btn_link = cta_product.url
-    endif
-    if cta_image == blank and cta_product.featured_image != blank
-      assign cta_image = cta_product.featured_image
-    endif
+  # ─────────────────────────────────────────────────────
+  # 3. BLOG TAGS — existing: custom.blog_tags
+  # Can be list/array of strings or comma-separated/JSON string
+  # ─────────────────────────────────────────────────────
+  assign blog_tags_raw = article.metafields.custom.blog_tags
+  assign blog_tags_val = blog_tags_raw.value | default: blog_tags_raw
+  assign blog_tags_list = blank
+  if blog_tags_raw.value != blank and blog_tags_raw.value.first != blank
+    assign blog_tags_list = blog_tags_raw.value
+  elsif blog_tags_val != blank
+    assign blog_tags_clean_str = blog_tags_val | remove: '[' | remove: ']' | remove: '"' | remove: "'" | remove: '\"'
+    assign blog_tags_list = blog_tags_clean_str | split: ','
   endif
 
-  # Product Showcase (Only from metafields)
-  assign showcase_products = article.metafields.custom.blog_products.value | default: article.metafields.custom.blog_products | default: article.metafields.custom.products.value | default: article.metafields.custom.products
+  # ─────────────────────────────────────────────────────
+  # 4. BLOG PRODUCTS — existing: custom.blog_products (product reference)
+  # Can be single or list of product references
+  # ─────────────────────────────────────────────────────
+  assign blog_products_raw = article.metafields.custom.blog_products
+  assign blog_products = blog_products_raw.value
+  # Normalize: if it's a single object not an array, wrap it
+  assign blog_products_type = blog_products_raw.type
 
-  # Frequently asked questions from custom.faqs or custom.blog_faqs
-  assign blog_faqs = article.metafields.custom.faqs.value | default: article.metafields.custom.faqs | default: article.metafields.custom.blog_faqs.value | default: article.metafields.custom.blog_faqs
+  # ─────────────────────────────────────────────────────
+  # 5. FAQS — existing: custom.faqs (metaobject list)
+  # ─────────────────────────────────────────────────────
+  assign blog_faqs_raw = article.metafields.custom.faqs
+  assign blog_faqs = blog_faqs_raw.value | default: blog_faqs_raw
 
-  # Related Articles (Select up to 3 relevant articles)
+  # ─────────────────────────────────────────────────────
+  # 6. RELATED ARTICLES — existing: custom.related_articles (article reference list)
+  # ─────────────────────────────────────────────────────
+  assign explicit_related_raw = article.metafields.custom.related_articles
+  assign explicit_related = explicit_related_raw.value | default: explicit_related_raw
   assign related_limit = 3
   assign related_count = 0
-  assign explicit_related = article.metafields.custom.related_articles.value | default: article.metafields.custom.related_articles
   assign related_handles_str = ''
+
+  # ─────────────────────────────────────────────────────
+  # 7. READING TIME — NEW: custom.reading_time (single line text)
+  # Falls back to calculated estimate
+  # ─────────────────────────────────────────────────────
+  assign reading_time_manual = article.metafields.custom.reading_time.value | default: article.metafields.custom.reading_time
+  if reading_time_manual != blank
+    assign reading_time_display = reading_time_manual
+  else
+    assign word_count = article.content | strip_html | split: ' ' | size
+    assign calc_reading_time = word_count | divided_by: 200
+    if calc_reading_time < 1
+      assign calc_reading_time = 1
+    endif
+    assign reading_time_display = calc_reading_time | append: ' min read'
+  endif
+
+  # ─────────────────────────────────────────────────────
+  # 8. ARTICLE INTRO — NEW: custom.article_intro (multi-line text)
+  # Shown below meta, above featured image
+  # ─────────────────────────────────────────────────────
+  assign article_intro_raw = article.metafields.custom.article_intro
+  assign article_intro = article_intro_raw.value | default: article_intro_raw
+  # Also use Shopify's built-in excerpt as a fallback
+  if article_intro == blank and article.excerpt != blank
+    assign article_intro = article.excerpt
+  endif
+
+  # ─────────────────────────────────────────────────────
+  # 9. FEATURED PRODUCT — NEW: custom.featured_product (product reference)
+  # Single product shown in-article as premium card
+  # ─────────────────────────────────────────────────────
+  assign featured_product = article.metafields.custom.featured_product.value | default: article.metafields.custom.featured_product
+
+  # ─────────────────────────────────────────────────────
+  # 10. CTA FIELDS — NEW: custom.cta_title, cta_description, cta_button_text, cta_link
+  # ─────────────────────────────────────────────────────
+  assign cta_title = article.metafields.custom.cta_title.value | default: article.metafields.custom.cta_title
+  assign cta_description = article.metafields.custom.cta_description.value | default: article.metafields.custom.cta_description
+  assign cta_button_text = article.metafields.custom.cta_button_text.value | default: article.metafields.custom.cta_button_text
+  assign cta_link = article.metafields.custom.cta_link.value | default: article.metafields.custom.cta_link
+  # Determine if any CTA content exists
+  assign has_cta = false
+  if cta_title != blank or cta_description != blank
+    assign has_cta = true
+  endif
+  if cta_button_text == blank
+    assign cta_button_text = 'Explore Products'
+  endif
+  if cta_link == blank
+    assign cta_link = '/collections/all'
+  endif
 -%}
 
-{%- comment -%} 1. Explicit related articles {%- endcomment -%}
+{%- comment -%} ── Build Related Articles List ── {%- endcomment -%}
 {%- if explicit_related != blank and explicit_related.size > 0 -%}
   {%- for rel in explicit_related -%}
     {%- if rel.id != article.id and related_count < related_limit -%}
@@ -90,7 +146,6 @@
   {%- endfor -%}
 {%- endif -%}
 
-{%- comment -%} 2. Match by category or tags {%- endcomment -%}
 {%- if related_count < related_limit -%}
   {%- for other in blog.articles -%}
     {%- if other.id != article.id -%}
@@ -118,7 +173,6 @@
   {%- endfor -%}
 {%- endif -%}
 
-{%- comment -%} 3. Fill remaining from blog.articles {%- endcomment -%}
 {%- if related_count < related_limit -%}
   {%- for other in blog.articles -%}
     {%- if other.id != article.id and related_count < related_limit -%}
@@ -137,19 +191,21 @@
 {%- assign related_handles = related_handles_str | split: ',' -%}
 
 <article class="article-page" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-page__container">
-    <div class="article-page__narrow">
+  
+  <!-- Reading Progress Bar -->
+  <div class="article-progress-bar" id="articleProgressBar" aria-hidden="true">
+    <div class="article-progress-bar__fill"></div>
+  </div>
 
-      <!-- Breadcrumb -->
+  <div class="article-page__container">
+
+    <!-- ── BREADCRUMB + BACK LINK ── -->
+    <div class="article-top-nav">
       <nav class="article-breadcrumb" aria-label="Breadcrumb">
         <ol class="article-breadcrumb__list">
-          <li class="article-breadcrumb__item">
-            <a href="{{ routes.root_url }}">Home</a>
-          </li>
+          <li class="article-breadcrumb__item"><a href="{{ routes.root_url }}">Home</a></li>
           <li class="article-breadcrumb__separator" aria-hidden="true">/</li>
-          <li class="article-breadcrumb__item">
-            <a href="{{ blog.url }}">{{ blog.title }}</a>
-          </li>
+          <li class="article-breadcrumb__item"><a href="{{ blog.url }}">{{ blog.title }}</a></li>
           {%- if blog_category != blank and blog_category != blog.title -%}
             <li class="article-breadcrumb__separator" aria-hidden="true">/</li>
             <li class="article-breadcrumb__item">
@@ -163,345 +219,717 @@
         </ol>
       </nav>
 
-      <!-- Article Hero / Header -->
-      <header class="article-hero">
-        {%- if blog_category != blank -%}
-          <div class="article-hero__category">
-            <span class="article-badge">{{ blog_category }}</span>
-          </div>
-        {%- endif -%}
+      <a href="{{ blog.url }}" class="article-back-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back to {{ blog.title | default: 'Blog' }}</span>
+      </a>
+    </div>
 
-        <h1 class="article-hero__title" itemprop="headline">
-          {{ article.title | escape }}
-        </h1>
+    <!-- ── ARTICLE HERO ── -->
+    <header class="article-hero">
 
-        <div class="article-hero__meta">
-          {%- if author_name != blank -%}
-            <div class="article-hero__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-              {%- if author_photo != blank -%}
-                <img
-                  src="{{ author_photo | image_url: width: 80, height: 80, crop: 'center' }}"
-                  alt="{{ author_name | escape }}"
-                  class="article-hero__author-avatar"
-                  width="38"
-                  height="38"
-                  loading="eager"
-                >
-              {%- else -%}
-                <span class="article-hero__author-initial" aria-hidden="true">
-                  {{ author_name | slice: 0, 1 | upcase }}
-                </span>
-              {%- endif -%}
-              <span class="article-hero__author-name" itemprop="name">{{ author_name }}</span>
-            </div>
-            <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
-          {%- endif -%}
-
-          <time class="article-hero__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
-            {{ article.published_at | date: '%B %d, %Y' }}
-          </time>
-
-          <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
-          <span class="article-hero__reading-time">{{ reading_time }} min read</span>
-        </div>
-
-        {%- if article.image -%}
-          <div class="article-hero__media-wrap">
-            <div class="article-hero__media" style="aspect-ratio: 16 / 9;">
-              <img
-                srcset="
-                  {% if article.image.width >= 375 %}{{ article.image | image_url: width: 375 }} 375w,{% endif %}
-                  {% if article.image.width >= 550 %}{{ article.image | image_url: width: 550 }} 550w,{% endif %}
-                  {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
-                  {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
-                  {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
-                  {{ article.image | image_url }} {{ article.image.width }}w
-                "
-                sizes="(min-width: 1200px) 820px, (min-width: 750px) 90vw, 100vw"
-                src="{{ article.image | image_url: width: 1100 }}"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                width="{{ article.image.width }}"
-                height="{{ article.image.height }}"
-                alt="{{ article.image.alt | default: article.title | escape }}"
-                class="article-hero__img"
-                itemprop="image"
-              >
-            </div>
-            {%- if article.image.alt != blank and article.image.alt != article.title -%}
-              <div class="article-hero__caption">{{ article.image.alt }}</div>
+      <!-- Category Badge -->
+      {%- if blog_category != blank -%}
+        <div class="article-hero__category">
+          <span class="article-badge">
+            {%- assign cat_icon_check = blog_category | downcase | strip -%}
+            {%- if cat_icon_check == 'product guides' or cat_icon_check == 'info' -%}
+              <!-- Product guides: Magnifier over jar / inspection icon -->
+              <svg class="article-badge__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 3h12l-1 4H7L6 3z"></path>
+                <path d="M6 7v11a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7"></path>
+                <circle cx="11" cy="14" r="2.5"></circle>
+                <line x1="13" y1="16" x2="16" y2="19"></line>
+              </svg>
+            {%- elsif cat_icon_check == 'origins' or cat_icon_check == 'travel' -%}
+              <!-- Origins: Mountain icon -->
+              <svg class="article-badge__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+              </svg>
+            {%- elsif cat_icon_check == 'use & care' or cat_icon_check == 'health and wellness' or cat_icon_check == 'wellness' -%}
+              <!-- Use & care: Spoon and jar / wellness hands icon -->
+              <svg class="article-badge__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 2a2 2 0 0 0-2 2v4a3 3 0 0 0 3 3h1v9a2 2 0 1 0 4 0V2H7z"></path>
+                <path d="M15 8h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4"></path>
+              </svg>
+            {%- elsif cat_icon_check == 'recipes' or cat_icon_check == 'recipe' -%}
+              <!-- Recipes: Recipe card icon -->
+              <svg class="article-badge__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+                <path d="M6 6h10"></path>
+                <path d="M6 10h10"></path>
+                <path d="M6 14h6"></path>
+              </svg>
+            {%- else -%}
+              <svg class="article-badge__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+              </svg>
             {%- endif -%}
-          </div>
-        {%- endif -%}
-      </header>
-
-      <!-- Introduction (if article.excerpt is set) -->
-      {%- if article.excerpt != blank -%}
-        <div class="article-intro">
-          {{ article.excerpt }}
+            <span>{{ blog_category }}</span>
+          </span>
         </div>
       {%- endif -%}
 
-      <!-- Table of Contents (Automatically generated from H2 headings & placed right after intro) -->
-      <nav id="article-toc" class="article-toc" aria-label="Table of contents" style="display: none;">
-        <div class="article-toc__header">
-          <span class="article-toc__title">In this article</span>
+      <!-- H1 Article Title -->
+      <h1 class="article-hero__title" itemprop="headline">{{ article.title | escape }}</h1>
+
+      <!-- Author / Date / Reading Time -->
+      <div class="article-hero__meta">
+        {%- if author_name != blank -%}
+          <div class="article-hero__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            {%- if author_photo != blank -%}
+              <img
+                src="{{ author_photo | image_url: width: 80, height: 80, crop: 'center' }}"
+                alt="{{ author_name | escape }}"
+                class="article-hero__author-avatar"
+                width="44"
+                height="44"
+                loading="eager"
+              >
+            {%- else -%}
+              <span class="article-hero__author-initial" aria-hidden="true">
+                {{ author_name | slice: 0, 1 | upcase }}
+              </span>
+            {%- endif -%}
+            <span class="article-hero__author-name" itemprop="name">{{ author_name }}</span>
+          </div>
+          <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
+        {%- endif -%}
+
+        <time class="article-hero__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
+          {{ article.published_at | date: '%B %d, %Y' }}
+        </time>
+
+        {%- if reading_time_display != blank -%}
+          <span class="article-hero__meta-dot" aria-hidden="true">&bull;</span>
+          <span class="article-hero__reading-time">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {{ reading_time_display }}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <!-- Article Intro (custom.article_intro / excerpt fallback) -->
+      {%- if article_intro != blank -%}
+        <div class="article-intro" itemprop="description">
+          {%- if article_intro contains '<' -%}
+            {{ article_intro }}
+          {%- else -%}
+            <p>{{ article_intro }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Blog Tags (custom.blog_tags) -->
+      {%- if blog_tags_list != blank and blog_tags_list.size > 0 -%}
+        <div class="article-tags">
+          {%- for tag in blog_tags_list -%}
+            {%- assign tag_clean = tag | remove: '[' | remove: ']' | remove: '"' | remove: "'" | remove: '\"' | strip -%}
+            {%- if tag_clean != blank -%}
+              <a href="{{ routes.search_url }}?q={{ tag_clean | url_encode }}&type=article" class="article-tag">{{ tag_clean }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- elsif article.tags.size > 0 -%}
+        <div class="article-tags">
+          {%- for tag in article.tags -%}
+            {%- assign tag_clean = tag | remove: '[' | remove: ']' | remove: '"' | remove: "'" | remove: '\"' | strip -%}
+            {%- if tag_clean != blank -%}
+              <a href="{{ routes.search_url }}?q={{ tag_clean | url_encode }}&type=article" class="article-tag">{{ tag_clean }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Featured Image (Large, full-width, 16:9) -->
+      {%- if article.image -%}
+        <div class="article-hero__media-wrap">
+          <div class="article-hero__media">
+            <img
+              srcset="
+                {% if article.image.width >= 375 %}{{ article.image | image_url: width: 375 }} 375w,{% endif %}
+                {% if article.image.width >= 550 %}{{ article.image | image_url: width: 550 }} 550w,{% endif %}
+                {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+                {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+                {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+                {{ article.image | image_url }} {{ article.image.width }}w
+              "
+              sizes="(min-width: 1200px) 1200px, 95vw"
+              src="{{ article.image | image_url: width: 1200 }}"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="{{ article.image.width }}"
+              height="{{ article.image.height }}"
+              alt="{{ article.image.alt | default: article.title | escape }}"
+              class="article-hero__img"
+              itemprop="image"
+            >
+          </div>
+          {%- if article.image.alt != blank and article.image.alt != article.title -%}
+            <div class="article-hero__caption">{{ article.image.alt }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </header>
+
+    <!-- ── TWO-COLUMN EDITORIAL LAYOUT ── -->
+    <div class="article-main-layout">
+
+      <!-- ── LEFT: Main Reading Column ── -->
+      <main class="article-content-column">
+
+        <!-- Mobile TOC Accordion (shown above content on mobile) -->
+        <nav id="article-toc-mobile" class="article-toc--mobile" aria-label="Table of contents">
           <button
             type="button"
-            class="article-toc__toggle"
-            aria-expanded="true"
-            aria-controls="article-toc-list"
-            aria-label="Toggle table of contents"
+            class="article-toc__mobile-btn"
+            aria-expanded="false"
+            aria-controls="article-toc-mobile-panel"
+            aria-label="Toggle Table of Contents"
           >
-            <span class="article-toc__toggle-text">Hide</span>
-            <svg class="article-toc__toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <div class="article-toc__mobile-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              <span>In this article</span>
+              <span class="article-toc__count" id="article-toc-mobile-count"></span>
+            </div>
+            <svg class="article-toc__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
+          <div id="article-toc-mobile-panel" class="article-toc__mobile-panel" hidden>
+            <ol class="article-toc__list--mobile"></ol>
+          </div>
+        </nav>
+
+        <!-- ── MAIN ARTICLE CONTENT BODY ── -->
+        <div class="article-content-body rte" itemprop="articleBody">
+          {{ article.content }}
         </div>
-        <ol id="article-toc-list" class="article-toc__list"></ol>
-      </nav>
 
-      <!-- Main Article Content -->
-      <div class="article-content-body rte" itemprop="articleBody">
-        {{ article.content }}
-      </div>
+        <!-- ── FEATURED PRODUCT CARD (custom.featured_product) ── -->
+        {%- if featured_product != blank -%}
+          {%- assign fp = featured_product -%}
+          <section class="article-featured-product" aria-label="Featured product recommendation">
+            <div class="article-featured-product__inner">
+              <div class="article-featured-product__label">
+                <span class="article-featured-product__eyebrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                  Featured recommendation
+                </span>
+              </div>
+              <div class="article-featured-product__media">
+                {%- if fp.featured_image != blank -%}
+                  <a href="{{ fp.url }}" class="article-featured-product__media-link" tabindex="-1" aria-hidden="true">
+                    <img
+                      src="{{ fp.featured_image | image_url: width: 400 }}"
+                      srcset="{{ fp.featured_image | image_url: width: 200 }} 200w, {{ fp.featured_image | image_url: width: 400 }} 400w"
+                      sizes="(min-width: 768px) 200px, 40vw"
+                      alt="{{ fp.featured_image.alt | default: fp.title | escape }}"
+                      loading="lazy"
+                      width="200"
+                      height="200"
+                      class="article-featured-product__img"
+                    >
+                  </a>
+                {%- endif -%}
+              </div>
+              <div class="article-featured-product__content">
+                {%- if fp.type != blank -%}
+                  <span class="article-featured-product__type">{{ fp.type }}</span>
+                {%- endif -%}
+                <h3 class="article-featured-product__title">
+                  <a href="{{ fp.url }}">{{ fp.title }}</a>
+                </h3>
+                {%- if fp.description != blank -%}
+                  <p class="article-featured-product__desc">
+                    {{ fp.description | strip_html | truncate: 120 }}
+                  </p>
+                {%- endif -%}
+                <div class="article-featured-product__price-row">
+                  <span class="article-featured-product__price">
+                    {{ fp.price | money }}
+                  </span>
+                  {%- if fp.compare_at_price > fp.price -%}
+                    <span class="article-featured-product__compare-price">{{ fp.compare_at_price | money }}</span>
+                    {%- assign discount_pct = fp.compare_at_price | minus: fp.price | times: 100 | divided_by: fp.compare_at_price -%}
+                    <span class="article-featured-product__badge-save">{{ discount_pct }}% off</span>
+                  {%- endif -%}
+                </div>
+                {%- if fp.available -%}
+                  {%- assign fp_variant = fp.selected_or_first_available_variant -%}
+                  <div class="article-featured-product__actions">
+                    <button
+                      type="button"
+                      class="article-product-atc-btn article-featured-product__atc-btn cp-atc"
+                      data-variant-id="{{ fp_variant.id }}"
+                      aria-label="Add {{ fp.title | escape }} to cart"
+                    >
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add to cart</span>
+                    </button>
+                    <a href="{{ fp.url }}" class="article-featured-product__btn">
+                      <span>View details</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                {%- else -%}
+                  <div class="article-featured-product__actions">
+                    <button type="button" class="article-product-atc-btn article-product-atc-btn--oos" disabled>
+                      Out of stock
+                    </button>
+                    <a href="{{ fp.url }}" class="article-featured-product__btn">
+                      <span>View details</span>
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </section>
+        {%- endif -%}
 
-      <!-- Mid-Article Contextual CTA (Only if configured in metafields) -->
-      {%- if cta_heading != blank or cta_product != blank -%}
-        <aside class="article-mid-cta" aria-label="Featured recommendation">
-          <div class="article-mid-cta__inner">
-            <div class="article-mid-cta__content">
-              <span class="article-mid-cta__badge">Try it yourself</span>
-              {%- if cta_heading != blank -%}
-                <h3 class="article-mid-cta__heading">{{ cta_heading }}</h3>
+        <!-- ── BLOG PRODUCTS SLIDER (custom.blog_products) — injected at ~20% by JS ── -->
+        {%- assign blog_prods = article.metafields.custom.blog_products.value | default: article.metafields.custom.blog_products -%}
+        {%- assign has_blog_prods = false -%}
+        {%- if blog_prods != blank -%}
+          {%- if blog_prods.first != nil or blog_prods.size > 0 or blog_prods.title != blank -%}
+            {%- assign has_blog_prods = true -%}
+          {%- endif -%}
+        {%- endif -%}
+        {%- if has_blog_prods -%}
+        <template id="bp-slider-tpl">
+          <section class="article-products-section article-products-section--slider" aria-label="Recommended products">
+            <div class="article-products-section__header-row">
+              <div class="article-products-section__header-text">
+                <span class="article-section-eyebrow">Featured products</span>
+                <h3 class="article-products-section__title">From My Pahadi Dukan</h3>
+              </div>
+              <div class="article-bp-slider-arrows">
+                <button class="article-bp-slider-btn article-bp-slider-btn--prev" aria-label="Previous products" type="button">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="article-bp-slider-btn article-bp-slider-btn--next" aria-label="Next products" type="button">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            </div>
+            <div class="article-bp-slider-wrap">
+              <div class="article-bp-slider-track">
+                {%- if blog_prods.first != nil or blog_prods.size > 0 -%}
+                  {%- for prod in blog_prods -%}
+                    {%- if prod.title != blank -%}
+                      {%- assign prod_variant = prod.selected_or_first_available_variant -%}
+                      {%- assign clean_title = prod.title | split: '|' | first | strip -%}
+                      <article class="article-product-mini-card article-bp-slide">
+                        <a href="{{ prod.url }}" class="article-product-mini-card__media-link">
+                          {%- if prod.featured_image != blank -%}
+                            <img
+                              src="{{ prod.featured_image | image_url: width: 400 }}"
+                              alt="{{ prod.featured_image.alt | default: clean_title | escape }}"
+                              loading="lazy"
+                              width="220"
+                              height="220"
+                              class="article-product-mini-card__img"
+                            >
+                          {%- else -%}
+                            <div class="article-product-mini-card__placeholder">
+                              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            </div>
+                          {%- endif -%}
+                        </a>
+                        <div class="article-product-mini-card__body">
+                          <h4 class="article-product-mini-card__title">
+                            <a href="{{ prod.url }}" title="{{ prod.title | escape }}">{{ clean_title }}</a>
+                          </h4>
+                          <div class="article-product-mini-card__price-row">
+                            <span class="article-product-mini-card__price">{{ prod.price | money }}</span>
+                            {%- if prod.compare_at_price > prod.price -%}
+                              <span class="article-product-mini-card__compare">{{ prod.compare_at_price | money }}</span>
+                              {%- assign discount = prod.compare_at_price | minus: prod.price | times: 100 | divided_by: prod.compare_at_price -%}
+                              <span class="article-product-mini-card__off">{{ discount }}% off</span>
+                            {%- endif -%}
+                          </div>
+                          {%- if prod.available -%}
+                            <button
+                              type="button"
+                              class="article-product-atc-btn cp-atc"
+                              data-variant-id="{{ prod_variant.id }}"
+                              aria-label="Add {{ clean_title | escape }} to cart"
+                            >
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                              </svg>
+                              <span>Add to cart</span>
+                            </button>
+                          {%- else -%}
+                            <button type="button" class="article-product-atc-btn article-product-atc-btn--oos" disabled>
+                              Out of stock
+                            </button>
+                          {%- endif -%}
+                        </div>
+                      </article>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- elsif blog_prods.title != blank -%}
+                  {%- assign prod = blog_prods -%}
+                  {%- assign prod_variant = prod.selected_or_first_available_variant -%}
+                  {%- assign clean_title = prod.title | split: '|' | first | strip -%}
+                  <article class="article-product-mini-card article-bp-slide">
+                    <a href="{{ prod.url }}" class="article-product-mini-card__media-link">
+                      {%- if prod.featured_image != blank -%}
+                        <img
+                          src="{{ prod.featured_image | image_url: width: 400 }}"
+                          alt="{{ prod.featured_image.alt | default: clean_title | escape }}"
+                          loading="lazy"
+                          width="220"
+                          height="220"
+                          class="article-product-mini-card__img"
+                        >
+                      {%- endif -%}
+                    </a>
+                    <div class="article-product-mini-card__body">
+                      <h4 class="article-product-mini-card__title">
+                        <a href="{{ prod.url }}" title="{{ prod.title | escape }}">{{ clean_title }}</a>
+                      </h4>
+                      <div class="article-product-mini-card__price-row">
+                        <span class="article-product-mini-card__price">{{ prod.price | money }}</span>
+                        {%- if prod.compare_at_price > prod.price -%}
+                          <span class="article-product-mini-card__compare">{{ prod.compare_at_price | money }}</span>
+                          {%- assign discount = prod.compare_at_price | minus: prod.price | times: 100 | divided_by: prod.compare_at_price -%}
+                          <span class="article-product-mini-card__off">{{ discount }}% off</span>
+                        {%- endif -%}
+                      </div>
+                      {%- if prod.available -%}
+                        <button
+                          type="button"
+                          class="article-product-atc-btn cp-atc"
+                          data-variant-id="{{ prod_variant.id }}"
+                          aria-label="Add {{ clean_title | escape }} to cart"
+                        >
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                          </svg>
+                          <span>Add to cart</span>
+                        </button>
+                      {%- else -%}
+                        <button type="button" class="article-product-atc-btn article-product-atc-btn--oos" disabled>
+                          Out of stock
+                        </button>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                {%- endif -%}
+              </div>
+            </div>
+          </section>
+        </template>
+        {%- endif -%}
+
+        <!-- ── AUTHOR CARD ── -->
+        {%- if author_name != blank or author_bio != blank -%}
+          <section class="article-author-section" aria-label="Author profile">
+            <div class="article-author-card">
+              <div class="article-author-card__avatar-wrap">
+                {%- if author_photo != blank -%}
+                  <img
+                    src="{{ author_photo | image_url: width: 160, height: 160, crop: 'center' }}"
+                    alt="{{ author_name | escape }}"
+                    class="article-author-card__avatar"
+                    width="76"
+                    height="76"
+                    loading="lazy"
+                  >
+                {%- elsif author_name != blank -%}
+                  <div class="article-author-card__avatar article-author-card__avatar--initial" aria-hidden="true">
+                    {{ author_name | slice: 0, 1 | upcase }}
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="article-author-card__content">
+                <div class="article-author-card__header">
+                  <div>
+                    <span class="article-author-card__label">Written by</span>
+                    {%- if author_name != blank -%}
+                      <h3 class="article-author-card__name">{{ author_name }}</h3>
+                    {%- endif -%}
+                    {%- if author_designation != blank -%}
+                      <span class="article-author-card__designation">{{ author_designation }}</span>
+                    {%- endif -%}
+                  </div>
+                  {%- if author_profile_url != blank -%}
+                    <a href="{{ author_profile_url }}" class="article-author-card__link">View profile &rarr;</a>
+                  {%- endif -%}
+                </div>
+                {%- if author_bio != blank -%}
+                  <div class="article-author-card__bio">
+                    {%- if author_bio contains '{"type":"root"' -%}
+                      {%- assign bio_chunks = author_bio | split: '"value":"' -%}
+                      {%- for chunk in bio_chunks -%}
+                        {%- unless forloop.first -%}
+                          {%- assign clean_chunk = chunk | split: '"' | first -%}
+                          {%- if clean_chunk != blank -%}
+                            <p>{{ clean_chunk }}</p>
+                          {%- endif -%}
+                        {%- endunless -%}
+                      {%- endfor -%}
+                    {%- elsif author_obj.bio.value != blank or author_obj.bio != blank -%}
+                      {{ author_obj.bio | metafield_tag }}
+                    {%- elsif author_bio contains '<' -%}
+                      {{ author_bio }}
+                    {%- else -%}
+                      <p>{{ author_bio }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </section>
+        {%- endif -%}
+
+        <!-- ── FAQ SECTION (existing custom.faqs metaobject) ── -->
+        {%- if blog_faqs != blank and blog_faqs.size > 0 -%}
+          <section class="article-faq-section" aria-label="Frequently asked questions">
+            <div class="article-faq-section__header">
+              <span class="article-section-eyebrow">Clear answers</span>
+              <h2 class="article-faq-section__title">Frequently asked questions</h2>
+            </div>
+
+            <div class="article-faq-list">
+              {%- for item in blog_faqs -%}
+                {%- assign faq = item.value | default: item -%}
+                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+                {%- if faq_question contains '{"type":"root"' -%}
+                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
+                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
+                {%- endif -%}
+                {%- if faq_question != blank and faq_answer != blank -%}
+                  <div class="article-faq-item">
+                    <button
+                      type="button"
+                      class="article-faq-item__question"
+                      aria-expanded="false"
+                      aria-controls="faq-ans-{{ forloop.index }}"
+                    >
+                      <span>{{ faq_question }}</span>
+                      <span class="article-faq-item__icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <line x1="12" y1="5" x2="12" y2="19" class="faq-icon-v"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </span>
+                    </button>
+                    <div id="faq-ans-{{ forloop.index }}" class="article-faq-item__answer" hidden>
+                      <div class="article-faq-item__answer-inner">
+                        {%- if faq_answer contains '{"type":"root"' -%}
+                          {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
+                          {%- for chunk in ans_chunks -%}
+                            {%- unless forloop.first -%}
+                              {%- assign clean_chunk = chunk | split: '"' | first -%}
+                              {%- if clean_chunk != blank -%}
+                                <p>{{ clean_chunk }}</p>
+                              {%- endif -%}
+                            {%- endunless -%}
+                          {%- endfor -%}
+                        {%- elsif faq.answer.value != blank or faq.answer != blank -%}
+                          {{ faq.answer | metafield_tag }}
+                        {%- elsif faq_answer contains '<' -%}
+                          {{ faq_answer }}
+                        {%- else -%}
+                          <p>{{ faq_answer }}</p>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </section>
+
+          <!-- FAQ Structured Data (JSON-LD) -->
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {%- assign faq_first = true -%}
+              {%- for item in blog_faqs -%}
+                {%- assign faq = item.value | default: item -%}
+                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+                {%- if faq_question contains '{"type":"root"' -%}
+                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
+                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
+                {%- endif -%}
+                {%- assign faq_schema_text = faq_answer -%}
+                {%- if faq_answer contains '{"type":"root"' -%}
+                  {%- assign faq_schema_text = '' -%}
+                  {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
+                  {%- for chunk in ans_chunks -%}
+                    {%- unless forloop.first -%}
+                      {%- assign clean_chunk = chunk | split: '"' | first -%}
+                      {%- assign faq_schema_text = faq_schema_text | append: ' ' | append: clean_chunk -%}
+                    {%- endunless -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                {%- if faq_question != blank and faq_answer != blank -%}
+                  {%- unless faq_first -%},{%- endunless -%}
+                  {
+                    "@type": "Question",
+                    "name": {{ faq_question | strip_html | strip | json }},
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": {{ faq_schema_text | strip_html | strip | json }}
+                    }
+                  }
+                  {%- assign faq_first = false -%}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+          </script>
+        {%- endif -%}
+
+        <!-- ── FINAL CTA (from custom.cta_* metafields or branded default) ── -->
+        {%- if has_cta -%}
+          <section class="article-final-cta article-final-cta--metafield" aria-label="Call to action">
+            <div class="article-final-cta__inner">
+              <div class="article-final-cta__badge">
+                <span>Authentic Himalayan harvest</span>
+              </div>
+              {%- if cta_title != blank -%}
+                <h3 class="article-final-cta__heading">{{ cta_title }}</h3>
               {%- endif -%}
               {%- if cta_description != blank -%}
-                <p class="article-mid-cta__desc">{{ cta_description }}</p>
+                <p class="article-final-cta__desc">{{ cta_description }}</p>
               {%- endif -%}
-              {%- if cta_btn_link != blank -%}
-                <a href="{{ cta_btn_link }}" class="article-mid-cta__btn">
-                  {{ cta_btn_text }}
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="article-final-cta__actions">
+                <a href="{{ cta_link }}" class="article-final-cta__btn">
+                  <span>{{ cta_button_text }}</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
-              {%- endif -%}
-            </div>
-            {%- if cta_image != blank -%}
-              <div class="article-mid-cta__media">
-                <img
-                  src="{{ cta_image | image_url: width: 320 }}"
-                  alt="{{ cta_heading | default: 'Recommendation' | escape }}"
-                  loading="lazy"
-                  width="140"
-                  height="140"
-                  class="article-mid-cta__img"
-                >
               </div>
-            {%- endif -%}
-          </div>
-        </aside>
-      {%- endif -%}
-
-      <!-- Product Showcase Cards (Only if custom.blog_products is populated) -->
-      {%- if showcase_products != blank and showcase_products.size > 0 -%}
-        <section class="article-product-showcase" aria-label="Featured products">
-          <div class="article-product-showcase__header">
-            <span class="article-section-eyebrow">Himalayan essentials</span>
-            <h2 class="article-product-showcase__title">Featured in this article</h2>
-          </div>
-          <div class="article-product-showcase__grid">
-            {%- for prod in showcase_products -%}
-              {%- if prod != blank and prod.title != blank -%}
-                <div class="article-product-card">
-                  <a href="{{ prod.url }}" class="article-product-card__img-wrap">
-                    {%- if prod.featured_image != blank -%}
-                      <img
-                        src="{{ prod.featured_image | image_url: width: 450 }}"
-                        srcset="{{ prod.featured_image | image_url: width: 300 }} 300w, {{ prod.featured_image | image_url: width: 450 }} 450w"
-                        sizes="(min-width: 900px) 280px, 80vw"
-                        alt="{{ prod.title | escape }}"
-                        class="article-product-card__img"
-                        loading="lazy"
-                        width="280"
-                        height="280"
-                      >
-                    {%- else -%}
-                      <div class="article-product-card__placeholder"></div>
-                    {%- endif -%}
-                  </a>
-                  <div class="article-product-card__body">
-                    <h3 class="article-product-card__title">
-                      <a href="{{ prod.url }}">{{ prod.title }}</a>
-                    </h3>
-                    <div class="article-product-card__pricing">
-                      <span class="article-product-card__price">{{ prod.price | money }}</span>
-                      {%- if prod.compare_at_price > prod.price -%}
-                        <span class="article-product-card__compare-price">{{ prod.compare_at_price | money }}</span>
-                      {%- endif -%}
-                    </div>
-                    {%- if prod.description != blank -%}
-                      <p class="article-product-card__info">
-                        {{ prod.description | strip_html | truncate: 85 }}
-                      </p>
-                    {%- endif -%}
-                    <div class="article-product-card__actions">
-                      {%- if prod.available -%}
-                        <button
-                          type="button"
-                          class="article-product-card__btn-cart"
-                          data-variant-id="{{ prod.selected_or_first_available_variant.id }}"
-                        >
-                          Add to cart
-                        </button>
-                      {%- else -%}
-                        <button type="button" class="article-product-card__btn-cart" disabled>
-                          Sold out
-                        </button>
-                      {%- endif -%}
-                      <a href="{{ prod.url }}" class="article-product-card__link-view">
-                        View product &rarr;
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        </section>
-      {%- endif -%}
-
-      <!-- Author Profile Block (Only if author_name or author_bio exists) -->
-      {%- if author_name != blank or author_bio != blank -%}
-        <section class="article-author-section" aria-label="Author profile">
-          <div class="article-author-card">
-            <div class="article-author-card__avatar-wrap">
-              {%- if author_photo != blank -%}
-                <img
-                  src="{{ author_photo | image_url: width: 160, height: 160, crop: 'center' }}"
-                  alt="{{ author_name | escape }}"
-                  class="article-author-card__avatar"
-                  width="76"
-                  height="76"
-                  loading="lazy"
-                >
-              {%- elsif author_name != blank -%}
-                <div class="article-author-card__avatar article-author-card__avatar--initial" aria-hidden="true">
-                  {{ author_name | slice: 0, 1 | upcase }}
-                </div>
-              {%- endif -%}
             </div>
-            <div class="article-author-card__content">
-              <div class="article-author-card__header">
-                <div>
-                  <span class="article-author-card__label">Written by</span>
-                  {%- if author_name != blank -%}
-                    <h3 class="article-author-card__name">{{ author_name }}</h3>
-                  {%- endif -%}
-                  {%- if author_designation != blank -%}
-                    <span class="article-author-card__designation">{{ author_designation }}</span>
-                  {%- endif -%}
-                </div>
-                {%- if author_profile_url != blank -%}
-                  <a href="{{ author_profile_url }}" class="article-author-card__link">View profile &rarr;</a>
-                {%- endif -%}
+          </section>
+        {%- else -%}
+          <!-- Default branded CTA when no metafield values set -->
+          <section class="article-final-cta" aria-label="Explore Pahadi Collection">
+            <div class="article-final-cta__inner">
+              <div class="article-final-cta__badge">
+                <span>Authentic Himalayan harvest</span>
               </div>
-              {%- if author_bio != blank -%}
-                <p class="article-author-card__bio">{{ author_bio }}</p>
-              {%- endif -%}
+              <h3 class="article-final-cta__heading">Ready to experience authentic Pahadi flavours?</h3>
+              <p class="article-final-cta__desc">
+                Explore our collection of authentic spices, herbs and Himalayan ingredients directly sourced from high-altitude farmers.
+              </p>
+              <div class="article-final-cta__actions">
+                <a href="/collections/all" class="article-final-cta__btn">
+                  <span>Explore Pahadi products</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
-      {%- endif -%}
-
-      <!-- Frequently Asked Questions (From custom.faqs or custom.blog_faqs) -->
-      {%- if blog_faqs != blank and blog_faqs.size > 0 -%}
-        <section class="article-faq-section" aria-label="Frequently asked questions">
-          <div class="article-faq-section__header">
-            <span class="article-section-eyebrow">Clear answers</span>
-            <h2 class="article-faq-section__title">Frequently asked questions</h2>
-          </div>
-
-          <div class="article-faq-list">
-            {%- for item in blog_faqs -%}
-              {%- assign faq = item.value | default: item -%}
-              {%- assign faq_question = faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
-              {%- assign faq_answer = faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
-              {%- if faq_question != blank and faq_answer != blank -%}
-                <div class="article-faq-item">
-                  <button
-                    type="button"
-                    class="article-faq-item__question"
-                    aria-expanded="false"
-                    aria-controls="faq-ans-{{ forloop.index }}"
-                  >
-                    <span>{{ faq_question }}</span>
-                    <span class="article-faq-item__icon" aria-hidden="true">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <line x1="12" y1="5" x2="12" y2="19" class="faq-icon-v"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                    </span>
-                  </button>
-                  <div id="faq-ans-{{ forloop.index }}" class="article-faq-item__answer" hidden>
-                    <div class="article-faq-item__answer-inner">
-                      {{ faq_answer }}
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        </section>
-
-        <!-- FAQ Structured Data (Generated safely from visible FAQs) -->
-        <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [
-            {%- assign faq_first = true -%}
-            {%- for item in blog_faqs -%}
-              {%- assign faq = item.value | default: item -%}
-              {%- assign faq_question = faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
-              {%- assign faq_answer = faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
-              {%- if faq_question != blank and faq_answer != blank -%}
-                {%- unless faq_first -%},{%- endunless -%}
-                {
-                  "@type": "Question",
-                  "name": {{ faq_question | json }},
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": {{ faq_answer | strip_html | json }}
-                  }
-                }
-                {%- assign faq_first = false -%}
-              {%- endif -%}
-            {%- endfor -%}
-          ]
-        }
-        </script>
-      {%- endif -%}
-
-      <!-- App blocks -->
-      {%- for block in section.blocks -%}
-        {%- if block.type == '@app' -%}
-          <div class="article-app-block" {{ block.shopify_attributes }}>
-            {% render block %}
-          </div>
+          </section>
         {%- endif -%}
-      {%- endfor -%}
 
-    </div><!-- /.article-page__narrow -->
+        {%- comment -%}
+          Previous/Next navigation removed as per client requirements:
+          "Let’s keep only Related Articles section and remove the 'Previous' section."
+        {%- endcomment -%}
 
-    <!-- Related Articles Section (Wide layout) -->
+        <!-- App Blocks -->
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="article-app-block" {{ block.shopify_attributes }}>
+              {% render block %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </main>
+
+      <!-- ── RIGHT: Sticky Sidebar Column (Desktop Only) ── -->
+      <aside class="article-sidebar-column">
+        <div class="article-sticky-sidebar">
+
+          <!-- Sticky "In This Article" TOC Card -->
+          <nav id="article-toc-desktop" class="article-toc-card" aria-label="Table of contents" style="display: none;">
+            <div class="article-toc-card__header">
+              <div class="article-toc-card__title-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <h3 class="article-toc-card__title">In this article</h3>
+              </div>
+            </div>
+            <div class="article-toc-card__progress">
+              <div class="article-toc-card__progress-bar" id="articleTocProgressBar"></div>
+            </div>
+            <ol id="article-toc-desktop-list" class="article-toc-card__list"></ol>
+          </nav>
+
+          <!-- Sidebar Trust Widget (always shown) -->
+          <div class="article-sidebar-widget">
+            <div class="article-sidebar-widget__icon">🏔️</div>
+            <h4 class="article-sidebar-widget__title">Pure Himalayan sourcing</h4>
+            <p class="article-sidebar-widget__text">Authentic, unadulterated ingredients harvested directly from Himalayan valleys and trusted farming collectives.</p>
+            <a href="/collections/all" class="article-sidebar-widget__link">
+              <span>Explore collection</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </aside>
+
+    </div><!-- /.article-main-layout -->
+
+    <!-- ── WIDE RELATED ARTICLES SECTION (3-Column Grid, existing custom.related_articles) ── -->
     {%- if related_handles.size > 0 -%}
       <section class="article-related-section" aria-label="Related articles">
         <div class="article-related-section__header">
-          <span class="article-section-eyebrow">Continue reading</span>
+          <span class="article-section-eyebrow">Keep exploring</span>
           <h2 class="article-related-section__title">Related articles</h2>
         </div>
 
@@ -510,19 +938,21 @@
             {%- assign rel_article = articles[handle] -%}
             {%- if rel_article != blank and rel_article.title != blank -%}
               {%- liquid
-                assign rel_cat_val = rel_article.metafields.custom.blog_category.value | default: rel_article.metafields.custom.blog_category
-                if rel_cat_val.name != blank
-                  assign rel_category = rel_cat_val.name
-                elsif rel_cat_val != blank
-                  assign rel_category = rel_cat_val
-                elsif rel_article.tags.first != blank
-                  assign rel_category = rel_article.tags.first
-                else
-                  assign rel_category = blog.title
+                assign rel_cat = rel_article.metafields.custom.blog_category.value | default: rel_article.metafields.custom.blog_category
+                if rel_cat == blank
+                  assign rel_cat = rel_article.tags.first | default: blog.title
+                endif
+                assign rel_cat_check = rel_cat | downcase | strip
+                if rel_cat_check == 'info'
+                  assign rel_cat = 'Product guides'
+                elsif rel_cat_check == 'travel'
+                  assign rel_cat = 'Origins'
+                elsif rel_cat_check == 'health and wellness' or rel_cat_check == 'health & wellness' or rel_cat_check == 'wellness'
+                  assign rel_cat = 'Use & care'
                 endif
               -%}
               <article class="article-related-card">
-                <a href="{{ rel_article.url }}" class="article-related-card__media">
+                <a href="{{ rel_article.url }}" class="article-related-card__media" tabindex="-1">
                   {%- if rel_article.image != blank -%}
                     <img
                       src="{{ rel_article.image | image_url: width: 600 }}"
@@ -537,7 +967,7 @@
                   {%- else -%}
                     <div class="article-related-card__placeholder"></div>
                   {%- endif -%}
-                  <span class="article-related-card__badge">{{ rel_category }}</span>
+                  <span class="article-related-card__badge">{{ rel_cat }}</span>
                 </a>
                 <div class="article-related-card__body">
                   <time class="article-related-card__date" datetime="{{ rel_article.published_at | date: '%Y-%m-%d' }}">
@@ -552,8 +982,8 @@
                     </p>
                   {%- endif -%}
                   <a href="{{ rel_article.url }}" class="article-related-card__link">
-                    Read article
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <span>Read article</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
@@ -566,7 +996,7 @@
       </section>
     {%- endif -%}
 
-    <!-- Preserved Comments Section -->
+    <!-- Comments Section -->
     {%- if blog.comments_enabled? -%}
       <div class="article-comments-section" id="comments">
         {%- if article.comments_count > 0 -%}
@@ -589,16 +1019,14 @@
         {% form 'new_comment', article %}
           <h3>{{ 'blogs.article.comment_form_title' | t }}</h3>
           {%- if form.posted_successfully? -%}
-            <p class="form__message" role="status">
-              {{ 'blogs.article.success' | t }}
-            </p>
+            <p class="form__message" role="status">{{ 'blogs.article.success' | t }}</p>
           {%- endif -%}
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-            <input type="text" name="comment[author]" placeholder="{{ 'blogs.article.name' | t }}" required value="{{ form.author }}" style="padding: 10px 14px; border-radius: 8px; border: 1.5px solid #e7ded0;">
-            <input type="email" name="comment[email]" placeholder="{{ 'blogs.article.email' | t }}" required value="{{ form.email }}" style="padding: 10px 14px; border-radius: 8px; border: 1.5px solid #e7ded0;">
+            <input type="text" name="comment[author]" placeholder="{{ 'blogs.article.name' | t }}" required value="{{ form.author }}" style="padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e7ded0; font-family: inherit;">
+            <input type="email" name="comment[email]" placeholder="{{ 'blogs.article.email' | t }}" required value="{{ form.email }}" style="padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e7ded0; font-family: inherit;">
           </div>
-          <textarea name="comment[body]" rows="4" placeholder="{{ 'blogs.article.message' | t }}" required style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1.5px solid #e7ded0; margin-bottom: 16px;">{{ form.body }}</textarea>
-          <button type="submit" class="button" style="background: #008b75; color: #fff; padding: 10px 24px; border-radius: 20px; border: none; cursor: pointer;">
+          <textarea name="comment[body]" rows="4" placeholder="{{ 'blogs.article.message' | t }}" required style="width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #e7ded0; margin-bottom: 16px; font-family: inherit;">{{ form.body }}</textarea>
+          <button type="submit" class="button" style="background: #008b75; color: #fff; padding: 12px 28px; border-radius: 30px; border: none; font-weight: 700; cursor: pointer;">
             {{ 'blogs.article.post' | t }}
           </button>
         {% endform %}
@@ -609,109 +1037,242 @@
 </article>
 
 <!-- Article Structured Data -->
-<script type="application/ld+json">
-  {{ article | structured_data }}
-</script>
+<script type="application/ld+json">{{ article | structured_data }}</script>
 
-<!-- Interactive Logic for TOC, FAQs, and Product Add to Cart -->
+<!-- Interactive Editorial Logic: TOC, Progress Bar, Step Cards, Tip Cards, FAQ Accordion -->
 <script>
 (function() {
   'use strict';
 
   function initBlogArticle() {
-    // 1. Table of Contents Generator
-    var contentEl = document.querySelector('.article-content-body');
-    var tocEl = document.getElementById('article-toc');
-    var tocList = document.getElementById('article-toc-list');
-    var tocToggle = document.querySelector('.article-toc__toggle');
-
-    if (contentEl && tocEl && tocList) {
-      // Find direct H2 elements inside article content
-      var h2Elements = contentEl.querySelectorAll('h2');
-      if (h2Elements.length >= 2) {
-        // Move TOC immediately before the first H2 (right after introduction)
-        var firstH2 = h2Elements[0];
-        if (firstH2 && firstH2.parentNode) {
-          firstH2.parentNode.insertBefore(tocEl, firstH2);
+    // ── 0. DOM AUTO-CLEANER (Strips bracketed tags & rich text AST) ──
+    try {
+      // 1. Clean Tags: strip [, ], ", '
+      document.querySelectorAll('.article-tag').forEach(function(tag) {
+        var raw = tag.textContent;
+        if (raw && (raw.indexOf('[') !== -1 || raw.indexOf(']') !== -1 || raw.indexOf('"') !== -1 || raw.indexOf("'") !== -1)) {
+          tag.textContent = raw.replace(/[\[\]"']/g, '').trim();
         }
+      });
 
-        tocList.innerHTML = '';
-        var existingIds = {};
-
-        h2Elements.forEach(function(h2, index) {
-          var text = (h2.textContent || '').trim();
-          if (!text) return;
-
-          // Generate or preserve ID
-          var id = h2.id;
-          if (!id) {
-            id = text.toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/(^-|-$)/g, '');
-            if (!id) id = 'section-' + (index + 1);
-
-            // Handle duplicates
-            if (existingIds[id]) {
-              existingIds[id]++;
-              id = id + '-' + existingIds[id];
-            } else {
-              existingIds[id] = 1;
+      // 2. Parse any raw AST JSON in bio, FAQ, etc.
+      function parseRichTextAst(str) {
+        if (typeof str !== 'string' || str.indexOf('{"type":"root"') === -1) return null;
+        try {
+          var data = JSON.parse(str.trim());
+          function extract(node) {
+            if (!node) return '';
+            if (node.type === 'text') return node.value || '';
+            if (node.children && Array.isArray(node.children)) {
+              return node.children.map(extract).join('');
             }
-            h2.id = id;
+            return '';
           }
+          if (data.type === 'root' && Array.isArray(data.children)) {
+            return data.children.map(function(c) {
+              return '<p>' + extract(c) + '</p>';
+            }).join('');
+          }
+        } catch(e) {
+          var matches = str.match(/"value":"([^"]+)"/g);
+          if (matches && matches.length > 0) {
+            return matches.map(function(m) {
+              return '<p>' + m.replace('"value":"', '').slice(0, -1) + '</p>';
+            }).join('');
+          }
+        }
+        return null;
+      }
 
-          var li = document.createElement('li');
-          li.className = 'article-toc__item';
+      var astSelectors = ['.article-author-card__bio', '.article-faq-item__answer-inner', '.article-faq-item__question span'];
+      astSelectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) {
+          var txt = el.textContent || '';
+          if (txt.indexOf('{"type":"root"') !== -1) {
+            var cleanHtml = parseRichTextAst(txt);
+            if (cleanHtml) el.innerHTML = cleanHtml;
+          }
+        });
+      });
+    } catch (cleanErr) {
+      console.warn('AST cleanup error:', cleanErr);
+    }
 
-          var a = document.createElement('a');
-          a.href = '#' + id;
-          a.textContent = text;
-          a.setAttribute('data-target-id', id);
+    var contentEl = document.querySelector('.article-content-body');
 
-          // Smooth scrolling with offset for sticky header
-          a.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.getElementById(id);
-            if (target) {
-              var offset = 90;
-              var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-              window.scrollTo({ top: top, behavior: 'smooth' });
-              history.pushState(null, null, '#' + id);
-            }
-          });
+    // ── 1. TABLE OF CONTENTS GENERATOR ──
+    var tocDesktop = document.getElementById('article-toc-desktop');
+    var tocDesktopList = document.getElementById('article-toc-desktop-list');
+    var tocMobile = document.getElementById('article-toc-mobile');
+    var tocMobilePanel = document.getElementById('article-toc-mobile-panel');
+    var tocMobileList = tocMobile ? tocMobile.querySelector('.article-toc__list--mobile') : null;
+    var tocMobileBtn = document.querySelector('.article-toc__mobile-btn');
+    var tocMobileCount = document.getElementById('article-toc-mobile-count');
 
-          li.appendChild(a);
-          tocList.appendChild(li);
+    if (contentEl) {
+
+      // ── Open all article content links in new tab ──
+      contentEl.querySelectorAll('a').forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href && !href.startsWith('#')) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+      contentEl.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (a && a.href && !a.getAttribute('href').startsWith('#')) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+
+      // ── Clean up Shopify Rich Text Editor image alignment bug ──
+      contentEl.querySelectorAll('img').forEach(function(img) {
+        if (!img.classList.contains('article-product-mini-card__img')) {
+          var floatVal = img.style.float || (img.getAttribute('style') && img.getAttribute('style').indexOf('float: none') !== -1 ? 'none' : '');
+          if (!floatVal || floatVal === 'none') {
+            img.style.marginLeft = 'auto';
+            img.style.marginRight = 'auto';
+            img.style.display = 'block';
+          }
+        }
+      });
+
+      // ── Inject Blog Products Slider at ~20% of Article Content ──
+      var bpSliderTpl = document.getElementById('bp-slider-tpl');
+      if (bpSliderTpl && !contentEl.querySelector('.article-products-section--slider')) {
+        var blocks = Array.from(contentEl.children).filter(function(node) {
+          return node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'TEMPLATE';
         });
 
-        tocEl.style.display = 'block';
+        if (blocks.length > 0) {
+          var totalContentHeight = contentEl.scrollHeight || contentEl.offsetHeight;
+          var targetHeight = totalContentHeight * 0.20;
+          var contentTop = contentEl.getBoundingClientRect().top + window.pageYOffset;
+          var bestBlock = blocks[0];
+          var minDiff = Infinity;
 
-        // Toggle Collapse on Mobile/Desktop
-        if (tocToggle) {
-          tocToggle.addEventListener('click', function() {
-            var isHidden = tocList.hasAttribute('hidden');
-            if (isHidden) {
-              tocList.removeAttribute('hidden');
-              tocToggle.setAttribute('aria-expanded', 'true');
-              var textSpan = tocToggle.querySelector('.article-toc__toggle-text');
-              if (textSpan) textSpan.textContent = 'Hide';
-            } else {
-              tocList.setAttribute('hidden', '');
-              tocToggle.setAttribute('aria-expanded', 'false');
-              var textSpan = tocToggle.querySelector('.article-toc__toggle-text');
-              if (textSpan) textSpan.textContent = 'Show';
+          for (var b = 0; b < blocks.length; b++) {
+            var block = blocks[b];
+            var blockBottom = (block.getBoundingClientRect().bottom + window.pageYOffset) - contentTop;
+            var diff = Math.abs(blockBottom - targetHeight);
+
+            if (diff < minDiff) {
+              minDiff = diff;
+              bestBlock = block;
             }
-          });
+
+            if (blockBottom >= targetHeight && (block.tagName === 'P' || block.tagName === 'UL' || block.tagName === 'OL' || block.tagName === 'DIV' || block.tagName === 'BLOCKQUOTE')) {
+              bestBlock = block;
+              break;
+            }
+          }
+
+          if (bestBlock) {
+            var frag = bpSliderTpl.content ? bpSliderTpl.content.cloneNode(true) : null;
+            var sliderNode = frag ? frag.firstElementChild : (bpSliderTpl.firstElementChild ? bpSliderTpl.firstElementChild.cloneNode(true) : null);
+            if (sliderNode) {
+              bestBlock.insertAdjacentElement('afterend', sliderNode);
+              initBpSlider(sliderNode);
+            }
+          }
+        }
+      }
+
+    var h2Elements = contentEl.querySelectorAll('h2');
+    if (h2Elements.length >= 2) {
+      if (tocDesktopList) tocDesktopList.innerHTML = '';
+      if (tocMobileList) tocMobileList.innerHTML = '';
+      var existingIds = {};
+
+      h2Elements.forEach(function(h2, index) {
+        var text = (h2.textContent || '').trim().replace(/^CHAPTER\s*/i, '');
+        if (!text) return;
+
+        var id = h2.id;
+        if (!id) {
+          id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+          if (!id) id = 'section-' + (index + 1);
+          if (existingIds[id]) {
+            existingIds[id]++;
+            id = id + '-' + existingIds[id];
+          } else {
+            existingIds[id] = 1;
+          }
+          h2.id = id;
         }
 
-        // Active heading scrollspy
-        if ('IntersectionObserver' in window) {
-          var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                var activeId = entry.target.id;
-                var links = tocList.querySelectorAll('.article-toc__item');
-                links.forEach(function(item) {
+        if (tocDesktopList) {
+          var liD = document.createElement('li');
+          liD.className = 'article-toc-card__item';
+          var aD = document.createElement('a');
+          aD.href = '#' + id;
+          aD.textContent = text;
+          aD.setAttribute('data-target-id', id);
+          aD.addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToSection(id);
+          });
+          liD.appendChild(aD);
+          tocDesktopList.appendChild(liD);
+        }
+
+        if (tocMobileList) {
+          var liM = document.createElement('li');
+          var aM = document.createElement('a');
+          aM.href = '#' + id;
+          aM.textContent = text;
+          aM.setAttribute('data-target-id', id);
+          aM.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (tocMobileBtn && tocMobilePanel) {
+              tocMobileBtn.setAttribute('aria-expanded', 'false');
+              tocMobilePanel.setAttribute('hidden', '');
+            }
+            scrollToSection(id);
+          });
+          liM.appendChild(aM);
+          tocMobileList.appendChild(liM);
+        }
+      });
+
+      if (tocMobileCount) tocMobileCount.textContent = h2Elements.length + ' sections';
+      if (tocDesktop) tocDesktop.style.display = 'block';
+      if (tocMobile) tocMobile.classList.add('is-ready');
+
+      // Mobile TOC Toggle
+      if (tocMobileBtn && tocMobilePanel) {
+        tocMobileBtn.addEventListener('click', function() {
+          var isExpanded = tocMobileBtn.getAttribute('aria-expanded') === 'true';
+          if (isExpanded) {
+            tocMobileBtn.setAttribute('aria-expanded', 'false');
+            tocMobilePanel.setAttribute('hidden', '');
+          } else {
+            tocMobileBtn.setAttribute('aria-expanded', 'true');
+            tocMobilePanel.removeAttribute('hidden');
+          }
+        });
+      }
+
+      function scrollToSection(id) {
+        var target = document.getElementById(id);
+        if (target) {
+          var offset = 96;
+          var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+          if (history.pushState) history.pushState(null, null, '#' + id);
+        }
+      }
+
+      // ScrollSpy via IntersectionObserver
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var activeId = entry.target.id;
+              if (tocDesktopList) {
+                tocDesktopList.querySelectorAll('.article-toc-card__item').forEach(function(item) {
                   var link = item.querySelector('a');
                   if (link && link.getAttribute('data-target-id') === activeId) {
                     item.classList.add('is-active');
@@ -720,23 +1281,144 @@
                   }
                 });
               }
-            });
-          }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
-
-          h2Elements.forEach(function(h2) {
-            observer.observe(h2);
+              if (tocMobileList) {
+                tocMobileList.querySelectorAll('li').forEach(function(item) {
+                  var link = item.querySelector('a');
+                  if (link && link.getAttribute('data-target-id') === activeId) {
+                    item.classList.add('is-active');
+                  } else {
+                    item.classList.remove('is-active');
+                  }
+                });
+              }
+            }
           });
-        }
+        }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+        h2Elements.forEach(function(h2) { observer.observe(h2); });
       }
     }
 
-    // 2. FAQ Accordion Handler
-    var faqQuestions = document.querySelectorAll('.article-faq-item__question');
-    faqQuestions.forEach(function(btn) {
+    // ── 2. READING PROGRESS BAR ──
+    var globalProgressBar = document.querySelector('.article-progress-bar__fill');
+    var tocProgressBar = document.getElementById('articleTocProgressBar');
+
+    function updateProgressBar() {
+      var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (docHeight <= 0) return;
+      var pct = Math.min(100, Math.max(0, (window.pageYOffset / docHeight) * 100));
+      if (globalProgressBar) globalProgressBar.style.width = pct + '%';
+      if (tocProgressBar) tocProgressBar.style.width = pct + '%';
+    }
+
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    updateProgressBar();
+
+    // ── 3. STEP-BY-STEP INSTRUCTION CARDS ──
+    contentEl.querySelectorAll('ol').forEach(function(ol) {
+      var items = ol.querySelectorAll('li');
+      if (items.length < 2) return;
+      var isStepList = true;
+      items.forEach(function(li) {
+        if (!li.querySelector('strong, b') && li.textContent.trim().length > 150) isStepList = false;
+      });
+      if (!isStepList) return;
+
+      var stepGrid = document.createElement('div');
+      stepGrid.className = 'article-step-grid';
+
+      items.forEach(function(li, idx) {
+        var stepNumStr = (idx + 1 < 10) ? '0' + (idx + 1) : '' + (idx + 1);
+        var strongEl = li.querySelector('strong, b');
+        var stepTitle = '', stepDesc = '';
+
+        if (strongEl) {
+          stepTitle = strongEl.textContent.trim().replace(/:$/, '');
+          var cloneLi = li.cloneNode(true);
+          var cloneStrong = cloneLi.querySelector('strong, b');
+          if (cloneStrong) cloneStrong.remove();
+          stepDesc = cloneLi.textContent.trim().replace(/^:\s*/, '');
+        } else {
+          var text = li.textContent.trim();
+          var periodIdx = text.indexOf('.');
+          if (periodIdx > 0 && periodIdx < 45) {
+            stepTitle = text.substring(0, periodIdx).trim();
+            stepDesc = text.substring(periodIdx + 1).trim();
+          } else {
+            stepTitle = 'Step ' + (idx + 1);
+            stepDesc = text;
+          }
+        }
+
+        var card = document.createElement('div');
+        card.className = 'article-step-card';
+        card.innerHTML =
+          '<div class="article-step-card__header">' +
+            '<span class="article-step-card__num">' + stepNumStr + '</span>' +
+            '<h4 class="article-step-card__title">' + stepTitle + '</h4>' +
+          '</div>' +
+          '<p class="article-step-card__desc">' + stepDesc + '</p>';
+        stepGrid.appendChild(card);
+      });
+
+      ol.parentNode.replaceChild(stepGrid, ol);
+    });
+
+    // ── 4. TIP & CALLOUT CARDS ──
+    contentEl.querySelectorAll('p').forEach(function(p) {
+      var text = p.textContent.trim();
+      var isTip = false, tipType = 'tip', badgeText = 'COOKING TIP';
+
+      if (/^(Tip|Pro Tip|Chef's Tip)[\s:]/i.test(text)) {
+        isTip = true; badgeText = 'COOKING TIP';
+      } else if (/^(Important|Note|Warning|Caution)[\s:]/i.test(text)) {
+        isTip = true; tipType = 'info'; badgeText = 'IMPORTANT NOTE';
+      } else if (/^Remember[\s:]/i.test(text)) {
+        isTip = true; badgeText = 'KEY REMINDER';
+      }
+
+      if (isTip && !p.closest('.article-step-card') && !p.closest('.article-product-cta-card')) {
+        var cleanText = text.replace(/^(Tip|Pro Tip|Chef's Tip|Important|Note|Warning|Caution|Remember)[\s:]+\s*/i, '');
+        var tipCard = document.createElement('aside');
+        tipCard.className = 'article-tip-card' + (tipType === 'info' ? ' article-tip-card--info' : '');
+        tipCard.innerHTML =
+          '<div class="article-tip-card__header">' +
+            '<span class="article-tip-card__badge">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+                '<circle cx="12" cy="12" r="10"></circle>' +
+                '<line x1="12" y1="16" x2="12" y2="12"></line>' +
+                '<line x1="12" y1="8" x2="12.01" y2="8"></line>' +
+              '</svg>' +
+              badgeText +
+            '</span>' +
+          '</div>' +
+          '<p class="article-tip-card__text">' + cleanText + '</p>';
+        p.parentNode.replaceChild(tipCard, p);
+      }
+    });
+    } // end if (contentEl)
+
+    // ── 5. FAQ ACCORDION HANDLER ──
+    document.querySelectorAll('.article-faq-item__question').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var item = btn.closest('.article-faq-item');
-        var answer = item.querySelector('.article-faq-item__answer');
+        var answer = item ? item.querySelector('.article-faq-item__answer') : null;
+        if (!item || !answer) return;
+
         var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all other FAQs
+        document.querySelectorAll('.article-faq-item__question').forEach(function(otherBtn) {
+          if (otherBtn !== btn) {
+            var otherItem = otherBtn.closest('.article-faq-item');
+            var otherAnswer = otherItem ? otherItem.querySelector('.article-faq-item__answer') : null;
+            if (otherItem && otherAnswer) {
+              otherBtn.setAttribute('aria-expanded', 'false');
+              otherItem.classList.remove('is-open');
+              otherAnswer.setAttribute('hidden', '');
+            }
+          }
+        });
 
         if (isExpanded) {
           btn.setAttribute('aria-expanded', 'false');
@@ -750,77 +1432,143 @@
       });
     });
 
-    // 3. Product Showcase Add to Cart Integration
-    var cartBtns = document.querySelectorAll('.article-product-card__btn-cart');
-    cartBtns.forEach(function(btn) {
-      btn.addEventListener('click', async function(e) {
-        e.preventDefault();
-        var variantId = btn.getAttribute('data-variant-id');
-        if (!variantId) return;
+    // ── 6. BLOG PRODUCT ADD TO CART INTEGRATION ──
+    document.addEventListener('click', async function (e) {
+      var btn = e.target.closest('.article-product-atc-btn, .cp-atc');
+      if (!btn || btn.disabled) return;
 
-        var origText = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = 'Adding...';
+      var variantId = btn.getAttribute('data-variant-id');
+      if (!variantId) return;
 
-        try {
-          var response = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({
-              id: variantId,
-              quantity: 1,
-              sections: ['cart-drawer'],
-              sections_url: window.location.pathname
-            })
-          });
+      e.preventDefault();
+      var originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="article-atc-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg><span>Adding...</span>';
 
-          if (!response.ok) {
-            throw new Error(await response.text());
-          }
+      try {
+        var response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: 1,
+            sections: ['cart-drawer'],
+            sections_url: window.location.pathname
+          })
+        });
 
-          var data = await response.json();
-
-          if (data.sections && data.sections['cart-drawer']) {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(data.sections['cart-drawer'], 'text/html');
-
-            var newBody = doc.querySelector('#nc-body');
-            var oldBody = document.querySelector('#nc-body');
-            if (newBody && oldBody) oldBody.replaceWith(newBody);
-
-            var newBreakdown = doc.querySelector('.nc-price-breakdown');
-            var oldBreakdown = document.querySelector('.nc-price-breakdown');
-            if (newBreakdown && oldBreakdown) {
-              oldBreakdown.replaceWith(newBreakdown);
-            }
-
-            var newFooter = doc.querySelector('.cart-drawer__footer');
-            var oldFooter = document.querySelector('.cart-drawer__footer');
-            if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
-          }
-
-          var drawer = document.querySelector('#nc-cart-drawer');
-          if (drawer) {
-            drawer.classList.add('is-open');
-            drawer.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-          }
-
-          btn.textContent = 'Added ✓';
-          setTimeout(function() {
-            btn.disabled = false;
-            btn.textContent = origText;
-          }, 2000);
-        } catch (err) {
-          console.error('Error adding to cart:', err);
-          btn.disabled = false;
-          btn.textContent = origText;
+        if (!response.ok) {
+          throw new Error(await response.text());
         }
-      });
+
+        var data = await response.json();
+
+        if (data.sections && data.sections['cart-drawer']) {
+          var parser = new DOMParser();
+          var html = parser.parseFromString(data.sections['cart-drawer'], 'text/html');
+
+          // Replace drawer body
+          var newBody = html.querySelector('#nc-body');
+          var oldBody = document.querySelector('#nc-body');
+          if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+          // Replace breakdown
+          var newBreakdown = html.querySelector('.nc-price-breakdown');
+          var oldBreakdown = document.querySelector('.nc-price-breakdown');
+          if (newBreakdown) {
+            if (oldBreakdown) {
+              oldBreakdown.replaceWith(newBreakdown);
+            } else {
+              var footer = document.querySelector('.cart-drawer__footer');
+              if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+            }
+          }
+
+          // Replace footer
+          var newFooter = html.querySelector('.cart-drawer__footer');
+          var oldFooter = document.querySelector('.cart-drawer__footer');
+          if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+        }
+
+        // Open cart drawer
+        var drawer = document.querySelector('#nc-cart-drawer');
+        if (drawer) {
+          drawer.classList.add('is-open');
+          drawer.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        // Refresh cart count & pubsub
+        try {
+          var cart = await fetch('/cart.js').then(function(r) { return r.json(); });
+          if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, {
+              source: 'blog-article',
+              cartData: cart
+            });
+          }
+          if (typeof window.ncUpdatePriceBreakdown === 'function') {
+            window.ncUpdatePriceBreakdown(cart);
+          }
+        } catch (cErr) {
+          console.warn('Cart count update error:', cErr);
+        }
+
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Added ✓</span>';
+        btn.classList.add('is-added');
+
+        setTimeout(function() {
+          btn.innerHTML = originalHtml;
+          btn.disabled = false;
+          btn.classList.remove('is-added');
+        }, 1500);
+
+      } catch (err) {
+        console.error('Error adding product to cart:', err);
+        btn.innerHTML = '<span>Error adding</span>';
+        setTimeout(function() {
+          btn.innerHTML = originalHtml;
+          btn.disabled = false;
+        }, 2000);
+      }
     });
+
+    function initBpSlider(slider) {
+      if (!slider) return;
+      var track = slider.querySelector('.article-bp-slider-track');
+      var prevBtn = slider.querySelector('.article-bp-slider-btn--prev');
+      var nextBtn = slider.querySelector('.article-bp-slider-btn--next');
+      if (!track) return;
+
+      function updateControls() {
+        if (!prevBtn || !nextBtn) return;
+        var maxScroll = track.scrollWidth - track.clientWidth - 4;
+        prevBtn.disabled = track.scrollLeft <= 4;
+        nextBtn.disabled = track.scrollLeft >= maxScroll;
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var amount = Math.max(220, track.clientWidth * 0.75);
+          track.scrollBy({ left: -amount, behavior: 'smooth' });
+        });
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var amount = Math.max(220, track.clientWidth * 0.75);
+          track.scrollBy({ left: amount, behavior: 'smooth' });
+        });
+      }
+
+      track.addEventListener('scroll', updateControls, { passive: true });
+      window.addEventListener('resize', updateControls);
+      setTimeout(updateControls, 300);
+    }
   }
 
   if (document.readyState === 'loading') {

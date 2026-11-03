@@ -85,6 +85,20 @@
   box-shadow: 0 10px 24px rgba(0, 139, 117, 0.14);
 }
 
+/* Image card styling */
+.sb-m3-card--image {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.sb-m3-card-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
 /* Stamp Motif in Corner */
 .sb-m3-card-header {
   display: flex;
@@ -185,5 +199,8 @@
   }
   .sb-m3-card {
     padding: 20px 16px !important;
+  }
+  .sb-m3-card.sb-m3-card--image {
+    padding: 0 !important;
   }
 }

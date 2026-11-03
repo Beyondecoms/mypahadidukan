@@ -61,8 +61,15 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: 44px;
+}
+
+.sb-m9-hero-grid--single {
+  grid-template-columns: 1fr;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sb-m9-graphic-box {
@@ -80,7 +87,11 @@
 .sb-m9-graphic-svg {
   width: 200px;
   height: 150px;
+  max-width: 200px;
+  max-height: 150px;
+  object-fit: contain;
   margin-bottom: 16px;
+  display: block;
 }
 
 .sb-m9-instruction-step {
@@ -96,13 +107,35 @@
   font-weight: 600;
 }
 
-/* 30-Glass Stamp Sheet Grid */
+/* 30-Glass Stamp Sheet Grid (2nd block) */
 .sb-m9-stamp-sheet {
   background-color: #faf5eb;
   border: 2px dashed #008b75;
   border-radius: 16px;
   padding: 24px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sb-m9-stamp-sheet--image {
+  padding: 0;
+  overflow: hidden;
+  border: 1.5px solid #e7ded0;
+  background-color: #fff8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-m9-stamp-image {
+  width: 100%;
+  height: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+  border-radius: 14px;
 }
 
 .sb-m9-stamp-title {
@@ -144,10 +177,10 @@
   text-align: center;
 }
 
-/* 3 Postcard Cards + Storage Card */
+/* Recipe Cards Grid */
 .sb-m9-cards-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--m9-cols, 3), 1fr);
   gap: 20px;
   margin-bottom: 28px;
 }
@@ -158,6 +191,22 @@
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.sb-m9-recipe-card--image {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-m9-recipe-card-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
 }
 
 .sb-m9-recipe-title {
@@ -175,6 +224,7 @@
   line-height: 1.6;
 }
 
+/* Storage Card (Bottom block) */
 .sb-m9-storage-card {
   background-color: #fff3e6;
   border: 1.5px solid #ee5922;
@@ -183,6 +233,20 @@
   color: #7c2d12;
   font-size: 1.18rem;
   line-height: 1.65;
+}
+
+.sb-m9-storage-card--image {
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
+}
+
+.sb-m9-storage-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
 }
 
 .sb-m9-storage-title {
@@ -225,6 +289,9 @@
   .sb-m9-stamp-sheet {
     padding: 16px 12px !important;
   }
+  .sb-m9-stamp-sheet--image {
+    padding: 0 !important;
+  }
   .sb-m9-glasses-grid {
     grid-template-columns: repeat(6, 1fr) !important;
     gap: 6px !important;
@@ -236,5 +303,9 @@
   .sb-m9-recipe-card,
   .sb-m9-storage-card {
     padding: 18px 14px !important;
+  }
+  .sb-m9-recipe-card--image,
+  .sb-m9-storage-card--image {
+    padding: 0 !important;
   }
 }

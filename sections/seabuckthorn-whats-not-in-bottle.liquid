@@ -1,20 +1,64 @@
 {{ 'section-seabuckthorn-m4.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign m4_heading = product.metafields.custom.m4_section_heading.value
-  assign m4_card_titles = product.metafields.custom.m4_card_titles.value
-  assign m4_card_descriptions = product.metafields.custom.m4_card_1_description.value
-  assign m4_bottom_statement = product.metafields.custom.m4_bottom_statement.value
+  assign m4_heading = product.metafields.custom.m4_section_heading.value | default: product.metafields.custom.m4_section_heading
+  assign m4_images = product.metafields.custom.m4_images.value | default: product.metafields.custom.m4_images | default: product.metafields.custom.m4_image.value | default: product.metafields.custom.m4_image | default: product.metafields.custom['m4_images'].value | default: product.metafields.custom['m4_images'] | default: product.metafields.custom['m4_image'].value | default: product.metafields.custom['m4_image']
 
-  assign marquee_text = m4_bottom_statement | join: ' · '
+  assign m4_first = m4_images | first
+  assign m4_bottom_statement = product.metafields.custom.m4_bottom_statement.value | default: product.metafields.custom.m4_bottom_statement
+  assign m4_bs_first = m4_bottom_statement | first
+  if m4_bottom_statement.first != blank or m4_bs_first != blank
+    assign marquee_text = m4_bottom_statement | join: ' · '
+  else
+    assign marquee_text = m4_bottom_statement
+  endif
 
-  assign has_cards = false
-  if m4_card_titles != blank or m4_card_descriptions != blank
-    assign has_cards = true
+  # Priority 1: Check for valid images
+  assign has_images = false
+  if m4_first != blank
+    assign has_images = true
+  elsif m4_images != blank and m4_images.src != blank or m4_images.width != blank
+    assign has_images = true
+  endif
+
+  # Priority 2: Check for text metafields
+  assign m4_card_titles = product.metafields.custom.m4_card_titles.value | default: product.metafields.custom.m4_card_titles | default: product.metafields.custom.m4_card_title.value | default: product.metafields.custom.m4_card_title | default: product.metafields.custom['m4_card_titles'].value | default: product.metafields.custom['m4_card_titles']
+  assign m4_card_descriptions = product.metafields.custom.m4_card_descriptions.value | default: product.metafields.custom.m4_card_descriptions | default: product.metafields.custom.m4_card_1_description.value | default: product.metafields.custom.m4_card_1_description | default: product.metafields.custom['m4_card_descriptions'].value | default: product.metafields.custom['m4_card_descriptions'] | default: product.metafields.custom['m4_card_1_description'].value | default: product.metafields.custom['m4_card_1_description']
+
+  assign titles_first = m4_card_titles | first
+  assign descs_first = m4_card_descriptions | first
+  assign titles_count = m4_card_titles.size | default: 0
+  assign descs_count = m4_card_descriptions.size | default: 0
+
+  assign text_cards_count = titles_count
+  if descs_count > text_cards_count
+    assign text_cards_count = descs_count
+  endif
+
+  assign has_text = false
+  if titles_first != blank or descs_first != blank or text_cards_count > 0
+    assign has_text = true
+  elsif m4_card_titles != blank or m4_card_descriptions != blank
+    assign has_text = true
+  endif
+
+  assign max_i = text_cards_count | minus: 1
+  if max_i < 0
+    assign max_i = 4
+  endif
+
+  # Content mode flags: Priority 1 Images, Priority 2 Text
+  assign is_image_mode = false
+  assign is_text_mode = false
+
+  if has_images
+    assign is_image_mode = true
+  elsif has_text
+    assign is_text_mode = true
   endif
 
   assign has_content = false
-  if m4_heading != blank or has_cards or marquee_text != blank
+  if m4_heading != blank or is_image_mode or is_text_mode or marquee_text != blank
     assign has_content = true
   endif
 -%}
@@ -30,10 +74,49 @@
       </div>
     {%- endif -%}
 
-    <!-- Postcard Carousel / Grid Cards -->
-    {%- if has_cards -%}
-      <div class="sb-m4-cards-wrapper">
-        {%- for i in (0..4) -%}
+    <!-- Cards Wrapper -->
+    {%- if is_image_mode -%}
+      {%- if m4_first != blank -%}
+        {%- assign cols_count = m4_images.size | at_most: 5 -%}
+      {%- else -%}
+        {%- assign cols_count = 1 -%}
+      {%- endif -%}
+      <div class="sb-m4-cards-wrapper" style="--m4-cols: {{ cols_count }};">
+        {%- if m4_first != blank -%}
+          {%- for image in m4_images -%}
+            {%- if image != blank -%}
+              {%- assign img_alt = image.alt | default: m4_heading | default: product.title | escape -%}
+              <div class="sb-m4-card sb-m4-card--image" style="background-color: {{ section.settings.card_bg }};">
+                {{ image | image_url: width: 1200 | image_tag: 
+                  loading: 'lazy', 
+                  alt: img_alt,
+                  class: 'sb-m4-card-img',
+                  widths: '240, 360, 480, 600, 800, 1000, 1200',
+                  sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 33vw, 20vw'
+                }}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- elsif m4_images.src != blank or m4_images.width != blank -%}
+          {%- assign img_alt = m4_images.alt | default: m4_heading | default: product.title | escape -%}
+          <div class="sb-m4-card sb-m4-card--image" style="background-color: {{ section.settings.card_bg }};">
+            {{ m4_images | image_url: width: 1200 | image_tag: 
+              loading: 'lazy', 
+              alt: img_alt,
+              class: 'sb-m4-card-img',
+              widths: '240, 360, 480, 600, 800, 1000, 1200',
+              sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 33vw, 20vw'
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- elsif is_text_mode -%}
+      {%- assign text_cols_count = text_cards_count | at_most: 5 -%}
+      {%- if text_cols_count < 1 -%}
+        {%- assign text_cols_count = 5 -%}
+      {%- endif -%}
+      <div class="sb-m4-cards-wrapper" style="--m4-cols: {{ text_cols_count }};">
+        {%- for i in (0..max_i) -%}
           {%- assign card_title = m4_card_titles[i] -%}
           {%- assign card_desc = m4_card_descriptions[i] -%}
           {%- if card_title != blank or card_desc != blank -%}

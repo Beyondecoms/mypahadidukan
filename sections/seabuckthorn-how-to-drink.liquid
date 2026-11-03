@@ -1,5 +1,27 @@
 {{ 'section-seabuckthorn-m9.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign m9_image_1 = product.metafields.custom.m9_image_1.value | default: product.metafields.custom.m9_image_1 | default: product.metafields.custom['m9_image-1'].value | default: product.metafields.custom['m9_image-1'] | default: product.metafields.custom.m9_image__1.value | default: product.metafields.custom.m9_image__1
+  assign m9_images_2 = product.metafields.custom.m9_image_2.value | default: product.metafields.custom.m9_image_2 | default: product.metafields.custom['m9_image-2'].value | default: product.metafields.custom['m9_image-2'] | default: product.metafields.custom.m9_images_2.value | default: product.metafields.custom.m9_images_2
+  assign m9_image_3 = product.metafields.custom.m9_image_3.value | default: product.metafields.custom.m9_image_3 | default: product.metafields.custom['m9_image-3'].value | default: product.metafields.custom['m9_image-3'] | default: product.metafields.custom.m9_image__3.value | default: product.metafields.custom.m9_image__3
+
+  assign m9_first_1 = m9_image_1 | first
+  if m9_first_1 != blank
+    assign m9_img_1_obj = m9_first_1
+  else
+    assign m9_img_1_obj = m9_image_1
+  endif
+
+  assign m9_recipe_first = m9_images_2 | first
+
+  assign m9_first_3 = m9_image_3 | first
+  if m9_first_3 != blank
+    assign m9_img_3_obj = m9_first_3
+  else
+    assign m9_img_3_obj = m9_image_3
+  endif
+-%}
+
 <div class="sb-m9-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
   <div class="sb-m9-container">
     
@@ -7,17 +29,17 @@
     <div class="sb-m9-top-bar">
       <span class="sb-m9-module-badge">{{ section.settings.module_tag }}</span>
     </div>
-
+               
     <!-- Main Card Box -->
     <div class="sb-m9-card-wrapper">
       <div class="sb-m9-header">
         <h2 class="sb-m9-title">{{ section.settings.heading }}</h2>
-        <h3 class="sb-m9-subtitle">{{ section.settings.subtitle }}</h3>
+        {% comment %} <h3 class="sb-m9-subtitle">{{ section.settings.subtitle }}</h3> {% endcomment %}
       </div>
 
       <!-- Hero Graphic + 30-Glass Stamp Sheet Grid -->
-      <div class="sb-m9-hero-grid">
-        <!-- Hero Graphic -->
+      <div class="sb-m9-hero-grid{% if m9_img_1_obj == blank %} sb-m9-hero-grid--single{% endif %}">
+        <!-- Hero Graphic (1st block) -->
         <div class="sb-m9-graphic-box">
           <svg class="sb-m9-graphic-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Glass -->
@@ -33,39 +55,60 @@
           <div class="sb-m9-instruction-timing">{{ section.settings.timing_text }}</div>
         </div>
 
-        <!-- 30-Glass Stamp Sheet Grid -->
-        <div class="sb-m9-stamp-sheet">
-          <div class="sb-m9-stamp-title">30 glasses in a bottle</div>
-          <div class="sb-m9-glasses-grid">
-            {%- for i in (1..30) -%}
-              <div class="sb-m9-glass-icon {% if i == 1 %}filled{% endif %}" title="Glass {{ i }}"></div>
-            {%- endfor -%}
+        <!-- 30-Glass Stamp Sheet Grid (2nd block: only if m9_image_1 exists) -->
+        {%- if m9_img_1_obj != blank -%}
+          <div class="sb-m9-stamp-sheet sb-m9-stamp-sheet--image">
+            {%- assign img_alt_1 = m9_img_1_obj.alt | default: "30 glasses in a bottle" | escape -%}
+            {{ m9_img_1_obj | image_url: width: 1000 | image_tag:
+              class: 'sb-m9-stamp-image',
+              loading: 'lazy',
+              alt: img_alt_1
+            }}
           </div>
-          <div class="sb-m9-stamp-footer">That's the one you had this morning</div>
-        </div>
+        {%- endif -%}
       </div>
 
-      <!-- 3 Recipe Postcards -->
-      <div class="sb-m9-cards-row">
-        <div class="sb-m9-recipe-card">
-          <h4 class="sb-m9-recipe-title">In room temperature</h4>
-          <p class="sb-m9-recipe-desc">How most people take it</p>
+      <!-- Recipe Cards (Only if m9_images_2 exists) -->
+      {%- if m9_recipe_first != blank -%}
+        {%- assign m9_cols = m9_images_2.size | at_most: 4 -%}
+        <div class="sb-m9-cards-row" style="--m9-cols: {{ m9_cols }};">
+          {%- for image in m9_images_2 -%}
+            {%- if image != blank -%}
+              {%- assign img_alt = image.alt | default: 'Recipe ' | append: forloop.index | escape -%}
+              <div class="sb-m9-recipe-card sb-m9-recipe-card--image">
+                {{ image | image_url: width: 800 | image_tag:
+                  class: 'sb-m9-recipe-card-img',
+                  loading: 'lazy',
+                  alt: img_alt
+                }}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
-        <div class="sb-m9-recipe-card">
-          <h4 class="sb-m9-recipe-title">Through yoghurt</h4>
-          <p class="sb-m9-recipe-desc">Thicker, less sharp</p>
+      {%- elsif m9_images_2 != blank and m9_images_2.src != blank or m9_images_2.width != blank -%}
+        <div class="sb-m9-cards-row" style="--m9-cols: 1;">
+          {%- assign img_alt = m9_images_2.alt | default: 'Recipe 1' | escape -%}
+          <div class="sb-m9-recipe-card sb-m9-recipe-card--image">
+            {{ m9_images_2 | image_url: width: 800 | image_tag:
+              class: 'sb-m9-recipe-card-img',
+              loading: 'lazy',
+              alt: img_alt
+            }}
+          </div>
         </div>
-        <div class="sb-m9-recipe-card">
-          <h4 class="sb-m9-recipe-title">In a smoothie</h4>
-          <p class="sb-m9-recipe-desc">To balance the sourness</p>
-        </div>
-      </div>
+      {%- endif -%}
 
-      <!-- Storage Card -->
-      <div class="sb-m9-storage-card">
-        <h4 class="sb-m9-storage-title">Storage</h4>
-        <p style="margin:0;">Cool, dark, dry. Once you open it, keep it in the fridge and finish it within four weeks. Shake before pouring.</p>
-      </div>
+      <!-- Storage Card (Only if m9_image_3 exists) -->
+      {%- if m9_img_3_obj != blank -%}
+        <div class="sb-m9-storage-card sb-m9-storage-card--image">
+          {%- assign storage_alt = m9_img_3_obj.alt | default: 'Storage instructions' | escape -%}
+          {{ m9_img_3_obj | image_url: width: 1400 | image_tag:
+            class: 'sb-m9-storage-img',
+            loading: 'lazy',
+            alt: storage_alt
+          }}
+        </div>
+      {%- endif -%}
 
     </div>
 
@@ -82,13 +125,13 @@
       "type": "text",
       "id": "module_tag",
       "label": "Module Tag",
-      "default": "M9 · How to drink it"
+      "default": "M9 · How to Take It"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "HOW TO DRINK IT"
+      "default": "How to Take It"
     },
     {
       "type": "text",
@@ -122,3 +165,4 @@
   ]
 }
 {% endschema %}
+
