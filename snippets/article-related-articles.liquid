@@ -1,0 +1,237 @@
+{%- comment -%}
+  Related articles grid for the blog article page.
+
+  1. Hand-picked custom.related_articles come first.
+  2. Remaining slots are filled from every blog in search_blogs, ranked by:
+       +10 per shared product topic (matched in title, URL, category and tags)
+       +3  per shared tag (custom.blog_tags or native tags)
+       +1  for the same blog or the same custom.blog_category
+     Articles scoring 0 are never shown, so unrelated posts don't fill the grid. Ties go to the newest.
+  article.handle is already "blog-handle/article-handle", so it works as an articles[] key across blogs.
+
+  Accepts:
+  - article: {Object} Current article
+  - blog: {Object} Current blog
+  - search_blogs: {String} Comma-separated blog handles; the current blog is always searched
+  - topics: {String} One topic per line, alternative spellings comma-separated
+  - limit: {Number} Number of cards (default: 3)
+
+  Usage:
+  {% render 'article-related-articles', article: article, blog: blog, search_blogs: section.settings.related_blogs, topics: section.settings.related_topics %}
+{%- endcomment -%}
+
+{%- liquid
+  assign related_limit = limit | default: 3
+  assign related_count = 0
+  assign related_keys_str = ''
+
+  assign explicit_related = article.metafields.custom.related_articles.value
+  if explicit_related != blank and explicit_related.size > 0
+    for rel in explicit_related
+      if rel.id != article.id and related_count < related_limit
+        assign related_keys_str = related_keys_str | append: ',' | append: rel.handle
+        assign related_count = related_count | plus: 1
+      endif
+    endfor
+  endif
+
+  if related_count < related_limit
+    # ── Signals for the current article ──
+    assign cur_cat_meta = article.metafields.custom.blog_category.value | default: article.metafields.custom.blog_category | downcase | strip
+
+    assign cur_tag_val = article.metafields.custom.blog_tags.value
+    if cur_tag_val.first != blank
+      assign cur_tags_str = cur_tag_val | join: ','
+    else
+      assign cur_tags_str = cur_tag_val | append: ''
+    endif
+    assign cur_native_tags = article.tags | join: ','
+    assign cur_tags_str = cur_tags_str | append: ',' | append: cur_native_tags | downcase | remove: '[' | remove: ']' | remove: '"'
+    assign cur_tags_norm = cur_tags_str | remove: ' ' | split: ',' | uniq | join: '|' | prepend: '|' | append: '|'
+    assign cur_tags_check = cur_tags_norm | remove: '|'
+    assign has_cur_tags = false
+    if cur_tags_check != blank
+      assign has_cur_tags = true
+    endif
+
+    # Keywords match from the start of a word (" honey" matches "honey" but not "something")
+    assign cur_haystack = article.title | append: ' ' | append: article.handle | append: ' ' | append: cur_cat_meta | append: ' ' | append: cur_tags_str
+    assign cur_haystack = cur_haystack | downcase | replace: '-', ' ' | replace: ',', ' ' | replace: ':', ' ' | replace: '(', ' ' | replace: ')', ' ' | replace: '/', ' ' | prepend: ' '
+
+    assign topic_lines = topics | newline_to_br | split: '<br />'
+    assign cur_topics_str = ''
+    for line in topic_lines
+      assign line_clean = line | strip | downcase
+      assign line_kws = line_clean | split: ','
+      for kw in line_kws
+        assign kw_needle = kw | strip | prepend: ' '
+        if kw_needle != ' ' and cur_haystack contains kw_needle
+          assign cur_topics_str = cur_topics_str | append: ';' | append: line_clean
+          break
+        endif
+      endfor
+    endfor
+    assign cur_topics = cur_topics_str | remove_first: ';' | split: ';'
+
+    # ── Score every article in the searched blogs ──
+    assign blog_handles = search_blogs | remove: ' ' | prepend: ',' | prepend: blog.handle | split: ',' | uniq
+    assign keys_check = related_keys_str | append: ','
+    assign ranked_str = ''
+
+    for bh in blog_handles
+      if bh == blank
+        continue
+      endif
+      for other in blogs[bh].articles
+        if other.id == article.id
+          continue
+        endif
+        assign other_key = other.handle
+        assign other_key_check = ',' | append: other_key | append: ','
+        if keys_check contains other_key_check
+          continue
+        endif
+
+        assign score = 0
+        assign other_cat_meta = other.metafields.custom.blog_category.value | default: other.metafields.custom.blog_category | downcase | strip
+        if bh == blog.handle
+          assign score = 1
+        elsif cur_cat_meta != blank and other_cat_meta == cur_cat_meta
+          assign score = 1
+        endif
+
+        assign other_tag_val = other.metafields.custom.blog_tags.value
+        if other_tag_val.first != blank
+          assign other_tags_str = other_tag_val | join: ','
+        else
+          assign other_tags_str = other_tag_val | append: ''
+        endif
+        assign other_native_tags = other.tags | join: ','
+        assign other_tags_str = other_tags_str | append: ',' | append: other_native_tags | downcase | remove: '[' | remove: ']' | remove: '"'
+
+        if has_cur_tags
+          assign other_tag_list = other_tags_str | remove: ' ' | split: ',' | uniq
+          for t in other_tag_list
+            if t != blank
+              assign t_needle = '|' | append: t | append: '|'
+              if cur_tags_norm contains t_needle
+                assign score = score | plus: 3
+              endif
+            endif
+          endfor
+        endif
+
+        if cur_topics.size > 0
+          assign other_haystack = other.title | append: ' ' | append: other.handle | append: ' ' | append: other_cat_meta | append: ' ' | append: other_tags_str
+          assign other_haystack = other_haystack | downcase | replace: '-', ' ' | replace: ',', ' ' | replace: ':', ' ' | replace: '(', ' ' | replace: ')', ' ' | replace: '/', ' ' | prepend: ' '
+          for topic in cur_topics
+            assign topic_kws = topic | split: ','
+            for kw in topic_kws
+              assign kw_needle = kw | strip | prepend: ' '
+              if kw_needle != ' ' and other_haystack contains kw_needle
+                assign score = score | plus: 10
+                break
+              endif
+            endfor
+          endfor
+        endif
+
+        # Sort key: inverted score (3 digits) + inverted publish time (10 digits), so a plain
+        # string sort puts the highest score first and the newest article first within a score
+        if score > 0
+          assign inv_score = 1000 | minus: score | prepend: '00' | slice: -3, 3
+          assign inv_time = other.published_at | date: '%s' | times: -1 | plus: 9999999999
+          assign ranked_str = ranked_str | append: ',' | append: inv_score | append: inv_time | append: '|' | append: other_key
+        endif
+      endfor
+    endfor
+
+    assign ranked = ranked_str | remove_first: ',' | split: ',' | sort
+    for entry in ranked
+      if related_count >= related_limit
+        break
+      endif
+      assign rel_key = entry | split: '|' | last
+      assign related_keys_str = related_keys_str | append: ',' | append: rel_key
+      assign related_count = related_count | plus: 1
+    endfor
+  endif
+
+  assign related_keys = related_keys_str | remove_first: ',' | split: ','
+-%}
+
+{%- if related_keys.size > 0 -%}
+  <section class="article-related-section" aria-label="Related articles">
+    <div class="article-related-section__header">
+      <span class="article-section-eyebrow">Keep exploring</span>
+      <h2 class="article-related-section__title">Related articles</h2>
+    </div>
+
+    <div class="article-related-grid">
+      {%- for rel_key in related_keys -%}
+        {%- assign rel_article = articles[rel_key] -%}
+        {%- if rel_article != blank and rel_article.title != blank -%}
+          {%- liquid
+            assign rel_blog_handle = rel_key | split: '/' | first
+            assign rel_blog_title = blogs[rel_blog_handle].title
+            assign rel_cat = rel_article.metafields.custom.blog_category.value | default: rel_article.metafields.custom.blog_category
+            if rel_cat == blank
+              assign rel_cat = rel_article.tags.first | default: rel_blog_title
+            endif
+            assign rel_cat_check = rel_cat | downcase | strip
+            if rel_cat_check == 'info'
+              assign rel_cat = 'Product guides'
+            elsif rel_cat_check == 'travel'
+              assign rel_cat = 'Origins'
+            elsif rel_cat_check == 'health and wellness' or rel_cat_check == 'health & wellness' or rel_cat_check == 'wellness'
+              assign rel_cat = 'Use & care'
+            endif
+          -%}
+          <article class="article-related-card">
+            <a href="{{ rel_article.url }}" class="article-related-card__media" tabindex="-1">
+              {%- if rel_article.image != blank -%}
+                <img
+                  src="{{ rel_article.image | image_url: width: 600 }}"
+                  srcset="{{ rel_article.image | image_url: width: 350 }} 350w, {{ rel_article.image | image_url: width: 600 }} 600w"
+                  sizes="(min-width: 900px) 33vw, 85vw"
+                  alt="{{ rel_article.title | escape }}"
+                  loading="lazy"
+                  width="360"
+                  height="225"
+                  class="article-related-card__img"
+                >
+              {%- else -%}
+                <div class="article-related-card__placeholder"></div>
+              {%- endif -%}
+            </a>
+            <div class="article-related-card__body">
+              <div class="article-related-card__meta">
+                {%- if rel_cat != blank -%}
+                  <span class="article-related-card__badge">{{ rel_cat }}</span>
+                {%- endif -%}
+                <time class="article-related-card__date" datetime="{{ rel_article.published_at | date: '%Y-%m-%d' }}">
+                  {{- rel_article.published_at | date: '%b %d, %Y' -}}
+                </time>
+              </div>
+              <h3 class="article-related-card__title">
+                <a href="{{ rel_article.url }}">{{ rel_article.title }}</a>
+              </h3>
+              {%- if rel_article.excerpt_or_content != blank -%}
+                <p class="article-related-card__excerpt">
+                  {{ rel_article.excerpt_or_content | strip_html | truncate: 110 }}
+                </p>
+              {%- endif -%}
+              <a href="{{ rel_article.url }}" class="article-related-card__link">
+                <span>Read article</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
