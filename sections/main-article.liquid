@@ -1,4 +1,11 @@
+{% render 'article-redirect',
+  article: article,
+  blog: blog,
+  search_blogs: section.settings.related_blogs
+%}
+
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+{{ 'card-product.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   # ─────────────────────────────────────────────────────
@@ -71,13 +78,8 @@
   assign blog_faqs = blog_faqs_raw.value | default: blog_faqs_raw
 
   # ─────────────────────────────────────────────────────
-  # 6. RELATED ARTICLES — existing: custom.related_articles (article reference list)
+  # 6. RELATED ARTICLES — custom.related_articles + topic matching, see snippets/article-related-articles.liquid
   # ─────────────────────────────────────────────────────
-  assign explicit_related_raw = article.metafields.custom.related_articles
-  assign explicit_related = explicit_related_raw.value | default: explicit_related_raw
-  assign related_limit = 3
-  assign related_count = 0
-  assign related_handles_str = ''
 
   # ─────────────────────────────────────────────────────
   # 7. READING TIME — NEW: custom.reading_time (single line text)
@@ -131,64 +133,6 @@
     assign cta_link = '/collections/all'
   endif
 -%}
-
-{%- comment -%} ── Build Related Articles List ── {%- endcomment -%}
-{%- if explicit_related != blank and explicit_related.size > 0 -%}
-  {%- for rel in explicit_related -%}
-    {%- if rel.id != article.id and related_count < related_limit -%}
-      {%- if related_handles_str == '' -%}
-        {%- assign related_handles_str = rel.handle -%}
-      {%- else -%}
-        {%- assign related_handles_str = related_handles_str | append: ',' | append: rel.handle -%}
-      {%- endif -%}
-      {%- assign related_count = related_count | plus: 1 -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
-
-{%- if related_count < related_limit -%}
-  {%- for other in blog.articles -%}
-    {%- if other.id != article.id -%}
-      {%- unless related_handles_str contains other.handle -%}
-        {%- assign is_match = false -%}
-        {%- assign other_cat = other.metafields.custom.blog_category.value | default: other.metafields.custom.blog_category -%}
-        {%- if other_cat != blank and other_cat == blog_category -%}
-          {%- assign is_match = true -%}
-        {%- endif -%}
-        {%- for tag in article.tags -%}
-          {%- if other.tags contains tag -%}
-            {%- assign is_match = true -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if is_match and related_count < related_limit -%}
-          {%- if related_handles_str == '' -%}
-            {%- assign related_handles_str = other.handle -%}
-          {%- else -%}
-            {%- assign related_handles_str = related_handles_str | append: ',' | append: other.handle -%}
-          {%- endif -%}
-          {%- assign related_count = related_count | plus: 1 -%}
-        {%- endif -%}
-      {%- endunless -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
-
-{%- if related_count < related_limit -%}
-  {%- for other in blog.articles -%}
-    {%- if other.id != article.id and related_count < related_limit -%}
-      {%- unless related_handles_str contains other.handle -%}
-        {%- if related_handles_str == '' -%}
-          {%- assign related_handles_str = other.handle -%}
-        {%- else -%}
-          {%- assign related_handles_str = related_handles_str | append: ',' | append: other.handle -%}
-        {%- endif -%}
-        {%- assign related_count = related_count | plus: 1 -%}
-      {%- endunless -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
-
-{%- assign related_handles = related_handles_str | split: ',' -%}
 
 <article class="article-page" itemscope itemtype="https://schema.org/BlogPosting">
   
@@ -383,7 +327,49 @@
     <!-- ── TWO-COLUMN EDITORIAL LAYOUT ── -->
     <div class="article-main-layout">
 
-      <!-- ── LEFT: Main Reading Column ── -->
+      <!-- ── LEFT: Sidebar Column (Desktop Only) — the TOC sticks while the article scrolls ── -->
+      <aside class="article-sidebar-column" id="article-sidebar">
+        <div class="article-sidebar-track">
+
+          <!-- Sticky "In This Article" TOC Card -->
+          <nav id="article-toc-desktop" class="article-toc-card" aria-label="Table of contents" style="display: none;">
+            <div class="article-toc-card__header">
+              <div class="article-toc-card__title-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <h3 class="article-toc-card__title">In this article</h3>
+              </div>
+            </div>
+            <div class="article-toc-card__progress">
+              <div class="article-toc-card__progress-bar" id="articleTocProgressBar"></div>
+            </div>
+            <ol id="article-toc-desktop-list" class="article-toc-card__list"></ol>
+          </nav>
+
+        </div>
+
+        <!-- Sidebar Trust Widget (always shown; sits at the end of the column, below the TOC track) -->
+        <div class="article-sidebar-widget">
+          <div class="article-sidebar-widget__icon">🏔️</div>
+          <h4 class="article-sidebar-widget__title">Pure Himalayan sourcing</h4>
+          <p class="article-sidebar-widget__text">Authentic, unadulterated ingredients harvested directly from Himalayan valleys and trusted farming collectives.</p>
+          <a href="/collections/all" class="article-sidebar-widget__link">
+            <span>Explore collection</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </aside>
+
+      <!-- ── RIGHT: Main Reading Column ── -->
       <main class="article-content-column">
 
         <!-- Mobile TOC Accordion (shown above content on mobile) -->
@@ -416,10 +402,98 @@
           </div>
         </nav>
 
+        {%- render 'article-buy-button-card' -%}
+
         <!-- ── MAIN ARTICLE CONTENT BODY ── -->
         <div class="article-content-body rte" itemprop="articleBody">
           {{ article.content }}
         </div>
+
+        <!-- ── FAQ SECTION (existing custom.faqs metaobject) — plain, always-open text that reads as part of the article ── -->
+        {%- if blog_faqs != blank and blog_faqs.size > 0 -%}
+          <section class="article-faq-section" aria-labelledby="article-faq-title">
+            <h2 class="article-faq-section__title" id="article-faq-title">Frequently asked questions</h2>
+
+            <div class="article-faq-list">
+              {%- for item in blog_faqs -%}
+                {%- assign faq = item.value | default: item -%}
+                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+                {%- if faq_question contains '{"type":"root"' -%}
+                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
+                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
+                {%- endif -%}
+                {%- if faq_question != blank and faq_answer != blank -%}
+                  <div class="article-faq-item">
+                    <h3 class="article-faq-item__question">{{ faq_question }}</h3>
+                    <div class="article-faq-item__answer">
+                      {%- if faq_answer contains '{"type":"root"' -%}
+                        {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
+                        {%- for chunk in ans_chunks -%}
+                          {%- unless forloop.first -%}
+                            {%- assign clean_chunk = chunk | split: '"' | first -%}
+                            {%- if clean_chunk != blank -%}
+                              <p>{{ clean_chunk }}</p>
+                            {%- endif -%}
+                          {%- endunless -%}
+                        {%- endfor -%}
+                      {%- elsif faq.answer.value != blank or faq.answer != blank -%}
+                        {{ faq.answer | metafield_tag }}
+                      {%- elsif faq_answer contains '<' -%}
+                        {{ faq_answer }}
+                      {%- else -%}
+                        <p>{{ faq_answer }}</p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </section>
+
+          <!-- FAQ Structured Data (JSON-LD) -->
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {%- assign faq_first = true -%}
+              {%- for item in blog_faqs -%}
+                {%- assign faq = item.value | default: item -%}
+                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
+                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
+                {%- if faq_question contains '{"type":"root"' -%}
+                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
+                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
+                {%- endif -%}
+                {%- assign faq_schema_text = faq_answer -%}
+                {%- if faq_answer contains '{"type":"root"' -%}
+                  {%- assign faq_schema_text = '' -%}
+                  {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
+                  {%- for chunk in ans_chunks -%}
+                    {%- unless forloop.first -%}
+                      {%- assign clean_chunk = chunk | split: '"' | first -%}
+                      {%- assign faq_schema_text = faq_schema_text | append: ' ' | append: clean_chunk -%}
+                    {%- endunless -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                {%- if faq_question != blank and faq_answer != blank -%}
+                  {%- unless faq_first -%},{%- endunless -%}
+                  {
+                    "@type": "Question",
+                    "name": {{ faq_question | strip_html | strip | json }},
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": {{ faq_schema_text | strip_html | strip | json }}
+                    }
+                  }
+                  {%- assign faq_first = false -%}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+          </script>
+        {%- endif -%}
 
         <!-- ── FEATURED PRODUCT CARD (custom.featured_product) ── -->
         {%- if featured_product != blank -%}
@@ -541,110 +615,30 @@
                 {%- if blog_prods.first != nil or blog_prods.size > 0 -%}
                   {%- for prod in blog_prods -%}
                     {%- if prod.title != blank -%}
-                      {%- assign prod_variant = prod.selected_or_first_available_variant -%}
-                      {%- assign clean_title = prod.title | split: '|' | first | strip -%}
-                      <article class="article-product-mini-card article-bp-slide">
-                        <a href="{{ prod.url }}" class="article-product-mini-card__media-link">
-                          {%- if prod.featured_image != blank -%}
-                            <img
-                              src="{{ prod.featured_image | image_url: width: 400 }}"
-                              alt="{{ prod.featured_image.alt | default: clean_title | escape }}"
-                              loading="lazy"
-                              width="220"
-                              height="220"
-                              class="article-product-mini-card__img"
-                            >
-                          {%- else -%}
-                            <div class="article-product-mini-card__placeholder">
-                              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            </div>
-                          {%- endif -%}
-                        </a>
-                        <div class="article-product-mini-card__body">
-                          <h4 class="article-product-mini-card__title">
-                            <a href="{{ prod.url }}" title="{{ prod.title | escape }}">{{ clean_title }}</a>
-                          </h4>
-                          <div class="article-product-mini-card__price-row">
-                            <span class="article-product-mini-card__price">{{ prod.price | money }}</span>
-                            {%- if prod.compare_at_price > prod.price -%}
-                              <span class="article-product-mini-card__compare">{{ prod.compare_at_price | money }}</span>
-                              {%- assign discount = prod.compare_at_price | minus: prod.price | times: 100 | divided_by: prod.compare_at_price -%}
-                              <span class="article-product-mini-card__off">{{ discount }}% off</span>
-                            {%- endif -%}
-                          </div>
-                          {%- if prod.available -%}
-                            <button
-                              type="button"
-                              class="article-product-atc-btn cp-atc"
-                              data-variant-id="{{ prod_variant.id }}"
-                              aria-label="Add {{ clean_title | escape }} to cart"
-                            >
-                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                              </svg>
-                              <span>Add to cart</span>
-                            </button>
-                          {%- else -%}
-                            <button type="button" class="article-product-atc-btn article-product-atc-btn--oos" disabled>
-                              Out of stock
-                            </button>
-                          {%- endif -%}
-                        </div>
-                      </article>
+                      <div class="article-bp-slide">
+                        {% render 'card-product',
+                          card_product: prod,
+                          media_aspect_ratio: 'square',
+                          show_secondary_image: true,
+                          show_vendor: false,
+                          show_rating: true,
+                          lazy_load: true
+                        %}
+                      </div>
                     {%- endif -%}
                   {%- endfor -%}
                 {%- elsif blog_prods.title != blank -%}
                   {%- assign prod = blog_prods -%}
-                  {%- assign prod_variant = prod.selected_or_first_available_variant -%}
-                  {%- assign clean_title = prod.title | split: '|' | first | strip -%}
-                  <article class="article-product-mini-card article-bp-slide">
-                    <a href="{{ prod.url }}" class="article-product-mini-card__media-link">
-                      {%- if prod.featured_image != blank -%}
-                        <img
-                          src="{{ prod.featured_image | image_url: width: 400 }}"
-                          alt="{{ prod.featured_image.alt | default: clean_title | escape }}"
-                          loading="lazy"
-                          width="220"
-                          height="220"
-                          class="article-product-mini-card__img"
-                        >
-                      {%- endif -%}
-                    </a>
-                    <div class="article-product-mini-card__body">
-                      <h4 class="article-product-mini-card__title">
-                        <a href="{{ prod.url }}" title="{{ prod.title | escape }}">{{ clean_title }}</a>
-                      </h4>
-                      <div class="article-product-mini-card__price-row">
-                        <span class="article-product-mini-card__price">{{ prod.price | money }}</span>
-                        {%- if prod.compare_at_price > prod.price -%}
-                          <span class="article-product-mini-card__compare">{{ prod.compare_at_price | money }}</span>
-                          {%- assign discount = prod.compare_at_price | minus: prod.price | times: 100 | divided_by: prod.compare_at_price -%}
-                          <span class="article-product-mini-card__off">{{ discount }}% off</span>
-                        {%- endif -%}
-                      </div>
-                      {%- if prod.available -%}
-                        <button
-                          type="button"
-                          class="article-product-atc-btn cp-atc"
-                          data-variant-id="{{ prod_variant.id }}"
-                          aria-label="Add {{ clean_title | escape }} to cart"
-                        >
-                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1"></circle>
-                            <circle cx="20" cy="21" r="1"></circle>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                          </svg>
-                          <span>Add to cart</span>
-                        </button>
-                      {%- else -%}
-                        <button type="button" class="article-product-atc-btn article-product-atc-btn--oos" disabled>
-                          Out of stock
-                        </button>
-                      {%- endif -%}
-                    </div>
-                  </article>
+                  <div class="article-bp-slide">
+                    {% render 'card-product',
+                      card_product: prod,
+                      media_aspect_ratio: 'square',
+                      show_secondary_image: true,
+                      show_vendor: false,
+                      show_rating: true,
+                      lazy_load: true
+                    %}
+                  </div>
                 {%- endif -%}
               </div>
             </div>
@@ -713,110 +707,6 @@
           </section>
         {%- endif -%}
 
-        <!-- ── FAQ SECTION (existing custom.faqs metaobject) ── -->
-        {%- if blog_faqs != blank and blog_faqs.size > 0 -%}
-          <section class="article-faq-section" aria-label="Frequently asked questions">
-            <div class="article-faq-section__header">
-              <span class="article-section-eyebrow">Clear answers</span>
-              <h2 class="article-faq-section__title">Frequently asked questions</h2>
-            </div>
-
-            <div class="article-faq-list">
-              {%- for item in blog_faqs -%}
-                {%- assign faq = item.value | default: item -%}
-                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
-                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
-                {%- if faq_question contains '{"type":"root"' -%}
-                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
-                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
-                {%- endif -%}
-                {%- if faq_question != blank and faq_answer != blank -%}
-                  <div class="article-faq-item">
-                    <button
-                      type="button"
-                      class="article-faq-item__question"
-                      aria-expanded="false"
-                      aria-controls="faq-ans-{{ forloop.index }}"
-                    >
-                      <span>{{ faq_question }}</span>
-                      <span class="article-faq-item__icon" aria-hidden="true">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                          <line x1="12" y1="5" x2="12" y2="19" class="faq-icon-v"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                      </span>
-                    </button>
-                    <div id="faq-ans-{{ forloop.index }}" class="article-faq-item__answer" hidden>
-                      <div class="article-faq-item__answer-inner">
-                        {%- if faq_answer contains '{"type":"root"' -%}
-                          {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
-                          {%- for chunk in ans_chunks -%}
-                            {%- unless forloop.first -%}
-                              {%- assign clean_chunk = chunk | split: '"' | first -%}
-                              {%- if clean_chunk != blank -%}
-                                <p>{{ clean_chunk }}</p>
-                              {%- endif -%}
-                            {%- endunless -%}
-                          {%- endfor -%}
-                        {%- elsif faq.answer.value != blank or faq.answer != blank -%}
-                          {{ faq.answer | metafield_tag }}
-                        {%- elsif faq_answer contains '<' -%}
-                          {{ faq_answer }}
-                        {%- else -%}
-                          <p>{{ faq_answer }}</p>
-                        {%- endif -%}
-                      </div>
-                    </div>
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          </section>
-
-          <!-- FAQ Structured Data (JSON-LD) -->
-          <script type="application/ld+json">
-          {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {%- assign faq_first = true -%}
-              {%- for item in blog_faqs -%}
-                {%- assign faq = item.value | default: item -%}
-                {%- assign faq_question = faq.question.value | default: faq.question | default: faq.title | default: faq.faq_question | default: faq.heading -%}
-                {%- assign faq_answer = faq.answer.value | default: faq.answer | default: faq.description | default: faq.faq_answer | default: faq.content -%}
-                {%- if faq_question contains '{"type":"root"' -%}
-                  {%- assign q_chunks = faq_question | split: '"value":"' -%}
-                  {%- assign faq_question = q_chunks[1] | split: '"' | first -%}
-                {%- endif -%}
-                {%- assign faq_schema_text = faq_answer -%}
-                {%- if faq_answer contains '{"type":"root"' -%}
-                  {%- assign faq_schema_text = '' -%}
-                  {%- assign ans_chunks = faq_answer | split: '"value":"' -%}
-                  {%- for chunk in ans_chunks -%}
-                    {%- unless forloop.first -%}
-                      {%- assign clean_chunk = chunk | split: '"' | first -%}
-                      {%- assign faq_schema_text = faq_schema_text | append: ' ' | append: clean_chunk -%}
-                    {%- endunless -%}
-                  {%- endfor -%}
-                {%- endif -%}
-                {%- if faq_question != blank and faq_answer != blank -%}
-                  {%- unless faq_first -%},{%- endunless -%}
-                  {
-                    "@type": "Question",
-                    "name": {{ faq_question | strip_html | strip | json }},
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": {{ faq_schema_text | strip_html | strip | json }}
-                    }
-                  }
-                  {%- assign faq_first = false -%}
-                {%- endif -%}
-              {%- endfor -%}
-            ]
-          }
-          </script>
-        {%- endif -%}
-
         <!-- ── FINAL CTA (from custom.cta_* metafields or branded default) ── -->
         {%- if has_cta -%}
           <section class="article-final-cta article-final-cta--metafield" aria-label="Call to action">
@@ -881,120 +771,15 @@
 
       </main>
 
-      <!-- ── RIGHT: Sticky Sidebar Column (Desktop Only) ── -->
-      <aside class="article-sidebar-column">
-        <div class="article-sticky-sidebar">
-
-          <!-- Sticky "In This Article" TOC Card -->
-          <nav id="article-toc-desktop" class="article-toc-card" aria-label="Table of contents" style="display: none;">
-            <div class="article-toc-card__header">
-              <div class="article-toc-card__title-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="8" y1="6" x2="21" y2="6"></line>
-                  <line x1="8" y1="12" x2="21" y2="12"></line>
-                  <line x1="8" y1="18" x2="21" y2="18"></line>
-                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                </svg>
-                <h3 class="article-toc-card__title">In this article</h3>
-              </div>
-            </div>
-            <div class="article-toc-card__progress">
-              <div class="article-toc-card__progress-bar" id="articleTocProgressBar"></div>
-            </div>
-            <ol id="article-toc-desktop-list" class="article-toc-card__list"></ol>
-          </nav>
-
-          <!-- Sidebar Trust Widget (always shown) -->
-          <div class="article-sidebar-widget">
-            <div class="article-sidebar-widget__icon">🏔️</div>
-            <h4 class="article-sidebar-widget__title">Pure Himalayan sourcing</h4>
-            <p class="article-sidebar-widget__text">Authentic, unadulterated ingredients harvested directly from Himalayan valleys and trusted farming collectives.</p>
-            <a href="/collections/all" class="article-sidebar-widget__link">
-              <span>Explore collection</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-          </div>
-
-        </div>
-      </aside>
-
     </div><!-- /.article-main-layout -->
 
-    <!-- ── WIDE RELATED ARTICLES SECTION (3-Column Grid, existing custom.related_articles) ── -->
-    {%- if related_handles.size > 0 -%}
-      <section class="article-related-section" aria-label="Related articles">
-        <div class="article-related-section__header">
-          <span class="article-section-eyebrow">Keep exploring</span>
-          <h2 class="article-related-section__title">Related articles</h2>
-        </div>
-
-        <div class="article-related-grid">
-          {%- for handle in related_handles -%}
-            {%- assign rel_article = articles[handle] -%}
-            {%- if rel_article != blank and rel_article.title != blank -%}
-              {%- liquid
-                assign rel_cat = rel_article.metafields.custom.blog_category.value | default: rel_article.metafields.custom.blog_category
-                if rel_cat == blank
-                  assign rel_cat = rel_article.tags.first | default: blog.title
-                endif
-                assign rel_cat_check = rel_cat | downcase | strip
-                if rel_cat_check == 'info'
-                  assign rel_cat = 'Product guides'
-                elsif rel_cat_check == 'travel'
-                  assign rel_cat = 'Origins'
-                elsif rel_cat_check == 'health and wellness' or rel_cat_check == 'health & wellness' or rel_cat_check == 'wellness'
-                  assign rel_cat = 'Use & care'
-                endif
-              -%}
-              <article class="article-related-card">
-                <a href="{{ rel_article.url }}" class="article-related-card__media" tabindex="-1">
-                  {%- if rel_article.image != blank -%}
-                    <img
-                      src="{{ rel_article.image | image_url: width: 600 }}"
-                      srcset="{{ rel_article.image | image_url: width: 350 }} 350w, {{ rel_article.image | image_url: width: 600 }} 600w"
-                      sizes="(min-width: 900px) 33vw, 85vw"
-                      alt="{{ rel_article.title | escape }}"
-                      loading="lazy"
-                      width="360"
-                      height="225"
-                      class="article-related-card__img"
-                    >
-                  {%- else -%}
-                    <div class="article-related-card__placeholder"></div>
-                  {%- endif -%}
-                  <span class="article-related-card__badge">{{ rel_cat }}</span>
-                </a>
-                <div class="article-related-card__body">
-                  <time class="article-related-card__date" datetime="{{ rel_article.published_at | date: '%Y-%m-%d' }}">
-                    {{ rel_article.published_at | date: '%b %d, %Y' }}
-                  </time>
-                  <h3 class="article-related-card__title">
-                    <a href="{{ rel_article.url }}">{{ rel_article.title }}</a>
-                  </h3>
-                  {%- if rel_article.excerpt_or_content != blank -%}
-                    <p class="article-related-card__excerpt">
-                      {{ rel_article.excerpt_or_content | strip_html | truncate: 110 }}
-                    </p>
-                  {%- endif -%}
-                  <a href="{{ rel_article.url }}" class="article-related-card__link">
-                    <span>Read article</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </a>
-                </div>
-              </article>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </section>
-    {%- endif -%}
+    <!-- ── WIDE RELATED ARTICLES SECTION (3-Column Grid) ── -->
+    {% render 'article-related-articles',
+      article: article,
+      blog: blog,
+      search_blogs: section.settings.related_blogs,
+      topics: section.settings.related_topics
+    %}
 
     <!-- Comments Section -->
     {%- if blog.comments_enabled? -%}
@@ -1039,7 +824,7 @@
 <!-- Article Structured Data -->
 <script type="application/ld+json">{{ article | structured_data }}</script>
 
-<!-- Interactive Editorial Logic: TOC, Progress Bar, Step Cards, Tip Cards, FAQ Accordion -->
+<!-- Interactive Editorial Logic: TOC, Progress Bar, Step Cards, Tip Cards, Add to Cart -->
 <script>
 (function() {
   'use strict';
@@ -1084,7 +869,7 @@
         return null;
       }
 
-      var astSelectors = ['.article-author-card__bio', '.article-faq-item__answer-inner', '.article-faq-item__question span'];
+      var astSelectors = ['.article-author-card__bio', '.article-faq-item__answer', '.article-faq-item__question'];
       astSelectors.forEach(function(sel) {
         document.querySelectorAll(sel).forEach(function(el) {
           var txt = el.textContent || '';
@@ -1101,6 +886,7 @@
     var contentEl = document.querySelector('.article-content-body');
 
     // ── 1. TABLE OF CONTENTS GENERATOR ──
+    var tocSidebar = document.getElementById('article-sidebar');
     var tocDesktop = document.getElementById('article-toc-desktop');
     var tocDesktopList = document.getElementById('article-toc-desktop-list');
     var tocMobile = document.getElementById('article-toc-mobile');
@@ -1180,7 +966,8 @@
         }
       }
 
-    var h2Elements = contentEl.querySelectorAll('h2');
+    // FAQ sits right after the body as part of the article, so it gets a TOC entry too
+    var h2Elements = document.querySelectorAll('.article-content-body h2, .article-faq-section__title');
     if (h2Elements.length >= 2) {
       if (tocDesktopList) tocDesktopList.innerHTML = '';
       if (tocMobileList) tocMobileList.innerHTML = '';
@@ -1239,6 +1026,7 @@
 
       if (tocMobileCount) tocMobileCount.textContent = h2Elements.length + ' sections';
       if (tocDesktop) tocDesktop.style.display = 'block';
+      if (tocSidebar) tocSidebar.classList.add('has-toc');
       if (tocMobile) tocMobile.classList.add('is-ready');
 
       // Mobile TOC Toggle
@@ -1398,41 +1186,7 @@
     });
     } // end if (contentEl)
 
-    // ── 5. FAQ ACCORDION HANDLER ──
-    document.querySelectorAll('.article-faq-item__question').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var item = btn.closest('.article-faq-item');
-        var answer = item ? item.querySelector('.article-faq-item__answer') : null;
-        if (!item || !answer) return;
-
-        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-        // Close all other FAQs
-        document.querySelectorAll('.article-faq-item__question').forEach(function(otherBtn) {
-          if (otherBtn !== btn) {
-            var otherItem = otherBtn.closest('.article-faq-item');
-            var otherAnswer = otherItem ? otherItem.querySelector('.article-faq-item__answer') : null;
-            if (otherItem && otherAnswer) {
-              otherBtn.setAttribute('aria-expanded', 'false');
-              otherItem.classList.remove('is-open');
-              otherAnswer.setAttribute('hidden', '');
-            }
-          }
-        });
-
-        if (isExpanded) {
-          btn.setAttribute('aria-expanded', 'false');
-          item.classList.remove('is-open');
-          answer.setAttribute('hidden', '');
-        } else {
-          btn.setAttribute('aria-expanded', 'true');
-          item.classList.add('is-open');
-          answer.removeAttribute('hidden');
-        }
-      });
-    });
-
-    // ── 6. BLOG PRODUCT ADD TO CART INTEGRATION ──
+    // ── 5. BLOG PRODUCT ADD TO CART INTEGRATION ──
     document.addEventListener('click', async function (e) {
       var btn = e.target.closest('.article-product-atc-btn, .cp-atc');
       if (!btn || btn.disabled) return;
@@ -1584,7 +1338,30 @@
   "name": "Blog article",
   "tag": "section",
   "class": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Related articles"
+    },
+    {
+      "type": "paragraph",
+      "content": "Hand-picked related articles (custom.related_articles) always show first. Remaining slots go to articles about the same product topic, then shared tags, then the same category. Unrelated articles are never used to fill the grid."
+    },
+    {
+      "type": "text",
+      "id": "related_blogs",
+      "label": "Blogs to search",
+      "info": "Blog handles, separated by commas. The current blog is always searched.",
+      "default": "info, health-and-wellness, recipes, travel, shilajit"
+    },
+    {
+      "type": "textarea",
+      "id": "related_topics",
+      "label": "Product topics",
+      "info": "One topic per line. Put other spellings on the same line, separated by commas. Matched against article title, URL, category and tags.",
+      "default": "sea buckthorn, seabuckthorn\nshilajit\nsaffron, kesar\nhoney\nghee\nwalnut\nbadam, almond\nshatavari\nashwagandha\ncordyceps\nhing, asafoetida\nmoringa\nburansh, rhododendron\ncoffee\ngarlic\nlemongrass, lemon grass\nrosemary\nlavender\nchamomile\ning makhir\npippali, pepper\nchilli\nrajma\ngucchi\namla\nstrawberry\nred rice, black rice\nanjeer, fig, raisin, dry fruit, pine nut, nuts\nvitamin c\nomega"
+    }
+  ],
   "blocks": [
     {
       "type": "@app"

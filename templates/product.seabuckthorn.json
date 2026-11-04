@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -264,18 +273,6 @@
       "settings": {
         "module_tag": "",
         "design_tag": "",
-        "heading": "WHAT'S IN MY BOTTLE",
-        "subheading": "One ingredient. This won't take long.",
-        "diagram_label": "",
-        "ingredient_1_name": "WILD SEA BUCKTHORN BERRIES",
-        "ingredient_1_pct": "99.99%",
-        "ingredient_2_prefix": "and this bit —",
-        "ingredient_2_pct": "0.01%",
-        "ingredient_2_suffix": "— is E211",
-        "parchment_title": "About that 0.01%",
-        "parchment_para1": "Pressed berry with nothing added to it spoils in about a week. E211 is a permitted preservative, it's in there at one part in ten thousand, and it's the reason this bottle can reach Chennai instead of only Leh.",
-        "parchment_para2": "We could have rounded up and called it 100% pure. Plenty of bottles on the internet do.",
-        "parchment_para3": "We'd rather you knew what the hundredth of a percent was.",
         "bg_color": "#fffbef",
         "card_wrapper_bg": "#ffffff",
         "card_border_color": "#e7ded0",
@@ -289,10 +286,6 @@
     "seabuckthorn_m3": {
       "type": "seabuckthorn-omega-7",
       "settings": {
-        "module_tag": "",
-        "design_tag": "",
-        "subtitle": "THE ONE YOU CAN'T GET ANYWHERE ELSE",
-        "heading": "Meet omega-7",
         "bg_color": "#fffbef",
         "heading_color": "#1c1918",
         "subtitle_color": "#ee5922",
@@ -305,10 +298,6 @@
     "seabuckthorn_m4": {
       "type": "seabuckthorn-whats-not-in-bottle",
       "settings": {
-        "module_tag": "What's not in my bottle",
-        "design_tag": "",
-        "heading": "WHAT'S NOT IN MY BOTTLE",
-        "marquee_text": "No sugar · No water · No colour · No added flavour · No \"Himalayan\" that isn't",
         "bg_color": "#fffbef",
         "heading_color": "#1c1918",
         "card_bg": "#ffffff",
@@ -322,67 +311,24 @@
     "seabuckthorn_m5": {
       "type": "seabuckthorn-honest-warning",
       "settings": {
-        "module_tag": "M5 · Let's be honest — this is not a nice drink",
-        "design_tag": "",
-        "header_title": "LET'S BE HONEST",
-        "main_heading": "You might not love the drink right away!",
-        "quote_text": "Sea buckthorn is sour. Properly sour - nearer to unripe citrus than to juice. The first spoonful makes most people's face do something.",
-        "body_para1": "Nothing is wrong with your bottle. There's just no sugar in it to hide behind.",
-        "body_para2": "One tablespoon in a glass of warm water is how most people take it. Add honey if you like.",
-        "handwritten_note": "We won't be offended.",
-        "photo_caption": "Real first-sip reaction",
         "bg_color": "#fffbef",
         "card_bg": "#ffffff",
-        "card_border_color": "#e7ded0",
-        "badge_bg": "#ee5922",
-        "badge_color": "#ffffff"
+        "card_border_color": "#e7ded0"
       }
     },
     "seabuckthorn_m6": {
       "type": "seabuckthorn-where-it-comes-from",
-      "settings": {
-        "module_tag": "",
-        "design_tag": "",
-        "heading": "PICKED WITH A STICK, OFF A THORN BUSH",
-        "subtitle": "Ladakh, 3 weeks every September",
-        "stamp_text": "Ladakh Wild Harvest",
-        "para_1": "Nobody planted sea buckthorn here. It came up on its own along the riverbeds, the way it has for as long as anyone can remember, and Ladakh has ended up with about 9 of every 10 sea buckthorn berries in India.",
-        "para_2": "Picking it is nobody's favourite job. The bush is armed - long thorns, set close - so you don't reach into it. You spread a cloth on the ground, take a stick to the branches, and let the berries come down on their own.",
-        "para_3": "Then you hurry. They bruise within hours, so whatever comes down in the morning is pressed by evening. September is the whole season. Miss it and then it’s the next year.",
-        "para_4": "And nobody is out there spraying a wild bush by a river at 3,000 metres. There's no one to do it.",
-        "bg_color": "#fffbef",
-        "heading_color": "#1c1918",
-        "badge_bg": "#008b75",
-        "badge_color": "#ffffff"
-      }
+      "settings": {}
     },
     "seabuckthorn_m7": {
       "type": "seabuckthorn-bits-at-bottom",
-      "settings": {
-        "module_tag": "",
-        "design_tag": "",
-        "heading": "YOU'LL SEE BITS AT THE BOTTOM",
-        "subtitle": "This is the good news",
-        "para_1": "That's the berry, doing what berries do.",
-        "para_2": "Leave the bottle standing and it settles. A little sediment, the odd fragment of seed.",
-        "shake_text": "Shake it and it all comes back.",
-        "bg_color": "#fffbef",
-        "badge_bg": "#008b75",
-        "badge_color": "#ffffff"
-      }
+      "settings": {}
     },
     "seabuckthorn_m8": {
       "type": "seabuckthorn-batch-tested",
       "settings": {
         "module_tag": "",
-        "design_tag": "",
-        "heading": "EVERY BATCH TESTED. REPORT PUBLISHED.",
-        "description": "Every batch is tested at an NABL-accredited lab before it goes on sale - before listing, not after complaints.",
-        "btn_label": "Read the latest batch report",
-        "report_url": "",
-        "bg_color": "#fffbef",
-        "badge_bg": "#008b75",
-        "badge_color": "#ffffff"
+        "bg_color": "#fffbef"
       }
     },
     "seabuckthorn_m9": {
@@ -400,9 +346,6 @@
       "type": "seabuckthorn-what-it-costs",
       "settings": {
         "module_tag": "",
-        "para_1": "1 tablespoon makes a glass, and there are 30 in a bottle. That's the honest way to look at the price of a pulp.",
-        "para_2": "Ladakh gets one harvest a year, picked over 3 weeks, and then freighted down from 3,500 metres. There's no second crop to cover a bad one.",
-        "para_3": "We'd rather show you that sum than print \"premium\" on the label and hope nobody asks.",
         "bg_color": "#fffbef"
       }
     },
@@ -411,11 +354,11 @@
       "settings": {
         "module_tag": "",
         "design_tag": "",
-        "heading": "FREQUENTLY ASKED QUESTIONS",
-        "bg_color": "#fffbef",
-        "heading_color": "#1c1918",
         "badge_bg": "#008b75",
-        "badge_color": "#ffffff"
+        "badge_color": "#ffffff",
+        "heading": "FREQUENTLY ASKED QUESTIONS",
+        "heading_color": "#1c1918",
+        "bg_color": "#fffbef"
       }
     },
     "product_tabs_PVmzYe": {

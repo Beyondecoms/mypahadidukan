@@ -1,0 +1,206 @@
+{% comment %}
+  Transforms Shopify Buy Button embed components and .carousel-row in blog articles
+  into native theme product cards (.cp-card), matching collection and home page cards identically.
+{% endcomment %}
+
+<script>
+(function() {
+  if (window.__mpdBuyButtonBridgeInitialized) return;
+  window.__mpdBuyButtonBridgeInitialized = true;
+
+  var productQueue = [];
+  var isProcessing = null;
+  var storefrontToken = 'ff14759a858950c096b40885270d2422';
+  var shopDomain = 'mypahadidukan.myshopify.com';
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function renderCard(prod, container) {
+    if (!container) return;
+
+    var numId = prod.id ? prod.id.replace('gid://shopify/Product/', '') : '';
+    var firstVar = (prod.variants && prod.variants.edges && prod.variants.edges[0] && prod.variants.edges[0].node) || {};
+    var variantId = firstVar.id ? firstVar.id.replace('gid://shopify/ProductVariant/', '') : '';
+    var variantTitle = firstVar.title || '';
+
+    var price = parseFloat((firstVar.price && firstVar.price.amount) || (prod.priceRange && prod.priceRange.minVariantPrice && prod.priceRange.minVariantPrice.amount) || 0);
+    var comparePrice = parseFloat((firstVar.compareAtPrice && firstVar.compareAtPrice.amount) || (prod.compareAtPriceRange && prod.compareAtPriceRange.minVariantPrice && prod.compareAtPriceRange.minVariantPrice.amount) || 0);
+    var hasDiscount = comparePrice > price;
+    var discountPct = hasDiscount ? Math.round((comparePrice - price) / comparePrice * 100) : 0;
+
+    var img1 = (prod.featuredImage && prod.featuredImage.url) || (prod.images && prod.images.edges && prod.images.edges[0] && prod.images.edges[0].node && prod.images.edges[0].node.url) || '';
+    var img2 = (prod.images && prod.images.edges && prod.images.edges[1] && prod.images.edges[1].node && prod.images.edges[1].node.url) || '';
+
+    var prodUrl = '/products/' + (prod.handle || '');
+    var fullTitle = prod.title || '';
+    var shortTitle = fullTitle.length > 35 ? fullTitle.slice(0, 35) + '...' : fullTitle;
+    var isAvailable = typeof prod.availableForSale === 'boolean' ? prod.availableForSale : true;
+    var hasSecondary = !!img2;
+
+    var cardHtml = '<div class="cp-card' + (hasSecondary ? ' cp-card--has-secondary' : '') + '">' +
+      '<button type="button" aria-label="Add to Wishlist" class="swym-button swym-add-to-wishlist-view-product cp-wishlist product_' + numId + '" data-with-epi="true" data-swaction="addToWishlist" data-product-id="' + numId + '" data-variant-id="' + variantId + '" data-product-url="' + window.location.origin + prodUrl + '"></button>' +
+      '<a href="' + prodUrl + '" class="cp-img-wrap cp-ratio--square">' +
+        (img1 ? '<img class="cp-img cp-img--primary" src="' + img1 + '" alt="' + escapeHtml(fullTitle) + '" loading="lazy" width="600" height="600">' : '<div class="cp-img cp-img--placeholder"></div>') +
+        (img2 ? '<img class="cp-img cp-img--secondary" src="' + img2 + '" alt="' + escapeHtml(fullTitle) + '" loading="lazy" width="600" height="600">' : '') +
+      '</a>' +
+      (hasDiscount ? '<div class="cp-discount-bar">Extra 10% Discount at Checkout</div>' : '') +
+      '<div class="cp-info">' +
+        '<a href="' + prodUrl + '" class="cp-title" title="' + escapeHtml(fullTitle) + '">' + escapeHtml(shortTitle) + '</a>' +
+        (variantTitle && variantTitle !== 'Default Title' ? '<p class="cp-variant">' + escapeHtml(variantTitle) + '</p>' : '') +
+        '<div class="cp-stars">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+          '<span style="position:relative;display:inline-block;width:16px;height:16px;vertical-align:middle;">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="position:absolute;left:0;top:0;display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+            '<span style="position:absolute;left:0;top:0;overflow:hidden;width:80%;height:100%;display:block;">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+            '</span>' +
+          '</span>' +
+          '<span class="cp-rating-score">4.8</span>' +
+        '</div>' +
+        '<div class="cp-price-row">' +
+          (hasDiscount ? '<span class="cp-compare">₹' + Math.round(comparePrice) + '</span>' : '') +
+          '<span class="cp-price">₹' + Math.round(price) + '</span>' +
+          (hasDiscount ? '<span class="cp-off">' + discountPct + '%off</span>' : '') +
+        '</div>' +
+        (isAvailable ?
+          '<button type="button" class="cp-atc" data-variant-id="' + variantId + '">Add To Cart</button>' :
+          '<button type="button" class="cp-atc cp-atc--oos" disabled>Out of Stock</button>'
+        ) +
+      '</div>' +
+    '</div>';
+
+    container.innerHTML = cardHtml;
+  }
+
+  function fetchAndRenderProducts() {
+    if (!productQueue.length) return;
+    var batch = productQueue.splice(0, productQueue.length);
+    var ids = batch.map(function(item) { return item.id; });
+
+    var query = 'query getProducts($ids: [ID!]!) { nodes(ids: $ids) { ... on Product { id title handle vendor availableForSale featuredImage { url(transform: { maxWidth: 600 }) altText } images(first: 2) { edges { node { url(transform: { maxWidth: 600 }) altText } } } priceRange { minVariantPrice { amount currencyCode } } compareAtPriceRange { minVariantPrice { amount currencyCode } } variants(first: 10) { edges { node { id title availableForSale price { amount } compareAtPrice { amount } } } } } } }';
+
+    var gqlIds = ids.map(function(id) {
+      return id.toString().indexOf('gid://') === 0 ? id : 'gid://shopify/Product/' + id;
+    });
+
+    fetch('https://' + shopDomain + '/api/2024-01/graphql.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': storefrontToken
+      },
+      body: JSON.stringify({
+        query: query,
+        variables: { ids: gqlIds }
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      var nodes = (json && json.data && json.data.nodes) || [];
+      batch.forEach(function(item, idx) {
+        var prod = nodes[idx];
+        if (!prod || !prod.title) {
+          if (item.node && item.node.parentNode) {
+            item.node.remove();
+          }
+          return;
+        }
+        renderCard(prod, item.node);
+      });
+    })
+    .catch(function(err) {
+      console.warn('Storefront query error:', err);
+    });
+  }
+
+  function queueProduct(id, node) {
+    if (!id || !node) return;
+    productQueue.push({ id: id, node: node });
+    clearTimeout(isProcessing);
+    isProcessing = setTimeout(fetchAndRenderProducts, 20);
+  }
+
+  // Intercept ShopifyBuy SDK to prevent iframe creation and inject native cards
+  var customUI = {
+    createComponent: function(type, options) {
+      if (type === 'product' && options) {
+        var id = options.id;
+        var node = options.node;
+        if (id && node) {
+          queueProduct(id, node);
+        }
+      }
+    }
+  };
+
+  window.ShopifyBuy = {
+    __customProductCard: true,
+    buildClient: function(config) {
+      if (config && config.domain) shopDomain = config.domain;
+      if (config && config.storefrontAccessToken) storefrontToken = config.storefrontAccessToken;
+      return config;
+    },
+    UI: {
+      onReady: function(client) {
+        if (client && client.domain) shopDomain = client.domain;
+        if (client && client.storefrontAccessToken) storefrontToken = client.storefrontAccessToken;
+        return Promise.resolve(customUI);
+      }
+    }
+  };
+
+  // Fallback scanner: scans for inline productData or unrendered .carousel-card elements
+  function scanAndTransformFallback() {
+    var cards = document.querySelectorAll('.carousel-card[id^="product-component-"], [id^="product-component-"]');
+    if (!cards.length) return;
+
+    var unrendered = [];
+    cards.forEach(function(card) {
+      if (!card.querySelector('.cp-card')) {
+        unrendered.push(card);
+      }
+    });
+
+    if (!unrendered.length) return;
+
+    // Look for productData script in document
+    var scripts = document.querySelectorAll('script');
+    var foundData = null;
+    scripts.forEach(function(sc) {
+      var txt = sc.textContent || '';
+      if (txt.indexOf('productData') !== -1 && txt.indexOf('shopifyId') !== -1) {
+        var match = txt.match(/productData\s*=\s*(\[[\s\S]*?\]);/);
+        if (match && match[1]) {
+          try {
+            var raw = match[1].replace(/\/\/[^\n]*/g, '').replace(/,\s*]/, ']');
+            foundData = eval('(' + raw + ')');
+          } catch(e) {}
+        }
+      }
+    });
+
+    if (Array.isArray(foundData)) {
+      foundData.forEach(function(item) {
+        var el = document.getElementById(item.htmlId);
+        if (el && !el.querySelector('.cp-card')) {
+          queueProduct(item.shopifyId, el);
+        }
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scanAndTransformFallback);
+  } else {
+    scanAndTransformFallback();
+  }
+  window.addEventListener('load', scanAndTransformFallback);
+})();
+</script>
+

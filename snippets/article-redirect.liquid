@@ -1,0 +1,152 @@
+{%- comment -%}
+  ──────────────────────────────────────────────────────────────────────────────
+  DYNAMIC BLOG ARTICLE REDIRECT
+  ──────────────────────────────────────────────────────────────────────────────
+  Requirement:
+  Articles selected/tagged in a main article's "Related Articles" metafield
+  (custom.related_articles) act as redirect-source articles. Any visitor landing
+  directly (or via links) on those source articles is automatically redirected
+  to the main/primary blog article URL.
+  
+  The main blog article itself must not redirect and remains accessible normally.
+  Works dynamically across desktop and mobile, with loop protection and
+  preservation of query strings and hash anchors.
+  ──────────────────────────────────────────────────────────────────────────────
+{%- endcomment -%}
+
+{%- liquid
+  assign redirect_target_url = ''
+
+  # 1. Direct metafield override (if explicitly configured directly on this article)
+  assign direct_main = article.metafields.custom.main_article.value | default: article.metafields.custom.redirect_to.value | default: article.metafields.custom.parent_article.value
+  if direct_main != blank and direct_main.url != blank and direct_main.id != article.id
+    assign redirect_target_url = direct_main.url
+  endif
+
+  # 2. Dynamic reverse lookup across blogs in the store:
+  # Check if another article has selected the current article in custom.related_articles
+  if redirect_target_url == blank
+    assign blog_handles_setting = search_blogs | default: 'info, health-and-wellness, recipes, travel, shilajit'
+    assign all_blog_handles = blog_handles_setting | remove: ' ' | prepend: ',' | prepend: blog.handle | split: ',' | uniq
+
+    for bh in all_blog_handles
+      if bh == blank or blogs[bh] == blank
+        continue
+      endif
+      for candidate in blogs[bh].articles
+        if candidate.id == article.id
+          continue
+        endif
+        assign candidate_rel = candidate.metafields.custom.related_articles.value
+        if candidate_rel != blank and candidate_rel.size > 0
+          for rel in candidate_rel
+            assign match = false
+            if rel.id != blank and article.id != blank and rel.id == article.id
+              assign match = true
+            elsif rel.handle != blank and article.handle != blank
+              if rel.handle == article.handle
+                assign match = true
+              else
+                assign rel_slug = rel.handle | split: '/' | last
+                assign art_slug = article.handle | split: '/' | last
+                if rel_slug != blank and rel_slug == art_slug
+                  assign match = true
+                endif
+              endif
+            elsif rel.url != blank and article.url != blank and rel.url == article.url
+              assign match = true
+            endif
+
+            if match
+              # Check for circular reference: if this article also selected candidate, break loop
+              assign is_circular = false
+              if article.metafields.custom.related_articles.value != blank
+                for my_rel in article.metafields.custom.related_articles.value
+                  if my_rel.id == candidate.id or my_rel.handle == candidate.handle
+                    assign is_circular = true
+                    break
+                  endif
+                endfor
+              endif
+
+              unless is_circular
+                assign redirect_target_url = candidate.url
+              endunless
+              break
+            endif
+          endfor
+        endif
+        if redirect_target_url != blank
+          break
+        endif
+      endfor
+      if redirect_target_url != blank
+        break
+      endif
+    endfor
+  endif
+-%}
+
+{%- if redirect_target_url != blank -%}
+  <script>
+    (function() {
+      var targetUrl = {{ redirect_target_url | json }};
+      if (!targetUrl) return;
+
+      var currentPath = window.location.pathname.replace(/\/+$/, '');
+      var parser = document.createElement('a');
+      parser.href = targetUrl;
+      var targetPath = parser.pathname.replace(/\/+$/, '');
+
+      // Never redirect to the current URL
+      if (currentPath === targetPath) return;
+
+      // Loop protection via sessionStorage trail
+      var storageKey = 'mpd_article_redirect_trail';
+      var trail = [];
+      try {
+        trail = JSON.parse(sessionStorage.getItem(storageKey) || '[]');
+      } catch (e) {
+        trail = [];
+      }
+
+      if (trail.indexOf(targetPath) !== -1 || trail.length >= 3) {
+        console.warn('[MPD Redirect] Loop detected towards', targetPath, 'Stopping redirect.');
+        sessionStorage.removeItem(storageKey);
+        return;
+      }
+
+      trail.push(currentPath);
+      try {
+        sessionStorage.setItem(storageKey, JSON.stringify(trail));
+      } catch (e) {}
+
+      // Preserve query params (UTM tags, tracking) and hash
+      var search = window.location.search || '';
+      var hash = window.location.hash || '';
+      var finalUrl = targetUrl;
+      if (search) {
+        finalUrl += (finalUrl.indexOf('?') === -1 ? '?' : '&') + search.substring(1);
+      }
+      finalUrl += hash;
+
+      window.location.replace(finalUrl);
+    })();
+  </script>
+  <meta http-equiv="refresh" content="0; url={{ redirect_target_url }}">
+  <link rel="canonical" href="{{ redirect_target_url }}">
+  <style>
+    html, body { display: none !important; }
+  </style>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url={{ redirect_target_url }}">
+    <div style="padding: 40px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <p style="font-size: 16px; color: #201d1b;">Redirecting to <a href="{{ redirect_target_url }}" style="color: #008b75; font-weight: 700;">{{ redirect_target_url }}</a>...</p>
+    </div>
+  </noscript>
+{%- else -%}
+  <script>
+    try { sessionStorage.removeItem('mpd_article_redirect_trail'); } catch (e) {}
+  </script>
+{%- endif -%}
+
