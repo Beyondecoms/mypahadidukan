@@ -1,0 +1,50 @@
+{%- comment -%}
+  Renders the 404 postage-stamp illustration (signpost on a mountain trail) and its "Lost in the hills" postmark.
+
+  Accepts:
+  - stamp_color: {String} Fill of the perforated stamp border (default: #347F6C)
+
+  Usage:
+  {% render 'icon-404-stamp', stamp_color: section.settings.stamp_color %}
+{%- endcomment -%}
+{%- liquid
+  assign stamp_fill = stamp_color | default: '#347F6C'
+-%}
+<svg
+  class="nf-stamp__art"
+  viewBox="0 0 400 470"
+  width="100%"
+  role="img"
+  aria-label="A postage stamp showing a signpost on a mountain trail pointing to Saffron and Cow Ghee, with a plank reading You are here, and the number 404, not found"
+>
+  <path d="M0,0 L4.1,0 A7,7 0 0 0 18.1,0 L26.3,0 A7,7 0 0 0 40.3,0 L48.6,0 A7,7 0 0 0 62.6,0 L70.8,0 A7,7 0 0 0 84.8,0 L93.0,0 A7,7 0 0 0 107.0,0 L115.2,0 A7,7 0 0 0 129.2,0 L137.4,0 A7,7 0 0 0 151.4,0 L159.7,0 A7,7 0 0 0 173.7,0 L181.9,0 A7,7 0 0 0 195.9,0 L204.1,0 A7,7 0 0 0 218.1,0 L226.3,0 A7,7 0 0 0 240.3,0 L248.6,0 A7,7 0 0 0 262.6,0 L270.8,0 A7,7 0 0 0 284.8,0 L293.0,0 A7,7 0 0 0 307.0,0 L315.2,0 A7,7 0 0 0 329.2,0 L337.4,0 A7,7 0 0 0 351.4,0 L359.7,0 A7,7 0 0 0 373.7,0 L381.9,0 A7,7 0 0 0 395.9,0 L400,0 L400,3.7 A7,7 0 0 0 400,17.7 L400,25.0 A7,7 0 0 0 400,39.0 L400,46.4 A7,7 0 0 0 400,60.4 L400,67.8 A7,7 0 0 0 400,81.8 L400,89.1 A7,7 0 0 0 400,103.1 L400,110.5 A7,7 0 0 0 400,124.5 L400,131.9 A7,7 0 0 0 400,145.9 L400,153.2 A7,7 0 0 0 400,167.2 L400,174.6 A7,7 0 0 0 400,188.6 L400,196.0 A7,7 0 0 0 400,210.0 L400,217.3 A7,7 0 0 0 400,231.3 L400,238.7 A7,7 0 0 0 400,252.7 L400,260.0 A7,7 0 0 0 400,274.0 L400,281.4 A7,7 0 0 0 400,295.4 L400,302.8 A7,7 0 0 0 400,316.8 L400,324.1 A7,7 0 0 0 400,338.1 L400,345.5 A7,7 0 0 0 400,359.5 L400,366.9 A7,7 0 0 0 400,380.9 L400,388.2 A7,7 0 0 0 400,402.2 L400,409.6 A7,7 0 0 0 400,423.6 L400,431.0 A7,7 0 0 0 400,445.0 L400,452.3 A7,7 0 0 0 400,466.3 L400,470 L395.9,470 A7,7 0 0 0 381.9,470 L373.7,470 A7,7 0 0 0 359.7,470 L351.4,470 A7,7 0 0 0 337.4,470 L329.2,470 A7,7 0 0 0 315.2,470 L307.0,470 A7,7 0 0 0 293.0,470 L284.8,470 A7,7 0 0 0 270.8,470 L262.6,470 A7,7 0 0 0 248.6,470 L240.3,470 A7,7 0 0 0 226.3,470 L218.1,470 A7,7 0 0 0 204.1,470 L195.9,470 A7,7 0 0 0 181.9,470 L173.7,470 A7,7 0 0 0 159.7,470 L151.4,470 A7,7 0 0 0 137.4,470 L129.2,470 A7,7 0 0 0 115.2,470 L107.0,470 A7,7 0 0 0 93.0,470 L84.8,470 A7,7 0 0 0 70.8,470 L62.6,470 A7,7 0 0 0 48.6,470 L40.3,470 A7,7 0 0 0 26.3,470 L18.1,470 A7,7 0 0 0 4.1,470 L0,470 L0,466.3 A7,7 0 0 0 0,452.3 L0,445.0 A7,7 0 0 0 0,431.0 L0,423.6 A7,7 0 0 0 0,409.6 L0,402.2 A7,7 0 0 0 0,388.2 L0,380.9 A7,7 0 0 0 0,366.9 L0,359.5 A7,7 0 0 0 0,345.5 L0,338.1 A7,7 0 0 0 0,324.1 L0,316.8 A7,7 0 0 0 0,302.8 L0,295.4 A7,7 0 0 0 0,281.4 L0,274.0 A7,7 0 0 0 0,260.0 L0,252.7 A7,7 0 0 0 0,238.7 L0,231.3 A7,7 0 0 0 0,217.3 L0,210.0 A7,7 0 0 0 0,196.0 L0,188.6 A7,7 0 0 0 0,174.6 L0,167.2 A7,7 0 0 0 0,153.2 L0,145.9 A7,7 0 0 0 0,131.9 L0,124.5 A7,7 0 0 0 0,110.5 L0,103.1 A7,7 0 0 0 0,89.1 L0,81.8 A7,7 0 0 0 0,67.8 L0,60.4 A7,7 0 0 0 0,46.4 L0,39.0 A7,7 0 0 0 0,25.0 L0,17.7 A7,7 0 0 0 0,3.7 Z" fill="{{ stamp_fill }}"/>
+  <rect x="24" y="24" width="352" height="316" fill="#FFF4CE"/>
+  <circle cx="316" cy="78" r="26" fill="#F3E3A0" stroke="#231F20" stroke-width="2"/>
+  <polygon points="24,214 110,112 160,172 225,96 300,182 376,132 376,240 24,240" fill="#037564" stroke="#231F20" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="110,112 94,136 108,130 118,140 128,130 138,136" fill="#FFEEB7"/>
+  <polygon points="225,96 207,124 221,117 229,128 241,117 253,124" fill="#FFEEB7"/>
+  <polygon points="48,238 62,200 76,238" fill="#231F20"/>
+  <polygon points="54,222 62,188 70,222" fill="#231F20"/>
+  <path d="M24,252 Q130,218 220,246 T376,236 L376,340 L24,340 Z" fill="#231F20"/>
+  <path d="M318,340 C 290,322 345,306 318,288 C 296,274 330,264 312,250" fill="none" stroke="#FFEEB7" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 14"/>
+  <rect x="134" y="206" width="12" height="134" fill="#FFEEB7" stroke="#231F20" stroke-width="2"/>
+  <polygon points="146,214 252,214 266,228 252,242 146,242" fill="#FFEEB7" stroke="#231F20" stroke-width="2"/>
+  <text x="158" y="234" class="nf-stamp__label" font-size="15" fill="#231F20">SAFFRON</text>
+  <polygon points="134,250 28,250 14,264 28,278 134,278" fill="#FFEEB7" stroke="#231F20" stroke-width="2"/>
+  <text x="124" y="270" text-anchor="end" class="nf-stamp__label" font-size="15" fill="#231F20">COW GHEE</text>
+  <g transform="rotate(-5 140 306)">
+    <rect x="68" y="292" width="144" height="30" fill="#FFEEB7" stroke="#231F20" stroke-width="2"/>
+    <text x="140" y="312" text-anchor="middle" class="nf-stamp__label" font-size="14" fill="#231F20">YOU ARE HERE?</text>
+  </g>
+  <text x="200" y="424" text-anchor="middle" class="nf-stamp__label" font-size="84" letter-spacing="3" fill="#FFEEB7">404</text>
+  <text x="200" y="452" text-anchor="middle" class="nf-stamp__label nf-stamp__label--700" font-size="14" letter-spacing="5" fill="#FFEEB7">NOT FOUND · MPD</text>
+</svg>
+<svg class="nf-stamp__postmark" viewBox="0 0 220 100" width="220" height="100" aria-hidden="true" focusable="false">
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#231F20" stroke-width="3"/>
+  <circle cx="50" cy="50" r="32" fill="none" stroke="#231F20" stroke-width="1.5"/>
+  <text x="50" y="46" text-anchor="middle" class="nf-stamp__label" font-size="10" letter-spacing="1" fill="#231F20">LOST IN</text>
+  <text x="50" y="60" text-anchor="middle" class="nf-stamp__label" font-size="10" letter-spacing="1" fill="#231F20">THE HILLS</text>
+  <path d="M96,28 q10,-10 20,0 t20,0 t20,0 t20,0 t20,0" fill="none" stroke="#231F20" stroke-width="3" stroke-linecap="round"/>
+  <path d="M96,46 q10,-10 20,0 t20,0 t20,0 t20,0 t20,0" fill="none" stroke="#231F20" stroke-width="3" stroke-linecap="round"/>
+  <path d="M96,64 q10,-10 20,0 t20,0 t20,0 t20,0 t20,0" fill="none" stroke="#231F20" stroke-width="3" stroke-linecap="round"/>
+</svg>

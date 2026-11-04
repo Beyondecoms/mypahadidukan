@@ -1,6 +1,10 @@
 {{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
 
-<div id="ps-section-{{ section.id }}" class="ps-section" style="
+{%- liquid
+  assign ps_card_count = collections[section.settings.collection].products.size | at_most: section.settings.products_to_show
+-%}
+
+<div id="ps-section-{{ section.id }}" class="ps-section{% if ps_card_count <= 4 %} ps-section--fits{% endif %}" style="
     --ps-bg-desktop: {% if section.settings.bg_image != blank %}url({{ section.settings.bg_image | image_url: width: 2000 }}){% else %}none{% endif %};
     --ps-bg-mobile: {% if section.settings.bg_image_mobile != blank %}url({{ section.settings.bg_image_mobile | image_url: width: 1000 }}){% else %}none{% endif %};
     --ps-bg-color: {{ section.settings.bg_color }};
@@ -22,7 +26,16 @@
 
   <div class="ps-wrapper">
 
-    <h2 class="ps-title">{{ section.settings.title }}</h2>
+    {%- if section.settings.view_all_label != blank -%}
+      <div class="ps-header">
+        <h2 class="ps-title">{{ section.settings.title }}</h2>
+        <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="ps-view-all">
+          {{- section.settings.view_all_label -}}
+        </a>
+      </div>
+    {%- else -%}
+      <h2 class="ps-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
     <div>
       <div>
     <div class="ps-slider-row">
@@ -308,6 +321,18 @@
       "id": "title",
       "label": "Section heading",
       "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all link label",
+      "info": "Optional. Shown next to the heading, e.g. \"See all products\"."
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link",
+      "info": "Defaults to all products"
     },
     {
       "type": "checkbox",

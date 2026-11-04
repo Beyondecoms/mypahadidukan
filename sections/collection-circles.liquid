@@ -2,6 +2,9 @@
 
 <div class="collection-circles-section" style="background: {{ section.settings.bg_color }};">
   <div class="collection-circles-wrapper">
+    {%- if section.settings.title != blank -%}
+      <h2 class="collection-circles-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
 
     <!-- Scroll Buttons -->
     <div class="collection-slider-row">
@@ -130,6 +133,12 @@
   "tag": "section",
   "class": "collection-circles-outer",
   "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "info": "Optional. Leave blank to hide."
+    },
     {
       "type": "color",
       "id": "bg_color",

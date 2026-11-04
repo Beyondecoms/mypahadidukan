@@ -49,6 +49,45 @@
   font-variant: small-caps;
 }
 
+/* ── HEADER (title + optional view-all link) ── */
+.ps-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 39px;
+}
+
+.ps-header .ps-title {
+  margin: 0;
+}
+
+.ps-view-all {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-family-normal);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #231F20;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ps-view-all:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* All cards visible at 4-up: nothing to scroll on desktop */
+@media (min-width: 901px) {
+  .ps-section--fits .ps-arrow,
+  .ps-section--fits .ps-dots {
+    display: none;
+  }
+}
+
 /* ── SLIDER ROW ── */
 .ps-slider-row {
   display: flex;

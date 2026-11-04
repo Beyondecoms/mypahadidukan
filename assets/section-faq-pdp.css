@@ -139,6 +139,30 @@
     font-family: var(--font-family-normal);
 }
 
+/* ── FOOTER LINK (optional) ── */
+.pdp-faq-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.pdp-faq-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-family-normal);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #231F20;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.pdp-faq-link:hover {
+  text-decoration-thickness: 2px;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .pdp-inner {

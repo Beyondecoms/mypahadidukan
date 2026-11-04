@@ -1,0 +1,288 @@
+/* ==========================================================================
+   404 page
+   Hero values follow the design reference. Heading sizes are scaled ~1.18x
+   because the reference used Libre Baskerville as a stand-in for Mrs Eaves,
+   which renders smaller at the same px size.
+   ========================================================================== */
+
+.nf-hero {
+  --nf-ink: #231F20;
+  --nf-heading-font: var(--font-heading-family), Georgia, serif;
+  --nf-hand-font: 'Caveat', cursive;
+  background: var(--nf-bg);
+  color: var(--nf-ink);
+  font-family: var(--font-family-normal), sans-serif;
+  letter-spacing: 0;
+}
+
+.nf-hero__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 40px 52px;
+  box-sizing: border-box;
+}
+
+/* ── Copy column ── */
+.nf-hero__content {
+  flex: 1 1 440px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+.nf-hero__eyebrow,
+.nf-hero__note {
+  margin: 0;
+  font-family: var(--nf-hand-font);
+  line-height: normal;
+  letter-spacing: 0;
+  transform-origin: left;
+}
+
+.nf-hero__eyebrow {
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--nf-accent);
+  transform: rotate(-2deg);
+}
+
+.nf-hero__note {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--nf-ink);
+  transform: rotate(-1.5deg);
+}
+
+.nf-hero__title {
+  margin: 0;
+  font-family: var(--nf-heading-font);
+  font-variant: small-caps;
+  font-weight: 400;
+  font-size: 59px;
+  line-height: 0.975;
+  letter-spacing: -0.3px;
+  color: var(--nf-ink);
+  word-break: normal;
+}
+
+.nf-hero__text {
+  margin: 0;
+  max-width: 480px;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--nf-ink);
+}
+
+/* ── Buttons ── */
+.nf-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.nf-btn {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-family: var(--font-family-normal), sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nf-btn--primary {
+  padding: 0 30px;
+  background: var(--nf-accent);
+  color: #FFFFFF;
+}
+
+.nf-btn--primary:hover {
+  background: var(--nf-accent-hover);
+  color: #FFFFFF;
+}
+
+.nf-btn--ghost {
+  padding: 0 28px;
+  border: 1.5px solid var(--nf-ink);
+  color: var(--nf-ink);
+}
+
+.nf-btn--ghost:hover {
+  background: var(--nf-ink);
+  color: #FFFBF0;
+}
+
+.nf-btn:focus-visible {
+  outline: 2px solid var(--nf-ink);
+  outline-offset: 3px;
+}
+
+/* ── Illustration panel ── */
+.nf-hero__visual {
+  flex: 1 1 420px;
+  min-width: 0;
+  min-height: 620px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--nf-panel);
+}
+
+.nf-stamp {
+  position: relative;
+  width: 82%;
+  max-width: 400px;
+  transform: rotate(3deg);
+  filter: drop-shadow(0 6px 10px rgba(35, 31, 32, 0.2));
+}
+
+.nf-stamp__art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.nf-stamp__postmark {
+  position: absolute;
+  left: -50px;
+  bottom: 6px;
+  transform: rotate(-8deg);
+}
+
+.nf-stamp__label {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+}
+
+.nf-stamp__label--700 {
+  font-weight: 700;
+}
+
+/* ── Wave divider into the next section ── */
+.nf-hero__wave {
+  display: block;
+}
+
+.nf-hero__wave-fill {
+  fill: var(--nf-wave);
+}
+
+/* ==========================================================================
+   Reused sections on the 404 template.
+   Scoped by the section keys set in templates/404.json so the homepage
+   instances of these sections are untouched.
+   ========================================================================== */
+
+/* Shop by Category — collection-circles */
+[id$='__nf-categories'] .collection-circles-section {
+  padding: 28px 0 56px;
+}
+
+[id$='__nf-categories'] .collection-circles-wrapper {
+  max-width: 1240px;
+  padding: 0 30px;
+}
+
+[id$='__nf-categories'] .collection-circles-title {
+  margin-bottom: 13px;
+  font-size: 36px;
+}
+
+[id$='__nf-categories'] .collection-circle-link {
+  gap: 12px;
+}
+
+[id$='__nf-categories'] .collection-label {
+  line-height: 1.3;
+}
+
+/* A single dot means every circle is already visible */
+[id$='__nf-categories'] .collection-dots .dot:only-child {
+  display: none;
+}
+
+/* Best Sellers — product-slider */
+[id$='__nf-bestsellers'] .ps-section {
+  padding: 0;
+}
+
+[id$='__nf-bestsellers'] .ps-wrapper {
+  max-width: 1240px;
+  padding: 52px 36px 48px;
+}
+
+[id$='__nf-bestsellers'] .ps-header {
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+[id$='__nf-bestsellers'] .ps-title {
+  font-size: 36px;
+}
+
+/* Any Last Questions — faq-home */
+[id$='__nf-faq'] .pdp-section {
+  padding: 56px 0 64px;
+}
+
+[id$='__nf-faq'] .pdp-wrapper {
+  max-width: 940px;
+  padding: 0 40px;
+}
+
+[id$='__nf-faq'] .pdp-title-faq {
+  margin-bottom: 24px;
+  font-size: 38px;
+  line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+  [id$='__nf-categories'] .collection-circles-section {
+    padding: 28px 0 36px;
+  }
+
+  [id$='__nf-categories'] .collection-circles-wrapper {
+    padding: 0;
+  }
+
+  [id$='__nf-categories'] .collection-circles-title {
+    padding: 0 40px;
+  }
+
+  /* Snap to the inner padding so the first item lines up with the 40px gutter */
+  [id$='__nf-categories'] .collection-slider,
+  [id$='__nf-bestsellers'] .ps-slider {
+    scroll-padding: 0 16px;
+  }
+
+  [id$='__nf-bestsellers'] .ps-wrapper {
+    padding: 44px 24px 44px;
+  }
+
+  [id$='__nf-bestsellers'] .ps-header {
+    margin: 0 0 8px;
+    padding: 0 16px;
+  }
+
+  [id$='__nf-bestsellers'] .ps-title {
+    font-size: 36px;
+  }
+}

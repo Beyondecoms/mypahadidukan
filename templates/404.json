@@ -1,1 +1,164 @@
-{"sections":{"main":{"type":"main-404","settings":{}}},"order":["main"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "eyebrow": "Return to sender!",
+        "heading": "We couldn't deliver this page to you.",
+        "text": "It seems to have wandered off the trail somewhere in the mountains. The link may be old, or the address may have a typo. Let's get you back to the village.",
+        "primary_label": "Back to home",
+        "secondary_label": "Shop all products",
+        "secondary_link": "/collections/all",
+        "note": "Psst... our bestsellers are right below.",
+        "bg_color": "#fcf0be",
+        "panel_color": "#f4e1c6",
+        "accent_color": "#347f6c",
+        "accent_hover_color": "#285f51",
+        "stamp_color": "#347f6c",
+        "show_wave": true,
+        "wave_color": "#fffbf0"
+      }
+    },
+    "nf-categories": {
+      "type": "collection-circles",
+      "name": "Shop by Category",
+      "blocks": {
+        "circle_kAxggz": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_51.png",
+            "label": "Gifting",
+            "collection_link": "shopify://collections/all-products"
+          }
+        },
+        "circle_axYg33": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_55.png",
+            "label": "pure-seabuckthorn",
+            "collection_link": "shopify://collections/pure-seabuckthorn"
+          }
+        },
+        "circle_8Khfrr": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_60.png",
+            "label": "pahadi-wellness",
+            "collection_link": "shopify://collections/pahadi-wellness"
+          }
+        },
+        "circle_QDrNYj": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_8.jpg",
+            "label": "jams & spreads",
+            "collection_link": "shopify://collections/jams-spreads-preserves"
+          }
+        },
+        "circle_4zzjDd": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_62.png",
+            "label": "Dry Fruits",
+            "collection_link": "shopify://collections/dry-fruits"
+          }
+        },
+        "circle_D4AEkd": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_7.jpg",
+            "label": "natural beverages",
+            "collection_link": "shopify://collections/natural-beverages"
+          }
+        },
+        "circle_wnqVt3": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_6.jpg",
+            "label": "Pure Honey",
+            "collection_link": "shopify://collections/pure-honey"
+          }
+        }
+      },
+      "block_order": [
+        "circle_kAxggz",
+        "circle_axYg33",
+        "circle_8Khfrr",
+        "circle_QDrNYj",
+        "circle_4zzjDd",
+        "circle_D4AEkd",
+        "circle_wnqVt3"
+      ],
+      "settings": {
+        "title": "Shop by Category",
+        "bg_color": "#fffbf0"
+      }
+    },
+    "nf-bestsellers": {
+      "type": "product-slider",
+      "name": "Best Sellers",
+      "settings": {
+        "title": "Best Sellers",
+        "view_all_label": "See all products",
+        "view_all_link": "/collections/all",
+        "show_secondary_image": true,
+        "collection": "best-selling",
+        "products_to_show": 4,
+        "discount_text": "Extra 10% Discount at Checkout",
+        "bg_color": "#fcf0be"
+      }
+    },
+    "nf-faq": {
+      "type": "faq-home",
+      "name": "Any Last Questions",
+      "blocks": {
+        "faq_kQXBxP": {
+          "type": "faq",
+          "settings": {
+            "question": "How Long Does Delivery Take?",
+            "answer": "Usually 5-7 days, depending on where you are. You'll get the tracking details once it ships. We ship within 24-48 hours."
+          }
+        },
+        "faq_WP4QCx": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship outside India?",
+            "answer": "Yes, to a good number of countries. Rates and timelines are on our international shipping page, and if yours isn't listed, message us on WhatsApp, and we'll find out."
+          }
+        },
+        "faq_yXhGCz": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Cash on Delivery available?",
+            "answer": "No, not on our own site. Here you can pay by UPI, card, netbanking, or wallet, and there's a no-cost EMI option on UPI for larger orders. If you'd rather pay on delivery, we're on Amazon and Flipkart, and COD works fine on both. Same products, just an easier checkout for anyone who prefers paying at the door."
+          }
+        },
+        "faq_AKft4p": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my order arrives damaged or something's wrong?",
+            "answer": "Message us on WhatsApp with a photo, or email support@mypahadidukan.com. We'll sort it - replacement or refund, whichever suits. You'll hear back from an actual person, usually within half an hour."
+          }
+        }
+      },
+      "block_order": [
+        "faq_kQXBxP",
+        "faq_WP4QCx",
+        "faq_yXhGCz",
+        "faq_AKft4p"
+      ],
+      "settings": {
+        "title": "Any Last Questions ?",
+        "bg_color": "#fcf7e4",
+        "link_label": "Still stuck? Contact us",
+        "link_url": "shopify://pages/new-contact-1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nf-categories",
+    "nf-bestsellers",
+    "nf-faq"
+  ]
+}

@@ -13,6 +13,25 @@
   /* padding: 0 24px; */
 } 
 
+/* ── HEADING (optional) ── */
+.collection-circles-title {
+  margin: 0 0 16px;
+  font-family: var(--font-heading-family), Georgia, serif;
+  font-size: var(--font-heading-size);
+  font-weight: 400;
+  font-variant: small-caps;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #231F20;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .collection-circles-title {
+    font-size: var(--font-heading-size-mobile);
+  }
+}
+
 /* ── SLIDER ROW (wraps arrows + slider) ── */
 .collection-slider-row {
   display: flex;
