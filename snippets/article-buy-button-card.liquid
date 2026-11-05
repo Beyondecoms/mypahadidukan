@@ -1,6 +1,6 @@
 {% comment %}
   Transforms Shopify Buy Button embed components and .carousel-row in blog articles
-  into native theme product cards (.cp-card), matching collection and home page cards identically.
+  into the homepage product card (.ps-card, see snippets/product-slider-card.liquid).
 {% endcomment %}
 
 <script>
@@ -40,37 +40,36 @@
     var isAvailable = typeof prod.availableForSale === 'boolean' ? prod.availableForSale : true;
     var hasSecondary = !!img2;
 
-    var cardHtml = '<div class="cp-card' + (hasSecondary ? ' cp-card--has-secondary' : '') + '">' +
-      '<button type="button" aria-label="Add to Wishlist" class="swym-button swym-add-to-wishlist-view-product cp-wishlist product_' + numId + '" data-with-epi="true" data-swaction="addToWishlist" data-product-id="' + numId + '" data-variant-id="' + variantId + '" data-product-url="' + window.location.origin + prodUrl + '"></button>' +
-      '<a href="' + prodUrl + '" class="cp-img-wrap cp-ratio--square">' +
-        (img1 ? '<img class="cp-img cp-img--primary" src="' + img1 + '" alt="' + escapeHtml(fullTitle) + '" loading="lazy" width="600" height="600">' : '<div class="cp-img cp-img--placeholder"></div>') +
-        (img2 ? '<img class="cp-img cp-img--secondary" src="' + img2 + '" alt="' + escapeHtml(fullTitle) + '" loading="lazy" width="600" height="600">' : '') +
+    // Same markup as snippets/product-slider-card.liquid (the homepage card), styled by section-product-slider.css
+    var star = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    var cardHtml = '<div class="ps-card">' +
+      '<button type="button" aria-label="Add to Wishlist" class="swym-button swym-add-to-wishlist-view-product product_' + numId + '" data-with-epi="true" data-swaction="addToWishlist" data-product-id="' + numId + '" data-variant-id="' + variantId + '" data-product-url="' + window.location.origin + prodUrl + '"></button>' +
+      '<a href="' + prodUrl + '" class="ps-img-wrap' + (hasSecondary ? ' ps-img-wrap--has-secondary' : '') + '">' +
+        (img1 ? '<img src="' + img1 + '" alt="' + escapeHtml(fullTitle) + '" class="ps-img ps-img--primary">' : '') +
+        (hasSecondary ? '<img src="' + img2 + '" alt="' + escapeHtml(fullTitle) + '" class="ps-img ps-img--secondary" loading="lazy">' : '') +
       '</a>' +
-      (hasDiscount ? '<div class="cp-discount-bar">Extra 10% Discount at Checkout</div>' : '') +
-      '<div class="cp-info">' +
-        '<a href="' + prodUrl + '" class="cp-title" title="' + escapeHtml(fullTitle) + '">' + escapeHtml(shortTitle) + '</a>' +
-        (variantTitle && variantTitle !== 'Default Title' ? '<p class="cp-variant">' + escapeHtml(variantTitle) + '</p>' : '') +
-        '<div class="cp-stars">' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+      (hasDiscount ? '<div class="ps-discount-bar">Extra 10% Discount at Checkout</div>' : '') +
+      '<div class="ps-info">' +
+        '<a href="' + prodUrl + '" class="ps-product-title" title="' + escapeHtml(fullTitle) + '">' + escapeHtml(shortTitle) + '</a>' +
+        (variantTitle && variantTitle !== 'Default Title' ? '<p class="ps-variant">' + escapeHtml(variantTitle) + '</p>' : '') +
+        '<div class="ps-stars">' +
+          star + star + star + star +
           '<span style="position:relative;display:inline-block;width:16px;height:16px;vertical-align:middle;">' +
             '<svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="position:absolute;left:0;top:0;display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
             '<span style="position:absolute;left:0;top:0;overflow:hidden;width:80%;height:100%;display:block;">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
             '</span>' +
           '</span>' +
-          '<span class="cp-rating-score">4.8</span>' +
+          '<span class="ps-rating-score">4.8</span>' +
         '</div>' +
-        '<div class="cp-price-row">' +
-          (hasDiscount ? '<span class="cp-compare">₹' + Math.round(comparePrice) + '</span>' : '') +
-          '<span class="cp-price">₹' + Math.round(price) + '</span>' +
-          (hasDiscount ? '<span class="cp-off">' + discountPct + '%off</span>' : '') +
+        '<div class="ps-price-row">' +
+          (hasDiscount ? '<span class="ps-compare">₹' + Math.round(comparePrice) + '</span>' : '') +
+          '<span class="ps-price">₹' + Math.round(price) + '</span>' +
+          (hasDiscount ? '<span class="ps-off">' + discountPct + '%off</span>' : '') +
         '</div>' +
         (isAvailable ?
-          '<button type="button" class="cp-atc" data-variant-id="' + variantId + '">Add To Cart</button>' :
-          '<button type="button" class="cp-atc cp-atc--oos" disabled>Out of Stock</button>'
+          '<button type="button" class="ps-atc" data-variant-id="' + variantId + '">Add To Cart</button>' :
+          '<button type="button" class="ps-atc ps-atc--oos" disabled>Out of Stock</button>'
         ) +
       '</div>' +
     '</div>';
@@ -162,7 +161,7 @@
 
     var unrendered = [];
     cards.forEach(function(card) {
-      if (!card.querySelector('.cp-card')) {
+      if (!card.querySelector('.ps-card')) {
         unrendered.push(card);
       }
     });
@@ -188,7 +187,7 @@
     if (Array.isArray(foundData)) {
       foundData.forEach(function(item) {
         var el = document.getElementById(item.htmlId);
-        if (el && !el.querySelector('.cp-card')) {
+        if (el && !el.querySelector('.ps-card')) {
           queueProduct(item.shopifyId, el);
         }
       });

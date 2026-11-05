@@ -6,6 +6,7 @@
 
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 {{ 'card-product.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   # ─────────────────────────────────────────────────────
@@ -616,13 +617,11 @@
                   {%- for prod in blog_prods -%}
                     {%- if prod.title != blank -%}
                       <div class="article-bp-slide">
-                        {% render 'card-product',
-                          card_product: prod,
-                          media_aspect_ratio: 'square',
+                        {% render 'product-slider-card',
+                          product: prod,
+                          position: forloop.index,
                           show_secondary_image: true,
-                          show_vendor: false,
-                          show_rating: true,
-                          lazy_load: true
+                          discount_text: 'Extra 10% Discount at Checkout'
                         %}
                       </div>
                     {%- endif -%}
@@ -630,13 +629,11 @@
                 {%- elsif blog_prods.title != blank -%}
                   {%- assign prod = blog_prods -%}
                   <div class="article-bp-slide">
-                    {% render 'card-product',
-                      card_product: prod,
-                      media_aspect_ratio: 'square',
+                    {% render 'product-slider-card',
+                      product: prod,
+                      position: 1,
                       show_secondary_image: true,
-                      show_vendor: false,
-                      show_rating: true,
-                      lazy_load: true
+                      discount_text: 'Extra 10% Discount at Checkout'
                     %}
                   </div>
                 {%- endif -%}
@@ -1129,7 +1126,9 @@
         } else {
           var text = li.textContent.trim();
           var periodIdx = text.indexOf('.');
-          if (periodIdx > 0 && periodIdx < 45) {
+          // Split "Short title. Details" only when something follows the period; a single
+          // short sentence would otherwise become a title with an empty description
+          if (periodIdx > 0 && periodIdx < 45 && text.substring(periodIdx + 1).trim()) {
             stepTitle = text.substring(0, periodIdx).trim();
             stepDesc = text.substring(periodIdx + 1).trim();
           } else {
@@ -1145,7 +1144,7 @@
             '<span class="article-step-card__num">' + stepNumStr + '</span>' +
             '<h4 class="article-step-card__title">' + stepTitle + '</h4>' +
           '</div>' +
-          '<p class="article-step-card__desc">' + stepDesc + '</p>';
+          (stepDesc ? '<p class="article-step-card__desc">' + stepDesc + '</p>' : '');
         stepGrid.appendChild(card);
       });
 
@@ -1188,7 +1187,8 @@
 
     // ── 5. BLOG PRODUCT ADD TO CART INTEGRATION ──
     document.addEventListener('click', async function (e) {
-      var btn = e.target.closest('.article-product-atc-btn, .cp-atc');
+      // .ps-atc: the homepage product card, used by the products slider and in-article buy-button cards
+      var btn = e.target.closest('.article-product-atc-btn, .cp-atc, .article-page .ps-atc');
       if (!btn || btn.disabled) return;
 
       var variantId = btn.getAttribute('data-variant-id');
