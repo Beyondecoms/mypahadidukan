@@ -1,4 +1,9 @@
 /* Section M6 - Where it comes from */
+.sb-m6-section,
+.sb-m6-section * {
+  box-sizing: border-box;
+}
+
 .sb-m6-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m6-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -71,7 +76,7 @@
 
 .sb-m6-banner-image-wrap {
   width: 100%;
-  height: 380px;
+  height: clamp(420px, 45vw, 540px);
   position: relative;
   background-color: #008b75;
   overflow: hidden;
@@ -81,6 +86,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
 }
 
 .sb-m6-banner-placeholder {
@@ -122,7 +128,7 @@
 }
 
 .sb-m6-story-block {
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   line-height: 1.7;
   color: #333333;
 }
@@ -172,13 +178,20 @@
     font-size: 1.15rem !important;
   }
   .sb-m6-banner-image-wrap {
-    height: 220px !important;
+    height: clamp(250px, 65vw, 320px) !important;
+  }
+  .sb-m6-banner-image-wrap img {
+    object-position: center 20% !important;
   }
   .sb-m6-stamp-overlay {
-    top: 14px !important;
-    right: 14px !important;
-    padding: 6px 12px !important;
-    font-size: 0.8rem !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    max-width: calc(100% - 24px) !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1.25 !important;
   }
   .sb-m6-story-body {
     grid-template-columns: 1fr !important;
@@ -186,11 +199,12 @@
     gap: 16px !important;
   }
   .sb-m6-story-block {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
   }
   .sb-m6-facts-bar {
     padding: 14px 14px !important;
-    font-size: 0.95rem !important;
+    font-size: 1.05rem !important;
     gap: 10px !important;
     justify-content: flex-start !important;
   }

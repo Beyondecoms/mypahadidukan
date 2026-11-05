@@ -1,4 +1,9 @@
 /* Section M3 - Meet omega-7 */
+.sb-m3-section,
+.sb-m3-section * {
+  box-sizing: border-box;
+}
+
 .sb-m3-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m3-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 0;
@@ -155,7 +160,7 @@
 }
 
 .sb-m3-card-body {
-  font-size: 1.1rem;
+  font-size: 1.18rem;
   line-height: 1.65;
   color: #2b2825;
   flex: 1;
@@ -171,7 +176,7 @@
 
 .sb-m3-highlight-text {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   color: #008b75;
   border-top: 1.5px dashed #e7ded0;
   padding-top: 12px;
@@ -196,6 +201,16 @@
   .sb-m3-cards-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+  }
+  .sb-m3-card-title {
+    font-size: 1.2rem !important;
+  }
+  .sb-m3-card-body {
+    font-size: 1.08rem !important;
+    line-height: 1.6 !important;
+  }
+  .sb-m3-highlight-text {
+    font-size: 1.12rem !important;
   }
   .sb-m3-card {
     padding: 20px 16px !important;

@@ -13,7 +13,7 @@
 }
 
 .sb-m2-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -351,8 +351,9 @@
 .sb-m2-parchment-body p {
   margin: 0 0 14px 0;
   line-height: 1.7;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: #2b2825;
+  line-height: 1.7;
 }
 
 .sb-m2-parchment-body p:last-child,
@@ -443,7 +444,7 @@
     gap: 16px !important;
   }
   .sb-m2-callout {
-    font-size: 0.95rem !important;
+    font-size: 1rem !important;
   }
   .sb-m2-callout-text {
     font-size: 0.95rem !important;
@@ -466,7 +467,7 @@
     margin-bottom: 10px !important;
   }
   .sb-m2-parchment-body p {
-    font-size: 1rem !important;
+    font-size: 1.08rem !important;
     line-height: 1.6 !important;
     margin-bottom: 10px !important;
   }

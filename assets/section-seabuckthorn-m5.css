@@ -1,4 +1,9 @@
 /* Section M5 - The honest warning */
+.sb-m5-section,
+.sb-m5-section * {
+  box-sizing: border-box;
+}
+
 .sb-m5-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m5-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 0;
@@ -75,7 +80,7 @@
 }
 
 .sb-m5-quote {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   line-height: 1.65;
   font-family: Georgia, serif;
   font-style: italic;
@@ -86,14 +91,14 @@
 }
 
 .sb-m5-body-text {
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   line-height: 1.7;
   color: #333333;
 }
 
 .sb-m5-handwritten {
   font-family: 'Caveat', cursive, Georgia, serif;
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   color: #ee5922;
   font-weight: 700;
   margin-top: 10px;
@@ -165,10 +170,14 @@
     font-size: 1.15rem !important;
   }
   .sb-m5-quote {
-    font-size: 1.15rem !important;
+    font-size: 1.22rem !important;
     padding-left: 14px !important;
   }
   .sb-m5-body-text {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
+  }
+  .sb-m5-handwritten {
+    font-size: 1.5rem !important;
   }
 }

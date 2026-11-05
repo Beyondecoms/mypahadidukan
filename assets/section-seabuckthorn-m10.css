@@ -1,4 +1,9 @@
 /* Section M10 - What it costs */
+.sb-m10-section,
+.sb-m10-section * {
+  box-sizing: border-box;
+}
+
 .sb-m10-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m10-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -76,10 +81,11 @@
     margin-bottom: 14px !important;
   }
   .sb-m10-body p {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
     margin-bottom: 12px !important;
   }
   .sb-m10-body p:last-child {
-    font-size: 1.1rem !important;
+    font-size: 1.18rem !important;
   }
 }

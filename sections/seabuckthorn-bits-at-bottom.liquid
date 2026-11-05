@@ -13,6 +13,16 @@
   if m7_heading != blank or m7_subtitle != blank or m7_desc != blank or m7_add_desc != blank or m7_highlight != blank or m7_image != blank
     assign has_content = true
   endif
+
+  assign has_text = false
+  if m7_heading != blank or m7_subtitle != blank or m7_desc != blank or m7_add_desc != blank or m7_highlight != blank
+    assign has_text = true
+  endif
+
+  assign image_only = false
+  if m7_image != blank and has_text == false
+    assign image_only = true
+  endif
 -%}
 
 {%- if has_content -%}
@@ -25,43 +35,55 @@
     </div>
 
     <!-- Main Card Box -->
-    <div class="sb-m7-card-wrapper">
-      <div class="sb-m7-grid{% if m7_image == blank %} sb-m7-grid--no-image{% endif %}" style="{% if m7_image == blank %}grid-template-columns: 1fr;{% endif %}">
-        
-        <!-- Photo Column (Only if image is present) -->
-        {%- if m7_image != blank -%}
-          <div class="sb-m7-photo-col">
-            <div class="sb-m7-photo-box">
-              <img src="{{ m7_image | image_url: width: 500 }}" alt="{{ m7_alt }}" loading="lazy" width="500" height="500">
-            </div>
-          </div>
-        {%- endif -%}
+    <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}">
 
-        <!-- Content Column -->
-        <div class="sb-m7-content-col">
-          {%- if m7_heading != blank -%}
-            <h2 class="sb-m7-title">{{ m7_heading }}</h2>
-          {%- endif -%}
-          {%- if m7_subtitle != blank -%}
-            <h3 class="sb-m7-subtitle">"{{ m7_subtitle }}"</h3>
-          {%- endif -%}
-          
-          {%- if m7_desc != blank or m7_add_desc != blank or m7_highlight != blank -%}
-            <div class="sb-m7-body">
-              {%- if m7_desc != blank -%}
-                <p>{{ m7_desc | newline_to_br }}</p>
-              {%- endif -%}
-              {%- if m7_add_desc != blank -%}
-                <p>{{ m7_add_desc | newline_to_br }}</p>
-              {%- endif -%}
-              {%- if m7_highlight != blank -%}
-                <p class="sb-m7-shake-note"><em>{{ m7_highlight }}</em></p>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+      {%- if image_only -%}
+        <!-- Image-only layout: single centered image, full-width -->
+        <div class="sb-m7-image-only-wrap">
+          <div class="sb-m7-photo-box sb-m7-photo-box--large">
+            <img src="{{ m7_image | image_url: width: 900 }}" alt="{{ m7_alt }}" loading="lazy" width="900">
+          </div>
         </div>
 
-      </div>
+      {%- else -%}
+        <div class="sb-m7-grid{% if m7_image == blank %} sb-m7-grid--no-image{% endif %}">
+          
+          <!-- Photo Column (Only if image is present) -->
+          {%- if m7_image != blank -%}
+            <div class="sb-m7-photo-col">
+              <div class="sb-m7-photo-box">
+                <img src="{{ m7_image | image_url: width: 500 }}" alt="{{ m7_alt }}" loading="lazy" width="500" height="500">
+              </div>
+            </div>
+          {%- endif -%}
+
+          <!-- Content Column -->
+          <div class="sb-m7-content-col">
+            {%- if m7_heading != blank -%}
+              <h2 class="sb-m7-title">{{ m7_heading }}</h2>
+            {%- endif -%}
+            {%- if m7_subtitle != blank -%}
+              <h3 class="sb-m7-subtitle">"{{ m7_subtitle }}"</h3>
+            {%- endif -%}
+            
+            {%- if m7_desc != blank or m7_add_desc != blank or m7_highlight != blank -%}
+              <div class="sb-m7-body">
+                {%- if m7_desc != blank -%}
+                  <p>{{ m7_desc | newline_to_br }}</p>
+                {%- endif -%}
+                {%- if m7_add_desc != blank -%}
+                  <p>{{ m7_add_desc | newline_to_br }}</p>
+                {%- endif -%}
+                {%- if m7_highlight != blank -%}
+                  <p class="sb-m7-shake-note"><em>{{ m7_highlight }}</em></p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+        </div>
+      {%- endif -%}
+
     </div>
 
   </div>

@@ -1,4 +1,9 @@
 /* Section M11 - FAQs */
+.sb-m11-section,
+.sb-m11-section * {
+  box-sizing: border-box;
+}
+
 .sb-m11-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -14,7 +19,7 @@
 }
 
 .sb-m11-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -81,7 +86,7 @@
   justify-content: space-between;
   text-align: left;
   font-family: inherit;
-  font-size: 1.3rem;
+  font-size: 1.32rem;
   font-weight: 800;
   color: #1c1918;
   cursor: pointer;
@@ -104,7 +109,7 @@
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
   padding: 0 28px;
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   line-height: 1.7;
   color: #333333;
 }
@@ -129,14 +134,16 @@
   }
   .sb-m11-faq-question {
     padding: 16px 14px !important;
-    font-size: 1.05rem !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
   }
   .sb-m11-faq-icon {
     font-size: 1.4rem !important;
   }
   .sb-m11-faq-answer {
     padding: 0 14px !important;
-    font-size: 0.98rem !important;
+    font-size: 1.08rem !important;
+    line-height: 1.6 !important;
   }
   .sb-m11-faq-item.active .sb-m11-faq-answer {
     padding: 0 14px 16px 14px !important;

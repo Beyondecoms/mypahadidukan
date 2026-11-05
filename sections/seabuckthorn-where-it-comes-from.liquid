@@ -47,7 +47,7 @@
         <!-- Banner Image Wrap (Only if image is present) -->
         {%- if m6_image != blank -%}
           <div class="sb-m6-banner-image-wrap">
-            {{ m6_image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: m6_alt, width: 1400, height: 400 }}
+            {{ m6_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: m6_alt }}
             {%- if m6_badge != blank -%}
               <div class="sb-m6-stamp-overlay">
                 <span>{{ m6_badge }}</span>

@@ -1,4 +1,9 @@
 /* Section M7 - You'll see bits at the bottom */
+.sb-m7-section,
+.sb-m7-section * {
+  box-sizing: border-box;
+}
+
 .sb-m7-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m7-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -110,7 +115,7 @@
 }
 
 .sb-m7-body {
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   line-height: 1.7;
   color: #2b2825;
 }
@@ -121,6 +126,38 @@
   color: #ee5922;
   margin-top: 8px;
   font-style: italic;
+}
+
+
+/* Image-only layout (no text fields set) */
+.sb-m7-card-wrapper--image-only {
+  padding: 24px;
+}
+
+.sb-m7-image-only-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sb-m7-photo-box--large {
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid #e7ded0;
+  background-color: #fff8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-m7-photo-box--large img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 /* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
@@ -144,9 +181,16 @@
     font-size: 1.15rem !important;
   }
   .sb-m7-body {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
   }
   .sb-m7-shake-note {
     font-size: 1.15rem !important;
+  }
+  .sb-m7-card-wrapper--image-only {
+    padding: 14px !important;
+  }
+  .sb-m7-photo-box--large {
+    max-width: 100% !important;
   }
 }

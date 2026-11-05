@@ -1,4 +1,9 @@
 /* Section M9 - How to drink it */
+.sb-m9-section,
+.sb-m9-section * {
+  box-sizing: border-box;
+}
+
 .sb-m9-section {
   padding: 10px 10px;
   font-family: var(--font-body-family);
@@ -13,7 +18,7 @@
 }
 
 .sb-m9-top-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -102,8 +107,9 @@
 }
 
 .sb-m9-instruction-timing {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: #333333;
+  line-height: 1.65;
   font-weight: 600;
 }
 
@@ -121,6 +127,19 @@
 
 .sb-m9-stamp-sheet--image {
   padding: 0;
+/* Standalone stamp sheet (no hero graphic) */
+.sb-m9-stamp-sheet--standalone {
+  margin-bottom: 32px;
+  min-height: 220px;
+  border-radius: 16px;
+}
+
+.sb-m9-stamp-sheet--standalone .sb-m9-stamp-image {
+  max-height: 480px;
+  width: 100%;
+  object-fit: contain;
+}
+
   overflow: hidden;
   border: 1.5px solid #e7ded0;
   background-color: #fff8e8;
@@ -231,7 +250,7 @@
   border-radius: 16px;
   padding: 24px;
   color: #7c2d12;
-  font-size: 1.18rem;
+  font-size: 1.22rem;
   line-height: 1.65;
 }
 
@@ -291,6 +310,16 @@
   }
   .sb-m9-stamp-sheet--image {
     padding: 0 !important;
+  }
+  .sb-m9-stamp-sheet--standalone {
+    margin-bottom: 20px !important;
+    min-height: 160px !important;
+  }
+  .sb-m9-recipe-desc {
+    font-size: 1.05rem !important;
+  }
+  .sb-m9-storage-card {
+    font-size: 1.08rem !important;
   }
   .sb-m9-glasses-grid {
     grid-template-columns: repeat(6, 1fr) !important;
