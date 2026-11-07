@@ -556,6 +556,31 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
 
   {% section 'whatsapp-float' %}
-  
+  {% if template contains 'product' %}
+<style>.mpd-hide-offer { display: none !important; }</style>
+<script>
+(function () {
+  var HIDE_FOR_VARIANT = '46659355083058'; // 300ml
+
+  function selectedVariant() {
+    var input = document.querySelector('form[action*="/cart/add"] [name="id"]');
+    if (input && input.value) return input.value;
+    return new URLSearchParams(location.search).get('variant');
+  }
+
+  function update() {
+    var hide = selectedVariant() === HIDE_FOR_VARIANT;
+    document.querySelectorAll('span').forEach(function (el) {
+      if (el.children.length === 0 && /^\s*Buy at Rs\.?/i.test(el.textContent)) {
+        el.classList.toggle('mpd-hide-offer', hide);
+      }
+    });
+  }
+
+  update();
+  setInterval(update, 300); // catches variant switches and late-rendered app content
+})();
+</script>
+{% endif %}
 </body>
 </html>
