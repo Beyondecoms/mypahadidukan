@@ -557,10 +557,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   {% section 'whatsapp-float' %}
   {% if template contains 'product' %}
-<style>.mpd-hide-offer { display: none !important; }</style>
 <script>
 (function () {
-  var HIDE_FOR_VARIANT = '46659355083058'; // 300ml
+  var TARGET_VARIANT = '46659355083058'; // 300ml
+  var NEW_TEXT = 'No extra amount added on checkout';
 
   function selectedVariant() {
     var input = document.querySelector('form[action*="/cart/add"] [name="id"]');
@@ -569,16 +569,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function update() {
-    var hide = selectedVariant() === HIDE_FOR_VARIANT;
+    var isTarget = selectedVariant() === TARGET_VARIANT;
     document.querySelectorAll('span').forEach(function (el) {
-      if (el.children.length === 0 && /^\s*Buy at Rs\.?/i.test(el.textContent)) {
-        el.classList.toggle('mpd-hide-offer', hide);
+      if (el.children.length) return;
+      var txt = el.textContent.trim();
+
+      if (el.dataset.mpdOriginal === undefined) {
+        if (!/^Buy at Rs\.?/i.test(txt)) return; // not our line
+        el.dataset.mpdOriginal = el.textContent;
+      }
+
+      if (isTarget) {
+        if (el.textContent !== NEW_TEXT) el.textContent = NEW_TEXT;
+      } else if (el.textContent === NEW_TEXT) {
+        el.textContent = el.dataset.mpdOriginal;
       }
     });
   }
 
   update();
-  setInterval(update, 300); // catches variant switches and late-rendered app content
+  setInterval(update, 300);
 })();
 </script>
 {% endif %}
