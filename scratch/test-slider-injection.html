@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test Slider Injection</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 20px; }
+    .article-content-body { max-width: 800px; margin: 0 auto; }
+    .article-products-section--slider { background: #fee; padding: 20px; border: 2px solid red; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="article-content-body rte">
+    <p>Paragraph 1: Intro to the article...</p>
+    <p>Paragraph 2: Second intro paragraph with more details...</p>
+    <h2>Heading 1</h2>
+    <p>Paragraph 3: Content under heading 1. This is a longer paragraph that explains the benefits and traditional usage of the herbs.</p>
+    <p>Paragraph 4: More details about the herbs and recipes.</p>
+    <ul>
+      <li>Bullet 1</li>
+      <li>Bullet 2</li>
+      <li>Bullet 3</li>
+    </ul>
+    <h2>Heading 2</h2>
+    <p>Paragraph 5: Detailed section about dosages and directions.</p>
+    <p>Paragraph 6: More details.</p>
+    <h2>Heading 3</h2>
+    <p>Paragraph 7: Conclusion paragraph.</p>
+    <p>Paragraph 8: Final disclaimer.</p>
+  </div>
+
+  <template id="bp-slider-tpl">
+    <section class="article-products-section article-products-section--slider">
+      <h3>From My Pahadi Dukan</h3>
+    </section>
+  </template>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      var contentEl = document.querySelector('.article-content-body');
+      var bpSliderTpl = document.getElementById('bp-slider-tpl');
+      if (bpSliderTpl && !contentEl.querySelector('.article-products-section--slider')) {
+        var blocks = Array.from(contentEl.children).filter(function(node) {
+          return node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'TEMPLATE';
+        });
+
+        console.log('Total blocks found:', blocks.length);
+        if (blocks.length > 0) {
+          var totalContentHeight = contentEl.scrollHeight || contentEl.offsetHeight;
+          var targetHeight = totalContentHeight * 0.20;
+          var contentTop = contentEl.getBoundingClientRect().top + window.pageYOffset;
+          var bestBlock = blocks[0];
+          var minDiff = Infinity;
+
+          console.log('totalContentHeight:', totalContentHeight, 'targetHeight:', targetHeight);
+
+          for (var b = 0; b < blocks.length; b++) {
+            var block = blocks[b];
+            var blockBottom = (block.getBoundingClientRect().bottom + window.pageYOffset) - contentTop;
+            var diff = Math.abs(blockBottom - targetHeight);
+
+            console.log('Block', b, block.tagName, 'bottom:', blockBottom, 'diff:', diff);
+
+            if (diff < minDiff) {
+              minDiff = diff;
+              bestBlock = block;
+            }
+
+            if (blockBottom >= targetHeight && (block.tagName === 'P' || block.tagName === 'UL' || block.tagName === 'OL' || block.tagName === 'DIV' || block.tagName === 'BLOCKQUOTE')) {
+              bestBlock = block;
+              console.log('Matched target at block', b, block.tagName, block.textContent.substring(0, 30));
+              break;
+            }
+          }
+
+          if (bestBlock) {
+            var frag = bpSliderTpl.content ? bpSliderTpl.content.cloneNode(true) : null;
+            var sliderNode = frag ? frag.firstElementChild : (bpSliderTpl.firstElementChild ? bpSliderTpl.firstElementChild.cloneNode(true) : null);
+            if (sliderNode) {
+              bestBlock.insertAdjacentElement('afterend', sliderNode);
+              console.log('Inserted after:', bestBlock.tagName, bestBlock.textContent.substring(0, 30));
+            }
+          }
+        }
+      }
+    });
+  
+  var debug = document.createElement('div');
+  debug.id = 'debug-output';
+  debug.innerHTML = 'BEST BLOCK: ' + (bestBlock ? (bestBlock.tagName + ' - ' + bestBlock.textContent.substring(0, 40)) : 'NONE') +
+    '<br>TOTAL BLOCKS: ' + blocks.length +
+    '<br>TOTAL HEIGHT: ' + totalContentHeight +
+    '<br>TARGET HEIGHT: ' + targetHeight;
+  document.body.prepend(debug);
+</script>
+</body>
+</html>

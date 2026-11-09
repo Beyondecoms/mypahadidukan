@@ -6,12 +6,21 @@
   assign m7_desc = product.metafields.custom.m7_description.value
   assign m7_add_desc = product.metafields.custom.m7_additional_description.value
   assign m7_highlight = product.metafields.custom.m7_highlight_text.value
-  assign m7_image = product.metafields.custom.m7_image.value | default: product.metafields.custom.m7_image
-  assign m7_alt = m7_heading | default: product.title | escape
 
-  assign has_content = false
-  if m7_heading != blank or m7_subtitle != blank or m7_desc != blank or m7_add_desc != blank or m7_highlight != blank or m7_image != blank
-    assign has_content = true
+  # Support both new List of Images (custom.m7_images) and old Single Image (custom.m7_image)
+  assign m7_images_raw = product.metafields.custom.m7_images.value | default: product.metafields.custom.m7_images | default: product.metafields.custom['m7_images'].value | default: product.metafields.custom['m7_images'] | default: product.metafields.custom['m7-images'].value | default: product.metafields.custom['m7-images']
+  assign m7_single_raw = product.metafields.custom.m7_image.value | default: product.metafields.custom.m7_image | default: product.metafields.custom['m7_image'].value | default: product.metafields.custom['m7_image']
+
+  assign m7_images_count = 0
+  if m7_images_raw != blank
+    assign m7_images_count = m7_images_raw.size | default: 0
+  elsif m7_single_raw != blank
+    assign m7_images_count = 1
+  endif
+
+  assign has_images = false
+  if m7_images_count > 0
+    assign has_images = true
   endif
 
   assign has_text = false
@@ -19,9 +28,22 @@
     assign has_text = true
   endif
 
+  assign has_content = false
+  if has_text or has_images
+    assign has_content = true
+  endif
+
   assign image_only = false
-  if m7_image != blank and has_text == false
+  if has_images and has_text == false
     assign image_only = true
+  endif
+
+  assign m7_alt = m7_heading | default: product.title | escape
+
+  # Grid columns for multi-image layout (clamped between 1 and 4)
+  assign m7_grid_cols = m7_images_count | at_most: 4
+  if m7_grid_cols < 1
+    assign m7_grid_cols = 1
   endif
 -%}
 
@@ -38,22 +60,65 @@
     <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}">
 
       {%- if image_only -%}
-        <!-- Image-only layout: single centered image, full-width -->
-        <div class="sb-m7-image-only-wrap">
-          <div class="sb-m7-photo-box sb-m7-photo-box--large">
-            <img src="{{ m7_image | image_url: width: 900 }}" alt="{{ m7_alt }}" loading="lazy" width="900">
-          </div>
+        <!-- Image-only layout: responsive grid of images -->
+        <div class="sb-m7-images-grid" style="--m7-grid-cols: {{ m7_grid_cols }};">
+          {%- if m7_images_raw != blank -%}
+            {%- for image in m7_images_raw -%}
+              {%- if image != blank -%}
+                {%- assign img_alt = image.alt | default: m7_alt | escape -%}
+                <div class="sb-m7-photo-box{% if m7_images_count == 1 %} sb-m7-photo-box--large{% else %} sb-m7-photo-box--multi{% endif %}">
+                  {{ image | image_url: width: 1200 | image_tag:
+                    loading: 'lazy',
+                    alt: img_alt
+                  }}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- elsif m7_single_raw != blank -%}
+            {%- assign img_alt = m7_single_raw.alt | default: m7_alt | escape -%}
+            <div class="sb-m7-photo-box sb-m7-photo-box--large">
+              {{ m7_single_raw | image_url: width: 1200 | image_tag:
+                loading: 'lazy',
+                alt: img_alt
+              }}
+            </div>
+          {%- endif -%}
         </div>
 
       {%- else -%}
-        <div class="sb-m7-grid{% if m7_image == blank %} sb-m7-grid--no-image{% endif %}">
+        <!-- Two-column layout with text -->
+        <div class="sb-m7-grid{% unless has_images %} sb-m7-grid--no-image{% endunless %}">
           
-          <!-- Photo Column (Only if image is present) -->
-          {%- if m7_image != blank -%}
+          <!-- Photo Column (Only if images are present) -->
+          {%- if has_images -%}
             <div class="sb-m7-photo-col">
-              <div class="sb-m7-photo-box">
-                <img src="{{ m7_image | image_url: width: 500 }}" alt="{{ m7_alt }}" loading="lazy" width="500" height="500">
-              </div>
+              {%- if m7_images_count > 1 -%}
+                <div class="sb-m7-photo-stack">
+                  {%- for image in m7_images_raw -%}
+                    {%- if image != blank -%}
+                      {%- assign img_alt = image.alt | default: m7_alt | escape -%}
+                      <div class="sb-m7-photo-box">
+                        {{ image | image_url: width: 600 | image_tag:
+                          loading: 'lazy',
+                          alt: img_alt
+                        }}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                {%- assign single_img_obj = m7_single_raw -%}
+                {%- if m7_images_raw != blank -%}
+                  {%- assign single_img_obj = m7_images_raw | first -%}
+                {%- endif -%}
+                {%- assign img_alt = single_img_obj.alt | default: m7_alt | escape -%}
+                <div class="sb-m7-photo-box">
+                  {{ single_img_obj | image_url: width: 600 | image_tag:
+                    loading: 'lazy',
+                    alt: img_alt
+                  }}
+                </div>
+              {%- endif -%}
             </div>
           {%- endif -%}
 

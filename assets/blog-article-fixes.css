@@ -1,0 +1,333 @@
+/* ==========================================================================
+   My Pahadi Dukan - Blog Article Fixes
+   Scoped to .article-hero and .article-content-body to avoid affecting other pages
+   ========================================================================== */
+
+/* ── 1. FEATURED HERO IMAGE FIX ──
+   Ensures featured images render cleanly at their natural aspect ratio without distortion or cropping */
+.article-hero__media {
+  aspect-ratio: auto !important;
+  height: auto !important;
+  background-color: transparent !important;
+}
+
+.article-hero__img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* ── 2. INFOGRAPHIC IMAGE ──
+   Full-width responsive infographic placed directly before tables */
+.article-content-body .blog-infographic {
+  display: block !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 36px auto !important;
+  border-radius: var(--mpd-radius-md, 14px) !important;
+  box-shadow: var(--mpd-shadow-card, 0 4px 20px rgba(35, 32, 30, 0.05)) !important;
+  border: 1.5px solid var(--mpd-border, #e7ded0) !important;
+  box-sizing: border-box !important;
+}
+
+@media only screen and (max-width: 749px) {
+  .article-content-body .blog-infographic {
+    margin: 24px auto !important;
+    border-radius: var(--mpd-radius-sm, 8px) !important;
+  }
+}
+
+/* ── 3. TABLE STYLING & HEADERS ──
+   Dark green headers, white text, H3 typography inheritance, scrollable on mobile */
+.article-content-body table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  margin: 36px 0 !important;
+  border: 1.5px solid var(--mpd-border, #e7ded0) !important;
+  border-radius: var(--mpd-radius-md, 14px) !important;
+  overflow: hidden !important;
+  background-color: var(--mpd-bg-surface, #ffffff) !important;
+  box-shadow: var(--mpd-shadow-subtle, 0 2px 8px rgba(35, 32, 30, 0.04)) !important;
+  box-sizing: border-box !important;
+}
+
+/* Header row: handles standard thead th/td, explicit .blog-table-header, and first row td (Shopify RTE fallback) */
+.article-content-body table thead th,
+.article-content-body table thead td,
+.article-content-body table tr.blog-table-header th,
+.article-content-body table tr.blog-table-header td,
+.article-content-body table:not(:has(thead)) tbody tr:first-child th,
+.article-content-body table:not(:has(thead)) tbody tr:first-child td,
+.article-content-body table:not(:has(thead)) tr:first-child th,
+.article-content-body table:not(:has(thead)) tr:first-child td {
+  background-color: var(--mpd-primary-hover, #025b4e) !important;
+  color: #ffffff !important;
+  padding: 16px 20px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  border: none !important;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15) !important;
+  /* H3 typography inheritance matching theme's .article-content-body h3 */
+  font-family: var(--mpd-font-heading, "Figtree", sans-serif) !important;
+  font-size: clamp(19px, 2vw, 24px) !important;
+  font-weight: 800 !important;
+  line-height: 1.32 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Force all inner elements inside header cells to adopt white text and matching font */
+.article-content-body table thead th *,
+.article-content-body table thead td *,
+.article-content-body table tr.blog-table-header th *,
+.article-content-body table tr.blog-table-header td *,
+.article-content-body table:not(:has(thead)) tbody tr:first-child th *,
+.article-content-body table:not(:has(thead)) tbody tr:first-child td *,
+.article-content-body table:not(:has(thead)) tr:first-child th *,
+.article-content-body table:not(:has(thead)) tr:first-child td * {
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+}
+
+/* Body rows */
+.article-content-body table tbody tr:not(:first-child) td,
+.article-content-body table tr:not(:first-child) td {
+  padding: 15px 18px !important;
+  font-size: 15.5px !important;
+  line-height: 1.65 !important;
+  color: var(--mpd-text-body, #2c2724) !important;
+  border-bottom: 1px solid var(--mpd-border-light, #f0eae1) !important;
+  background-color: var(--mpd-bg-surface, #ffffff);
+}
+
+.article-content-body table tr:nth-child(even) td {
+  background-color: #faf7f2 !important;
+}
+
+.article-content-body table tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Mobile responsiveness: scrollable without breaking page container */
+@media only screen and (max-width: 749px) {
+  .article-content-body table {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 24px 0 !important;
+    border-radius: var(--mpd-radius-sm, 10px) !important;
+  }
+  .article-content-body table thead th,
+  .article-content-body table thead td,
+  .article-content-body table tr.blog-table-header th,
+  .article-content-body table tr.blog-table-header td,
+  .article-content-body table:not(:has(thead)) tbody tr:first-child th,
+  .article-content-body table:not(:has(thead)) tbody tr:first-child td,
+  .article-content-body table:not(:has(thead)) tr:first-child th,
+  .article-content-body table:not(:has(thead)) tr:first-child td {
+    padding: 14px 16px !important;
+    font-size: 18px !important;
+    line-height: 1.35 !important;
+    white-space: nowrap !important;
+  }
+  .article-content-body table tr:not(:first-child) td {
+    padding: 12px 14px !important;
+    font-size: 14.5px !important;
+    min-width: 140px !important;
+  }
+}
+
+/* ── 4. DISCLAIMER BLOCK ──
+   Dedicated styled callout block for medical/wellness disclaimers */
+.article-content-body .blog-disclaimer {
+  background-color: #faf7f2 !important;
+  border-left: 4px solid var(--mpd-primary, #008b75) !important;
+  border-radius: 0 var(--mpd-radius-sm, 8px) var(--mpd-radius-sm, 8px) 0 !important;
+  padding: 18px 22px !important;
+  margin: 32px 0 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--mpd-text-muted, #5e5750) !important;
+  box-shadow: var(--mpd-shadow-subtle, 0 2px 8px rgba(35, 32, 30, 0.04)) !important;
+  box-sizing: border-box !important;
+}
+
+.article-content-body .blog-disclaimer p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+}
+
+.article-content-body .blog-disclaimer strong,
+.article-content-body .blog-disclaimer b {
+  color: var(--mpd-text-main, #1c1918) !important;
+  font-weight: 700 !important;
+}
+
+@media only screen and (max-width: 749px) {
+  .article-content-body .blog-disclaimer {
+    padding: 14px 16px !important;
+    margin: 22px 0 !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ── 5. BLOG ACTION BUTTONS ──
+   Solid brand green buttons replacing plain inline text links */
+.article-content-body .blog-btn-wrap {
+  margin: 30px 0 !important;
+  text-align: left;
+}
+
+.article-content-body .blog-btn-wrap--center {
+  text-align: center;
+}
+
+.article-content-body a.blog-btn,
+.article-content-body .blog-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background-color: var(--mpd-primary, #008b75) !important;
+  color: #ffffff !important;
+  padding: 14px 28px !important;
+  border-radius: var(--mpd-radius-pill, 9999px) !important;
+  font-family: var(--mpd-font-heading, "Figtree", sans-serif) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(0, 139, 117, 0.25) !important;
+  transition: all 0.22s ease !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+.article-content-body a.blog-btn *,
+.article-content-body .blog-btn * {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.article-content-body a.blog-btn:hover,
+.article-content-body .blog-btn:hover {
+  background-color: var(--mpd-primary-hover, #025b4e) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0, 139, 117, 0.35) !important;
+  text-decoration: none !important;
+}
+
+@media only screen and (max-width: 749px) {
+  .article-content-body .blog-btn-wrap {
+    margin: 22px 0 !important;
+  }
+  .article-content-body a.blog-btn,
+  .article-content-body .blog-btn {
+    display: flex !important;
+    width: 100% !important;
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ── 6. TL;DR CALLOUT BLOCK ──
+   Styled after the theme's Important Note (.article-tip-card) */
+.article-content-body .blog-callout--tldr {
+  margin: 36px 0 !important;
+  background: linear-gradient(135deg, var(--mpd-bg-tint-green, #f2f8f6) 0%, #ffffff 100%) !important;
+  border: 1.5px solid #c7e8df !important;
+  border-left: 5px solid var(--mpd-primary, #008b75) !important;
+  border-radius: var(--mpd-radius-md, 14px) !important;
+  padding: 24px 28px !important;
+  box-shadow: var(--mpd-shadow-subtle, 0 2px 8px rgba(35, 32, 30, 0.04)) !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+.article-content-body .blog-callout--tldr .article-tip-card__header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+}
+
+.article-content-body .blog-callout--tldr .article-tip-card__badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-family: var(--mpd-font-heading, "Figtree", sans-serif) !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--mpd-primary, #008b75) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+.article-content-body .blog-callout--tldr .blog-callout__intro {
+  font-size: 16.5px !important;
+  line-height: 1.7 !important;
+  color: var(--mpd-text-main, #1c1918) !important;
+  margin: 0 0 16px 0 !important;
+  font-weight: 500 !important;
+}
+
+.article-content-body .blog-callout--tldr .blog-callout__list {
+  list-style: disc !important;
+  margin: 0 !important;
+  padding-left: 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.article-content-body .blog-callout--tldr .blog-callout__list li {
+  font-size: 15.5px !important;
+  line-height: 1.65 !important;
+  color: var(--mpd-text-body, #2c2724) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.article-content-body .blog-callout--tldr .blog-callout__list li strong {
+  color: var(--mpd-text-main, #1c1918) !important;
+  font-weight: 700 !important;
+}
+
+@media only screen and (max-width: 749px) {
+  .article-content-body .blog-callout--tldr {
+    padding: 18px 18px !important;
+    margin: 24px 0 !important;
+    border-radius: var(--mpd-radius-sm, 10px) !important;
+  }
+  .article-content-body .blog-callout--tldr .blog-callout__intro {
+    font-size: 15px !important;
+    margin-bottom: 14px !important;
+  }
+  .article-content-body .blog-callout--tldr .blog-callout__list {
+    padding-left: 18px !important;
+    gap: 10px !important;
+  }
+  .article-content-body .blog-callout--tldr .blog-callout__list li {
+    font-size: 14px !important;
+  }
+}
+

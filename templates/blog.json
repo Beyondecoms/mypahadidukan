@@ -139,6 +139,7 @@
     },
     "product_slider_j3RWmn": {
       "type": "product-slider",
+      "disabled": true,
       "custom_css": [
         ".ps-wrapper {padding: 1% 24px 0px;}"
       ],

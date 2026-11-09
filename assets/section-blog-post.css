@@ -905,7 +905,7 @@ body {
   display: none !important;
 }
 
-/* Card Slide Overrides — Scoped for .article-bp-slide and in-article .carousel-row to render .cp-card */
+/* Card Slide Overrides — .article-bp-slide and in-article .carousel-row hold the homepage card (.ps-card) */
 .article-bp-slide {
   flex: 0 0 260px !important;
   min-width: 260px !important;
@@ -928,9 +928,30 @@ body {
   border-color: transparent !important;
 }
 
-.article-bp-slide .cp-card {
-  width: 100% !important;
-  height: 100% !important;
+/* The slide sets the width; the card fills it (its own flex-basis is for the homepage row) */
+.article-bp-slide > .ps-card,
+.carousel-row .carousel-card > .ps-card {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* Inherit the site's body text like the homepage card does (layout/theme.liquid body),
+   not the article's larger reading type */
+.article-page .ps-card {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  font-size: 1.5rem;
+  letter-spacing: 0.06rem;
+  line-height: calc(1 + 0.8 / var(--font-body-scale));
+  color: rgba(var(--color-foreground), 0.75);
+  text-align: start;
+}
+
+@media screen and (min-width: 750px) {
+  .article-page .ps-card {
+    font-size: 1.6rem;
+  }
 }
 
 /* ── In-Article Blog Product Carousel (.carousel-row) ── */
@@ -969,32 +990,9 @@ body {
   padding: 4px !important;
 }
 
-.carousel-row .carousel-card .cp-card {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Ensure .cp-card links inside article body are styled cleanly as product cards */
-.article-content-body .cp-card a,
-.article-content-body .cp-card a *,
-.article-template__content .cp-card a,
-.article-template__content .cp-card a *,
-.rte .cp-card a,
-.rte .cp-card a * {
-  text-decoration: none !important;
-}
-
-.article-content-body .cp-card .cp-title,
-.article-template__content .cp-card .cp-title,
-.rte .cp-card .cp-title {
-  color: #231F20 !important;
-}
-
-.article-content-body .cp-card .cp-title:hover,
-.article-template__content .cp-card .cp-title:hover,
-.rte .cp-card .cp-title:hover {
-  color: var(--mpd-primary, #048E79) !important;
-}
+/* Product cards inside the article body are the homepage card, styled only by
+   section-product-slider.css: the article's p / img / link rules below skip anything
+   inside .ps-card via :where(:not(.ps-card *)), which adds no specificity */
 
 @media (max-width: 768px) {
   .article-products-section--slider {
@@ -1016,7 +1014,6 @@ body {
     padding: 12px 2px 20px !important;
     margin: 22px 0 !important;
   }
-}
 
   .article-bp-slider-arrows {
     display: none !important;
@@ -1351,7 +1348,7 @@ body {
 }
 
 /* Paragraphs */
-.article-content-body p {
+.article-content-body p:where(:not(.ps-card *)) {
   font-size: 18px !important;
   line-height: 1.85 !important;
   margin: 0 0 24px;
@@ -1372,9 +1369,9 @@ body {
 }
 
 /* ── Article Body Links (Consistent Brand Primary Green & Hover) ── */
-.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]),
-.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]),
-.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]) {
+.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):where(:not(.ps-card *)),
+.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):where(:not(.ps-card *)),
+.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):where(:not(.ps-card *)) {
   color: var(--mpd-primary) !important;
   text-decoration: underline !important;
   text-decoration-thickness: 1.5px !important;
@@ -1415,12 +1412,12 @@ body {
 }
 
 /* Hover & Focus state */
-.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover,
-.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus,
-.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover,
-.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus,
-.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover,
-.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus,
+.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover:where(:not(.ps-card *)),
+.article-content-body a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus:where(:not(.ps-card *)),
+.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover:where(:not(.ps-card *)),
+.article-template__content a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus:where(:not(.ps-card *)),
+.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):hover:where(:not(.ps-card *)),
+.rte a:not([class*="btn"]):not([class*="button"]):not([class*="card"]):focus:where(:not(.ps-card *)),
 .article-content-body strong a:not([class*="btn"]):not([class*="button"]):hover,
 .article-content-body b a:not([class*="btn"]):not([class*="button"]):hover,
 .article-content-body em a:not([class*="btn"]):not([class*="button"]):hover,
@@ -1487,7 +1484,7 @@ body {
 }
 
 /* In-Content Images & Figures */
-.article-content-body img {
+.article-content-body img:where(:not(.ps-card *)) {
   max-width: 100%;
   height: auto;
   display: block;
@@ -1702,6 +1699,11 @@ body {
   font-weight: 900;
   flex-shrink: 0;
   border: 1.5px solid var(--mpd-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .article-step-card__title {
@@ -1711,6 +1713,12 @@ body {
   color: var(--mpd-text-main);
   margin: 0;
   line-height: 1.3;
+}
+
+/* The title is an h4 inside the article body, so the generic .article-content-body h4
+   margins (28px top, and an !important one on mobile) would push it below the circle */
+.article-content-body .article-step-card__title {
+  margin: 0 !important;
 }
 
 .article-step-card__desc {
@@ -2189,21 +2197,12 @@ body {
 /* Matches .article-content-body h2 */
 .article-faq-section__title {
   font-family: var(--mpd-font-heading);
-<<<<<<< HEAD
   font-size: clamp(30px, 2.9vw, 38px);
   font-weight: 800;
   line-height: 1.25;
   color: #141211;
   margin: 60px 0 22px;
   padding-top: 28px;
-=======
-  font-size: clamp(34px, 3.2vw, 42px);
-  font-weight: 800;
-  line-height: 1.25;
-  color: #141211;
-  margin: 68px 0 24px;
-  padding-top: 30px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
   border-top: 2px solid var(--mpd-border-light);
   letter-spacing: -0.015em;
   scroll-margin-top: 100px;
@@ -2216,11 +2215,7 @@ body {
 /* Slightly lighter than an article h3 so a run of questions doesn't feel heavy */
 .article-faq-item__question {
   font-family: var(--mpd-font-heading);
-<<<<<<< HEAD
   font-size: clamp(20px, 1.8vw, 22.5px);
-=======
-  font-size: clamp(22px, 2vw, 25px);
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
   font-weight: 800;
   line-height: 1.35;
   color: #141211;
@@ -2231,11 +2226,7 @@ body {
 /* Matches .article-content-body p */
 .article-faq-item__answer,
 .article-faq-item__answer p {
-<<<<<<< HEAD
   font-size: 18px;
-=======
-  font-size: 20px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
   line-height: 1.85;
   color: #201d1b;
 }
@@ -2543,7 +2534,7 @@ body {
     font-size: 16px;
   }
 
-  .article-content-body p,
+  .article-content-body p:where(:not(.ps-card *)),
   .article-content-body li {
     font-size: 16.5px !important;
     line-height: 1.8 !important;
@@ -2551,11 +2542,7 @@ body {
 
   .article-faq-item__answer,
   .article-faq-item__answer p {
-<<<<<<< HEAD
     font-size: 16.5px;
-=======
-    font-size: 18.5px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
     line-height: 1.8;
   }
 
@@ -2700,11 +2687,7 @@ body {
   }
 
   .article-hero__caption {
-<<<<<<< HEAD
     font-size: 11.5px;
-=======
-    font-size: 12.5px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
     padding: 8px 0;
     text-align: left;
   }
@@ -2761,7 +2744,7 @@ body {
     text-align: left;
   }
 
-  .article-content-body p {
+  .article-content-body p:where(:not(.ps-card *)) {
     font-size: 16px !important;
     line-height: 1.75 !important;
     margin-bottom: 18px !important;
@@ -2981,17 +2964,10 @@ body {
   }
 
   .article-faq-section__title {
-<<<<<<< HEAD
     font-size: clamp(21px, 5vw, 25px);
     line-height: 1.3;
     margin: 34px 0 12px;
     padding-top: 16px;
-=======
-    font-size: clamp(23px, 5.5vw, 28px);
-    line-height: 1.3;
-    margin: 38px 0 14px;
-    padding-top: 18px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
   }
 
   .article-faq-item + .article-faq-item {
@@ -2999,22 +2975,14 @@ body {
   }
 
   .article-faq-item__question {
-<<<<<<< HEAD
     font-size: 17px;
-=======
-    font-size: 19px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
     line-height: 1.35;
     margin-bottom: 8px;
   }
 
   .article-faq-item__answer,
   .article-faq-item__answer p {
-<<<<<<< HEAD
     font-size: 16px;
-=======
-    font-size: 17px;
->>>>>>> cc08e28489c8337401732a17e4d6a5416a3a58be
     line-height: 1.75;
   }
 

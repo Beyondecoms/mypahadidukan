@@ -48,100 +48,12 @@
       <div class="ps-slider">
         {%- assign collection = collections[section.settings.collection] -%}
         {%- for product in collection.products limit: section.settings.products_to_show -%}
-          <div class="ps-card">
-           <button 
-              type="button"
-              aria-label="Add to Wishlist" 
-              class="swym-button swym-add-to-wishlist-view-product product_{{ product.id }}" 
-              data-with-epi="true" 
-              data-swaction="addToWishlist" 
-              data-product-id="{{ product.id }}" 
-              data-variant-id="{{ product.selected_or_first_available_variant.id | default: product.variants[0].id }}" 
-              data-product-url="{{ shop.url | append: product.url }}">
-            </button>
-            {%- if product.metafields.custom.badge != blank -%}
-              <span class="ps-badge">{{ product.metafields.custom.badge }}</span>
-            {%- elsif forloop.index == 1 -%}
-              <span class="ps-badge ps-badge--recommended">Recommended</span>
-            {%- elsif forloop.index == 3 -%}
-              <span class="ps-badge ps-badge--trending">Trending</span>
-            {%- endif -%}
-
-            {%- assign ps_first_image = product.featured_image -%}
-            {%- assign ps_second_image = product.images[1] -%}
-
-            <a href="{{ product.url }}" class="ps-img-wrap{% if section.settings.show_secondary_image and ps_second_image %} ps-img-wrap--has-secondary{% endif %}">
-              <img
-                src="{{ ps_first_image | image_url: width: 400 }}"
-                alt="{{ product.title | escape }}"
-                class="ps-img ps-img--primary">
-
-              {%- if section.settings.show_secondary_image and ps_second_image -%}
-                <img
-                  src="{{ ps_second_image | image_url: width: 400 }}"
-                  alt="{{ product.title | escape }}"
-                  class="ps-img ps-img--secondary"
-                  loading="lazy">
-              {%- endif -%}
-            </a>
-
-            {%- if product.compare_at_price > product.price -%}
-              <div class="ps-discount-bar">
-                {{ section.settings.discount_text }}
-              </div>
-            {%- endif -%}
-
-            <div class="ps-info">
-              <a href="{{ product.url }}" class="ps-product-title">{{ product.title | truncate: 35 }}</a>
-              <p class="ps-variant">{{ product.variants.first.title}}</p>
-              {%- assign ps_rating = product.metafields.reviews.rating.value | default: 4.8 -%}
-              {%- assign ps_rating_float = ps_rating | append: '' | plus: 0.0 -%}
-              {%- assign ps_rating_int = ps_rating_float | floor -%}
-              {%- assign ps_rating_dec = ps_rating_float | minus: ps_rating_int -%}
-              {%- assign ps_partial_star = ps_rating_int | plus: 1 -%}
-              {%- assign ps_dec_width = ps_rating_dec | times: 100 | round -%}
-
-              <div class="ps-stars">
-                {%- for i in (1..5) -%}
-                  {%- if i <= ps_rating_int -%}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  {%- elsif i == ps_partial_star and ps_dec_width > 0 -%}
-                    <span style="position:relative;display:inline-block;width:16px;height:16px;vertical-align:middle;">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="position:absolute;left:0;top:0;display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                      <span style="position:absolute;left:0;top:0;overflow:hidden;width:{{ ps_dec_width }}%;height:100%;display:block;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="display:block;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                      </span>
-                    </span>
-                  {%- else -%}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d1d5db" style="display:block;vertical-align:middle;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  {%- endif -%}
-                {%- endfor -%}
-                <span class="ps-rating-score">{{ ps_rating_float | round: 1 }}</span>
-              </div>
-              <div class="ps-price-row">
-                {%- if product.compare_at_price > product.price -%}
-                  <span class="ps-compare">₹{{ product.compare_at_price | money_without_currency }}</span>
-                {%- endif -%}
-                <span class="ps-price">₹{{ product.price | money_without_currency }}</span>
-
-                {%- if product.compare_at_price > product.price -%}
-                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-                  <span class="ps-off">{{ discount }}%off</span>
-                {%- endif -%}
-              </div>
-
-              {%- if product.available -%}
-                <button class="ps-atc" data-variant-id="{{ product.variants.first.id }}">
-                  Add To Cart
-                </button>
-              {%- else -%}
-                <button class="ps-atc ps-atc--oos" disabled>
-                  Out of Stock
-                </button>
-              {%- endif -%}
-            </div>
-
-          </div>
+          {%- render 'product-slider-card',
+            product: product,
+            position: forloop.index,
+            show_secondary_image: section.settings.show_secondary_image,
+            discount_text: section.settings.discount_text
+          -%}
         {%- endfor -%}
       </div>
 

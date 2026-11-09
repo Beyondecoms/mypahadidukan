@@ -6,6 +6,8 @@
 
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 {{ 'card-product.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-slider.css' | asset_url | stylesheet_tag }}
+{{ 'blog-article-fixes.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   # ─────────────────────────────────────────────────────
@@ -616,13 +618,11 @@
                   {%- for prod in blog_prods -%}
                     {%- if prod.title != blank -%}
                       <div class="article-bp-slide">
-                        {% render 'card-product',
-                          card_product: prod,
-                          media_aspect_ratio: 'square',
+                        {% render 'product-slider-card',
+                          product: prod,
+                          position: forloop.index,
                           show_secondary_image: true,
-                          show_vendor: false,
-                          show_rating: true,
-                          lazy_load: true
+                          discount_text: 'Extra 10% Discount at Checkout'
                         %}
                       </div>
                     {%- endif -%}
@@ -630,13 +630,11 @@
                 {%- elsif blog_prods.title != blank -%}
                   {%- assign prod = blog_prods -%}
                   <div class="article-bp-slide">
-                    {% render 'card-product',
-                      card_product: prod,
-                      media_aspect_ratio: 'square',
+                    {% render 'product-slider-card',
+                      product: prod,
+                      position: 1,
                       show_secondary_image: true,
-                      show_vendor: false,
-                      show_rating: true,
-                      lazy_load: true
+                      discount_text: 'Extra 10% Discount at Checkout'
                     %}
                   </div>
                 {%- endif -%}
@@ -928,31 +926,51 @@
       // ── Inject Blog Products Slider at ~20% of Article Content ──
       var bpSliderTpl = document.getElementById('bp-slider-tpl');
       if (bpSliderTpl && !contentEl.querySelector('.article-products-section--slider')) {
-        var blocks = Array.from(contentEl.children).filter(function(node) {
-          return node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'TEMPLATE';
-        });
+        // Recursively unwrap single wrapper containers (e.g. pasted RTE divs) to find real article blocks
+        function getTopBlocks(parent) {
+          var children = Array.from(parent.children).filter(function(node) {
+            return node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'TEMPLATE';
+          });
+          if (children.length === 1 && children[0].children && children[0].children.length > 2) {
+            return getTopBlocks(children[0]);
+          }
+          return children;
+        }
+
+        var blocks = getTopBlocks(contentEl);
 
         if (blocks.length > 0) {
-          var totalContentHeight = contentEl.scrollHeight || contentEl.offsetHeight;
-          var targetHeight = totalContentHeight * 0.20;
-          var contentTop = contentEl.getBoundingClientRect().top + window.pageYOffset;
-          var bestBlock = blocks[0];
-          var minDiff = Infinity;
+          // Calculate 20% mark by text volume (synchronous, immune to lazy images or layout shifts)
+          var totalTextLength = 0;
+          for (var i = 0; i < blocks.length; i++) {
+            totalTextLength += (blocks[i].textContent || '').trim().length;
+          }
+
+          var targetTextLength = totalTextLength * 0.20;
+          var accumulatedLength = 0;
+          var bestBlock = null;
 
           for (var b = 0; b < blocks.length; b++) {
             var block = blocks[b];
-            var blockBottom = (block.getBoundingClientRect().bottom + window.pageYOffset) - contentTop;
-            var diff = Math.abs(blockBottom - targetHeight);
+            accumulatedLength += (block.textContent || '').trim().length;
 
-            if (diff < minDiff) {
-              minDiff = diff;
-              bestBlock = block;
-            }
+            // Target suitable block: paragraph, list, blockquote, or text div (never directly after a heading H1-H6)
+            var isHeading = /^H[1-6]$/.test(block.tagName);
+            var isSuitable = (block.tagName === 'P' || block.tagName === 'UL' || block.tagName === 'OL' || block.tagName === 'DIV' || block.tagName === 'BLOCKQUOTE') && !isHeading;
 
-            if (blockBottom >= targetHeight && (block.tagName === 'P' || block.tagName === 'UL' || block.tagName === 'OL' || block.tagName === 'DIV' || block.tagName === 'BLOCKQUOTE')) {
+            if (accumulatedLength >= targetTextLength && isSuitable) {
               bestBlock = block;
               break;
             }
+          }
+
+          // Fallback if needed: target 20% by index (skipping headings)
+          if (!bestBlock) {
+            var fallbackIdx = Math.max(0, Math.min(blocks.length - 1, Math.floor(blocks.length * 0.20)));
+            while (fallbackIdx < blocks.length - 1 && /^H[1-6]$/.test(blocks[fallbackIdx].tagName)) {
+              fallbackIdx++;
+            }
+            bestBlock = blocks[fallbackIdx];
           }
 
           if (bestBlock) {
@@ -1129,7 +1147,9 @@
         } else {
           var text = li.textContent.trim();
           var periodIdx = text.indexOf('.');
-          if (periodIdx > 0 && periodIdx < 45) {
+          // Split "Short title. Details" only when something follows the period; a single
+          // short sentence would otherwise become a title with an empty description
+          if (periodIdx > 0 && periodIdx < 45 && text.substring(periodIdx + 1).trim()) {
             stepTitle = text.substring(0, periodIdx).trim();
             stepDesc = text.substring(periodIdx + 1).trim();
           } else {
@@ -1145,7 +1165,7 @@
             '<span class="article-step-card__num">' + stepNumStr + '</span>' +
             '<h4 class="article-step-card__title">' + stepTitle + '</h4>' +
           '</div>' +
-          '<p class="article-step-card__desc">' + stepDesc + '</p>';
+          (stepDesc ? '<p class="article-step-card__desc">' + stepDesc + '</p>' : '');
         stepGrid.appendChild(card);
       });
 
@@ -1188,7 +1208,8 @@
 
     // ── 5. BLOG PRODUCT ADD TO CART INTEGRATION ──
     document.addEventListener('click', async function (e) {
-      var btn = e.target.closest('.article-product-atc-btn, .cp-atc');
+      // .ps-atc: the homepage product card, used by the products slider and in-article buy-button cards
+      var btn = e.target.closest('.article-product-atc-btn, .cp-atc, .article-page .ps-atc');
       if (!btn || btn.disabled) return;
 
       var variantId = btn.getAttribute('data-variant-id');
