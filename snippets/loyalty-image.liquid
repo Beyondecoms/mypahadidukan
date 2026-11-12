@@ -1,0 +1,39 @@
+{%- comment -%}
+  Loyalty page image: renders the merchant-picked image, or the bundled
+  theme asset when the image setting is empty.
+
+  Accepts:
+  - image: image object from an image_picker setting (optional)
+  - fallback: theme asset filename used when image is blank
+  - fallback_width / fallback_height: intrinsic size of the fallback asset
+  - alt: alt text (defaults to the image's own alt)
+  - class: class for the img element
+  - sizes: sizes attribute for merchant images (default 100vw)
+  - loading: 'lazy' (default) or 'eager'
+{%- endcomment -%}
+{%- liquid
+  assign loading = loading | default: 'lazy'
+  assign sizes = sizes | default: '100vw'
+-%}
+{%- if image != blank -%}
+  {%- assign image_alt = alt | default: image.alt -%}
+  {{
+    image
+    | image_url: width: image.width
+    | image_tag:
+      alt: image_alt,
+      class: class,
+      sizes: sizes,
+      widths: '200, 375, 550, 750, 1100, 1500, 2000, 2880',
+      loading: loading
+  }}
+{%- elsif fallback != blank -%}
+  <img
+    src="{{ fallback | asset_url }}"
+    alt="{{ alt | escape }}"
+    class="{{ class }}"
+    width="{{ fallback_width }}"
+    height="{{ fallback_height }}"
+    loading="{{ loading }}"
+  >
+{%- endif -%}

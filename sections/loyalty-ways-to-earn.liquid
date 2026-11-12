@@ -1,0 +1,390 @@
+{%- comment -%}
+  Loyalty page "More ways to earn": reward cards in a 3-column grid and a
+  full-width "Ready to be rewarded?" CTA card. On mobile the cards become a
+  sideways scroller and the CTA card moves to the front.
+  Styles: section-loyalty-page.css
+{%- endcomment -%}
+{% render 'loyalty-page-assets' %}
+
+{%- liquid
+  if section.settings.pattern_image != blank
+    assign pattern_url = section.settings.pattern_image | image_url: width: 2000
+  else
+    assign pattern_url = 'loyalty-pattern.webp' | asset_url
+  endif
+
+  if section.settings.pattern_image_mobile != blank
+    assign pattern_mobile_url = section.settings.pattern_image_mobile | image_url: width: 750
+  elsif section.settings.pattern_image != blank
+    assign pattern_mobile_url = pattern_url
+  else
+    assign pattern_mobile_url = 'loyalty-pattern-mobile.webp' | asset_url
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} .lp {
+    --lp-heading: {{ section.settings.heading_color }};
+    --lp-text: {{ section.settings.text_color }};
+    {%- if section.settings.show_pattern %}
+      --lp-pattern: url('{{ pattern_url }}');
+      --lp-pattern-mobile: url('{{ pattern_mobile_url }}');
+    {%- endif %}
+  }
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'card' %}
+        #lp-earn-{{ block.id }} {
+          --card-end: {{ block.settings.end_color }};
+          --card-title: {{ block.settings.title_color }};
+          --card-edge: {{ block.settings.edge_color }};
+        }
+      {%- when 'cta' -%}
+        {%- liquid
+          if block.settings.background_image != blank
+            assign cta_grid_url = block.settings.background_image | image_url: width: 2440
+          else
+            assign cta_grid_url = 'loyalty-cta-grid.webp' | asset_url
+          endif
+          if block.settings.mobile_image != blank
+            assign cta_mobile_url = block.settings.mobile_image | image_url: width: 750
+          else
+            assign cta_mobile_url = 'loyalty-cta-mobile.webp' | asset_url
+          endif
+        %}
+        #lp-earn-{{ block.id }} {
+          --lp-cta-grid: url('{{ cta_grid_url }}');
+          --lp-cta-mobile: url('{{ cta_mobile_url }}');
+        }
+    {%- endcase -%}
+  {%- endfor %}
+</style>
+
+<div class="lp lp-earn lp-pattern">
+  <div class="lp-earn__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="lp-head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lp-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="lp-sub">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="lp-earn__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'card' -%}
+              {%- assign icon_asset = 'loyalty-earn-' | append: block.settings.icon | append: '.webp' -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" id="lp-earn-{{ block.id }}" class="lp-earn-card lp-earn-card--link" {{ block.shopify_attributes }}>
+              {%- else -%}
+                <div id="lp-earn-{{ block.id }}" class="lp-earn-card" {{ block.shopify_attributes }}>
+              {%- endif -%}
+                {% render 'loyalty-image',
+                  image: block.settings.image,
+                  fallback: icon_asset,
+                  fallback_width: 356,
+                  fallback_height: 328,
+                  alt: '',
+                  class: 'lp-earn-card__icon',
+                  sizes: '150px'
+                %}
+                {%- if block.settings.title != blank -%}
+                  <h3 class="lp-earn-card__title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="lp-earn-card__text">{{ block.settings.text | escape | newline_to_br }}</p>
+                {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+
+            {%- when 'cta' -%}
+              {%- assign cta_link = block.settings.link | default: routes.account_register_url -%}
+              <div id="lp-earn-{{ block.id }}" class="lp-cta" {{ block.shopify_attributes }}>
+                {% render 'loyalty-image',
+                  image: block.settings.collage_image,
+                  fallback: 'loyalty-cta-collage.webp',
+                  fallback_width: 1512,
+                  fallback_height: 605,
+                  alt: block.settings.image_alt,
+                  class: 'lp-cta__collage lp-desk-only',
+                  sizes: '(max-width: 768px) 1px, 760px'
+                %}
+                {%- if block.settings.show_sparkles -%}
+                  <img
+                    src="{{ 'loyalty-cta-sparkles.webp' | asset_url }}"
+                    alt=""
+                    class="lp-cta__sparkles lp-desk-only"
+                    width="505"
+                    height="126"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+                {%- if block.settings.image_alt != blank -%}
+                  <p class="visually-hidden lp-mob-only">{{ block.settings.image_alt | escape }}</p>
+                {%- endif -%}
+                <a href="{{ cta_link }}" class="lp-cta__btn">
+                  {% render 'loyalty-image',
+                    image: block.settings.button_image,
+                    fallback: 'loyalty-cta-button.webp',
+                    fallback_width: 478,
+                    fallback_height: 300,
+                    alt: block.settings.button_label,
+                    class: 'lp-desk-only',
+                    sizes: '230px'
+                  %}
+                  {% render 'loyalty-image',
+                    image: block.settings.button_image_mobile,
+                    fallback: 'loyalty-cta-button-mobile.webp',
+                    fallback_width: 316,
+                    fallback_height: 112,
+                    alt: block.settings.button_label,
+                    class: 'lp-mob-only',
+                    sizes: '158px'
+                  %}
+                </a>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Loyalty: Ways to earn",
+  "tag": "section",
+  "class": "lp-section lp-section--earn",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More ways to earn"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Get rewarded when you shop and engage."
+    },
+    {
+      "type": "header",
+      "content": "Background pattern"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pattern",
+      "label": "Show pattern",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "pattern_image",
+      "label": "Desktop pattern",
+      "info": "Leave empty to use the bundled bow pattern."
+    },
+    {
+      "type": "image_picker",
+      "id": "pattern_image_mobile",
+      "label": "Mobile pattern"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1A2E1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Subheading",
+      "default": "#414651"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Reward card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Bundled icon",
+          "options": [
+            { "value": "birthday", "label": "Birthday cake" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "feedback", "label": "Thumbs up" }
+          ],
+          "default": "birthday"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon",
+          "info": "Replaces the bundled icon. Square, at least 300 x 300px."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Birthday Reward"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Earn 100 points on birthday"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. Makes the whole card clickable."
+        },
+        {
+          "type": "color",
+          "id": "end_color",
+          "label": "Gradient bottom color",
+          "default": "#EFFAFF"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#33535B"
+        },
+        {
+          "type": "color",
+          "id": "edge_color",
+          "label": "Bottom edge shadow",
+          "default": "#78A0B3"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "name": "Join banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Leave images empty to use the bundled artwork. Desktop artwork is 1120 x 345px; mobile is a 260 x 286px card."
+        },
+        {
+          "type": "image_picker",
+          "id": "collage_image",
+          "label": "Desktop artwork",
+          "info": "Collage with the headline. Recommended 1512 x 605px, transparent background."
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Desktop background",
+          "info": "Laid over a white to cream gradient."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sparkles",
+          "label": "Show sparkles around the button",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile card image",
+          "info": "Recommended 520 x 572px."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Artwork alt text",
+          "default": "Ready to be rewarded? Join to redeem free rewards, unlock tier gifts and enjoy exclusive sales."
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "image_picker",
+          "id": "button_image",
+          "label": "Desktop button image"
+        },
+        {
+          "type": "image_picker",
+          "id": "button_image_mobile",
+          "label": "Mobile button image"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "Used as the button's alt text.",
+          "default": "Start Earning"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link",
+          "info": "Defaults to the create account page."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty: Ways to earn",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "birthday",
+            "title": "Birthday Reward",
+            "text": "Earn 100 points on birthday",
+            "end_color": "#EFFAFF",
+            "title_color": "#33535B",
+            "edge_color": "#78A0B3"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "instagram",
+            "title": "Instagram Follow Reward",
+            "text": "Earn 20 points on Instagram follow",
+            "end_color": "#DCC6FF",
+            "title_color": "#623E9C",
+            "edge_color": "#95936C"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "feedback",
+            "title": "Feedback Reward",
+            "text": "Earn 40 points on review\nEarn 50 points on image review",
+            "end_color": "#E3DFA8",
+            "title_color": "#4A4933",
+            "edge_color": "#95936C"
+          }
+        },
+        {
+          "type": "cta"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,184 @@
+{%- comment -%}
+  Loyalty page hero: full-width banner image (separate mobile crop) with the
+  animated "Join" button pinned to the bottom center.
+  Falls back to the bundled loyalty-hero-* and loyalty-join-button assets
+  when no images are picked. Styles: section-loyalty-page.css
+{%- endcomment -%}
+{% render 'loyalty-page-assets' %}
+
+{%- liquid
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+  assign button_link = section.settings.button_link | default: routes.account_register_url
+
+  if desktop_image != blank
+    assign desktop_ratio = desktop_image.aspect_ratio
+  else
+    assign desktop_ratio = '3.125'
+  endif
+
+  if mobile_image != blank
+    assign mobile_ratio = mobile_image.aspect_ratio
+  elsif desktop_image != blank
+    assign mobile_ratio = desktop_image.aspect_ratio
+  else
+    assign mobile_ratio = '0.9524'
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --lp-hero-ratio: {{ desktop_ratio }};
+    --lp-hero-ratio-mobile: {{ mobile_ratio }};
+  }
+  #shopify-section-{{ section.id }} .lp-hero__media {
+    aspect-ratio: var(--lp-hero-ratio);
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .lp-hero__media {
+      aspect-ratio: var(--lp-hero-ratio-mobile);
+    }
+  }
+</style>
+
+<div class="lp lp-hero">
+  {%- if section.settings.heading != blank -%}
+    <h1 class="visually-hidden">{{ section.settings.heading | escape }}</h1>
+  {%- endif -%}
+
+  <picture class="lp-hero__media">
+    {%- if mobile_image != blank -%}
+      <source
+        media="(max-width: 768px)"
+        srcset="{{ mobile_image | image_url: width: 375 }} 375w, {{ mobile_image | image_url: width: 550 }} 550w, {{ mobile_image | image_url: width: 750 }} 750w, {{ mobile_image | image_url: width: 1100 }} 1100w"
+        sizes="100vw"
+        width="{{ mobile_image.width }}"
+        height="{{ mobile_image.height }}"
+      >
+    {%- elsif desktop_image == blank -%}
+      <source
+        media="(max-width: 768px)"
+        srcset="{{ 'loyalty-hero-mobile.webp' | asset_url }}"
+        width="648"
+        height="698"
+      >
+    {%- endif -%}
+
+    {%- if desktop_image != blank -%}
+      {{
+        desktop_image
+        | image_url: width: 2880
+        | image_tag:
+          alt: section.settings.image_alt,
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000, 2880',
+          loading: 'eager',
+          fetchpriority: 'high'
+      }}
+    {%- else -%}
+      <img
+        src="{{ 'loyalty-hero-desktop.webp' | asset_url }}"
+        alt="{{ section.settings.image_alt | escape }}"
+        width="2880"
+        height="936"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+  </picture>
+
+  {%- if section.settings.show_button -%}
+    <a href="{{ button_link }}" class="lp-hero__cta">
+      {%- if section.settings.button_image != blank -%}
+        <img
+          src="{{ section.settings.button_image | image_url: width: section.settings.button_image.width }}"
+          alt="{{ section.settings.button_label | escape }}"
+          width="{{ section.settings.button_image.width }}"
+          height="{{ section.settings.button_image.height }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          src="{{ 'loyalty-join-button.gif' | asset_url }}"
+          alt="{{ section.settings.button_label | escape }}"
+          width="702"
+          height="210"
+          loading="eager"
+        >
+      {%- endif -%}
+    </a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Loyalty: Hero banner",
+  "tag": "section",
+  "class": "lp-section lp-section--hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "info": "Hidden on screen. Read by search engines and screen readers.",
+      "default": "Loyalty Circle"
+    },
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image",
+      "info": "Leave empty to use the bundled banner. Recommended 2880 x 936px."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Leave empty to use the bundled mobile banner. Recommended 648 x 680px."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Banner alt text",
+      "default": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks."
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "button_image",
+      "label": "Button image",
+      "info": "Leave empty to use the bundled animated button. GIFs are supported."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Used as the button's alt text.",
+      "default": "Join Loyalty Circle"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the create account page."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty: Hero banner"
+    }
+  ]
+}
+{% endschema %}

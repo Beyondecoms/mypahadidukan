@@ -1,0 +1,442 @@
+{%- comment -%}
+  Loyalty page "Compare your access": benefits table with three tier columns.
+  Tiers are section settings; each benefit row is a block whose tier values
+  accept "yes" (tick), "no" (grey tick) or any text (shown in the tier color).
+
+  Layout: one CSS grid. Every cell is placed explicitly (grid-row inline,
+  grid-column by class) so each tier's background card can span all rows
+  behind its cells and rows stay aligned across columns.
+  Styles: section-loyalty-page.css
+{%- endcomment -%}
+{% render 'loyalty-page-assets' %}
+
+{%- liquid
+  assign row_count = section.blocks.size
+  assign foot_row = row_count | plus: 2
+  assign tier_span = row_count | plus: 2
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} .lp {
+    --lp-heading: {{ section.settings.heading_color }};
+    --lp-text: {{ section.settings.text_color }};
+    --lp-panel: {{ section.settings.panel_color }};
+    --lp-line: {{ section.settings.line_color }};
+    --lp-yes: {{ section.settings.yes_color }};
+    --lp-no: {{ section.settings.no_color }};
+    --lp-tier-1-color: {{ section.settings.tier_1_color }};
+    --lp-tier-1-bg: {{ section.settings.tier_1_bg }};
+    --lp-tier-1-line: {{ section.settings.tier_1_line }};
+    --lp-tier-1-divider: {{ section.settings.tier_1_divider }};
+    --lp-tier-2-color: {{ section.settings.tier_2_color }};
+    --lp-tier-2-bg: {{ section.settings.tier_2_bg }};
+    --lp-tier-2-line: {{ section.settings.tier_2_line }};
+    --lp-tier-2-divider: {{ section.settings.tier_2_divider }};
+    --lp-tier-3-color: {{ section.settings.tier_3_color }};
+    --lp-tier-3-bg: {{ section.settings.tier_3_bg }};
+    --lp-tier-3-line: {{ section.settings.tier_3_line }};
+    --lp-tier-3-divider: {{ section.settings.tier_3_divider }};
+  }
+  #shopify-section-{{ section.id }} .lp-table__foot {
+    grid-row: {{ foot_row }};
+  }
+</style>
+
+<div class="lp lp-compare">
+  <div class="lp-container lp-compare__panel">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="lp-head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lp-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="lp-sub">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="lp-table-scroll">
+      <div class="lp-table" role="table" aria-label="{{ section.settings.heading | escape }}">
+        {%- for n in (1..3) -%}
+          <div
+            class="lp-tier-bg lp-tier--{{ n }} lp-col-{{ n | plus: 1 }}"
+            style="grid-row: 1 / span {{ tier_span }};"
+            aria-hidden="true"
+          ></div>
+        {%- endfor -%}
+
+        <div class="lp-table__row" role="row">
+          <div class="lp-label-head lp-col-1" style="grid-row: 1;" role="columnheader">
+            {%- if section.settings.benefits_heading != blank -%}
+              <p class="lp-label-head__title lp-label-head__title--desktop">
+                {{- section.settings.benefits_heading | escape -}}
+              </p>
+            {%- endif -%}
+            {%- assign mobile_heading = section.settings.benefits_heading_mobile
+              | default: section.settings.benefits_heading
+            -%}
+            {%- if mobile_heading != blank -%}
+              <p class="lp-label-head__title lp-label-head__title--mobile" aria-hidden="true">
+                {{- mobile_heading | escape -}}
+              </p>
+            {%- endif -%}
+            {%- if section.settings.benefits_text != blank -%}
+              <p class="lp-label-head__text">{{ section.settings.benefits_text | escape }}</p>
+            {%- endif -%}
+          </div>
+
+          {%- for n in (1..3) -%}
+            {%- liquid
+              assign key_name = 'tier_' | append: n | append: '_name'
+              assign key_badge = 'tier_' | append: n | append: '_badge'
+              assign key_req = 'tier_' | append: n | append: '_requirement'
+              assign badge_asset = 'loyalty-tier-' | append: n | append: '.webp'
+            -%}
+            <div
+              class="lp-tier-head lp-tier--{{ n }} lp-col-{{ n | plus: 1 }}"
+              style="grid-row: 1;"
+              role="columnheader"
+            >
+              {% render 'loyalty-image',
+                image: section.settings[key_badge],
+                fallback: badge_asset,
+                fallback_width: 202,
+                fallback_height: 202,
+                alt: '',
+                class: 'lp-tier-head__badge',
+                sizes: '67px'
+              %}
+              <h3 class="lp-tier-head__name">{{ section.settings[key_name] | escape }}</h3>
+              <span class="lp-tier-head__divider" aria-hidden="true"></span>
+              {%- if section.settings[key_req] != blank -%}
+                <div class="lp-tier-head__req">{{ section.settings[key_req] }}</div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- for block in section.blocks -%}
+          {%- assign grid_row = forloop.index | plus: 1 -%}
+          <div
+            class="lp-table__row{% if forloop.last %} lp-table__row--last{% endif %}"
+            role="row"
+            {{ block.shopify_attributes }}
+          >
+            <div class="lp-label lp-col-1" style="grid-row: {{ grid_row }};" role="rowheader">
+              {{- block.settings.label | escape -}}
+            </div>
+
+            {%- for n in (1..3) -%}
+              {%- liquid
+                assign key = 'tier_' | append: n
+                assign value = block.settings[key] | strip
+                assign value_key = value | downcase
+              -%}
+              <div
+                class="lp-cell lp-tier--{{ n }} lp-col-{{ n | plus: 1 }}"
+                style="grid-row: {{ grid_row }};"
+                role="cell"
+              >
+                <div class="lp-cell__in">
+                  {%- if value_key == 'yes' -%}
+                    <svg class="lp-check" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+                      <circle cx="14" cy="14" r="14"/>
+                      <path d="M7.41 14.29c1.65 1.5 4.21 3.83 4.21 3.83l8.15-7.41" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+                    </svg>
+                    <span class="visually-hidden">Included</span>
+                  {%- elsif value_key == 'no' -%}
+                    <svg class="lp-check lp-check--no" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+                      <circle cx="14" cy="14" r="14"/>
+                      <path d="M7.41 14.29c1.65 1.5 4.21 3.83 4.21 3.83l8.15-7.41" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+                    </svg>
+                    <span class="visually-hidden">Not included</span>
+                  {%- elsif value != blank -%}
+                    <span class="lp-cell__val">{{ value | escape }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+
+        <div class="lp-table__foot lp-col-1" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="lp-compare__note">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Loyalty: Compare tiers",
+  "tag": "section",
+  "class": "lp-section lp-section--compare",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Compare your access"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "The more you shop, the more you unlock."
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits column heading",
+      "default": "Membership Benefits"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading_mobile",
+      "label": "Benefits column heading on mobile",
+      "info": "Shorter text fits the narrow mobile column.",
+      "default": "Member Benefits"
+    },
+    {
+      "type": "text",
+      "id": "benefits_text",
+      "label": "Benefits column text",
+      "default": "The more you shop, the more you unlock."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "*Maximum cap applicable."
+    },
+    {
+      "type": "header",
+      "content": "Tier 1"
+    },
+    {
+      "type": "text",
+      "id": "tier_1_name",
+      "label": "Name",
+      "default": "Crushing"
+    },
+    {
+      "type": "image_picker",
+      "id": "tier_1_badge",
+      "label": "Badge",
+      "info": "Leave empty to use the bundled badge."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tier_1_requirement",
+      "label": "Requirement",
+      "default": "Spend <strong>₹2,999</strong> over 12 months."
+    },
+    {
+      "type": "color",
+      "id": "tier_1_color",
+      "label": "Name and values",
+      "default": "#D36F3C"
+    },
+    {
+      "type": "color",
+      "id": "tier_1_bg",
+      "label": "Card background",
+      "default": "#FFECD7"
+    },
+    {
+      "type": "color",
+      "id": "tier_1_line",
+      "label": "Row lines",
+      "default": "#F9CAB2"
+    },
+    {
+      "type": "color",
+      "id": "tier_1_divider",
+      "label": "Divider under name",
+      "default": "#D36F3C"
+    },
+    {
+      "type": "header",
+      "content": "Tier 2"
+    },
+    {
+      "type": "text",
+      "id": "tier_2_name",
+      "label": "Name",
+      "default": "Obsessed"
+    },
+    {
+      "type": "image_picker",
+      "id": "tier_2_badge",
+      "label": "Badge",
+      "info": "Leave empty to use the bundled badge."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tier_2_requirement",
+      "label": "Requirement",
+      "default": "Spend <strong>₹4,999</strong> over 12 months."
+    },
+    {
+      "type": "color",
+      "id": "tier_2_color",
+      "label": "Name and values",
+      "default": "#3C546C"
+    },
+    {
+      "type": "color",
+      "id": "tier_2_bg",
+      "label": "Card background",
+      "default": "#EFFAFF"
+    },
+    {
+      "type": "color",
+      "id": "tier_2_line",
+      "label": "Row lines",
+      "default": "#CCDEF0"
+    },
+    {
+      "type": "color",
+      "id": "tier_2_divider",
+      "label": "Divider under name",
+      "default": "#95B7D8"
+    },
+    {
+      "type": "header",
+      "content": "Tier 3"
+    },
+    {
+      "type": "text",
+      "id": "tier_3_name",
+      "label": "Name",
+      "default": "Committed"
+    },
+    {
+      "type": "image_picker",
+      "id": "tier_3_badge",
+      "label": "Badge",
+      "info": "Leave empty to use the bundled badge."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tier_3_requirement",
+      "label": "Requirement",
+      "default": "Spend <strong>₹7,999</strong> over 12 months."
+    },
+    {
+      "type": "color",
+      "id": "tier_3_color",
+      "label": "Name and values",
+      "default": "#A95475"
+    },
+    {
+      "type": "color",
+      "id": "tier_3_bg",
+      "label": "Card background",
+      "default": "#FFEBF3"
+    },
+    {
+      "type": "color",
+      "id": "tier_3_line",
+      "label": "Row lines",
+      "default": "#F7CBDC"
+    },
+    {
+      "type": "color",
+      "id": "tier_3_divider",
+      "label": "Divider under name",
+      "default": "#A95475"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Headings",
+      "default": "#1A2E1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#414651"
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Panel background",
+      "default": "#FFFBEF"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Benefit row lines",
+      "default": "#DFDFDF"
+    },
+    {
+      "type": "color",
+      "id": "yes_color",
+      "label": "Included tick",
+      "default": "#008B75"
+    },
+    {
+      "type": "color",
+      "id": "no_color",
+      "label": "Not included tick",
+      "default": "#BDBDBD"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Benefit row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Benefit",
+          "default": "Benefit"
+        },
+        {
+          "type": "paragraph",
+          "content": "Type yes for a green tick, no for a grey tick, or any text such as 10% or 100 points."
+        },
+        {
+          "type": "text",
+          "id": "tier_1",
+          "label": "Tier 1",
+          "default": "yes"
+        },
+        {
+          "type": "text",
+          "id": "tier_2",
+          "label": "Tier 2",
+          "default": "yes"
+        },
+        {
+          "type": "text",
+          "id": "tier_3",
+          "label": "Tier 3",
+          "default": "yes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty: Compare tiers",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Earn Points on every Order", "tier_1": "10%", "tier_2": "10%", "tier_3": "10%" } },
+        { "type": "row", "settings": { "label": "Extra Discount*", "tier_1": "7.5%", "tier_2": "10%", "tier_3": "15%" } },
+        { "type": "row", "settings": { "label": "Maximum Discount", "tier_1": "₹225", "tier_2": "₹225", "tier_3": "₹225" } },
+        { "type": "row", "settings": { "label": "Points Validity", "tier_1": "60 days", "tier_2": "60 days", "tier_3": "60 days" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

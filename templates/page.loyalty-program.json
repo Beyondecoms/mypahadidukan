@@ -9,15 +9,289 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
+    "hero": {
+      "type": "loyalty-hero",
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "heading": "Loyalty Circle",
+        "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",
+        "show_button": true,
+        "button_label": "Join Loyalty Circle",
+        "button_link": ""
+      }
+    },
+    "how": {
+      "type": "loyalty-how-it-works",
+      "blocks": {
+        "step_shop": {
+          "type": "step",
+          "settings": {
+            "icon": "shop",
+            "title": "Shop",
+            "text": "Shop on MPD"
+          }
+        },
+        "step_accumulate": {
+          "type": "step",
+          "settings": {
+            "icon": "accumulate",
+            "title": "Accumulate",
+            "text": "Earn 10% back in points"
+          }
+        },
+        "step_redeem": {
+          "type": "step",
+          "settings": {
+            "icon": "redeem",
+            "title": "Redeem",
+            "text": "Use your points on rewards"
+          }
+        }
+      },
+      "block_order": [
+        "step_shop",
+        "step_accumulate",
+        "step_redeem"
+      ],
+      "settings": {
+        "heading": "How it works",
+        "subheading": "Simple as your wash day routine.",
+        "show_rate": true,
+        "rate_left": "₹100 spent",
+        "rate_right": "10 points",
+        "rate_note": "Redeem for products, freebies, and merch from the rewards catalogue.",
+        "show_pattern": true,
+        "heading_color": "#1A2E1A",
+        "text_color": "#414651",
+        "step_text_color": "#111111",
+        "panel_color": "#FFFBEF",
+        "accent_color": "#EE5922",
+        "accent_text_color": "#FFFFFF"
+      }
+    },
+    "compare": {
+      "type": "loyalty-compare",
+      "blocks": {
+        "row_points": {
+          "type": "row",
+          "settings": {
+            "label": "Earn Points on every Order",
+            "tier_1": "10%",
+            "tier_2": "10%",
+            "tier_3": "10%"
+          }
+        },
+        "row_discount": {
+          "type": "row",
+          "settings": {
+            "label": "Extra Discount*",
+            "tier_1": "7.5%",
+            "tier_2": "10%",
+            "tier_3": "15%"
+          }
+        },
+        "row_max_discount": {
+          "type": "row",
+          "settings": {
+            "label": "Maximum Discount",
+            "tier_1": "₹225",
+            "tier_2": "₹225",
+            "tier_3": "₹225"
+          }
+        },
+        "row_validity": {
+          "type": "row",
+          "settings": {
+            "label": "Points Validity",
+            "tier_1": "60 days",
+            "tier_2": "60 days",
+            "tier_3": "60 days"
+          }
+        },
+        "row_delivery": {
+          "type": "row",
+          "settings": {
+            "label": "Free Delivery",
+            "tier_1": "yes",
+            "tier_2": "yes",
+            "tier_3": "yes"
+          }
+        },
+        "row_bonus": {
+          "type": "row",
+          "settings": {
+            "label": "Bonus Points During Sales",
+            "tier_1": "10%",
+            "tier_2": "15%",
+            "tier_3": "20%"
+          }
+        },
+        "row_birthday": {
+          "type": "row",
+          "settings": {
+            "label": "Birthday Points",
+            "tier_1": "100 points",
+            "tier_2": "100 points",
+            "tier_3": "100 points"
+          }
+        },
+        "row_milestone": {
+          "type": "row",
+          "settings": {
+            "label": "Milestone reward on entering tier",
+            "tier_1": "no",
+            "tier_2": "yes",
+            "tier_3": "yes"
+          }
+        },
+        "row_exclusive": {
+          "type": "row",
+          "settings": {
+            "label": "Member-exclusive sales",
+            "tier_1": "no",
+            "tier_2": "yes",
+            "tier_3": "yes"
+          }
+        },
+        "row_events": {
+          "type": "row",
+          "settings": {
+            "label": "Invitations to MPD Events",
+            "tier_1": "no",
+            "tier_2": "no",
+            "tier_3": "yes"
+          }
+        },
+        "row_testers": {
+          "type": "row",
+          "settings": {
+            "label": "Pre-launch Product Testers",
+            "tier_1": "no",
+            "tier_2": "no",
+            "tier_3": "yes"
+          }
+        },
+        "row_early": {
+          "type": "row",
+          "settings": {
+            "label": "Early access to new launches",
+            "tier_1": "no",
+            "tier_2": "no",
+            "tier_3": "yes"
+          }
+        }
+      },
+      "block_order": [
+        "row_points",
+        "row_discount",
+        "row_max_discount",
+        "row_validity",
+        "row_delivery",
+        "row_bonus",
+        "row_birthday",
+        "row_milestone",
+        "row_exclusive",
+        "row_events",
+        "row_testers",
+        "row_early"
+      ],
+      "settings": {
+        "heading": "Compare your access",
+        "subheading": "The more you shop, the more you unlock.",
+        "benefits_heading": "Membership Benefits",
+        "benefits_heading_mobile": "Member Benefits",
+        "benefits_text": "The more you shop, the more you unlock.",
+        "footnote": "*Maximum cap applicable.",
+        "tier_1_name": "Crushing",
+        "tier_1_requirement": "Spend <strong>₹2,999</strong> over 12 months.",
+        "tier_1_color": "#D36F3C",
+        "tier_1_bg": "#FFECD7",
+        "tier_1_line": "#F9CAB2",
+        "tier_2_name": "Obsessed",
+        "tier_2_requirement": "Spend <strong>₹4,999</strong> over 12 months.",
+        "tier_2_color": "#3C546C",
+        "tier_2_bg": "#EFFAFF",
+        "tier_2_line": "#CCDEF0",
+        "tier_3_name": "Committed",
+        "tier_3_requirement": "Spend <strong>₹7,999</strong> over 12 months.",
+        "tier_3_color": "#A95475",
+        "tier_3_bg": "#FFEBF3",
+        "tier_3_line": "#F7CBDC",
+        "heading_color": "#1A2E1A",
+        "text_color": "#414651",
+        "panel_color": "#FFFBEF",
+        "line_color": "#DFDFDF",
+        "yes_color": "#008B75",
+        "no_color": "#BDBDBD"
+      }
+    },
+    "earn": {
+      "type": "loyalty-ways-to-earn",
+      "blocks": {
+        "card_birthday": {
+          "type": "card",
+          "settings": {
+            "icon": "birthday",
+            "title": "Birthday Reward",
+            "text": "Earn 100 points on birthday",
+            "link": "",
+            "end_color": "#EFFAFF",
+            "title_color": "#33535B",
+            "edge_color": "#78A0B3"
+          }
+        },
+        "card_instagram": {
+          "type": "card",
+          "settings": {
+            "icon": "instagram",
+            "title": "Instagram Follow Reward",
+            "text": "Earn 20 points on Instagram follow",
+            "link": "",
+            "end_color": "#DCC6FF",
+            "title_color": "#623E9C",
+            "edge_color": "#95936C"
+          }
+        },
+        "card_feedback": {
+          "type": "card",
+          "settings": {
+            "icon": "feedback",
+            "title": "Feedback Reward",
+            "text": "Earn 40 points on review\nEarn 50 points on image review",
+            "link": "",
+            "end_color": "#E3DFA8",
+            "title_color": "#4A4933",
+            "edge_color": "#95936C"
+          }
+        },
+        "cta": {
+          "type": "cta",
+          "settings": {
+            "show_sparkles": true,
+            "image_alt": "Ready to be rewarded? Join to redeem free rewards, unlock tier gifts and enjoy exclusive sales.",
+            "button_label": "Start Earning",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_birthday",
+        "card_instagram",
+        "card_feedback",
+        "cta"
+      ],
+      "settings": {
+        "heading": "More ways to earn",
+        "subheading": "Get rewarded when you shop and engage.",
+        "show_pattern": true,
+        "heading_color": "#1A2E1A",
+        "text_color": "#414651"
       }
     }
   },
   "order": [
-    "main"
+    "hero",
+    "how",
+    "compare",
+    "earn"
   ]
 }

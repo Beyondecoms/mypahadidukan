@@ -1,0 +1,267 @@
+{%- comment -%}
+  Loyalty page "How it works": step blocks joined by arrows, followed by the
+  "₹100 spent = 10 points" conversion card. Sits on the bow pattern background.
+  Styles: section-loyalty-page.css
+{%- endcomment -%}
+{% render 'loyalty-page-assets' %}
+
+{%- liquid
+  if section.settings.pattern_image != blank
+    assign pattern_url = section.settings.pattern_image | image_url: width: 2000
+  else
+    assign pattern_url = 'loyalty-pattern.webp' | asset_url
+  endif
+
+  if section.settings.pattern_image_mobile != blank
+    assign pattern_mobile_url = section.settings.pattern_image_mobile | image_url: width: 750
+  elsif section.settings.pattern_image != blank
+    assign pattern_mobile_url = pattern_url
+  else
+    assign pattern_mobile_url = 'loyalty-pattern-mobile.webp' | asset_url
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} .lp {
+    --lp-heading: {{ section.settings.heading_color }};
+    --lp-text: {{ section.settings.text_color }};
+    --lp-step-text: {{ section.settings.step_text_color }};
+    --lp-panel: {{ section.settings.panel_color }};
+    --lp-accent: {{ section.settings.accent_color }};
+    --lp-accent-text: {{ section.settings.accent_text_color }};
+    {%- if section.settings.show_pattern %}
+      --lp-pattern: url('{{ pattern_url }}');
+      --lp-pattern-mobile: url('{{ pattern_mobile_url }}');
+    {%- endif %}
+  }
+</style>
+
+<div class="lp lp-how lp-pattern">
+  <div class="lp-container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="lp-head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lp-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="lp-sub">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="lp-steps list-unstyled" role="list">
+        {%- for block in section.blocks -%}
+          <li class="lp-step" {{ block.shopify_attributes }}>
+            {%- assign icon_asset = 'loyalty-step-' | append: block.settings.icon | append: '.webp' -%}
+            {% render 'loyalty-image',
+              image: block.settings.image,
+              fallback: icon_asset,
+              fallback_width: 608,
+              fallback_height: 548,
+              alt: '',
+              class: 'lp-step__icon',
+              sizes: '(max-width: 768px) 30vw, 267px'
+            %}
+            {%- if block.settings.title != blank -%}
+              <h3 class="lp-step__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="lp-step__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </li>
+          {%- unless forloop.last -%}
+            <li class="lp-step-arrow" aria-hidden="true">
+              {% render 'loyalty-image',
+                image: section.settings.arrow_image,
+                fallback: 'loyalty-arrow.webp',
+                fallback_width: 152,
+                fallback_height: 154,
+                alt: '',
+                sizes: '75px'
+              %}
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+
+    {%- if section.settings.show_rate -%}
+      <div class="lp-rate">
+        <p class="lp-rate__row">
+          <span class="lp-rate__box">{{ section.settings.rate_left | escape }}</span>
+          <span class="lp-rate__equals" role="img" aria-label="equals"></span>
+          <span class="lp-rate__box">{{ section.settings.rate_right | escape }}</span>
+        </p>
+        {%- if section.settings.rate_note != blank -%}
+          <p class="lp-rate__note">{{ section.settings.rate_note | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Loyalty: How it works",
+  "tag": "section",
+  "class": "lp-section lp-section--how",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Simple as your wash day routine."
+    },
+    {
+      "type": "image_picker",
+      "id": "arrow_image",
+      "label": "Arrow between steps",
+      "info": "Leave empty to use the bundled arrow."
+    },
+    {
+      "type": "header",
+      "content": "Points conversion card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rate",
+      "label": "Show conversion card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rate_left",
+      "label": "Left box",
+      "default": "₹100 spent"
+    },
+    {
+      "type": "text",
+      "id": "rate_right",
+      "label": "Right box",
+      "default": "10 points"
+    },
+    {
+      "type": "text",
+      "id": "rate_note",
+      "label": "Note",
+      "default": "Redeem for products, freebies, and merch from the rewards catalogue."
+    },
+    {
+      "type": "header",
+      "content": "Background pattern"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pattern",
+      "label": "Show pattern",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "pattern_image",
+      "label": "Desktop pattern",
+      "info": "Leave empty to use the bundled bow pattern."
+    },
+    {
+      "type": "image_picker",
+      "id": "pattern_image_mobile",
+      "label": "Mobile pattern"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1A2E1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Subheading and note",
+      "default": "#414651"
+    },
+    {
+      "type": "color",
+      "id": "step_text_color",
+      "label": "Step text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Conversion card background",
+      "default": "#FFFBEF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Conversion boxes and equals sign",
+      "default": "#EE5922"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Conversion box text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Bundled icon",
+          "options": [
+            { "value": "shop", "label": "Shopping bag" },
+            { "value": "accumulate", "label": "Piggy bank" },
+            { "value": "redeem", "label": "Gift box" }
+          ],
+          "default": "shop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon",
+          "info": "Replaces the bundled icon. Recommended 608 x 548px."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Shop"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Shop on MPD"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty: How it works",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "shop", "title": "Shop", "text": "Shop on MPD" } },
+        { "type": "step", "settings": { "icon": "accumulate", "title": "Accumulate", "text": "Earn 10% back in points" } },
+        { "type": "step", "settings": { "icon": "redeem", "title": "Redeem", "text": "Use your points on rewards" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
