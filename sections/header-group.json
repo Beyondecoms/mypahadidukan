@@ -16,6 +16,7 @@
       "blocks": {
         "announcement_BCWkkM": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "message": "NOTICE: Orders placed on 11th November will be shipped from 12th November onwards.",
             "message_link": ""
