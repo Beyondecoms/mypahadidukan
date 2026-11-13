@@ -78,9 +78,26 @@
 
 /* ── Hero banner ─────────────────────────────────────────────────────────── */
 
+loyalty-hero,
+loyalty-earn {
+  display: block;
+}
+
 .lp-hero {
   position: relative;
   background: #f7f7f7;
+}
+
+.lp-hero__guest {
+  position: relative;
+}
+
+.lp-hero[data-state='member'] {
+  background: none;
+}
+
+.lp-hero[data-state='member'] .lp-hero__guest {
+  display: none;
 }
 
 .lp-hero__media {
@@ -118,6 +135,237 @@
 .lp-hero__cta img {
   width: 100%;
   height: auto;
+}
+
+/* Member dashboard: replaces the banner for shoppers signed in to YourToken.
+   data-tier (0 = no tier yet) sets the background and progress colors. */
+.lp-member {
+  --member-bg: #fefcec;
+  --member-fill: linear-gradient(90deg, #121212 0%, #6c684a 100%);
+  --member-accent: #414651;
+  display: none;
+  background: var(--member-bg);
+}
+
+.lp-member[data-tier='1'] {
+  --member-bg: linear-gradient(182deg, #ffffff 0%, rgba(255, 255, 255, 0.54) 100%), #d88059;
+  --member-fill: linear-gradient(90deg, #724430 0%, #d8815b 100%);
+  --member-accent: #d88059;
+}
+
+.lp-member[data-tier='2'] {
+  --member-bg: linear-gradient(198deg, #ffffff 0%, rgba(255, 255, 255, 0.54) 100%), #95b7d8;
+  --member-fill: linear-gradient(90deg, #33475b 0%, #6a9fd3 100%);
+  --member-accent: #6a9fd3;
+}
+
+.lp-member[data-tier='3'] {
+  --member-bg: linear-gradient(199deg, #ffffff 0%, rgba(255, 255, 255, 0.54) 100%), #d1789c;
+  --member-fill: linear-gradient(90deg, #663348 0%, #9c5672 50%, #f2c0d6 100%);
+  --member-accent: #d1789c;
+}
+
+.lp-hero[data-state='member'] .lp-member {
+  display: block;
+}
+
+.lp-member__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 2fr);
+  gap: 40px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 64px 10px;
+}
+
+.lp-member__art {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.lp-member__art img {
+  width: 100%;
+  height: auto;
+}
+
+.lp .lp-member__count {
+  margin: -20px 0 10px;
+  font-size: 35px;
+  font-weight: 600;
+  line-height: 1.8;
+  text-align: center;
+  color: #000000;
+}
+
+.lp-member__num {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.lp .lp-member__status {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #414651;
+}
+
+.lp-member:not([data-tier='0']) .lp-member__status {
+  font-weight: 700;
+  color: var(--member-accent);
+}
+
+.lp-member[data-loading] [data-lp-points],
+.lp-member[data-loading] .lp-member__note {
+  opacity: 0.35;
+}
+
+.lp-member__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 30px;
+  min-height: 210px;
+  padding: 20px 25px;
+  border-radius: 32px;
+  background: #ffffff;
+  box-shadow: 0 3.97px 7.94px rgba(0, 0, 0, 0.25);
+}
+
+.lp-member__progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 45px;
+  height: 100%;
+  padding-right: 30px;
+  border-right: 2px dotted #d9d9d9;
+}
+
+.lp .lp-member__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #000000;
+}
+
+.lp-member__since-label {
+  font-weight: 400;
+}
+
+.lp-member__bar {
+  position: relative;
+  height: 15px;
+  border-radius: 50px;
+  background: #d9d9d9;
+}
+
+.lp-member__fill {
+  display: block;
+  width: 5%;
+  height: 100%;
+  border-radius: 50px;
+  background: var(--member-fill);
+  transition: width 0.6s ease;
+}
+
+.lp .lp-member__next {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  width: 80px;
+  height: auto;
+}
+
+.lp-member__note {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  transition: opacity 0.2s ease;
+}
+
+.lp .lp-member__spent,
+.lp .lp-member__goal {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+  color: #414651;
+}
+
+.lp .lp-member__goal {
+  margin-left: auto;
+  text-align: right;
+}
+
+.lp-member__goal b,
+.lp-member__goal strong {
+  font-weight: 700;
+}
+
+/* Tier ladder: 270px wide, like the reference artwork */
+.lp-ladder {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 300px;
+  margin: 0;
+  padding: 0 0 0 30px;
+  list-style: none;
+}
+
+.lp-ladder__tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  opacity: 0.56;
+}
+
+.lp-ladder__tier.is-unlocked {
+  opacity: 1;
+}
+
+.lp-ladder__badge {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.lp .lp-ladder__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lp-ladder__check {
+  position: absolute;
+  top: -1px;
+  right: -4px;
+  display: none;
+  width: 18px;
+  height: 18px;
+  fill: #007a0c;
+}
+
+.lp-ladder__tier.is-unlocked .lp-ladder__check {
+  display: block;
+}
+
+.lp-ladder__name {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lp-ladder__req {
+  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1;
 }
 
 /* ── How it works ────────────────────────────────────────────────────────── */
@@ -538,10 +786,125 @@
   color: #6b7280;
 }
 
+/* Live cards from the YourToken "Loyalty Page" app block. Its wrappers are
+   flattened so the cards sit in .lp-earn__grid like the static ones, and
+   everything else the block renders stays hidden. YourToken sets inline
+   styles, hence the !important overrides. */
+.lp-earn__app,
+.lp-earn[data-live] .lp-earn-card--static {
+  display: none;
+}
+
+.lp-earn[data-live] .lp-earn__app,
+.lp-earn[data-live] .lp-earn__app .shopify-app-block,
+.lp-earn[data-live] .lp-earn__app [data-yt-product-block],
+.lp-earn__app .yt-loyalty-page-container,
+.lp-earn__app .yt-loyalty-page-ways-to-earn,
+.lp-earn__app .yt-loyalty-page-ways-to-earn-content,
+.lp-earn__app .yt-loyalty-page-ways-to-earn-grid {
+  display: contents !important;
+}
+
+.lp-earn__app .yt-loyalty-page-container > :not(.yt-loyalty-page-ways-to-earn),
+.lp-earn__app .yt-loyalty-page-ways-to-earn-content > :not(.yt-loyalty-page-ways-to-earn-grid) {
+  display: none !important;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 346px;
+  padding: 20px 10px !important;
+  border-radius: 34px;
+  background: linear-gradient(180deg, #ffffff 0%, var(--card-end, #effaff) 100%);
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 4px var(--card-edge, #78a0b3),
+    inset 0 1px 4px rgba(255, 255, 255, 0.5),
+    inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  font-family: var(--lp-font-heading);
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  margin: 0 !important;
+  font-size: 64px !important;
+  color: var(--card-title, #1a2e1a) !important;
+  background: var(--card-icon, none) 0 0 / contain no-repeat;
+}
+
+.lp-earn__app [data-lp-icon] .yt-loyalty-page-ways-to-earn-item-icon > * {
+  display: none;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-title {
+  display: block !important;
+  min-height: 0 !important;
+  margin: 13px 0 0 !important;
+  font-family: var(--lp-font-heading);
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+  letter-spacing: normal !important;
+  color: var(--card-title, #1a2e1a) !important;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-description {
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 23px 0 20px !important;
+  font-family: var(--lp-font-heading);
+  font-size: 15px !important;
+  line-height: 15px !important;
+  white-space: pre-line;
+  color: #6b7280 !important;
+}
+
+/* Action row: always 46px tall, so cards line up with or without a button */
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item > div:last-child {
+  min-height: 42px !important;
+  margin-top: 4px !important;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-action {
+  min-width: 188px !important;
+  min-height: 42px !important;
+  padding: 9px 20px !important;
+  border-radius: 50px !important;
+  background-color: #151515 !important;
+  box-shadow:
+    inset 2px 2px 6px rgba(255, 255, 255, 0.32),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.32);
+  font-family: var(--lp-font-heading);
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 16px !important;
+  color: #ffffff !important;
+  transition: transform 0.2s ease;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-action:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-action:focus-visible {
+  outline: 2px solid #1a2e1a;
+  outline-offset: 3px;
+}
+
 /* "Ready to be rewarded?" card: artwork is positioned in % of the card so it
    scales with the card's fixed 1120 x 345 aspect ratio. */
 .lp-cta {
   position: relative;
+  order: 100;
   grid-column: 1 / -1;
   aspect-ratio: 1120 / 345;
   overflow: hidden;
@@ -603,13 +966,52 @@
 /* ── Tablet: keep the 3 steps / 3 cards, shrink the type ─────────────────── */
 
 @media screen and (max-width: 1023px) {
-  .lp-earn-card__icon {
+  .lp-earn-card__icon,
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-icon {
     width: 120px;
     height: 120px;
   }
 
-  .lp .lp-earn-card__title {
-    font-size: 20px;
+  .lp .lp-earn-card__title,
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-title {
+    font-size: 20px !important;
+  }
+
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-action {
+    min-width: 150px !important;
+  }
+
+  /* Member dashboard: points summary above the card */
+  .lp-member__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 40px 24px;
+  }
+
+  .lp-member__points {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .lp-member__art {
+    width: 140px;
+    margin: 0;
+  }
+
+  .lp .lp-member__count {
+    margin: 0;
+    text-align: left;
+  }
+
+  .lp .lp-member__status {
+    text-align: left;
+  }
+
+  .lp .lp-member__spent,
+  .lp .lp-member__goal {
+    font-size: 18px;
   }
 }
 
@@ -644,6 +1046,97 @@
   .lp-hero__cta {
     bottom: 5px;
     width: min(42.8vw, 340px);
+  }
+
+  /* Member dashboard */
+  .lp-member__inner {
+    gap: 15px;
+    padding: 20px 15px 30px;
+  }
+
+  .lp-member__points {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: start;
+    gap: 0;
+  }
+
+  .lp-member__art {
+    width: 120px;
+  }
+
+  .lp .lp-member__count {
+    font-size: 20px;
+  }
+
+  .lp-member__num {
+    font-size: 35px;
+  }
+
+  .lp .lp-member__status {
+    margin-top: -10px;
+    font-size: 13px;
+  }
+
+  .lp-member__card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 25px;
+    min-height: 0;
+    padding: 20px 10px;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .lp-member__progress {
+    gap: 25px;
+    padding: 0 0 25px;
+    border-right: 0;
+    border-bottom: 2px dotted #d9d9d9;
+  }
+
+  .lp .lp-member__title {
+    font-size: 16px;
+  }
+
+  .lp-member__bar {
+    height: 8px;
+  }
+
+  .lp .lp-member__next {
+    top: -15px;
+    right: -10px;
+    width: 45px;
+  }
+
+  .lp .lp-member__spent,
+  .lp .lp-member__goal {
+    font-size: 16px;
+  }
+
+  .lp-ladder {
+    width: 210px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .lp-ladder__badge {
+    width: 37px;
+    height: 37px;
+  }
+
+  .lp-ladder__check {
+    width: 14px;
+    height: 14px;
+  }
+
+  .lp-ladder__name {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .lp-ladder__req {
+    margin-top: 4px;
+    font-size: 9px;
   }
 
   /* How it works */
@@ -881,7 +1374,8 @@
   }
 
   .lp-earn-card,
-  .lp-cta {
+  .lp-cta,
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item {
     flex: 0 0 260px;
     min-height: 286px;
     border-radius: 15px;
@@ -889,19 +1383,29 @@
     scroll-margin-left: 10px;
   }
 
-  .lp-earn-card__icon {
+  .lp-earn-card__icon,
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-icon {
     width: 100px;
     height: 100px;
   }
 
-  .lp .lp-earn-card__title {
-    margin-top: 16px;
-    font-size: 18px;
-    line-height: 18px;
+  .lp .lp-earn-card__title,
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-title {
+    margin-top: 16px !important;
+    font-size: 18px !important;
+    line-height: 18px !important;
   }
 
   .lp .lp-earn-card__text {
     margin: 16px 0 66px;
+  }
+
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-description {
+    margin: 16px 0 20px !important;
+  }
+
+  .lp-earn__app .yt-loyalty-page-ways-to-earn-item-action {
+    min-width: 160px !important;
   }
 
   .lp-cta {

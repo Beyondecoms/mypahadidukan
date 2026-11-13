@@ -2,9 +2,16 @@
   Loyalty page "More ways to earn": reward cards in a 3-column grid and a
   full-width "Ready to be rewarded?" CTA card. On mobile the cards become a
   sideways scroller and the CTA card moves to the front.
+
+  Add the YourToken "Loyalty Page" app block to this section to make the cards
+  live: once it loads, its cards (with actions such as adding a birthday)
+  replace the static ones and take the look of the static card with the same
+  icon. Only its "Ways to earn" cards are shown; turn off the other parts in
+  YourToken > On-site content > Loyalty Page. Logic: loyalty-page.js
   Styles: section-loyalty-page.css
 {%- endcomment -%}
 {% render 'loyalty-page-assets' %}
+<script src="{{ 'loyalty-page.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   if section.settings.pattern_image != blank
@@ -33,12 +40,6 @@
   }
   {%- for block in section.blocks -%}
     {%- case block.type -%}
-      {%- when 'card' %}
-        #lp-earn-{{ block.id }} {
-          --card-end: {{ block.settings.end_color }};
-          --card-title: {{ block.settings.title_color }};
-          --card-edge: {{ block.settings.edge_color }};
-        }
       {%- when 'cta' -%}
         {%- liquid
           if block.settings.background_image != blank
@@ -60,7 +61,7 @@
   {%- endfor %}
 </style>
 
-<div class="lp lp-earn lp-pattern">
+<loyalty-earn class="lp lp-earn lp-pattern">
   <div class="lp-earn__inner">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="lp-head">
@@ -76,13 +77,25 @@
     {%- if section.blocks.size > 0 -%}
       <div class="lp-earn__grid">
         {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="lp-earn__app" data-lp-earn-app>{% render block %}</div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'card' -%}
+              {%- capture card_attributes -%}
+                id="lp-earn-{{ block.id }}"
+                style="--card-end: {{ block.settings.end_color }}; --card-title: {{ block.settings.title_color }}; --card-edge: {{ block.settings.edge_color }};"
+                data-lp-earn-type="{{ block.settings.icon }}"
+                {{ block.shopify_attributes }}
+              {%- endcapture -%}
               {%- assign icon_asset = 'loyalty-earn-' | append: block.settings.icon | append: '.webp' -%}
               {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" id="lp-earn-{{ block.id }}" class="lp-earn-card lp-earn-card--link" {{ block.shopify_attributes }}>
+                <a href="{{ block.settings.link }}" class="lp-earn-card lp-earn-card--static lp-earn-card--link" {{ card_attributes }}>
               {%- else -%}
-                <div id="lp-earn-{{ block.id }}" class="lp-earn-card" {{ block.shopify_attributes }}>
+                <div class="lp-earn-card lp-earn-card--static" {{ card_attributes }}>
               {%- endif -%}
                 {% render 'loyalty-image',
                   image: block.settings.image,
@@ -106,7 +119,15 @@
               {%- endif -%}
 
             {%- when 'cta' -%}
-              {%- assign cta_link = block.settings.link | default: routes.account_register_url -%}
+              {%- liquid
+                # The sign-in link stays off account URLs, which KwikPass takes over and returns to /account.
+                if block.settings.open_yourtoken
+                  assign login_fallback = request.path | append: '?showYt=true'
+                else
+                  assign login_fallback = routes.account_register_url
+                endif
+                assign cta_link = block.settings.link | default: login_fallback
+              -%}
               <div id="lp-earn-{{ block.id }}" class="lp-cta" {{ block.shopify_attributes }}>
                 {% render 'loyalty-image',
                   image: block.settings.collage_image,
@@ -130,7 +151,13 @@
                 {%- if block.settings.image_alt != blank -%}
                   <p class="visually-hidden lp-mob-only">{{ block.settings.image_alt | escape }}</p>
                 {%- endif -%}
-                <a href="{{ cta_link }}" class="lp-cta__btn">
+                <a
+                  href="{{ cta_link }}"
+                  class="lp-cta__btn"
+                  {% if block.settings.open_yourtoken %}
+                    data-lp-login
+                  {% endif %}
+                >
                   {% render 'loyalty-image',
                     image: block.settings.button_image,
                     fallback: 'loyalty-cta-button.webp',
@@ -156,7 +183,7 @@
       </div>
     {%- endif -%}
   </div>
-</div>
+</loyalty-earn>
 
 {% schema %}
 {
@@ -228,7 +255,8 @@
             { "value": "instagram", "label": "Instagram" },
             { "value": "feedback", "label": "Thumbs up" }
           ],
-          "default": "birthday"
+          "default": "birthday",
+          "info": "With the YourToken app block, the live card for the same reward (birthday, Instagram follow, feedback) takes this card's icon and colors."
         },
         {
           "type": "image_picker",
@@ -335,12 +363,22 @@
           "default": "Start Earning"
         },
         {
+          "type": "checkbox",
+          "id": "open_yourtoken",
+          "label": "Open YourToken sign-in",
+          "info": "Guests sign in with the store login and come back to this page. Members get the YourToken rewards widget.",
+          "default": true
+        },
+        {
           "type": "url",
           "id": "link",
           "label": "Button link",
-          "info": "Defaults to the create account page."
+          "info": "Used when the sign-in above is off. Defaults to the create account page."
         }
       ]
+    },
+    {
+      "type": "@app"
     }
   ],
   "presets": [

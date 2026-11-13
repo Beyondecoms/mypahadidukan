@@ -60,12 +60,12 @@
         "rate_right": "10 points",
         "rate_note": "Redeem for products, freebies, and merch from the rewards catalogue.",
         "show_pattern": true,
-        "heading_color": "#1A2E1A",
+        "heading_color": "#1a2e1a",
         "text_color": "#414651",
         "step_text_color": "#111111",
-        "panel_color": "#FFFBEF",
-        "accent_color": "#EE5922",
-        "accent_text_color": "#FFFFFF"
+        "panel_color": "#fffbef",
+        "accent_color": "#ee5922",
+        "accent_text_color": "#ffffff"
       }
     },
     "compare": {
@@ -203,30 +203,37 @@
         "footnote": "*Maximum cap applicable.",
         "tier_1_name": "Crushing",
         "tier_1_requirement": "Spend <strong>₹2,999</strong> over 12 months.",
-        "tier_1_color": "#D36F3C",
-        "tier_1_bg": "#FFECD7",
-        "tier_1_line": "#F9CAB2",
+        "tier_1_color": "#d36f3c",
+        "tier_1_bg": "#ffecd7",
+        "tier_1_line": "#f9cab2",
+        "tier_1_divider": "#d36f3c",
         "tier_2_name": "Obsessed",
         "tier_2_requirement": "Spend <strong>₹4,999</strong> over 12 months.",
-        "tier_2_color": "#3C546C",
-        "tier_2_bg": "#EFFAFF",
-        "tier_2_line": "#CCDEF0",
+        "tier_2_color": "#3c546c",
+        "tier_2_bg": "#effaff",
+        "tier_2_line": "#ccdef0",
+        "tier_2_divider": "#95b7d8",
         "tier_3_name": "Committed",
         "tier_3_requirement": "Spend <strong>₹7,999</strong> over 12 months.",
-        "tier_3_color": "#A95475",
-        "tier_3_bg": "#FFEBF3",
-        "tier_3_line": "#F7CBDC",
-        "heading_color": "#1A2E1A",
+        "tier_3_color": "#a95475",
+        "tier_3_bg": "#ffebf3",
+        "tier_3_line": "#f7cbdc",
+        "tier_3_divider": "#a95475",
+        "heading_color": "#1a2e1a",
         "text_color": "#414651",
-        "panel_color": "#FFFBEF",
-        "line_color": "#DFDFDF",
-        "yes_color": "#008B75",
-        "no_color": "#BDBDBD"
+        "panel_color": "#fffbef",
+        "line_color": "#dfdfdf",
+        "yes_color": "#008b75",
+        "no_color": "#bdbdbd"
       }
     },
     "earn": {
       "type": "loyalty-ways-to-earn",
       "blocks": {
+        "yourtoken_loyalty_loyalty_page_block_FeU6Ew": {
+          "type": "shopify://apps/yourtoken-loyalty/blocks/loyalty-page-block/019b3be8-f559-70af-9e2e-d3b502d6f55f",
+          "settings": {}
+        },
         "card_birthday": {
           "type": "card",
           "settings": {
@@ -234,9 +241,9 @@
             "title": "Birthday Reward",
             "text": "Earn 100 points on birthday",
             "link": "",
-            "end_color": "#EFFAFF",
-            "title_color": "#33535B",
-            "edge_color": "#78A0B3"
+            "end_color": "#effaff",
+            "title_color": "#33535b",
+            "edge_color": "#78a0b3"
           }
         },
         "card_instagram": {
@@ -246,9 +253,9 @@
             "title": "Instagram Follow Reward",
             "text": "Earn 20 points on Instagram follow",
             "link": "",
-            "end_color": "#DCC6FF",
-            "title_color": "#623E9C",
-            "edge_color": "#95936C"
+            "end_color": "#dcc6ff",
+            "title_color": "#623e9c",
+            "edge_color": "#95936c"
           }
         },
         "card_feedback": {
@@ -258,9 +265,9 @@
             "title": "Feedback Reward",
             "text": "Earn 40 points on review\nEarn 50 points on image review",
             "link": "",
-            "end_color": "#E3DFA8",
-            "title_color": "#4A4933",
-            "edge_color": "#95936C"
+            "end_color": "#e3dfa8",
+            "title_color": "#4a4933",
+            "edge_color": "#95936c"
           }
         },
         "cta": {
@@ -274,6 +281,7 @@
         }
       },
       "block_order": [
+        "yourtoken_loyalty_loyalty_page_block_FeU6Ew",
         "card_birthday",
         "card_instagram",
         "card_feedback",
@@ -283,7 +291,7 @@
         "heading": "More ways to earn",
         "subheading": "Get rewarded when you shop and engage.",
         "show_pattern": true,
-        "heading_color": "#1A2E1A",
+        "heading_color": "#1a2e1a",
         "text_color": "#414651"
       }
     }
