@@ -1,10 +1,10 @@
 /**
  * Loyalty page ↔ YourToken
  *
- * - [data-lp-login] links sign guests in and bring them back to this page, and
- *   open the YourToken rewards widget for members. The store signs in with
- *   KwikPass (YourToken hands its own sign-in to it too). The return URL carries
- *   ?showYt=true, which tells YourToken to link the new session on arrival.
+ * - [data-lp-login] links send guests through the Shopify sign-in and back to
+ *   this page, and open the YourToken rewards widget for members. The return URL
+ *   carries ?showYt=true, which tells YourToken to link the store session to a
+ *   YourToken one on arrival.
  * - <loyalty-hero> swaps the guest banner for the member dashboard while the
  *   shopper has a YourToken session, and fills in points and tier progress.
  * - <loyalty-earn> replaces the static "ways to earn" cards with YourToken's
@@ -98,20 +98,29 @@
     window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
   }
 
+  function storeCustomerId() {
+    const hero = document.querySelector('loyalty-hero[data-customer]');
+    if (hero) return hero.dataset.customer;
+    const meta = window.ShopifyAnalytics && window.ShopifyAnalytics.meta;
+    return meta && meta.page && meta.page.customerId ? String(meta.page.customerId) : '';
+  }
+
   function startLogin() {
-    if (hasSession() && openYourToken()) return;
-    // KwikPass returns to the given path (straight away if already signed in to the store).
-    if (typeof window.kpHandleLogin === 'function') {
-      window.kpHandleLogin(returnPath());
+    if (hasSession()) {
+      openYourToken();
       return;
     }
-    if (openYourToken()) return;
-    const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-    window.location.href = `${root}account/login?return_url=${encodeURIComponent(returnPath())}`;
+    // Signed in to the store already: reload with the flag so YourToken links the session.
+    if (storeCustomerId()) {
+      window.location.href = returnPath();
+      return;
+    }
+    // Shopify sign-in, then back here. return_to only accepts relative URLs.
+    window.location.href = `/customer_authentication/login?return_to=${encodeURIComponent(returnPath())}`;
   }
 
   // Capture on window so this runs before KwikPass, which takes over clicks on
-  // account links and would send the shopper to /account after signing in.
+  // account links and opens its own sign-in, returning to /account.
   window.addEventListener(
     'click',
     (event) => {
