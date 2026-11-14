@@ -247,6 +247,19 @@
           "storefront_layout_drawer_position": "left",
           "storefront_layout_as_section_page": ""
         }
+      },
+      "773175526901516413": {
+        "type": "shopify://apps/referrush/blocks/floating-popup/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
+        "disabled": false,
+        "settings": {}
+      },
+      "12676059360672597252": {
+        "type": "shopify://apps/referrush/blocks/contact-form/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
+        "disabled": false,
+        "settings": {
+          "y_position": 20,
+          "position": "left"
+        }
       }
     },
     "color_schemes": {
