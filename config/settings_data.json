@@ -171,11 +171,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "1219337400145039034": {
-        "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
-        "disabled": false,
-        "settings": {}
-      },
       "6386671502852046031": {
         "type": "shopify://apps/reelcart/blocks/floating-video/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
         "disabled": false,
@@ -269,6 +264,11 @@
       "14418474333536001498": {
         "type": "shopify://apps/cooee/blocks/app-embed-main/2f17a8e7-57ed-4fda-b07d-26521d722e6f",
         "disabled": false,
+        "settings": {}
+      },
+      "1219337400145039034": {
+        "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
+        "disabled": true,
         "settings": {}
       }
     },
