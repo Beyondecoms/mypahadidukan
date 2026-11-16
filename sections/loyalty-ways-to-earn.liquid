@@ -81,6 +81,23 @@
             <div class="lp-earn__app" data-lp-earn-app>{% render block %}</div>
           {%- endif -%}
         {%- endfor -%}
+        {%- comment -%}
+          YourToken's block script writes its settings into the first copy of the
+          block on the page only (the hero banner), then loads the script that
+          renders every copy. Module scripts run in page order, so this runs after
+          YourToken's and hands the same settings to the copy here before it
+          renders. If it runs too late, the static cards stay.
+        {%- endcomment -%}
+        <script type="module">
+          const attr = 'data-yt-loyalty-page-config';
+          const source = document.querySelector(`[${attr}]`);
+          document.querySelectorAll(`[data-lp-earn-app] [${attr}]`).forEach((target) => {
+            const own = (target.getAttribute(attr) || '').trim();
+            if (source && target !== source && (own === '' || own === '{}')) {
+              target.setAttribute(attr, source.getAttribute(attr));
+            }
+          });
+        </script>
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
@@ -365,8 +382,8 @@
         {
           "type": "checkbox",
           "id": "open_yourtoken",
-          "label": "Sign in and return to this page",
-          "info": "Guests sign in with the store login and come back to this page. Members get the YourToken rewards widget.",
+          "label": "Open YourToken sign-in",
+          "info": "Opens the YourToken widget: sign-in for guests, rewards for members.",
           "default": true
         },
         {

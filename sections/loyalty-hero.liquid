@@ -1,11 +1,15 @@
 {%- comment -%}
   Loyalty page hero.
-  Guests see the full-width banner (separate mobile crop) with the animated
-  "Join" button, which opens the YourToken sign-in when the widget is on the
-  page. Shoppers signed in to YourToken see the member dashboard instead:
-  points, tier progress by spend and the tier ladder, filled in by
-  loyalty-page.js. Falls back to the bundled loyalty-* assets when no images
-  are picked. Styles: section-loyalty-page.css
+  Guests see the banner: with the YourToken "Loyalty Page" app block added, that
+  block's banner (content and colours set in YourToken > On-site content >
+  Loyalty Page > Banner; only the banner part shows here), otherwise the
+  bundled image banner (separate mobile crop) with the animated "Join" button.
+  Both open YourToken's sign-in: its own code (phone or email, "Guest sign-in
+  on this page") instead of the store-wide method (KwikPass); other pages are
+  unchanged.
+  Shoppers signed in to YourToken see the member dashboard instead: points,
+  tier progress by spend and the tier ladder, filled in by loyalty-page.js.
+  Styles: section-loyalty-page.css
 {%- endcomment -%}
 {% render 'loyalty-page-assets' %}
 <script src="{{ 'loyalty-page.js' | asset_url }}" defer="defer"></script>
@@ -20,7 +24,23 @@
     assign login_fallback = routes.account_register_url
   endif
   assign button_link = section.settings.button_link | default: login_fallback
+  assign has_app = false
+  if section.blocks.size > 0
+    assign has_app = true
+  endif
   assign show_member = section.settings.show_member_banner
+
+  if section.settings.member_art != blank
+    assign member_art_url = section.settings.member_art | image_url: width: 400
+  else
+    assign member_art_url = 'loyalty-badges-stack.webp' | asset_url
+  endif
+
+  if section.settings.tier_1_badge != blank
+    assign first_badge_url = section.settings.tier_1_badge | image_url: width: 160
+  else
+    assign first_badge_url = 'loyalty-tier-1.webp' | asset_url
+  endif
 
   if desktop_image != blank
     assign desktop_ratio = desktop_image.aspect_ratio
@@ -34,18 +54,6 @@
     assign mobile_ratio = desktop_image.aspect_ratio
   else
     assign mobile_ratio = '0.9524'
-  endif
-
-  if section.settings.member_art != blank
-    assign member_art_url = section.settings.member_art | image_url: width: 400
-  else
-    assign member_art_url = 'loyalty-badges-stack.webp' | asset_url
-  endif
-
-  if section.settings.tier_1_badge != blank
-    assign first_badge_url = section.settings.tier_1_badge | image_url: width: 160
-  else
-    assign first_badge_url = 'loyalty-tier-1.webp' | asset_url
   endif
 -%}
 
@@ -65,85 +73,213 @@
 </style>
 
 <loyalty-hero
-  class="lp lp-hero"
+  class="lp lp-hero{% if has_app %} lp-hero--app{% endif %}"
   data-state="guest"
   data-shop-id="{{ shop.id }}"
   data-customer="{{ customer.id }}"
 >
-  {%- if section.settings.heading != blank -%}
-    <h1 class="visually-hidden">{{ section.settings.heading | escape }}</h1>
+  {%- comment -%}
+    Runs before YourToken loads, so it must stay above the banner.
+
+    Sign-in method: YourToken uses the method chosen in the app for the whole
+    store (KwikPass). For guests on this page only, switch it to YourToken's own
+    code sign-in by rewriting the method in the brand settings YourToken loads
+    (the widget's and the banner's). If YourToken changes that response, the
+    store method shows instead. Customers signed in to the store keep the store
+    method, which links their points without a code.
+  {%- endcomment -%}
+  {%- if customer == blank and section.settings.sign_in_method != 'store' -%}
+    <script>
+      (function () {
+        var method = {{ section.settings.sign_in_method | json }};
+        var brandUrl = /^https:\/\/api\.yourtoken\.io\/api\/v1\/brand\/(shopify|domain)\//;
+
+        function ownSignIn(text) {
+          try {
+            var brand = JSON.parse(text);
+            var program = brand && (brand.data || brand).brandRewardProgram;
+            if (!program) return text;
+            program.programAuthType = method;
+            return JSON.stringify(brand);
+          } catch (error) {
+            return text;
+          }
+        }
+
+        try {
+          var xhr = XMLHttpRequest.prototype;
+          var open = xhr.open;
+          var readText = Object.getOwnPropertyDescriptor(xhr, 'responseText').get;
+          var readResponse = Object.getOwnPropertyDescriptor(xhr, 'response').get;
+          xhr.open = function (verb, url) {
+            if (brandUrl.test(String(url))) {
+              var rewritten = null;
+              var text = function (request) {
+                if (request.readyState !== 4) return readText.call(request);
+                if (rewritten === null) rewritten = ownSignIn(readText.call(request));
+                return rewritten;
+              };
+              Object.defineProperty(this, 'responseText', {
+                configurable: true,
+                get: function () {
+                  return text(this);
+                },
+              });
+              Object.defineProperty(this, 'response', {
+                configurable: true,
+                get: function () {
+                  return this.responseType && this.responseType !== 'text' ? readResponse.call(this) : text(this);
+                },
+              });
+            }
+            return open.apply(this, arguments);
+          };
+        } catch (error) {}
+
+        if (typeof window.fetch !== 'function') return;
+        var fetchFromNetwork = window.fetch;
+        window.fetch = function (input) {
+          var call = fetchFromNetwork.apply(window, arguments);
+          var url = input instanceof Request ? input.url : String(input);
+          if (!brandUrl.test(url)) return call;
+          return call.then(function (response) {
+            if (!response.ok) return response;
+            return response
+              .clone()
+              .text()
+              .then(function (text) {
+                return new Response(ownSignIn(text), {
+                  status: response.status,
+                  statusText: response.statusText,
+                  headers: response.headers,
+                });
+              })
+              .catch(function () {
+                return response;
+              });
+          });
+        };
+      })();
+    </script>
   {%- endif -%}
+  {%- unless request.design_mode -%}
+    {%- comment -%}
+      A store-linked YourToken sign-in (KwikPass or the store account) stays after
+      the shopper signs out of the store, so the banner would still show their
+      points. Before YourToken renders, drop one the store no longer backs:
+      nobody signed in, or a different customer than the one it was first seen
+      with. YourToken's own code sign-in doesn't depend on the store; YourToken's
+      logout ends it. Mirrors YourToken's logout.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        try {
+          var customer = {{ customer.id | json }};
+          var store = window.localStorage;
+          var ownerKey = 'lp-yt-customer';
+          if (!store.getItem('widget_session')) return;
+          var provider = (document.cookie.match(/(?:^|;\s*)ytprovider=([^;]*)/) || [])[1];
+          if (!provider) provider = (JSON.parse(store.getItem('ytuser') || '{}') || {}).provider;
+          if (provider && provider !== 'sso') {
+            store.removeItem(ownerKey);
+            return;
+          }
+          var owner = store.getItem(ownerKey);
+          if (customer && (!owner || owner === String(customer))) {
+            store.setItem(ownerKey, String(customer));
+            return;
+          }
+          ['widget_session', 'ytuser', ownerKey].forEach(function (key) {
+            store.removeItem(key);
+          });
+          store.setItem('yt-auth-state', String(Date.now()));
+          document.cookie = 'ytuser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        } catch (error) {}
+      })();
+    </script>
+  {%- endunless -%}
+  {%- if has_app -%}
+    <div class="lp-hero__app">
+      {%- for block in section.blocks -%}
+        {% render block %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="visually-hidden">{{ section.settings.heading | escape }}</h1>
+    {%- endif -%}
 
-  <div class="lp-hero__guest">
-    <picture class="lp-hero__media">
-      {%- if mobile_image != blank -%}
-        <source
-          media="(max-width: 768px)"
-          srcset="{{ mobile_image | image_url: width: 375 }} 375w, {{ mobile_image | image_url: width: 550 }} 550w, {{ mobile_image | image_url: width: 750 }} 750w, {{ mobile_image | image_url: width: 1100 }} 1100w"
-          sizes="100vw"
-          width="{{ mobile_image.width }}"
-          height="{{ mobile_image.height }}"
-        >
-      {%- elsif desktop_image == blank -%}
-        <source
-          media="(max-width: 768px)"
-          srcset="{{ 'loyalty-hero-mobile.webp' | asset_url }}"
-          width="648"
-          height="698"
-        >
-      {%- endif -%}
-
-      {%- if desktop_image != blank -%}
-        {{
-          desktop_image
-          | image_url: width: 2880
-          | image_tag:
-            alt: section.settings.image_alt,
-            sizes: '100vw',
-            widths: '750, 1100, 1500, 2000, 2880',
-            loading: 'eager',
-            fetchpriority: 'high'
-        }}
-      {%- else -%}
-        <img
-          src="{{ 'loyalty-hero-desktop.webp' | asset_url }}"
-          alt="{{ section.settings.image_alt | escape }}"
-          width="2880"
-          height="936"
-          loading="eager"
-          fetchpriority="high"
-        >
-      {%- endif -%}
-    </picture>
-
-    {%- if section.settings.show_button -%}
-      <a
-        href="{{ button_link }}"
-        class="lp-hero__cta"
-        {% if section.settings.open_yourtoken %}
-          data-lp-login
-        {% endif %}
-      >
-        {%- if section.settings.button_image != blank -%}
-          <img
-            src="{{ section.settings.button_image | image_url: width: section.settings.button_image.width }}"
-            alt="{{ section.settings.button_label | escape }}"
-            width="{{ section.settings.button_image.width }}"
-            height="{{ section.settings.button_image.height }}"
-            loading="eager"
+    <div class="lp-hero__guest">
+      <picture class="lp-hero__media">
+        {%- if mobile_image != blank -%}
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ mobile_image | image_url: width: 375 }} 375w, {{ mobile_image | image_url: width: 550 }} 550w, {{ mobile_image | image_url: width: 750 }} 750w, {{ mobile_image | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+            width="{{ mobile_image.width }}"
+            height="{{ mobile_image.height }}"
           >
-        {%- else -%}
-          <img
-            src="{{ 'loyalty-join-button.gif' | asset_url }}"
-            alt="{{ section.settings.button_label | escape }}"
-            width="702"
-            height="210"
-            loading="eager"
+        {%- elsif desktop_image == blank -%}
+          <source
+            media="(max-width: 768px)"
+            srcset="{{ 'loyalty-hero-mobile.webp' | asset_url }}"
+            width="648"
+            height="698"
           >
         {%- endif -%}
-      </a>
-    {%- endif -%}
-  </div>
+
+        {%- if desktop_image != blank -%}
+          {{
+            desktop_image
+            | image_url: width: 2880
+            | image_tag:
+              alt: section.settings.image_alt,
+              sizes: '100vw',
+              widths: '750, 1100, 1500, 2000, 2880',
+              loading: 'eager',
+              fetchpriority: 'high'
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'loyalty-hero-desktop.webp' | asset_url }}"
+            alt="{{ section.settings.image_alt | escape }}"
+            width="2880"
+            height="936"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {%- endif -%}
+      </picture>
+
+      {%- if section.settings.show_button -%}
+        <a
+          href="{{ button_link }}"
+          class="lp-hero__cta"
+          {% if section.settings.open_yourtoken %}
+            data-lp-login
+          {% endif %}
+        >
+          {%- if section.settings.button_image != blank -%}
+            <img
+              src="{{ section.settings.button_image | image_url: width: section.settings.button_image.width }}"
+              alt="{{ section.settings.button_label | escape }}"
+              width="{{ section.settings.button_image.width }}"
+              height="{{ section.settings.button_image.height }}"
+              loading="eager"
+            >
+          {%- else -%}
+            <img
+              src="{{ 'loyalty-join-button.gif' | asset_url }}"
+              alt="{{ section.settings.button_label | escape }}"
+              width="702"
+              height="210"
+              loading="eager"
+            >
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 
   {%- if show_member -%}
     <div class="lp-member" data-lp-member data-tier="0" data-loading>
@@ -273,8 +409,11 @@
   {%- endif -%}
 </loyalty-hero>
 
-{%- comment -%} Avoids a guest flash for members. Signed out of the store means guest. {%- endcomment -%}
-{%- if show_member and customer -%}
+{%- comment -%}
+  Avoids a banner flash for members. The guard above has already dropped a
+  session the store no longer backs.
+{%- endcomment -%}
+{%- if show_member -%}
   <script>
     try {
       if (window.localStorage.getItem('widget_session')) {
@@ -345,8 +484,8 @@
     {
       "type": "checkbox",
       "id": "open_yourtoken",
-      "label": "Sign in and return to this page",
-      "info": "Guests sign in with the store login and come back to this page. Members get the YourToken rewards widget.",
+      "label": "Open YourToken sign-in",
+      "info": "Opens the YourToken widget: sign-in for guests, rewards for members.",
       "default": true
     },
     {
@@ -354,6 +493,22 @@
       "id": "button_link",
       "label": "Button link",
       "info": "Used when the sign-in above is off. Defaults to the create account page."
+    },
+    {
+      "type": "header",
+      "content": "YourToken sign-in"
+    },
+    {
+      "type": "select",
+      "id": "sign_in_method",
+      "label": "Guest sign-in on this page",
+      "info": "With the YourToken app block added. \"Store setting\" uses the method chosen in YourToken for the whole store (KwikPass). Customers signed in to the store skip the code.",
+      "options": [
+        { "value": "yourtoken", "label": "YourToken phone code" },
+        { "value": "yourtoken_email", "label": "YourToken email code" },
+        { "value": "store", "label": "Store setting" }
+      ],
+      "default": "yourtoken"
     },
     {
       "type": "header",
@@ -492,6 +647,11 @@
       "type": "image_picker",
       "id": "tier_3_badge",
       "label": "Badge"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
     }
   ],
   "presets": [

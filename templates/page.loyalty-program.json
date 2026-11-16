@@ -11,6 +11,15 @@
   "sections": {
     "hero": {
       "type": "loyalty-hero",
+      "blocks": {
+        "yourtoken_loyalty_banner": {
+          "type": "shopify://apps/yourtoken-loyalty/blocks/loyalty-page-block/019b3be8-f559-70af-9e2e-d3b502d6f55f",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "yourtoken_loyalty_banner"
+      ],
       "settings": {
         "heading": "Loyalty Circle",
         "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",

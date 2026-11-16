@@ -1,12 +1,13 @@
 /**
  * Loyalty page ↔ YourToken
  *
- * - [data-lp-login] links send guests through the Shopify sign-in and back to
- *   this page, and open the YourToken rewards widget for members. The return URL
- *   carries ?showYt=true, which tells YourToken to link the store session to a
- *   YourToken one on arrival.
- * - <loyalty-hero> swaps the guest banner for the member dashboard while the
- *   shopper has a YourToken session, and fills in points and tier progress.
+ * - [data-lp-login] links ("Start Earning", and the fallback hero button) open
+ *   the YourToken widget: its sign-in for guests, rewards for members. Without
+ *   the widget on the page they work as plain links.
+ * - <loyalty-hero> shows the member dashboard (points, tier progress by spend,
+ *   tier ladder) in place of the banner while the shopper has a YourToken
+ *   session. Guests keep the banner: YourToken's own (app block) or the bundled
+ *   image.
  * - <loyalty-earn> replaces the static "ways to earn" cards with YourToken's
  *   live cards (rendered by the Loyalty Page app block) once they load. The live
  *   cards keep YourToken's actions (add birthday, follow, ...) and borrow the
@@ -19,7 +20,6 @@
 
   const API = 'https://api.yourtoken.io/api/v1';
   const SESSION_KEY = 'widget_session';
-  const RETURN_FLAG = 'showYt';
 
   const readStorage = (key) => {
     try {
@@ -28,49 +28,6 @@
       return null;
     }
   };
-
-  const hasSession = () => Boolean(readStorage(SESSION_KEY));
-
-  // Store customer the YourToken session was seen with. YourToken keeps its
-  // session after the shopper signs out of the store, so it can be stale.
-  const OWNER_KEY = 'lp-yt-customer';
-
-  const writeStorage = (key, value) => {
-    try {
-      if (value === null) {
-        window.localStorage.removeItem(key);
-      } else {
-        window.localStorage.setItem(key, value);
-      }
-    } catch (error) {
-      // Storage unavailable (private mode); nothing to keep.
-    }
-  };
-
-  /** Signs YourToken out the way its own logout does. */
-  function clearYourTokenSession() {
-    [SESSION_KEY, 'ytuser', OWNER_KEY].forEach((key) => writeStorage(key, null));
-    writeStorage('yt-auth-state', String(Date.now()));
-    document.cookie = 'ytuser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.dispatchEvent(new CustomEvent('yt:auth:state-updated', { detail: { isLoggedIn: false } }));
-  }
-
-  /**
-   * True when the YourToken session belongs to the shopper signed in to the
-   * store. A session left over from a store sign-out, or from another
-   * customer, is cleared so their points never show.
-   */
-  function hasOwnSession(customerId) {
-    if (!hasSession()) return false;
-    if (window.Shopify && window.Shopify.designMode) return Boolean(customerId);
-    const owner = readStorage(OWNER_KEY);
-    if (!customerId || (owner && owner !== customerId)) {
-      clearYourTokenSession();
-      return false;
-    }
-    if (!owner) writeStorage(OWNER_KEY, customerId);
-    return true;
-  }
 
   /** Opens the YourToken widget: its sign-in for guests, rewards for members. */
   function openYourToken() {
@@ -83,55 +40,13 @@
     return true;
   }
 
-  /** This page, flagged so YourToken links the session when the shopper lands back here. */
-  function returnPath() {
-    const url = new URL(window.location.href);
-    url.searchParams.set(RETURN_FLAG, 'true');
-    return url.pathname + url.search + url.hash;
-  }
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest && event.target.closest('[data-lp-login]');
+    if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (openYourToken()) event.preventDefault();
+  });
 
-  /** Drops the return flag once the shopper is signed in, so reloads and shared links stay clean. */
-  function clearReturnFlag() {
-    const url = new URL(window.location.href);
-    if (!url.searchParams.has(RETURN_FLAG)) return;
-    url.searchParams.delete(RETURN_FLAG);
-    window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
-  }
-
-  function storeCustomerId() {
-    const hero = document.querySelector('loyalty-hero[data-customer]');
-    if (hero) return hero.dataset.customer;
-    const meta = window.ShopifyAnalytics && window.ShopifyAnalytics.meta;
-    return meta && meta.page && meta.page.customerId ? String(meta.page.customerId) : '';
-  }
-
-  function startLogin() {
-    if (hasSession()) {
-      openYourToken();
-      return;
-    }
-    // Signed in to the store already: reload with the flag so YourToken links the session.
-    if (storeCustomerId()) {
-      window.location.href = returnPath();
-      return;
-    }
-    // Shopify sign-in, then back here. return_to only accepts relative URLs.
-    window.location.href = `/customer_authentication/login?return_to=${encodeURIComponent(returnPath())}`;
-  }
-
-  // Capture on window so this runs before KwikPass, which takes over clicks on
-  // account links and opens its own sign-in, returning to /account.
-  window.addEventListener(
-    'click',
-    (event) => {
-      const trigger = event.target.closest && event.target.closest('[data-lp-login]');
-      if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      event.stopPropagation();
-      startLogin();
-    },
-    true
-  );
+  /* ── Member dashboard ─────────────────────────────────────────────────── */
 
   async function ytGet(path, params) {
     const token = readStorage(SESSION_KEY);
@@ -162,8 +77,6 @@
     }
     return brandIdRequest;
   }
-
-  /* ── Member dashboard ─────────────────────────────────────────────────── */
 
   class LoyaltyHero extends HTMLElement {
     connectedCallback() {
@@ -210,10 +123,10 @@
     }
 
     update() {
-      const signedIn = hasOwnSession(this.dataset.customer || '');
+      // The hero's inline guard has already dropped a session the store no longer backs.
+      const signedIn = Boolean(readStorage(SESSION_KEY));
       this.dataset.state = signedIn ? 'member' : 'guest';
       if (signedIn) {
-        clearReturnFlag();
         this.load();
       } else {
         this.loadedSession = null;
@@ -238,7 +151,14 @@
           }).catch(() => null),
           ytGet('/users/me', userParams).catch(() => null),
         ]);
-        if (this.loadedSession === session) this.render(points, user);
+        if (this.loadedSession !== session) return;
+        // Nothing came back (expired session, API down): keep YourToken's own banner.
+        if (!points && !user) {
+          this.loadedSession = null;
+          this.dataset.state = 'guest';
+          return;
+        }
+        this.render(points, user);
       } finally {
         this.member.removeAttribute('data-loading');
       }

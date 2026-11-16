@@ -137,6 +137,72 @@ loyalty-earn {
   height: auto;
 }
 
+/* YourToken banner, from the "Loyalty Page" app block in the hero section:
+   sign-in for guests, points balance for members. Content and colours are set
+   in YourToken. The block also renders the other loyalty page sections; only
+   the banner shows here (Ways to earn uses its own copy of the block). */
+.lp-hero--app {
+  background: none;
+}
+
+.lp-hero__app .yt-loyalty-page-container {
+  max-width: none !important;
+}
+
+.lp-hero__app .yt-loyalty-page-container > :not(.yt-loyalty-page-banner) {
+  display: none !important;
+}
+
+.lp-hero__app .yt-loyalty-page-banner {
+  border: 0 !important;
+}
+
+/* Replaces YourToken's stock photo until a banner image is picked in the app */
+.lp-hero__app .yt-loyalty-page-banner[style*='images.unsplash.com/photo-1515886657613'] {
+  background-color: #eaf4fb !important;
+  background-image: url('loyalty-pattern.webp') !important;
+}
+
+.lp-hero__app .yt-loyalty-page-banner-badge,
+.lp-hero__app .yt-loyalty-page-banner-title,
+.lp-hero__app .yt-loyalty-page-banner-subtitle,
+.lp-hero__app .yt-loyalty-page-banner-button,
+.lp-hero__app .yt-loyalty-page-banner-balance-card,
+.lp-hero__app .yt-loyalty-page-banner-progress {
+  font-family: var(--lp-font-heading) !important;
+}
+
+.lp-hero__app .yt-loyalty-page-banner-title {
+  letter-spacing: normal !important;
+}
+
+.lp-hero__app .yt-loyalty-page-banner-button {
+  min-height: 48px;
+  padding: 12px 32px !important;
+  border-radius: 50px !important;
+  background: #151515 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow:
+    inset 0 -2px 4px rgba(255, 255, 255, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  transition: transform 0.2s ease;
+}
+
+.lp-hero__app .yt-loyalty-page-banner-button:hover {
+  transform: translateY(-2px);
+}
+
+.lp-hero__app .yt-loyalty-page-banner-button:focus-visible {
+  outline: 2px solid #1a2e1a;
+  outline-offset: 4px;
+}
+
+/* Signed in: the member dashboard below replaces YourToken's banner. */
+.lp-hero[data-state='member'] .lp-hero__app {
+  display: none;
+}
+
 /* Member dashboard: replaces the banner for shoppers signed in to YourToken.
    data-tier (0 = no tier yet) sets the background and progress colors. */
 .lp-member {
