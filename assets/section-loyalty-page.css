@@ -72,7 +72,6 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
-  text-transform: capitalize;
   color: var(--lp-text);
 }
 
@@ -472,7 +471,6 @@ loyalty-earn {
   font-weight: 600;
   line-height: 24px;
   letter-spacing: normal;
-  text-transform: capitalize;
   color: inherit;
 }
 
@@ -521,6 +519,11 @@ loyalty-earn {
   font-style: italic;
   font-weight: 700;
   line-height: 30px;
+}
+
+.lp-rate__box--line {
+  flex: 0 1 auto;
+  padding: 30px 40px;
 }
 
 .lp-rate__equals {
@@ -1249,6 +1252,11 @@ loyalty-earn {
     box-shadow: 0 1.86px 1.86px rgba(0, 0, 0, 0.25);
     font-size: 16px;
     line-height: 16px;
+  }
+
+  .lp-rate__box--line {
+    padding: 16px 20px;
+    line-height: 20px;
   }
 
   .lp-rate__equals {

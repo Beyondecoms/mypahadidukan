@@ -1,6 +1,8 @@
 {%- comment -%}
   Loyalty page "How it works": step blocks joined by arrows, followed by the
-  "₹100 spent = 10 points" conversion card. Sits on the bow pattern background.
+  points conversion card: one line ("Every ₹100 you spend brings you 10
+  points.") or two boxes joined by an equals sign ("₹100 spent = 10 points")
+  when the right box has text. Sits on the bow pattern background.
   Styles: section-loyalty-page.css
 {%- endcomment -%}
 {% render 'loyalty-page-assets' %}
@@ -89,9 +91,13 @@
     {%- if section.settings.show_rate -%}
       <div class="lp-rate">
         <p class="lp-rate__row">
-          <span class="lp-rate__box">{{ section.settings.rate_left | escape }}</span>
-          <span class="lp-rate__equals" role="img" aria-label="equals"></span>
-          <span class="lp-rate__box">{{ section.settings.rate_right | escape }}</span>
+          {%- if section.settings.rate_right != blank -%}
+            <span class="lp-rate__box">{{ section.settings.rate_left | escape }}</span>
+            <span class="lp-rate__equals" role="img" aria-label="equals"></span>
+            <span class="lp-rate__box">{{ section.settings.rate_right | escape }}</span>
+          {%- else -%}
+            <span class="lp-rate__box lp-rate__box--line">{{ section.settings.rate_left | escape }}</span>
+          {%- endif -%}
         </p>
         {%- if section.settings.rate_note != blank -%}
           <p class="lp-rate__note">{{ section.settings.rate_note | escape }}</p>
@@ -118,7 +124,7 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Simple as your wash day routine."
+      "default": "Simple as a walk in the meadows."
     },
     {
       "type": "image_picker",
@@ -140,19 +146,21 @@
       "type": "text",
       "id": "rate_left",
       "label": "Left box",
+      "info": "Shown on its own as one line when the right box is empty.",
       "default": "₹100 spent"
     },
     {
       "type": "text",
       "id": "rate_right",
       "label": "Right box",
+      "info": "Leave empty to show the left box as one line.",
       "default": "10 points"
     },
     {
       "type": "text",
       "id": "rate_note",
       "label": "Note",
-      "default": "Redeem for products, freebies, and merch from the rewards catalogue."
+      "default": "Swap them for discounts."
     },
     {
       "type": "header",
@@ -242,7 +250,7 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Shop"
+          "default": "Shop the Himalayas"
         },
         {
           "type": "text",
@@ -257,9 +265,9 @@
     {
       "name": "Loyalty: How it works",
       "blocks": [
-        { "type": "step", "settings": { "icon": "shop", "title": "Shop", "text": "Shop on MPD" } },
-        { "type": "step", "settings": { "icon": "accumulate", "title": "Accumulate", "text": "Earn 10% back in points" } },
-        { "type": "step", "settings": { "icon": "redeem", "title": "Redeem", "text": "Use your points on rewards" } }
+        { "type": "step", "settings": { "icon": "shop", "title": "Shop the Himalayas", "text": "Shop on MPD" } },
+        { "type": "step", "settings": { "icon": "accumulate", "title": "Collect stamps", "text": "Get 10% back in points on every order." } },
+        { "type": "step", "settings": { "icon": "redeem", "title": "Spend them your way", "text": "Turn your stamps into rewards." } }
       ]
     }
   ]

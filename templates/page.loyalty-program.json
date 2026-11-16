@@ -24,8 +24,11 @@
         "heading": "Loyalty Circle",
         "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",
         "show_button": true,
-        "button_label": "Join Loyalty Circle",
-        "button_link": ""
+        "button_label": "Start your journey",
+        "button_link": "",
+        "tier_1_name": "Tourist",
+        "tier_2_name": "Traveller",
+        "tier_3_name": "Explorer"
       }
     },
     "how": {
@@ -35,7 +38,7 @@
           "type": "step",
           "settings": {
             "icon": "shop",
-            "title": "Shop",
+            "title": "Shop the Himalayas",
             "text": "Shop on MPD"
           }
         },
@@ -43,16 +46,16 @@
           "type": "step",
           "settings": {
             "icon": "accumulate",
-            "title": "Accumulate",
-            "text": "Earn 10% back in points"
+            "title": "Collect stamps",
+            "text": "Get 10% back in points on every order."
           }
         },
         "step_redeem": {
           "type": "step",
           "settings": {
             "icon": "redeem",
-            "title": "Redeem",
-            "text": "Use your points on rewards"
+            "title": "Spend them your way",
+            "text": "Turn your stamps into rewards."
           }
         }
       },
@@ -63,11 +66,11 @@
       ],
       "settings": {
         "heading": "How it works",
-        "subheading": "Simple as your wash day routine.",
+        "subheading": "Simple as a walk in the meadows.",
         "show_rate": true,
-        "rate_left": "₹100 spent",
-        "rate_right": "10 points",
-        "rate_note": "Redeem for products, freebies, and merch from the rewards catalogue.",
+        "rate_left": "Every ₹100 you spend brings you 10 points.",
+        "rate_right": "",
+        "rate_note": "Swap them for discounts.",
         "show_pattern": true,
         "heading_color": "#1a2e1a",
         "text_color": "#414651",
@@ -124,69 +127,6 @@
             "tier_2": "yes",
             "tier_3": "yes"
           }
-        },
-        "row_bonus": {
-          "type": "row",
-          "settings": {
-            "label": "Bonus Points During Sales",
-            "tier_1": "10%",
-            "tier_2": "15%",
-            "tier_3": "20%"
-          }
-        },
-        "row_birthday": {
-          "type": "row",
-          "settings": {
-            "label": "Birthday Points",
-            "tier_1": "100 points",
-            "tier_2": "100 points",
-            "tier_3": "100 points"
-          }
-        },
-        "row_milestone": {
-          "type": "row",
-          "settings": {
-            "label": "Milestone reward on entering tier",
-            "tier_1": "no",
-            "tier_2": "yes",
-            "tier_3": "yes"
-          }
-        },
-        "row_exclusive": {
-          "type": "row",
-          "settings": {
-            "label": "Member-exclusive sales",
-            "tier_1": "no",
-            "tier_2": "yes",
-            "tier_3": "yes"
-          }
-        },
-        "row_events": {
-          "type": "row",
-          "settings": {
-            "label": "Invitations to MPD Events",
-            "tier_1": "no",
-            "tier_2": "no",
-            "tier_3": "yes"
-          }
-        },
-        "row_testers": {
-          "type": "row",
-          "settings": {
-            "label": "Pre-launch Product Testers",
-            "tier_1": "no",
-            "tier_2": "no",
-            "tier_3": "yes"
-          }
-        },
-        "row_early": {
-          "type": "row",
-          "settings": {
-            "label": "Early access to new launches",
-            "tier_1": "no",
-            "tier_2": "no",
-            "tier_3": "yes"
-          }
         }
       },
       "block_order": [
@@ -194,36 +134,29 @@
         "row_discount",
         "row_max_discount",
         "row_validity",
-        "row_delivery",
-        "row_bonus",
-        "row_birthday",
-        "row_milestone",
-        "row_exclusive",
-        "row_events",
-        "row_testers",
-        "row_early"
+        "row_delivery"
       ],
       "settings": {
-        "heading": "Compare your access",
-        "subheading": "The more you shop, the more you unlock.",
-        "benefits_heading": "Membership Benefits",
-        "benefits_heading_mobile": "Member Benefits",
-        "benefits_text": "The more you shop, the more you unlock.",
+        "heading": "Choose your path",
+        "subheading": "The more you shop, the further you go.",
+        "benefits_heading": "Three tiers, one trail.",
+        "benefits_heading_mobile": "Three tiers, one trail.",
+        "benefits_text": "What you spend over 12 months decides where you stand.",
         "footnote": "*Maximum cap applicable.",
-        "tier_1_name": "Crushing",
-        "tier_1_requirement": "Spend <strong>₹2,999</strong> over 12 months.",
+        "tier_1_name": "Tourist",
+        "tier_1_requirement": "Just arrived. Spend <strong>₹2,999</strong> over 12 months.",
         "tier_1_color": "#d36f3c",
         "tier_1_bg": "#ffecd7",
         "tier_1_line": "#f9cab2",
         "tier_1_divider": "#d36f3c",
-        "tier_2_name": "Obsessed",
-        "tier_2_requirement": "Spend <strong>₹4,999</strong> over 12 months.",
+        "tier_2_name": "Traveller",
+        "tier_2_requirement": "Coming back for more. Spend <strong>₹4,999</strong> over 12 months.",
         "tier_2_color": "#3c546c",
         "tier_2_bg": "#effaff",
         "tier_2_line": "#ccdef0",
         "tier_2_divider": "#95b7d8",
-        "tier_3_name": "Committed",
-        "tier_3_requirement": "Spend <strong>₹7,999</strong> over 12 months.",
+        "tier_3_name": "Explorer",
+        "tier_3_requirement": "The hills feel like home. Spend <strong>₹7,999</strong> over 12 months.",
         "tier_3_color": "#a95475",
         "tier_3_bg": "#ffebf3",
         "tier_3_line": "#f7cbdc",
