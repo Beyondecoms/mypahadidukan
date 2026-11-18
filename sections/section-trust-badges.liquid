@@ -28,7 +28,9 @@
         <!-- Text -->
         <div class="tb-text">
           <p class="tb-title">{{ block.settings.title }}</p>
-          <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+          {%- if block.settings.subtitle != blank -%}
+            <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+          {%- endif -%}
         </div>
 
       </div>

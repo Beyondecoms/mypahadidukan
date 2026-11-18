@@ -1,0 +1,35 @@
+{%- comment -%}
+  Ingredients and Additional Information accordions on the product page
+  (desktop and mobile). An accordion is left out when it has no text.
+  Opening and closing: assets/product-main.js.
+
+  Accepts:
+  - ingredients, additional_info: the text to show
+{%- endcomment -%}
+{%- liquid
+  assign titles = 'Ingredients|Additional Information' | split: '|'
+-%}
+{%- for title in titles -%}
+  {%- liquid
+    if forloop.first
+      assign body = ingredients
+    else
+      assign body = additional_info
+    endif
+  -%}
+  {%- if body != blank -%}
+    <div class="pm-accordion">
+      <button type="button" class="pm-accordion-btn" aria-expanded="false">
+        <span>{{ title }}</span>
+        <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path d="M15.4265 0C15.2545 0 15.0824 0.0573478 14.9677 0.172043L8.02867 7.11111L1.03226 0.172043C0.802867 -0.0573476 0.401434 -0.0573476 0.172043 0.172043C-0.0573477 0.401434 -0.0573477 0.802867 0.172043 1.03226L7.56989 8.43011C7.79928 8.6595 8.20072 8.6595 8.43011 8.43011L15.828 1.03226C16.0573 0.802867 16.0573 0.401434 15.828 0.172043C15.7706 0.0573478 15.5986 0 15.4265 0Z" fill="black"/>
+        </svg>
+      </button>
+      <div class="pm-accordion-body">
+        <div class="pm-accordion-content">
+          {{ body }}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endfor -%}

@@ -16,6 +16,8 @@ if (!customElements.get('localization-form')) {
           searchIcon: this.querySelector('.country-filter__search-icon'),
           liveRegion: this.querySelector('#sr-country-search-results'),
         };
+        // Some header markup renders this element without a selector button.
+        if (!this.elements.button) return;
         this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
         this.addEventListener('keydown', this.onContainerKeyDown.bind(this));
         this.addEventListener('focusout', this.closeSelector.bind(this));

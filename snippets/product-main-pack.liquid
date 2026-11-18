@@ -1,0 +1,61 @@
+{%- comment -%}
+  One pack card on the product page, used by the desktop layout
+  (sections/product-main.liquid) and the mobile layout
+  (snippets/product-main-mobile.liquid). Selecting is handled by
+  assets/product-main.js.
+
+  Accepts:
+  - variant: the pack
+  - current_variant: the pack selected when the page loads
+{%- endcomment -%}
+{%- liquid
+  assign is_current = false
+  if variant.id == current_variant.id
+    assign is_current = true
+  endif
+  assign title_parts = variant.title | split: '('
+-%}
+<div
+  class="pm-variant-card{% if is_current %} active{% endif %}{% if variant.metafields.custom.best_seller.value %} best-seller{% endif %}{% unless variant.available %} is-sold-out{% endunless %}"
+  role="radio"
+  tabindex="0"
+  aria-checked="{{ is_current }}"
+  data-variant-id="{{ variant.id }}"
+>
+  {%- if variant.compare_at_price > variant.price -%}
+    {%- assign v_disc = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+    <div class="pm-variant-top">
+      <div class="pm-variant-disc">{{ v_disc }}% off</div>
+      <svg class="pm-variant-check" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="20" height="20" rx="10" fill="#048E79"/>
+        <path d="M5.71191 9.83165L8.73712 12.8569L14.4514 7.14258" stroke="white" stroke-width="0.9" stroke-linecap="round"/>
+      </svg>
+    </div>
+  {%- endif -%}
+
+  <div class="pm-variant-title">
+    {{ title_parts[0] | strip }}
+  </div>
+
+  {%- if title_parts.size > 1 -%}
+    <div class="pm-variant-sub">
+      {{ title_parts[1] | remove: ')' | strip }}
+    </div>
+  {%- endif -%}
+
+  <div class="pm-variant-price">
+    <span class="pm-variant-main-price">₹{{ variant.price | money_without_currency }}</span>
+    {%- if variant.compare_at_price > variant.price -%}
+      <span class="pm-variant-compare">₹{{ variant.compare_at_price | money_without_currency }}</span>
+    {%- endif -%}
+  </div>
+  {%- if variant.metafields.custom.per_bottle_price.value != blank -%}
+    <div class="pm-variant-per">₹{{ variant.metafields.custom.per_bottle_price.value }} per bottle</div>
+  {%- endif -%}
+  {%- if variant.metafields.custom.tag -%}
+    <div class="pm-best-seller-tag">{{ variant.metafields.custom.tag }}</div>
+  {%- endif -%}
+  {%- unless variant.available -%}
+    <div class="pm-variant-soldout">Sold out</div>
+  {%- endunless -%}
+</div>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Image position under the product gallery (desktop and mobile): one dot per
+  image, or a "1 / 12" counter when there are too many images for dots.
+  Updated by assets/product-main.js.
+{%- endcomment -%}
+{%- if product.images.size > 1 -%}
+  {%- if product.images.size > 7 -%}
+    <div class="pm-main-counter" data-pm-counter aria-live="polite">1 / {{ product.images.size }}</div>
+  {%- else -%}
+    <div class="pm-main-dots">
+      {%- for image in product.images -%}
+        <button
+          type="button"
+          class="pm-main-dot{% if forloop.first %} active{% endif %}"
+          aria-label="Show image {{ forloop.index }} of {{ forloop.length }}"
+          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-slide="{{ forloop.index0 }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

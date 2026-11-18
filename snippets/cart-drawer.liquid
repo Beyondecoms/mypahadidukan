@@ -212,7 +212,7 @@
             {%- comment -%} ── FBT ── {%- endcomment -%}
             {%- if fbt_collection != blank and fbt_collection.products.size > 0 -%}
               <div class="nc-fbt" id="nc-fbt-section">
-                <div class="nc-fbt__title">Frequently Brought Together</div>
+                <div class="nc-fbt__title">Frequently Bought Together</div>
                 <div class="nc-fbt__scroll" id="nc-fbt-scroll">
                   {%- for product in fbt_collection.products -%}
                     {%- assign variant = product.selected_or_first_available_variant -%}
@@ -416,6 +416,9 @@
 
   if (overlay)  overlay.addEventListener('click', closeDrawer);
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) closeDrawer();
+  });
 
   window.ncCartOpen  = openDrawer;
   window.ncCartClose = closeDrawer;
@@ -468,11 +471,11 @@ if (!registerCartUpdateListener()) {
 
   function updateBadge(cart) {
     /* Header bubble */
-    var badge = document.getElementById('header-cart-count');
-    if (badge) {
+    /* Desktop and mobile headers each have one */
+    document.querySelectorAll('[data-header-cart-count]').forEach(function (badge) {
       badge.textContent = cart.item_count;
       badge.style.display = cart.item_count > 0 ? '' : 'none';
-    }
+    });
     /* Drawer header count */
     var countEl = document.getElementById('nc-item-count');
     if (countEl) countEl.textContent = '(' + cart.item_count + ')';
@@ -634,16 +637,10 @@ if (!registerCartUpdateListener()) {
           }
 
           // Header Count
-          var headerCount = document.getElementById('header-cart-count');
-          if (headerCount) {
-            if (cart.item_count > 0) {
-              headerCount.textContent = cart.item_count;
-              headerCount.style.display = '';
-            } else {
-              headerCount.textContent = '0';
-              headerCount.style.display = 'none';
-            }
-          }
+          document.querySelectorAll('[data-header-cart-count]').forEach(function (headerCount) {
+            headerCount.textContent = cart.item_count > 0 ? cart.item_count : '0';
+            headerCount.style.display = cart.item_count > 0 ? '' : 'none';
+          });
 
         });
     }).observe(target, {

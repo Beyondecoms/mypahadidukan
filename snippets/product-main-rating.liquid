@@ -1,0 +1,45 @@
+{%- comment -%}
+  Rating and "Trusted by" line on the product page (desktop and mobile).
+  Stars show only when the product has review data.
+
+  Accepts:
+  - rating: product.metafields.reviews.rating.value
+  - rating_count: product.metafields.reviews.rating_count.value
+  - trusted_count: e.g. "100k+"; the line is hidden when blank
+{%- endcomment -%}
+{%- if rating != blank or trusted_count != blank -%}
+  <div class="pm-rating-row">
+    {%- if rating != blank -%}
+      {%- assign rating_float = rating | append: '' | plus: 0.0 -%}
+      <div class="pm-stars" role="img" aria-label="Rated {{ rating_float | round: 1 }} out of 5">
+        {%- for i in (1..5) -%}
+          {%- assign index_float = forloop.index0 | append: '' | plus: 0.0 -%}
+          {%- assign diff = rating_float | minus: index_float -%}
+          <span class="star-wrapper" aria-hidden="true">
+            <svg class="star-bg" width="16" height="16" viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#d1d5db"/>
+            </svg>
+            <span class="star-fill" style="width:{% if diff >= 1 %}100{% elsif diff > 0 %}{{ diff | times: 100 | round }}{% else %}0{% endif %}%;">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#f59e0b"/>
+              </svg>
+            </span>
+          </span>
+        {%- endfor -%}
+      </div>
+      <span class="pm-rating-score">{{ rating_float | round: 1 }}</span>
+      {%- if rating_count != blank -%}
+        <a href="#judgeme_product_reviews" class="pm-rating-count">
+          from {{ rating_count }}
+          {% if rating_count == 1 %}review{% else %}reviews{% endif %}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if trusted_count != blank -%}
+      <span class="pm-trusted">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a6b4a" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10" stroke="white" stroke-width="2" fill="none"/></svg>
+        Trusted by {{ trusted_count }} Customers
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

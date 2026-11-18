@@ -1,0 +1,41 @@
+{%- comment -%}
+  Short customer quotes under the price on the product page. Uses the
+  product's custom.mini_reviews metafield (JSON list of name, rating, review);
+  without it, the section's "Mini Review" blocks. Shows nothing when neither
+  has reviews.
+{%- endcomment -%}
+{%- assign mini_reviews_json = product.metafields.custom.mini_reviews.value -%}
+{%- assign mini_review_blocks = section.blocks | where: 'type', 'mini_review' -%}
+{%- if mini_reviews_json != blank -%}
+  <div class="pm-mini-reviews">
+    {%- for review in mini_reviews_json -%}
+      <div class="pm-mini-review">
+        <div class="pm-mini-top">
+          <span class="pm-mini-name">{{ review.name }}</span>
+          <div class="pm-mini-stars" role="img" aria-label="{{ review.rating }} out of 5 stars">
+            {%- for i in (1..review.rating) -%}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {%- endfor -%}
+          </div>
+        </div>
+        <p class="pm-mini-text">{{ review.review }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- elsif mini_review_blocks.size > 0 -%}
+  <div class="pm-mini-reviews">
+    {%- for block in mini_review_blocks -%}
+      <div class="pm-mini-review" {{ block.shopify_attributes }}>
+        <div class="pm-mini-top">
+          <span class="pm-mini-name">{{ block.settings.name }}</span>
+          <div class="pm-mini-stars" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+            {%- for i in (1..block.settings.rating) -%}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            {%- endfor -%}
+          </div>
+        </div>
+        <p class="pm-mini-text">{{ block.settings.review }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
