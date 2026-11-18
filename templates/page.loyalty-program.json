@@ -25,10 +25,25 @@
         "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",
         "show_button": true,
         "button_label": "Start your journey",
+        "open_yourtoken": true,
         "button_link": "",
+        "sign_in_method": "yourtoken",
+        "show_member_banner": true,
+        "points_label": "points",
+        "start_text": "Start collecting points",
+        "member_label": "Member",
+        "tier_prefix": "MPD",
+        "since_label": "since",
+        "goal_text": "[amount] more to [tier]",
+        "top_text": "Enjoy your <strong>premium benefits</strong>",
+        "progress_label": "Progress to the next tier",
+        "unlocked_label": "unlocked",
         "tier_1_name": "Tourist",
+        "tier_1_spend": 2999,
         "tier_2_name": "Traveller",
-        "tier_3_name": "Explorer"
+        "tier_2_spend": 4999,
+        "tier_3_name": "Explorer",
+        "tier_3_spend": 7999
       }
     },
     "how": {
@@ -38,6 +53,7 @@
           "type": "step",
           "settings": {
             "icon": "shop",
+            "image": "shopify://shop_images/e459bd9a002c80b9efb2f62ff17bfa241ea2cbf3.png",
             "title": "Shop the Himalayas",
             "text": "Shop on MPD"
           }
@@ -218,6 +234,7 @@
             "show_sparkles": true,
             "image_alt": "Ready to be rewarded? Join to redeem free rewards, unlock tier gifts and enjoy exclusive sales.",
             "button_label": "Start Earning",
+            "open_yourtoken": true,
             "link": ""
           }
         }
