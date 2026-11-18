@@ -53,7 +53,7 @@
           "type": "step",
           "settings": {
             "icon": "shop",
-            "image": "shopify://shop_images/e459bd9a002c80b9efb2f62ff17bfa241ea2cbf3.png",
+            "image": "shopify://shop_images/e459bd9a002c80b9efb2f62ff17bfa241ea2cbf3-removebg-preview.png",
             "title": "Shop the Himalayas",
             "text": "Shop on MPD"
           }
@@ -62,6 +62,7 @@
           "type": "step",
           "settings": {
             "icon": "accumulate",
+            "image": "shopify://shop_images/Satin_gold_rupee_coin_2-removebg-preview.png",
             "title": "Collect stamps",
             "text": "Get 10% back in points on every order."
           }
@@ -70,6 +71,7 @@
           "type": "step",
           "settings": {
             "icon": "redeem",
+            "image": "shopify://shop_images/Structured_golden_gift_box_with_flowing_ribbon-1__1__1-removebg-preview.png",
             "title": "Spend them your way",
             "text": "Turn your stamps into rewards."
           }
