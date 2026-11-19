@@ -6,8 +6,9 @@
  *   the widget on the page they work as plain links.
  * - <loyalty-hero> shows the member dashboard (points, tier progress by spend,
  *   tier ladder) in place of the banner while the shopper has a YourToken
- *   session. Guests keep the banner: YourToken's own (app block) or the bundled
- *   image.
+ *   session. Guests keep the banner: the image banner, or YourToken's own (app
+ *   block). On small screens without a mobile image, the image banner swipes
+ *   sideways: it opens on the first panel and the arrows step between panels.
  * - <loyalty-earn> replaces the static "ways to earn" cards with YourToken's
  *   live cards (rendered by the Loyalty Page app block) once they load. The live
  *   cards keep YourToken's actions (add birthday, follow, ...) and borrow the
@@ -78,8 +79,48 @@
     return brandIdRequest;
   }
 
+  /** Banner swipe on small screens: snap stops at the centre of each panel. */
+  function bindHeroSwipe(root) {
+    const scroller = root.querySelector('[data-lp-hero-scroller]');
+    const stops = scroller ? [...scroller.querySelectorAll('[data-lp-hero-stop]')] : [];
+    const prev = root.querySelector('[data-lp-hero-prev]');
+    const next = root.querySelector('[data-lp-hero-next]');
+    if (!stops.length || !prev || !next) return;
+
+    // Scroll positions that centre each stop, limited to what can be scrolled.
+    const targets = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      return stops.map((stop) => Math.min(max, Math.max(0, stop.offsetLeft - scroller.clientWidth / 2)));
+    };
+    const scrollable = () => scroller.scrollWidth - scroller.clientWidth > 1;
+
+    const sync = () => {
+      const left = scroller.scrollLeft;
+      const points = targets();
+      prev.hidden = !scrollable() || !points.some((point) => point < left - 2);
+      next.hidden = !scrollable() || !points.some((point) => point > left + 2);
+    };
+
+    prev.addEventListener('click', () => {
+      const left = scroller.scrollLeft;
+      const point = targets().filter((value) => value < left - 2).pop();
+      if (point !== undefined) scroller.scrollTo({ left: point, behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      const left = scroller.scrollLeft;
+      const point = targets().find((value) => value > left + 2);
+      if (point !== undefined) scroller.scrollTo({ left: point, behavior: 'smooth' });
+    });
+
+    scroller.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    if (scrollable()) scroller.scrollLeft = targets()[0];
+    sync();
+  }
+
   class LoyaltyHero extends HTMLElement {
     connectedCallback() {
+      bindHeroSwipe(this);
       this.member = this.querySelector('[data-lp-member]');
       const configElement = this.querySelector('[data-lp-config]');
       if (!this.member || !configElement) return;
