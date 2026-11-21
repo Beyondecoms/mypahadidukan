@@ -452,6 +452,9 @@
     mainSlides[currentImg].classList.add('active');
     mainDots[currentImg] && mainDots[currentImg].classList.add('active');
     thumbs[currentImg] && thumbs[currentImg].classList.add('active');
+    // Store active index on slider element so lightbox can read it
+    var sliderEl = document.getElementById('pm-main-slider-{{ section.id }}');
+    if (sliderEl) sliderEl.dataset.activeIdx = currentImg;
     // Notify lightbox of slide change
     document.dispatchEvent(new CustomEvent('pm:slideChange', { detail: { idx: currentImg } }));
   }
@@ -716,12 +719,18 @@ document.getElementById('pm-buy-btn').addEventListener('click', function() {
   }
 
   // Click on any main image
+  var sliderEl = document.getElementById('pm-main-slider-{{ section.id }}');
   zoomableImgs.forEach(function (img, i) {
-    img.addEventListener('click', function () { openLightbox(i); });
+    img.addEventListener('click', function () {
+      // Read the slider's current active index (set by goToImage via dataset)
+      var activeIdx = sliderEl ? parseInt(sliderEl.dataset.activeIdx || '0', 10) : i;
+      openLightbox(isNaN(activeIdx) ? i : activeIdx);
+    });
     img.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openLightbox(i);
+        var activeIdx = sliderEl ? parseInt(sliderEl.dataset.activeIdx || '0', 10) : i;
+        openLightbox(isNaN(activeIdx) ? i : activeIdx);
       }
     });
   });

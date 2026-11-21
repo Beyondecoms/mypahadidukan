@@ -638,11 +638,13 @@ For breadcrumbs
   inset: 0;
   opacity: 0;
   transition: opacity 0.4s ease;
+  pointer-events: none; /* prevent invisible slides intercepting clicks */
 }
 
 .pm-main-slide.active {
   position: relative;
   opacity: 1;
+  pointer-events: auto; /* only the visible slide is clickable */
 }
 
 .pm-main-img {
