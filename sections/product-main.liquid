@@ -136,6 +136,7 @@
                   data-variant-id="{{ variant.id }}"
                   data-price="{{ variant.price }}"
                   data-compare="{{ variant.compare_at_price }}"
+                  data-image-id="{{ variant.featured_image.id }}"
                 >
                   {%- if variant.compare_at_price > variant.price -%}
                     <div style="justify-content: space-between; display: flex; align-items: center;">
@@ -284,7 +285,7 @@
           </span>
           <div class="pm-main-image-slider" id="pm-main-slider-{{ section.id }}">
             {%- for image in product.images -%}
-              <div class="pm-main-slide {% if forloop.first %}active{% endif %}">
+              <div class="pm-main-slide {% if forloop.first %}active{% endif %}" data-image-id="{{ image.id }}">
                 <img
                   src="{{ image | image_url: width: 900 }}"
                   data-zoom-src="{{ image | image_url: width: 1800 }}"
@@ -490,6 +491,18 @@
         if (discEl) {
           var disc = Math.round((compare - price) * 100 / compare);
           discEl.textContent = disc + '% off';
+        }
+      }
+
+      // ── Switch gallery to variant's featured image ──
+      var imgId = card.dataset.imageId;
+      if (imgId && imgId !== 'nil' && imgId !== '') {
+        var targetIdx = -1;
+        mainSlides.forEach(function(slide, i) {
+          if (slide.dataset.imageId === imgId) { targetIdx = i; }
+        });
+        if (targetIdx >= 0 && targetIdx !== currentImg) {
+          goToImage(targetIdx);
         }
       }
     });
