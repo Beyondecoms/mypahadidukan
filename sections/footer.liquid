@@ -2,7 +2,8 @@
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .footer {
+  .footer,
+  .footer-disclaimer-strip {
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
   }
 
@@ -12,7 +13,8 @@
   }
 
   @media screen and (min-width: 750px) {
-    .footer {
+    .footer,
+    .footer-disclaimer-strip {
       margin-top: {{ section.settings.margin_top }}px;
     }
     .section-{{ section.id }}-padding {
@@ -50,6 +52,12 @@
   }
 {%- endstyle -%}
 
+{%- if section.settings.brand_disclaimer != blank -%}
+  <div class="footer-disclaimer-strip">
+    <p>{{ section.settings.brand_disclaimer | escape }}</p>
+  </div>
+{%- endif -%}
+
 <footer class="footer section-{{ section.id }}-padding" style="position: relative; overflow: hidden;">
 
   <!-- Overlay for readability -->
@@ -81,10 +89,6 @@
         <!-- Description -->
         {%- if section.settings.brand_description != blank -%}
           <p class="footer__brand-desc">{{ section.settings.brand_description }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.brand_disclaimer != blank -%}
-          <p class="footer__brand-disclaimer">{{ section.settings.brand_disclaimer }}</p>
         {%- endif -%}
 
         <!-- Newsletter -->
@@ -349,7 +353,7 @@
     {
       "type": "text",
       "id": "brand_disclaimer",
-      "label": "Disclaimer text (small)",
+      "label": "Disclaimer above footer",
       "default": "--The products listed on this website are not intended to diagnose, treat, cure, or prevent any disease.--"
     },
     {

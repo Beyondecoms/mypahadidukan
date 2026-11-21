@@ -113,6 +113,13 @@
   margin-right: auto;
 }
 
+.ps2-footer-light a {
+  color: #07594f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .ps2-wrapper {

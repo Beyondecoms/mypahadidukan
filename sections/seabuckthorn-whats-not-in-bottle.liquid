@@ -76,12 +76,25 @@
 
     <!-- Cards Wrapper -->
     {%- if is_image_mode -%}
+      {%- assign image_cols = 1 -%}
       {%- if m4_first != blank -%}
-        {%- assign cols_count = m4_images.size | at_most: 5 -%}
-      {%- else -%}
-        {%- assign cols_count = 1 -%}
+        {%- assign image_cols = m4_images.size | at_most: 4 -%}
       {%- endif -%}
-      <div class="sb-m4-cards-wrapper" style="--m4-cols: {{ cols_count }};">
+      {%- if image_cols > 1 -%}
+        {%- assign desktop_excluded_space = image_cols | times: 20 -%}
+        {%- assign desktop_max_width = 1220 | minus: desktop_excluded_space | divided_by: image_cols -%}
+        {%- capture image_sizes -%}(max-width: 749px) min(85vw, 420px), (max-width: 1219px) max(285px, calc((100vw - {{ desktop_excluded_space }}px) / {{ image_cols }})), {{ desktop_max_width }}px{%- endcapture -%}
+      {%- else -%}
+        {%- assign image_sizes = '(max-width: 749px) calc(100vw - 24px), (max-width: 1219px) calc(100vw - 20px), 1200px' -%}
+      {%- endif -%}
+      <div
+        class="sb-m4-cards-wrapper sb-m4-cards-wrapper--images"
+        {% if image_cols > 1 %}
+          role="region"
+          aria-label="{{ m4_heading | default: 'Product images' | escape }}"
+          tabindex="0"
+        {% endif %}
+      >
         {%- if m4_first != blank -%}
           {%- for image in m4_images -%}
             {%- if image != blank -%}
@@ -92,7 +105,7 @@
                   alt: img_alt,
                   class: 'sb-m4-card-img',
                   widths: '240, 360, 480, 600, 800, 1000, 1200',
-                  sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 33vw, 20vw'
+                  sizes: image_sizes
                 }}
               </div>
             {%- endif -%}
@@ -105,7 +118,7 @@
               alt: img_alt,
               class: 'sb-m4-card-img',
               widths: '240, 360, 480, 600, 800, 1000, 1200',
-              sizes: '(max-width: 749px) 100vw, (max-width: 1024px) 33vw, 20vw'
+              sizes: image_sizes
             }}
           </div>
         {%- endif -%}

@@ -159,7 +159,9 @@
 .is-footer-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
 }
 
 .is-footer-link {
@@ -169,6 +171,7 @@
   text-underline-offset: 3px;
   font-family: var(--font-family-normal);
   transition: color 0.2s ease;
+  overflow-wrap: anywhere;
 }
 
 .is-footer-link:hover {

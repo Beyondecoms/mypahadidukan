@@ -49,7 +49,7 @@
 
 /* ── HEADLINE ── */
 .bh-headline {
-  font-size: 68px;
+  font-size: var(--font-heading-size);
   font-weight: 400;
   line-height: 1.1;
   margin: 0 0 28px;
@@ -92,7 +92,7 @@
 
 /* ── BODY ── */
 .bh-body {
-  font-size: 16px;
+  font-size: inherit;
   line-height: 1.75;
   color: #3a4a44;
   margin: 0 0 40px;
@@ -218,12 +218,7 @@
     padding: 64px 0;
   }
 
-  .bh-headline {
-    font-size: clamp(36px, 8vw, 52px);
-  }
-
   .bh-body {
-    font-size: 15px;
     max-width: 100%;
   }
 
@@ -238,6 +233,12 @@
   .bh-source-text {
     font-size: 10px;
     letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 749px) {
+  .bh-headline {
+    font-size: var(--font-heading-size-mobile);
   }
 }
 

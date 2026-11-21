@@ -41,7 +41,7 @@
 
 .mission-heading {
     font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
-    font-size: 71px;
+    font-size: var(--font-heading-size);
     font-weight: 400;
     line-height: 1.4;
     letter-spacing: .04em;
@@ -85,7 +85,7 @@
 
 .mission-stat-number {
   font-family: 'Cormorant Garamond', 'Garamond', Georgia, serif;
-  font-size: 56px;
+  font-size: var(--font-heading-size);
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -115,8 +115,14 @@
   }
 
   .mission-heading {
-    font-size: clamp(36px, 8vw, 60px);
     margin-bottom: 90px;
+  }
+}
+
+@media (max-width: 749px) {
+  .mission-heading,
+  .mission-stat-number {
+    font-size: var(--font-heading-size-mobile);
   }
 }
 
@@ -125,18 +131,11 @@
     padding: 40px 20px;
   }
 
-  .mission-heading {
-    font-size: clamp(30px, 9vw, 44px);
-  }
-
   .mission-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 32px 16px;
   }
 
-  .mission-stat-number {
-    font-size: 55px;
-  }
   
   .mission-stat-label{
     font-size: 13px;

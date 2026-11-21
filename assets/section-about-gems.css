@@ -43,7 +43,7 @@
 
 .vision-heading {
   font-family: "Mrs Eaves Small Caps", "IM Fell English SC", Georgia, serif;
-  font-size: 32px;
+  font-size: var(--font-heading-size);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: 0.14em;
@@ -68,7 +68,7 @@
 
 .vision-body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
+  font-size: inherit;
   line-height: 1.75;
   margin: 0;
 }
@@ -115,18 +115,17 @@
     padding: 48px 24px;
   }
 
+}
+
+@media (max-width: 749px) {
   .vision-heading {
-    font-size: 24px;
+    font-size: var(--font-heading-size-mobile);
   }
 }
 
 @media (max-width: 480px) {
   .vision-inner {
     padding: 36px 20px;
-  }
-
-  .vision-body {
-    font-size: 14px;
   }
 
   .vision-quote-heading,

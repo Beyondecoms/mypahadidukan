@@ -20,6 +20,11 @@
   assign clean_btn_text = btn_text_raw | remove: '→' | remove: '->' | strip
   assign btn_url = product.metafields.custom.m8_button_link.value | default: product.metafields.custom.m8_button_link
 
+  assign vendor_name = product.vendor | strip | downcase
+  assign is_ladakh_orchards = false
+  assign modal_title = 'Lab reports'
+  assign modal_instructions = 'Choose a report to open in a new tab.'
+
   # ── Report-link logic ────────────────────────────────────────────────────────
   # ALL THREE metafields are treated as LISTS.
   # "Lab-report link" in Shopify admin maps to custom.lab_report_link
@@ -27,17 +32,30 @@
   # Priority: lab_report_links → lab_reports → lab_report_link
   # NEVER put a raw object into href. Extract .url; fallback via | json + split.
 
-  assign _raw_list = product.metafields.custom.lab_report_links.value
-  if _raw_list == blank
-    assign _raw_list = product.metafields.custom.lab_reports.value
-  endif
-  if _raw_list == blank
-    assign _raw_list = product.metafields.custom.lab_report_link.value
+  if vendor_name == 'ladakh orchards'
+    assign is_ladakh_orchards = true
+    assign modal_title = 'Organic farming in Ladakh'
+    assign modal_instructions = 'Choose an article to open in a new tab.'
+    assign _raw_list = 'https://ladakh.gov.in/ladakh-gets-organic-farmer-facilitation-centers-in-both-districts/|https://lokniwas.ladakh.gov.in/press-details/409|https://timesofindia.indiatimes.com/city/srinagar/ladakh-becomes-indias-first-100-organic-ut-farmer-certification-to-follow/amp_articleshow/135202994.cms' | split: '|'
+    assign article_labels = 'Organic Farmer Facilitation Centres — Ladakh Administration|Organic farming press release — Lokniwas|Ladakh’s organic transition — The Times of India' | split: '|'
+    if m8_heading == blank and m8_description == blank
+      assign m8_heading = modal_title
+    endif
+  else
+    assign _raw_list = product.metafields.custom.lab_report_links.value
+    if _raw_list == blank
+      assign _raw_list = product.metafields.custom.lab_reports.value
+    endif
+    if _raw_list == blank
+      assign _raw_list = product.metafields.custom.lab_report_link.value
+    endif
   endif
 
   # Count only items that resolve to a real URL
   assign report_count = 0
-  if _raw_list != blank
+  if is_ladakh_orchards
+    assign report_count = _raw_list.size
+  elsif _raw_list != blank
     for _ci in _raw_list
       assign _ci_url = _ci.url
       if _ci_url == blank
@@ -54,172 +72,149 @@
 
   assign cta_url = btn_url
 
-  assign has_content = false
-  if m8_heading != blank or m8_description != blank or point_count > 0 or clean_btn_text != blank or btn_url != blank or report_count > 0
-    assign has_content = true
+  assign has_summary = false
+  if m8_heading != blank or m8_description != blank
+    assign has_summary = true
+  endif
+
+  assign has_details = false
+  if point_count > 0 or report_count > 0
+    assign has_details = true
+  elsif clean_btn_text != blank and cta_url != blank
+    assign has_details = true
   endif
 -%}
 
-
-{%- if has_content -%}
-  {%- if point_count == 2 -%}
-    <style>
-      @media only screen and (max-width: 749px) {
-        #shopify-section-{{ section.id }} .sb-m8-cross-list {
-          grid-template-columns: repeat(2, 1fr) !important;
-        }
-      }
-    </style>
-  {%- elsif point_count >= 4 -%}
-    <style>
-      @media only screen and (max-width: 749px) {
-        #shopify-section-{{ section.id }} .sb-m8-cross-list {
-          grid-template-columns: repeat(2, 1fr) !important;
-        }
-      }
-    </style>
-  {%- endif -%}
-
+{%- if has_summary or has_details -%}
   <div class="sb-m8-section" style="background-color: {{ section.settings.bg_color | default: '#fffbef' }};">
     <div class="sb-m8-container">
       
-      <!-- Top Meta Row -->
-      {%- if section.settings.module_tag != blank or section.settings.design_tag != blank -%}
-        <div class="sb-m8-top-bar">
-          {%- if section.settings.module_tag != blank -%}
-            <span class="sb-m8-module-badge">{{ section.settings.module_tag }}</span>
-          {%- endif -%}
-          {%- if section.settings.design_tag != blank -%}
-            <span class="sb-m8-pill-badge" style="background-color: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">{{ section.settings.design_tag }}</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
-      <!-- Main Card Box -->
-      <div class="sb-m8-card-wrapper">
-        {%- if m8_heading != blank -%}
-          <div class="sb-m8-header">
-            <h2 class="sb-m8-title">{{ m8_heading }}</h2>
-          </div>
-        {%- endif -%}
-
-        {%- if m8_description != blank -%}
-          <div class="sb-m8-body">
-            <p>{{ m8_description | newline_to_br }}</p>
-          </div>
-        {%- endif -%}
-
-        <!-- Cross Badges Row -->
-        {%- if point_count > 0 -%}
-          <div class="sb-m8-cross-list">
-            {%- for pt in m8_points_list -%}
-              {%- assign trimmed_pt = pt | strip -%}
-              {%- if trimmed_pt != blank -%}
-                <div class="sb-m8-cross-item"><span>✕</span> {{ trimmed_pt }}</div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-
-        <!-- CTA Button -->
-        {%- assign cta_label = clean_btn_text -%}
-        {%- if cta_label == blank -%}{%- assign cta_label = 'Read the latest batch report' -%}{%- endif -%}
-
-        {%- if report_count == 1 -%}
-          {%- comment %} Single report — loop _raw_list to find the valid URL {%- endcomment %}
-          {%- for _si in _raw_list -%}
-            {%- assign _si_url = _si.url -%}
-            {%- if _si_url == blank -%}
-              {%- assign _si_json = _si | json -%}
-              {%- if _si_json contains '"url"' -%}
-                {%- assign _si_url = _si_json | split: '"url":"' | last | split: '"' | first -%}
-              {%- endif -%}
+      <div class="sb-m8-card-wrapper{% if has_summary and has_details %} sb-m8-card-wrapper--split{% endif %}">
+        {%- if has_summary -%}
+          <div class="sb-m8-summary">
+            {%- if m8_heading != blank -%}
+              <h2 class="sb-m8-title">{{ m8_heading }}</h2>
             {%- endif -%}
-            {%- if _si_url contains 'http' -%}
-              <a href="{{ _si_url }}" class="sb-m8-cta-btn" target="_blank" rel="noopener noreferrer">
-                {{ cta_label }} →
-              </a>
-              {%- break -%}
+            {%- if m8_description != blank -%}
+              <div class="sb-m8-body">
+                <p>{{ m8_description | newline_to_br }}</p>
+              </div>
             {%- endif -%}
-          {%- endfor -%}
+          </div>
+        {%- endif -%}
 
-        {%- elsif report_count > 1 -%}
-          {%- comment %} Multiple reports — open modal {%- endcomment %}
-          <button
-            type="button"
-            class="sb-m8-cta-btn"
-            onclick="document.getElementById('sb-m8-modal-{{ section.id }}').classList.add('is-open')"
-            aria-haspopup="dialog"
-          >
-            {{ cta_label }} →
-          </button>
-
-          <!-- Report Modal -->
-          <div
-            id="sb-m8-modal-{{ section.id }}"
-            class="sb-m8-modal-overlay"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Lab Reports"
-            onclick="if(event.target===this)this.classList.remove('is-open')"
-          >
-            <div class="sb-m8-modal-box">
-              <button
-                class="sb-m8-modal-close"
-                type="button"
-                aria-label="Close"
-                onclick="document.getElementById('sb-m8-modal-{{ section.id }}').classList.remove('is-open')"
-              >✕</button>
-              <h3 class="sb-m8-modal-title">Lab Reports</h3>
-              <p class="sb-m8-modal-subtitle">Select a report to view</p>
-              <ul class="sb-m8-modal-list">
-                {%- for _item in _raw_list -%}
-                  {%- comment %} Extract URL via .url, then fallback to | json + split — never output the object {%- endcomment %}
-                  {%- assign _item_url = _item.url -%}
-                  {%- if _item_url == blank -%}
-                    {%- assign _item_json = _item | json -%}
-                    {%- if _item_json contains '"url"' -%}
-                      {%- assign _item_url = _item_json | split: '"url":"' | last | split: '"' | first -%}
-                    {%- endif -%}
-                  {%- endif -%}
-                  {%- comment %} Label {%- endcomment %}
-                  {%- assign _item_label = _item.label | default: _item.text | default: _item.name | default: _item.title -%}
-                  {%- if _item_label == blank -%}
-                    {%- assign _item_json2 = _item | json -%}
-                    {%- if _item_json2 contains '"label"' -%}
-                      {%- assign _item_label = _item_json2 | split: '"label":"' | last | split: '"' | first -%}
-                    {%- endif -%}
-                  {%- endif -%}
-                  {%- if _item_label == blank -%}{%- assign _item_label = 'Report ' | append: forloop.index -%}{%- endif -%}
-                  {%- comment %} Only render if we have an actual URL {%- endcomment %}
-                  {%- if _item_url contains 'http' -%}
-                    <li>
-                      <a href="{{ _item_url }}" target="_blank" rel="noopener noreferrer" class="sb-m8-modal-link">
-                        📄 {{ _item_label }}
-                      </a>
-                    </li>
+        {%- if has_details -%}
+          <div class="sb-m8-details">
+            {%- if point_count > 0 -%}
+              <ul class="sb-m8-cross-list" role="list">
+                {%- for pt in m8_points_list -%}
+                  {%- assign trimmed_pt = pt | strip -%}
+                  {%- if trimmed_pt != blank -%}
+                    <li class="sb-m8-cross-item"><span aria-hidden="true">✕</span>{{ trimmed_pt | escape }}</li>
                   {%- endif -%}
                 {%- endfor -%}
               </ul>
-            </div>
+            {%- endif -%}
+
+            <!-- CTA Button -->
+            {%- assign cta_label = clean_btn_text -%}
+            {%- if is_ladakh_orchards -%}
+              {%- assign cta_label = 'Read about organic farming in Ladakh' -%}
+            {%- elsif cta_label == blank -%}
+              {%- assign cta_label = 'Read the latest batch report' -%}
+            {%- endif -%}
+
+            {%- if report_count == 1 -%}
+              {%- comment %} Single report — loop _raw_list to find the valid URL {%- endcomment %}
+              {%- for _si in _raw_list -%}
+                {%- assign _si_url = _si.url -%}
+                {%- if _si_url == blank -%}
+                  {%- assign _si_json = _si | json -%}
+                  {%- if _si_json contains '"url"' -%}
+                    {%- assign _si_url = _si_json | split: '"url":"' | last | split: '"' | first -%}
+                  {%- endif -%}
+                {%- endif -%}
+                {%- if _si_url contains 'http' -%}
+                  <a href="{{ _si_url }}" class="sb-m8-cta-btn" target="_blank" rel="noopener noreferrer">
+                    {{ cta_label }} →
+                  </a>
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+            {%- elsif report_count > 1 -%}
+              {%- comment %} Multiple reports — open modal {%- endcomment %}
+              <button
+                type="button"
+                class="sb-m8-cta-btn"
+                onclick="document.getElementById('sb-m8-modal-{{ section.id }}').showModal()"
+                aria-haspopup="dialog"
+                aria-controls="sb-m8-modal-{{ section.id }}"
+              >
+                {{ cta_label }} →
+              </button>
+
+              <dialog
+                id="sb-m8-modal-{{ section.id }}"
+                class="sb-m8-modal"
+                aria-labelledby="sb-m8-modal-title-{{ section.id }}"
+                aria-describedby="sb-m8-modal-instructions-{{ section.id }}"
+                onclick="if (event.target === this) this.close()"
+              >
+                <div class="sb-m8-modal-box">
+                  <header class="sb-m8-modal-header">
+                    <div>
+                      <h3 class="sb-m8-modal-title" id="sb-m8-modal-title-{{ section.id }}">{{ modal_title }}</h3>
+                      <p class="sb-m8-modal-subtitle" id="sb-m8-modal-instructions-{{ section.id }}">{{ modal_instructions }}</p>
+                    </div>
+                    <form method="dialog">
+                      <button class="sb-m8-modal-close" aria-label="{{ 'accessibility.close' | t | escape }}" autofocus>×</button>
+                    </form>
+                  </header>
+                  <ul class="sb-m8-modal-list">
+                    {%- for _item in _raw_list -%}
+                      {%- if is_ladakh_orchards -%}
+                        {%- assign _item_url = _item -%}
+                        {%- assign _item_label = article_labels[forloop.index0] -%}
+                      {%- else -%}
+                        {%- assign _item_url = _item.url -%}
+                        {%- if _item_url == blank -%}
+                          {%- assign _item_json = _item | json -%}
+                          {%- if _item_json contains '"url"' -%}
+                            {%- assign _item_url = _item_json | split: '"url":"' | last | split: '"' | first -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                        {%- assign _item_label = _item.label | default: _item.text | default: _item.name | default: _item.title -%}
+                        {%- if _item_label == blank -%}
+                          {%- assign _item_json2 = _item | json -%}
+                          {%- if _item_json2 contains '"label"' -%}
+                            {%- assign _item_label = _item_json2 | split: '"label":"' | last | split: '"' | first -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                        {%- if _item_label == blank -%}{%- assign _item_label = 'Report ' | append: forloop.index -%}{%- endif -%}
+                      {%- endif -%}
+                      {%- comment %} Only render if we have an actual URL {%- endcomment %}
+                      {%- if _item_url contains 'http' -%}
+                        <li>
+                          <a href="{{ _item_url | escape }}" target="_blank" rel="noopener noreferrer" class="sb-m8-modal-link">
+                            <span class="sb-m8-modal-file" aria-hidden="true"></span>
+                            <span class="sb-m8-modal-label">{{ _item_label | escape }}</span>
+                            <span class="sb-m8-modal-arrow" aria-hidden="true">↗</span>
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </dialog>
+
+            {%- elsif clean_btn_text != blank and cta_url != blank -%}
+              {%- comment %} No reports — fall back to m8_button_link {%- endcomment %}
+              <a href="{{ cta_url }}" class="sb-m8-cta-btn" target="_blank" rel="noopener noreferrer">
+                {{ cta_label }} →
+              </a>
+            {%- endif -%}
           </div>
-
-          <script>
-            (function(){
-              document.addEventListener('keydown', function(e){
-                if(e.key === 'Escape'){
-                  var m = document.getElementById('sb-m8-modal-{{ section.id }}');
-                  if(m) m.classList.remove('is-open');
-                }
-              });
-            })();
-          </script>
-
-        {%- elsif clean_btn_text != blank and cta_url != blank -%}
-          {%- comment %} No reports — fall back to m8_button_link {%- endcomment %}
-          <a href="{{ cta_url }}" class="sb-m8-cta-btn" target="_blank" rel="noopener noreferrer">
-            {{ cta_label }} →
-          </a>
         {%- endif -%}
 
       </div>

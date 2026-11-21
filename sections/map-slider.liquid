@@ -10,12 +10,9 @@
 {{ 'section-slider-map.css' | asset_url | stylesheet_tag }}
 
 <div class="sbr-section" style="background: {{ section.settings.bg_color }};">
-
-  <div class="sbr-slider-wrap" id="sbr-slider-{{ section.id }}">
-
-    <!-- Header -->
+  {%- if section.settings.title != blank -%}
     <div class="sbr-header">
-      <span class="sbr-pin-icon">
+      <span class="sbr-pin-icon" aria-hidden="true">
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_1792_3961)">
             <path d="M38.925 14.925C38.925 23.175 24 48 24 48C24 48 9.07501 23.175 9.07501 14.925C9.07501 6.675 15.75 0 24 0C32.25 0 38.925 6.675 38.925 14.925Z" fill="#F3743C"/>
@@ -28,9 +25,11 @@
           </defs>
         </svg>
       </span>
-      <h2 class="sbr-title">{{ section.settings.title }}</h2>
+      <h2 class="sbr-title">{{ section.settings.title | escape }}</h2>
     </div>
+  {%- endif -%}
 
+  <div class="sbr-slider-wrap" id="sbr-slider-{{ section.id }}">
     <!-- Slides -->
     {%- for block in section.blocks -%}
       {%- assign visibility = block.settings.visibility | default: 'both' -%}

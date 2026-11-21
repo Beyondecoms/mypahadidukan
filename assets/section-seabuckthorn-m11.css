@@ -48,7 +48,7 @@
 
 .sb-m11-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   color: #1c1918;
@@ -86,7 +86,7 @@
   justify-content: space-between;
   text-align: left;
   font-family: inherit;
-  font-size: 1.32rem;
+  font-size: 18px;
   font-weight: 800;
   color: #1c1918;
   cursor: pointer;
@@ -109,7 +109,7 @@
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
   padding: 0 28px;
-  font-size: 1.22rem;
+  font-size: 16px;
   line-height: 1.7;
   color: #333333;
 }
@@ -129,12 +129,12 @@
     margin-bottom: 20px !important;
   }
   .sb-m11-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
   }
   .sb-m11-faq-question {
     padding: 16px 14px !important;
-    font-size: 1.15rem !important;
+    font-size: 16px !important;
     font-weight: 700 !important;
   }
   .sb-m11-faq-icon {
@@ -142,7 +142,7 @@
   }
   .sb-m11-faq-answer {
     padding: 0 14px !important;
-    font-size: 1.08rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
   }
   .sb-m11-faq-item.active .sb-m11-faq-answer {

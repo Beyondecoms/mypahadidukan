@@ -65,12 +65,22 @@
   font-weight: 500;
 }
 
-.footer__brand-disclaimer {
-  font-size: 10px;
-  color: rgba(255,255,255,0.55);
-  line-height: 100%;
-  margin: 0;
-  font-family: var(--font-family-normal);
+.footer-disclaimer-strip {
+  padding: 14px 20px;
+  background: #faf9f6;
+  color: #292725;
+  font: 400 14px/1.5 var(--font-family-normal, Arial), Arial, sans-serif;
+  text-align: center;
+}
+
+.footer-disclaimer-strip p {
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow-wrap: anywhere;
+}
+
+.footer-disclaimer-strip + .footer {
+  margin-top: 0;
 }
 
 /* ── NEWSLETTER ── */
@@ -341,14 +351,6 @@
     font-family: var(--font-family-normal);
     line-height: 1.35;
     color: #fff;
-    margin: 0;
-  }
-
-  .footer__brand-disclaimer--mobile {
-    font-size: 10px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.4;
-    font-family: var(--font-family-normal);
     margin: 0;
   }
 

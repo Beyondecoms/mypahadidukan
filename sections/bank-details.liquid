@@ -47,12 +47,12 @@
       <p class="bd-help-sub" style="color: {{ section.settings.help_sub_color }};">{{ section.settings.help_subtitle }}</p>
       <div class="bd-help-links">
         {% if section.settings.whatsapp_url != blank %}
-          <a class="bd-help-link" href="{{ section.settings.whatsapp_url }}" target="_blank" rel="noopener" style="color: {{ section.settings.link_color }};">
+          <a class="bd-help-link" href="{{ section.settings.whatsapp_url | escape }}" target="_blank" rel="noopener" style="color: {{ section.settings.link_color }};">
             {{ section.settings.whatsapp_label }}
           </a>
         {% endif %}
         {% if section.settings.email_url != blank %}
-          <a class="bd-help-link" href="{{ section.settings.email_url }}" style="color: {{ section.settings.link_color }};">
+          <a class="bd-help-link" href="{{ section.settings.email_url | escape }}" style="color: {{ section.settings.link_color }};">
             {{ section.settings.email_label }}
           </a>
         {% endif %}

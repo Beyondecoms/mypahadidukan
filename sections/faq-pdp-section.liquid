@@ -1,6 +1,7 @@
 {{ 'section-faq-pdp.css' | asset_url | stylesheet_tag }}
 
-{% if product.metafields.custom.product_faq.value!=blank %}
+{%- assign product_faqs = product.metafields.custom.product_faq.value -%}
+{% if product_faqs != blank %}
   <div class="pdp-section" style="background: {{ section.settings.bg_color }};">
     <div class="pdp-wrapper">
 
@@ -9,27 +10,25 @@
 
       <div class="pdp-inner">
 
-        <!-- Left Image -->
-        <div class="pdp-image-faq-col">
-          {%- if section.settings.image != blank -%}
-            <img
-              src="{%- if product.metafields.custom.product_faq_image != blank -%}
-                    {{ product.metafields.custom.product_faq_image  }}
-                  {%- else -%}
-                    {{ section.settings.image | asset_url }}
-                  {%- endif -%}"
-              alt="{{ section.settings.title | default: 'FAQ' }}"
-              class="pdp-image-faq"
-              loading="lazy"
-            >
-          {%- else -%}
-            {{ 'image' | placeholder_svg_tag: 'pdp-image-faq-placeholder' }}
-          {%- endif -%}
-        </div>
+        {%- if product.featured_image != blank -%}
+          {%- assign image_alt = product.featured_image.alt | default: product.title -%}
+          <div class="pdp-image-faq-col">
+            {{
+              product.featured_image
+              | image_url: width: 1000
+              | image_tag:
+                class: 'pdp-image-faq',
+                alt: image_alt,
+                loading: 'lazy',
+                widths: '240, 360, 480, 600, 750, 900, 1000',
+                sizes: '(max-width: 768px) calc(100vw - 48px), (max-width: 1300px) 36vw, 450px'
+            }}
+          </div>
+        {%- endif -%}
 
         <!-- Right FAQ -->
         <div class="pdp-faq-col">
-          {%- for faq in product.metafields.custom.product_faq.value -%}
+          {%- for faq in product_faqs -%}
             {%- assign parts = faq | split: '|' -%}
             <div class="pdp-faq-item">
               <button
@@ -94,18 +93,13 @@
 {
   "name": "FAQ Section",
   "tag": "section",
-  "class": "pdp-section-outer",
+  "class": "pdp-section-outer product-faq-section",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "label": "Section title",
       "default": "Any Last Questions ?"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Left image"
     },
     {
       "type": "color",

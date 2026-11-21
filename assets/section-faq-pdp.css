@@ -191,3 +191,24 @@
     font-size: 14px;
   }
 }
+
+/* The product FAQ uses the current product's image within its own column. */
+.product-faq-section .pdp-image-faq-col {
+  width: 36%;
+}
+
+.product-faq-section .pdp-image-faq {
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .product-faq-section .pdp-image-faq-col {
+    width: 100%;
+  }
+
+  .product-faq-section .pdp-image-faq {
+    height: 220px;
+  }
+}

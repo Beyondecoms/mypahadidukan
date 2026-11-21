@@ -41,7 +41,7 @@
 
 .team-heading {
     font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
-    font-size: 40px;
+    font-size: var(--font-heading-size);
     font-weight: 500;
     line-height: 1.15;
     letter-spacing: .05em;
@@ -65,7 +65,7 @@
 
 .team-description {
   font-family: var(--font-body-family, 'Helvetica Neue', Inter, Arial, sans-serif);
-  font-size: 16px;
+  font-size: inherit;
   line-height: 1.75;
   margin: 0 0 52px;
   max-width: 720px;
@@ -83,7 +83,7 @@
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 32px;
 }
 
@@ -131,41 +131,41 @@
 /* --- NAME + ROLE --- */
 
 .team-card-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .team-card-name {
   font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
-  font-size: 15px;
+  font-size: 2rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.025em;
   text-transform: uppercase;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .team-card-role {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 10px;
+  font-size: 1.2rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.25;
 }
 
 /* --- QUOTE --- */
 
 .team-card-quote {
-  font-family: 'Cormorant Garamond', 'Garamond', Georgia, serif;
-  font-size: 13px;
-  font-style: italic;
+  font-family: var(--font-family-normal, 'Archivo'), var(--font-body-family, Arial, sans-serif);
+  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: normal;
   line-height: 1.6;
   margin: 0;
-  font-weight: 500;
 }
 
 /* --- RESPONSIVE --- */
@@ -176,9 +176,28 @@
   }
 }
 
+@media (max-width: 900px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 749px) {
+  .team-heading {
+    font-size: var(--font-heading-size-mobile);
+  }
+
+  .team-card-name {
+    font-size: 1.8rem;
+  }
+
+  .team-card-quote {
+    font-size: 1.6rem;
+  }
+}
+
 @media (max-width: 600px) {
   .team-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 32px 16px;
   }
 
@@ -188,7 +207,6 @@
   }
 
   .team-heading {
-    font-size: clamp(28px, 8vw, 42px);
     margin-bottom: 18px;
   }
 
@@ -197,17 +215,8 @@
   }
 
   .team-description {
-    font-size: 15px;
     line-height: 1.65;
     margin-bottom: 36px;
-  }
-
-  .team-card-name {
-    font-size: 16px;
-  }
-
-  .team-card-quote {
-    font-size: 17px;
   }
 }
 

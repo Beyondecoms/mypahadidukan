@@ -292,28 +292,40 @@
 }
 
 .bs-supported-logos {
-  --marquee-speed: 22s;
-  gap: 40px;
-  padding: 4px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(16px, 4vw, 64px);
+  width: 100%;
 }
 
 .bs-supported-logo img {
-  height: 45px;
-  width: auto;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
   object-fit: contain;
-  transition: opacity 0.2s ease;
 }
 
-.bs-supported-logo img:hover { opacity: 0.8; }
+.bs-supported-logo a:hover img { opacity: 0.8; }
+
+@media (max-width: 600px) {
+  .bs-supported-logos {
+    max-width: 248px;
+    gap: 16px;
+  }
+
+  .bs-supported-logo img {
+    width: 60px;
+    height: 60px;
+  }
+}
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .bs-media-logo {
       opacity: 1;
       transform: translateY(3px);
-  }
-  .bs-supported-logo img{
-    height: 30px;
   }
   .bs-stat {
     padding-left: 5px;
@@ -375,9 +387,6 @@
     --marquee-speed: 18s;
   }
 
-  .bs-supported-logos {
-    --marquee-speed: 14s;
-  }
 }
 /* ── Letter responsive images ── */
 .bs-letter-img {
@@ -414,13 +423,7 @@
     width: 100%;                          /* allow wrapping */
   }
 
-  .bs-supported-logos {
-    gap: 80px;
-  }
-
-  /* Hide duplicate items on desktop */
-  .bs-media-logo[aria-hidden="true"],
-  .bs-supported-logo[aria-hidden="true"] {
+  .bs-media-logo[aria-hidden="true"] {
     display: none;
   }
 
@@ -431,26 +434,6 @@
     overflow: visible;
   }
 }
-/* ── Supported By: no marquee on any device ── */
-.bs-supported-row .bs-marquee-track {
-  animation: none !important;
-  transform: none !important;
-  justify-content: center;
-  flex-wrap: nowrap;
-  width: 100%;
-}
-
-.bs-supported-row .bs-marquee-outer {
-  mask-image: none;
-  -webkit-mask-image: none;
-  overflow: visible;
-}
-
-/* Hide duplicate aria-hidden logos */
-.bs-supported-logo[aria-hidden="true"] {
-  display: none;
-}
-
 /* Mobile-only top image */
 .bs-team-img--mobile-top {
   display: none;

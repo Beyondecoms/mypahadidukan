@@ -38,6 +38,15 @@
     assign image_only = true
   endif
 
+  assign single_image_only = false
+  if image_only and m7_images_count == 1
+    assign single_image_only = true
+    assign single_image = m7_single_raw
+    if m7_images_raw != blank
+      assign single_image = m7_images_raw | first
+    endif
+  endif
+
   assign m7_alt = m7_heading | default: product.title | escape
 
   # Grid columns for multi-image layout (clamped between 1 and 4)
@@ -57,32 +66,35 @@
     </div>
 
     <!-- Main Card Box -->
-    <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}">
+    <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}{% if single_image_only %} sb-m7-card-wrapper--single-image{% endif %}">
 
-      {%- if image_only -%}
-        <!-- Image-only layout: responsive grid of images -->
+      {%- if single_image_only -%}
+        {%- assign img_alt = single_image.alt | default: m7_alt -%}
+        <div class="sb-m7-photo-box sb-m7-photo-box--large">
+          {{ single_image | image_url: width: 1200 | image_tag:
+            loading: 'lazy',
+            alt: img_alt,
+            widths: '360, 540, 680, 900, 1200',
+            sizes: '(max-width: 749px) calc(100vw - 54px), 680px'
+          }}
+        </div>
+        <a class="sb-m7-image-link" href="{{ single_image | image_url: width: single_image.width }}" target="_blank" rel="noopener">
+          View full-size image <span aria-hidden="true">↗</span>
+        </a>
+
+      {%- elsif image_only -%}
         <div class="sb-m7-images-grid" style="--m7-grid-cols: {{ m7_grid_cols }};">
-          {%- if m7_images_raw != blank -%}
-            {%- for image in m7_images_raw -%}
-              {%- if image != blank -%}
-                {%- assign img_alt = image.alt | default: m7_alt | escape -%}
-                <div class="sb-m7-photo-box{% if m7_images_count == 1 %} sb-m7-photo-box--large{% else %} sb-m7-photo-box--multi{% endif %}">
-                  {{ image | image_url: width: 1200 | image_tag:
-                    loading: 'lazy',
-                    alt: img_alt
-                  }}
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          {%- elsif m7_single_raw != blank -%}
-            {%- assign img_alt = m7_single_raw.alt | default: m7_alt | escape -%}
-            <div class="sb-m7-photo-box sb-m7-photo-box--large">
-              {{ m7_single_raw | image_url: width: 1200 | image_tag:
-                loading: 'lazy',
-                alt: img_alt
-              }}
-            </div>
-          {%- endif -%}
+          {%- for image in m7_images_raw -%}
+            {%- if image != blank -%}
+              {%- assign img_alt = image.alt | default: m7_alt | escape -%}
+              <div class="sb-m7-photo-box sb-m7-photo-box--multi">
+                {{ image | image_url: width: 1200 | image_tag:
+                  loading: 'lazy',
+                  alt: img_alt
+                }}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
 
       {%- else -%}

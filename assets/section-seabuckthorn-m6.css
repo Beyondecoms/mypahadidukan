@@ -48,7 +48,7 @@
 
 .sb-m6-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -59,7 +59,7 @@
 
 .sb-m6-subtitle {
   font-family: var(--font-heading-family);
-  font-size: 1.4rem;
+  font-size: 18px;
   font-weight: 800;
   color: #ee5922;
   margin: 0;
@@ -111,7 +111,7 @@
   padding: 10px 18px;
   border-radius: 10px;
   color: #008b75;
-  font-size: 0.95rem;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -128,7 +128,7 @@
 }
 
 .sb-m6-story-block {
-  font-size: 1.22rem;
+  font-size: 16px;
   line-height: 1.7;
   color: #333333;
 }
@@ -148,7 +148,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 16px;
-  font-size: 1.2rem;
+  font-size: 16px;
   font-weight: 800;
   color: #008b75;
   letter-spacing: 0.02em;
@@ -162,7 +162,7 @@
 
 .sb-m6-fact-bullet {
   color: #ee5922;
-  font-size: 1.2rem;
+  font-size: 16px;
 }
 
 /* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
@@ -171,11 +171,11 @@
     padding: 20px 12px !important;
   }
   .sb-m6-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
   }
   .sb-m6-subtitle {
-    font-size: 1.15rem !important;
+    font-size: 16px !important;
   }
   .sb-m6-banner-image-wrap {
     height: clamp(250px, 65vw, 320px) !important;
@@ -187,7 +187,7 @@
     top: 12px !important;
     right: 12px !important;
     padding: 6px 10px !important;
-    font-size: 0.75rem !important;
+    font-size: 12px !important;
     max-width: calc(100% - 24px) !important;
     white-space: normal !important;
     text-align: center !important;
@@ -199,13 +199,17 @@
     gap: 16px !important;
   }
   .sb-m6-story-block {
-    font-size: 1.1rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
   }
   .sb-m6-facts-bar {
     padding: 14px 14px !important;
-    font-size: 1.05rem !important;
+    font-size: 14px !important;
     gap: 10px !important;
     justify-content: flex-start !important;
+  }
+
+  .sb-m6-fact-bullet {
+    font-size: 14px;
   }
 }

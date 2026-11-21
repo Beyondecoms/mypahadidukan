@@ -40,7 +40,7 @@
 
 .sb-m4-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -105,14 +105,14 @@
 
 .sb-m4-card-title {
   font-family: var(--font-heading-family);
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 800;
   color: #1c1918;
   margin: 0;
 }
 
 .sb-m4-card-body {
-  font-size: 1.18rem;
+  font-size: 16px;
   line-height: 1.65;
   color: #333333;
 }
@@ -135,7 +135,7 @@
   white-space: nowrap;
   animation: sb-m4-marquee 28s linear infinite;
   gap: 36px;
-  font-size: 1.1rem;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -158,7 +158,29 @@
   100% { transform: translateX(-50%); }
 }
 
-/* MOBILE RESPONSIVE STYLES (ALWAYS PLACED AT VERY BOTTOM) */
+.sb-m4-cards-wrapper--images {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(285px, 1fr);
+  overflow-x: auto;
+  padding-block-end: 8px;
+  scroll-snap-type: x proximity;
+}
+
+.sb-m4-cards-wrapper--images:focus-visible {
+  outline: 2px solid #008b75;
+  outline-offset: 3px;
+}
+
+.sb-m4-cards-wrapper--images > .sb-m4-card {
+  scroll-snap-align: start;
+}
+
+.sb-m4-cards-wrapper--images > .sb-m4-card:hover {
+  transform: none;
+}
+
+/* Mobile */
 @media only screen and (max-width: 749px) {
   .sb-m4-section {
     padding: 20px 12px !important;
@@ -167,14 +189,21 @@
     margin-bottom: 20px !important;
   }
   .sb-m4-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
   }
   .sb-m4-cards-wrapper {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
     gap: 14px !important;
     margin-bottom: 20px !important;
+  }
+  .sb-m4-cards-wrapper:not(.sb-m4-cards-wrapper--images) {
+    grid-template-columns: 1fr;
+  }
+  .sb-m4-cards-wrapper--images {
+    grid-auto-columns: min(85%, 420px);
+  }
+  .sb-m4-cards-wrapper--images:has(> :only-child) {
+    grid-auto-columns: 100%;
   }
   .sb-m4-card {
     width: 100% !important;
@@ -186,10 +215,10 @@
     padding: 0 !important;
   }
   .sb-m4-card-title {
-    font-size: 1.15rem !important;
+    font-size: 16px !important;
   }
   .sb-m4-card-body {
-    font-size: 1.08rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
   }
   .sb-m4-marquee-outer {
@@ -199,7 +228,7 @@
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%) !important;
   }
   .sb-m4-marquee-track {
-    font-size: 0.98rem !important;
+    font-size: 14px !important;
     gap: 20px !important;
   }
 }

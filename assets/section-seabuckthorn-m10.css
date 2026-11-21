@@ -40,7 +40,7 @@
 
 .sb-m10-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   color: #1c1918;
@@ -53,7 +53,7 @@
 }
 
 .sb-m10-body p {
-  font-size: 1.25rem;
+  font-size: 16px;
   line-height: 1.7;
   color: #2b2825;
   margin: 0 0 18px 0;
@@ -63,7 +63,6 @@
   margin-bottom: 0;
   font-weight: 700;
   color: #1c1918;
-  font-size: 1.3rem;
 }
 
 /* MOBILE RESPONSIVE STYLES (PLACED AT VERY BOTTOM) */
@@ -76,16 +75,13 @@
     border-radius: 16px !important;
   }
   .sb-m10-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
     margin-bottom: 14px !important;
   }
   .sb-m10-body p {
-    font-size: 1.1rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
     margin-bottom: 12px !important;
-  }
-  .sb-m10-body p:last-child {
-    font-size: 1.18rem !important;
   }
 }

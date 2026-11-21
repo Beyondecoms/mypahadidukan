@@ -63,6 +63,7 @@
 }
 
 .cr-track {
+  position: relative;
   display: flex;
   gap: 28px;
   will-change: transform;
@@ -302,7 +303,7 @@
     font-size: var(--font-heading-size-mobile);
   }
   .cr-card {
-    width: calc(100vw - 64px);
+    width: calc(100% - 64px);
     padding: 20px 22px;
   }
   .cr-name {

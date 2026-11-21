@@ -231,7 +231,19 @@
       }
     ]
   },
-    {
+  {
+    "name": "Product offers",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_product_offer_cards",
+        "label": "Show offer cards and coupon codes",
+        "info": "When off, product pages with configured offers display the current checkout offers without coupon codes.",
+        "default": false
+      }
+    ]
+  },
+  {
     "name": "Gokwik",
     "settings": [
       {

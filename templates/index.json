@@ -1,1 +1,1059 @@
-{"sections":{"Top_slider":{"type":"Top_slider","blocks":{"image_axApfn":{"type":"Image","settings":{"image":"shopify:\/\/shop_images\/Frame_50_98f73b2a-67d8-4927-8761-37ccc048b7bb.png","mobile_image":"shopify:\/\/shop_images\/mpd_23.png","image_link":""}},"image_HrAEqe":{"type":"Image","settings":{"image":"shopify:\/\/shop_images\/Frame_53_77bf553e-b49d-4933-b027-3a3c17bccff1.png","mobile_image":"shopify:\/\/shop_images\/mpd1_63b40a16-5adf-4f63-bd0c-ecfca931295e.png","image_link":""}},"image_M6yDyN":{"type":"Image","settings":{"image":"shopify:\/\/shop_images\/Frame_54_bebd3d99-8ac1-4f31-bd20-176971e6d802.png","mobile_image":"shopify:\/\/shop_images\/mpd_32.png","image_link":""}},"video_7jhfmV":{"type":"video","disabled":true,"settings":{"video2_link":"","overlay_heading":"Improve <span style=\"font-weight: 500;\">Strength<\/span> Naturally","overlay_subtext":"Powered by Nature | Proven by Science"}}},"block_order":["image_axApfn","image_HrAEqe","image_M6yDyN","video_7jhfmV"],"settings":{}},"home_page_marquee_aVQU7i":{"type":"home-page-marquee","blocks":{"item_YJ6R4a":{"type":"item","settings":{"text":"Kashmir's Saffron"}},"item_fyYryM":{"type":"item","settings":{"text":"Himalaya's Shilajit"}},"item_gqgiMU":{"type":"item","settings":{"text":"Ladakh's Seabuckthorn"}}},"block_order":["item_YJ6R4a","item_fyYryM","item_gqgiMU"],"name":"Marquee Bar","settings":{"bg_color":"#8b3a2a","text_color":"#ffffff","diamond_color":"#ffffff","speed":30,"font_size":13}},"featured_collection":{"type":"featured-collection","disabled":true,"settings":{"collection":"all","products_to_show":8,"title":"Featured products","heading_size":"h2","description":"","show_description":false,"description_style":"body","columns_desktop":4,"enable_desktop_slider":false,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":false,"padding_top":44,"padding_bottom":36}},"collection_circles_GmgYAk":{"type":"collection-circles","blocks":{"circle_kAxggz":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Frame_51.png","label":"Gifting","collection_link":"shopify:\/\/collections\/all-products"}},"circle_axYg33":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Frame_55.png","label":"pure-seabuckthorn","collection_link":"shopify:\/\/collections\/pure-seabuckthorn"}},"circle_8Khfrr":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Frame_60.png","label":"pahadi-wellness","collection_link":"shopify:\/\/collections\/pahadi-wellness"}},"circle_QDrNYj":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Collection_Images_8.jpg","label":"jams & spreads","collection_link":"shopify:\/\/collections\/jams-spreads-preserves"}},"circle_4zzjDd":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Frame_62.png","label":"Dry Fruits","collection_link":"shopify:\/\/collections\/dry-fruits"}},"circle_D4AEkd":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Collection_Images_7.jpg","label":"natural beverages","collection_link":"shopify:\/\/collections\/natural-beverages"}},"circle_xVck9h":{"type":"circle","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Frame_63.png","label":"Seabuckthorn","collection_link":"shopify:\/\/collections\/natural-beverages"}},"circle_wnqVt3":{"type":"circle","settings":{"image":"shopify:\/\/shop_images\/Collection_Images_6.jpg","label":"Pure Honey","collection_link":"shopify:\/\/collections\/pure-honey"}},"circle_kRiRRE":{"type":"circle","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Frame_51_a9cb9243-66fe-48b5-8797-1c624db0fa53.png","label":"Jams & Spreads","collection_link":"shopify:\/\/collections\/jams-spreads-preserves"}},"circle_C43m8n":{"type":"circle","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Frame_63.png","label":"Pure Ghee","collection_link":""}}},"block_order":["circle_kAxggz","circle_axYg33","circle_8Khfrr","circle_QDrNYj","circle_4zzjDd","circle_D4AEkd","circle_xVck9h","circle_wnqVt3","circle_kRiRRE","circle_C43m8n"],"name":"Collection Circles","settings":{"bg_color":"#fffbef"}},"map_slider_pBYB94":{"type":"map-slider","blocks":{"region_yqxmaw":{"type":"region","name":"Ladakh mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/Ladakh_e7391e7c-e185-40d9-b582-ccd0a23a59b7.png","region_name":"Ladakh","product_count":"11,500 ft","description":"India’s coldest desert, where shilajit seeps from the rock and apricots dry in the sun.\n\nChuli apricots, dried the old way; seabuckthorn, so tart it stings the back of your tongue.","tags":"Sundried • Mineral-rich • Wild","collection_link":"shopify:\/\/collections\/ladakh","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_xeRp6q":{"type":"region","name":"Jammu & Kashmir mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/JNK_1bfb2046-02b7-4905-ae4f-a6cf2e21dd38.png","region_name":"Jammu & Kashmir","product_count":"6,070 ft","description":"Almonds from Kashmir's orchards, saffron from its fields, chilli powder red enough to stain your hands.\nWhere saffron, kahwa, and cold-weather harvests have fed kitchens for generations.","tags":"Fiery • Nutty • Bittersweet","collection_link":"shopify:\/\/collections\/kashmir","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_LdC8yn":{"type":"region","name":"Himachal Pradesh mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/HP_27a2ffbf-9970-4ad9-9996-0fc24eeb5aac.png","region_name":"Himachal Pradesh","product_count":"9,413 ft","description":"Apples, apricots, plums picked first, then jammed, jarred, and spooned into honey right after.\nRajma on the stove, jam on the shelf, honey somewhere within reach. Himachal, basically.","tags":"Amber • Fruity • Iron-rich","collection_link":"shopify:\/\/collections\/himachal-pradesh","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_RiY6RJ":{"type":"region","name":"Uttarkhand mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/UTT.png","region_name":"Uttarkhand","product_count":"6,896 ft","description":"Nobody planted this - buransh flowers, wild millets, forest honey; all of it just grew.\nBuransh, red rice, horsegram, lion's mane. One state, oddly good at everything.","tags":"Calming • Floral • Herbal","collection_link":"shopify:\/\/collections\/best-selling","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_jEqqVp":{"type":"region","name":"Sikkim mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/SK.png","region_name":"Bhutan","product_count":"12,415 ft","description":"One black cardamom pod from here, and suddenly the pot smells like someone's coming home.\nEverything Sikkim grows, it grows patiently. The black cardamom is proof you can taste.","tags":"Woodsmoked • Earthy • Nostalgic","collection_link":"shopify:\/\/collections\/sikkim","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_QqAWkR":{"type":"region","name":"Nagaland mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/NL.png","region_name":"Nagaland","product_count":"6,000 ft","description":"Putka honey is sour, runny, and unlike any honey you've had. That's the point.\nPutka honey for those who like surprises, wild cherry and apple honey for those who don't.","tags":"Sour • Silky • Dense","collection_link":"shopify:\/\/collections\/nagaland","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_e9rAeM":{"type":"region","name":"Meghalaya mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/ML.png","region_name":"Meghalaya","product_count":"4,900 ft","description":"Lakadong turmeric, Ing Makhir ginger, Cassia cinnamon, Pippali pepper - four spices that don't do subtle.\nYour turmeric is 3% curcumin. Lakadong starts at 12. Your ginger? Ing Makhir outdoes it entirely.","tags":"Zingy • Anti-inflammatory • Pungent","collection_link":"shopify:\/\/collections\/bhutan","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_6RWRB6":{"type":"region","name":"western ghat mb","settings":{"visibility":"mobile","map_image":"shopify:\/\/shop_images\/W_GHATS.png","region_name":"Western Ghats","product_count":"3,000 ft","description":"India's oldest forest has been perfecting jasmine since before the Himalayas existed.\n150 million years of forest, distilled into jasmine, rose, and wild basil.","tags":"Hydrating • Flower-pressed • Artisanal","collection_link":"shopify:\/\/collections\/western-ghats","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_nnt8kd":{"type":"region","name":"Ladakh","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/Ladakh_c71f617c-51ee-41db-a4eb-b8b4128a8847.jpg","region_name":"Ladakh","product_count":"11,500 ft","description":"India’s coldest desert, where shilajit seeps from the rock and apricots dry in the sun.\nChuli apricots, dried the old way; seabuckthorn, so tart it stings the back of your tongue.","tags":"Sundried • Mineral-rich • Wild","collection_link":"shopify:\/\/collections\/ladakh","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_QFr8Db":{"type":"region","name":"Jammu & Kashmir","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/JNK.jpg","region_name":"Jammu & Kashmir","product_count":"6,070 ft","description":"Almonds from Kashmir's orchards, saffron from its fields, chilli powder red enough to stain your hands.\nWhere saffron, kahwa, and cold-weather harvests have fed kitchens for generations.","tags":"Fiery • Nutty • Bittersweet","collection_link":"shopify:\/\/collections\/kashmir","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_JHb9G7":{"type":"region","name":"Himachal Pradesh","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/HP.jpg","region_name":"Himachal Pradesh","product_count":"9,413 ft","description":"Apples, apricots, plums picked first, then jammed, jarred, and spooned into honey right after.\nRajma on the stove, jam on the shelf, honey somewhere within reach. Himachal, basically.","tags":"Amber • Fruity • Iron-rich","collection_link":"shopify:\/\/collections\/himachal-pradesh","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_QKwQTH":{"type":"region","name":"Uttarakhand","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/UTT.jpg","region_name":"Uttarakhand","product_count":"6,896 ft","description":"Nobody planted this - buransh flowers, wild millets, forest honey; all of it just grew.\nBuransh, red rice, horsegram, lion's mane. One state, oddly good at everything.","tags":"Calming • Floral • Herbal","collection_link":"shopify:\/\/collections\/uttarakhand","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_CQ7DcF":{"type":"region","name":"Sikkim ","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/SK.jpg","region_name":"Sikkim","product_count":"12,415 ft","description":"One black cardamom pod from here, and suddenly the pot smells like someone's coming home.\nEverything Sikkim grows, it grows patiently. The black cardamom is proof you can taste.","tags":"Woodsmoked • Earthy • Nostalgic","collection_link":"shopify:\/\/collections\/sikkim","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_HWPNLh":{"type":"region","name":"Meghalaya","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/ML_1.jpg","region_name":"Meghalaya","product_count":"4,900 ft","description":"Lakadong turmeric, Ing Makhir ginger, Cassia cinnamon, Pippali pepper - four spices that don't do subtle.\nYour turmeric is 3% curcumin. Lakadong starts at 12. Your ginger? Ing Makhir outdoes it entirely.","tags":"Zingy • Anti-inflammatory • Pungent","collection_link":"shopify:\/\/collections\/meghalaya","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}},"region_EL9eUa":{"type":"region","name":"Nagaland","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/NL.jpg","region_name":"Nagaland","product_count":"6,000 ft","description":"Putka honey is sour, runny, and unlike any honey you've had. That's the point.\nPutka honey for those who like surprises, wild cherry and apple honey for those who don't.","tags":"Sour • Silky • Dense","collection_link":"shopify:\/\/collections\/nagaland","button_label":"Explore Now","card_bg_desktop":"#8b4513","card_bg_mobile":"#1e3a2f"}},"region_jEVtqd":{"type":"region","name":"Kerala","settings":{"visibility":"desktop","map_image":"shopify:\/\/shop_images\/W_GHATS.jpg","region_name":"Western Ghats","product_count":"3,000 ft","description":"India's oldest forest has been perfecting jasmine since before the Himalayas existed.\n150 million years of forest, distilled into jasmine, rose, and wild basil.","tags":"Hydrating • Flower-pressed • Artisanal","collection_link":"shopify:\/\/collections\/western-ghats","button_label":"Explore Now","card_bg_desktop":"#025b4e","card_bg_mobile":"#1e3a2f"}}},"block_order":["region_yqxmaw","region_xeRp6q","region_LdC8yn","region_RiY6RJ","region_jEqqVp","region_QqAWkR","region_e9rAeM","region_6RWRB6","region_nnt8kd","region_QFr8Db","region_JHb9G7","region_QKwQTH","region_CQ7DcF","region_HWPNLh","region_EL9eUa","region_jEVtqd"],"name":"Shop By Region","settings":{"title":"Shop By Region","bg_color":"#f5e6b8"}},"section_trust_badges_YJJ6Br":{"type":"section-trust-badges","blocks":{"badge_MABeTV":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2.png","title":"100% Natural","subtitle":"Straight from the hills"}},"badge_pXwm6x":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2_1.png","title":"100k+","subtitle":"Across the map"}},"badge_MhJwPW":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2_1.png","title":"1,00,000+","subtitle":"Loyal customers"}},"badge_JarVJ3":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2_2.png","title":"60+ local makers","subtitle":"Known by name"}},"badge_Ljibec":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2_2.png","title":"FSSAI complaint","subtitle":"Every maker verified"}},"badge_M86RC6":{"type":"badge","settings":{"icon_image":"shopify:\/\/shop_images\/Screenshot_2026-03-12_150103_2_3.png","title":"SHGs & co-ops","subtitle":"Directly backed"}}},"block_order":["badge_MABeTV","badge_pXwm6x","badge_MhJwPW","badge_JarVJ3","badge_Ljibec","badge_M86RC6"],"name":"Trust Badges","settings":{"section_style":"tb-section-border","bg_color":"#ffeeb7"}},"why_choose_us_qaByfy":{"type":"why-choose-us","blocks":{"tab_nDbaaE":{"type":"tab","settings":{"tab_label":"Our Vision","youtube_url":"https:\/\/youtu.be\/QEYcAK_0Ab0?si=liw8lpLuikrJZQNU"}},"tab_JwDWNU":{"type":"tab","settings":{"tab_label":"Our Sources","youtube_url":"https:\/\/youtu.be\/X3gc2eo1ZZU?si=nN_Ie1K0TBSJj5M8"}}},"block_order":["tab_nDbaaE","tab_JwDWNU"],"name":"Why Choose Us","settings":{"title":"Why Choose My Pahadi Dukan ?","bg_color":"#fffbef"}},"watch_and_buy_n6cKa9":{"type":"watch-and-buy","blocks":{"reelcart_video_carousel_9Cxbpi":{"type":"shopify:\/\/apps\/reelcart\/blocks\/video-carousel\/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450","settings":{"selected_campaign_title":"Homepage MPD","is_collection_carousel":false,"section_bg":"rgba(0,0,0,0)","title_color":"#6c7278","title_bg":"rgba(0,0,0,0)","section_title":"","section_subtitle":"","horizontal_alignment":"center","card_details":"product-info","show_scroll_arrows":true,"show_view_count":true,"video_card_width":280,"video_card_width_mobile":200,"video_card_height":460,"video_card_height_mobile":330,"desktop_show_image":true,"desktop_show_title":true,"desktop_show_price":true,"phone_show_image":true,"phone_show_title":false,"phone_show_price":false,"caption_text_alignment":"left","caption_fontsize":12,"caption_padding":20,"caption_color_background":"linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)","username_visibility":false}}},"block_order":["reelcart_video_carousel_9Cxbpi"],"name":"Watch & Buy","settings":{"section_style":"wab-section-border","title":"Watch & Buy","title_color":"#231f20","bg_color":"#ffeeb7"}},"product-slider":{"type":"product-slider","settings":{"title":"Best Sellers","show_secondary_image":true,"bg_image":"shopify:\/\/shop_images\/Best_Seller_Background.jpg","bg_image_mobile":"shopify:\/\/shop_images\/Best_Seller_Background.png","collection":"best-selling","products_to_show":8,"discount_text":"Extra 10% Discount at Checkout","bg_color":"#fdf6e3"}},"customer_reviews_HA6E9C":{"type":"customer-reviews","blocks":{"review_hDNHDH":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","profile_image":"shopify:\/\/shop_images\/Frame_2147227588.png","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"I've been using this product for three months now and the results are incredible.","product":"organic-arabica-bermiok-farms-coffee"}},"review_ahTUqj":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"I've been using this product for three months now and the results are incredible.","product":"arabica-kanchenjunga-peaberry"}},"review_z6VpXG":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_fH9Qbp":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_cxzJ7g":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_eDU97c":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_drRprn":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_LpUKB3":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}},"review_FRhHPx":{"type":"review","settings":{"customer_name":"Sarah Johnson","initials":"SJ","avatar_color":"#1a6b4a","verified":true,"rating":5,"review_title":"Absolutely Amazing Product!","review_text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .","product":"arabica-kanchenjunga-peaberry"}}},"block_order":["review_hDNHDH","review_ahTUqj","review_z6VpXG","review_fH9Qbp","review_cxzJ7g","review_eDU97c","review_drRprn","review_LpUKB3","review_FRhHPx"],"name":"Customer Reviews","settings":{"title":"Trusted By 50000+ Customers","bg_image":"shopify:\/\/shop_images\/Frame_2147227326.png","bg_image_mobile":"shopify:\/\/shop_images\/Trusted_By_Background.png","overall_rating":5,"rating_score":"4.8","review_count":5,"bg_color":"#fdf6e3"}},"product_slider_LpUPrJ":{"type":"product-slider","name":"Product Slider","settings":{"title":"New Arrival","show_secondary_image":true,"collection":"best-selling","products_to_show":8,"discount_text":"Extra 10% Discount at Checkout","bg_color":"#fffbef"}},"brand_story_7VrzKH":{"type":"brand-story","blocks":{"stat_VhN6bT":{"type":"stat","settings":{"number":"11","label_top":"states","label_bottom":"All in one place"}},"stat_whitPP":{"type":"stat","settings":{"number":"150+","label_top":"products","label_bottom":"One standard of purity"}},"stat_kRwWUn":{"type":"stat","settings":{"number":"20,000+","label_top":"farmers","label_bottom":"Empowered and uplifted"}}},"block_order":["stat_VhN6bT","stat_whitPP","stat_kRwWUn"],"name":"Brand Story","settings":{"bg_color":"#ffeeb7","bg_image":"shopify:\/\/shop_images\/Frame_2147227905.png","philosophy_title":"The idea behind My Pahadi Dukan","philosophy_text":"We don't make honey. A family in the hills does, the way their grandparents did. What they never had was a buyer who'd pay fairly and carry it past the village. That's us. We find them, buy direct, add nothing, and bring it straight to you.","team_image":"shopify:\/\/shop_images\/Frame_22166.png","media_title":"In the Media","media_logo_1":"shopify:\/\/shop_images\/image_795.png","media_link_1":"https:\/\/www.hindustantimes.com\/","media_logo_2":"shopify:\/\/shop_images\/image_798.png","media_link_2":"https:\/\/www.hindustantimes.com\/","media_logo_3":"shopify:\/\/shop_images\/image_794.png","media_link_3":"https:\/\/www.hindustantimes.com\/","media_logo_4":"shopify:\/\/shop_images\/image_799.png","media_link_4":"https:\/\/www.hindustantimes.com\/","media_logo_5":"shopify:\/\/shop_images\/image_796.png","media_link_5":"https:\/\/www.hindustantimes.com\/","media_logo_6":"shopify:\/\/shop_images\/image_799.png","media_link_6":"https:\/\/www.hindustantimes.com\/","letter_front_image":"shopify:\/\/shop_images\/Front.png","letter_back_image":"shopify:\/\/shop_images\/LETTER.png","letter_front_image_mobile":"shopify:\/\/shop_images\/Front_1.png","letter_back_image_mobile":"shopify:\/\/shop_images\/LETTER_1.png","letter_quote":"","letter_tap_text":"","letter_back_text":"","supported_title":"Supported by","supported_logo_1":"shopify:\/\/shop_images\/image_782.png","supported_link_1":"https:\/\/www.hindustantimes.com\/","supported_logo_2":"shopify:\/\/shop_images\/image_783.png","supported_link_2":"https:\/\/www.hindustantimes.com\/","supported_logo_3":"shopify:\/\/shop_images\/image_785.png","supported_link_3":"https:\/\/www.hindustantimes.com\/","supported_logo_4":"shopify:\/\/shop_images\/image_786.png","supported_link_4":"https:\/\/www.hindustantimes.com\/"}},"featured_blog":{"type":"featured-blog","blocks":{"blog_jhJJqD":{"type":"blog","settings":{"blog":"info"}},"blog_GHV4TH":{"type":"blog","settings":{"blog":"health-and-wellness"}},"blog_QdgTeN":{"type":"blog","settings":{"blog":"info"}},"blog_imqnUi":{"type":"blog","settings":{"blog":"health-and-wellness"}}},"block_order":["blog_jhJJqD","blog_GHV4TH","blog_QdgTeN","blog_imqnUi"],"settings":{"title":"Latest Blog","bg_color":"#ffffff"}},"Seo_content":{"type":"Seo-content","disabled":true,"settings":{"heading":"SEO Content","subheading1":"An Ayurvedic Company Where Tradition Meets Innovation","paragraph1":"Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...","subheading2":"Behind Every Success Is A Great Team","paragraph2":"As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors...","subheading3":"An Ayurvedic Company Where Tradition Meets Innovation","paragraph3":"Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...","subheading4":"Behind Every Success Is A Great Team","paragraph4":"As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors...","subheading5":"An Ayurvedic Company Where Tradition Meets Innovation","paragraph5":"Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...","subheading6":"Behind Every Success Is A Great Team","paragraph6":"As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors..."}},"faq_home_H8fcf4":{"type":"faq-home","blocks":{"faq_HzyLtf":{"type":"faq","settings":{"question":"Are Your Products Authentic And Locally Sourced?","answer":"Yes. Every product comes straight from the person who made it - a farmer, an artisan, or a village self-help group. We've met most of them ourselves, which is how we know it's genuine. A few things reach us through a partner in the region, like our Sikkim cardamom, which comes via Pahari Roots. Either way, we can trace a batch back and tell you where it came from. Simply write in and ask."}},"faq_kQXBxP":{"type":"faq","settings":{"question":"How Long Does Delivery Take?","answer":"Usually 5-7 days, depending on where you are. You'll get the tracking details once it ships. We ship within 24-48 hours."}},"faq_qjwFAz":{"type":"faq","settings":{"question":"How do I know the shilajit or saffron is real, not adulterated?","answer":"Fair worry; the market's full of fakes. For products like shilajit and saffron, where adulteration is common, we have each batch tested at an NABL-accredited lab and include the report directly in the product description. Read it before you buy."}},"faq_EzkUGc":{"type":"faq","settings":{"question":"Do you make your own products, or only sell others'?","answer":"Both, and a bit of a third thing. A few products we make ourselves and lab-test. Most we buy directly from farmers and small makers. And we stock several small mountain brands under their own labels, because they were already doing it so well. Each listing tells you which. Look for the name of the brand in the product title!"}},"faq_mzcHbW":{"type":"faq","settings":{"question":"Will someone call me asking for payment on a prepaid order?","answer":"No, never. We do not call to collect payment on an order you've already paid for. Our only official numbers are +91 84286 11319 and +91 856994 9587, both listed on the site. Anything else is not from us."}},"faq_WP4QCx":{"type":"faq","settings":{"question":"Do you ship outside India?","answer":"Yes, to a good number of countries. Rates and timelines are on our international shipping page, and if yours isn't listed, message us on WhatsApp, and we'll find out."}},"faq_yXhGCz":{"type":"faq","settings":{"question":"Is Cash on Delivery available?","answer":"No, not on our own site. Here you can pay by UPI, card, netbanking, or wallet, and there's a no-cost EMI option on UPI for larger orders. If you'd rather pay on delivery, we're on Amazon and Flipkart, and COD works fine on both. Same products, just an easier checkout for anyone who prefers paying at the door."}},"faq_AKft4p":{"type":"faq","settings":{"question":"What if my order arrives damaged or something's wrong?","answer":"Message us on WhatsApp with a photo, or email support@mypahadidukan.com. We'll sort it - replacement or refund, whichever suits. You'll hear back from an actual person, usually within half an hour."}},"faq_ggBR9D":{"type":"faq","settings":{"question":"Do these products treat or cure health conditions?","answer":"No, and we'll be straight about it. These are traditional foods and wellness products, not medicine. They've been part of mountain life for generations, but they aren't clinically proven and aren't meant to diagnose, treat, cure, or prevent anything. If you're pregnant, on medication, or managing a condition, check the label warnings and ask your doctor before trying something new."}}},"block_order":["faq_HzyLtf","faq_kQXBxP","faq_qjwFAz","faq_EzkUGc","faq_mzcHbW","faq_WP4QCx","faq_yXhGCz","faq_AKft4p","faq_ggBR9D"],"name":"FAQ-home Section","settings":{"title":"Any Last Questions ?","bg_color":"#fdf6e3"}}},"order":["Top_slider","home_page_marquee_aVQU7i","featured_collection","collection_circles_GmgYAk","map_slider_pBYB94","section_trust_badges_YJJ6Br","why_choose_us_qaByfy","watch_and_buy_n6cKa9","product-slider","customer_reviews_HA6E9C","product_slider_LpUPrJ","brand_story_7VrzKH","featured_blog","Seo_content","faq_home_H8fcf4"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "Top_slider": {
+      "type": "Top_slider",
+      "blocks": {
+        "image_axApfn": {
+          "type": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_50_98f73b2a-67d8-4927-8761-37ccc048b7bb.png",
+            "mobile_image": "shopify://shop_images/mpd_23.png",
+            "image_link": ""
+          }
+        },
+        "image_HrAEqe": {
+          "type": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_53_77bf553e-b49d-4933-b027-3a3c17bccff1.png",
+            "mobile_image": "shopify://shop_images/mpd1_63b40a16-5adf-4f63-bd0c-ecfca931295e.png",
+            "image_link": ""
+          }
+        },
+        "image_M6yDyN": {
+          "type": "Image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_54_bebd3d99-8ac1-4f31-bd20-176971e6d802.png",
+            "mobile_image": "shopify://shop_images/mpd_32.png",
+            "image_link": ""
+          }
+        },
+        "video_7jhfmV": {
+          "type": "video",
+          "disabled": true,
+          "settings": {
+            "video2_link": "",
+            "overlay_heading": "Improve <span style=\"font-weight: 500;\">Strength</span> Naturally",
+            "overlay_subtext": "Powered by Nature | Proven by Science"
+          }
+        }
+      },
+      "block_order": [
+        "image_axApfn",
+        "image_HrAEqe",
+        "image_M6yDyN",
+        "video_7jhfmV"
+      ],
+      "settings": {}
+    },
+    "home_page_marquee_aVQU7i": {
+      "type": "home-page-marquee",
+      "blocks": {
+        "item_YJ6R4a": {
+          "type": "item",
+          "settings": {
+            "text": "Kashmir's Saffron"
+          }
+        },
+        "item_fyYryM": {
+          "type": "item",
+          "settings": {
+            "text": "Himalaya's Shilajit"
+          }
+        },
+        "item_gqgiMU": {
+          "type": "item",
+          "settings": {
+            "text": "Ladakh's Seabuckthorn"
+          }
+        }
+      },
+      "block_order": [
+        "item_YJ6R4a",
+        "item_fyYryM",
+        "item_gqgiMU"
+      ],
+      "name": "Marquee Bar",
+      "settings": {
+        "bg_color": "#8b3a2a",
+        "text_color": "#ffffff",
+        "diamond_color": "#ffffff",
+        "speed": 30,
+        "font_size": 13
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Featured products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "collection_circles_GmgYAk": {
+      "type": "collection-circles",
+      "blocks": {
+        "circle_kAxggz": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_51.png",
+            "label": "Gifting",
+            "collection_link": "shopify://collections/all-products"
+          }
+        },
+        "circle_axYg33": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_55.png",
+            "label": "pure-seabuckthorn",
+            "collection_link": "shopify://collections/pure-seabuckthorn"
+          }
+        },
+        "circle_8Khfrr": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_60.png",
+            "label": "pahadi-wellness",
+            "collection_link": "shopify://collections/pahadi-wellness"
+          }
+        },
+        "circle_QDrNYj": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_8.jpg",
+            "label": "jams & spreads",
+            "collection_link": "shopify://collections/jams-spreads-preserves"
+          }
+        },
+        "circle_4zzjDd": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Frame_62.png",
+            "label": "Dry Fruits",
+            "collection_link": "shopify://collections/dry-fruits"
+          }
+        },
+        "circle_D4AEkd": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_7.jpg",
+            "label": "natural beverages",
+            "collection_link": "shopify://collections/natural-beverages"
+          }
+        },
+        "circle_xVck9h": {
+          "type": "circle",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Frame_63.png",
+            "label": "Seabuckthorn",
+            "collection_link": "shopify://collections/natural-beverages"
+          }
+        },
+        "circle_wnqVt3": {
+          "type": "circle",
+          "settings": {
+            "image": "shopify://shop_images/Collection_Images_6.jpg",
+            "label": "Pure Honey",
+            "collection_link": "shopify://collections/pure-honey"
+          }
+        },
+        "circle_kRiRRE": {
+          "type": "circle",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Frame_51_a9cb9243-66fe-48b5-8797-1c624db0fa53.png",
+            "label": "Jams & Spreads",
+            "collection_link": "shopify://collections/jams-spreads-preserves"
+          }
+        },
+        "circle_C43m8n": {
+          "type": "circle",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Frame_63.png",
+            "label": "Pure Ghee",
+            "collection_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "circle_kAxggz",
+        "circle_axYg33",
+        "circle_8Khfrr",
+        "circle_QDrNYj",
+        "circle_4zzjDd",
+        "circle_D4AEkd",
+        "circle_xVck9h",
+        "circle_wnqVt3",
+        "circle_kRiRRE",
+        "circle_C43m8n"
+      ],
+      "name": "Collection Circles",
+      "settings": {
+        "title": "",
+        "bg_color": "#fffbef"
+      }
+    },
+    "map_slider_pBYB94": {
+      "type": "map-slider",
+      "blocks": {
+        "region_yqxmaw": {
+          "type": "region",
+          "name": "Ladakh mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/Ladakh_e7391e7c-e185-40d9-b582-ccd0a23a59b7.png",
+            "region_name": "Ladakh",
+            "product_count": "11,500 ft",
+            "description": "India’s coldest desert, where shilajit seeps from the rock and apricots dry in the sun.\n\nChuli apricots, dried the old way; seabuckthorn, so tart it stings the back of your tongue.",
+            "tags": "Sundried • Mineral-rich • Wild",
+            "collection_link": "shopify://collections/ladakh",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_xeRp6q": {
+          "type": "region",
+          "name": "Jammu & Kashmir mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/JNK_1bfb2046-02b7-4905-ae4f-a6cf2e21dd38.png",
+            "region_name": "Jammu & Kashmir",
+            "product_count": "6,070 ft",
+            "description": "Almonds from Kashmir's orchards, saffron from its fields, chilli powder red enough to stain your hands.\nWhere saffron, kahwa, and cold-weather harvests have fed kitchens for generations.",
+            "tags": "Fiery • Nutty • Bittersweet",
+            "collection_link": "shopify://collections/kashmir",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_LdC8yn": {
+          "type": "region",
+          "name": "Himachal Pradesh mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/HP_27a2ffbf-9970-4ad9-9996-0fc24eeb5aac.png",
+            "region_name": "Himachal Pradesh",
+            "product_count": "9,413 ft",
+            "description": "Apples, apricots, plums picked first, then jammed, jarred, and spooned into honey right after.\nRajma on the stove, jam on the shelf, honey somewhere within reach. Himachal, basically.",
+            "tags": "Amber • Fruity • Iron-rich",
+            "collection_link": "shopify://collections/himachal-pradesh",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_RiY6RJ": {
+          "type": "region",
+          "name": "Uttarkhand mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/UTT.png",
+            "region_name": "Uttarkhand",
+            "product_count": "6,896 ft",
+            "description": "Nobody planted this - buransh flowers, wild millets, forest honey; all of it just grew.\nBuransh, red rice, horsegram, lion's mane. One state, oddly good at everything.",
+            "tags": "Calming • Floral • Herbal",
+            "collection_link": "shopify://collections/best-selling",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_jEqqVp": {
+          "type": "region",
+          "name": "Sikkim mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/SK.png",
+            "region_name": "Bhutan",
+            "product_count": "12,415 ft",
+            "description": "One black cardamom pod from here, and suddenly the pot smells like someone's coming home.\nEverything Sikkim grows, it grows patiently. The black cardamom is proof you can taste.",
+            "tags": "Woodsmoked • Earthy • Nostalgic",
+            "collection_link": "shopify://collections/sikkim",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_QqAWkR": {
+          "type": "region",
+          "name": "Nagaland mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/NL.png",
+            "region_name": "Nagaland",
+            "product_count": "6,000 ft",
+            "description": "Putka honey is sour, runny, and unlike any honey you've had. That's the point.\nPutka honey for those who like surprises, wild cherry and apple honey for those who don't.",
+            "tags": "Sour • Silky • Dense",
+            "collection_link": "shopify://collections/nagaland",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_e9rAeM": {
+          "type": "region",
+          "name": "Meghalaya mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/ML.png",
+            "region_name": "Meghalaya",
+            "product_count": "4,900 ft",
+            "description": "Lakadong turmeric, Ing Makhir ginger, Cassia cinnamon, Pippali pepper - four spices that don't do subtle.\nYour turmeric is 3% curcumin. Lakadong starts at 12. Your ginger? Ing Makhir outdoes it entirely.",
+            "tags": "Zingy • Anti-inflammatory • Pungent",
+            "collection_link": "shopify://collections/bhutan",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_6RWRB6": {
+          "type": "region",
+          "name": "western ghat mb",
+          "settings": {
+            "visibility": "mobile",
+            "map_image": "shopify://shop_images/W_GHATS.png",
+            "region_name": "Western Ghats",
+            "product_count": "3,000 ft",
+            "description": "India's oldest forest has been perfecting jasmine since before the Himalayas existed.\n150 million years of forest, distilled into jasmine, rose, and wild basil.",
+            "tags": "Hydrating • Flower-pressed • Artisanal",
+            "collection_link": "shopify://collections/western-ghats",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_nnt8kd": {
+          "type": "region",
+          "name": "Ladakh",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/Ladakh_c71f617c-51ee-41db-a4eb-b8b4128a8847.jpg",
+            "region_name": "Ladakh",
+            "product_count": "11,500 ft",
+            "description": "India’s coldest desert, where shilajit seeps from the rock and apricots dry in the sun.\nChuli apricots, dried the old way; seabuckthorn, so tart it stings the back of your tongue.",
+            "tags": "Sundried • Mineral-rich • Wild",
+            "collection_link": "shopify://collections/ladakh",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_QFr8Db": {
+          "type": "region",
+          "name": "Jammu & Kashmir",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/JNK.jpg",
+            "region_name": "Jammu & Kashmir",
+            "product_count": "6,070 ft",
+            "description": "Almonds from Kashmir's orchards, saffron from its fields, chilli powder red enough to stain your hands.\nWhere saffron, kahwa, and cold-weather harvests have fed kitchens for generations.",
+            "tags": "Fiery • Nutty • Bittersweet",
+            "collection_link": "shopify://collections/kashmir",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_JHb9G7": {
+          "type": "region",
+          "name": "Himachal Pradesh",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/HP.jpg",
+            "region_name": "Himachal Pradesh",
+            "product_count": "9,413 ft",
+            "description": "Apples, apricots, plums picked first, then jammed, jarred, and spooned into honey right after.\nRajma on the stove, jam on the shelf, honey somewhere within reach. Himachal, basically.",
+            "tags": "Amber • Fruity • Iron-rich",
+            "collection_link": "shopify://collections/himachal-pradesh",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_QKwQTH": {
+          "type": "region",
+          "name": "Uttarakhand",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/UTT.jpg",
+            "region_name": "Uttarakhand",
+            "product_count": "6,896 ft",
+            "description": "Nobody planted this - buransh flowers, wild millets, forest honey; all of it just grew.\nBuransh, red rice, horsegram, lion's mane. One state, oddly good at everything.",
+            "tags": "Calming • Floral • Herbal",
+            "collection_link": "shopify://collections/uttarakhand",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_CQ7DcF": {
+          "type": "region",
+          "name": "Sikkim ",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/SK.jpg",
+            "region_name": "Sikkim",
+            "product_count": "12,415 ft",
+            "description": "One black cardamom pod from here, and suddenly the pot smells like someone's coming home.\nEverything Sikkim grows, it grows patiently. The black cardamom is proof you can taste.",
+            "tags": "Woodsmoked • Earthy • Nostalgic",
+            "collection_link": "shopify://collections/sikkim",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_HWPNLh": {
+          "type": "region",
+          "name": "Meghalaya",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/ML_1.jpg",
+            "region_name": "Meghalaya",
+            "product_count": "4,900 ft",
+            "description": "Lakadong turmeric, Ing Makhir ginger, Cassia cinnamon, Pippali pepper - four spices that don't do subtle.\nYour turmeric is 3% curcumin. Lakadong starts at 12. Your ginger? Ing Makhir outdoes it entirely.",
+            "tags": "Zingy • Anti-inflammatory • Pungent",
+            "collection_link": "shopify://collections/meghalaya",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_EL9eUa": {
+          "type": "region",
+          "name": "Nagaland",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/NL.jpg",
+            "region_name": "Nagaland",
+            "product_count": "6,000 ft",
+            "description": "Putka honey is sour, runny, and unlike any honey you've had. That's the point.\nPutka honey for those who like surprises, wild cherry and apple honey for those who don't.",
+            "tags": "Sour • Silky • Dense",
+            "collection_link": "shopify://collections/nagaland",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#8b4513",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        },
+        "region_jEVtqd": {
+          "type": "region",
+          "name": "Kerala",
+          "settings": {
+            "visibility": "desktop",
+            "map_image": "shopify://shop_images/W_GHATS.jpg",
+            "region_name": "Western Ghats",
+            "product_count": "3,000 ft",
+            "description": "India's oldest forest has been perfecting jasmine since before the Himalayas existed.\n150 million years of forest, distilled into jasmine, rose, and wild basil.",
+            "tags": "Hydrating • Flower-pressed • Artisanal",
+            "collection_link": "shopify://collections/western-ghats",
+            "button_label": "Explore Now",
+            "card_bg_desktop": "#025b4e",
+            "card_bg_mobile": "#1e3a2f"
+          }
+        }
+      },
+      "block_order": [
+        "region_yqxmaw",
+        "region_xeRp6q",
+        "region_LdC8yn",
+        "region_RiY6RJ",
+        "region_jEqqVp",
+        "region_QqAWkR",
+        "region_e9rAeM",
+        "region_6RWRB6",
+        "region_nnt8kd",
+        "region_QFr8Db",
+        "region_JHb9G7",
+        "region_QKwQTH",
+        "region_CQ7DcF",
+        "region_HWPNLh",
+        "region_EL9eUa",
+        "region_jEVtqd"
+      ],
+      "name": "Shop By Region",
+      "settings": {
+        "title": "Shop By Region",
+        "bg_color": "#f5e6b8"
+      }
+    },
+    "section_trust_badges_YJJ6Br": {
+      "type": "section-trust-badges",
+      "blocks": {
+        "badge_MABeTV": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2.png",
+            "title": "100% Natural",
+            "subtitle": "Straight from the hills"
+          }
+        },
+        "badge_pXwm6x": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
+            "title": "100k+",
+            "subtitle": "Across the map"
+          }
+        },
+        "badge_MhJwPW": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
+            "title": "1,00,000+",
+            "subtitle": "Loyal customers"
+          }
+        },
+        "badge_JarVJ3": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
+            "title": "60+ local makers",
+            "subtitle": "Known by name"
+          }
+        },
+        "badge_Ljibec": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
+            "title": "FSSAI complaint",
+            "subtitle": "Every maker verified"
+          }
+        },
+        "badge_M86RC6": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_3.png",
+            "title": "SHGs & co-ops",
+            "subtitle": "Directly backed"
+          }
+        }
+      },
+      "block_order": [
+        "badge_MABeTV",
+        "badge_pXwm6x",
+        "badge_MhJwPW",
+        "badge_JarVJ3",
+        "badge_Ljibec",
+        "badge_M86RC6"
+      ],
+      "name": "Trust Badges",
+      "settings": {
+        "section_style": "tb-section-border",
+        "bg_color": "#ffeeb7"
+      }
+    },
+    "why_choose_us_qaByfy": {
+      "type": "why-choose-us",
+      "blocks": {
+        "tab_nDbaaE": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Our Vision",
+            "youtube_url": "https://youtu.be/QEYcAK_0Ab0?si=liw8lpLuikrJZQNU"
+          }
+        },
+        "tab_JwDWNU": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Our Sources",
+            "youtube_url": "https://youtu.be/X3gc2eo1ZZU?si=nN_Ie1K0TBSJj5M8"
+          }
+        }
+      },
+      "block_order": [
+        "tab_nDbaaE",
+        "tab_JwDWNU"
+      ],
+      "name": "Why Choose Us",
+      "settings": {
+        "title": "Why Choose My Pahadi Dukan ?",
+        "bg_color": "#fffbef"
+      }
+    },
+    "watch_and_buy_n6cKa9": {
+      "type": "watch-and-buy",
+      "blocks": {
+        "reelcart_video_carousel_9Cxbpi": {
+          "type": "shopify://apps/reelcart/blocks/video-carousel/8f2b089e-2cd0-45ca-b34e-c8bf9d0cf450",
+          "settings": {
+            "selected_campaign_title": "Homepage MPD",
+            "is_collection_carousel": false,
+            "section_bg": "rgba(0,0,0,0)",
+            "title_color": "#6c7278",
+            "title_bg": "rgba(0,0,0,0)",
+            "section_title": "",
+            "section_subtitle": "",
+            "horizontal_alignment": "center",
+            "card_details": "product-info",
+            "show_scroll_arrows": true,
+            "show_view_count": true,
+            "video_card_width": 280,
+            "video_card_width_mobile": 200,
+            "video_card_height": 460,
+            "video_card_height_mobile": 330,
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_show_price": true,
+            "phone_show_image": true,
+            "phone_show_title": false,
+            "phone_show_price": false,
+            "caption_text_alignment": "left",
+            "caption_fontsize": 12,
+            "caption_padding": 20,
+            "caption_color_background": "linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.69) 100%)",
+            "username_visibility": false
+          }
+        }
+      },
+      "block_order": [
+        "reelcart_video_carousel_9Cxbpi"
+      ],
+      "name": "Watch & Buy",
+      "settings": {
+        "section_style": "wab-section-border",
+        "title": "Watch & Buy",
+        "title_color": "#231f20",
+        "bg_color": "#ffeeb7"
+      }
+    },
+    "product-slider": {
+      "type": "product-slider",
+      "settings": {
+        "title": "Best Sellers",
+        "view_all_label": "",
+        "view_all_link": "",
+        "show_secondary_image": true,
+        "bg_image": "shopify://shop_images/Best_Seller_Background.jpg",
+        "bg_image_mobile": "shopify://shop_images/Best_Seller_Background.png",
+        "collection": "best-selling",
+        "products_to_show": 8,
+        "discount_text": "Extra 10% Discount at Checkout",
+        "bg_color": "#fdf6e3"
+      }
+    },
+    "customer_reviews_HA6E9C": {
+      "type": "customer-reviews",
+      "blocks": {
+        "review_hDNHDH": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "profile_image": "shopify://shop_images/Frame_2147227588.png",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "I've been using this product for three months now and the results are incredible.",
+            "product": "organic-arabica-bermiok-farms-coffee"
+          }
+        },
+        "review_ahTUqj": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "I've been using this product for three months now and the results are incredible.",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_z6VpXG": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_fH9Qbp": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_cxzJ7g": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_eDU97c": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_drRprn": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_LpUKB3": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        },
+        "review_FRhHPx": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "initials": "SJ",
+            "avatar_color": "#1a6b4a",
+            "verified": true,
+            "rating": 5,
+            "review_title": "Absolutely Amazing Product!",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
+            "product": "arabica-kanchenjunga-peaberry"
+          }
+        }
+      },
+      "block_order": [
+        "review_hDNHDH",
+        "review_ahTUqj",
+        "review_z6VpXG",
+        "review_fH9Qbp",
+        "review_cxzJ7g",
+        "review_eDU97c",
+        "review_drRprn",
+        "review_LpUKB3",
+        "review_FRhHPx"
+      ],
+      "name": "Customer Reviews",
+      "settings": {
+        "title": "Trusted By 50000+ Customers",
+        "bg_image": "shopify://shop_images/Frame_2147227326.png",
+        "bg_image_mobile": "shopify://shop_images/Trusted_By_Background.png",
+        "overall_rating": 5,
+        "rating_score": "4.8",
+        "review_count": 5,
+        "bg_color": "#fdf6e3"
+      }
+    },
+    "product_slider_LpUPrJ": {
+      "type": "product-slider",
+      "name": "Product Slider",
+      "settings": {
+        "title": "New Arrival",
+        "view_all_label": "",
+        "view_all_link": "",
+        "show_secondary_image": true,
+        "collection": "best-selling",
+        "products_to_show": 8,
+        "discount_text": "Extra 10% Discount at Checkout",
+        "bg_color": "#fffbef"
+      }
+    },
+    "brand_story_7VrzKH": {
+      "type": "brand-story",
+      "blocks": {
+        "stat_VhN6bT": {
+          "type": "stat",
+          "settings": {
+            "number": "11",
+            "label_top": "states",
+            "label_bottom": "All in one place"
+          }
+        },
+        "stat_whitPP": {
+          "type": "stat",
+          "settings": {
+            "number": "150+",
+            "label_top": "products",
+            "label_bottom": "One standard of purity"
+          }
+        },
+        "stat_kRwWUn": {
+          "type": "stat",
+          "settings": {
+            "number": "20,000+",
+            "label_top": "farmers",
+            "label_bottom": "Empowered and uplifted"
+          }
+        }
+      },
+      "block_order": [
+        "stat_VhN6bT",
+        "stat_whitPP",
+        "stat_kRwWUn"
+      ],
+      "name": "Brand Story",
+      "settings": {
+        "bg_color": "#ffeeb7",
+        "bg_image": "shopify://shop_images/Frame_2147227905.png",
+        "philosophy_title": "The idea behind My Pahadi Dukan",
+        "philosophy_text": "We don't make honey. A family in the hills does, the way their grandparents did. What they never had was a buyer who'd pay fairly and carry it past the village. That's us. We find them, buy direct, add nothing, and bring it straight to you.",
+        "team_image": "shopify://shop_images/Frame_22166.png",
+        "media_title": "In the Media",
+        "media_logo_1": "shopify://shop_images/image_795.png",
+        "media_link_1": "https://www.hindustantimes.com/",
+        "media_logo_2": "shopify://shop_images/image_798.png",
+        "media_link_2": "https://www.hindustantimes.com/",
+        "media_logo_3": "shopify://shop_images/image_794.png",
+        "media_link_3": "https://www.hindustantimes.com/",
+        "media_logo_4": "shopify://shop_images/image_799.png",
+        "media_link_4": "https://www.hindustantimes.com/",
+        "media_logo_5": "shopify://shop_images/image_796.png",
+        "media_link_5": "https://www.hindustantimes.com/",
+        "media_logo_6": "shopify://shop_images/image_799.png",
+        "media_link_6": "https://www.hindustantimes.com/",
+        "letter_front_image": "shopify://shop_images/Front.png",
+        "letter_back_image": "shopify://shop_images/LETTER.png",
+        "letter_front_image_mobile": "shopify://shop_images/Front_1.png",
+        "letter_back_image_mobile": "shopify://shop_images/LETTER_1.png",
+        "letter_quote": "",
+        "letter_tap_text": "",
+        "letter_back_text": "",
+        "supported_title": "Supported by",
+        "supported_logo_1": "shopify://shop_images/OYO_Logo_Square.jpg",
+        "supported_link_1": "",
+        "supported_logo_2": "shopify://shop_images/IIM_Kashipur_Logo_square.jpg",
+        "supported_link_2": "",
+        "supported_logo_3": "shopify://shop_images/IIT_Mandi_logo_square.png",
+        "supported_link_3": "",
+        "supported_logo_4": "shopify://shop_images/meity_Logo_square.jpg",
+        "supported_link_4": "",
+        "supported_logo_5": "shopify://shop_images/ministry_of_agriculture_Logo_square.jpg",
+        "supported_link_5": ""
+      }
+    },
+    "featured_blog": {
+      "type": "featured-blog",
+      "blocks": {
+        "blog_jhJJqD": {
+          "type": "blog",
+          "settings": {
+            "blog": "info"
+          }
+        },
+        "blog_GHV4TH": {
+          "type": "blog",
+          "settings": {
+            "blog": "health-and-wellness"
+          }
+        },
+        "blog_QdgTeN": {
+          "type": "blog",
+          "settings": {
+            "blog": "info"
+          }
+        },
+        "blog_imqnUi": {
+          "type": "blog",
+          "settings": {
+            "blog": "health-and-wellness"
+          }
+        }
+      },
+      "block_order": [
+        "blog_jhJJqD",
+        "blog_GHV4TH",
+        "blog_QdgTeN",
+        "blog_imqnUi"
+      ],
+      "settings": {
+        "title": "Latest Blog",
+        "bg_color": "#ffffff"
+      }
+    },
+    "Seo_content": {
+      "type": "Seo-content",
+      "disabled": true,
+      "settings": {
+        "heading": "SEO Content",
+        "subheading1": "An Ayurvedic Company Where Tradition Meets Innovation",
+        "paragraph1": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...",
+        "subheading2": "Behind Every Success Is A Great Team",
+        "paragraph2": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors...",
+        "subheading3": "An Ayurvedic Company Where Tradition Meets Innovation",
+        "paragraph3": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...",
+        "subheading4": "Behind Every Success Is A Great Team",
+        "paragraph4": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors...",
+        "subheading5": "An Ayurvedic Company Where Tradition Meets Innovation",
+        "paragraph5": "Established in 1976, Ayurchem manufactures Ayurvedic medicines based on the traditional wisdom of Ayurveda...",
+        "subheading6": "Behind Every Success Is A Great Team",
+        "paragraph6": "As a reputed Ayurvedic company, we have a team of highly skilled and dedicated Ayurvedic doctors..."
+      }
+    },
+    "faq_home_H8fcf4": {
+      "type": "faq-home",
+      "blocks": {
+        "faq_HzyLtf": {
+          "type": "faq",
+          "settings": {
+            "question": "Are Your Products Authentic And Locally Sourced?",
+            "answer": "Yes. Every product comes straight from the person who made it - a farmer, an artisan, or a village self-help group. We've met most of them ourselves, which is how we know it's genuine. A few things reach us through a partner in the region, like our Sikkim cardamom, which comes via Pahari Roots. Either way, we can trace a batch back and tell you where it came from. Simply write in and ask."
+          }
+        },
+        "faq_kQXBxP": {
+          "type": "faq",
+          "settings": {
+            "question": "How Long Does Delivery Take?",
+            "answer": "Usually 5-7 days, depending on where you are. You'll get the tracking details once it ships. We ship within 24-48 hours."
+          }
+        },
+        "faq_qjwFAz": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I know the shilajit or saffron is real, not adulterated?",
+            "answer": "Fair worry; the market's full of fakes. For products like shilajit and saffron, where adulteration is common, we have each batch tested at an NABL-accredited lab and include the report directly in the product description. Read it before you buy."
+          }
+        },
+        "faq_EzkUGc": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you make your own products, or only sell others'?",
+            "answer": "Both, and a bit of a third thing. A few products we make ourselves and lab-test. Most we buy directly from farmers and small makers. And we stock several small mountain brands under their own labels, because they were already doing it so well. Each listing tells you which. Look for the name of the brand in the product title!"
+          }
+        },
+        "faq_mzcHbW": {
+          "type": "faq",
+          "settings": {
+            "question": "Will someone call me asking for payment on a prepaid order?",
+            "answer": "No, never. We do not call to collect payment on an order you've already paid for. Our only official numbers are +91 84286 11319 and +91 856994 9587, both listed on the site. Anything else is not from us."
+          }
+        },
+        "faq_WP4QCx": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship outside India?",
+            "answer": "Yes, to a good number of countries. Rates and timelines are on our international shipping page, and if yours isn't listed, message us on WhatsApp, and we'll find out."
+          }
+        },
+        "faq_yXhGCz": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Cash on Delivery available?",
+            "answer": "No, not on our own site. Here you can pay by UPI, card, netbanking, or wallet, and there's a no-cost EMI option on UPI for larger orders. If you'd rather pay on delivery, we're on Amazon and Flipkart, and COD works fine on both. Same products, just an easier checkout for anyone who prefers paying at the door."
+          }
+        },
+        "faq_AKft4p": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my order arrives damaged or something's wrong?",
+            "answer": "Message us on WhatsApp with a photo, or email support@mypahadidukan.com. We'll sort it - replacement or refund, whichever suits. You'll hear back from an actual person, usually within half an hour."
+          }
+        },
+        "faq_ggBR9D": {
+          "type": "faq",
+          "settings": {
+            "question": "Do these products treat or cure health conditions?",
+            "answer": "No, and we'll be straight about it. These are traditional foods and wellness products, not medicine. They've been part of mountain life for generations, but they aren't clinically proven and aren't meant to diagnose, treat, cure, or prevent anything. If you're pregnant, on medication, or managing a condition, check the label warnings and ask your doctor before trying something new."
+          }
+        }
+      },
+      "block_order": [
+        "faq_HzyLtf",
+        "faq_kQXBxP",
+        "faq_qjwFAz",
+        "faq_EzkUGc",
+        "faq_mzcHbW",
+        "faq_WP4QCx",
+        "faq_yXhGCz",
+        "faq_AKft4p",
+        "faq_ggBR9D"
+      ],
+      "name": "FAQ-home Section",
+      "settings": {
+        "title": "Any Last Questions ?",
+        "bg_color": "#fdf6e3",
+        "link_label": "",
+        "link_url": ""
+      }
+    }
+  },
+  "order": [
+    "Top_slider",
+    "home_page_marquee_aVQU7i",
+    "featured_collection",
+    "collection_circles_GmgYAk",
+    "map_slider_pBYB94",
+    "section_trust_badges_YJJ6Br",
+    "why_choose_us_qaByfy",
+    "watch_and_buy_n6cKa9",
+    "product-slider",
+    "customer_reviews_HA6E9C",
+    "product_slider_LpUPrJ",
+    "brand_story_7VrzKH",
+    "featured_blog",
+    "Seo_content",
+    "faq_home_H8fcf4"
+  ]
+}

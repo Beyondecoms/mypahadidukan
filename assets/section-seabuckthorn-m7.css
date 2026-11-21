@@ -84,7 +84,7 @@
   padding: 20px;
   text-align: center;
   color: #008b75;
-  font-size: 1.15rem;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -96,7 +96,7 @@
 
 .sb-m7-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   color: #1c1918;
@@ -107,7 +107,7 @@
 
 .sb-m7-subtitle {
   font-family: var(--font-heading-family);
-  font-size: 1.4rem;
+  font-size: 18px;
   font-weight: 700;
   color: #008b75;
   font-style: italic;
@@ -115,14 +115,14 @@
 }
 
 .sb-m7-body {
-  font-size: 1.22rem;
+  font-size: 16px;
   line-height: 1.7;
   color: #2b2825;
 }
 
 .sb-m7-shake-note {
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 16px;
   color: #ee5922;
   margin-top: 8px;
   font-style: italic;
@@ -142,13 +142,32 @@
   width: 100%;
 }
 
-.sb-m7-images-grid[style*="--m7-grid-cols: 1"] {
-  max-width: 680px;
+.sb-m7-card-wrapper--single-image {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 730px);
+  margin-inline: auto;
+}
+
+.sb-m7-image-link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 6px;
+  min-height: 44px;
+  max-width: 100%;
+  color: #006b59;
+  font: 600 14px/1.4 var(--font-family-normal, Arial), Arial, sans-serif;
+  text-underline-offset: 3px;
+}
+
+.sb-m7-image-link:focus-visible {
+  outline: 2px solid #006b59;
+  outline-offset: 3px;
 }
 
 .sb-m7-photo-box--large {
   width: 100%;
-  max-width: 680px;
   aspect-ratio: auto;
   border-radius: 20px;
   overflow: hidden;
@@ -207,18 +226,18 @@
     gap: 24px !important;
   }
   .sb-m7-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
   }
   .sb-m7-subtitle {
-    font-size: 1.15rem !important;
+    font-size: 16px !important;
   }
   .sb-m7-body {
-    font-size: 1.1rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
   }
   .sb-m7-shake-note {
-    font-size: 1.15rem !important;
+    font-size: 14px !important;
   }
   .sb-m7-card-wrapper--image-only {
     padding: 14px !important;
@@ -226,12 +245,6 @@
   .sb-m7-images-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
-  }
-  .sb-m7-images-grid[style*="--m7-grid-cols: 1"] {
-    max-width: 100% !important;
-  }
-  .sb-m7-photo-box--large {
-    max-width: 100% !important;
   }
   .sb-m7-photo-box--multi {
     border-radius: 14px !important;

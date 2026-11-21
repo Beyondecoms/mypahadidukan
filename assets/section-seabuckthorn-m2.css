@@ -43,7 +43,7 @@
 
 .sb-m2-title {
   font-family: var(--font-heading-family);
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
+  font-size: var(--font-heading-size);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -54,7 +54,7 @@
 
 .sb-m2-subtitle {
   font-family: var(--font-heading-family);
-  font-size: 1.45rem;
+  font-size: 18px;
   color: #ee5922;
   margin: 0;
   font-weight: 700;
@@ -183,7 +183,7 @@
 
 .sb-m2-glass-label {
   margin-top: 14px;
-  font-size: 1.05rem;
+  font-size: 14px;
   color: #555555;
   letter-spacing: 0.05em;
   font-weight: 600;
@@ -269,7 +269,7 @@
 .sb-m2-callout {
   display: flex;
   align-items: center;
-  font-size: 1.25rem;
+  font-size: 16px;
   font-weight: 700;
   color: #1c1918;
 }
@@ -279,12 +279,12 @@
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 1.25rem;
+  font-size: 16px;
   line-height: 1.4;
 }
 
 .sb-m2-ingredient-name {
-  font-size: 1.25rem;
+  font-size: 16px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -293,23 +293,23 @@
 
 .sb-m2-dot {
   color: #888888;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 .sb-m2-percentage {
   font-weight: 800;
   color: #ee5922;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 .sb-m2-callout-preservative {
   color: #333333;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 .sb-m2-prefix,
 .sb-m2-suffix {
-  font-size: 1.25rem;
+  font-size: 16px;
   font-style: italic;
 }
 
@@ -317,7 +317,7 @@
   font-weight: 800;
   color: #008b75;
   font-style: normal;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 /* Parchment Card */
@@ -341,7 +341,7 @@
 }
 
 .sb-m2-parchment-title {
-  font-size: 1.45rem;
+  font-size: 18px;
   font-weight: 800;
   margin: 0 0 14px 0;
   color: #008b75;
@@ -351,7 +351,7 @@
 .sb-m2-parchment-body p {
   margin: 0 0 14px 0;
   line-height: 1.7;
-  font-size: 1.2rem;
+  font-size: 16px;
   color: #2b2825;
   line-height: 1.7;
 }
@@ -402,11 +402,11 @@
     margin-bottom: 20px !important;
   }
   .sb-m2-title {
-    font-size: 1.8rem !important;
+    font-size: var(--font-heading-size-mobile) !important;
     line-height: 1.2 !important;
   }
   .sb-m2-subtitle {
-    font-size: 1.15rem !important;
+    font-size: 16px !important;
   }
   .sb-m2-card-wrapper {
     padding: 20px 12px !important;
@@ -444,10 +444,10 @@
     gap: 16px !important;
   }
   .sb-m2-callout {
-    font-size: 1rem !important;
+    font-size: 14px !important;
   }
   .sb-m2-callout-text {
-    font-size: 0.95rem !important;
+    font-size: 14px !important;
     gap: 5px !important;
   }
   .sb-m2-ingredient-name,
@@ -456,18 +456,18 @@
   .sb-m2-prefix,
   .sb-m2-suffix,
   .sb-m2-dot {
-    font-size: 0.95rem !important;
+    font-size: 14px !important;
   }
   .sb-m2-parchment-card {
     padding: 18px 14px !important;
     border-radius: 12px !important;
   }
   .sb-m2-parchment-title {
-    font-size: 1.2rem !important;
+    font-size: 16px !important;
     margin-bottom: 10px !important;
   }
   .sb-m2-parchment-body p {
-    font-size: 1.08rem !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
     margin-bottom: 10px !important;
   }
@@ -478,5 +478,9 @@
   .sb-m2-banner-item,
   .sb-m2-banner-img {
     border-radius: 12px !important;
+  }
+
+  .sb-m2-callout-preservative {
+    font-size: 14px;
   }
 }

@@ -1,0 +1,69 @@
+{%- liquid
+  assign fields = 'description:Description|ingredient:Ingredients|additional:Additional Information|health_benefits:Health benefits|nutrient:Nutrient|how_to_use:How to Use|faqs:FAQs|manufacturing_details:Manufacturing Details' | split: '|'
+  assign product_fields = product.metafields.custom
+  assign ingredients = product_fields.ingredient
+  if ingredients.value == blank
+    assign ingredients = product_fields.ingredients
+  endif
+-%}
+
+{%- for field in fields -%}
+  {%- assign entry = field | split: ':' -%}
+  {%- assign key = entry[0] -%}
+  {%- capture content -%}
+    {%- case key -%}
+      {%- when 'description' -%}
+        {{- product.description -}}
+      {%- when 'additional' -%}
+        {%- unless product.has_only_default_variant or product.options_with_values == blank -%}
+          <table>
+            <tbody>
+              {%- for option in product.options_with_values -%}
+                <tr>
+                  <th scope="row">{{ option.name | escape }}</th>
+                  <td>
+                    {%- for value in option.values -%}
+                      {{- value | escape -}}
+                      {%- unless forloop.last %}, {% endunless -%}
+                    {%- endfor -%}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- endunless -%}
+      {%- else -%}
+        {%- assign metafield = product_fields[key] -%}
+        {%- if key == 'ingredient' -%}
+          {%- assign metafield = ingredients -%}
+        {%- endif -%}
+        {%- if metafield.value != blank -%}
+          {%- if key == 'manufacturing_details' -%}
+            {%- assign fssai_logo = images['fssai-logo-png_seeklogo-304263_1.png'] -%}
+            {%- if fssai_logo != blank -%}
+              {{- fssai_logo | image_url: width: 80 | image_tag: alt: 'FSSAI Logo', style: 'display:block; margin-bottom:12px;' -}}
+            {%- endif -%}
+          {%- endif -%}
+          {{- metafield | metafield_tag -}}
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endcapture -%}
+
+  {%- assign content = content | strip -%}
+  {%- if content != blank -%}
+    {%- assign panel_id = 'pm-acc-' | append: panel_prefix | append: '-' | append: layout | append: '-' | append: key -%}
+    <div class="pm-accordion">
+      <button type="button" class="pm-accordion-btn" data-accordion="{{ key }}" aria-controls="{{ panel_id }}" aria-expanded="false">
+        <span>{{ entry[1] }}</span>
+        <svg aria-hidden="true" focusable="false" width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.4265 0C15.2545 0 15.0824 0.0573478 14.9677 0.172043L8.02867 7.11111L1.03226 0.172043C0.802867 -0.0573476 0.401434 -0.0573476 0.172043 0.172043C-0.0573477 0.401434 -0.0573477 0.802867 0.172043 1.03226L7.56989 8.43011C7.79928 8.6595 8.20072 8.6595 8.43011 8.43011L15.828 1.03226C16.0573 0.802867 16.0573 0.401434 15.828 0.172043C15.7706 0.0573478 15.5986 0 15.4265 0Z" fill="black"/>
+        </svg>
+      </button>
+      <div class="pm-accordion-body" id="{{ panel_id }}" inert>
+        <div class="pm-accordion-clip">
+          <div class="pm-accordion-content">{{ content }}</div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endfor -%}

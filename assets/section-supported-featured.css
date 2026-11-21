@@ -12,7 +12,7 @@
   margin: 0 auto;
   padding: 72px 64px;
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   gap: 64px;
   align-items: start;
   width: 100%;
@@ -29,15 +29,7 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
-  width: 668px;
-}
-
-/* ── DIVIDER ── */
-.sf-divider {
-  width: 1px;
-  background: rgba(0,0,0,0.12);
-  align-self: stretch;
-  min-height: 400px;
+  width: 100%;
 }
 
 /* ── LABEL ROW ── */
@@ -82,7 +74,7 @@
 ══════════════════ */
 .sf-grid-table {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
@@ -111,10 +103,25 @@
   pointer-events: none;
 }
 
+.sf-cell-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.sf-supporter-logo {
+  display: block;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
 .sf-cell-link {
   text-decoration: none;
   color: inherit;
-  display: block;
 }
 
 .sf-grid-cell:not(.sf-grid-cell--empty):hover {
@@ -127,8 +134,10 @@
 
 .sf-cell-text {
   display: block;
+  flex: 1 1 80px;
   writing-mode: horizontal-tb;
   white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 /* ══════════════════
@@ -177,6 +186,7 @@
   writing-mode: horizontal-tb;
   white-space: normal;
   word-break: normal;
+  overflow-wrap: anywhere;
   min-width: 0;
 }
 
@@ -198,41 +208,25 @@
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 1100px) {
-  .sf-featured-list{
-    width: 80%;
-  }
-  .sf-col{
-    width:600px;
-  }
-
-}
-
 @media (max-width: 900px) {
   .sf-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 48px;
     padding: 48px 24px;
   }
 
-  .sf-divider {
-    display: none;
-  }
-
   .sf-heading {
-    max-width: 43%;
-    font-size: 24px;
     margin-bottom: 24px;
   }
-  .sf-feature-row{
-    max-width: 68%;
+}
+
+@media (max-width: 749px) {
+  .sf-heading {
+    font-size: calc(var(--font-heading-size-mobile) * 0.875);
   }
 }
 
 @media (max-width: 600px) {
-  .sf-grid-table{
-    width: 57%;
-  }
   .sf-inner {
     padding: 40px 16px;
   }
@@ -240,6 +234,11 @@
   .sf-grid-cell {
     padding: 16px;
     font-size: 13px;
+  }
+
+  .sf-supporter-logo {
+    width: 40px;
+    height: 40px;
   }
 
   .sf-feature-name {

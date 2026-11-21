@@ -20,13 +20,19 @@
           {% assign supporter_blocks = section.blocks | where: "type", "supporter" %}
           {% assign total = supporter_blocks | size %}
           {% for block in supporter_blocks %}
+            {%- capture supporter_content -%}
+              {%- if block.settings.logo != blank -%}
+                {{ block.settings.logo | image_url: width: 96 | image_tag: class: 'sf-supporter-logo', widths: '40, 48, 80, 96', sizes: '(max-width: 600px) 40px, 48px', alt: '', loading: 'lazy' }}
+              {%- endif -%}
+              <span class="sf-cell-text">{{ block.settings.name | escape }}</span>
+            {%- endcapture -%}
             <div class="sf-grid-cell {% if forloop.last and total == forloop.index and total != 1 %}sf-grid-cell--last{% endif %}" {{ block.shopify_attributes }}>
               {% if block.settings.url != blank %}
-                <a class="sf-cell-link" href="{{ block.settings.url }}" target="_blank" rel="noopener">
-                  <span class="sf-cell-text">{{ block.settings.name }}</span>
+                <a class="sf-cell-content sf-cell-link" href="{{ block.settings.url }}" target="_blank" rel="noopener">
+                  {{ supporter_content }}
                 </a>
               {% else %}
-                <span class="sf-cell-text">{{ block.settings.name }}</span>
+                <div class="sf-cell-content">{{ supporter_content }}</div>
               {% endif %}
             </div>
           {% endfor %}
@@ -182,6 +188,11 @@
           "id": "name",
           "label": "Institution Name",
           "default": "Institution Name"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Institution logo"
         },
         {
           "type": "url",

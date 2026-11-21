@@ -106,7 +106,6 @@
 
   var prevBtn = document.querySelector('#cr-carousel-{{ section.id }} .cr-nav-prev');
   var nextBtn = document.querySelector('#cr-carousel-{{ section.id }} .cr-nav-next');
-  {% comment %} var currentEl = document.getElementById('cr-current-{{ section.id }}'); {% endcomment %}
 
   // ── CLONE CARDS FOR INFINITE LOOP ──
   // Prepend a clone of the last card, append a clone of the first card.
@@ -122,27 +121,12 @@
   var current = 1;
   var isTransitioning = false;
 
-  function cardGap() {
-    return parseInt(getComputedStyle(track).gap) || 0;
-  }
-
-  function realIndex(i) {
-    // maps track index -> displayed 1-based real index
-    if (i === 0) return total;
-    if (i === cards.length - 1) return 1;
-    return i;
-  }
-
-function render(withTransition) {
+  function render(withTransition) {
     var activeCard = cards[current];
-    var cardWidth = activeCard.getBoundingClientRect().width;
     var viewportWidth = viewport.getBoundingClientRect().width;
-
-    // distance from track start to the left edge of the active card
-    var offsetToCard = activeCard.offsetLeft;
-
-    // center the active card: push track so its midpoint = viewport midpoint
-    var offset = (viewportWidth / 2) - (cardWidth / 2) - offsetToCard;
+    // Use the layout width because inactive cards are visually scaled down.
+    var cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
+    var offset = viewportWidth / 2 - cardCenter;
 
     track.style.transition = withTransition ? 'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)' : 'none';
     track.style.transform = 'translateX(' + offset + 'px)';
@@ -150,9 +134,7 @@ function render(withTransition) {
     cards.forEach(function (card, i) {
       card.classList.toggle('active', i === current);
     });
-
-    currentEl.textContent = realIndex(current);
-}
+  }
 
   function goTo(index, withTransition) {
     if (isTransitioning) return;
@@ -161,16 +143,18 @@ function render(withTransition) {
     render(withTransition !== false);
   }
 
-  // After a transition ends, if we're sitting on a clone, snap silently to the real card
-  track.addEventListener('transitionend', function () {
+  function settleCarousel() {
     isTransitioning = false;
     if (current === 0) {
-      current = cards.length - 2; // jump to real last card
-      render(false);
+      current = total;
     } else if (current === cards.length - 1) {
-      current = 1; // jump to real first card
-      render(false);
+      current = 1;
     }
+    render(false);
+  }
+
+  track.addEventListener('transitionend', function (event) {
+    if (event.target === track && event.propertyName === 'transform') settleCarousel();
   });
 
   prevBtn.addEventListener('click', function () { goTo(current - 1); });
@@ -187,7 +171,7 @@ function render(withTransition) {
     else if (diff < -40) goTo(current + 1);
   }, { passive: true });
 
-  window.addEventListener('resize', function () { render(false); });
+  window.addEventListener('resize', settleCarousel);
   render(false);
 })();
 </script>

@@ -1,7 +1,4 @@
 <style>
-  .slide {
-  position: relative;
-}
 @media (max-width: 768px) {
 
   .slide-overlay-text {
@@ -80,24 +77,30 @@
   }
   .slider-container {
   position: relative;
-  z=0;
   isolation: isolate;
   width: 100%;
   overflow: hidden;
+  overflow: clip;
   line-height: 0;
   font-size: 0;
 }
-  .slider-wrapper {
+  .slider-container > .slider-wrapper {
     display: flex;
+    width: 100%;
+    touch-action: pan-y pinch-zoom;
     transition: transform 0.6s ease;
   }
-  .slide {
-  min-width: 100%;
-  transition: transform 0.6s ease;
-  flex-shrink: 0;
+  .slider-wrapper > .slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  box-sizing: border-box;
   line-height: 0;
   font-size: 0;
 }
+  .slider-wrapper > .slide > a {
+    display: block;
+  }
   .slide img, .slide video {
     width: 100%;
   }
@@ -165,6 +168,10 @@
 }
 
 @media (max-width: 768px) {
+  .slider-container > .slider-wrapper {
+    transition: none;
+  }
+
   .dot_multiple_video{
     height: 8px;
     width: 8px;
@@ -185,7 +192,7 @@
 </style>
 
 
-<div class="slider-container">
+<div id="TopSlider-{{ section.id }}" class="slider-container">
   <div class="slider-wrapper">
     {% assign first = true %}
     {% for block in section.blocks %}
@@ -254,23 +261,21 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const sliderWrapper = document.querySelector('.slider-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot_multiple_video');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+    const slider = document.getElementById('TopSlider-{{ section.id }}');
+    if (!slider) return;
+
+    const sliderWrapper = slider.querySelector('.slider-wrapper');
+    const slides = sliderWrapper.querySelectorAll(':scope > .slide');
+    const dots = slider.querySelectorAll('.dot_multiple_video');
+    const prevBtn = slider.querySelector('.button_slider.prev');
+    const nextBtn = slider.querySelector('.button_slider.next');
+    if (!slides.length) return;
 
     let index = 0;
     let startX = 0, currentX = 0;
     let isDragging = false;
     let moved = false;
     let autoSlideInterval;
-
-    function updateSlider() {
-        sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[index].classList.add('active');
-    }
 
      function resetAutoSlide() {
       autoSlide();
@@ -385,6 +390,7 @@ document.addEventListener("DOMContentLoaded", function() {
     sliderWrapper.addEventListener('touchstart', handleTouchStart);
     sliderWrapper.addEventListener('touchmove', handleTouchMove);
     sliderWrapper.addEventListener('touchend', handleTouchEnd);
+    sliderWrapper.addEventListener('touchcancel', resetAutoSlide);
 
     sliderWrapper.addEventListener('mousedown', handleMouseDown);
     sliderWrapper.addEventListener('mousemove', handleMouseMove);

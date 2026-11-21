@@ -65,12 +65,12 @@
         {%- endif -%}
         <div class="is-footer-links">
           {%- if section.settings.whatsapp_url != blank -%}
-            <a href="{{ section.settings.whatsapp_url }}" class="is-footer-link" target="_blank" rel="noopener">
+            <a href="{{ section.settings.whatsapp_url | escape }}" class="is-footer-link" target="_blank" rel="noopener">
               {{ section.settings.whatsapp_label | default: 'Whatsapp Us' }}
             </a>
           {%- endif -%}
           {%- if section.settings.email_url != blank -%}
-            <a href="{{ section.settings.email_url }}" class="is-footer-link">
+            <a href="{{ section.settings.email_url | escape }}" class="is-footer-link">
               {{ section.settings.email_label | default: 'Email Us' }}
             </a>
           {%- endif -%}

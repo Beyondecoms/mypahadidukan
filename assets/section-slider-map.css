@@ -11,29 +11,36 @@
 
 /* ── HEADER ── */
 .sbr-header {
-  position: absolute;
-  top: 4px;
-  left: 24px;
-  z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  padding: 24px 16px 20px;
+  text-align: center;
 }
 
 .sbr-pin-icon {
-  display: flex;
-  align-items: center;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.sbr-pin-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .sbr-title {
-  font-size: 48px;
+  font-size: var(--font-heading-size);
   font-weight: 400;
   color: #1a2e1a;
-  font-family: var(--font-heading-family);
+  font-family: var(--font-heading-family), Georgia, serif;
   margin: 0;
   font-variant: small-caps;
-
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-wrap: balance;
 }
 
 /* ── SLIDER WRAP ── */
@@ -413,11 +420,11 @@
   .sbr-arrow--prev { left: 10px; }
   .sbr-arrow--next { right: 10px; }
 
-  .sbr-header { top: 18px; left: 8px; }
+  .sbr-header { gap: 6px; padding-block: 16px; }
 
-  .sbr-pin-icon { width: 25px; height: 14px; }
+  .sbr-pin-icon { width: 22px; height: 22px; }
 
-  .sbr-title { font-size: 32px; }
+  .sbr-title { font-size: var(--font-heading-size-mobile); }
   .sbr-card-top{
     margin-bottom: 5px;
   }
