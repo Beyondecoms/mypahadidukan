@@ -331,3 +331,150 @@
   }
 }
 
+/* ── 8. IN-CONTENT BLOG PRODUCT CARDS & HORIZONTAL SCROLL TRACK (<!-- BLOG_PRODUCT:X -->) ──
+   Places reusable product-slider-card (.ps-card) cleanly inside blog content.
+   All consecutive products remain in a single horizontal row and never wrap to another line. */
+.blog-products-scroll {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--mpd-border, #e7ded0) transparent !important;
+  margin: 36px auto !important;
+  padding: 8px 4px 18px !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-padding: 0 4px !important;
+}
+
+.blog-products-scroll::-webkit-scrollbar {
+  height: 6px !important;
+}
+
+.blog-products-scroll::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.blog-products-scroll::-webkit-scrollbar-thumb {
+  background: var(--mpd-border, #e7ded0) !important;
+  border-radius: 999px !important;
+}
+
+.blog-products-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 16px !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 4px !important;
+}
+
+.blog-products-track > .blog-product-card {
+  flex: 0 0 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  width: 260px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: start !important;
+  scroll-snap-stop: normal !important;
+}
+
+.blog-products-track > .blog-product-card > .ps-card {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+/* 1 Product: single centered card */
+.blog-products-scroll--1 .blog-products-track {
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.blog-products-scroll--1 .blog-products-track > .blog-product-card {
+  flex: 0 0 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  width: 280px !important;
+}
+
+/* 2 Products: centered when fits on desktop, safe to prevent overflow cutoff */
+@media screen and (min-width: 750px) {
+  .blog-products-scroll--2 .blog-products-track {
+    justify-content: center !important;
+    justify-content: safe center !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Mobile responsive layout */
+@media screen and (max-width: 749px) {
+  .blog-products-scroll {
+    margin: 24px auto !important;
+    padding: 6px 2px 14px !important;
+  }
+
+  .blog-products-track {
+    gap: 12px !important;
+    min-width: auto !important;
+  }
+
+  .blog-products-track > .blog-product-card {
+    flex: 0 0 210px !important;
+    min-width: 210px !important;
+    max-width: 220px !important;
+    width: 210px !important;
+  }
+
+  /* Single product remains centered on mobile */
+  .blog-products-scroll--1 .blog-products-track {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .blog-products-scroll--1 .blog-products-track > .blog-product-card {
+    flex: 0 0 270px !important;
+    min-width: 270px !important;
+    max-width: 280px !important;
+    width: 270px !important;
+  }
+}
+
+/* Backwards compatibility for single-card wrapper */
+.article-product-card-wrap {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 36px auto !important;
+  width: 100% !important;
+  max-width: 300px !important;
+  box-sizing: border-box !important;
+}
+
+.article-product-card-wrap > .ps-card {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: 300px !important;
+  margin: 0 auto !important;
+}
+
+@media only screen and (max-width: 749px) {
+  .article-product-card-wrap {
+    margin: 24px auto !important;
+    max-width: 270px !important;
+  }
+}
+
+

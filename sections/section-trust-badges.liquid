@@ -1,6 +1,11 @@
 {{ 'section-trust-badges.css' | asset_url | stylesheet_tag }}
 
-<div class="{{ section.settings.section_style }}" style="background: {{ section.settings.bg_color }};">
+{%- assign section_style = section.settings.section_style -%}
+{%- if section_style == 'tb-section-stacked' -%}
+  {%- assign section_style = 'tb-section-compact' -%}
+{%- endif -%}
+
+<div class="{{ section_style }}" style="--tb-background: {{ section.settings.bg_color }}; background: var(--tb-background);">
   <div class="tb-inner">
     {%- for block in section.blocks -%}
       <div class="tb-item" {{ block.shopify_attributes }}>
@@ -8,12 +13,19 @@
         <!-- Icon / Image -->
         <div class="tb-icon-wrap">
           {%- if block.settings.icon_image != blank -%}
-            <img
-              src="{{ block.settings.icon_image | image_url: width: 120 }}"
-              alt="{{ block.settings.title }}"
-              class="tb-icon-img"
-              loading="lazy"
-            >
+            {%- if section_style == 'tb-section-compact' -%}
+              {{
+                block.settings.icon_image
+                | image_url: width: 320
+                | image_tag: widths: '96, 120, 240, 320', sizes: '(max-width: 600px) 88px, 116px', alt: '', class: 'tb-icon-img', loading: 'lazy'
+              }}
+            {%- else -%}
+              {{
+                block.settings.icon_image
+                | image_url: width: 120
+                | image_tag: alt: block.settings.title, class: 'tb-icon-img', loading: 'lazy'
+              }}
+            {%- endif -%}
           {%- else -%}
             <!-- Fallback placeholder circle -->
             <div class="tb-icon-placeholder">
@@ -27,15 +39,17 @@
 
         <!-- Text -->
         <div class="tb-text">
-          <p class="tb-title">{{ block.settings.title }}</p>
-          {%- if block.settings.subtitle != blank -%}
-            <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+          {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
+            <h3 class="tb-title">{{ block.settings.title }}</h3>
+          {%- else -%}
+            <p class="tb-title">{{ block.settings.title }}</p>
           {%- endif -%}
+          <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
         </div>
 
       </div>
 
-      {%- unless forloop.last -%}
+      {%- unless forloop.last or section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
         <div class="tb-divider" aria-hidden="true"></div>
       {%- endunless -%}
     {%- endfor -%}
@@ -54,6 +68,7 @@
       "label": "Section Style",
       "options": [
         { "value": "tb-section", "label": "Default" },
+        { "value": "tb-section-compact", "label": "Compact" },
         { "value": "tb-section-border", "label": "With Border" }
       ],
       "default": "tb-section"

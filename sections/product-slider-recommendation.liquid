@@ -58,7 +58,6 @@
 
           <div class="ps-slider">
             {%- for rec_product in ps_products limit: section.settings.products_to_show -%}
-              {%- assign rec_variant = rec_product.selected_or_first_available_variant | default: rec_product.variants.first -%}
               <div class="ps-card">
                <button
                   type="button"
@@ -67,7 +66,7 @@
                   data-with-epi="true"
                   data-swaction="addToWishlist"
                   data-product-id="{{ rec_product.id }}"
-                  data-variant-id="{{ rec_variant.id }}"
+                  data-variant-id="{{ rec_product.selected_or_first_available_variant.id | default: rec_product.variants[0].id }}"
                   data-product-url="{{ shop.url | append: rec_product.url }}">
                 </button>
                 {%- if rec_product.metafields.custom.badge != blank -%}
@@ -96,7 +95,7 @@
                   {%- endif -%}
                 </a>
 
-                {%- if rec_product.available and rec_variant.compare_at_price > rec_variant.price -%}
+                {%- if rec_product.compare_at_price > rec_product.price -%}
                   <div class="ps-discount-bar">
                     {{ section.settings.discount_text }}
                   </div>
@@ -104,11 +103,8 @@
 
                 <div class="ps-info">
                   <a href="{{ rec_product.url }}" class="ps-product-title">{{ rec_product.title | truncate: 35 }}</a>
-                  {%- unless rec_product.has_only_default_variant -%}
-                    <p class="ps-variant">{{ rec_variant.title }}</p>
-                  {%- endunless -%}
-                  {%- assign ps_rating = rec_product.metafields.reviews.rating.value -%}
-                  {%- if ps_rating != blank -%}
+                  <p class="ps-variant">{{ rec_product.variants.first.title }}</p>
+                  {%- assign ps_rating = rec_product.metafields.reviews.rating.value | default: 4.8 -%}
                   {%- assign ps_rating_float = ps_rating | append: '' | plus: 0.0 -%}
                   {%- assign ps_rating_int = ps_rating_float | floor -%}
                   {%- assign ps_rating_dec = ps_rating_float | minus: ps_rating_int -%}
@@ -132,21 +128,20 @@
                     {%- endfor -%}
                     <span class="ps-rating-score">{{ ps_rating_float | round: 1 }}</span>
                   </div>
-                  {%- endif -%}
                   <div class="ps-price-row">
-                    {%- if rec_variant.compare_at_price > rec_variant.price -%}
-                      <span class="ps-compare">₹{{ rec_variant.compare_at_price | money_without_currency }}</span>
+                    {%- if rec_product.compare_at_price > rec_product.price -%}
+                      <span class="ps-compare">₹{{ rec_product.compare_at_price | money_without_currency }}</span>
                     {%- endif -%}
-                    <span class="ps-price">₹{{ rec_variant.price | money_without_currency }}</span>
+                    <span class="ps-price">₹{{ rec_product.price | money_without_currency }}</span>
 
-                    {%- if rec_variant.compare_at_price > rec_variant.price -%}
-                      {%- assign discount = rec_variant.compare_at_price | minus: rec_variant.price | times: 100 | divided_by: rec_variant.compare_at_price -%}
+                    {%- if rec_product.compare_at_price > rec_product.price -%}
+                      {%- assign discount = rec_product.compare_at_price | minus: rec_product.price | times: 100 | divided_by: rec_product.compare_at_price -%}
                       <span class="ps-off">{{ discount }}%off</span>
                     {%- endif -%}
                   </div>
 
                   {%- if rec_product.available -%}
-                    <button class="ps-atc" data-variant-id="{{ rec_variant.id }}">
+                    <button class="ps-atc" data-variant-id="{{ rec_product.variants.first.id }}">
                       Add To Cart
                     </button>
                   {%- else -%}

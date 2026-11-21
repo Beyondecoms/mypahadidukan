@@ -11,14 +11,20 @@
   "sections": {
     "hero": {
       "type": "loyalty-hero",
+      "blocks": {
+        "yourtoken_loyalty_banner": {
+          "type": "shopify://apps/yourtoken-loyalty/blocks/loyalty-page-block/019b3be8-f559-70af-9e2e-d3b502d6f55f",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "yourtoken_loyalty_banner"
+      ],
       "settings": {
         "heading": "Loyalty Circle",
-        "desktop_image": "shopify://shop_images/4_09533922-dc71-4b57-89d2-751427355620.jpg",
-        "background_color": "#0c0c0c",
-        "image_alt": "How the Loyalty Circle works. 1, Start your trek: sign up and shop on our website to join the My Pahadi Dukan Loyalty Circle. 2, Harvest the points: every ₹100 spent earns points, redeem them for free Himalayan goodness. 3, Reach the peak: keep shopping to rise through the tiers and unlock special perks.",
+        "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",
         "show_button": true,
         "button_label": "Start your journey",
-        "button_offset": 8,
         "open_yourtoken": true,
         "button_link": "",
         "sign_in_method": "yourtoken",
@@ -48,8 +54,8 @@
           "settings": {
             "icon": "shop",
             "image": "shopify://shop_images/e459bd9a002c80b9efb2f62ff17bfa241ea2cbf3-removebg-preview.png",
-            "title": "Shop the Himalayas",
-            "text": "Shop on MPD"
+            "title": "Start Your Trek",
+            "text": "Shop at My Pahadi Dukan."
           }
         },
         "step_accumulate": {
@@ -57,8 +63,8 @@
           "settings": {
             "icon": "accumulate",
             "image": "shopify://shop_images/Satin_gold_rupee_coin_2-removebg-preview.png",
-            "title": "Collect stamps",
-            "text": "Get 10% back in points on every order."
+            "title": "Harvest the Points",
+            "text": "Earn points with every order and eligible activity."
           }
         },
         "step_redeem": {
@@ -66,8 +72,8 @@
           "settings": {
             "icon": "redeem",
             "image": "shopify://shop_images/Structured_golden_gift_box_with_flowing_ribbon-1__1__1-removebg-preview.png",
-            "title": "Spend them your way",
-            "text": "Turn your stamps into rewards."
+            "title": "Reach the Peak",
+            "text": "Redeem your points for rewards and exclusive benefits."
           }
         }
       },
@@ -78,11 +84,11 @@
       ],
       "settings": {
         "heading": "How it works",
-        "subheading": "Simple as a walk in the meadows.",
+        "subheading": "Simple steps. Greater rewards.",
         "show_rate": true,
-        "rate_left": "Every ₹100 you spend brings you 10 points.",
-        "rate_right": "",
-        "rate_note": "Swap them for discounts.",
+        "rate_left": "₹100 spent",
+        "rate_right": "10 points",
+        "rate_note": "Earn points every time you shop and turn your purchases into rewards.",
         "show_pattern": true,
         "heading_color": "#1a2e1a",
         "text_color": "#414651",
@@ -192,6 +198,7 @@
           "type": "card",
           "settings": {
             "icon": "birthday",
+            "image": "shopify://shop_images/43a7d5d879902fc3fdbb550ff30484185f01a106-removebg-preview.png",
             "title": "Birthday Reward",
             "text": "Earn 100 points on birthday",
             "link": "",
@@ -204,6 +211,7 @@
           "type": "card",
           "settings": {
             "icon": "instagram",
+            "image": "shopify://shop_images/ebb8be48a60c85b5afa250d7e27ff707b61ff722-removebg-preview.png",
             "title": "Instagram Follow Reward",
             "text": "Earn 20 points on Instagram follow",
             "link": "",
@@ -216,6 +224,7 @@
           "type": "card",
           "settings": {
             "icon": "feedback",
+            "image": "shopify://shop_images/193514a03d0dd4790b72efe096cfc05ff907a056-removebg-preview.png",
             "title": "Feedback Reward",
             "text": "Earn 40 points on review\nEarn 50 points on image review",
             "link": "",
@@ -244,7 +253,7 @@
       ],
       "settings": {
         "heading": "More ways to earn",
-        "subheading": "Get rewarded when you shop and engage.",
+        "subheading": "Get rewarded when you shop, engage and celebrate.",
         "show_pattern": true,
         "heading_color": "#1a2e1a",
         "text_color": "#414651"

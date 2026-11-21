@@ -1,7 +1,6 @@
 {%- comment -%}
   Loyalty page "More ways to earn": reward cards in a 3-column grid and a
-  full-width "Ready to be rewarded?" CTA card. On mobile the cards become a
-  sideways scroller and the CTA card moves to the front.
+  separate "Ready to be rewarded?" CTA card with its original artwork and link.
 
   Add the YourToken "Loyalty Page" app block to this section to make the cards
   live: once it loads, its cards (with actions such as adding a birthday)
@@ -62,144 +61,150 @@
 </style>
 
 <loyalty-earn class="lp lp-earn lp-pattern">
-  <div class="lp-earn__inner">
-    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="lp-head">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="lp-title">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="lp-sub">{{ section.settings.subheading | escape }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- if section.blocks.size > 0 -%}
-      <div class="lp-earn__grid">
-        {%- for block in section.blocks -%}
-          {%- if block.type == '@app' -%}
-            <div class="lp-earn__app" data-lp-earn-app>{% render block %}</div>
+  <div class="lp-earn__rewards lp-premium">
+    <div class="lp-earn__inner">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="lp-head">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="lp-title">{{ section.settings.heading | escape }}</h2>
           {%- endif -%}
-        {%- endfor -%}
-        {%- comment -%}
-          YourToken's block script writes its settings into the first copy of the
-          block on the page only (the hero banner), then loads the script that
-          renders every copy. Module scripts run in page order, so this runs after
-          YourToken's and hands the same settings to the copy here before it
-          renders. If it runs too late, the static cards stay.
-        {%- endcomment -%}
-        <script type="module">
-          const attr = 'data-yt-loyalty-page-config';
-          const source = document.querySelector(`[${attr}]`);
-          document.querySelectorAll(`[data-lp-earn-app] [${attr}]`).forEach((target) => {
-            const own = (target.getAttribute(attr) || '').trim();
-            if (source && target !== source && (own === '' || own === '{}')) {
-              target.setAttribute(attr, source.getAttribute(attr));
-            }
-          });
-        </script>
+          {%- if section.settings.subheading != blank -%}
+            <p class="lp-sub">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'card' -%}
-              {%- capture card_attributes -%}
-                id="lp-earn-{{ block.id }}"
-                style="--card-end: {{ block.settings.end_color }}; --card-title: {{ block.settings.title_color }}; --card-edge: {{ block.settings.edge_color }};"
-                data-lp-earn-type="{{ block.settings.icon }}"
-                {{ block.shopify_attributes }}
-              {%- endcapture -%}
-              {%- assign icon_asset = 'loyalty-earn-' | append: block.settings.icon | append: '.webp' -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" class="lp-earn-card lp-earn-card--static lp-earn-card--link" {{ card_attributes }}>
-              {%- else -%}
-                <div class="lp-earn-card lp-earn-card--static" {{ card_attributes }}>
-              {%- endif -%}
-                {% render 'loyalty-image',
-                  image: block.settings.image,
-                  fallback: icon_asset,
-                  fallback_width: 356,
-                  fallback_height: 328,
-                  alt: '',
-                  class: 'lp-earn-card__icon',
-                  sizes: '150px'
-                %}
-                {%- if block.settings.title != blank -%}
-                  <h3 class="lp-earn-card__title">{{ block.settings.title | escape }}</h3>
-                {%- endif -%}
-                {%- if block.settings.text != blank -%}
-                  <p class="lp-earn-card__text">{{ block.settings.text | escape | newline_to_br }}</p>
-                {%- endif -%}
-              {%- if block.settings.link != blank -%}
-                </a>
-              {%- else -%}
-                </div>
-              {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-earn__grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              <div class="lp-earn__app" data-lp-earn-app>{% render block %}</div>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- comment -%}
+            YourToken's block script writes its settings into the first copy of the
+            block on the page only (the hero banner), then loads the script that
+            renders every copy. Module scripts run in page order, so this runs after
+            YourToken's and hands the same settings to the copy here before it
+            renders. If it runs too late, the static cards stay.
+          {%- endcomment -%}
+          <script type="module">
+            const attr = 'data-yt-loyalty-page-config';
+            const source = document.querySelector(`[${attr}]`);
+            document.querySelectorAll(`[data-lp-earn-app] [${attr}]`).forEach((target) => {
+              const own = (target.getAttribute(attr) || '').trim();
+              if (source && target !== source && (own === '' || own === '{}')) {
+                target.setAttribute(attr, source.getAttribute(attr));
+              }
+            });
+          </script>
 
-            {%- when 'cta' -%}
-              {%- liquid
-                # The sign-in link stays off account URLs, which KwikPass takes over and returns to /account.
-                if block.settings.open_yourtoken
-                  assign login_fallback = request.path | append: '?showYt=true'
-                else
-                  assign login_fallback = routes.account_register_url
-                endif
-                assign cta_link = block.settings.link | default: login_fallback
-              -%}
-              <div id="lp-earn-{{ block.id }}" class="lp-cta" {{ block.shopify_attributes }}>
-                {% render 'loyalty-image',
-                  image: block.settings.collage_image,
-                  fallback: 'loyalty-cta-collage.webp',
-                  fallback_width: 1512,
-                  fallback_height: 605,
-                  alt: block.settings.image_alt,
-                  class: 'lp-cta__collage lp-desk-only',
-                  sizes: '(max-width: 768px) 1px, 760px'
-                %}
-                {%- if block.settings.show_sparkles -%}
-                  <img
-                    src="{{ 'loyalty-cta-sparkles.webp' | asset_url }}"
-                    alt=""
-                    class="lp-cta__sparkles lp-desk-only"
-                    width="505"
-                    height="126"
-                    loading="lazy"
-                  >
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'card' -%}
+                {%- capture card_attributes -%}
+                  id="lp-earn-{{ block.id }}"
+                  style="--card-end: {{ block.settings.end_color }}; --card-title: {{ block.settings.title_color }}; --card-edge: {{ block.settings.edge_color }};"
+                  data-lp-earn-type="{{ block.settings.icon }}"
+                  {{ block.shopify_attributes }}
+                {%- endcapture -%}
+                {%- assign icon_asset = 'loyalty-earn-' | append: block.settings.icon | append: '.webp' -%}
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="lp-earn-card lp-earn-card--static lp-earn-card--link" {{ card_attributes }}>
+                {%- else -%}
+                  <div class="lp-earn-card lp-earn-card--static" {{ card_attributes }}>
                 {%- endif -%}
-                {%- if block.settings.image_alt != blank -%}
-                  <p class="visually-hidden lp-mob-only">{{ block.settings.image_alt | escape }}</p>
+                  {% render 'loyalty-image',
+                    image: block.settings.image,
+                    fallback: icon_asset,
+                    fallback_width: 356,
+                    fallback_height: 328,
+                    alt: '',
+                    class: 'lp-earn-card__icon',
+                    sizes: '150px'
+                  %}
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="lp-earn-card__title">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p class="lp-earn-card__text">{{ block.settings.text | escape | newline_to_br }}</p>
+                  {%- endif -%}
+                {%- if block.settings.link != blank -%}
+                  </a>
+                {%- else -%}
+                  </div>
                 {%- endif -%}
-                <a
-                  href="{{ cta_link }}"
-                  class="lp-cta__btn"
-                  {% if block.settings.open_yourtoken %}
-                    data-lp-login
-                  {% endif %}
-                >
-                  {% render 'loyalty-image',
-                    image: block.settings.button_image,
-                    fallback: 'loyalty-cta-button.webp',
-                    fallback_width: 478,
-                    fallback_height: 300,
-                    alt: block.settings.button_label,
-                    class: 'lp-desk-only',
-                    sizes: '230px'
-                  %}
-                  {% render 'loyalty-image',
-                    image: block.settings.button_image_mobile,
-                    fallback: 'loyalty-cta-button-mobile.webp',
-                    fallback_width: 316,
-                    fallback_height: 112,
-                    alt: block.settings.button_label,
-                    class: 'lp-mob-only',
-                    sizes: '158px'
-                  %}
-                </a>
-              </div>
-          {%- endcase -%}
-        {%- endfor -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'cta' -%}
+      <div class="lp-earn__inner lp-earn__cta-area">
+        {%- liquid
+          # The sign-in link stays off account URLs, which KwikPass takes over and returns to /account.
+          if block.settings.open_yourtoken
+            assign login_fallback = request.path | append: '?showYt=true'
+          else
+            assign login_fallback = routes.account_register_url
+          endif
+          assign cta_link = block.settings.link | default: login_fallback
+        -%}
+        <div id="lp-earn-{{ block.id }}" class="lp-cta" {{ block.shopify_attributes }}>
+          {% render 'loyalty-image',
+            image: block.settings.collage_image,
+            fallback: 'loyalty-cta-collage.webp',
+            fallback_width: 1512,
+            fallback_height: 605,
+            alt: block.settings.image_alt,
+            class: 'lp-cta__collage lp-desk-only',
+            sizes: '(max-width: 768px) 1px, 760px'
+          %}
+          {%- if block.settings.show_sparkles -%}
+            <img
+              src="{{ 'loyalty-cta-sparkles.webp' | asset_url }}"
+              alt=""
+              class="lp-cta__sparkles lp-desk-only"
+              width="505"
+              height="126"
+              loading="lazy"
+            >
+          {%- endif -%}
+          {%- if block.settings.image_alt != blank -%}
+            <p class="visually-hidden lp-mob-only">{{ block.settings.image_alt | escape }}</p>
+          {%- endif -%}
+          <a
+            href="{{ cta_link }}"
+            class="lp-cta__btn"
+            {% if block.settings.open_yourtoken %}
+              data-lp-login
+            {% endif %}
+          >
+            {% render 'loyalty-image',
+              image: block.settings.button_image,
+              fallback: 'loyalty-cta-button.webp',
+              fallback_width: 478,
+              fallback_height: 300,
+              alt: block.settings.button_label,
+              class: 'lp-desk-only',
+              sizes: '230px'
+            %}
+            {% render 'loyalty-image',
+              image: block.settings.button_image_mobile,
+              fallback: 'loyalty-cta-button-mobile.webp',
+              fallback_width: 316,
+              fallback_height: 112,
+              alt: block.settings.button_label,
+              class: 'lp-mob-only',
+              sizes: '158px'
+            %}
+          </a>
+        </div>
       </div>
     {%- endif -%}
-  </div>
+  {%- endfor -%}
 </loyalty-earn>
 
 {% schema %}

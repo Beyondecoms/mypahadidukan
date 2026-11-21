@@ -1,8 +1,4 @@
-{% render 'article-redirect',
-  article: article,
-  blog: blog,
-  search_blogs: section.settings.related_blogs
-%}
+{% render 'article-redirect', article: article %}
 
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 {{ 'card-product.css' | asset_url | stylesheet_tag }}
@@ -408,8 +404,121 @@
         {%- render 'article-buy-button-card' -%}
 
         <!-- ── MAIN ARTICLE CONTENT BODY ── -->
+        {%- assign article_content_rendered = article.content -%}
+        {%- assign blog_products = article.metafields.custom.blog_products.value | default: article.metafields.custom.blog_products -%}
+
+        {%- capture newline %}
+{% endcapture -%}
+        {%- assign norm_content = article_content_rendered
+          | replace: '&lt;!--', '<!--'
+          | replace: '--&gt;', '-->'
+          | replace: '<!--BLOG_PRODUCT:', '<!-- BLOG_PRODUCT:'
+          | replace: '<!-- blog_product:', '<!-- BLOG_PRODUCT:'
+          | replace: '<!--blog_product:', '<!-- BLOG_PRODUCT:'
+          | replace: '<!-- BLOG_PRODUCT: ', '<!-- BLOG_PRODUCT:'
+        -%}
+        {%- assign norm_content = norm_content
+          | replace: '<p><!-- BLOG_PRODUCT:', '<!-- BLOG_PRODUCT:'
+          | replace: '<p> <!-- BLOG_PRODUCT:', '<!-- BLOG_PRODUCT:'
+          | replace: '<p><br><!-- BLOG_PRODUCT:', '<!-- BLOG_PRODUCT:'
+          | replace: '<p><br /><!-- BLOG_PRODUCT:', '<!-- BLOG_PRODUCT:'
+          | replace: '--></p>', '-->'
+          | replace: '--> </p>', '-->'
+          | replace: '--><br></p>', '-->'
+          | replace: '--><br /></p>', '-->'
+        -%}
+        {%- assign norm_p_nl = '<p>' | append: newline | append: '<!-- BLOG_PRODUCT:' -%}
+        {%- assign norm_nl_p = '-->' | append: newline | append: '</p>' -%}
+        {%- assign norm_content = norm_content | replace: norm_p_nl, '<!-- BLOG_PRODUCT:' | replace: norm_nl_p, '-->' -%}
+
+        {%- if norm_content contains '<!-- BLOG_PRODUCT:' -%}
+          {%- assign bp_chunks = norm_content | split: '<!-- BLOG_PRODUCT:' -%}
+          {%- assign article_content_rendered = bp_chunks[0] -%}
+
+          {%- assign current_group_cards = '' -%}
+          {%- assign current_group_count = 0 -%}
+
+          {%- for chunk in bp_chunks -%}
+            {%- unless forloop.first -%}
+              {%- if chunk contains '-->' -%}
+                {%- assign raw_idx = chunk | split: '-->' | first -%}
+                {%- assign placeholder_end_marker = raw_idx | append: '-->' -%}
+                {%- assign text_after = chunk | remove_first: placeholder_end_marker -%}
+
+                {%- assign clean_idx = raw_idx | strip | replace: ' ', '' -%}
+                {%- assign target_idx = clean_idx | plus: 0 -%}
+                {%- assign target_idx_check = target_idx | append: '' -%}
+
+                {%- assign matched_product = nil -%}
+                {%- if clean_idx == target_idx_check and blog_products != blank -%}
+                  {%- assign matched_product = blog_products[target_idx] -%}
+                  {%- if matched_product == blank or matched_product.title == blank -%}
+                    {%- for p in blog_products -%}
+                      {%- if forloop.index0 == target_idx -%}
+                        {%- assign matched_product = p -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- if matched_product == blank and target_idx == 0 and blog_products.title != blank -%}
+                    {%- assign matched_product = blog_products -%}
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if matched_product != blank and matched_product.title != blank -%}
+                  {%- assign card_position = target_idx | plus: 1 -%}
+                  {%- capture card_markup -%}
+                    <div class="blog-product-card" data-blog-product-index="{{ target_idx }}">
+                      <!-- [BLOG_PRODUCT:{{ target_idx }}] -> {{ matched_product.title | escape }} -->
+                      {% render 'product-slider-card',
+                        product: matched_product,
+                        position: card_position,
+                        show_secondary_image: true,
+                        discount_text: 'Extra 10% Discount at Checkout'
+                      %}
+                    </div>
+                  {%- endcapture -%}
+                  {%- assign current_group_cards = current_group_cards | append: card_markup -%}
+                  {%- assign current_group_count = current_group_count | plus: 1 -%}
+                {%- endif -%}
+
+                {%- assign is_consecutive = false -%}
+                {%- unless forloop.last -%}
+                  {%- assign clean_between = text_after | strip_html | replace: '&nbsp;', ' ' | strip -%}
+                  {%- if clean_between == blank -%}
+                    {%- unless text_after contains '<img' -%}
+                      {%- assign is_consecutive = true -%}
+                    {%- endunless -%}
+                  {%- endif -%}
+                {%- endunless -%}
+
+                {%- unless is_consecutive -%}
+                  {%- if current_group_count > 0 -%}
+                    {%- capture group_html -%}
+                      <div class="blog-products-scroll blog-products-scroll--{{ current_group_count }} blog-products-row blog-products-row--{{ current_group_count }}">
+                        <div class="blog-products-track">
+                          {{ current_group_cards }}
+                        </div>
+                      </div>
+                    {%- endcapture -%}
+                    {%- assign article_content_rendered = article_content_rendered | append: group_html | append: text_after -%}
+                  {%- else -%}
+                    {%- assign article_content_rendered = article_content_rendered | append: text_after -%}
+                  {%- endif -%}
+                  {%- assign current_group_cards = '' -%}
+                  {%- assign current_group_count = 0 -%}
+                {%- endunless -%}
+
+              {%- else -%}
+                {%- assign unbroken_chunk = '<!-- BLOG_PRODUCT:' | append: chunk -%}
+                {%- assign article_content_rendered = article_content_rendered | append: unbroken_chunk -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+
         <div class="article-content-body rte" itemprop="articleBody">
-          {{ article.content }}
+          {{ article_content_rendered }}
         </div>
 
         <!-- ── FAQ SECTION (existing custom.faqs metaobject) — plain, always-open text that reads as part of the article ── -->
@@ -588,62 +697,7 @@
           </section>
         {%- endif -%}
 
-        <!-- ── BLOG PRODUCTS SLIDER (custom.blog_products) — injected at ~20% by JS ── -->
-        {%- assign blog_prods = article.metafields.custom.blog_products.value | default: article.metafields.custom.blog_products -%}
-        {%- assign has_blog_prods = false -%}
-        {%- if blog_prods != blank -%}
-          {%- if blog_prods.first != nil or blog_prods.size > 0 or blog_prods.title != blank -%}
-            {%- assign has_blog_prods = true -%}
-          {%- endif -%}
-        {%- endif -%}
-        {%- if has_blog_prods -%}
-        <template id="bp-slider-tpl">
-          <section class="article-products-section article-products-section--slider" aria-label="Recommended products">
-            <div class="article-products-section__header-row">
-              <div class="article-products-section__header-text">
-                <span class="article-section-eyebrow">Featured products</span>
-                <h3 class="article-products-section__title">From My Pahadi Dukan</h3>
-              </div>
-              <div class="article-bp-slider-arrows">
-                <button class="article-bp-slider-btn article-bp-slider-btn--prev" aria-label="Previous products" type="button">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button class="article-bp-slider-btn article-bp-slider-btn--next" aria-label="Next products" type="button">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
-              </div>
-            </div>
-            <div class="article-bp-slider-wrap">
-              <div class="article-bp-slider-track">
-                {%- if blog_prods.first != nil or blog_prods.size > 0 -%}
-                  {%- for prod in blog_prods -%}
-                    {%- if prod.title != blank -%}
-                      <div class="article-bp-slide">
-                        {% render 'product-slider-card',
-                          product: prod,
-                          position: forloop.index,
-                          show_secondary_image: true,
-                          discount_text: 'Extra 10% Discount at Checkout'
-                        %}
-                      </div>
-                    {%- endif -%}
-                  {%- endfor -%}
-                {%- elsif blog_prods.title != blank -%}
-                  {%- assign prod = blog_prods -%}
-                  <div class="article-bp-slide">
-                    {% render 'product-slider-card',
-                      product: prod,
-                      position: 1,
-                      show_secondary_image: true,
-                      discount_text: 'Extra 10% Discount at Checkout'
-                    %}
-                  </div>
-                {%- endif -%}
-              </div>
-            </div>
-          </section>
-        </template>
-        {%- endif -%}
+
 
         <!-- ── AUTHOR CARD ── -->
         {%- if author_name != blank or author_bio != blank -%}
@@ -914,7 +968,7 @@
 
       // ── Clean up Shopify Rich Text Editor image alignment bug ──
       contentEl.querySelectorAll('img').forEach(function(img) {
-        if (!img.classList.contains('article-product-mini-card__img')) {
+        if (!img.classList.contains('article-product-mini-card__img') && !img.closest('.ps-card')) {
           var floatVal = img.style.float || (img.getAttribute('style') && img.getAttribute('style').indexOf('float: none') !== -1 ? 'none' : '');
           if (!floatVal || floatVal === 'none') {
             img.style.marginLeft = 'auto';
@@ -924,66 +978,7 @@
         }
       });
 
-      // ── Inject Blog Products Slider at ~20% of Article Content ──
-      var bpSliderTpl = document.getElementById('bp-slider-tpl');
-      if (bpSliderTpl && !contentEl.querySelector('.article-products-section--slider')) {
-        // Recursively unwrap single wrapper containers (e.g. pasted RTE divs) to find real article blocks
-        function getTopBlocks(parent) {
-          var children = Array.from(parent.children).filter(function(node) {
-            return node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'TEMPLATE';
-          });
-          if (children.length === 1 && children[0].children && children[0].children.length > 2) {
-            return getTopBlocks(children[0]);
-          }
-          return children;
-        }
 
-        var blocks = getTopBlocks(contentEl);
-
-        if (blocks.length > 0) {
-          // Calculate 20% mark by text volume (synchronous, immune to lazy images or layout shifts)
-          var totalTextLength = 0;
-          for (var i = 0; i < blocks.length; i++) {
-            totalTextLength += (blocks[i].textContent || '').trim().length;
-          }
-
-          var targetTextLength = totalTextLength * 0.20;
-          var accumulatedLength = 0;
-          var bestBlock = null;
-
-          for (var b = 0; b < blocks.length; b++) {
-            var block = blocks[b];
-            accumulatedLength += (block.textContent || '').trim().length;
-
-            // Target suitable block: paragraph, list, blockquote, or text div (never directly after a heading H1-H6)
-            var isHeading = /^H[1-6]$/.test(block.tagName);
-            var isSuitable = (block.tagName === 'P' || block.tagName === 'UL' || block.tagName === 'OL' || block.tagName === 'DIV' || block.tagName === 'BLOCKQUOTE') && !isHeading;
-
-            if (accumulatedLength >= targetTextLength && isSuitable) {
-              bestBlock = block;
-              break;
-            }
-          }
-
-          // Fallback if needed: target 20% by index (skipping headings)
-          if (!bestBlock) {
-            var fallbackIdx = Math.max(0, Math.min(blocks.length - 1, Math.floor(blocks.length * 0.20)));
-            while (fallbackIdx < blocks.length - 1 && /^H[1-6]$/.test(blocks[fallbackIdx].tagName)) {
-              fallbackIdx++;
-            }
-            bestBlock = blocks[fallbackIdx];
-          }
-
-          if (bestBlock) {
-            var frag = bpSliderTpl.content ? bpSliderTpl.content.cloneNode(true) : null;
-            var sliderNode = frag ? frag.firstElementChild : (bpSliderTpl.firstElementChild ? bpSliderTpl.firstElementChild.cloneNode(true) : null);
-            if (sliderNode) {
-              bestBlock.insertAdjacentElement('afterend', sliderNode);
-              initBpSlider(sliderNode);
-            }
-          }
-        }
-      }
 
     // FAQ sits right after the body as part of the article, so it gets a TOC entry too
     var h2Elements = document.querySelectorAll('.article-content-body h2, .article-faq-section__title');
@@ -1144,7 +1139,8 @@
           var cloneLi = li.cloneNode(true);
           var cloneStrong = cloneLi.querySelector('strong, b');
           if (cloneStrong) cloneStrong.remove();
-          stepDesc = cloneLi.textContent.trim().replace(/^:\s*/, '');
+          // Use innerHTML so nested anchor links (e.g. <a>), formatting, and styling are preserved
+          stepDesc = cloneLi.innerHTML.trim().replace(/^(:\s*|&nbsp;\s*|\s*:\s*&nbsp;\s*)+/i, '').replace(/^:\s*/, '');
         } else {
           var text = li.textContent.trim();
           var periodIdx = text.indexOf('.');
@@ -1152,10 +1148,16 @@
           // short sentence would otherwise become a title with an empty description
           if (periodIdx > 0 && periodIdx < 45 && text.substring(periodIdx + 1).trim()) {
             stepTitle = text.substring(0, periodIdx).trim();
-            stepDesc = text.substring(periodIdx + 1).trim();
+            var rawHtml = li.innerHTML.trim();
+            var periodInHtml = rawHtml.indexOf('.');
+            if (periodInHtml > 0) {
+              stepDesc = rawHtml.substring(periodInHtml + 1).trim();
+            } else {
+              stepDesc = text.substring(periodIdx + 1).trim();
+            }
           } else {
             stepTitle = 'Step ' + (idx + 1);
-            stepDesc = text;
+            stepDesc = li.innerHTML.trim();
           }
         }
 
@@ -1187,7 +1189,7 @@
       }
 
       if (isTip && !p.closest('.article-step-card') && !p.closest('.article-product-cta-card')) {
-        var cleanText = text.replace(/^(Tip|Pro Tip|Chef's Tip|Important|Note|Warning|Caution|Remember)[\s:]+\s*/i, '');
+        var cleanHtml = p.innerHTML.trim().replace(/^(Tip|Pro Tip|Chef's Tip|Important|Note|Warning|Caution|Remember)[\s:]+\s*/i, '');
         var tipCard = document.createElement('aside');
         tipCard.className = 'article-tip-card' + (tipType === 'info' ? ' article-tip-card--info' : '');
         tipCard.innerHTML =
@@ -1201,7 +1203,7 @@
               badgeText +
             '</span>' +
           '</div>' +
-          '<p class="article-tip-card__text">' + cleanText + '</p>';
+          '<p class="article-tip-card__text">' + cleanHtml + '</p>';
         p.parentNode.replaceChild(tipCard, p);
       }
     });
@@ -1311,40 +1313,6 @@
         }, 2000);
       }
     });
-
-    function initBpSlider(slider) {
-      if (!slider) return;
-      var track = slider.querySelector('.article-bp-slider-track');
-      var prevBtn = slider.querySelector('.article-bp-slider-btn--prev');
-      var nextBtn = slider.querySelector('.article-bp-slider-btn--next');
-      if (!track) return;
-
-      function updateControls() {
-        if (!prevBtn || !nextBtn) return;
-        var maxScroll = track.scrollWidth - track.clientWidth - 4;
-        prevBtn.disabled = track.scrollLeft <= 4;
-        nextBtn.disabled = track.scrollLeft >= maxScroll;
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var amount = Math.max(220, track.clientWidth * 0.75);
-          track.scrollBy({ left: -amount, behavior: 'smooth' });
-        });
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var amount = Math.max(220, track.clientWidth * 0.75);
-          track.scrollBy({ left: amount, behavior: 'smooth' });
-        });
-      }
-
-      track.addEventListener('scroll', updateControls, { passive: true });
-      window.addEventListener('resize', updateControls);
-      setTimeout(updateControls, 300);
-    }
   }
 
   if (document.readyState === 'loading') {

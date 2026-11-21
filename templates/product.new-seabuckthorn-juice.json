@@ -133,6 +133,30 @@
             "text_color": "#ffffff"
           }
         },
+        "mini_review_D7EFk7": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Raja Kumar",
+            "rating": 5,
+            "review": "Great Results, Loved it!"
+          }
+        },
+        "mini_review_VRqcxN": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Priya",
+            "rating": 5,
+            "review": "Awesome Taste fr..!"
+          }
+        },
+        "mini_review_Qx9jt9": {
+          "type": "mini_review",
+          "settings": {
+            "name": "Raja Kumar",
+            "rating": 3,
+            "review": "Great Results, Love"
+          }
+        },
         "trust_icon_hpHGUe": {
           "type": "trust_icon",
           "settings": {
@@ -167,23 +191,31 @@
             "offer_text": "Buy <span>2</span> Get <span>1 Free</span> on a Seabuckthorn pulp",
             "coupon_code": "<span>BUY310</span>"
           }
+        },
+        "offer_e7gK9e": {
+          "type": "offer",
+          "settings": {
+            "offer_text": "Get a<span> EXTRA 10% Off </span>on a Cart value of Rs2199",
+            "coupon_code": "<span>SUMMER10</span>"
+          }
         }
       },
       "block_order": [
         "badge_kK9xE3",
         "badge_ezJHwR",
         "badge_8hyGzb",
+        "mini_review_D7EFk7",
+        "mini_review_VRqcxN",
+        "mini_review_Qx9jt9",
         "trust_icon_hpHGUe",
         "trust_icon_zLKAYb",
         "trust_icon_aUVeGG",
         "offer_G48RVH",
-        "offer_eVncRJ"
+        "offer_eVncRJ",
+        "offer_e7gK9e"
       ],
       "name": "Product Main",
-      "settings": {
-        "ingredients_text": "",
-        "additional_info_text": ""
-      }
+      "settings": {}
     },
     "section_trust_badges_xPyreK": {
       "type": "section-trust-badges",
@@ -191,45 +223,45 @@
         "badge_8rirVA": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2.png",
-            "title": "100% Natural",
-            "subtitle": "From Pahadi Region"
+            "icon_image": "shopify://shop_images/icon-mountain_copy.png",
+            "title": "Pureness",
+            "subtitle": "Sourced from the Himalayas, unadulterated and untouched — the way nature intended."
           }
         },
         "badge_NE4kM3": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
-            "title": "100k+",
-            "subtitle": "Trusted Customers"
+            "icon_image": "shopify://shop_images/icon-farmers_copy.png",
+            "title": "Authentic",
+            "subtitle": "We bring you what the locals use — no shortcuts, no factory imitations."
           }
         },
         "badge_4jVrya": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
+            "icon_image": "shopify://shop_images/Scientific_Exploration_in_Nature_1_copy_590c0157-d067-41de-afeb-274d81b7300a.png",
             "title": "Lab Tested",
-            "subtitle": ""
+            "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
           }
         },
         "badge_HHhEKd": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_3.png",
-            "title": "FSSAI Approved",
-            "subtitle": ""
+            "icon_image": "shopify://shop_images/icon-transparency_copy.png",
+            "title": "Transparency",
+            "subtitle": "From source to shelf, we show you everything — because trust isn’t built on secrets."
           }
         }
       },
       "block_order": [
         "badge_8rirVA",
         "badge_NE4kM3",
-        "badge_4jVrya",
-        "badge_HHhEKd"
+        "badge_HHhEKd",
+        "badge_4jVrya"
       ],
       "name": "Trust Badges",
       "settings": {
-        "section_style": "tb-section",
+        "section_style": "tb-section-compact",
         "bg_color": "#ffffff"
       }
     },
@@ -475,55 +507,80 @@
       "name": "FAQ Section",
       "settings": {
         "title": "Any Last Questions ?",
-        "image": "shopify://shop_images/Frame_2147228047.png",
         "bg_color": "#fffbef"
       }
     },
     "product_story_Cxw8pt": {
-      "type": "product-story",
+      "type": "brand-story",
       "blocks": {
         "stat_378cGz": {
           "type": "stat",
           "settings": {
-            "number": "221",
-            "label_top": "Products",
-            "label_bottom": "All Products"
+            "number": "11",
+            "label_top": "states",
+            "label_bottom": "All in one place"
           }
         },
         "stat_WdQBKC": {
           "type": "stat",
           "settings": {
-            "number": "48+",
-            "label_top": "Products",
-            "label_bottom": "New Launch"
+            "number": "150+",
+            "label_top": "products",
+            "label_bottom": "One standard of purity"
+          }
+        },
+        "stat_XiYj9x": {
+          "type": "stat",
+          "settings": {
+            "number": "20,000+",
+            "label_top": "farmers",
+            "label_bottom": "Empowered and uplifted"
           }
         }
       },
       "block_order": [
         "stat_378cGz",
-        "stat_WdQBKC"
+        "stat_WdQBKC",
+        "stat_XiYj9x"
       ],
-      "name": "Product Story",
+      "name": "Brand Story",
       "settings": {
-        "bg_color": "#fdf6e3",
+        "bg_color": "#ffeeb7",
         "bg_image": "shopify://shop_images/Frame_2147227905.png",
-        "bg_image_mobile": "shopify://shop_images/Frame_2147227326.png",
-        "philosophy_title": "The Philosophy rooted in mountain",
-        "philosophy_text": "",
+        "philosophy_title": "The idea behind My Pahadi Dukan",
+        "philosophy_text": "We don't make honey. A family in the hills does, the way their grandparents did. What they never had was a buyer who'd pay fairly and carry it past the village. That's us. We find them, buy direct, add nothing, and bring it straight to you.",
         "team_image": "shopify://shop_images/Frame_22166.png",
         "media_title": "In the Media",
         "media_logo_1": "shopify://shop_images/image_795.png",
-        "media_link_1": "",
+        "media_link_1": "https://www.hindustantimes.com/",
         "media_logo_2": "shopify://shop_images/image_798.png",
-        "media_link_2": "",
+        "media_link_2": "https://www.hindustantimes.com/",
         "media_logo_3": "shopify://shop_images/image_794.png",
-        "media_link_3": "",
-        "media_logo_4": "shopify://shop_images/Frame_2147227897.png",
-        "media_link_4": "",
-        "media_logo_5": "shopify://shop_images/image_799.png",
-        "media_link_5": "",
-        "media_logo_6": "shopify://shop_images/image_796.png",
-        "media_link_6": ""
+        "media_link_3": "https://www.hindustantimes.com/",
+        "media_logo_4": "shopify://shop_images/image_799.png",
+        "media_link_4": "https://www.hindustantimes.com/",
+        "media_logo_5": "shopify://shop_images/image_796.png",
+        "media_link_5": "https://www.hindustantimes.com/",
+        "media_logo_6": "shopify://shop_images/image_799.png",
+        "media_link_6": "https://www.hindustantimes.com/",
+        "letter_front_image": "shopify://shop_images/Front.png",
+        "letter_back_image": "shopify://shop_images/LETTER.png",
+        "letter_front_image_mobile": "shopify://shop_images/Front_1.png",
+        "letter_back_image_mobile": "shopify://shop_images/LETTER_1.png",
+        "letter_quote": "",
+        "letter_tap_text": "",
+        "letter_back_text": "",
+        "supported_title": "Supported by",
+        "supported_logo_1": "shopify://shop_images/OYO_Logo_Square.jpg",
+        "supported_link_1": "",
+        "supported_logo_2": "shopify://shop_images/IIM_Kashipur_Logo_square.jpg",
+        "supported_link_2": "",
+        "supported_logo_3": "shopify://shop_images/IIT_Mandi_logo_square.png",
+        "supported_link_3": "",
+        "supported_logo_4": "shopify://shop_images/meity_Logo_square.jpg",
+        "supported_link_4": "",
+        "supported_logo_5": "shopify://shop_images/ministry_of_agriculture_Logo_square.jpg",
+        "supported_link_5": ""
       }
     }
   },

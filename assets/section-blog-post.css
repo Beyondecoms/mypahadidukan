@@ -306,7 +306,18 @@ body {
   max-width: var(--mpd-max-container);
   margin: 28px 0 0;
 }
+.blog-content-link {
+  color: #008f7a !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
+}
 
+.blog-content-link:hover {
+  color: #006f60 !important;
+}
 .article-hero__media {
   width: 100%;
   border-radius: var(--mpd-radius-lg);
@@ -930,7 +941,9 @@ body {
 
 /* The slide sets the width; the card fills it (its own flex-basis is for the homepage row) */
 .article-bp-slide > .ps-card,
-.carousel-row .carousel-card > .ps-card {
+.carousel-row .carousel-card > .ps-card,
+.article-product-card-wrap > .ps-card,
+.blog-product-card > .ps-card {
   flex: 1 1 auto;
   width: 100%;
 }
@@ -1727,6 +1740,14 @@ body {
   color: var(--mpd-text-body);
   margin: 0 !important;
   flex: 1;
+}
+
+.article-step-card__desc a,
+.article-step-card a {
+  position: relative;
+  z-index: 2;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 /* ── VISUAL BREAK: TIP & NOTE CARDS ── */

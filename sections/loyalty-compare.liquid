@@ -42,7 +42,7 @@
   }
 </style>
 
-<div class="lp lp-compare">
+<div class="lp lp-compare lp-premium">
   <div class="lp-container lp-compare__panel">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="lp-head">
@@ -55,7 +55,7 @@
       </div>
     {%- endif -%}
 
-    <div class="lp-table-scroll">
+    <div class="lp-table-scroll" tabindex="0" role="region" aria-label="Loyalty tier comparison">
       <div class="lp-table" role="table" aria-label="{{ section.settings.heading | escape }}">
         {%- for n in (1..3) -%}
           <div

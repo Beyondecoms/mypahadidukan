@@ -1,1 +1,114 @@
-{"name":"t:sections.header.name","type":"header","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"custom_text_7FMKRj":{"type":"custom-text","settings":{"custom_text_content":"Summer sale discount <span>off 30%!<\/span>! Shop Now","notification_url":"","color_custom_text":"#ffffff","color_custom_text_link":"#f11e1e","color_custom_text_link_hover":"#f11e1e","font_size_desktop":19,"text_align":"center","font_size_mobile":12,"text_align_mobi":"center","show_mobile_custom_text":true}},"custom_text_ktRpfD":{"type":"custom-text","settings":{"custom_text_content":"Additional 10% off On your first Order","notification_url":"","color_custom_text":"#ffffff","color_custom_text_link":"#f11e1e","color_custom_text_link_hover":"#f11e1e","font_size_desktop":19,"text_align":"center","font_size_mobile":12,"text_align_mobi":"center","show_mobile_custom_text":true}},"custom_text_xRebGV":{"type":"custom-text","settings":{"custom_text_content":"Summer sale discount off 30%! Shop Now","notification_url":"","color_custom_text":"#ffffff","color_custom_text_link":"#f11e1e","color_custom_text_link_hover":"#f11e1e","font_size_desktop":19,"text_align":"center","font_size_mobile":12,"text_align_mobi":"center","show_mobile_custom_text":true}}},"block_order":["custom_text_7FMKRj","custom_text_ktRpfD","custom_text_xRebGV"],"settings":{"show_topbar":true,"track_order_link":"https:\/\/wa.me\/918428611319?text=Track%20Order","track_order":"Track Your Order","max_width":"","fullwidth":false,"padding":"","margin":"","bg_background":"#048e79","topbar_absolute":false,"bg_background2":"#000000","font_size":17,"notification_interval":5,"color_text":"#868686","font_weight":"600","border":false,"border_width":"1px 1px 1px 1px","border_color":"#868686","border_opacity":1,"show_mobile":true}},"header":{"type":"header","settings":{"logo":"shopify:\/\/shop_images\/c8552b51f26cb3cb0f998e5455eca889f652c1d6_31f1b910-e133-4692-8447-8a39ffa1844a.png","track_order_url":"https:\/\/wa.me\/918428611319?text=Track%20Order","rotating_words":"gift, kapiva, flower","logo_width":120,"menu":"new-menu_theme","menu_type_desktop":"dropdown","search_placeholder":"Search for gift","wishlist_url":"","show_currency":true,"bg_color":"#fffbef","nav_text_color":"#2d2d2d","nav_hover_color":"#1a6b4a","highlight_bg_color":"#1a6b4a","highlight_text_color":"#ffffff"}}},"order":["announcement-bar","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "custom_text_7FMKRj": {
+          "type": "custom-text",
+          "settings": {
+            "custom_text_content": "Summer sale discount <span>off 30%!</span>! Shop Now",
+            "notification_url": "",
+            "color_custom_text": "#ffffff",
+            "color_custom_text_link": "#f11e1e",
+            "color_custom_text_link_hover": "#f11e1e",
+            "font_size_desktop": 19,
+            "text_align": "center",
+            "font_size_mobile": 12,
+            "text_align_mobi": "center",
+            "show_mobile_custom_text": true
+          }
+        },
+        "custom_text_ktRpfD": {
+          "type": "custom-text",
+          "settings": {
+            "custom_text_content": "Additional 10% off On your first Order",
+            "notification_url": "",
+            "color_custom_text": "#ffffff",
+            "color_custom_text_link": "#f11e1e",
+            "color_custom_text_link_hover": "#f11e1e",
+            "font_size_desktop": 19,
+            "text_align": "center",
+            "font_size_mobile": 12,
+            "text_align_mobi": "center",
+            "show_mobile_custom_text": true
+          }
+        },
+        "custom_text_xRebGV": {
+          "type": "custom-text",
+          "settings": {
+            "custom_text_content": "Summer sale discount off 30%! Shop Now",
+            "notification_url": "",
+            "color_custom_text": "#ffffff",
+            "color_custom_text_link": "#f11e1e",
+            "color_custom_text_link_hover": "#f11e1e",
+            "font_size_desktop": 19,
+            "text_align": "center",
+            "font_size_mobile": 12,
+            "text_align_mobi": "center",
+            "show_mobile_custom_text": true
+          }
+        }
+      },
+      "block_order": [
+        "custom_text_7FMKRj",
+        "custom_text_ktRpfD",
+        "custom_text_xRebGV"
+      ],
+      "settings": {
+        "show_topbar": true,
+        "track_order_link": "https://wa.me/918428611319?text=Track%20Order",
+        "track_order": "Track Your Order",
+        "max_width": "",
+        "fullwidth": false,
+        "padding": "",
+        "margin": "",
+        "bg_background": "#048e79",
+        "topbar_absolute": false,
+        "bg_background2": "#000000",
+        "font_size": 17,
+        "notification_interval": 5,
+        "color_text": "#868686",
+        "font_weight": "600",
+        "border": false,
+        "border_width": "1px 1px 1px 1px",
+        "border_color": "#868686",
+        "border_opacity": 1,
+        "show_mobile": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "shopify://shop_images/c8552b51f26cb3cb0f998e5455eca889f652c1d6_31f1b910-e133-4692-8447-8a39ffa1844a.png",
+        "track_order_url": "https://wa.me/918428611319?text=Track%20Order",
+        "rotating_words": "gift, kapiva, flower",
+        "logo_width": 120,
+        "menu": "new-menu_theme",
+        "menu_type_desktop": "dropdown",
+        "search_placeholder": "Search for gift",
+        "wishlist_url": "",
+        "show_currency": true,
+        "bg_color": "#fffbef",
+        "nav_text_color": "#2d2d2d",
+        "nav_hover_color": "#1a6b4a",
+        "highlight_bg_color": "#1a6b4a",
+        "highlight_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

@@ -265,11 +265,6 @@
         "type": "shopify://apps/cooee/blocks/app-embed-main/2f17a8e7-57ed-4fda-b07d-26521d722e6f",
         "disabled": false,
         "settings": {}
-      },
-      "1219337400145039034": {
-        "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
-        "disabled": true,
-        "settings": {}
       }
     },
     "color_schemes": {

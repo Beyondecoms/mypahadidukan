@@ -1,8 +1,8 @@
 {%- comment -%}
-  Loyalty page "How it works": step blocks joined by arrows, followed by the
+  Loyalty page "How it works": three step cards followed by the
   points conversion card: one line ("Every ₹100 you spend brings you 10
   points.") or two boxes joined by an equals sign ("₹100 spent = 10 points")
-  when the right box has text. Sits on the bow pattern background.
+  when the right box has text.
   Styles: section-loyalty-page.css
 {%- endcomment -%}
 {% render 'loyalty-page-assets' %}
@@ -38,7 +38,7 @@
   }
 </style>
 
-<div class="lp lp-how lp-pattern">
+<div class="lp lp-how lp-premium">
   <div class="lp-container">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="lp-head">
@@ -55,6 +55,7 @@
       <ol class="lp-steps list-unstyled" role="list">
         {%- for block in section.blocks -%}
           <li class="lp-step" {{ block.shopify_attributes }}>
+            <span class="lp-step__number" aria-hidden="true">{{ forloop.index }}</span>
             {%- assign icon_asset = 'loyalty-step-' | append: block.settings.icon | append: '.webp' -%}
             {% render 'loyalty-image',
               image: block.settings.image,
@@ -63,7 +64,7 @@
               fallback_height: 548,
               alt: '',
               class: 'lp-step__icon',
-              sizes: '(max-width: 768px) 30vw, 267px'
+              sizes: '150px'
             %}
             {%- if block.settings.title != blank -%}
               <h3 class="lp-step__title">{{ block.settings.title | escape }}</h3>
@@ -72,18 +73,6 @@
               <p class="lp-step__text">{{ block.settings.text | escape }}</p>
             {%- endif -%}
           </li>
-          {%- unless forloop.last -%}
-            <li class="lp-step-arrow" aria-hidden="true">
-              {% render 'loyalty-image',
-                image: section.settings.arrow_image,
-                fallback: 'loyalty-arrow.webp',
-                fallback_width: 152,
-                fallback_height: 154,
-                alt: '',
-                sizes: '75px'
-              %}
-            </li>
-          {%- endunless -%}
         {%- endfor -%}
       </ol>
     {%- endif -%}

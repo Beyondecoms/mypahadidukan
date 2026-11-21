@@ -161,6 +161,7 @@
 -%}
 
 {%- if related_keys.size > 0 -%}
+  {%- assign main_article_url = article.url -%}
   <section class="article-related-section" aria-label="Related articles">
     <div class="article-related-section__header">
       <span class="article-section-eyebrow">Keep exploring</span>
@@ -188,7 +189,7 @@
             endif
           -%}
           <article class="article-related-card">
-            <a href="{{ rel_article.url }}" class="article-related-card__media" tabindex="-1">
+            <a href="{{ main_article_url }}" class="article-related-card__media" tabindex="-1">
               {%- if rel_article.image != blank -%}
                 <img
                   src="{{ rel_article.image | image_url: width: 600 }}"
@@ -214,14 +215,14 @@
                 </time>
               </div>
               <h3 class="article-related-card__title">
-                <a href="{{ rel_article.url }}">{{ rel_article.title }}</a>
+                <a href="{{ main_article_url }}">{{ rel_article.title }}</a>
               </h3>
               {%- if rel_article.excerpt_or_content != blank -%}
                 <p class="article-related-card__excerpt">
                   {{ rel_article.excerpt_or_content | strip_html | truncate: 110 }}
                 </p>
               {%- endif -%}
-              <a href="{{ rel_article.url }}" class="article-related-card__link">
+              <a href="{{ main_article_url }}" class="article-related-card__link">
                 <span>Read article</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>

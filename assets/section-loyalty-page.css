@@ -84,7 +84,7 @@ loyalty-earn {
 
 .lp-hero {
   position: relative;
-  background: var(--lp-hero-bg, #0c0c0c);
+  background: #f7f7f7;
 }
 
 .lp-hero__guest {
@@ -112,136 +112,28 @@ loyalty-earn {
   object-position: 50% 0;
 }
 
-/* Centred on a line --lp-hero-cta-bottom up from the banner's bottom edge
-   ("Button position from bottom"). */
 .lp-hero__cta {
   position: absolute;
   left: 50%;
-  bottom: var(--lp-hero-cta-bottom, 8%);
-  z-index: 1;
+  bottom: min(16.6px, 1.153vw);
   width: min(340px, 23.61vw);
-  transform: translate(-50%, 50%);
+  transform: translateX(-50%);
   line-height: 0;
   transition: transform 0.2s ease;
 }
 
 .lp-hero__cta:hover {
-  transform: translate(-50%, calc(50% - 2px));
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .lp-hero__cta:focus-visible {
-  outline: 2px solid #fbe9cc;
+  outline: 2px solid #1a2e1a;
   outline-offset: 4px;
 }
 
 .lp-hero__cta img {
   width: 100%;
   height: auto;
-}
-
-/* Text button, gold on the dark banner art */
-.lp-hero__cta--text {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  min-height: clamp(38px, 3.3vw, 52px);
-  padding: 0.2em clamp(22px, 2.2vw, 36px) 0;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #fbe9cc 0%, #e6c08b 100%);
-  box-shadow:
-    0 0 0 1px rgba(251, 233, 204, 0.35),
-    0 6px 24px rgba(230, 192, 139, 0.25);
-  color: #1c160c;
-  font-family: var(--lp-font-heading);
-  font-size: clamp(14px, 1.15vw, 18px);
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-/* Phones and tablets without a mobile image: the banner keeps its height and
-   swipes sideways, snapping to each panel (stops placed in the markup). */
-.lp-hero__stop,
-.lp-hero__arrow {
-  display: none;
-}
-
-.lp-hero__arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: 1px solid rgba(251, 233, 204, 0.4);
-  border-radius: 50%;
-  background: rgba(12, 12, 12, 0.6);
-  color: #fbe9cc;
-  cursor: pointer;
-  transform: translateY(-50%);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-}
-
-.lp-hero__arrow--prev {
-  left: 8px;
-}
-
-.lp-hero__arrow--next {
-  right: 8px;
-}
-
-.lp-hero__arrow:focus-visible {
-  outline: 2px solid #fbe9cc;
-  outline-offset: 2px;
-}
-
-@media screen and (max-width: 989px) {
-  .lp-hero__guest--swipe {
-    --lp-hero-swipe-height: 400px;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__scroller {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__scroller::-webkit-scrollbar {
-    display: none;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__track {
-    position: relative;
-    width: max-content;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__media {
-    width: calc(var(--lp-hero-swipe-height) * var(--lp-hero-ratio));
-    height: var(--lp-hero-swipe-height);
-  }
-
-  .lp-hero__guest--swipe .lp-hero__stop {
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 1px;
-    height: 1px;
-    scroll-snap-align: center;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__arrow {
-    display: flex;
-  }
-
-  .lp-hero__guest--swipe .lp-hero__arrow[hidden] {
-    display: none;
-  }
 }
 
 /* YourToken banner, from the "Loyalty Page" app block in the hero section:
@@ -1221,13 +1113,8 @@ loyalty-earn {
   }
 
   .lp-hero__cta {
+    bottom: 5px;
     width: min(42.8vw, 340px);
-  }
-
-  .lp-hero__cta--text {
-    width: auto;
-    min-height: 40px;
-    font-size: 15px;
   }
 
   /* Member dashboard */
@@ -1620,5 +1507,377 @@ loyalty-earn {
     left: 57px;
     top: 197px;
     width: 158px;
+  }
+}
+
+/* Dark presentation for the middle of the loyalty page. */
+.lp-premium {
+  --lp-premium-heading: #f4d9a6;
+  --lp-premium-text: #dfd4c4;
+  --lp-premium-border: #63523b;
+  --lp-premium-card: radial-gradient(ellipse at 50% 100%, #58432b 0%, transparent 62%),
+    linear-gradient(150deg, #292522, #1a1817 72%);
+  --lp-premium-serif: Georgia, 'Times New Roman', serif;
+  color: var(--lp-premium-text);
+}
+
+.lp-how.lp-premium,
+.lp-compare.lp-premium,
+.lp-earn__rewards.lp-premium {
+  padding: clamp(44px, 5.6vw, 82px) 16px;
+  background-color: #151311;
+}
+
+.lp-premium .lp-title,
+.lp .lp-premium .lp-title {
+  color: var(--lp-premium-heading);
+  font-family: var(--lp-premium-serif);
+  font-size: clamp(30px, 4.2vw, 54px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.lp-premium .lp-sub,
+.lp .lp-premium .lp-sub,
+.lp-premium .lp-rate__note {
+  margin-top: 12px;
+  color: var(--lp-premium-text);
+  font-family: var(--lp-font-body);
+  font-size: clamp(14px, 1.65vw, 17px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.lp-how.lp-premium {
+  position: relative;
+  isolation: isolate;
+  background-image: radial-gradient(ellipse at top right, #483824 0%, transparent 52%);
+}
+
+.lp-how.lp-premium::before {
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 60%;
+  background: linear-gradient(135deg, #473928, #211a15);
+  clip-path: polygon(0 48%, 12% 32%, 21% 41%, 34% 14%, 41% 24%, 50% 0, 59% 32%, 64% 23%, 71% 41%, 86% 19%, 100% 50%, 100% 100%, 0 100%);
+  content: '';
+  opacity: .42;
+  pointer-events: none;
+}
+
+.lp-premium .lp-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(14px, 2vw, 28px);
+  max-width: 1120px;
+  margin: clamp(30px, 4vw, 52px) auto 0;
+}
+
+.lp-premium .lp-step,
+.lp .lp-premium .lp-earn-card,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item {
+  position: relative;
+  min-width: 0;
+  padding: 28px 22px;
+  border: 1px solid var(--lp-premium-border);
+  border-radius: 18px;
+  background: var(--lp-premium-card);
+  box-shadow: inset 0 1px rgba(255, 230, 194, .09), 0 12px 24px rgba(0, 0, 0, .24);
+  color: var(--lp-premium-text);
+}
+
+.lp-premium .lp-step {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.lp-premium .lp-step__number {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid var(--lp-premium-border);
+  border-radius: 50%;
+  background: #28231e;
+  color: var(--lp-premium-heading);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lp-premium .lp-step__icon {
+  align-self: center;
+  width: min(100%, 150px);
+  margin: 0 0 18px;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .45));
+}
+
+.lp-premium .lp-step__title,
+.lp-premium .lp-tier-head__name,
+.lp-premium .lp-label-head__title {
+  color: var(--lp-premium-heading);
+  font-family: var(--lp-premium-serif);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.lp-premium .lp-step__text {
+  margin: 8px 0 0;
+  font: 400 14px/1.55 var(--lp-font-body);
+}
+
+.lp-premium .lp-rate {
+  display: block;
+  max-width: 1120px;
+  margin: 26px auto 0;
+  padding: 26px 16px;
+  border: 1px solid var(--lp-premium-border);
+  border-radius: 18px;
+  background: radial-gradient(ellipse at top center, #433521, #211d19 72%);
+}
+
+.lp-premium .lp-rate__row {
+  flex-direction: row;
+  gap: clamp(9px, 2.2vw, 20px);
+}
+
+.lp-premium .lp-rate__box {
+  flex: 0 1 auto;
+  width: auto;
+  padding: 12px clamp(12px, 3vw, 30px);
+  border: 1px solid #7e6849;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #493e31, #2b251e);
+  color: var(--lp-premium-heading);
+  font: 600 clamp(16px, 2.6vw, 27px)/1.2 var(--lp-premium-serif);
+}
+
+.lp-premium .lp-rate__equals {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 10px;
+  transform: none;
+}
+
+.lp-premium .lp-rate__equals::before,
+.lp-premium .lp-rate__equals::after {
+  height: 2px;
+  background: var(--lp-premium-heading);
+}
+
+.lp-compare.lp-premium {
+  border-block: 1px solid #382e22;
+  background: radial-gradient(ellipse at top, #2d251e, #181512 70%);
+}
+
+.lp-premium .lp-compare__panel {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.lp-premium .lp-table-scroll {
+  overflow-x: auto;
+  scrollbar-color: #917651 #201b16;
+}
+
+.lp-premium .lp-table-scroll:focus-visible,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item-action:focus-visible {
+  outline: 2px solid #f4d9a6;
+  outline-offset: 4px;
+}
+
+.lp-premium .lp-table {
+  padding-top: 16px;
+}
+
+.lp-premium .lp-tier--1 { --lp-tier-metal: #e6b389; }
+.lp-premium .lp-tier--2 { --lp-tier-metal: #e1e3e8; }
+.lp-premium .lp-tier--3 { --lp-tier-metal: #f2d08c; }
+
+.lp-premium .lp-tier-bg {
+  border: 1px solid var(--lp-premium-border);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #342b22, #211e1b 62%);
+  box-shadow: inset 0 1px rgba(255, 235, 207, .12);
+}
+
+.lp-premium .lp-tier-bg.lp-tier--2 {
+  border-color: #66656a;
+  background: linear-gradient(145deg, #302f33, #211f21 62%);
+}
+
+.lp-premium .lp-tier-bg.lp-tier--3 {
+  border-color: #8d7246;
+  background: linear-gradient(145deg, #433421, #252019 62%);
+}
+
+.lp-premium .lp-tier-head__name,
+.lp-premium .lp-cell__val {
+  color: var(--lp-tier-metal);
+}
+
+.lp-premium .lp-tier-head__badge {
+  width: clamp(52px, 7vw, 88px);
+  margin-bottom: 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, .35));
+}
+
+.lp-premium .lp-tier-head__divider,
+.lp-premium .lp-label-head__title,
+.lp-premium .lp-label,
+.lp-premium .lp-cell__in {
+  border-color: var(--lp-premium-border);
+  border-width: 1px;
+}
+
+.lp-premium .lp-tier-head__req,
+.lp-premium .lp-label-head__text,
+.lp-premium .lp-label {
+  color: var(--lp-premium-text);
+  font: 400 clamp(13px, 1.2vw, 16px)/1.55 var(--lp-font-body);
+  letter-spacing: 0;
+}
+
+.lp-premium .lp-cell__val {
+  font-size: clamp(17px, 2.2vw, 24px);
+}
+
+.lp-premium .lp-check circle {
+  fill: #775b2f;
+}
+
+.lp-premium .lp-check--no circle {
+  fill: #555159;
+}
+
+.lp.lp-earn {
+  padding: 0;
+}
+
+.lp .lp-earn__rewards .lp-earn__inner {
+  width: min(1120px, 100%);
+}
+
+.lp .lp-premium .lp-earn__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 28px);
+  margin-top: clamp(24px, 4vw, 42px);
+  padding: 0;
+  overflow: visible;
+}
+
+.lp .lp-premium .lp-earn-card,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item {
+  justify-content: flex-start;
+  min-height: 285px;
+}
+
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item {
+  padding: 28px 22px !important;
+}
+
+.lp .lp-premium .lp-earn-card__icon,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item-icon {
+  width: 106px;
+  height: 106px;
+  object-position: center;
+  background-position: center;
+}
+
+.lp .lp-premium .lp-earn-card__title,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item-title {
+  color: var(--lp-premium-heading) !important;
+  font-family: var(--lp-premium-serif);
+  font-size: clamp(20px, 2.7vw, 25px) !important;
+  line-height: 1.2 !important;
+}
+
+.lp .lp-premium .lp-earn-card__text,
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item-description {
+  margin: 12px 0 16px !important;
+  color: var(--lp-premium-text) !important;
+  font: 400 14px/1.55 var(--lp-font-body) !important;
+}
+
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item > div:last-child {
+  margin-top: auto !important;
+}
+
+.lp .lp-premium .yt-loyalty-page-ways-to-earn-item-action {
+  min-width: min(160px, 100%) !important;
+  min-height: 44px !important;
+  max-width: 100%;
+  border: 1px solid #9d7e4b !important;
+  background-color: #33291d !important;
+  box-shadow: none;
+  color: var(--lp-premium-heading) !important;
+}
+
+.lp .lp-earn__cta-area {
+  width: min(1120px, 100% - 60px);
+  padding: 20px 0 64px;
+}
+
+@media screen and (max-width: 768px) {
+  .lp-how.lp-premium .lp-container,
+  .lp-compare.lp-premium .lp-container {
+    width: 100%;
+  }
+
+  .lp-premium .lp-steps,
+  .lp .lp-premium .lp-earn__grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: min(430px, 100%);
+    margin-inline: auto;
+    gap: 18px;
+  }
+
+  .lp-premium .lp-step {
+    padding: 20px;
+  }
+
+  .lp-premium .lp-step__icon {
+    width: 115px;
+    margin-bottom: 12px;
+  }
+
+  .lp-premium .lp-table {
+    min-width: 620px;
+    grid-template-columns: 128px repeat(3, minmax(0, 1fr));
+  }
+
+  .lp-premium .lp-label-head,
+  .lp-premium .lp-label {
+    background: #201b16;
+  }
+
+  .lp-premium .lp-tier-head {
+    padding: 16px 10px;
+  }
+
+  .lp-premium .lp-tier-head__name {
+    font-size: 19px;
+  }
+
+  .lp-premium .lp-tier-head__req {
+    font-size: 13px;
+  }
+
+  .lp .lp-earn__cta-area {
+    width: min(260px, 100% - 20px);
+    padding: 20px 0 40px;
   }
 }

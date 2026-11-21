@@ -367,9 +367,7 @@ For breadcrumbs
     font-weight: 700;
 }
 .out-to-notify button:disabled{
-  background-color: #e0e0e0;
-  color: #777;
-  cursor: not-allowed;
+  background-color: #13bba2;
 }
 /* ── ATC ROW ── */
 .pm-atc-row {
@@ -470,6 +468,31 @@ For breadcrumbs
 
 .pm-amazon-btn:hover { border-color: #FF9900; }
 
+.pm-research-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  margin-bottom: 16px;
+  color: #46512e;
+  font-family: var(--font-family-normal, var(--font-body-family, sans-serif));
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pm-research-link-label {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.pm-research-link svg {
+  flex: none;
+}
+
 /* ── TRUST ICONS ── */
 .pm-trust-row {
     display: flex;
@@ -529,16 +552,46 @@ For breadcrumbs
 }
 
 .pm-accordion-body {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.pm-accordion-btn.open + .pm-accordion-body {
+  grid-template-rows: 1fr;
+}
+
+.pm-accordion-clip {
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
 }
 
 .pm-accordion-content {
   padding: 0 0 16px;
+  font-family: var(--font-family-normal, var(--font-body-family));
   font-size: 14px;
   color: #555;
   line-height: 1.7;
+}
+
+/* Product descriptions can bring their own inline typography. */
+.pm-accordion-content :where(div, section, article, p, span, a, ul, ol, li, dl, dt, dd, table, caption, th, td, blockquote, strong, b, em, i, small, font) {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.pm-accordion-content :is(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600;
+  line-height: 1.4 !important;
+  letter-spacing: normal;
+}
+
+.pm-accordion-content :is(h1, h2, h3, h4, h5, h6) :where(b, strong) {
+  font-weight: inherit;
 }
 
 /* ══════════════════════
@@ -824,6 +877,68 @@ For breadcrumbs
 }
 .pm-offer-text span{
   font-weight: 600;
+}
+
+.pm-checkout-offers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pm-checkout-offer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: start;
+  gap: 8px 14px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #d9e5e0;
+  border-radius: 8px;
+  background: #fff;
+  color: #24352e;
+  font-family: var(--font-family-normal, 'Archivo'), var(--font-body-family, Arial, sans-serif);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.pm-checkout-offer--featured {
+  border-color: #07594f;
+  background: #07594f;
+  color: #fff;
+}
+
+.pm-checkout-offer-rate {
+  display: grid;
+  flex: 0 0 66px;
+  gap: 2px;
+  color: #07594f;
+  font-size: 12px;
+}
+
+.pm-checkout-offer-rate strong {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pm-checkout-offer--featured .pm-checkout-offer-rate {
+  color: inherit;
+}
+
+.pm-checkout-offer-details {
+  display: grid;
+  flex: 1 1 118px;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pm-checkout-offer-note {
+  color: #435e54;
+  font-size: 12px;
 }
 
 .pm-coupon-row {
@@ -1159,103 +1274,4 @@ div[onclick="applyPromisePincode()"] {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-}
-
-/* ── STATES SET BY assets/product-main.js ── */
-[data-pm-root] [hidden],
-.pm-share-status[hidden] {
-  display: none !important;
-}
-
-.pm-variant-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.pm-variant-card:not(.active) .pm-variant-check {
-  visibility: hidden;
-}
-
-.pm-variant-card:focus-visible,
-.pm-thumb:focus-visible {
-  outline: 2px solid #048E79;
-  outline-offset: 2px;
-}
-
-.pm-variant-card.is-sold-out {
-  opacity: 0.6;
-}
-
-.pm-variant-card.is-sold-out .pm-variant-main-price {
-  text-decoration: line-through;
-}
-
-.pm-variant-soldout {
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #990000;
-}
-
-/* Only the visible slide takes clicks and long-presses. */
-.pm-main-slide:not(.active) {
-  pointer-events: none;
-}
-
-.pm-main-slide.active {
-  z-index: 1;
-}
-
-.pm-main-counter {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.pm-qty-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.pm-atc-btn:disabled,
-.pm-atc-btn:disabled:hover,
-.pm-buy-btn:disabled,
-.pm-buy-btn:disabled:hover {
-  background: #e0e0e0;
-  border-color: #e0e0e0;
-  color: #777;
-  cursor: not-allowed;
-}
-
-.pm-qty-note,
-.pm-cart-error {
-  margin: 0 0 12px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #555;
-}
-
-.pm-cart-error {
-  color: #b42318;
-}
-
-.pm-share-status {
-  margin-left: auto;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1a6b4a;
-}
-
-.pm-share-status:not([hidden]) + .pm-share-btn {
-  margin-left: 8px;
 }

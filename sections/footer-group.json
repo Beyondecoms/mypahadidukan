@@ -1,1 +1,82 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"link_list_9rMPiR":{"type":"link_list","settings":{"heading":"Quick Links","menu":"collections-menu"}},"link_list_JNhYGa":{"type":"link_list","settings":{"heading":"Policies","menu":"policies"}},"link_list_GetkpH":{"type":"link_list","settings":{"heading":"Company","menu":"footerc"}}},"block_order":["link_list_9rMPiR","link_list_JNhYGa","link_list_GetkpH"],"settings":{"bg_color":"#1a6b4a","bg_image":"shopify:\/\/shop_images\/Footer.jpg","bg_image_mobile":"shopify:\/\/shop_images\/Footer_b0ccc3d0-cb82-4dfe-b038-4936637357e6.png","overlay_color":"#00000059","logo":"shopify:\/\/shop_images\/image_831_c6d42927-e709-41ba-ac62-eca8240ddd2d.png","logo_mobile":"shopify:\/\/shop_images\/Group_1321314678_1.png","logo_width":140,"brand_description":"Discover authentic products rooted in Pahadi culture.","brand_disclaimer":"--The products listed on this website are not intended to diagnose, treat, cure, or prevent any disease.--","newsletter_enable":true,"newsletter_heading":"Subscribe to our emails","newsletter_placeholder":"Example@gmail.com","newsletter_subtext":"Get Exclusive Coupons in Your Mail Box","social_linkedin":"https:\/\/www.linkedin.com\/company\/mypahadidukan\/","social_email":"","payment_enable":true,"show_policy":false,"margin_top":0,"padding_top":36,"padding_bottom":36}},"mobile-bottom-nav":{"type":"mobile-bottom-nav","settings":{"shop_url":"","whatsapp_url":"https:\/\/wa.me\/919999999999","menu":"","bg_color":"#1a6b4a","active_color":"#1a6b4a"}}},"order":["footer","mobile-bottom-nav"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_9rMPiR": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "collections-menu"
+          }
+        },
+        "link_list_JNhYGa": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Policies",
+            "menu": "policies"
+          }
+        },
+        "link_list_GetkpH": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Company",
+            "menu": "footerc"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_9rMPiR",
+        "link_list_JNhYGa",
+        "link_list_GetkpH"
+      ],
+      "settings": {
+        "bg_color": "#1a6b4a",
+        "bg_image": "shopify://shop_images/Footer.jpg",
+        "bg_image_mobile": "shopify://shop_images/Footer_b0ccc3d0-cb82-4dfe-b038-4936637357e6.png",
+        "overlay_color": "#00000059",
+        "logo": "shopify://shop_images/image_831_c6d42927-e709-41ba-ac62-eca8240ddd2d.png",
+        "logo_mobile": "shopify://shop_images/Group_1321314678_1.png",
+        "logo_width": 140,
+        "brand_description": "Discover authentic products rooted in Pahadi culture.",
+        "brand_disclaimer": "--The products listed on this website are not intended to diagnose, treat, cure, or prevent any disease.--",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_placeholder": "Example@gmail.com",
+        "newsletter_subtext": "Get Exclusive Coupons in Your Mail Box",
+        "social_linkedin": "https://www.linkedin.com/company/mypahadidukan/",
+        "social_email": "",
+        "payment_enable": true,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "mobile-bottom-nav": {
+      "type": "mobile-bottom-nav",
+      "settings": {
+        "shop_url": "",
+        "whatsapp_url": "https://wa.me/919999999999",
+        "menu": "",
+        "bg_color": "#1a6b4a",
+        "active_color": "#1a6b4a"
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "mobile-bottom-nav"
+  ]
+}
