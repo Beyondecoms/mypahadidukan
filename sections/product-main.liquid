@@ -278,14 +278,22 @@
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </button>
+          <!-- Zoom hint icon -->
+          <span class="pm-zoom-hint" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </span>
           <div class="pm-main-image-slider" id="pm-main-slider-{{ section.id }}">
             {%- for image in product.images -%}
               <div class="pm-main-slide {% if forloop.first %}active{% endif %}">
                 <img
                   src="{{ image | image_url: width: 900 }}"
+                  data-zoom-src="{{ image | image_url: width: 1800 }}"
                   alt="{{ product.title }}"
-                  class="pm-main-img"
+                  class="pm-main-img pm-zoomable"
                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Zoom image: {{ product.title }}"
                 >
               </div>
             {%- endfor -%}
@@ -382,6 +390,44 @@
     </div>
   </div>
 </div>
+
+<!-- ══ PRODUCT IMAGE LIGHTBOX (desktop + mobile) ══ -->
+<div
+  id="pm-lightbox"
+  class="pm-lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Product image viewer"
+  aria-hidden="true"
+  tabindex="-1"
+>
+  <div class="pm-lightbox-backdrop" id="pm-lightbox-backdrop"></div>
+  <button class="pm-lightbox-close" id="pm-lightbox-close" aria-label="Close image viewer">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="pm-lightbox-inner">
+    <img
+      id="pm-lightbox-img"
+      class="pm-lightbox-image"
+      src=""
+      alt=""
+      draggable="false"
+    >
+    <div class="pm-lightbox-loader" id="pm-lightbox-loader" aria-hidden="true">
+      <svg width="36" height="36" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="80 20" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.8s" repeatCount="indefinite"/></circle></svg>
+    </div>
+  </div>
+  <div class="pm-lightbox-counter" id="pm-lightbox-counter" aria-live="polite"></div>
+  {%- if product.images.size > 1 -%}
+  <button class="pm-lightbox-arrow pm-lightbox-prev" id="pm-lightbox-prev" aria-label="Previous image">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="pm-lightbox-arrow pm-lightbox-next" id="pm-lightbox-next" aria-label="Next image">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  {%- endif -%}
+</div>
+
 <div class="pm-mobile-only">
   {% render 'product-main-mobile' %}
 </div>
@@ -406,6 +452,8 @@
     mainSlides[currentImg].classList.add('active');
     mainDots[currentImg] && mainDots[currentImg].classList.add('active');
     thumbs[currentImg] && thumbs[currentImg].classList.add('active');
+    // Notify lightbox of slide change
+    document.dispatchEvent(new CustomEvent('pm:slideChange', { detail: { idx: currentImg } }));
   }
 
   mainDots.forEach(function(dot, i) {
@@ -593,7 +641,128 @@ document.getElementById('pm-buy-btn').addEventListener('click', function() {
   window.location.href = '/checkout?variant=' + selectedVariantId + '&quantity=' + qty;
 });
 
-  // ── PINCODE CHECK ──
+  // ── PRODUCT IMAGE LIGHTBOX / ZOOM ──
+(function () {
+  var lightbox      = document.getElementById('pm-lightbox');
+  var lbImg         = document.getElementById('pm-lightbox-img');
+  var lbLoader      = document.getElementById('pm-lightbox-loader');
+  var lbClose       = document.getElementById('pm-lightbox-close');
+  var lbBackdrop    = document.getElementById('pm-lightbox-backdrop');
+  var lbPrev        = document.getElementById('pm-lightbox-prev');
+  var lbNext        = document.getElementById('pm-lightbox-next');
+  var lbCounter     = document.getElementById('pm-lightbox-counter');
+  if (!lightbox || !lbImg) return;
+
+  // Collect all zoomable images (desktop section only)
+  var zoomableImgs = Array.from(
+    document.querySelectorAll('#pm-section-{{ section.id }} .pm-zoomable')
+  );
+  var totalImgs = zoomableImgs.length;
+  var lbIndex   = 0;
+  var previouslyFocused = null;
+
+  function openLightbox(idx) {
+    if (totalImgs === 0) return;
+    lbIndex = ((idx % totalImgs) + totalImgs) % totalImgs;
+    previouslyFocused = document.activeElement;
+
+    var img = zoomableImgs[lbIndex];
+    var hiResSrc = img.dataset.zoomSrc || img.src;
+    var altText  = img.alt || '{{ product.title | escape }}';
+
+    // Show loader, hide old image
+    lbImg.style.opacity = '0';
+    if (lbLoader) lbLoader.style.display = 'flex';
+
+    // Load high-res image
+    var tempImg = new Image();
+    tempImg.onload = function () {
+      lbImg.src = hiResSrc;
+      lbImg.alt = altText;
+      lbImg.style.opacity = '1';
+      if (lbLoader) lbLoader.style.display = 'none';
+    };
+    tempImg.onerror = function () {
+      // Fallback to displayed src
+      lbImg.src = img.src;
+      lbImg.alt = altText;
+      lbImg.style.opacity = '1';
+      if (lbLoader) lbLoader.style.display = 'none';
+    };
+    tempImg.src = hiResSrc;
+
+    // Counter
+    if (lbCounter && totalImgs > 1) {
+      lbCounter.textContent = (lbIndex + 1) + ' / ' + totalImgs;
+    }
+
+    // Show lightbox
+    lightbox.setAttribute('aria-hidden', 'false');
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    lbClose && lbClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+    if (previouslyFocused) previouslyFocused.focus();
+  }
+
+  function goLightbox(dir) {
+    openLightbox(lbIndex + dir);
+  }
+
+  // Click on any main image
+  zoomableImgs.forEach(function (img, i) {
+    img.addEventListener('click', function () { openLightbox(i); });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(i);
+      }
+    });
+  });
+
+  // Close button
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  // Backdrop click
+  if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
+  // Arrow buttons
+  if (lbPrev) lbPrev.addEventListener('click', function () { goLightbox(-1); });
+  if (lbNext) lbNext.addEventListener('click', function () { goLightbox(1); });
+
+  // Keyboard: ESC / arrow keys
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape')      { closeLightbox(); }
+    else if (e.key === 'ArrowLeft')  { goLightbox(-1); }
+    else if (e.key === 'ArrowRight') { goLightbox(1); }
+  });
+
+  // Touch/swipe support (mobile)
+  var touchStartX = null;
+  lightbox.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', function (e) {
+    if (touchStartX === null) return;
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { goLightbox(diff > 0 ? 1 : -1); }
+    touchStartX = null;
+  }, { passive: true });
+
+  // When gallery changes slide (via goToImage), keep lbIndex in sync
+  // so nav arrows in lightbox follow the visible slide
+  document.addEventListener('pm:slideChange', function (e) {
+    lbIndex = e.detail.idx;
+    if (lbCounter && totalImgs > 1) {
+      lbCounter.textContent = (lbIndex + 1) + ' / ' + totalImgs;
+    }
+  });
+})();
   {% comment %} document.getElementById('pm-pincode-btn').addEventListener('click', function() {
     var pin = document.getElementById('pm-pincode').value;
     var result = document.getElementById('pm-delivery-result');
