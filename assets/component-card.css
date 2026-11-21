@@ -17,7 +17,7 @@
   background: #fff; display: flex; flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-family-normal);
   pointer-events: all;
 }
 .nc-drawer.is-open .nc-panel { transform: translateX(0); }

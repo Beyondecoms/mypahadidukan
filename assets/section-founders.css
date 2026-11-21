@@ -30,7 +30,7 @@
 }
 
 .team-label-text {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: .22em;
@@ -40,7 +40,7 @@
 /* --- HEADING --- */
 
 .team-heading {
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
     font-size: var(--font-heading-size);
     font-weight: 500;
     line-height: 1.15;
@@ -138,7 +138,7 @@
 }
 
 .team-card-name {
-  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-family: var(--font-heading-family);
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 0.025em;
@@ -148,7 +148,7 @@
 }
 
 .team-card-role {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family-normal);
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.1em;

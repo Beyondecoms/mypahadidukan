@@ -30,7 +30,7 @@
 }
 
 .mission-label-text {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family-normal);
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.18em;
@@ -40,7 +40,7 @@
 /* --- HEADING --- */
 
 .mission-heading {
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
     font-size: var(--font-heading-size);
     font-weight: 400;
     line-height: 1.4;
@@ -94,7 +94,7 @@
 }
 
 .mission-stat-label {
-  font-family: Inter,sans-serif;
+  font-family: var(--font-family-normal);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.16em;

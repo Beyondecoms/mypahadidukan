@@ -34,7 +34,7 @@
 }
 
 .vision-label-text {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-normal);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.22em;
@@ -42,7 +42,7 @@
 }
 
 .vision-heading {
-  font-family: "Mrs Eaves Small Caps", "IM Fell English SC", Georgia, serif;
+  font-family: var(--font-heading-family);
   font-size: var(--font-heading-size);
   font-weight: 400;
   line-height: 1.15;
@@ -67,7 +67,7 @@
 }
 
 .vision-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-family-normal);
   font-size: inherit;
   line-height: 1.75;
   margin: 0;
@@ -89,7 +89,7 @@
 }
 
 .vision-quote-heading {
-  font-family: "Mrs Eaves Small Caps", "IM Fell English SC", Georgia, serif;
+  font-family: var(--font-heading-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 400;

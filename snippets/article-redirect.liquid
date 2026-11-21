@@ -94,7 +94,7 @@
     </script>
     <noscript>
       <meta http-equiv="refresh" content="0; url={{ redirect_target_url }}">
-      <div style="padding: 40px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <div style="padding: 40px; text-align: center; font-family: var(--font-family-normal);">
         <p style="font-size: 16px; color: #201d1b;">
           Redirecting to <a href="{{ redirect_target_url }}" style="color: #008b75; font-weight: 700;">{{ redirect_target_url }}</a>...
         </p>
@@ -102,3 +102,4 @@
     </noscript>
   {%- endif -%}
 {%- endunless -%}
+

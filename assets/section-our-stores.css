@@ -44,7 +44,7 @@
   letter-spacing: 0.14em;
   color: #e8754d;
   text-transform: uppercase;
-  font-family: Inter,sans-serif;
+  font-family: var(--font-family-normal);
   margin-bottom: 12px;
 }
 
@@ -53,7 +53,7 @@
   font-size: var(--font-heading-size);
   font-weight: 400;
   color:#0f6b5c;
-  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-family: var(--font-heading-family);
   font-variant: small-caps;
   margin: 0;
   line-height: 1.1;
@@ -78,7 +78,7 @@
   line-height: 1.7;
   color: #3a4a44;
   margin: 0 0 12px;
-  font-family: Inter,sans-serif;
+  font-family: var(--font-family-normal);
 }
 
 /* Meta row */
@@ -206,7 +206,7 @@
   font-weight: 400;
   color: #f5f1e4;
   margin: 0 0 2px;
-  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-family: var(--font-heading-family);
   font-variant: small-caps;
   letter-spacing: 0.02em;
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
@@ -219,7 +219,7 @@
     color: #f7edb1;
     margin: 0;
     text-transform: uppercase;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 /* Map pin */
@@ -258,7 +258,7 @@
     font-weight: 400;
     color: #0f6b5c;
     margin: 0 0 6px;
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
     font-variant: small-caps;
     letter-spacing: .01em;
 }
@@ -268,7 +268,7 @@
     color: #3a4a44;
     line-height: 1.6;
     margin: 0;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 .os-card-divider {
@@ -296,13 +296,13 @@
     letter-spacing: .12em;
     color: #3a4a44;
     text-transform: uppercase;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 .os-info-val {
     font-size: 13px;
     color: #1b2420;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 .os-info-phone {
@@ -397,7 +397,7 @@
     letter-spacing: .22em;
     color: #e07b39;
     text-transform: uppercase;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 .os-soon-cities {
@@ -405,7 +405,7 @@
     font-weight: 400;
     color: #0f6b5c;
     margin: 0;
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
     font-variant: small-caps;
     letter-spacing: .06em;
 }

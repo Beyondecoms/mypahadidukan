@@ -35,7 +35,7 @@
   letter-spacing: 0.1em;
   color: #3d2b1a;
   margin-bottom: 28px;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-normal);
 
 }
 
@@ -53,7 +53,7 @@
   font-weight: 400;
   line-height: 1.1;
   margin: 0 0 28px;
-  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-family: var(--font-heading-family);
   color: var(--primary-web-color);
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@
   color: #1a6b4a;
   font-variant: normal;
   font-weight: 500;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--font-heading-family);
 }
 
 .bh-suffix {
@@ -119,7 +119,7 @@
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
     transition: background .2s ease, transform .15s ease;
 }
 
@@ -135,7 +135,7 @@
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-normal);
   transition: color 0.2s ease;
 }
 
@@ -202,7 +202,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   color: #3a4a44;
-  font-family: Inter,sans-serif;
+  font-family: var(--font-family-normal);
   text-transform: uppercase;
 }
 

@@ -545,7 +545,7 @@
   }
 
   .sort-header h3 {
-    font-family: "Mrs Eaves", serif;
+    font-family: var(--font-heading-family);
     font-size: 22px;
     font-weight: normal;
     color: #231F20;
@@ -639,7 +639,7 @@
     justify-content: center;
     gap: 6px;
     /* padding-bottom: 20px; */
-    font-family: "Inter";
+    font-family: var(--font-family-normal);
     font-size: 14px;
     margin-top: 13px;
   }
@@ -653,7 +653,7 @@
     background: transparent;
     color: #231F20;
     cursor: pointer;
-    font-family: "Inter";
+    font-family: var(--font-family-normal);
     font-size: 16px;
     gap:10px;
     display: flex;
@@ -920,7 +920,7 @@
 
   .sd-mobile-header h3 {
     font-size: 18px;
-    font-family: Montserrat;
+    font-family: var(--font-family-normal);
     font-weight: 600;
     color: #1a1a1a;
     margin: 0;

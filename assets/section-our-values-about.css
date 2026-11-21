@@ -29,7 +29,7 @@
     letter-spacing: .14em;
     color: #e8754d;
     text-transform: uppercase;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
     margin-bottom: 12px;
 }
 
@@ -41,7 +41,7 @@
     word-spacing: 13px;
     font-weight: 400;
     text-transform: uppercase;
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
 }
 .ov-wrapper{
     display: flex;
@@ -51,7 +51,7 @@
     max-width: 515px;
     color: #3a4a44;
     font-size: inherit;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
     line-height: 1.4;
     margin-top: 15px;
 }
@@ -104,12 +104,12 @@
   color: #e07b39;
   font-size: 21px;
   letter-spacing: 2px;
-  font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+  font-family: var(--font-heading-family);
 }
 
 .ov-card-title {
     color: #0f6b5c;
-    font-family: Mrs Eaves Small Caps, IM Fell English SC, Georgia, serif;
+    font-family: var(--font-heading-family);
     font-weight: 400;
     letter-spacing: .01em;
     font-size: 28px;
@@ -121,7 +121,7 @@
     font-size: inherit;
     line-height: 1.65;
     margin-top: 12px;
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-normal);
 }
 
 /* HIGHLIGHT CARD */
@@ -144,7 +144,7 @@
   line-height: 1.4;
   font-weight: 400;
   text-transform: uppercase;
-  font-family: Mrs Eaves Small Caps,IM Fell English SC,Georgia,serif;
+  font-family: var(--font-heading-family);
 }
 
 .ov-highlight-text strong {
