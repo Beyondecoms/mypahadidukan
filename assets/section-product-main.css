@@ -367,7 +367,9 @@ For breadcrumbs
     font-weight: 700;
 }
 .out-to-notify button:disabled{
-  background-color: #13bba2;
+  background-color: #e0e0e0;
+  color: #777;
+  cursor: not-allowed;
 }
 /* ── ATC ROW ── */
 .pm-atc-row {
@@ -1467,4 +1469,103 @@ div[onclick="applyPromisePincode()"] {
 
   .pm-lightbox-prev { left: 8px; }
   .pm-lightbox-next { right: 8px; }
+}
+
+/* ── STATES SET BY assets/product-main.js ── */
+[data-pm-root] [hidden],
+.pm-share-status[hidden] {
+  display: none !important;
+}
+
+.pm-variant-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pm-variant-card:not(.active) .pm-variant-check {
+  visibility: hidden;
+}
+
+.pm-variant-card:focus-visible,
+.pm-thumb:focus-visible {
+  outline: 2px solid #048E79;
+  outline-offset: 2px;
+}
+
+.pm-variant-card.is-sold-out {
+  opacity: 0.6;
+}
+
+.pm-variant-card.is-sold-out .pm-variant-main-price {
+  text-decoration: line-through;
+}
+
+.pm-variant-soldout {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #990000;
+}
+
+/* Only the visible slide takes clicks and long-presses. */
+.pm-main-slide:not(.active) {
+  pointer-events: none;
+}
+
+.pm-main-slide.active {
+  z-index: 1;
+}
+
+.pm-main-counter {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pm-qty-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pm-atc-btn:disabled,
+.pm-atc-btn:disabled:hover,
+.pm-buy-btn:disabled,
+.pm-buy-btn:disabled:hover {
+  background: #e0e0e0;
+  border-color: #e0e0e0;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.pm-qty-note,
+.pm-cart-error {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.pm-cart-error {
+  color: #b42318;
+}
+
+.pm-share-status {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a6b4a;
+}
+
+.pm-share-status:not([hidden]) + .pm-share-btn {
+  margin-left: 8px;
 }

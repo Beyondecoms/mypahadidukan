@@ -84,7 +84,7 @@ loyalty-earn {
 
 .lp-hero {
   position: relative;
-  background: #f7f7f7;
+  background: var(--lp-hero-bg, #0c0c0c);
 }
 
 .lp-hero__guest {
@@ -112,28 +112,136 @@ loyalty-earn {
   object-position: 50% 0;
 }
 
+/* Centred on a line --lp-hero-cta-bottom up from the banner's bottom edge
+   ("Button position from bottom"). */
 .lp-hero__cta {
   position: absolute;
   left: 50%;
-  bottom: min(16.6px, 1.153vw);
+  bottom: var(--lp-hero-cta-bottom, 8%);
+  z-index: 1;
   width: min(340px, 23.61vw);
-  transform: translateX(-50%);
+  transform: translate(-50%, 50%);
   line-height: 0;
   transition: transform 0.2s ease;
 }
 
 .lp-hero__cta:hover {
-  transform: translateX(-50%) translateY(-2px);
+  transform: translate(-50%, calc(50% - 2px));
 }
 
 .lp-hero__cta:focus-visible {
-  outline: 2px solid #1a2e1a;
+  outline: 2px solid #fbe9cc;
   outline-offset: 4px;
 }
 
 .lp-hero__cta img {
   width: 100%;
   height: auto;
+}
+
+/* Text button, gold on the dark banner art */
+.lp-hero__cta--text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: clamp(38px, 3.3vw, 52px);
+  padding: 0.2em clamp(22px, 2.2vw, 36px) 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fbe9cc 0%, #e6c08b 100%);
+  box-shadow:
+    0 0 0 1px rgba(251, 233, 204, 0.35),
+    0 6px 24px rgba(230, 192, 139, 0.25);
+  color: #1c160c;
+  font-family: var(--lp-font-heading);
+  font-size: clamp(14px, 1.15vw, 18px);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Phones and tablets without a mobile image: the banner keeps its height and
+   swipes sideways, snapping to each panel (stops placed in the markup). */
+.lp-hero__stop,
+.lp-hero__arrow {
+  display: none;
+}
+
+.lp-hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(251, 233, 204, 0.4);
+  border-radius: 50%;
+  background: rgba(12, 12, 12, 0.6);
+  color: #fbe9cc;
+  cursor: pointer;
+  transform: translateY(-50%);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.lp-hero__arrow--prev {
+  left: 8px;
+}
+
+.lp-hero__arrow--next {
+  right: 8px;
+}
+
+.lp-hero__arrow:focus-visible {
+  outline: 2px solid #fbe9cc;
+  outline-offset: 2px;
+}
+
+@media screen and (max-width: 989px) {
+  .lp-hero__guest--swipe {
+    --lp-hero-swipe-height: 400px;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__scroller {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__track {
+    position: relative;
+    width: max-content;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__media {
+    width: calc(var(--lp-hero-swipe-height) * var(--lp-hero-ratio));
+    height: var(--lp-hero-swipe-height);
+  }
+
+  .lp-hero__guest--swipe .lp-hero__stop {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    scroll-snap-align: center;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__arrow {
+    display: flex;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__arrow[hidden] {
+    display: none;
+  }
 }
 
 /* YourToken banner, from the "Loyalty Page" app block in the hero section:
@@ -1113,8 +1221,13 @@ loyalty-earn {
   }
 
   .lp-hero__cta {
-    bottom: 5px;
     width: min(42.8vw, 340px);
+  }
+
+  .lp-hero__cta--text {
+    width: auto;
+    min-height: 40px;
+    font-size: 15px;
   }
 
   /* Member dashboard */

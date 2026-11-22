@@ -1,19 +1,29 @@
 {{ 'section-blog-articles-grid.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  # Start on the blog in the URL (/blogs/travel opens Travel), else the first one.
+  assign active_index = 0
+  for block in section.blocks
+    if block.settings.blog_handle == blog.handle
+      assign active_index = forloop.index0
+    endif
+  endfor
+-%}
+{%- assign active_block = section.blocks[active_index] -%}
 
 <div class="bag-section" style="background: {{ section.settings.bg_color }};" id="bag-{{ section.id }}">
   <div class="bag-wrapper">
 
     <!-- Category Title -->
-    <h2 class="bag-active-title" id="bag-title-{{ section.id }}">
-      {{ section.blocks.first.settings.blog_label | default: section.blocks.first.settings.blog_handle }}
-    </h2>
+    <h1 class="bag-active-title" id="bag-title-{{ section.id }}">
+      {{ active_block.settings.blog_label | default: active_block.settings.blog_handle | default: blog.title }}
+    </h1>
 
     <!-- Panels -->
     <div class="bag-panels-wrap" id="bag-panels-{{ section.id }}">
       {%- for block in section.blocks -%}
         {%- assign blog_obj = blogs[block.settings.blog_handle] -%}
         <div
-          class="bag-panel {% if forloop.first %}active{% endif %}"
+          class="bag-panel {% if forloop.index0 == active_index %}active{% endif %}"
           data-panel="{{ forloop.index0 }}"
           data-blog="{{ block.settings.blog_handle }}"
           data-label="{{ block.settings.blog_label | default: block.settings.blog_handle }}"
@@ -35,7 +45,7 @@
                     {%- endif -%}
                   </div>
                   <div class="bag-card-body">
-                    <h3 class="bag-card-title">{{ article.title }}</h3>
+                    <h2 class="bag-card-title">{{ article.title }}</h2>
                     <p class="bag-card-excerpt">
                       {{ article.excerpt_or_content | strip_html | truncate: 120 }}
                     </p>
@@ -68,7 +78,7 @@
 
     var panels  = Array.from(sectionEl.querySelectorAll('.bag-panel'));
     var titleEl = document.getElementById('bag-title-{{ section.id }}');
-    var current = 0;
+    var current = Math.max(0, panels.findIndex(function (p) { return p.classList.contains('active'); }));
     var perPage = parseInt('{{ section.settings.articles_per_page }}') || 6;
 
     // ── INIT all panels ──

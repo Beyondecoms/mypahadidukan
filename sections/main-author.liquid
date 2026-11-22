@@ -1,0 +1,171 @@
+{%- comment -%}
+  Author profile page: Metaobjects › Author, web pages at /pages/author/<handle>
+  (template: templates/metaobject/author.json).
+  Shows the author's photo, role, name and bio, then every article whose
+  article.metafields.custom.author points to this author (a single reference
+  or a list), from the blogs listed in the section settings.
+  Article cards reuse the blog listing's styles: section-blog-articles-grid.css.
+{%- endcomment -%}
+{{ 'section-blog-articles-grid.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign author = metaobject
+  assign blog_handles = section.settings.blog_handles | remove: ' ' | split: ','
+-%}
+
+<style>
+  #author-{{ section.id }} .author-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 720px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+  #author-{{ section.id }} .author-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  #author-{{ section.id }} .author-role {
+    margin: 0;
+    font-size: 15px;
+    color: #666666;
+  }
+  #author-{{ section.id }} .author-name {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.2;
+    color: #231f20;
+  }
+  #author-{{ section.id }} .author-bio {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #414651;
+  }
+  #author-{{ section.id }} .author-bio p:last-child {
+    margin-bottom: 0;
+  }
+  #author-{{ section.id }} .author-posts-heading {
+    margin: 0 0 24px;
+    text-align: center;
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    font-size: clamp(26px, 4vw, 34px);
+    color: #231f20;
+  }
+</style>
+
+<div class="bag-section" id="author-{{ section.id }}" style="background: {{ section.settings.bg_color }};">
+  <div class="bag-wrapper">
+    <div class="author-profile">
+      {%- if author.photo.value != blank -%}
+        {{
+          author.photo.value
+          | image_url: width: 320, height: 320, crop: 'center'
+          | image_tag: alt: author.name.value, class: 'author-photo', width: 160, height: 160
+        }}
+      {%- endif -%}
+      {%- if author.role.value != blank -%}
+        <p class="author-role">{{ author.role.value }}</p>
+      {%- endif -%}
+      <h1 class="author-name">{{ author.name.value | default: author.system.handle }}</h1>
+      {%- if author.bio.value != blank -%}
+        <div class="author-bio rte">{{ author.bio | metafield_tag }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- capture cards -%}
+      {%- for handle in blog_handles -%}
+        {%- assign source_blog = blogs[handle] -%}
+        {%- if source_blog != blank -%}
+          {%- paginate source_blog.articles by 250 -%}
+            {%- for post in source_blog.articles -%}
+              {%- liquid
+                assign post_author = post.metafields.custom.author
+                assign is_match = false
+                if post_author.type contains 'list'
+                  for ref in post_author.value
+                    if ref.system.id == author.system.id
+                      assign is_match = true
+                      break
+                    endif
+                  endfor
+                elsif post_author.value.system.id == author.system.id
+                  assign is_match = true
+                endif
+              -%}
+              {%- if is_match -%}
+                <a href="{{ post.url }}" class="bag-card">
+                  <div class="bag-card-img-wrap">
+                    {%- if post.image != blank -%}
+                      <img
+                        src="{{ post.image | image_url: width: 600 }}"
+                        alt="{{ post.image.alt | default: post.title | escape }}"
+                        class="bag-card-img"
+                        loading="lazy"
+                        width="600"
+                        height="{{ 600 | divided_by: post.image.aspect_ratio | round }}"
+                      >
+                    {%- else -%}
+                      <div class="bag-card-img-placeholder"></div>
+                    {%- endif -%}
+                  </div>
+                  <div class="bag-card-body">
+                    <h3 class="bag-card-title">{{ post.title }}</h3>
+                    <p class="bag-card-excerpt">{{ post.excerpt_or_content | strip_html | truncate: 120 }}</p>
+                    <div class="bag-card-read">
+                      Read More
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 8 16 12 12 16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if cards != blank -%}
+      <h2 class="author-posts-heading">{{ section.settings.posts_heading | replace: '[name]', author.name.value | escape }}</h2>
+      <div class="bag-grid">{{ cards }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Author page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "blog_handles",
+      "label": "Blogs to list articles from",
+      "info": "Blog handles separated by commas.",
+      "default": "info,shilajit,travel,health-and-wellness,recipes"
+    },
+    {
+      "type": "text",
+      "id": "posts_heading",
+      "label": "Articles heading",
+      "info": "[name] is replaced with the author's name.",
+      "default": "Articles by [name]"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

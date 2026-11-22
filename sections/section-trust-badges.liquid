@@ -44,7 +44,9 @@
           {%- else -%}
             <p class="tb-title">{{ block.settings.title }}</p>
           {%- endif -%}
-          <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+          {%- if block.settings.subtitle != blank -%}
+            <p class="tb-subtitle">{{ block.settings.subtitle }}</p>
+          {%- endif -%}
         </div>
 
       </div>

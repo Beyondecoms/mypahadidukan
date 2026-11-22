@@ -11,18 +11,10 @@
   "sections": {
     "hero": {
       "type": "loyalty-hero",
-      "blocks": {
-        "yourtoken_loyalty_banner": {
-          "type": "shopify://apps/yourtoken-loyalty/blocks/loyalty-page-block/019b3be8-f559-70af-9e2e-d3b502d6f55f",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "yourtoken_loyalty_banner"
-      ],
       "settings": {
         "heading": "Loyalty Circle",
-        "image_alt": "Join the Loyalty Circle: sign up and shop, earn 10 points for every ₹100 spent, then keep shopping to upgrade tiers and unlock perks.",
+        "desktop_image": "shopify://shop_images/4_09533922-dc71-4b57-89d2-751427355620.jpg",
+        "image_alt": "How the Loyalty Circle works. 1, Start your trek: sign up and shop on our website to join the My Pahadi Dukan Loyalty Circle. 2, Harvest the points: every ₹100 spent earns points, redeem them for free Himalayan goodness. 3, Reach the peak: keep shopping to rise through the tiers and unlock special perks.",
         "show_button": true,
         "button_label": "Start your journey",
         "open_yourtoken": true,

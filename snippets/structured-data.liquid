@@ -1,0 +1,104 @@
+{%- comment -%}
+  Site-wide JSON-LD, rendered once from layout/theme.liquid:
+  - Organization and WebSite (with site search) on the homepage
+  - BreadcrumbList on product, collection, blog, article and page templates
+  Product schema is output by sections/product-main.liquid.
+{%- endcomment -%}
+{%- liquid
+  assign origin = request.origin
+  assign home_url = origin | append: routes.root_url
+-%}
+
+{%- if request.page_type == 'index' -%}
+  {%- liquid
+    assign logo = shop.brand.logo
+    assign social = ''
+    assign social_keys = 'social_facebook_link,social_instagram_link,social_youtube_link,social_twitter_link,social_pinterest_link,social_tiktok_link' | split: ','
+    for key in social_keys
+      if settings[key] != blank
+        assign social = social | append: settings[key] | append: '|'
+      endif
+    endfor
+    assign social_links = social | split: '|'
+    assign search_target = origin | append: routes.search_url | append: '?q={search_term_string}'
+  -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ home_url | json }}
+      {%- if logo != blank -%},
+        "logo": {{ logo | image_url: width: 600 | prepend: 'https:' | json }}
+      {%- endif -%}
+      {%- if social_links.size > 0 -%},
+        "sameAs": {{ social_links | json }}
+      {%- endif %}
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ home_url | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ search_target | json }},
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+{%- endif -%}
+
+{%- liquid
+  assign crumb_names = ''
+  assign crumb_urls = ''
+  case request.page_type
+    when 'product'
+      if collection
+        assign crumb_names = collection.title
+        assign crumb_urls = origin | append: collection.url
+      endif
+      assign crumb_names = crumb_names | append: '§' | append: product.title
+      assign crumb_urls = crumb_urls | append: '§' | append: origin | append: product.url
+    when 'collection'
+      assign crumb_names = collection.title
+      assign crumb_urls = origin | append: collection.url
+    when 'blog'
+      assign crumb_names = blog.title
+      assign crumb_urls = origin | append: blog.url
+    when 'article'
+      assign crumb_names = blog.title | append: '§' | append: article.title
+      assign crumb_urls = origin | append: blog.url | append: '§' | append: origin | append: article.url
+    when 'page'
+      assign crumb_names = page.title
+      assign crumb_urls = origin | append: page.url
+  endcase
+  assign crumb_names = crumb_names | remove_first: '§' | split: '§'
+  assign crumb_urls = crumb_urls | remove_first: '§' | split: '§'
+-%}
+{%- if crumb_names.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": {{ home_url | json }}
+        }
+        {%- for name in crumb_names -%},
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index | plus: 1 }},
+            "name": {{ name | strip_html | json }},
+            "item": {{ crumb_urls[forloop.index0] | json }}
+          }
+        {%- endfor %}
+      ]
+    }
+  </script>
+{%- endif -%}
