@@ -55,7 +55,21 @@
       </div>
     {%- endif -%}
 
-    <div class="lp-table-scroll" tabindex="0" role="region" aria-label="Loyalty tier comparison">
+    {%- comment -%} Phones: pick a tier; the table swipes one tier at a time beside the labels. {%- endcomment -%}
+    <div class="lp-tier-tabs" data-lp-tier-tabs>
+      {%- for n in (1..3) -%}
+        {%- assign key_name = 'tier_' | append: n | append: '_name' -%}
+        <button
+          type="button"
+          class="lp-tier-tabs__btn{% if forloop.first %} is-active{% endif %}"
+          data-lp-tier-tab="{{ n }}"
+          aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+        >
+          {{- section.settings[key_name] | escape -}}
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="lp-table-scroll" tabindex="0" role="region" aria-label="Loyalty tier comparison" data-lp-tier-scroll>
       <div class="lp-table" role="table" aria-label="{{ section.settings.heading | escape }}">
         {%- for n in (1..3) -%}
           <div
@@ -90,7 +104,7 @@
               assign key_name = 'tier_' | append: n | append: '_name'
               assign key_badge = 'tier_' | append: n | append: '_badge'
               assign key_req = 'tier_' | append: n | append: '_requirement'
-              assign badge_asset = 'loyalty-tier-' | append: n | append: '.webp'
+              assign badge_asset = 'loyalty-tier-gold-' | append: n | append: '.svg'
             -%}
             <div
               class="lp-tier-head lp-tier--{{ n }} lp-col-{{ n | plus: 1 }}"
@@ -168,6 +182,53 @@
     {%- endif -%}
   </div>
 </div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    var tabs = root && root.querySelector('[data-lp-tier-tabs]');
+    var scroller = root && root.querySelector('[data-lp-tier-scroll]');
+    if (!tabs || !scroller) return;
+    var buttons = Array.prototype.slice.call(tabs.querySelectorAll('[data-lp-tier-tab]'));
+    var columns = Array.prototype.slice.call(scroller.querySelectorAll('.lp-tier-bg'));
+
+    function padding() {
+      return parseFloat(getComputedStyle(scroller).scrollPaddingLeft) || 0;
+    }
+    function target(index) {
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      return Math.max(0, Math.min(max, columns[index].offsetLeft - padding()));
+    }
+    function setActive(index) {
+      buttons.forEach(function (button, i) {
+        button.classList.toggle('is-active', i === index);
+        button.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+    }
+
+    buttons.forEach(function (button, index) {
+      button.addEventListener('click', function () {
+        setActive(index);
+        scroller.scrollTo({ left: target(index), behavior: 'smooth' });
+      });
+    });
+
+    var ticking = false;
+    scroller.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        var left = scroller.scrollLeft;
+        var nearest = 0;
+        columns.forEach(function (column, i) {
+          if (Math.abs(target(i) - left) < Math.abs(target(nearest) - left)) nearest = i;
+        });
+        setActive(nearest);
+      });
+    }, { passive: true });
+  })();
+</script>
 
 {% schema %}
 {

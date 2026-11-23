@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Explorer">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1d0"/>
+      <stop offset="0.35" stop-color="#f1cf8f"/>
+      <stop offset="0.7" stop-color="#c9964f"/>
+      <stop offset="1" stop-color="#8a5f2b"/>
+    </linearGradient>
+    <linearGradient id="goldSoft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbe4b4"/>
+      <stop offset="1" stop-color="#c99451"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#3d3023"/>
+      <stop offset="1" stop-color="#14100c"/>
+    </radialGradient>
+  </defs>
+  <circle cx="48" cy="48" r="45" fill="url(#gold)"/>
+  <circle cx="48" cy="48" r="39" fill="url(#core)"/>
+  <circle cx="48" cy="48" r="34.5" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.7"/>
+  <path d="M22 67l17-27 8 11 7-9 20 25z" fill="url(#gold)"/>
+  <path d="M39 40l-5.6 8.9 3.4-1.6 2.2 2.4 2.6-2.6 2.9 1.2z" fill="#fff4dc" opacity="0.9"/>
+  <path d="M39 40V23" stroke="#e6c08b" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M40.2 23.6c4-1.8 7.1 1 10.8-.5v9.6c-3.7 1.5-6.8-1.3-10.8.5z" fill="url(#gold)"/>
+  <path d="M26 72h44" stroke="#e6c08b" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

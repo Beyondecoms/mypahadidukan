@@ -6,12 +6,14 @@
  *   the widget on the page they work as plain links.
  * - <loyalty-hero> shows the member dashboard (points, tier progress by spend,
  *   tier ladder) in place of the banner while the shopper has a YourToken
- *   session. Guests keep the banner: YourToken's own (app block) or the bundled
- *   image.
+ *   session. Guests keep the banner: the image banner, or YourToken's own (app
+ *   block). On small screens without a mobile image, the image banner swipes
+ *   sideways: it opens on the first panel and the arrows step between panels.
  * - <loyalty-earn> replaces the static "ways to earn" cards with YourToken's
  *   live cards (rendered by the Loyalty Page app block) once they load. The live
- *   cards keep YourToken's actions (add birthday, follow, ...) and borrow the
- *   look of the static card with the same icon.
+ *   cards keep YourToken's actions (add birthday, follow, ...), borrow the
+ *   look of the static card with the same icon, and say "points" where
+ *   YourToken says "stamps".
  *
  * The session and API calls are the ones the YourToken widget itself uses.
  */
@@ -78,8 +80,48 @@
     return brandIdRequest;
   }
 
+  /** Banner swipe on small screens: snap stops at the centre of each panel. */
+  function bindHeroSwipe(root) {
+    const scroller = root.querySelector('[data-lp-hero-scroller]');
+    const stops = scroller ? [...scroller.querySelectorAll('[data-lp-hero-stop]')] : [];
+    const prev = root.querySelector('[data-lp-hero-prev]');
+    const next = root.querySelector('[data-lp-hero-next]');
+    if (!stops.length || !prev || !next) return;
+
+    // Scroll positions that centre each stop, limited to what can be scrolled.
+    const targets = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      return stops.map((stop) => Math.min(max, Math.max(0, stop.offsetLeft - scroller.clientWidth / 2)));
+    };
+    const scrollable = () => scroller.scrollWidth - scroller.clientWidth > 1;
+
+    const sync = () => {
+      const left = scroller.scrollLeft;
+      const points = targets();
+      prev.hidden = !scrollable() || !points.some((point) => point < left - 2);
+      next.hidden = !scrollable() || !points.some((point) => point > left + 2);
+    };
+
+    prev.addEventListener('click', () => {
+      const left = scroller.scrollLeft;
+      const point = targets().filter((value) => value < left - 2).pop();
+      if (point !== undefined) scroller.scrollTo({ left: point, behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      const left = scroller.scrollLeft;
+      const point = targets().find((value) => value > left + 2);
+      if (point !== undefined) scroller.scrollTo({ left: point, behavior: 'smooth' });
+    });
+
+    scroller.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    if (scrollable()) scroller.scrollLeft = targets()[0];
+    sync();
+  }
+
   class LoyaltyHero extends HTMLElement {
     connectedCallback() {
+      bindHeroSwipe(this);
       this.member = this.querySelector('[data-lp-member]');
       const configElement = this.querySelector('[data-lp-config]');
       if (!this.member || !configElement) return;
@@ -101,45 +143,73 @@
         if (tier) element.textContent = this.formatMoney(tier.spend);
       });
 
-      this.update = this.update.bind(this);
+      // The balance changes after sign-in (YourToken credits sign-up points a
+      // moment later) and while the widget is open (follows, birthday), so the
+      // dashboard refreshes at those moments instead of fetching once.
+      this.onAuth = () => this.update(true);
       this.onStorage = (event) => {
-        if (!event.key || event.key === SESSION_KEY || event.key === 'yt-auth-state') this.update();
+        if (!event.key || event.key === SESSION_KEY || event.key === 'yt-auth-state') this.update(true);
       };
-      document.addEventListener('yt:auth:state-updated', this.update);
-      document.addEventListener('yt:auth:session-expired', this.update);
+      this.refresh = () => {
+        if (this.dataset.state === 'member' && document.visibilityState === 'visible') this.load(true);
+      };
+      this.onWidgetToggle = () => setTimeout(this.refresh, 600);
+      this.onVisibility = () => {
+        if (document.visibilityState === 'visible') this.refresh();
+      };
+      document.addEventListener('yt:auth:state-updated', this.onAuth);
+      document.addEventListener('yt:auth:session-expired', this.onAuth);
       window.addEventListener('storage', this.onStorage);
+      window.addEventListener('loyaltyWidgetOpenChanged', this.onWidgetToggle);
+      window.addEventListener('focus', this.refresh);
+      document.addEventListener('visibilitychange', this.onVisibility);
+      this.timer = setInterval(this.refresh, 30000);
       this.update();
     }
 
     disconnectedCallback() {
-      if (!this.update) return;
-      document.removeEventListener('yt:auth:state-updated', this.update);
-      document.removeEventListener('yt:auth:session-expired', this.update);
+      if (!this.onAuth) return;
+      document.removeEventListener('yt:auth:state-updated', this.onAuth);
+      document.removeEventListener('yt:auth:session-expired', this.onAuth);
       window.removeEventListener('storage', this.onStorage);
+      window.removeEventListener('loyaltyWidgetOpenChanged', this.onWidgetToggle);
+      window.removeEventListener('focus', this.refresh);
+      document.removeEventListener('visibilitychange', this.onVisibility);
+      clearInterval(this.timer);
     }
 
     formatMoney(amount) {
       return this.money.format(Math.max(0, Math.round(Number(amount) || 0)));
     }
 
-    update() {
+    update(force) {
       // The hero's inline guard has already dropped a session the store no longer backs.
       const signedIn = Boolean(readStorage(SESSION_KEY));
       this.dataset.state = signedIn ? 'member' : 'guest';
       if (signedIn) {
-        this.load();
+        const justSignedIn = this.signedIn === false;
+        this.load(force);
+        if (justSignedIn) {
+          setTimeout(this.refresh, 3000);
+          setTimeout(this.refresh, 8000);
+        }
       } else {
         this.loadedSession = null;
+        this.rendered = false;
       }
+      this.signedIn = signedIn;
     }
 
-    async load() {
+    async load(force) {
       const session = readStorage(SESSION_KEY);
-      if (this.loadedSession === session) return;
+      if (!session || this.loading) return;
+      if (!force && this.loadedSession === session) return;
       this.loadedSession = session;
+      this.loading = true;
 
       const storeId = (window.ytapp && window.ytapp.storeId) || this.dataset.shopId;
-      this.member.setAttribute('data-loading', '');
+      // Dim the numbers only until the first result; refreshes update in place.
+      if (!this.rendered) this.member.setAttribute('data-loading', '');
       try {
         const brandId = await getBrandId(storeId);
         const userParams = { includeUserBrandLink: 'true', includeUserLtv: 'true' };
@@ -152,14 +222,19 @@
           ytGet('/users/me', userParams).catch(() => null),
         ]);
         if (this.loadedSession !== session) return;
-        // Nothing came back (expired session, API down): keep YourToken's own banner.
+        // Nothing came back (expired session, API down): show the banner on a
+        // first load, keep the last numbers on a refresh.
         if (!points && !user) {
-          this.loadedSession = null;
-          this.dataset.state = 'guest';
+          if (!this.rendered) {
+            this.loadedSession = null;
+            this.dataset.state = 'guest';
+          }
           return;
         }
         this.render(points, user);
+        this.rendered = true;
       } finally {
+        this.loading = false;
         this.member.removeAttribute('data-loading');
       }
     }
@@ -198,8 +273,8 @@
       const art = this.querySelector('[data-lp-art]');
       if (art) {
         art.src = current ? current.badgeLarge : this.config.art;
-        art.width = current ? 400 : 363;
-        art.height = current ? 400 : 235;
+        art.width = current ? 400 : 200;
+        art.height = current ? 400 : 140;
       }
 
       const sinceValue = link.rewardTierAcquiredAt || link.createdAt;
@@ -223,7 +298,7 @@
 
       const spent = this.querySelector('[data-lp-spent]');
       if (spent) {
-        spent.textContent = this.formatMoney(spend);
+        spent.textContent = (this.config.spentText || '[amount]').replace('[amount]', this.formatMoney(spend));
         spent.hidden = !next;
       }
 
@@ -282,7 +357,8 @@
       });
 
       this.observer = new MutationObserver(() => this.sync());
-      this.observer.observe(this.app, { childList: true, subtree: true });
+      // `disabled` flips when YourToken loads the member's claimed rewards.
+      this.observer.observe(this.app, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled'] });
       this.sync();
     }
 
@@ -293,8 +369,41 @@
     sync() {
       const items = this.app.querySelectorAll('.yt-loyalty-page-ways-to-earn-item');
       if (!items.length) return;
-      items.forEach((item) => this.dress(item));
+      items.forEach((item) => {
+        this.dress(item);
+        this.usePoints(item);
+        this.markDone(item);
+      });
       if (!this.hasAttribute('data-live')) this.setAttribute('data-live', '');
+    }
+
+    // YourToken calls its reward currency "stamps"; the rest of this page says
+    // points. Runs on every sync because YourToken can rewrite the text (the
+    // observer only watches added nodes, so this doesn't trigger itself).
+    usePoints(item) {
+      const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const text = node.nodeValue.replace(/\bstamps\b/gi, 'points').replace(/\bstamp\b/gi, 'point');
+        if (text !== node.nodeValue) node.nodeValue = text;
+      }
+    }
+
+    // Guests get no action buttons; for a member YourToken disables the button
+    // once the reward is claimed but keeps its "Visit" label, which reads as
+    // broken. Mark the card done and show "Earned" instead (CSS draws it, so
+    // YourToken's own text node is left alone).
+    markDone(item) {
+      const action = item.querySelector('.yt-loyalty-page-ways-to-earn-item-action');
+      const done = Boolean(action && action.disabled);
+      item.toggleAttribute('data-lp-done', done);
+      if (!action) return;
+      if (done && /^\s*(visit|follow|like|share|subscribe|join|open|go)\b/i.test(action.textContent)) {
+        action.setAttribute('data-lp-label', 'Earned');
+        action.setAttribute('aria-label', 'Earned');
+      } else if (action.hasAttribute('data-lp-label')) {
+        action.removeAttribute('data-lp-label');
+        action.removeAttribute('aria-label');
+      }
     }
 
     dress(item) {

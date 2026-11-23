@@ -142,7 +142,18 @@
   </div>
   {%- for block in section.blocks -%}
     {%- if block.type == 'cta' -%}
-      <div class="lp-earn__inner lp-earn__cta-area">
+      {%- liquid
+        # A finished banner image shows on its own. An image in "Desktop background"
+        # with no separate artwork is treated the same, so the bundled artwork never
+        # lands on top of a banner that already has its own headline and button.
+        assign banner = block.settings.banner_image
+        assign banner_mobile = block.settings.banner_image_mobile
+        if banner == blank and block.settings.background_image != blank and block.settings.collage_image == blank
+          assign banner = block.settings.background_image
+          assign banner_mobile = block.settings.mobile_image
+        endif
+      -%}
+      <div class="lp-earn__inner lp-earn__cta-area{% if banner != blank %} lp-earn__cta-area--banner{% endif %}">
         {%- liquid
           # The sign-in link stays off account URLs, which KwikPass takes over and returns to /account.
           if block.settings.open_yourtoken
@@ -152,6 +163,46 @@
           endif
           assign cta_link = block.settings.link | default: login_fallback
         -%}
+        {%- if banner != blank -%}
+          {%- comment -%}
+            A finished banner with its own headline and button: show only the
+            image, and the whole banner opens the sign-in (or the link).
+          {%- endcomment -%}
+          {%- liquid
+            assign banner_alt = banner.alt | default: block.settings.image_alt | default: 'Ready to be rewarded? Join to redeem free rewards, unlock tier gifts and enjoy exclusive sales. Start earning.'
+          -%}
+          <a
+            id="lp-earn-{{ block.id }}"
+            href="{{ cta_link }}"
+            class="lp-cta-banner"
+            {% if block.settings.open_yourtoken %}
+              data-lp-login
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <picture>
+              {%- if banner_mobile != blank -%}
+                <source
+                  media="(max-width: 768px)"
+                  srcset="{{ banner_mobile | image_url: width: 750 }} 750w, {{ banner_mobile | image_url: width: 1100 }} 1100w"
+                  sizes="calc(100vw - 32px)"
+                  width="{{ banner_mobile.width }}"
+                  height="{{ banner_mobile.height }}"
+                >
+              {%- endif -%}
+              {{
+                banner
+                | image_url: width: 2240
+                | image_tag:
+                  widths: '750, 1100, 1500, 2240',
+                  sizes: '(max-width: 768px) calc(100vw - 32px), min(1120px, 100vw - 60px)',
+                  alt: banner_alt,
+                  loading: 'lazy',
+                  class: 'lp-cta-banner__img'
+              }}
+            </picture>
+          </a>
+        {%- else -%}
         <div id="lp-earn-{{ block.id }}" class="lp-cta" {{ block.shopify_attributes }}>
           {% render 'loyalty-image',
             image: block.settings.collage_image,
@@ -202,6 +253,7 @@
             %}
           </a>
         </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   {%- endfor -%}
@@ -330,8 +382,28 @@
       "limit": 1,
       "settings": [
         {
+          "type": "header",
+          "content": "Complete banner"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Banner image",
+          "info": "A finished banner with its own headline and button, e.g. 1600 x 645px. When set, only this image shows (the artwork, background and button settings below are not used) and the whole banner opens the sign-in or link."
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_mobile",
+          "label": "Mobile banner image",
+          "info": "Optional. Phones show the banner image when this is empty."
+        },
+        {
+          "type": "header",
+          "content": "Built-in artwork"
+        },
+        {
           "type": "paragraph",
-          "content": "Leave images empty to use the bundled artwork. Desktop artwork is 1120 x 345px; mobile is a 260 x 286px card."
+          "content": "Used when no banner image is set. Leave images empty to use the bundled artwork. Desktop artwork is 1120 x 345px; mobile is a 260 x 286px card."
         },
         {
           "type": "image_picker",

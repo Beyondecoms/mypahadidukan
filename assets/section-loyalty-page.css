@@ -84,7 +84,7 @@ loyalty-earn {
 
 .lp-hero {
   position: relative;
-  background: #f7f7f7;
+  background: var(--lp-hero-bg, #0c0c0c);
 }
 
 .lp-hero__guest {
@@ -112,28 +112,136 @@ loyalty-earn {
   object-position: 50% 0;
 }
 
+/* Centred on a line --lp-hero-cta-bottom up from the banner's bottom edge
+   ("Button position from bottom"). */
 .lp-hero__cta {
   position: absolute;
   left: 50%;
-  bottom: min(16.6px, 1.153vw);
+  bottom: var(--lp-hero-cta-bottom, 8%);
+  z-index: 1;
   width: min(340px, 23.61vw);
-  transform: translateX(-50%);
+  transform: translate(-50%, 50%);
   line-height: 0;
   transition: transform 0.2s ease;
 }
 
 .lp-hero__cta:hover {
-  transform: translateX(-50%) translateY(-2px);
+  transform: translate(-50%, calc(50% - 2px));
 }
 
 .lp-hero__cta:focus-visible {
-  outline: 2px solid #1a2e1a;
+  outline: 2px solid #fbe9cc;
   outline-offset: 4px;
 }
 
 .lp-hero__cta img {
   width: 100%;
   height: auto;
+}
+
+/* Text button, gold on the dark banner art */
+.lp-hero__cta--text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: clamp(38px, 3.3vw, 52px);
+  padding: 0.2em clamp(22px, 2.2vw, 36px) 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fbe9cc 0%, #e6c08b 100%);
+  box-shadow:
+    0 0 0 1px rgba(251, 233, 204, 0.35),
+    0 6px 24px rgba(230, 192, 139, 0.25);
+  color: #1c160c;
+  font-family: var(--lp-font-heading);
+  font-size: clamp(14px, 1.15vw, 18px);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Phones and tablets without a mobile image: the banner keeps its height and
+   swipes sideways, snapping to each panel (stops placed in the markup). */
+.lp-hero__stop,
+.lp-hero__arrow {
+  display: none;
+}
+
+.lp-hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(251, 233, 204, 0.4);
+  border-radius: 50%;
+  background: rgba(12, 12, 12, 0.6);
+  color: #fbe9cc;
+  cursor: pointer;
+  transform: translateY(-50%);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.lp-hero__arrow--prev {
+  left: 8px;
+}
+
+.lp-hero__arrow--next {
+  right: 8px;
+}
+
+.lp-hero__arrow:focus-visible {
+  outline: 2px solid #fbe9cc;
+  outline-offset: 2px;
+}
+
+@media screen and (max-width: 989px) {
+  .lp-hero__guest--swipe {
+    --lp-hero-swipe-height: 400px;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__scroller {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__track {
+    position: relative;
+    width: max-content;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__media {
+    width: calc(var(--lp-hero-swipe-height) * var(--lp-hero-ratio));
+    height: var(--lp-hero-swipe-height);
+  }
+
+  .lp-hero__guest--swipe .lp-hero__stop {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    scroll-snap-align: center;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__arrow {
+    display: flex;
+  }
+
+  .lp-hero__guest--swipe .lp-hero__arrow[hidden] {
+    display: none;
+  }
 }
 
 /* YourToken banner, from the "Loyalty Page" app block in the hero section:
@@ -1113,8 +1221,13 @@ loyalty-earn {
   }
 
   .lp-hero__cta {
-    bottom: 5px;
     width: min(42.8vw, 340px);
+  }
+
+  .lp-hero__cta--text {
+    width: auto;
+    min-height: 40px;
+    font-size: 15px;
   }
 
   /* Member dashboard */
@@ -1880,4 +1993,267 @@ loyalty-earn {
     width: min(260px, 100% - 20px);
     padding: 20px 0 40px;
   }
+}
+
+/* "Ready to be rewarded?" as one finished banner image (Complete banner
+   setting): the image carries the headline and button, the link wraps it. */
+.lp-cta-banner {
+  display: block;
+  overflow: hidden;
+  border-radius: 34px;
+  line-height: 0;
+  transition: transform 0.2s ease;
+}
+
+.lp-cta-banner:hover {
+  transform: translateY(-2px);
+}
+
+.lp-cta-banner:focus-visible {
+  outline: 2px solid #f4d9a6;
+  outline-offset: 4px;
+}
+
+.lp-cta-banner__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .lp .lp-earn__cta-area--banner {
+    width: calc(100% - 32px);
+  }
+
+  .lp-cta-banner {
+    border-radius: 15px;
+  }
+}
+
+/* Phones with a mobile banner image (no swipe strip): the button sits under
+   the image instead of over it, so it never covers the banner's own content. */
+@media screen and (max-width: 768px) {
+  .lp-hero__guest:not(.lp-hero__guest--swipe) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+
+  .lp-hero__guest:not(.lp-hero__guest--swipe) .lp-hero__scroller {
+    align-self: stretch;
+  }
+
+  .lp-hero__guest:not(.lp-hero__guest--swipe) .lp-hero__cta {
+    position: static;
+    margin-top: 14px;
+    transform: none;
+  }
+
+  .lp-hero__guest:not(.lp-hero__guest--swipe) .lp-hero__cta:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* The middle of the loyalty page is dark from the hero down: the ways-to-earn
+   section, including the strip behind the "Ready to be rewarded" banner, uses
+   the same dark as the sections above instead of the light bow pattern. */
+.lp.lp-earn {
+  background-color: #151311;
+  background-image: none;
+}
+
+/* Member dashboard (after sign-in) in the page's dark and gold. One look for
+   every tier; the tier shows through its gold badge and the progress bar. */
+.lp-member,
+.lp-member[data-tier] {
+  --member-bg: radial-gradient(ellipse at 15% 0%, rgba(120, 90, 50, 0.3) 0%, transparent 55%), var(--lp-hero-bg, #0c0c0c);
+  --member-fill: linear-gradient(90deg, #8a5f2b 0%, #e6c08b 65%, #fbe9cc 100%);
+  --member-accent: #f4d9a6;
+}
+
+.lp .lp-member__count,
+.lp .lp-member__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #f4d9a6;
+}
+
+.lp .lp-member__status,
+.lp .lp-member__spent,
+.lp .lp-member__goal {
+  color: #dfd4c4;
+}
+
+.lp-member__goal b,
+.lp-member__goal strong {
+  color: #f4d9a6;
+}
+
+.lp-member__card {
+  border: 1px solid #63523b;
+  background:
+    radial-gradient(ellipse at 50% 120%, #58432b 0%, transparent 60%),
+    linear-gradient(150deg, #292522, #1a1817 72%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.lp-member__progress {
+  border-color: #63523b;
+}
+
+.lp-member__bar {
+  background: #3a322a;
+}
+
+.lp-ladder__tier {
+  color: #f4d9a6;
+  opacity: 0.5;
+}
+
+.lp-ladder__tier.is-unlocked {
+  opacity: 1;
+}
+
+.lp-ladder__req {
+  color: #dfd4c4;
+}
+
+.lp-ladder__check {
+  fill: #e6c08b;
+}
+
+.lp-ladder__check path {
+  stroke: #1c160c;
+}
+
+.lp .lp-member__spent {
+  white-space: nowrap;
+}
+
+/* Phones: spend and the next-tier goal on their own lines under the bar. */
+@media screen and (max-width: 768px) {
+  .lp-member__note {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .lp .lp-member__goal {
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+/* "Choose your path" tier pills: phones only. */
+.lp-tier-tabs {
+  display: none;
+}
+
+/* Phones: the labels stay pinned on the left and the table swipes one whole
+   tier at a time beside them (each tier column fills the space next to the
+   labels, and the swipe snaps to it). The pills above jump to a tier. */
+@media screen and (max-width: 768px) {
+  .lp-tier-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 18px;
+  }
+
+  .lp-tier-tabs__btn {
+    padding: 9px 16px;
+    border: 1px solid #63523b;
+    border-radius: 999px;
+    background: transparent;
+    color: #dfd4c4;
+    font-family: var(--lp-font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .lp-tier-tabs__btn.is-active {
+    border-color: #e6c08b;
+    background: linear-gradient(180deg, #fbe9cc 0%, #e6c08b 100%);
+    color: #1c160c;
+  }
+
+  .lp-tier-tabs__btn:focus-visible {
+    outline: 2px solid #f4d9a6;
+    outline-offset: 3px;
+  }
+
+  .lp-premium .lp-table-scroll {
+    --lp-label-col: 112px;
+    --lp-col-gap: 10px;
+    container-type: inline-size;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: calc(var(--lp-label-col) + var(--lp-col-gap));
+    scrollbar-width: none;
+  }
+
+  .lp-premium .lp-table-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lp-premium .lp-table {
+    width: max-content;
+    min-width: 0;
+    grid-template-columns:
+      var(--lp-label-col)
+      repeat(3, min(calc(100cqw - var(--lp-label-col) - var(--lp-col-gap)), 280px));
+    column-gap: var(--lp-col-gap);
+  }
+
+  .lp-premium .lp-tier-bg {
+    scroll-snap-align: start;
+  }
+
+  .lp-premium .lp-label-head,
+  .lp-premium .lp-label {
+    background: #151311;
+    box-shadow: 10px 0 12px -10px rgba(0, 0, 0, 0.8);
+  }
+
+  .lp-premium .lp-tier-head__badge {
+    width: 64px;
+  }
+
+  .lp-premium .lp-tier-head__name {
+    font-size: 22px;
+  }
+
+  .lp-premium .lp-tier-head__req {
+    font-size: 14px;
+  }
+}
+
+/* Claimed rewards: YourToken disables the button but keeps "Visit". */
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item[data-lp-done] .yt-loyalty-page-ways-to-earn-item-action {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+  cursor: default !important;
+  border-color: #63523b !important;
+  background-color: rgba(230, 192, 139, 0.08) !important;
+  color: #e6c08b !important;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item[data-lp-done] .yt-loyalty-page-ways-to-earn-item-action::before {
+  content: "\2713";
+  margin-right: 8px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-action[data-lp-label] {
+  font-size: 0 !important;
+}
+
+.lp-earn__app .yt-loyalty-page-ways-to-earn-item-action[data-lp-label]::after {
+  content: attr(data-lp-label);
+  font-size: 16px;
+  line-height: 1;
 }
