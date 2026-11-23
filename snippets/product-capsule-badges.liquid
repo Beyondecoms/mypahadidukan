@@ -1,0 +1,21 @@
+{%- assign badge_blocks = section.blocks | where: 'type', 'badge' -%}
+{%- assign badge_palette = '#025b4e,#9b4a26,#6e4a72' | split: ',' -%}
+{%- for feature in capsule_features -%}
+  {%- liquid
+    assign palette_index = forloop.index0 | modulo: badge_palette.size
+    assign fallback_color = badge_palette[palette_index]
+    assign badge_block = nil
+    for block in badge_blocks
+      if block.settings.label == feature
+        assign badge_block = block
+        break
+      endif
+    endfor
+  -%}
+  <span class="pm-badge" style="background:{{ badge_block.settings.bg_color | default: fallback_color }}; color:{{ badge_block.settings.text_color | default: '#ffffff' }};"{% if badge_block %} {{ badge_block.shopify_attributes }}{% endif %}>
+    {%- if badge_block.settings.icon != blank -%}
+      <img src="{{ badge_block.settings.icon | image_url: width: 20 }}" alt="" width="16" height="16">
+    {%- endif -%}
+    {{ feature | escape }}
+  </span>
+{%- endfor -%}

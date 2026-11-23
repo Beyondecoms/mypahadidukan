@@ -1,3 +1,4 @@
+{%- unless product.handle == 'lakadong-turmeric-100gms-8-10-curcumin' -%}
 {{ 'section-seabuckthorn-m10.css' | asset_url | stylesheet_tag }}
 
 <!-- NAMESPACES_TEST:
@@ -63,10 +64,11 @@ custom.price_description: {{ product.metafields.custom.price_description.value |
 
     <!-- Main Card Box -->
     <div class="sb-m10-card-wrapper">
+      <h2 class="sb-m10-section-heading">What it costs</h2>
       {%- if clean_heading_prefix != blank or heading_highlight != blank -%}
-        <h2 class="sb-m10-title">
+        <h3 class="sb-m10-title">
           {{ clean_heading_prefix }}{% if heading_highlight != blank %} <span class="sb-m10-price-highlight">{{ heading_highlight }}</span>{% endif %}
-        </h2>
+        </h3>
       {%- endif -%}
 
       {%- if m10_desc != blank or m10_harvest != blank or m10_final_highlight != blank -%}
@@ -87,6 +89,8 @@ custom.price_description: {{ product.metafields.custom.price_description.value |
   </div>
 </div>
 {%- endif -%}
+
+{%- endunless -%}
 
 {% schema %}
 {

@@ -236,20 +236,20 @@
             "subtitle": "We bring you what the locals use — no shortcuts, no factory imitations."
           }
         },
-        "badge_4jVrya": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Scientific_Exploration_in_Nature_1_copy_590c0157-d067-41de-afeb-274d81b7300a.png",
-            "title": "Lab Tested",
-            "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
-          }
-        },
         "badge_HHhEKd": {
           "type": "badge",
           "settings": {
             "icon_image": "shopify://shop_images/icon-transparency_copy.png",
             "title": "Transparency",
             "subtitle": "From source to shelf, we show you everything — because trust isn’t built on secrets."
+          }
+        },
+        "badge_4jVrya": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/Scientific_Exploration_in_Nature_1_copy_590c0157-d067-41de-afeb-274d81b7300a.png",
+            "title": "Lab Tested",
+            "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
           }
         }
       },
@@ -408,6 +408,7 @@
         "nutrients_tab_NwC9fK",
         "how_to_use_tab_6LkRyQ"
       ],
+      "disabled": true,
       "name": "Product Tabs",
       "settings": {}
     },
@@ -495,6 +496,8 @@
       "name": "Product Slider",
       "settings": {
         "title": "You May Also Like",
+        "view_all_label": "",
+        "view_all_link": "",
         "show_secondary_image": true,
         "collection": "best-selling",
         "products_to_show": 8,

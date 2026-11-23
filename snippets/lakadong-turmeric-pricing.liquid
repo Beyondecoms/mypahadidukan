@@ -1,0 +1,85 @@
+{%- assign description = description | strip -%}
+{%- if description != blank -%}
+  {%- liquid
+    assign lines = description | newline_to_br | split: '<br />'
+    assign headline = lines.first | strip
+    assign headline_prefix = headline | split: '. ' | first
+    assign body_start = 1
+    assign pack_heading = lines[1] | strip
+    assign price_heading = lines[2] | strip
+    assign unit_heading = lines[3] | strip
+  -%}
+
+  {%- comment -%} Shopify stores each cell of the pasted pricing table on its own line. {%- endcomment -%}
+  {%- capture table_rows -%}
+    {%- if pack_heading == 'Pack size' and price_heading == 'Price' and unit_heading == 'Per 100g' -%}
+      {%- for line in lines offset: 4 -%}
+        {%- liquid
+          assign cell_position = forloop.index0 | modulo: 3
+          if cell_position != 0
+            continue
+          endif
+
+          assign pack_size = line | strip
+          assign price_index = forloop.index0 | plus: 5
+          assign unit_index = price_index | plus: 1
+          assign price = lines[price_index] | strip
+          assign unit_price = lines[unit_index] | strip
+          if pack_size == blank
+            break
+          endif
+          unless price contains '₹' and unit_price contains '₹'
+            break
+          endunless
+
+          assign body_start = unit_index | plus: 1
+        -%}
+        <tr>
+          <th scope="row">{{ pack_size | escape }}</th>
+          <td>{{ price | escape }}</td>
+          <td>{{ unit_price | escape }}</td>
+        </tr>
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {{ 'section-seabuckthorn-m10.css' | asset_url | stylesheet_tag }}
+  <div class="sb-m10-section sb-m10-section--turmeric">
+    <div class="sb-m10-container">
+      <div class="sb-m10-card-wrapper">
+        <h2 class="sb-m10-section-heading">What it costs</h2>
+        <h3 class="sb-m10-title">
+          {%- if headline contains '. ' -%}
+            {%- assign headline_prefix = headline_prefix | append: '.' -%}
+            {{ headline_prefix | escape }} <span class="sb-m10-price-highlight">{{ headline | remove_first: headline_prefix | strip | escape }}</span>
+          {%- else -%}
+            {{ headline | escape }}
+          {%- endif -%}
+        </h3>
+
+        {%- if table_rows != blank -%}
+          <table class="sb-m10-price-table">
+            <caption class="visually-hidden">Lakadong Turmeric prices by pack size</caption>
+            <thead>
+              <tr>
+                <th scope="col">{{ pack_heading | escape }}</th>
+                <th scope="col">{{ price_heading | escape }}</th>
+                <th scope="col">{{ unit_heading | escape }}</th>
+              </tr>
+            </thead>
+            <tbody>{{ table_rows }}</tbody>
+          </table>
+        {%- endif -%}
+
+        <div class="sb-m10-body">
+          {%- for line in lines offset: body_start -%}
+            {%- assign paragraph = line | strip -%}
+            {%- if paragraph != blank -%}
+              <p>{{ paragraph | escape }}</p>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

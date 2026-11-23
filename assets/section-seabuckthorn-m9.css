@@ -28,12 +28,22 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
+.sb-m9-title {
+  font-family: var(--font-heading-family), serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ee5922;
+  margin: 0;
+}
+
 .sb-m9-subtitle {
   font-family: var(--font-heading-family);
   font-size: 1.45rem;
   font-weight: 800;
   color: #ee5922;
-  margin: 0;
+  margin: 10px 0 0;
   letter-spacing: 0.02em;
 }
 

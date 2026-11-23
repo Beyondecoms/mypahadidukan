@@ -2,11 +2,12 @@
 
 {%- liquid
   assign m5_eyebrow = product.metafields.custom.m5_eyebrow.value
-  assign m5_heading = product.metafields.custom.m5_heading.value
-  assign m5_quote = product.metafields.custom.m5_quote.value
-  assign m5_desc = product.metafields.custom.m5_description.value
-  assign m5_usage = product.metafields.custom.m5_usage_text.value
-  assign m5_highlight = product.metafields.custom.m5_highlight_text.value
+  assign m5_heading = product.metafields.custom.m5_heading.value | strip
+  assign m5_quote = product.metafields.custom.m5_quote.value | strip
+  assign m5_desc = product.metafields.custom.m5_description.value | strip
+  assign m5_desc = m5_desc | replace: 'Properly sour - nearer', 'Properly sour, nearer' | replace: "most people's face do", "most people's faces do"
+  assign m5_usage = product.metafields.custom.m5_usage_text.value | strip
+  assign m5_highlight = product.metafields.custom.m5_highlight_text.value | strip
   assign m5_image = product.metafields.custom.m5_image.value | default: product.metafields.custom.m5_image
   assign m5_caption = product.metafields.custom.m5_image_caption.value
   assign m5_alt = m5_caption | default: m5_heading | default: product.title | escape
@@ -36,7 +37,7 @@
           
           {%- if m5_quote != blank -%}
             <div class="sb-m5-quote">
-              "{{ m5_quote | newline_to_br }}"
+              “{{ m5_quote | newline_to_br }}”
             </div>
           {%- endif -%}
 

@@ -38,6 +38,16 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
+.sb-m10-section-heading {
+  font-family: var(--font-heading-family), serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ee5922;
+  margin: 0 0 16px;
+}
+
 .sb-m10-title {
   font-family: var(--font-heading-family);
   font-size: var(--font-heading-size);
@@ -50,6 +60,28 @@
 
 .sb-m10-price-highlight {
   color: #008b75;
+}
+
+.sb-m10-price-table {
+  width: 100%;
+  margin: 0 0 24px;
+  border-collapse: collapse;
+  font-size: 15px;
+  text-align: left;
+}
+
+.sb-m10-price-table th,
+.sb-m10-price-table td {
+  border: 1px solid #e7ded0;
+  padding: 8px 12px;
+}
+
+.sb-m10-price-table thead {
+  background-color: #fffbef;
+}
+
+.sb-m10-price-table tbody th {
+  font-weight: 400;
 }
 
 .sb-m10-body p {

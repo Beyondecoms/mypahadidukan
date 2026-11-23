@@ -50,16 +50,26 @@ For breadcrumbs
 }
 
 /* ── TITLE ── */
+.pm-title-row {
+  margin-bottom: 12px;
+  border-bottom: 1px solid #EDEDED;
+  padding-bottom: 20px;
+}
+
+.pm-title-row--with-share {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .pm-title {
     font-size: 28px;
     font-weight: 400;
     color: #1a2e1a;
-    margin: 0 0 12px;
+    margin: 0;
     line-height: 1.3;
     font-family: var(--font-heading-family);
     font-variant: small-caps;
-    border-bottom: 1px solid #EDEDED;
-    padding-bottom: 20px;
 }
 
 /* ── RATING ── */

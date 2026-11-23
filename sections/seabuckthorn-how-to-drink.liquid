@@ -1,4 +1,13 @@
+{%- if product.handle == 'lakadong-turmeric-100gms-8-10-curcumin' -%}
+  {%- render 'lakadong-turmeric-pricing', description: product.metafields.custom.m10_price_description.value -%}
+{%- endif -%}
+
 {%- liquid
+  assign show_oil_instructions = false
+  if product.handle == 'seabuckthorn-oil-vitamin-c-serum'
+    assign show_oil_instructions = true
+  endif
+
   assign m9_image_1 = product.metafields.custom.m9_image_1.value | default: product.metafields.custom.m9_image_1 | default: product.metafields.custom['m9_image-1'].value | default: product.metafields.custom['m9_image-1'] | default: product.metafields.custom.m9_image__1.value | default: product.metafields.custom.m9_image__1
   assign m9_images_2 = product.metafields.custom.m9_image_2.value | default: product.metafields.custom.m9_image_2 | default: product.metafields.custom['m9_image-2'].value | default: product.metafields.custom['m9_image-2'] | default: product.metafields.custom.m9_images_2.value | default: product.metafields.custom.m9_images_2
   assign m9_image_3 = product.metafields.custom.m9_image_3.value | default: product.metafields.custom.m9_image_3 | default: product.metafields.custom['m9_image-3'].value | default: product.metafields.custom['m9_image-3'] | default: product.metafields.custom.m9_image__3.value | default: product.metafields.custom.m9_image__3
@@ -24,15 +33,18 @@
   endif
 -%}
 
-{%- if m9_img_1_obj != blank or m9_has_recipe_image or m9_img_3_obj != blank -%}
+{%- if show_oil_instructions or m9_img_1_obj != blank or m9_has_recipe_image or m9_img_3_obj != blank -%}
   {{ 'section-seabuckthorn-m9.css' | asset_url | stylesheet_tag }}
   <div class="sb-m9-section" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
     <div class="sb-m9-container">
 
       <div class="sb-m9-card-wrapper">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="visually-hidden">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
+        <div>
+          <h2 class="sb-m9-title">How to use it</h2>
+          {%- if show_oil_instructions -%}
+            <p class="sb-m9-subtitle">A FEW DROPS. THAT'S THE WHOLE INSTRUCTION.</p>
+          {%- endif -%}
+        </div>
 
         <!-- 30-Glass Stamp Sheet (only if m9_image_1 exists) -->
         {%- if m9_img_1_obj != blank -%}
