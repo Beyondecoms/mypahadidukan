@@ -1613,6 +1613,26 @@
             "image_link": "",
             "product": ""
           }
+        },
+        "review_shruthi_seabuckthorn_oil": {
+          "type": "testimonial",
+          "settings": {
+            "title": "It's light weight and non greasy",
+            "description": "<p>It's light weight and non greasy. Easily absorbed and leaves an orange tint of th face, so ideal to use it in the night. I have used it only for two weeks, need to wait for results. Any organic products needs 3-6 months to see results so better to wait patiently for it do work. But so far I am enjoying the product as it literally had no chemicals, metals or any fancy stuffs that's sold in market. Very light, pure and fresh</p>",
+            "footer": "<p>Shruthi Bharadwaj</p>",
+            "product": "seabuckthorn-oil-vitamin-c-serum",
+            "hide_rating_and_badge": true
+          }
+        },
+        "review_kirit_seabuckthorn_pulp": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Miracle Result",
+            "description": "<p>I started using Sea Buckthorn pulp for past 30 days and the results are awesome. I think my immunity level has increased significantly.</p>",
+            "footer": "<p>Kirit Premji Dedhia</p>",
+            "product": "sea-buckthorn-juice",
+            "hide_rating_and_badge": true
+          }
         }
       },
       "block_order": [
@@ -1621,7 +1641,9 @@
         "testimonial_ztEGDP",
         "testimonial_w6fngi",
         "testimonial_8PwQCB",
-        "testimonial_MFcjBb"
+        "testimonial_MFcjBb",
+        "review_shruthi_seabuckthorn_oil",
+        "review_kirit_seabuckthorn_pulp"
       ],
       "name": "Testimonials",
       "settings": {
