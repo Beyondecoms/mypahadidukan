@@ -449,6 +449,7 @@
         },
         "coming_soon_YBMPx4": {
           "type": "coming_soon",
+          "disabled": true,
           "settings": {
             "label": "OPENING SOON",
             "cities": "Rishikesh · Shimla · Manali",
