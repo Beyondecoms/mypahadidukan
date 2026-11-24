@@ -622,6 +622,12 @@ For breadcrumbs
   font-weight: inherit;
 }
 
+/* Description tables come with inline widths (e.g. 85%) that leave them short of the text; span the column instead. */
+.pm-accordion-content table {
+  width: 100% !important;
+  max-width: 100%;
+}
+
 /* ══════════════════════
    RIGHT COLUMN
 ══════════════════════ */
