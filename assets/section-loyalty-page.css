@@ -1704,8 +1704,8 @@ loyalty-earn {
 }
 
 .lp-premium .lp-step {
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
 }
 
 .lp-premium .lp-step__number {
