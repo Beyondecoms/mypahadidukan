@@ -311,7 +311,7 @@
       },
       "5530246297231961265": {
         "type": "shopify://apps/yourtoken-loyalty/blocks/app-embed/019b3be8-f559-70af-9e2e-d3b502d6f55f",
-        "disabled": true,
+        "disabled": false,
         "settings": {}
       }
     },
