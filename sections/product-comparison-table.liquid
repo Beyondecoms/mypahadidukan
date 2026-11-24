@@ -1,0 +1,240 @@
+{%- liquid
+  assign comparison_field = product.metafields.custom.product_comparision_table
+  assign comparison = comparison_field.value
+  assign column_count = comparison.columns.size
+  assign first_row = comparison.rows | first
+  assign columns_type = comparison.columns | json | slice: 0
+  assign rows_type = comparison.rows | json | slice: 0
+  assign first_row_type = first_row | json | slice: 0
+
+  assign valid_table = false
+  if comparison_field.type == 'json' and columns_type == '[' and rows_type == '[' and first_row_type == '{' and column_count >= 2 and column_count == first_row.size
+    assign valid_table = true
+    for column in comparison.columns
+      assign column_type = column | json | slice: 0
+      assign column_label = column | strip
+      if column_type != '"' or column_label == blank
+        assign valid_table = false
+        break
+      endif
+    endfor
+  endif
+
+  # Order the documented columns explicitly. Other tables use the first row's key order.
+  assign column_keys = nil
+  if column_count == 3 and first_row.quality_point != nil and first_row.raw_honey != nil and first_row.commercial_honey != nil
+    assign column_keys = 'quality_point,raw_honey,commercial_honey' | split: ','
+  endif
+-%}
+
+{%- if valid_table -%}
+  {%- capture table_rows -%}
+    {%- for row in comparison.rows -%}
+      {%- assign row_type = row | json | slice: 0 -%}
+      {%- if row_type != '{' or row.size != column_count -%}
+        {%- assign valid_table = false -%}
+        {%- break -%}
+      {%- endif -%}
+      <tr>
+        {%- for property in first_row -%}
+          {%- liquid
+            assign column_key = column_keys[forloop.index0] | default: property.first
+            assign cell = row[column_key]
+            assign cell_type = cell | json | slice: 0
+            if cell == nil or cell_type == '{' or cell_type == '['
+              assign valid_table = false
+              break
+            endif
+          -%}
+          {%- if forloop.first -%}
+            <th scope="row">{{ cell | escape }}</th>
+          {%- else -%}
+            <td>{{ cell | escape }}</td>
+          {%- endif -%}
+        {%- endfor -%}
+      </tr>
+      {%- unless valid_table -%}{%- break -%}{%- endunless -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if valid_table -%}
+  {%- liquid
+    assign section_heading = section.settings.section_heading | strip | default: comparison.section_heading
+    if section_heading == blank and column_keys
+      assign section_heading = 'Raw vs pasteurised - the comparison'
+    endif
+    assign heading = section.settings.heading | strip
+    if heading == blank
+      assign heading = comparison.title
+    endif
+    if section_heading == blank
+      assign section_heading = heading
+      assign heading = ''
+    endif
+    assign description = section.settings.description | strip
+    if description == blank
+      assign description = comparison.description
+    endif
+  -%}
+  <div class="product-comparison">
+    <div class="product-comparison__card color-scheme-1">
+      {%- if section_heading != blank -%}
+        <h2 class="product-comparison__section-heading" id="ProductComparisonHeading-{{ section.id }}">{{ section_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if heading != blank -%}
+        <p class="product-comparison__intro">{{ heading | escape }}</p>
+      {%- endif -%}
+      {%- if description != blank -%}
+        <p class="product-comparison__description">{{ description | escape }}</p>
+      {%- endif -%}
+      <div
+        class="product-comparison__scroll"
+        role="region"
+        tabindex="0"
+        {% if section_heading != blank %}aria-labelledby="ProductComparisonHeading-{{ section.id }}"{% else %}aria-label="Product comparison"{% endif %}
+      >
+        <table class="product-comparison__table" style="--comparison-columns: {{ column_count }};">
+          <thead>
+            <tr>
+              {%- for column in comparison.columns -%}
+                <th scope="col">{{ column | escape }}</th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>{{ table_rows }}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-comparison {
+    padding: 10px;
+    font-family: var(--font-body-family);
+    background-color: #fffbef;
+  }
+
+  .product-comparison__card {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 44px;
+    border: 1px solid rgba(var(--color-foreground), 0.16);
+    border-radius: 20px;
+    background: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    box-shadow: 0 8px 30px rgba(var(--color-shadow), 0.05);
+  }
+
+  .product-comparison__section-heading {
+    margin: 0 0 24px;
+    font-family: var(--font-heading-family), serif;
+    font-size: var(--font-heading-size);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #1c1918;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .product-comparison__intro,
+  .product-comparison__description {
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+
+  .product-comparison__intro:has(+ .product-comparison__description) {
+    margin-bottom: 12px;
+  }
+
+  .product-comparison__scroll {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .product-comparison .product-comparison__table {
+    width: 100%;
+    min-width: calc(17rem * var(--comparison-columns));
+    border-collapse: collapse;
+    box-shadow: none;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .product-comparison__table th,
+  .product-comparison__table td {
+    padding: 12px 16px;
+    border: 1px solid rgba(var(--color-foreground), 0.18);
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+
+  .product-comparison__table thead th {
+    background: rgba(var(--color-foreground), 0.07);
+    font-weight: 700;
+  }
+
+  .product-comparison__table tbody th {
+    font-weight: 600;
+  }
+
+  @media (max-width: 749px) {
+    .product-comparison {
+      padding-inline: 12px;
+    }
+
+    .product-comparison__card {
+      padding: 20px 14px;
+      border-radius: 16px;
+    }
+
+    .product-comparison__section-heading {
+      font-size: var(--font-heading-size-mobile);
+      line-height: 1.2;
+    }
+
+    .product-comparison__intro,
+    .product-comparison__description {
+      font-size: 14px;
+    }
+
+    .product-comparison__table th,
+    .product-comparison__table td {
+      padding: 10px 12px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Comparison Table",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section label",
+      "info": "Displayed as the main heading above the comparison text."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave blank to use the title from the product comparison metafield. Displayed as introductory text when a section label is present."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "info": "Leave blank to use the description from the product comparison metafield."
+    }
+  ],
+  "presets": [{ "name": "Product Comparison Table" }]
+}
+{% endschema %}

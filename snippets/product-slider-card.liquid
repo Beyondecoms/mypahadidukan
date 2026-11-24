@@ -23,7 +23,7 @@
     data-product-url="{{ shop.url | append: product.url }}">
   </button>
   {%- if product.metafields.custom.badge != blank -%}
-    <span class="ps-badge ps-badge--{{ product.metafields.custom.badge | handleize }}">{{ product.metafields.custom.badge }}</span>
+    <span class="ps-badge">{{ product.metafields.custom.badge }}</span>
   {%- elsif position == 1 -%}
     <span class="ps-badge ps-badge--recommended">Recommended</span>
   {%- elsif position == 3 -%}
@@ -91,7 +91,7 @@
 
       {%- if product.compare_at_price > product.price -%}
         {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-        <span class="ps-off">{{ discount }}% off</span>
+        <span class="ps-off">{{ discount }}%off</span>
       {%- endif -%}
     </div>
 

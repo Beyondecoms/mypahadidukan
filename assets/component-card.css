@@ -259,15 +259,3 @@ cart-drawer-items { display: block; }
 }
 
 @media (max-width: 400px) { .nc-panel { width: 100vw; } }
-
-/* Cart update error from cart.js (empty unless a quantity change fails) */
-.nc-cart-error {
-  margin: 8px 16px 0;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #b42318;
-}
-
-.nc-cart-error:empty {
-  display: none;
-}

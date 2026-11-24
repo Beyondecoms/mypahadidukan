@@ -332,7 +332,7 @@
 
     {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    <main id="MainContent" class="content-for-layout focus-none{% if request.page_type == 'index' %} home-page-content{% endif %}" role="main" tabindex="-1">
       {%- if request.page_type == 'index' -%}
         <h1 class="visually-hidden">{{ shop.name | escape }}</h1>
       {%- endif -%}

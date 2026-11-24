@@ -153,8 +153,8 @@
 .psb-notify-btn {
   flex-shrink: 0;
   padding: 18px 61px;
-  background: #e0e0e0;
-  color: #777;
+  background: #13bba2;
+  color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 18px;
@@ -167,23 +167,8 @@
 }
 
 .psb-notify-btn:disabled {
-  cursor: not-allowed;
-}
-
-.psb-atc-btn:disabled {
-  background: #e0e0e0;
-  color: #777;
-}
-
-.psb-bar {
-  flex-wrap: wrap;
-}
-
-.psb-cart-error {
-  flex-basis: 100%;
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: #b42318;
+  background: #155c3e;
+  transform: translateY(-1px);
 }
 
 .psb-variant-select{
@@ -296,27 +281,9 @@
 }
 </style>
 
-{%- comment -%}
-  Sticky Add to Cart bar on the product page. Shows once the page's own Add to
-  Cart has scrolled out of view. Its pack menu, price and button share the
-  page's selected pack and quantity (assets/product-main.js).
-{%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
-  assign has_compare = false
-  if current_variant.compare_at_price > current_variant.price
-    assign has_compare = true
-    assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price
-  endif
 -%}
-
-{%- capture variant_options -%}
-  {%- for variant in product.variants -%}
-    <option value="{{ variant.id }}"{% if variant.id == current_variant.id %} selected{% endif %}>
-      {{- variant.title | escape }}{% unless variant.available %} (Sold out){% endunless -%}
-    </option>
-  {%- endfor -%}
-{%- endcapture -%}
 
 <div class="psb-bar" id="psb-bar" style="display: none;">
   <div class="psb-bar-desktop">
@@ -326,7 +293,7 @@
         <div class="psb-img-wrap">
           <img
             src="{{ product.featured_image | image_url: width: 120 }}"
-            alt=""
+            alt="{{ product.title }}"
             width="60"
             height="60"
             loading="lazy"
@@ -334,53 +301,245 @@
         </div>
         <div class="psb-info">
           <p class="psb-title">{{ product.title }}</p>
-          {%- unless product.has_only_default_variant -%}
-            <select class="psb-variant-select" aria-label="Pack">{{ variant_options }}</select>
-          {%- endunless -%}
+          <select class="psb-variant-select">
+          {% for variant in product.variants %}
+              <option value="{{ variant.id }}">
+              {{ variant.title }}
+              </option>
+          {% endfor %}
+          </select>
           <div class="psb-price-row">
-            <span class="psb-compare"{% unless has_compare %} hidden{% endunless %}>
-              {%- if has_compare %}₹{{ current_variant.compare_at_price | money_without_currency }}{% endif -%}
-            </span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              <span class="psb-compare">₹{{ current_variant.compare_at_price | money_without_currency }}</span>
+            {%- endif -%}
             <span class="psb-price">₹{{ current_variant.price | money_without_currency }}</span>
-            <span class="psb-discount"{% unless has_compare %} hidden{% endunless %}>{{ disc }}% off</span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              {%- assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+              <span class="psb-discount">{{ disc }}%off</span>
+            {%- endif -%}
           </div>
         </div>
       </div>
       <!-- Add to Cart Button -->
       {%- if product.available -%}
-        <button type="button" class="psb-atc-btn" data-psb-atc>Add to Cart</button>
+        <button class="psb-atc-btn" id="psb-atc-btn">
+          Add to Cart
+        </button>
       {%- else -%}
-        <button type="button" class="psb-notify-btn" disabled>Out Of Stock</button>
+        <button class="psb-notify-btn" id="psb-notify-btn">
+          Out Of Stock
+        </button>
       {%- endif -%}
     </div>
   </div>
   <div class="psb-bar-mobile">
-    <div class="psb-inner">
-      <div class="psb-bar-mobile-right">
-        <div class="psb-img-wrap">
-          <img
-            src="{{ product.featured_image | image_url: width: 120 }}"
-            alt=""
-            width="60"
-            height="60"
-            loading="lazy"
-          >
+    <div class=psb-inner>
+        <div class="psb-bar-mobile-right">
+          <div class="psb-img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 120 }}"
+                alt="{{ product.title }}"
+                width="60"
+                height="60"
+                loading="lazy"
+              >
+          </div>
         </div>
-      </div>
-      <div class="psb-bar-mobile-left">
-        <p class="psb-title">{{ product.title }}</p>
-        <div class="atc-select">
-          {%- unless product.has_only_default_variant -%}
-            <select class="psb-variant-select" aria-label="Pack">{{ variant_options }}</select>
-          {%- endunless -%}
-          {%- if product.available -%}
-            <button type="button" class="psb-atc-btn" data-psb-atc>Add to Cart</button>
-          {%- else -%}
-            <button type="button" class="psb-notify-btn" disabled>Out Of Stock</button>
-          {%- endif -%}
+        <div class="psb-bar-mobile-left">
+              <p class="psb-title">{{ product.title }}</p>
+              <div class="atc-select">
+                <select class="psb-variant-select">
+                {% for variant in product.variants %}
+                    <option value="{{ variant.id }}">
+                    {{ variant.title }}
+                    </option>
+                {% endfor %}
+                </select>
+                {%- if product.available -%}
+                  <button class="psb-atc-btn" id="psb-atc-btn-mobile">
+                    Add to Cart
+                  </button>
+                {%- else -%}
+                  <button class="psb-notify-btn" id="psb-notify-btn-mobile">
+                    Out Of Stock
+                  </button>
+                {%- endif -%}
+              </div>
         </div>
-      </div>
+    </div>
     </div>
   </div>
-  <p class="psb-cart-error" data-psb-cart-error role="alert" hidden></p>
-</div>
+<script>
+(function () {
+  var bar = document.getElementById('psb-bar');
+  var psbBtn = document.getElementById('psb-atc-btn');
+  var psbBtnMobile = document.getElementById('psb-atc-btn-mobile');
+
+  if (!bar) return;
+
+  // ── Find whichever ATC button is actually visible on screen ──
+  // Desktop button: id="pm-atc-btn"  (inside .pm-desktop-only)
+  // Mobile button:  id="pm-atc-btn-m" (inside .pm-mobile-only)
+  // Both share the class "pm-atc-btn", so this picks whichever
+  // one isn't hidden by display:none from the responsive CSS.
+  function getVisibleATC() {
+    var candidates = document.querySelectorAll('.pm-atc-btn');
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].offsetParent !== null) {
+        return candidates[i];
+      }
+    }
+    return null;
+  }
+
+function checkVisibility() {
+  var addToCartSection = getVisibleATC();
+  var isATCVisible = false;
+
+  if (addToCartSection) {
+    var rect = addToCartSection.getBoundingClientRect();
+    isATCVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  }
+
+  // Footer visible — require actual height AND meaningful overlap with viewport
+  var footer = document.querySelector('footer');
+  var isFooterVisible = false;
+
+  if (footer) {
+    var footerRect = footer.getBoundingClientRect();
+    var hasRealHeight = footerRect.height > 20; // guard against unmeasured/0-height footer
+    isFooterVisible = hasRealHeight && footerRect.top < (window.innerHeight - 100);
+  }
+
+  if (isATCVisible || isFooterVisible) {
+    bar.style.display = 'none';
+  } else {
+    bar.style.display = 'flex';
+  }
+}
+
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener('resize', checkVisibility, { passive: true });
+  checkVisibility();
+
+  // ── SHARED ADD TO CART HANDLER (sticky bar buttons) ──
+  function handleAddToCart(btn) {
+    btn.addEventListener('click', async function () {
+      btn.textContent = 'Adding...';
+      btn.disabled = true;
+
+      var variantId;
+
+      if (window.innerWidth <= 768) {
+        var select = document.querySelector('.psb-bar-mobile .psb-variant-select');
+        variantId = select ? parseInt(select.value) : {{ current_variant.id }};
+      } else {
+        var activeCard = document.querySelector('.pm-variant-card.active');
+        variantId = activeCard ? parseInt(activeCard.dataset.variantId) : {{ current_variant.id }};
+      }
+
+      // Read qty from whichever qty display is currently rendered
+      var qtyEl = document.getElementById('pm-qty-val') || document.getElementById('pm-qty-val-m');
+      var qty = qtyEl ? parseInt(qtyEl.textContent) || 1 : 1;
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: qty,
+            sections: ['cart-drawer'],
+            sections_url: window.location.pathname
+          })
+        });
+
+        const addedItem = await response.json();
+
+        if (addedItem.sections?.['cart-drawer']) {
+          const html = new DOMParser().parseFromString(
+            addedItem.sections['cart-drawer'], 'text/html'
+          );
+
+          const newBody = html.querySelector('#nc-body');
+          const oldBody = document.querySelector('#nc-body');
+          if (newBody && oldBody) oldBody.replaceWith(newBody);
+
+          const newBreakdown = html.querySelector('.nc-price-breakdown');
+          if (newBreakdown) {
+            const oldBreakdown = document.querySelector('.nc-price-breakdown');
+            if (oldBreakdown) {
+              oldBreakdown.replaceWith(newBreakdown);
+            } else {
+              const footer = document.querySelector('.cart-drawer__footer');
+              if (footer) footer.insertAdjacentElement('beforebegin', newBreakdown);
+            }
+          }
+
+          const newFooter = html.querySelector('.cart-drawer__footer');
+          const oldFooter = document.querySelector('.cart-drawer__footer');
+          if (newFooter && oldFooter) oldFooter.replaceWith(newFooter);
+        }
+
+        var drawer = document.getElementById('nc-cart-drawer');
+        if (drawer) {
+          drawer.classList.add('is-open');
+          drawer.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        const cartResponse = await fetch('/cart.js', {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const cartData = await cartResponse.json();
+
+        if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-main', cartData: cartData });
+        }
+
+        if (typeof window.ncUpdatePriceBreakdown === 'function') {
+          window.ncUpdatePriceBreakdown(cartData);
+        }
+
+      } catch (e) {
+        console.error(e);
+      } finally {
+        btn.textContent = 'Add to Cart';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  if (psbBtn) handleAddToCart(psbBtn);
+  if (psbBtnMobile) handleAddToCart(psbBtnMobile);
+
+  // Keep sticky-bar price in sync when a variant is selected (desktop)
+  var observer = new MutationObserver(function () {
+    var activeCard = document.querySelector('.pm-variant-card.active');
+    if (!activeCard) return;
+
+    var price   = parseInt(activeCard.dataset.price) / 100;
+    var compare = parseInt(activeCard.dataset.compare) / 100;
+
+    var priceEl   = bar.querySelector('.psb-price');
+    var compareEl = bar.querySelector('.psb-compare');
+    var discEl    = bar.querySelector('.psb-discount');
+
+    if (priceEl) priceEl.textContent = '₹' + Math.round(price);
+    if (compareEl) compareEl.textContent = compare > price ? '₹' + Math.round(compare) : '';
+    if (discEl && compare > price) {
+      var disc = Math.round((compare - price) * 100 / compare);
+      discEl.textContent = disc + '%off';
+      discEl.style.display = 'inline';
+    } else if (discEl) {
+      discEl.style.display = 'none';
+    }
+  });
+
+  var variantsGrid = document.querySelector('.pm-variants-grid');
+  if (variantsGrid) {
+    observer.observe(variantsGrid, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  }
+
+})();
+</script>

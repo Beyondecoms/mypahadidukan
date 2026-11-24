@@ -3632,6 +3632,35 @@ details-disclosure > details {
 
 /* swym-customs */
 
+.home-page-content :is(.sbr-header, .cr-header) {
+  padding-inline: clamp(24px, 2.5vw, 48px);
+}
+
+.home-page-content .sbr-header {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.home-page-content :is(.cr-title, .bs-philosophy-title, .bs-media-title, .bs-supported-title) {
+  font-variant: small-caps;
+}
+
+.home-page-content :is(.bs-philosophy-title, .bs-media-title, .bs-supported-title) {
+  font-family: 'Mrs Eaves', 'mrs-eaves', serif;
+}
+
+.home-page-content :is(.bs-media-title, .bs-supported-title) {
+  text-align: center;
+}
+
+.home-page-content :is(.collection-circles-title, .pdp-title-faq) {
+  text-align: left;
+}
+
+.home-page-content .collection-circles-title {
+  padding-inline: 24px;
+}
+
 button.pm-wishlist-btn.my-custom-wishlist-button.swym-button {
     position: absolute !important;
     display: unset !important;

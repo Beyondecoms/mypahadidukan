@@ -305,6 +305,10 @@
         "badge_color": "#ffffff"
       }
     },
+    "product_comparison_table": {
+      "type": "product-comparison-table",
+      "settings": {}
+    },
     "seabuckthorn_m5": {
       "type": "seabuckthorn-honest-warning",
       "settings": {
@@ -595,6 +599,7 @@
     "seabuckthorn_m2",
     "seabuckthorn_m3",
     "seabuckthorn_m4",
+    "product_comparison_table",
     "seabuckthorn_m5",
     "seabuckthorn_m6",
     "seabuckthorn_m7",

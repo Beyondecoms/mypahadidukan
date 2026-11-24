@@ -15,34 +15,41 @@
         "image_axApfn": {
           "type": "Image",
           "settings": {
-            "image": "shopify://shop_images/Frame_50_98f73b2a-67d8-4927-8761-37ccc048b7bb.png",
-            "mobile_image": "shopify://shop_images/mpd_23.png",
-            "image_link": ""
+            "image": "shopify://shop_images/1_31cab332-22fb-4bf3-83f1-1525b31a0d1b.jpg",
+            "mobile_image": "shopify://shop_images/1_e0f4da94-0548-4d34-b76b-60714cdce7f7.jpg",
+            "image_link": "shopify://collections/seabuckthorn-by-mpd"
           }
         },
         "image_HrAEqe": {
           "type": "Image",
           "settings": {
-            "image": "shopify://shop_images/Frame_53_77bf553e-b49d-4933-b027-3a3c17bccff1.png",
-            "mobile_image": "shopify://shop_images/mpd1_63b40a16-5adf-4f63-bd0c-ecfca931295e.png",
-            "image_link": ""
+            "image": "shopify://shop_images/2_6133ca7f-9bec-4c8b-abd5-a6bfdfd512bc.jpg",
+            "mobile_image": "shopify://shop_images/2_4912d7dd-90cc-47fc-9196-6610e2ff24a6.jpg",
+            "image_link": "shopify://products/multi-flora-honey-from-lahaul-spiti-my-pahadi-dukan"
           }
         },
         "image_M6yDyN": {
           "type": "Image",
           "settings": {
-            "image": "shopify://shop_images/Frame_54_bebd3d99-8ac1-4f31-bd20-176971e6d802.png",
-            "mobile_image": "shopify://shop_images/mpd_32.png",
-            "image_link": ""
+            "image": "shopify://shop_images/3_d8d75de8-51f9-4dae-b646-6f2236e639d8.jpg",
+            "mobile_image": "shopify://shop_images/3_cd865536-fffe-4389-b0dd-529a0f30c7b2.jpg",
+            "image_link": "shopify://collections/pahadi-ghee"
           }
         },
-        "video_7jhfmV": {
-          "type": "video",
-          "disabled": true,
+        "image_mradqT": {
+          "type": "Image",
           "settings": {
-            "video2_link": "",
-            "overlay_heading": "Improve <span style=\"font-weight: 500;\">Strength</span> Naturally",
-            "overlay_subtext": "Powered by Nature | Proven by Science"
+            "image": "shopify://shop_images/4_482c8fc6-9ef4-4d8a-bb35-5b94266688f6.jpg",
+            "mobile_image": "shopify://shop_images/4_5345839d-0ae9-4df4-9c0f-4340c37f8ae2.jpg",
+            "image_link": "shopify://products/afghani-pahadi-hing-my-pahadi-dukan"
+          }
+        },
+        "image_ErkXkD": {
+          "type": "Image",
+          "settings": {
+            "image": "shopify://shop_images/5_b654546e-c296-4266-b182-928d63d85120.jpg",
+            "mobile_image": "shopify://shop_images/5_7dfe071b-9b56-4253-828b-66dfa701ddc1.jpg",
+            "image_link": "shopify://products/combo-lavender-oil-rosemary-oil-lemongrass-oil"
           }
         }
       },
@@ -50,7 +57,8 @@
         "image_axApfn",
         "image_HrAEqe",
         "image_M6yDyN",
-        "video_7jhfmV"
+        "image_mradqT",
+        "image_ErkXkD"
       ],
       "settings": {}
     },
@@ -875,9 +883,9 @@
         "media_logo_6": "shopify://shop_images/image_799.png",
         "media_link_6": "https://www.hindustantimes.com/",
         "letter_front_image": "shopify://shop_images/Front.png",
-        "letter_back_image": "shopify://shop_images/LETTER.png",
+        "letter_back_image": "shopify://shop_images/Letter_4_3.png",
         "letter_front_image_mobile": "shopify://shop_images/Front_1.png",
-        "letter_back_image_mobile": "shopify://shop_images/LETTER_1.png",
+        "letter_back_image_mobile": "shopify://shop_images/Letter_3_4.png",
         "letter_quote": "",
         "letter_tap_text": "",
         "letter_back_text": "",

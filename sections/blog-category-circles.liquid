@@ -1,13 +1,4 @@
 {{ 'section-blog-category-circles.css' | asset_url | stylesheet_tag }}
-{%- liquid
-  # Start on the blog in the URL (/blogs/travel opens Travel), else the first one.
-  assign active_index = 0
-  for block in section.blocks
-    if block.settings.blog_handle == blog.handle
-      assign active_index = forloop.index0
-    endif
-  endfor
--%}
 
 <div class="bcc-section" style="background: {{ section.settings.bg_color }};" id="bcc-{{ section.id }}">
   <div class="bcc-outer">
@@ -21,7 +12,7 @@
     <div class="bcc-track" id="bcc-track-{{ section.id }}">
       {%- for block in section.blocks -%}
         <button
-          class="bcc-item {% if forloop.index0 == active_index %}active{% endif %}"
+          class="bcc-item {% if forloop.first %}active{% endif %}"
           data-blog="{{ block.settings.blog_handle }}"
           data-index="{{ forloop.index0 }}"
           {{ block.shopify_attributes }}
@@ -59,7 +50,7 @@
   var prevBtn = document.getElementById('bcc-prev-{{ section.id }}');
   var nextBtn = document.getElementById('bcc-next-{{ section.id }}');
   var items   = Array.from(document.querySelectorAll('#bcc-{{ section.id }} .bcc-item'));
-  var current = Math.max(0, items.findIndex(function (i) { return i.classList.contains('active'); }));
+  var current = 0;
 
   function activate(idx) {
     items.forEach(function(i) { i.classList.remove('active'); });

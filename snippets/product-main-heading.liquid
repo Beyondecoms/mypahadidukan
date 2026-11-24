@@ -1,7 +1,6 @@
 {%- assign capsule_feature_count = capsule_features | size -%}
 {%- capture share_button -%}
-  <span class="pm-share-status" data-pm-share-status role="status" hidden></span>
-  <button type="button" class="pm-share-btn" data-pm-share data-title="{{ product.title | escape }}" aria-label="Share">
+  <button class="pm-share-btn" onclick="navigator.share ? navigator.share({ title: {{ product.title | json | escape }}, url: window.location.href }) : navigator.clipboard.writeText(window.location.href)" aria-label="Share">
     {%- render 'icon-share-product' -%}
   </button>
 {%- endcapture -%}
@@ -14,11 +13,7 @@
 {%- endif -%}
 
 <div class="pm-title-row{% if capsule_feature_count == 0 %} pm-title-row--with-share{% endif %}">
-  {%- if mobile -%}
-    <p class="pm-title" role="heading" aria-level="1">{{ product.title }}</p>
-  {%- else -%}
-    <h1 class="pm-title">{{ product.title }}</h1>
-  {%- endif -%}
+  <h1 class="pm-title">{{ product.title }}</h1>
   {%- if capsule_feature_count == 0 -%}
     {{ share_button }}
   {%- endif -%}

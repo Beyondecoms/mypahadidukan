@@ -17,7 +17,7 @@
         "custom_text_7FMKRj": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "Summer sale discount <span>off 30%!</span>! Shop Now",
+            "custom_text_content": "10% extra off at checkout",
             "notification_url": "",
             "color_custom_text": "#ffffff",
             "color_custom_text_link": "#f11e1e",
@@ -32,7 +32,7 @@
         "custom_text_ktRpfD": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "Additional 10% off On your first Order",
+            "custom_text_content": "2.5% extra off above ₹1,999 (auto-applied)",
             "notification_url": "",
             "color_custom_text": "#ffffff",
             "color_custom_text_link": "#f11e1e",
@@ -47,7 +47,22 @@
         "custom_text_xRebGV": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "Summer sale discount off 30%! Shop Now",
+            "custom_text_content": "5% extra off above ₹4,999 (auto-applied)",
+            "notification_url": "",
+            "color_custom_text": "#ffffff",
+            "color_custom_text_link": "#f11e1e",
+            "color_custom_text_link_hover": "#f11e1e",
+            "font_size_desktop": 19,
+            "text_align": "center",
+            "font_size_mobile": 12,
+            "text_align_mobi": "center",
+            "show_mobile_custom_text": true
+          }
+        },
+        "custom_text_offer_8_percent": {
+          "type": "custom-text",
+          "settings": {
+            "custom_text_content": "8% extra off above ₹11,999 (auto-applied)",
             "notification_url": "",
             "color_custom_text": "#ffffff",
             "color_custom_text_link": "#f11e1e",
@@ -63,7 +78,8 @@
       "block_order": [
         "custom_text_7FMKRj",
         "custom_text_ktRpfD",
-        "custom_text_xRebGV"
+        "custom_text_xRebGV",
+        "custom_text_offer_8_percent"
       ],
       "settings": {
         "show_topbar": true,

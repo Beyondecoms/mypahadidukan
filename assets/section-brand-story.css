@@ -204,6 +204,7 @@
 }
 
 .bs-letter-card.flipped {
+  aspect-ratio: auto;
   transform: rotateY(180deg);
 }
 
@@ -222,11 +223,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .bs-letter-back {
   transform: rotateY(180deg);
+}
+
+.bs-letter-card.flipped .bs-letter-back {
+  position: relative;
+  inset: auto;
+}
+
+.bs-letter-card.flipped .bs-letter-back .bs-letter-img {
+  height: auto;
+  object-fit: contain;
 }
 
 .bs-letter-overlay {

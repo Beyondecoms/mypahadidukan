@@ -8,14 +8,7 @@
         data-collection-handle="{{ tab_collection.handle }}"
       >
         <div class="tab-image">
-          {%- if block.settings.image != blank -%}
-            <img
-              src="{{ block.settings.image | image_url: width: 200 }}"
-              alt="{{ block.settings.title | escape }}"
-              width="200"
-              height="{{ 200 | divided_by: block.settings.image.aspect_ratio | round }}"
-            >
-          {%- endif -%}
+          <img src="{{ block.settings.image | img_url: '200x' }}" alt="{{ block.settings.title }}">
         </div>
         <div class="tab-title">
           {{ block.settings.title }}
