@@ -12,7 +12,9 @@
     "bf_hero": {
       "type": "bf-hero",
       "settings": {
-        "image_alt": "Sea buckthorn pulp bottle on a wooden stand surrounded by fresh sea buckthorn berries",
+        "image": "shopify://shop_images/Black_Friday_Sale_image_jpg.jpg",
+        "mobile_image": "shopify://shop_images/Black_Friday_Sale_mobile_image_jpg.jpg",
+        "image_alt": "My Pahadi Dukan products on dark display stands",
         "eyebrow": "OUR ONE SALE OF THE YEAR",
         "heading": "We Don't Do Sales. Except This One.",
         "text": "Up to 60% off pure, lab-tested Himalayan products, straight from our farmers. Four days only, 27 to 30 November.",

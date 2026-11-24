@@ -71,29 +71,34 @@
 >
   <div class="bf-hero__grid">
     <div class="bf-hero__media">
-      {%- if section.settings.image != blank -%}
-        {{
-          section.settings.image
-          | image_url: width: 1600
-          | image_tag:
-            class: 'bf-hero__img',
-            widths: '600, 900, 1200, 1600',
-            sizes: '(max-width: 900px) 100vw, 50vw',
-            alt: section.settings.image_alt,
-            loading: 'eager',
-            fetchpriority: 'high'
-        }}
-      {%- else -%}
-        <img
-          class="bf-hero__img"
-          src="{{ 'bf-hero-default.jpg' | asset_url }}"
-          width="1340"
-          height="979"
-          alt="{{ section.settings.image_alt | escape }}"
-          loading="eager"
-          fetchpriority="high"
-        >
-      {%- endif -%}
+      <picture>
+        {%- if section.settings.mobile_image != blank -%}
+          <source media="(max-width: 900px)" srcset="{{ section.settings.mobile_image | image_url: width: 1200 }}">
+        {%- endif -%}
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'bf-hero__img',
+              widths: '600, 900, 1200, 1600',
+              sizes: '(max-width: 900px) 100vw, 50vw',
+              alt: section.settings.image_alt,
+              loading: 'eager',
+              fetchpriority: 'high'
+          }}
+        {%- else -%}
+          <img
+            class="bf-hero__img"
+            src="{{ 'bf-hero-default.jpg' | asset_url }}"
+            width="1340"
+            height="979"
+            alt="{{ section.settings.image_alt | escape }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {%- endif -%}
+      </picture>
     </div>
 
     <div class="bf-hero__content">
@@ -167,8 +172,14 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Image",
+      "label": "Desktop image",
       "info": "Leave empty to use the sea buckthorn photo from the design."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Leave empty to use the desktop image."
     },
     {
       "type": "text",
