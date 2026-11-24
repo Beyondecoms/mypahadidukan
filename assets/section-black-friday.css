@@ -567,12 +567,14 @@
   gap: 18px;
 }
 
-.bf-section .bf-why__title {
-  font-family: var(--bf-serif);
+.bf-section .bf-why__title,
+.bf-why-section + .tb-section-outer .tb-heading {
+  font-family: var(--bf-serif, 'Tinos', 'Times New Roman', serif);
   font-weight: 400;
   font-size: 40px;
   line-height: 1.12;
-  color: var(--bf-ink);
+  letter-spacing: normal;
+  color: var(--bf-ink, #1f1a17);
 }
 
 .bf-section .bf-why__text {
