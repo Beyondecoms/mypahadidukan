@@ -398,8 +398,8 @@
             "address": "Picnic Spot Road, Khurram Nagar Rd, opp. Fatimi Masjid, Sector 8, Vikas Nagar, Lucknow, UP 226022",
             "hours": "Mon – Sun · 10:00 – 21:00",
             "phone": "08881999204",
-            "map_url": "https://www.google.com/maps/place/Farziengineer/@26.8081689,80.8914829,17z/data=!3m1!4b1!4m6!3m5!1s0x399bff060f663e75:0xc6aacf23f2e80f1c!8m2!3d26.8081689!4d80.8940578!16s%2Fg%2F11s1bj50lg?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D",
-            "calendar_url": "shopify://blogs/info"
+            "map_url": "https://www.google.com/maps/dir/?api=1&destination=Picnic%20Spot%20Road%2C%20Khurram%20Nagar%20Rd%2C%20opp.%20Fatimi%20Masjid%2C%20Sector%208%2C%20Vikas%20Nagar%2C%20Lucknow%2C%20UP%20226022",
+            "calendar_url": "/pages/store-locator"
           }
         },
         "store_4zWLDY": {
@@ -413,23 +413,53 @@
             "address": "Rajpur Road, near Astley Hall, Dehradun, Uttarakhand 248001",
             "hours": "Mon – Sun · 09:30 – 21:30",
             "phone": "08881999205",
-            "map_url": "https://www.google.com/maps/place/Farziengineer/@26.8081689,80.8914829,17z/data=!3m1!4b1!4m6!3m5!1s0x399bff060f663e75:0xc6aacf23f2e80f1c!8m2!3d26.8081689!4d80.8940578!16s%2Fg%2F11s1bj50lg?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D",
-            "calendar_url": "shopify://blogs/health-and-wellness"
+            "map_url": "https://www.google.com/maps/dir/?api=1&destination=Rajpur%20Road%2C%20near%20Astley%20Hall%2C%20Dehradun%2C%20Uttarakhand%20248001",
+            "calendar_url": "/pages/store-locator"
           }
         },
-        "store_nP8ECz": {
+        "store_bahadurgarh": {
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/lucknow.avif",
-            "state": "Uttar Pradesh",
-            "city": "New Noida",
-            "store_type": "Grocery · Tasting Counter",
-            "store_name": "New Noida Store",
-            "address": "Picnic Spot Road, Khurram Nagar Rd, opp. Fatimi Masjid, Sector 8, Vikas Nagar, Lucknow, UP 226022",
+            "state": "Haryana",
+            "city": "Bahadurgarh",
+            "store_type": "Organic Store",
+            "store_name": "Shudh Native Organics",
+            "address": "Gali No. 2, Jhajjar Rd, near Royal Enfield Showroom, Krishna Colony, Bahadurgarh, Haryana 124507",
             "hours": "Mon – Sun · 10:00 – 21:00",
             "phone": "08881999204",
-            "map_url": "https://www.google.com/maps/place/Farziengineer/@28.6096787,77.3675372,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce5f3447f6a31:0xd023bf8f14559ed8!8m2!3d28.6096787!4d77.3701121!16s%2Fg%2F11j1hhv_69?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D",
-            "calendar_url": "shopify://pages/buransh-discount"
+            "map_url": "https://www.google.com/maps/dir/?api=1&destination=Gali%20No.%202%2C%20Jhajjar%20Rd%2C%20near%20Royal%20Enfield%20Showroom%2C%20Krishna%20Colony%2C%20Bahadurgarh%2C%20Haryana%20124507",
+            "calendar_url": "/pages/store-locator"
+          }
+        },
+        "store_palampur": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/deharadun.avif",
+            "state": "Himachal Pradesh",
+            "city": "Palampur",
+            "store_type": "Tea Store",
+            "store_name": "Pooja Tea Boutique",
+            "address": "S.S.B Chowk, Bindravan, Sugghar, Khilru, Palampur, Himachal Pradesh 176061",
+            "hours": "Mon – Sun · 10:00 – 20:00",
+            "phone": "08219659297",
+            "map_url": "https://www.google.com/maps/dir/?api=1&destination=S.S.B%20Chowk%2C%20Bindravan%2C%20Sugghar%2C%20Khilru%2C%20Palampur%2C%20Himachal%20Pradesh%20176061",
+            "calendar_url": "/pages/store-locator"
+          }
+        },
+        "store_secunderabad": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/lucknow.avif",
+            "state": "Telangana",
+            "city": "Secunderabad",
+            "store_type": "Dry Fruit Store",
+            "store_name": "Shree Zaika",
+            "address": "7-2-964, Sajjanlal Street, Takara Basthi, Monda Market, Shivaji Nagar, Secunderabad, Telangana 500003",
+            "hours": "Mon – Sun · 10:00 – 21:00",
+            "phone": "08309557014",
+            "map_url": "https://www.google.com/maps/dir/?api=1&destination=7-2-964%2C%20Sajjanlal%20Street%2C%20Takara%20Basthi%2C%20Monda%20Market%2C%20Shivaji%20Nagar%2C%20Secunderabad%2C%20Telangana%20500003",
+            "calendar_url": "/pages/store-locator"
           }
         },
         "coming_soon_YBMPx4": {
@@ -438,14 +468,16 @@
             "label": "OPENING SOON",
             "cities": "Rishikesh · Shimla · Manali",
             "notify_label": "Coming Soon",
-            "notify_url": ""
+            "notify_url": "/pages/store-locator"
           }
         }
       },
       "block_order": [
         "store_LP6nhB",
         "store_4zWLDY",
-        "store_nP8ECz",
+        "store_bahadurgarh",
+        "store_palampur",
+        "store_secunderabad",
         "coming_soon_YBMPx4"
       ],
       "name": "Our Stores",
@@ -455,8 +487,8 @@
         "title_plain": "Follow the smell of",
         "title_accent": "Honey",
         "intro_text": "Some things you have to taste first. Walk into a Pahadi Dukan, sample what catches your eye, and take home what you love.",
-        "meta_locations": "3 locations",
-        "meta_states": "2 states",
+        "meta_locations": "5 locations",
+        "meta_states": "5 states",
         "meta_soon": "Actively plotting more"
       }
     },
