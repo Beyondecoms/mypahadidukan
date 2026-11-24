@@ -1,0 +1,321 @@
+{{ 'section-black-friday.css' | asset_url | stylesheet_tag }}
+{%- render 'bf-fonts' -%}
+<script src="{{ 'black-friday.js' | asset_url }}" defer="defer"></script>
+
+{%- capture bf_phase -%}{%- render 'bf-sale-phase' -%}{%- endcapture -%}
+{%- assign bf_phase = bf_phase | strip -%}
+
+{%- liquid
+  # First paint of the countdown; black-friday.js keeps it ticking.
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign start_s = settings.bf_sale_start | date: '%s' | plus: 0
+  assign end_s = settings.bf_sale_end | date: '%s' | plus: 0
+  case settings.bf_preview_phase
+    when 'before'
+      assign left = 192730
+    when 'live'
+      assign left = 112482
+    when 'ended'
+      assign left = 0
+    else
+      if bf_phase == 'before'
+        assign left = start_s | minus: now_s
+      elsif bf_phase == 'live'
+        assign left = end_s | minus: now_s
+      else
+        assign left = 0
+      endif
+  endcase
+  if left < 0
+    assign left = 0
+  endif
+  assign dd = left | divided_by: 86400
+  assign hh = left | modulo: 86400 | divided_by: 3600
+  assign mm = left | modulo: 3600 | divided_by: 60
+  assign ss = left | modulo: 60
+
+  case bf_phase
+    when 'before'
+      assign label = section.settings.label_before
+      assign sub = section.settings.sub_before
+      assign aria = 'Time until the sale starts'
+    when 'live'
+      assign label = section.settings.label_live
+      assign sub = section.settings.sub_live
+      assign aria = 'Time left in the sale'
+    else
+      assign label = section.settings.label_ended
+      assign sub = section.settings.sub_ended
+      assign aria = 'Sale ended'
+  endcase
+-%}
+
+<section
+  class="bf-section bf-hero"
+  id="bf-hero"
+  style="background: linear-gradient(90deg, {{ section.settings.bg_from }} 0%, {{ section.settings.bg_mid }} 45%, {{ section.settings.bg_to }} 100%);"
+  data-bf-hero
+  data-bf-sale
+  data-start="{{ settings.bf_sale_start | escape }}"
+  data-end="{{ settings.bf_sale_end | escape }}"
+  data-preview="{{ settings.bf_preview_phase | default: 'auto' }}"
+  data-label-before="{{ section.settings.label_before | escape }}"
+  data-sub-before="{{ section.settings.sub_before | escape }}"
+  data-label-live="{{ section.settings.label_live | escape }}"
+  data-sub-live="{{ section.settings.sub_live | escape }}"
+  data-label-ended="{{ section.settings.label_ended | escape }}"
+  data-sub-ended="{{ section.settings.sub_ended | escape }}"
+  data-aria-before="Time until the sale starts"
+  data-aria-live="Time left in the sale"
+  data-aria-ended="Sale ended"
+>
+  <div class="bf-hero__grid">
+    <div class="bf-hero__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'bf-hero__img',
+            widths: '600, 900, 1200, 1600',
+            sizes: '(max-width: 900px) 100vw, 50vw',
+            alt: section.settings.image_alt,
+            loading: 'eager',
+            fetchpriority: 'high'
+        }}
+      {%- else -%}
+        <img
+          class="bf-hero__img"
+          src="{{ 'bf-hero-default.jpg' | asset_url }}"
+          width="1340"
+          height="979"
+          alt="{{ section.settings.image_alt | escape }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="bf-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="bf-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h1 class="bf-hero__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}
+        <p class="bf-hero__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      <div class="bf-timer">
+        <div class="bf-timer__head">
+          <span class="bf-timer__label" data-bf-label>{{ label }}</span>
+          <span class="bf-timer__sub" data-bf-sub>{{ sub }}</span>
+        </div>
+        <div class="bf-timer__grid" role="timer" aria-label="{{ aria }}" data-bf-timer>
+          <div class="bf-timer__cell">
+            <div class="bf-timer__num" data-bf-dd>{{ dd | prepend: '0' | slice: -2, 2 }}</div>
+            <div class="bf-timer__unit">{{ section.settings.unit_days }}</div>
+          </div>
+          <div class="bf-timer__cell">
+            <div class="bf-timer__num" data-bf-hh>{{ hh | prepend: '0' | slice: -2, 2 }}</div>
+            <div class="bf-timer__unit">{{ section.settings.unit_hours }}</div>
+          </div>
+          <div class="bf-timer__cell">
+            <div class="bf-timer__num" data-bf-mm>{{ mm | prepend: '0' | slice: -2, 2 }}</div>
+            <div class="bf-timer__unit">{{ section.settings.unit_minutes }}</div>
+          </div>
+          <div class="bf-timer__cell">
+            <div class="bf-timer__num" data-bf-ss>{{ ss | prepend: '0' | slice: -2, 2 }}</div>
+            <div class="bf-timer__unit">{{ section.settings.unit_seconds }}</div>
+          </div>
+        </div>
+      </div>
+
+      {%- if section.settings.cta_live_label != blank -%}
+        <a
+          href="{{ section.settings.cta_live_link | default: '#bf-deals' }}"
+          class="bf-hero__cta"
+          data-bf-when="live"
+          {% unless bf_phase == 'live' %}hidden{% endunless %}
+        >
+          {{- section.settings.cta_live_label -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_ended_label != blank -%}
+        <a
+          href="{{ section.settings.cta_ended_link | default: '#bf-deals' }}"
+          class="bf-hero__cta bf-hero__cta--ended"
+          data-bf-when="ended"
+          {% unless bf_phase == 'ended' %}hidden{% endunless %}
+        >
+          {{- section.settings.cta_ended_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Black Friday hero",
+  "tag": "div",
+  "class": "bf-hero-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sale dates and the preview switch are in Theme settings → Black Friday sale."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Leave empty to use the sea buckthorn photo from the design."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image description",
+      "default": "Sea buckthorn pulp bottle on a wooden stand surrounded by fresh sea buckthorn berries"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR ONE SALE OF THE YEAR"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We Don't Do Sales. Except This One."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Up to 60% off pure, lab-tested Himalayan products, straight from our farmers. Four days only, 27 to 30 November."
+    },
+    {
+      "type": "header",
+      "content": "Countdown"
+    },
+    {
+      "type": "text",
+      "id": "label_before",
+      "label": "Before the sale: label",
+      "default": "SALE GOES LIVE IN"
+    },
+    {
+      "type": "text",
+      "id": "sub_before",
+      "label": "Before the sale: date",
+      "default": "Friday 27 Nov, 12:00 AM IST"
+    },
+    {
+      "type": "text",
+      "id": "label_live",
+      "label": "Sale live: label",
+      "default": "SALE ENDS IN"
+    },
+    {
+      "type": "text",
+      "id": "sub_live",
+      "label": "Sale live: date",
+      "default": "Monday 30 Nov, 11:59 PM IST"
+    },
+    {
+      "type": "text",
+      "id": "label_ended",
+      "label": "Sale ended: label",
+      "default": "THIS SALE HAS ENDED"
+    },
+    {
+      "type": "text",
+      "id": "sub_ended",
+      "label": "Sale ended: date",
+      "default": "Back next November"
+    },
+    {
+      "type": "text",
+      "id": "unit_days",
+      "label": "Days label",
+      "default": "DAYS"
+    },
+    {
+      "type": "text",
+      "id": "unit_hours",
+      "label": "Hours label",
+      "default": "HOURS"
+    },
+    {
+      "type": "text",
+      "id": "unit_minutes",
+      "label": "Minutes label",
+      "default": "MINUTES"
+    },
+    {
+      "type": "text",
+      "id": "unit_seconds",
+      "label": "Seconds label",
+      "default": "SECONDS"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta_live_label",
+      "label": "Button while the sale is live",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_live_link",
+      "label": "Link",
+      "info": "Leave empty to scroll to the deals."
+    },
+    {
+      "type": "text",
+      "id": "cta_ended_label",
+      "label": "Button after the sale",
+      "default": "See you next November"
+    },
+    {
+      "type": "url",
+      "id": "cta_ended_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_from",
+      "label": "Background left",
+      "default": "#C48D3D"
+    },
+    {
+      "type": "color",
+      "id": "bg_mid",
+      "label": "Background middle",
+      "default": "#B47F33"
+    },
+    {
+      "type": "color",
+      "id": "bg_to",
+      "label": "Background right",
+      "default": "#9A6824"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black Friday hero"
+    }
+  ]
+}
+{% endschema %}

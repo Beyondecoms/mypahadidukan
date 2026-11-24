@@ -380,3 +380,80 @@
     font-size: 13px;
   }
 }
+
+
+/* ── TILES: four flat tiles in a row (Black Friday page) ── */
+.tb-section-tiles {
+  padding: 36px 56px 48px;
+}
+
+.tb-section-tiles .tb-inner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+  max-width: 1000px;
+}
+
+.tb-section-tiles .tb-item {
+  min-width: 0;
+  width: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff7d8;
+}
+
+.tb-section-tiles .tb-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+}
+
+.tb-section-tiles .tb-text {
+  align-items: flex-start;
+  gap: 0;
+}
+
+.tb-section-tiles .tb-item:hover .tb-icon-wrap {
+  transform: none;
+  box-shadow: none;
+}
+
+.tb-section-tiles .tb-title,
+.tb-section-tiles .tb-subtitle {
+  margin: 0;
+  font-family: 'Archivo', var(--font-family-normal, var(--font-body-family, sans-serif));
+  letter-spacing: normal;
+  overflow-wrap: anywhere;
+}
+
+.tb-section-tiles .tb-title {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: normal;
+  color: #1f1a17;
+}
+
+.tb-section-tiles .tb-subtitle {
+  font-size: 12.5px;
+  line-height: normal;
+  color: #4a3b30;
+}
+
+@media (max-width: 900px) {
+  .tb-section-tiles {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .tb-section-tiles .tb-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -48,3 +48,26 @@
 .marquee-bar:hover .marquee-content {
   animation-play-state: paused;
 }
+
+/* Compact style (Black Friday page): small ◆ glyph, tighter band, wider gaps */
+.marquee-bar--compact {
+  padding: 11px 0;
+}
+
+.marquee-bar--compact .marquee-content {
+  gap: 56px;
+  padding-right: 56px;
+}
+
+.marquee-bar--compact .marquee-item {
+  padding: 0;
+  gap: 0;
+}
+
+.marquee-bar--compact .marquee-text {
+  padding-left: 0;
+  font-family: 'Archivo', var(--font-body-family), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: normal;
+}

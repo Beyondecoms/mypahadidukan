@@ -1877,5 +1877,40 @@
         "info": "CSS selector for where to attach the icon on mobile view"
       }
     ]
+  },
+  {
+    "name": "Black Friday sale",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Used by the Black Friday hero countdown and deals grid. Times are in ISO format with the India offset, e.g. 2026-11-27T00:00:00+05:30."
+      },
+      {
+        "type": "text",
+        "id": "bf_sale_start",
+        "label": "Sale starts",
+        "default": "2026-11-27T00:00:00+05:30"
+      },
+      {
+        "type": "text",
+        "id": "bf_sale_end",
+        "label": "Sale ends",
+        "default": "2026-12-01T00:00:00+05:30",
+        "info": "The moment the sale is over, e.g. midnight after the last day."
+      },
+      {
+        "type": "select",
+        "id": "bf_preview_phase",
+        "label": "Preview phase",
+        "info": "For checking the page before launch. Set back to Automatic before the sale.",
+        "options": [
+          { "value": "auto", "label": "Automatic (follow the dates)" },
+          { "value": "before", "label": "Before the sale" },
+          { "value": "live", "label": "Sale live" },
+          { "value": "ended", "label": "Sale ended" }
+        ],
+        "default": "auto"
+      }
+    ]
   }
 ]

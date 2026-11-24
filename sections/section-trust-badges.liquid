@@ -39,7 +39,7 @@
 
         <!-- Text -->
         <div class="tb-text">
-          {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
+          {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' or section_style == 'tb-section-tiles' -%}
             <h3 class="tb-title">{{ block.settings.title }}</h3>
           {%- else -%}
             <p class="tb-title">{{ block.settings.title }}</p>
@@ -49,7 +49,7 @@
 
       </div>
 
-      {%- unless forloop.last or section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
+      {%- unless forloop.last or section_style == 'tb-section-compact' or section_style == 'tb-section-border' or section_style == 'tb-section-tiles' -%}
         <div class="tb-divider" aria-hidden="true"></div>
       {%- endunless -%}
     {%- endfor -%}
@@ -69,7 +69,8 @@
       "options": [
         { "value": "tb-section", "label": "Default" },
         { "value": "tb-section-compact", "label": "Compact" },
-        { "value": "tb-section-border", "label": "With Border" }
+        { "value": "tb-section-border", "label": "With Border" },
+        { "value": "tb-section-tiles", "label": "Tiles (4 across)" }
       ],
       "default": "tb-section"
     },
