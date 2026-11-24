@@ -412,6 +412,16 @@
   {%- render 'product-sticky-bar' -%}
 
 <script>
+  // Descriptions pasted from Docs/Sheets carry blank spacer blocks; tag them so
+  // section-product-main.css can collapse runs of them. trim() also strips &nbsp;.
+  document.querySelectorAll('#shopify-section-{{ section.id }} .pm-accordion-content :is(p, div, ul, ol)').forEach(function (el) {
+    if (el.textContent.trim() === '' && !el.querySelector('img, iframe, video, svg, table, button, input, select, textarea')) {
+      el.classList.add('pm-rte-blank');
+    }
+  });
+</script>
+
+<script>
 (function () {
   var sectionEl = document.getElementById('pm-section-{{ section.id }}');
   if (!sectionEl) return;

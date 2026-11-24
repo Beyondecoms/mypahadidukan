@@ -278,6 +278,11 @@
     font-weight: 700;
     flex-shrink: 0;
   }
+
+  /* No variant dropdown (single-variant product): let the button fill the row */
+  .atc-select > :is(.psb-atc-btn, .psb-notify-btn):only-child{
+    flex: 1;
+  }
 }
 </style>
 
@@ -301,6 +306,7 @@
         </div>
         <div class="psb-info">
           <p class="psb-title">{{ product.title }}</p>
+          {%- unless product.has_only_default_variant -%}
           <select class="psb-variant-select">
           {% for variant in product.variants %}
               <option value="{{ variant.id }}">
@@ -308,6 +314,7 @@
               </option>
           {% endfor %}
           </select>
+          {%- endunless -%}
           <div class="psb-price-row">
             {%- if current_variant.compare_at_price > current_variant.price -%}
               <span class="psb-compare">₹{{ current_variant.compare_at_price | money_without_currency }}</span>
@@ -348,6 +355,8 @@
         <div class="psb-bar-mobile-left">
               <p class="psb-title">{{ product.title }}</p>
               <div class="atc-select">
+                {%- comment -%} Single-variant products only have Shopify's "Default Title" placeholder. {%- endcomment -%}
+                {%- unless product.has_only_default_variant -%}
                 <select class="psb-variant-select">
                 {% for variant in product.variants %}
                     <option value="{{ variant.id }}">
@@ -355,6 +364,7 @@
                     </option>
                 {% endfor %}
                 </select>
+                {%- endunless -%}
                 {%- if product.available -%}
                   <button class="psb-atc-btn" id="psb-atc-btn-mobile">
                     Add to Cart

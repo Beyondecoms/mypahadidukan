@@ -144,6 +144,37 @@
     font-size: 14.5px !important;
     min-width: 140px !important;
   }
+
+  /* Tables of up to four columns fit the screen instead: the 140px cell minimum
+     and nowrap headers above pushed the last column off-screen with no hint that
+     it scrolls. Wider tables keep the horizontal scroll. */
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) {
+    display: table !important;
+    table-layout: auto !important;
+  }
+
+  /* Column widths pasted from Google Sheets (<col width="83">) squeeze columns. */
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) col {
+    width: auto !important;
+  }
+
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) tr > :is(th, td) {
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+    white-space: normal !important;
+  }
+
+  /* Cell text sits in <p>s that inherit word-break: break-word, which splits words. */
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) tr > :is(th, td),
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) tr > :is(th, td) * {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))) :is(thead tr, tr.blog-table-header) > :is(th, td),
+  .article-content-body.rte table:not(:has(tr > :nth-child(5))):not(:has(thead)) tr:first-child > :is(th, td) {
+    font-size: 16px !important;
+  }
 }
 
 /* ── 4. DISCLAIMER BLOCK ──

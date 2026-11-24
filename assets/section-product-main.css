@@ -686,6 +686,50 @@ For breadcrumbs
   }
 }
 
+/* Description images (often 1024px CDN files) must never be wider than the panel. */
+.pm-accordion-content :is(img, video) {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.pm-accordion-content iframe {
+  max-width: 100%;
+}
+
+/* Bare <button>s in descriptions ("Read the blog", "View Lab Report") otherwise
+   get the native iOS look, a tiny grey pill. Match the outline ATC button. */
+.pm-accordion-content button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 2px solid var(--primary-web-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--primary-web-color);
+  font: 600 15px/1.2 var(--font-family-normal, var(--font-body-family));
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+@media (hover: hover) {
+  .pm-accordion-content button:hover {
+    background: var(--primary-web-color);
+    color: #fff;
+  }
+}
+
+/* Blank spacer blocks (<p>&nbsp;</p>, <div><br></div>, <ul></ul>) are tagged
+   .pm-rte-blank by product-main.liquid. Keep one per run, and none straight
+   after a table, which already has its own bottom margin. */
+.pm-accordion-content .pm-rte-blank + .pm-rte-blank,
+.pm-accordion-content table + .pm-rte-blank {
+  display: none !important;
+}
+
 /* ══════════════════════
    RIGHT COLUMN
 ══════════════════════ */

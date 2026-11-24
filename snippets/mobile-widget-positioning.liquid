@@ -17,9 +17,17 @@
       border-radius: 6px 0 0 6px !important;
     }
 
-    body:has(#mobDrawer.open)
+    body:is(:has(#mobDrawer.open), :has(#mbnMorePopup.open))
       :is(#chat-widget, #refer_and_earn_button_referrush, .wa-float-wrapper) {
       display: none !important;
+    }
+  }
+
+  /* ReferRush pulls its phone error up 16px but leaves only 8px under the field
+     below 768px, so the message overlaps the field's underline. */
+  @media (max-width: 767px) {
+    .phone-error-referrush {
+      margin-top: 0 !important;
     }
   }
 </style>

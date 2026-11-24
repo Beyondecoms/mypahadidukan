@@ -3742,4 +3742,32 @@ button.swym-button.swym-button-1.swym-is-button.swym-sfl-popup-save-btn{
     background:#048e79 !important ;
 }
 
+/* Wishlist Plus has its primary colour set to near-black (#03000c) in the app,
+   and its newer storefront layout defaults buttons to #000. Put its filled
+   buttons (wishlist page, "item saved" popup, login nudge) on brand green. */
+html:root {
+  --swym-storefront-layout-button-color-bg-primary: var(--primary-web-color);
+}
+
+body :is(
+  .swym-ui-component button.swym-bg-2,
+  .swym-wishlist-grid .swym-add-to-cart-btn,
+  .swym-wishlist-detail-content .swym-wishlist-add-to-cart-btn,
+  .swym-empty-wishlist-continue-btn,
+  .swym-login-btn,
+  .swym-log-out-btn,
+  .swym-share-wishlist-email-btn,
+  .swym-clear-wishlist-btn,
+  .swym-save-list .swym-save-list-btn,
+  .swym-duplicate-wishlist-btn,
+  .swym-add-to-list-btn,
+  .swym-sfl-cart-btn,
+  .swym-sfl-add-all-to-cart-btn,
+  .swym-sfl-add-to-cart-btn
+) {
+  background: var(--primary-web-color) !important;
+  border-color: var(--primary-web-color) !important;
+  color: #fff !important;
+}
+
 /* swym-customs */
