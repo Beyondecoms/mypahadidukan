@@ -1,5 +1,5 @@
 .sbr-section-outer { width: 100%; }
-.sbr-section { font-family: inherit; }
+.sbr-section { font-family: inherit; padding-block: var(--section-spacing); }
 
 /* ── VISIBILITY CONTROL ── */
 @media (max-width: 600px) {
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 24px 16px 20px;
+  padding: 0 16px 20px;
   text-align: center;
 }
 
@@ -420,7 +420,7 @@
   .sbr-arrow--prev { left: 10px; }
   .sbr-arrow--next { right: 10px; }
 
-  .sbr-header { gap: 6px; padding-block: 16px; }
+  .sbr-header { gap: 6px; padding-block: 0 16px; }
 
   .sbr-pin-icon { width: 22px; height: 22px; }
 

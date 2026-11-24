@@ -3,7 +3,7 @@
 }
 
 .collection-circles-section {
-  padding: 3% 0 3%;
+  padding: calc(var(--section-spacing) - 15px) 0 var(--section-spacing);
   width: 100%;
 }
 
@@ -182,10 +182,6 @@
   /* 3 circles using full slider width (no arrow gap to subtract) */
   .collection-slide {
     flex: 0 0 calc((100% - 61px) / 4);
-  }
-
-  .collection-circles-section {
-    padding: 20px 0 20px;
   }
 
   /* Add horizontal padding so circles don't touch screen edge */

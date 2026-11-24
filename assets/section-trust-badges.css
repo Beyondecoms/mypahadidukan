@@ -216,6 +216,7 @@
 .tb-section-border {
   position: relative;
   padding: clamp(24px, 3.5vw, 43px) clamp(16px, 4vw, 48px);
+
 }
 
 .tb-section-border::after {

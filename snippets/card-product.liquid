@@ -117,7 +117,7 @@
       <p class="cp-vendor">{{ product.vendor }}</p>
     {%- endif -%}
 
-    <a href="{{ product.url }}" class="cp-title">{{ product.title | truncate: 35 }}</a>
+    <a href="{{ product.url }}" class="cp-title">{{ product.title }}</a>
 
     {%- if cp_variant.title != 'Default Title' -%}
       <p class="cp-variant">{{ cp_variant.title }}</p>

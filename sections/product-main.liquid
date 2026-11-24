@@ -101,7 +101,8 @@
           </div>
         {%- endif -%}
 
-        <!-- Select Pack -->
+        <!-- Select Pack (single-variant products only have Shopify's "Default Title" placeholder) -->
+        {%- unless product.has_only_default_variant -%}
         <div class="pm-pack-section">
           <p class="pm-pack-label">Select Pack</p>
           <div class="pm-variants-wrap">
@@ -161,6 +162,7 @@
             </div>
           </div>
         </div>
+        {%- endunless -%}
 
         <!-- Disclaimer -->
         {%- if disclaimer != blank -%}

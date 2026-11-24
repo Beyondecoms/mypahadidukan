@@ -2,7 +2,7 @@
 .pdp-section-outer { width: 100%; }
 
 .pdp-section {
-  padding: 48px 0;
+  padding: var(--section-spacing) 0;
   width: 100%;
 }
 

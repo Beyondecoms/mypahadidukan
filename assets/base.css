@@ -20,6 +20,7 @@ body, html {
   --font-heading-size-mobile:32px;
   --font-family-normal:'Archivo';
   --primary-web-color:#048E79;
+  --section-spacing: 48px;
   --alpha-button-background: 1;
   --alpha-button-border: 1;
   --alpha-link: 0.85;
@@ -27,6 +28,14 @@ body, html {
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+}
+
+/* Vertical padding for every content section: 48 desktop, 40 tablet, 32 mobile */
+@media (max-width: 989px) {
+  :root { --section-spacing: 40px; }
+}
+@media (max-width: 749px) {
+  :root { --section-spacing: 32px; }
 }
 
 .product-card-wrapper .card,
