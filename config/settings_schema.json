@@ -1562,7 +1562,7 @@
         "type": "text",
         "id": "whatsapp_number",
         "label": "WhatsApp number (with country code)",
-        "default": "919999999999",
+        "default": "918428611319",
         "info": "e.g. 919876543210 — no + or spaces"
       }
     ]

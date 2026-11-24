@@ -48,7 +48,7 @@
 }
 
 .bs-philosophy-title {
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 400;
   color: #1a2e1a;
   margin: 0;
@@ -123,7 +123,7 @@
 }
 
 .bs-media-title {
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 400;
   color: #1a2e1a;
   margin: 0;
@@ -299,7 +299,7 @@
 }
 
 .bs-supported-title {
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 400;
   color: #1a2e1a;
   margin: 0;
@@ -355,7 +355,7 @@
   }
 
   .bs-philosophy-title {
-    font-size: 24px;
+    font-size: 32px;
     padding-top: 22px;
   }
 
@@ -418,11 +418,11 @@
   }
 
   .bs-media-title {
-    font-size: 24px;
+    font-size: 32px;
   }
 
   .bs-supported-title {
-    font-size: 24px;
+    font-size: 32px;
   }
 
   .bs-media-logos {

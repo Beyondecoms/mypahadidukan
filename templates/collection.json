@@ -116,7 +116,7 @@
         "item_4ByrJe": {
           "type": "item",
           "settings": {
-            "item_name": "Collection",
+            "item_name": "Best Sellers",
             "item_link": "shopify:\/\/collections\/best-selling"
           }
         },
@@ -137,8 +137,8 @@
         "item_AVW3qN": {
           "type": "item",
           "settings": {
-            "item_name": "Collection",
-            "item_link": "shopify:\/\/collections\/best-selling"
+            "item_name": "Shop All",
+            "item_link": "shopify:\/\/collections\/all-products"
           }
         },
         "item_8qyHM6": {

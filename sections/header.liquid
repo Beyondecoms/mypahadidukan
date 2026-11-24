@@ -14,7 +14,8 @@
     <a href="{{ routes.root_url }}" class="logo-link">
       {%- if section.settings.logo != blank -%}
         <img
-          src="{{ section.settings.logo | image_url: width: 200 }}"
+          src="{{ section.settings.logo | image_url: width: 240 }}"
+          srcset="{{ section.settings.logo | image_url: width: 240 }} 1x, {{ section.settings.logo | image_url: width: 480 }} 2x"
           alt="{{ shop.name }}"
           width="{{ section.settings.logo_width }}"
           height="auto"

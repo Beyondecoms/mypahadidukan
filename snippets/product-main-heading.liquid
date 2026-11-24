@@ -1,9 +1,56 @@
 {%- assign capsule_feature_count = capsule_features | size -%}
 {%- capture share_button -%}
-  <button class="pm-share-btn" onclick="navigator.share ? navigator.share({ title: {{ product.title | json | escape }}, url: window.location.href }) : navigator.clipboard.writeText(window.location.href)" aria-label="Share">
+  <button
+    type="button"
+    class="pm-share-btn"
+    data-share-title="{{ product.title | escape }}"
+    data-share-url="{{ canonical_url }}"
+    aria-label="Share"
+  >
     {%- render 'icon-share-product' -%}
   </button>
 {%- endcapture -%}
+
+{%- comment -%}
+  Opens the device share sheet where the browser has one. If it's missing or refuses (desktop Chrome
+  often does), the link is copied instead and the button says so, so the click never looks dead.
+{%- endcomment -%}
+<script>
+  if (!window.pmShareBound) {
+    window.pmShareBound = true;
+    document.addEventListener('click', async function (event) {
+      var button = event.target.closest('.pm-share-btn');
+      if (!button) return;
+      var url = button.dataset.shareUrl || window.location.href;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: button.dataset.shareTitle, url: url });
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') return;
+        }
+      }
+      var copied = false;
+      try {
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      } catch (error) {
+        var field = document.createElement('textarea');
+        field.value = url;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+        try { copied = document.execCommand('copy'); } catch (e) {}
+        field.remove();
+      }
+      button.dataset.shareStatus = copied ? 'Link copied' : 'Copy failed';
+      clearTimeout(button.pmShareTimer);
+      button.pmShareTimer = setTimeout(function () { delete button.dataset.shareStatus; }, 2000);
+    });
+  }
+</script>
 
 {%- if capsule_feature_count > 0 -%}
   <div class="pm-badges-row">

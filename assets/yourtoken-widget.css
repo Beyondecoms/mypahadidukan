@@ -1,0 +1,212 @@
+/* YourToken loyalty widget, "loyalty gold" look matching the loyalty page.
+   The app sets its colours as inline styles, so these overrides use !important.
+   Palette: bg #151311, card #231e19→#1a1714, border #63523b, heading #f4d9a6,
+   accent #e6c08b, text #dfd4c4, muted #bfae95. */
+
+.yt-root .yt-rw-card {
+  background: #151311 !important;
+  border: 1px solid #63523b;
+  border-radius: 22px !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  font-family: Assistant, sans-serif;
+}
+
+/* Header */
+.yt-root .yt-rw-head {
+  background: #1d1915 radial-gradient(ellipse at top center, #4a3a25 0%, #1d1915 75%) !important;
+  color: #f4d9a6 !important;
+  border-bottom: 1px solid #63523b;
+}
+.yt-root .yt-rw-headBg { display: none !important; }
+.yt-root .yt-rw-close { color: #e6c08b !important; }
+.yt-root .yt-rw-eyebrow {
+  font: 700 12px/1.3 Assistant, sans-serif !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e6c08b !important;
+}
+.yt-root .yt-rw-title {
+  font-family: "Mrs Eaves", Georgia, serif !important;
+  font-weight: 700 !important;
+  font-size: 34px !important;
+  line-height: 1.05 !important;
+  text-transform: capitalize !important;
+  color: #f4d9a6 !important;
+}
+
+/* Body */
+.yt-root .yt-rw-body,
+.yt-root .yt-rw-sticky-footer,
+.yt-root .yt-rw-stay-signed-in {
+  background: #151311 !important;
+  color: #dfd4c4 !important;
+}
+.yt-root .yt-rw-body [style*="color: rgb(0, 0, 0)"] { color: #dfd4c4 !important; }
+.yt-root .yt-rw-content { padding-top: 16px !important; }
+
+/* Cards */
+.yt-root .yt-rw-hero,
+.yt-root .yt-rw-rate,
+.yt-root .yt-rw-refer {
+  background: linear-gradient(180deg, #231e19, #1a1714) !important;
+  border: 1px solid #63523b !important;
+  border-radius: 16px !important;
+  box-sizing: border-box;
+}
+.yt-root .yt-rw-hero { padding: 14px 20px; }
+.yt-root .yt-rw-rate { padding: 18px 16px !important; }
+
+/* Balance */
+.yt-root .yt-rw-amount {
+  font-family: "Mrs Eaves", Georgia, serif !important;
+  font-weight: 700 !important;
+  color: #f4d9a6 !important;
+}
+.yt-root .yt-rw-kicker { color: #bfae95 !important; letter-spacing: 0.14em; }
+.yt-root .yt-rw-unit { color: #e6c08b !important; font-weight: 700; }
+.yt-root .yt-rw-hero-right,
+.yt-root .yt-rw-starLogo { color: #e6c08b !important; opacity: 0.6; }
+.yt-root .yt-rw-note {
+  background: rgba(230, 192, 139, 0.08) !important;
+  border: 1px solid #3a322a;
+  border-radius: 12px;
+  color: #dfd4c4 !important;
+  padding: 10px 14px !important;
+}
+.yt-root .yt-rw-note b { color: #f4d9a6 !important; }
+.yt-root .yt-rw-link {
+  color: #e6c08b !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Buttons */
+.yt-root .yt-rw-coupon {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.yt-root .yt-rw-cta,
+.yt-root .yt-rw-coupon_cta {
+  background: linear-gradient(90deg, #8a5f2b, #e6c08b 65%, #fbe9cc) !important;
+  color: #151311 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+}
+.yt-root .yt-rw-cta-left,
+.yt-root .yt-rw-cta-right { color: #151311 !important; font-weight: 700; }
+
+/* Rate */
+.yt-root .yt-rw-rate__icon {
+  background: rgba(230, 192, 139, 0.12) !important;
+  color: #e6c08b !important;
+}
+.yt-root .yt-rw-rate__title {
+  font-family: "Mrs Eaves", Georgia, serif !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #f4d9a6 !important;
+}
+.yt-root .yt-rw-rate__sub { color: #bfae95 !important; }
+
+/* Refer and earn */
+.yt-root .yt-rw-refer__title {
+  font-family: "Mrs Eaves", Georgia, serif !important;
+  font-weight: 700 !important;
+  font-size: 26px !important;
+  color: #f4d9a6 !important;
+}
+.yt-root .yt-rw-refer__desc,
+.yt-root .yt-rw-ref__linkcta { color: #dfd4c4 !important; }
+.yt-root .yt-rw-codebox {
+  color: #f4d9a6 !important;
+  background: #1d1915 !important;
+  border: 1.5px dashed #9d7e4b !important;
+  font-weight: 700;
+}
+.yt-root .yt-rw-copy {
+  background: #2a231b !important;
+  border: 1px solid #63523b !important;
+  color: #e6c08b !important;
+}
+.yt-root .yt-rw-copy svg { color: #e6c08b !important; stroke: currentColor; }
+/* Light circles so the black X and share icons stay visible on the dark card */
+.yt-root .yt-rw-share__btn { background: #efe6d6 !important; border-radius: 50%; }
+.yt-root .yt-rw-share__btn:last-child { color: #151311 !important; }
+.yt-root .yt-refer-step-1 {
+  background: #1f1b17 !important;
+  border: 1px solid #3a322a !important;
+  color: #dfd4c4 !important;
+}
+.yt-root .yt-refer-step-1 * { color: #dfd4c4 !important; }
+
+/* Footer (the divider is a 1px element with an inline light background) */
+.yt-root hr { background: #3a322a !important; border-color: #3a322a !important; }
+.yt-root .yt-rw-bottom-cta button {
+  background: transparent !important;
+  color: #e6c08b !important;
+  border: 1px solid #9d7e4b !important;
+  font-weight: 700;
+}
+.yt-root .yt-rw-stay-signed-in { color: #bfae95 !important; }
+
+@media (max-width: 749px) {
+  .yt-root .yt-rw-title { font-size: 28px !important; }
+}
+
+
+/* Inner screens: Ways to Earn / Ways to Redeem cards (inline dark-grey text) */
+.yt-root .yt-wtr-redeemCard {
+  background: linear-gradient(180deg, #231e19, #1a1714) !important;
+  border: 1px solid #63523b !important;
+  border-radius: 14px !important;
+}
+.yt-root .yt-wtr-redeemCard_header { background: transparent !important; }
+.yt-root .yt-wtr-redeemCard_icon { background: rgba(230, 192, 139, 0.12) !important; border-radius: 10px; }
+.yt-root .yt-wtr-redeemCard_icon svg { color: #e6c08b !important; }
+.yt-root .yt-wte-bgIcon { color: #e6c08b !important; opacity: 0.06 !important; }
+.yt-root .yt-wtr-redeemCard_title,
+.yt-root .yt-wtr-redeemCard_title span { color: #dfd4c4 !important; }
+.yt-root .yt-wtr-redeemCard_title span[style*="font-weight: 600"] { color: #f4d9a6 !important; }
+.yt-root .yt-wtr-redeemCard_subtitle,
+.yt-root .yt-wtr-redeemCard_footerText,
+.yt-root .yt-wtr-footerText { color: #bfae95 !important; }
+.yt-root .yt-wtr-redeemCard_footer {
+  background: rgba(230, 192, 139, 0.06) !important;
+  border-top: 1px dashed #3a322a;
+}
+.yt-root .yt-wtr-redeemCard_cta {
+  background: linear-gradient(90deg, #8a5f2b, #e6c08b 65%, #fbe9cc) !important;
+  color: #151311 !important;
+  border: 0 !important;
+  font-weight: 700;
+}
+.yt-root .yt-wtr-redeemCard_cta:disabled {
+  background: transparent !important;
+  color: #bfae95 !important;
+  border: 1px solid #63523b !important;
+  cursor: default;
+}
+
+/* Any other text the app colours dark grey inline */
+.yt-root [style*="color: rgb(51, 51, 51)"],
+.yt-root [style*="color: rgb(44, 44, 44)"],
+.yt-root [style*="color: rgb(17, 17, 17)"] { color: #dfd4c4 !important; }
+.yt-root [style*="color: rgb(102, 102, 102)"],
+.yt-root [style*="color: rgb(91, 91, 91)"] { color: #bfae95 !important; }
+
+/* Scrollbars inside the widget */
+.yt-root,
+.yt-root * { scrollbar-width: thin; scrollbar-color: #63523b transparent; }
+.yt-root ::-webkit-scrollbar { width: 6px; height: 6px; }
+.yt-root ::-webkit-scrollbar-track { background: transparent; }
+.yt-root ::-webkit-scrollbar-thumb { background: #63523b; border-radius: 6px; }
+
+
+/* Card outlines and the copy icon (both set inline by the app) */
+.yt-root .yt-wtr-redeemCard,
+.yt-root .yt-wtr-redeemCard_header,
+.yt-root .yt-wtr-redeemCard_footer { border-color: #63523b !important; }
+.yt-root .yt-rw-copy svg [stroke]:not([stroke="none"]) { stroke: #e6c08b !important; }
+.yt-root .yt-rw-copy svg [fill]:not([fill="none"]) { fill: #e6c08b !important; }

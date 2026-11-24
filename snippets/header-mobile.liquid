@@ -19,6 +19,7 @@
             {%- if section.settings.logo != blank -%}
             <img
                 src="{{ section.settings.logo | image_url: width: 160 }}"
+                srcset="{{ section.settings.logo | image_url: width: 160 }} 1x, {{ section.settings.logo | image_url: width: 320 }} 2x"
                 alt="{{ shop.name }}"
                 width="{{ section.settings.logo_width | default: 100 }}"
                 height="auto"
@@ -107,6 +108,7 @@
         {%- if section.settings.logo != blank -%}
             <img
             src="{{ section.settings.logo | image_url: width: 120 }}"
+            srcset="{{ section.settings.logo | image_url: width: 120 }} 1x, {{ section.settings.logo | image_url: width: 240 }} 2x"
             alt="{{ shop.name }}"
             width="100"
             height="auto"

@@ -4,9 +4,11 @@
       <!-- Mobile: Logo + Description row -->
       <div class="footer__mobile-brand">
         <div class="footer__logo">
-          {%- if section.settings.logo != blank -%}
+          {%- assign mobile_logo = section.settings.logo_mobile | default: section.settings.logo -%}
+          {%- if mobile_logo != blank -%}
             <img
-              src="{{ section.settings.logo_mobile | image_url: width: 160 }}"
+              src="{{ mobile_logo | image_url: width: 160 }}"
+              srcset="{{ mobile_logo | image_url: width: 160 }} 1x, {{ mobile_logo | image_url: width: 320 }} 2x"
               alt="{{ shop.name }}"
               width="{{ section.settings.logo_width }}"
               height="auto"

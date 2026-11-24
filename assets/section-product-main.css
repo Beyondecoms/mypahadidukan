@@ -194,6 +194,24 @@ For breadcrumbs
   border-color: #333;
   background: #f5f5f5;
 }
+
+/* "Link copied" note shown after a share falls back to copying */
+.pm-share-btn { position: relative; }
+.pm-share-btn[data-share-status]::after {
+  content: attr(data-share-status);
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #231f20;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  z-index: 5;
+  pointer-events: none;
+}
 /* ── MINI REVIEWS ── */
 .pm-mini-reviews {
     display: flex;
