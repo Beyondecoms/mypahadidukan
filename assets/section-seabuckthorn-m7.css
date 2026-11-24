@@ -149,6 +149,12 @@
   margin-inline: auto;
 }
 
+/* Text above a single wide image (e.g. a comparison table) */
+.sb-m7-content-col--stacked {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
 .sb-m7-image-link {
   display: inline-flex;
   align-items: center;

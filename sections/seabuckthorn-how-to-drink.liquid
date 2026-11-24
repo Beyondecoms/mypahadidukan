@@ -1,7 +1,3 @@
-{%- if product.handle == 'lakadong-turmeric-100gms-8-10-curcumin' -%}
-  {%- render 'lakadong-turmeric-pricing', description: product.metafields.custom.m10_price_description.value -%}
-{%- endif -%}
-
 {%- liquid
   assign show_oil_instructions = false
   if product.handle == 'seabuckthorn-oil-vitamin-c-serum'

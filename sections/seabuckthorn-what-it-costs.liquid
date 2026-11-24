@@ -1,4 +1,7 @@
-{%- unless product.handle == 'lakadong-turmeric-100gms-8-10-curcumin' -%}
+{%- if product.handle == 'lakadong-turmeric-100gms-8-10-curcumin' -%}
+  {%- comment -%} Turmeric's pricing is a pack-size table, rendered by its own snippet in this "What it costs" slot. {%- endcomment -%}
+  {%- render 'lakadong-turmeric-pricing', description: product.metafields.custom.m10_price_description.value -%}
+{%- else -%}
 {{ 'section-seabuckthorn-m10.css' | asset_url | stylesheet_tag }}
 
 <!-- NAMESPACES_TEST:
@@ -90,7 +93,7 @@ custom.price_description: {{ product.metafields.custom.price_description.value |
 </div>
 {%- endif -%}
 
-{%- endunless -%}
+{%- endif -%}
 
 {% schema %}
 {

@@ -47,6 +47,19 @@
     endif
   endif
 
+  # A single wide image (e.g. a comparison table) is unreadable in the half-width
+  # photo column next to text, so it is stacked full width under the text instead.
+  assign wide_with_text = false
+  if has_text and m7_images_count == 1
+    assign wide_image = m7_single_raw
+    if m7_images_raw != blank
+      assign wide_image = m7_images_raw | first
+    endif
+    if wide_image.aspect_ratio > 1.8
+      assign wide_with_text = true
+    endif
+  endif
+
   assign m7_alt = m7_heading | default: product.title | escape
 
   # Grid columns for multi-image layout (clamped between 1 and 4)
@@ -66,7 +79,7 @@
     </div>
 
     <!-- Main Card Box -->
-    <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}{% if single_image_only %} sb-m7-card-wrapper--single-image{% endif %}">
+    <div class="sb-m7-card-wrapper{% if image_only %} sb-m7-card-wrapper--image-only{% endif %}{% if single_image_only or wide_with_text %} sb-m7-card-wrapper--single-image{% endif %}">
 
       {%- if single_image_only -%}
         {%- assign img_alt = single_image.alt | default: m7_alt -%}
@@ -79,6 +92,35 @@
           }}
         </div>
         <a class="sb-m7-image-link" href="{{ single_image | image_url: width: single_image.width }}" target="_blank" rel="noopener">
+          View full-size image <span aria-hidden="true">↗</span>
+        </a>
+
+      {%- elsif wide_with_text -%}
+        <div class="sb-m7-content-col sb-m7-content-col--stacked">
+          {%- if m7_heading != blank -%}
+            <h2 class="sb-m7-title">{{ m7_heading }}</h2>
+          {%- endif -%}
+          {%- if m7_subtitle != blank -%}
+            <h3 class="sb-m7-subtitle">"{{ m7_subtitle }}"</h3>
+          {%- endif -%}
+          {%- if m7_desc != blank or m7_add_desc != blank or m7_highlight != blank -%}
+            <div class="sb-m7-body">
+              {%- if m7_desc != blank -%}<p>{{ m7_desc | newline_to_br }}</p>{%- endif -%}
+              {%- if m7_add_desc != blank -%}<p>{{ m7_add_desc | newline_to_br }}</p>{%- endif -%}
+              {%- if m7_highlight != blank -%}<p class="sb-m7-shake-note"><em>{{ m7_highlight }}</em></p>{%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+        {%- assign img_alt = wide_image.alt | default: m7_alt -%}
+        <div class="sb-m7-photo-box sb-m7-photo-box--large">
+          {{ wide_image | image_url: width: 1200 | image_tag:
+            loading: 'lazy',
+            alt: img_alt,
+            widths: '360, 540, 680, 900, 1200',
+            sizes: '(max-width: 749px) calc(100vw - 54px), 680px'
+          }}
+        </div>
+        <a class="sb-m7-image-link" href="{{ wide_image | image_url: width: wide_image.width }}" target="_blank" rel="noopener">
           View full-size image <span aria-hidden="true">↗</span>
         </a>
 

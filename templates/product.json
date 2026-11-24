@@ -265,6 +265,12 @@
         "bg_color": "#ffffff"
       }
     },
+    "seabuckthorn_m1": {
+      "type": "seabuckthorn-opener",
+      "settings": {
+        "bg_color": "#fffbef"
+      }
+    },
     "seabuckthorn_m2": {
       "type": "seabuckthorn-whats-in-bottle",
       "settings": {
@@ -592,6 +598,7 @@
     "related-products",
     "product_main_wbYeCL",
     "section_trust_badges_xPyreK",
+    "seabuckthorn_m1",
     "seabuckthorn_m2",
     "seabuckthorn_m3",
     "seabuckthorn_m4",

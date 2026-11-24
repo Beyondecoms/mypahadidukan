@@ -1,0 +1,117 @@
+{%- liquid
+  # M1 - The opener. Content comes from product metafields (custom.m1_*);
+  # the section renders nothing unless the product has a heading or intro.
+  assign m1_eyebrow = product.metafields.custom.m1_eyebrow.value | strip
+  assign m1_heading = product.metafields.custom.m1_heading.value | strip
+  assign m1_subheading = product.metafields.custom.m1_subheading.value | strip
+  assign m1_intro = product.metafields.custom.m1_intro.value | strip
+  assign m1_pass_label = product.metafields.custom.m1_pass_label.value | strip | default: 'Passed'
+  assign m1_pass_text = product.metafields.custom.m1_pass_text.value | strip
+  assign m1_fail_label = product.metafields.custom.m1_fail_label.value | strip | default: 'Failed'
+  assign m1_fail_text = product.metafields.custom.m1_fail_text.value | strip
+  assign m1_panel_caption = product.metafields.custom.m1_panel_caption.value | strip
+  assign m1_desc = product.metafields.custom.m1_description.value | strip
+  assign m1_highlight = product.metafields.custom.m1_highlight.value | strip
+
+  assign has_panel = false
+  if m1_pass_text != blank or m1_fail_text != blank
+    assign has_panel = true
+  endif
+
+  assign has_content = false
+  if m1_heading != blank or m1_intro != blank
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+  {{ 'section-seabuckthorn-m1.css' | asset_url | stylesheet_tag }}
+
+  <div class="sb-m1-section" style="{% if section.settings.bg_color != blank %}background-color: {{ section.settings.bg_color }};{% endif %}">
+    <div class="sb-m1-container">
+      <div class="sb-m1-card">
+        {%- if m1_eyebrow != blank -%}
+          <p class="sb-m1-eyebrow">{{ m1_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if m1_heading != blank -%}
+          <h2 class="sb-m1-heading">{{ m1_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if m1_subheading != blank -%}
+          <p class="sb-m1-subheading">{{ m1_subheading | escape }}</p>
+        {%- endif -%}
+
+        {%- if m1_intro != blank -%}
+          <div class="sb-m1-body">
+            {%- assign paragraphs = m1_intro | newline_to_br | split: '<br />' -%}
+            {%- for paragraph in paragraphs -%}
+              {%- assign paragraph = paragraph | strip -%}
+              {%- if paragraph != blank -%}<p>{{ paragraph | escape }}</p>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if has_panel -%}
+          <figure class="sb-m1-verdicts">
+            <div class="sb-m1-verdict-grid">
+              <div class="sb-m1-verdict sb-m1-verdict--pass">
+                <p class="sb-m1-verdict-label">{{ m1_pass_label | escape }}</p>
+                {%- if m1_pass_text != blank -%}
+                  <p class="sb-m1-verdict-text">{{ m1_pass_text | escape }}</p>
+                {%- endif -%}
+              </div>
+              <div class="sb-m1-verdict sb-m1-verdict--fail">
+                <p class="sb-m1-verdict-label">{{ m1_fail_label | escape }}</p>
+                {%- if m1_fail_text != blank -%}
+                  <p class="sb-m1-verdict-text">{{ m1_fail_text | escape }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+            {%- if m1_panel_caption != blank -%}
+              <figcaption class="sb-m1-verdict-caption">{{ m1_panel_caption | escape }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endif -%}
+
+        {%- if m1_desc != blank -%}
+          {%- comment -%} Without a separate highlight, the description's last line is the closing line (bold). {%- endcomment -%}
+          <div class="sb-m1-body{% if m1_highlight == blank %} sb-m1-body--closing{% endif %}">
+            {%- assign paragraphs = m1_desc | newline_to_br | split: '<br />' -%}
+            {%- for paragraph in paragraphs -%}
+              {%- assign paragraph = paragraph | strip -%}
+              {%- if paragraph != blank -%}<p>{{ paragraph | escape }}</p>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if m1_highlight != blank -%}
+          <p class="sb-m1-highlight">{{ m1_highlight | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "M1 - The opener",
+  "tag": "section",
+  "class": "section-sb-m1",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Content comes from product metafields (custom.m1_*): heading, subheading, intro, pass/fail panel, description and highlight. Products without an M1 heading or intro show nothing."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#fffbef"
+    }
+  ],
+  "presets": [
+    {
+      "name": "M1 - The opener"
+    }
+  ]
+}
+{% endschema %}

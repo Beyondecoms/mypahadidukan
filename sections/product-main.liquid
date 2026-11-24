@@ -7,7 +7,7 @@
   assign amazon_link = product.metafields.custom.amazon_link.value
   assign trusted_count = product.metafields.custom.trusted_customers.value | default: '1M+'
   assign stock_text = blank 
-  if product.handle == 'sea-buckthorn-juice'
+  if product.handle == 'sea-buckthorn-juice' or product.handle == 'buy-shilajit-online'
     assign disclaimer = product.metafields.custom.disclaimer.value | remove: '(meta)' | strip
   elsif product.handle == 'seabuckthorn-oil-vitamin-c-serum'
     assign disclaimer = product.metafields.custom.important_information.value | strip

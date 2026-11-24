@@ -1,0 +1,171 @@
+/* Section M1 - The opener */
+.sb-m1-section,
+.sb-m1-section * {
+  box-sizing: border-box;
+}
+
+.sb-m1-section {
+  padding: 10px;
+  font-family: var(--font-body-family);
+  background-color: #fffbef;
+  color: #1c1918;
+}
+
+.sb-m1-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sb-m1-card {
+  background: #ffffff;
+  border: 1.5px solid #e7ded0;
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sb-m1-eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--font-heading-family);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ee5922;
+}
+
+.sb-m1-heading {
+  margin: 0;
+  max-width: 860px;
+  font-family: var(--font-heading-family);
+  font-size: var(--font-heading-size);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #1c1918;
+}
+
+.sb-m1-subheading {
+  margin: 6px 0 0;
+  font-family: 'Caveat', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ee5922;
+}
+
+.sb-m1-body {
+  max-width: 820px;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333333;
+}
+
+.sb-m1-body p {
+  margin: 0 0 12px;
+}
+
+.sb-m1-body p:last-child {
+  margin-bottom: 0;
+}
+
+.sb-m1-body--closing p:last-child {
+  font-weight: 700;
+  color: #1c1918;
+}
+
+.sb-m1-verdicts {
+  margin: 28px 0 8px;
+}
+
+.sb-m1-verdict-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1.5px solid #e7ded0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sb-m1-verdict {
+  padding: 28px 32px;
+}
+
+.sb-m1-verdict--pass {
+  background-color: #fff3d6;
+  color: #1c1918;
+}
+
+.sb-m1-verdict--fail {
+  background-color: #ee5922;
+  color: #ffffff;
+}
+
+.sb-m1-verdict-label {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sb-m1-verdict--pass .sb-m1-verdict-label {
+  color: #008b75;
+}
+
+.sb-m1-verdict-text {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.sb-m1-verdict-caption {
+  margin-top: 12px;
+  font-size: 14px;
+  font-style: italic;
+  color: #555555;
+  text-align: center;
+}
+
+.sb-m1-highlight {
+  margin: 20px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #1c1918;
+}
+
+@media only screen and (max-width: 749px) {
+  .sb-m1-section {
+    padding: 20px 12px;
+  }
+
+  .sb-m1-card {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+
+  .sb-m1-heading {
+    font-size: var(--font-heading-size-mobile);
+    line-height: 1.2;
+  }
+
+  .sb-m1-subheading {
+    font-size: 20px;
+  }
+
+  .sb-m1-body,
+  .sb-m1-verdict-text,
+  .sb-m1-highlight {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .sb-m1-verdict-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sb-m1-verdict {
+    padding: 20px;
+  }
+}
