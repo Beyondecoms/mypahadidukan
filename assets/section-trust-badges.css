@@ -186,6 +186,33 @@
   letter-spacing: -0.01em;
 }
 
+.home-page-content .tb-header {
+  max-width: 1400px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.home-page-content .tb-heading {
+  font-family: var(--font-heading-family);
+  font-size: var(--font-heading-size);
+  font-weight: 400;
+  font-variant: small-caps;
+  letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
+  color: #231f20;
+}
+
+@media (max-width: 990px) {
+  .home-page-content .tb-header {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-page-content .tb-heading {
+    font-size: var(--font-heading-size-mobile);
+  }
+}
+
 .tb-section-border {
   position: relative;
   padding: clamp(24px, 3.5vw, 48px) clamp(16px, 4vw, 48px);
