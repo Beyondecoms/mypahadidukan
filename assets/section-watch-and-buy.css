@@ -1,5 +1,5 @@
 .wab-section {
-  padding: 40px 20px;
+  padding: var(--section-spacing) 20px;
   position: relative;
   margin-top: 20px; /* space for the scallop */
 }
@@ -16,7 +16,7 @@
   margin-bottom: 18px;
   text-transform: capitalize;
   padding-left: 10px;
-  margin-top: 3%;
+  margin-top: 0;
   font-variant: small-caps;
 }
 
@@ -27,8 +27,14 @@
   }
 }
 
+/* ReelCart's carousel adds 10px bottom padding + 6px card margin below the videos;
+   pull it back so the cards sit exactly --section-spacing from the section edge. */
+.wab-content {
+  margin-bottom: -16px;
+}
+
 .wab-section-border {
-  padding: 3% 20px;
+  padding: var(--section-spacing) 20px;
   position: relative;
   /*margin-top: 20px; */
 }

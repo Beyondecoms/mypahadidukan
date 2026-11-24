@@ -1,7 +1,7 @@
 .bs-section-outer { width: 100%; }
 
 .bs-section {
-  padding: 3% 0 3%;
+  padding: var(--section-spacing) 0;
   width: 100%;
   overflow-x: hidden; /* prevent any child from causing horizontal scroll */
 }
@@ -356,7 +356,6 @@
 
   .bs-philosophy-title {
     font-size: 32px;
-    padding-top: 22px;
   }
 
   /* ── FIX: philosophy text must not overflow ── */

@@ -3,7 +3,7 @@
 }
 
 .why-choose-section {
-  padding: 3% 0 3%;
+  padding: var(--section-spacing) 0;
   width: 100%;
 }
 
