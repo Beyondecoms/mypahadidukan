@@ -60,7 +60,7 @@
         "body_text": "We stood on a slope so steep to need both hands to climb it. Someone twice our age walked past carrying twice what we had.\n\nThe best of everything really does grow where it's hardest to reach.\n\nEverything on this page came off a mountain in weather that would send most people back down. Whoever made it didn't have that option.\n\nSo we go up as well. \n\nWe sit with the producers, agree on a price together, buy their whole season in one go, and pay it upfront. After that, we don't touch what they made - the recipe, the method, the name on it; all of it stays theirs.",
         "primary_btn_label": "Fill your kitchen",
         "primary_btn_url": "",
-        "secondary_btn_label": "Eavesdrop on our letter",
+        "secondary_btn_label": "",
         "secondary_btn_url": "",
         "image": "shopify://shop_images/About.png",
         "source_text": "SOURCED ACROSS UTTARAKHAND · HIMACHAL · LADAKH · KASHMIR"
@@ -322,18 +322,18 @@
             "url": ""
           }
         },
-        "feature_PaUTeU": {
-          "type": "feature",
-          "settings": {
-            "name": "Outlook",
-            "url": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024"
-          }
-        },
         "feature_NNGYEB": {
           "type": "feature",
           "settings": {
             "name": "Entrepreneur India",
             "url": "https://india.entrepreneur.com/news-and-trends/my-pahadi-dukan-and-iyaso-secure-early-stage-funding/488854"
+          }
+        },
+        "feature_PaUTeU": {
+          "type": "feature",
+          "settings": {
+            "name": "Outlook",
+            "url": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024"
           }
         },
         "feature_zztnTU": {
@@ -343,18 +343,18 @@
             "url": "https://homegrown.co.in/homegrown-explore/from-kashmir-to-ladakh-4-startups-from-the-indian-mountains-supporting-local-communities"
           }
         },
-        "feature_LA6tQA": {
-          "type": "feature",
-          "settings": {
-            "name": "The Hindu",
-            "url": "https://www.thehindu.com/life-and-style/food/unboxing-cheer-diwali-hampers-2021-laduree-la-folie-bombay-sweet-shop-pumpkin-tales-royce-gift/article37263786.ece"
-          }
-        },
         "feature_iY8tp6": {
           "type": "feature",
           "settings": {
             "name": "Zee Business",
             "url": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162"
+          }
+        },
+        "feature_LA6tQA": {
+          "type": "feature",
+          "settings": {
+            "name": "The Hindu",
+            "url": "https://www.thehindu.com/life-and-style/food/unboxing-cheer-diwali-hampers-2021-laduree-la-folie-bombay-sweet-shop-pumpkin-tales-royce-gift/article37263786.ece"
           }
         }
       },
