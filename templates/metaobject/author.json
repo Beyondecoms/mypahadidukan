@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-author",
+      "settings": {
+        "blog_handles": "info,shilajit,travel,health-and-wellness,recipes",
+        "posts_heading": "Articles by [name]",
+        "bg_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

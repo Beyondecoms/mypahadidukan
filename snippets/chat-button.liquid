@@ -42,8 +42,10 @@
 }
 </style>
 
+{%- assign whatsapp_number = settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' -%}
+{%- if whatsapp_number != blank -%}
     <a
-    href="https://wa.me/{{ settings.whatsapp_number | default: '919999999999' }}"
+    href="https://wa.me/{{ whatsapp_number }}"
     class="chat-float-btn"
     target="_blank"
     rel="noopener"
@@ -54,3 +56,4 @@
 </svg>
   Chat with us
 </a>
+{%- endif -%}

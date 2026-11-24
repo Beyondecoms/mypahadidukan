@@ -157,7 +157,7 @@
       <span class="cp-price">₹{{ product.price | money_without_currency }}</span>
       {%- if product.compare_at_price > product.price -%}
         {%- assign cp_discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-        <span class="cp-off">{{ cp_discount }}%off</span>
+        <span class="cp-off">{{ cp_discount }}% off</span>
       {%- endif -%}
     </div>
 

@@ -377,13 +377,20 @@
     font-size: 14px;
     color: #231F20;
     text-decoration: none;
+    /* full title in the markup, cut to two lines here */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
 }
+/* sold out: visibly disabled */
 .add-to-cart--oos {
-  background: #13bba2 !important;
+  background: #e0e0e0 !important;
   cursor: not-allowed;
   pointer-events: none;
-  border: 1px solid #ccc;
-  color: white !important;
+  border: none;
+  color: #555 !important;
 }
 /* ===== VARIANT ===== */
 .product-variant {
@@ -957,41 +964,56 @@
     color: #18181B;
     font-family: "Archivo", sans-serif;
     gap: 8px;
+    position: relative;
   }
 
   .sd-row:last-child {
     border-bottom: none;
   }
 
+  /* native radio hidden visually but still reachable by keyboard */
   .sd-radio {
-    display: none !important;
+    position: absolute !important;
+    right: 0;
+    top: 50%;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
   }
 
+  /* single choice: round radio with a dot (same look as the desktop list) */
   .sd-box {
     width: 22px;
     height: 22px;
     border: 1.5px solid #ccc;
-    border-radius: 4px;
+    border-radius: 50%;
     flex-shrink: 0;
     position: relative;
-    transition: background 0.15s, border-color 0.15s;
+    background: #fff;
+    transition: border-color 0.15s;
   }
 
   .sd-radio:checked + .sd-box {
-    background: #048E79;
     border-color: #048E79;
   }
 
   .sd-radio:checked + .sd-box::after {
         content: "";
         position: absolute;
-        left: 4px;
-        top: 6px;
-        width: 12px;
-        height: 5px;
-        border-left: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-        transform: rotate(-45deg);
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #048E79;
+        transform: translate(-50%, -50%);
+  }
+
+  .sd-radio:focus-visible + .sd-box {
+    outline: 2px solid #048E79;
+    outline-offset: 2px;
   }
 
   .sd-mobile-footer {
@@ -1119,4 +1141,27 @@
   font-family: var(--font-family-normal);
   margin-left: 3px;
   font-weight: 500;
+}
+
+/* ===== MOBILE FILTER / SORT SHEETS: dimmed backdrop + page scroll lock ===== */
+.collection-sheet-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .collection-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998; /* sheets sit at 9999 */
+  }
+
+  .collection-sheet-backdrop.is-visible {
+    display: block;
+  }
+
+  html.collection-sheet-open,
+  html.collection-sheet-open body {
+    overflow: hidden;
+  }
 }

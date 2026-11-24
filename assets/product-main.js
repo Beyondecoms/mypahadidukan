@@ -236,6 +236,9 @@
       slides.forEach(function (slide, i) {
         slide.classList.toggle('active', i === index);
         slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+        // Only the visible image can be focused to open the zoom viewer.
+        var zoomable = slide.querySelector('.pm-zoomable');
+        if (zoomable) zoomable.tabIndex = i === index ? 0 : -1;
       });
       dots.forEach(function (dot, i) {
         dot.classList.toggle('active', i === index);
@@ -366,26 +369,136 @@
 
   /* ── Accordions and coupons ────────────────────────────────────────────── */
 
+  /* Panels animate open through the .open class (CSS grid rows) and stay
+     inert while closed, so their links can't be focused. One open at a time. */
   function bindAccordions(root) {
     var buttons = qsa(root, '.pm-accordion-btn');
-    buttons.forEach(function (button) {
+
+    function setOpen(button, open) {
       var body = button.nextElementSibling;
-      button.setAttribute('aria-expanded', 'false');
+      button.classList.toggle('open', open);
+      button.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (body) {
+        if (open) body.removeAttribute('inert');
+        else body.setAttribute('inert', '');
+      }
+    }
+
+    buttons.forEach(function (button) {
+      setOpen(button, false);
       button.addEventListener('click', function () {
         var opening = !button.classList.contains('open');
         buttons.forEach(function (other) {
-          var otherBody = other.nextElementSibling;
-          other.classList.remove('open');
-          other.setAttribute('aria-expanded', 'false');
-          if (otherBody) otherBody.style.maxHeight = null;
+          setOpen(other, false);
         });
-        if (opening && body) {
-          button.classList.add('open');
-          button.setAttribute('aria-expanded', 'true');
-          body.style.maxHeight = body.scrollHeight + 'px';
+        if (opening) setOpen(button, true);
+      });
+    });
+  }
+
+  /* ── Image zoom viewer (desktop gallery) ───────────────────────────────── */
+
+  function bindLightbox(root) {
+    var lightbox = document.getElementById('pm-lightbox');
+    var image = document.getElementById('pm-lightbox-img');
+    var images = qsa(root, '.pm-zoomable');
+    if (!lightbox || !image || !images.length) return;
+
+    var loader = document.getElementById('pm-lightbox-loader');
+    var close = document.getElementById('pm-lightbox-close');
+    var backdrop = document.getElementById('pm-lightbox-backdrop');
+    var prev = document.getElementById('pm-lightbox-prev');
+    var next = document.getElementById('pm-lightbox-next');
+    var counter = document.getElementById('pm-lightbox-counter');
+    var index = 0;
+    var returnFocus = null;
+    var touchX = null;
+
+    function isOpen() {
+      return lightbox.classList.contains('is-open');
+    }
+
+    // The gallery marks the visible slide .active; open on that one.
+    function activeIndex(fallback) {
+      var found = images.findIndex(function (img) {
+        var slide = img.closest('.pm-main-slide');
+        return slide && slide.classList.contains('active');
+      });
+      return found < 0 ? fallback : found;
+    }
+
+    function show(i) {
+      index = (i + images.length) % images.length;
+      var source = images[index];
+      var zoomSrc = source.dataset.zoomSrc || source.currentSrc || source.src;
+
+      function reveal(url) {
+        if (images[index] !== source) return; // a newer image was requested
+        image.src = url;
+        image.alt = source.alt;
+        image.style.opacity = '1';
+        if (loader) loader.style.display = 'none';
+      }
+
+      image.style.opacity = '0';
+      if (loader) loader.style.display = 'flex';
+      var preload = new Image();
+      preload.onload = function () { reveal(zoomSrc); };
+      preload.onerror = function () { reveal(source.currentSrc || source.src); };
+      preload.src = zoomSrc;
+      if (counter) counter.textContent = images.length > 1 ? index + 1 + ' / ' + images.length : '';
+    }
+
+    function open(i) {
+      returnFocus = document.activeElement;
+      show(i);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (close) close.focus();
+    }
+
+    function shut() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      image.removeAttribute('src');
+      if (returnFocus && returnFocus.focus) returnFocus.focus();
+    }
+
+    images.forEach(function (img, i) {
+      img.addEventListener('click', function () {
+        open(activeIndex(i));
+      });
+      img.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          open(activeIndex(i));
         }
       });
     });
+
+    if (close) close.addEventListener('click', shut);
+    if (backdrop) backdrop.addEventListener('click', shut);
+    if (prev) prev.addEventListener('click', function () { show(index - 1); });
+    if (next) next.addEventListener('click', function () { show(index + 1); });
+
+    document.addEventListener('keydown', function (event) {
+      if (!isOpen()) return;
+      if (event.key === 'Escape') shut();
+      else if (event.key === 'ArrowLeft') show(index - 1);
+      else if (event.key === 'ArrowRight') show(index + 1);
+    });
+
+    lightbox.addEventListener('touchstart', function (event) {
+      touchX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', function (event) {
+      if (touchX === null) return;
+      var delta = touchX - event.changedTouches[0].clientX;
+      if (Math.abs(delta) > 50) show(index + (delta > 0 ? 1 : -1));
+      touchX = null;
+    }, { passive: true });
   }
 
   function bindCoupons(root) {
@@ -427,6 +540,7 @@
     bindPackScroller(root, root.dataset.pmRoot === 'desktop');
     bindAccordions(root);
     bindCoupons(root);
+    if (root.dataset.pmRoot === 'desktop') bindLightbox(root);
 
     cards.forEach(function (card) {
       card.addEventListener('click', function () {
@@ -527,7 +641,7 @@
         setHidden(compare, !variant.compare);
       }
       if (discount) {
-        discount.textContent = variant.discount + '%off';
+        discount.textContent = variant.discount + '% off';
         setHidden(discount, !variant.compare || !variant.discount);
       }
       buttons.forEach(function (button) {

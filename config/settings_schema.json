@@ -1562,8 +1562,7 @@
         "type": "text",
         "id": "whatsapp_number",
         "label": "WhatsApp number (with country code)",
-        "default": "919999999999",
-        "info": "e.g. 919876543210 — no + or spaces"
+        "info": "e.g. 919876543210 — no + or spaces. The floating Chat with us button is hidden while this is empty."
       }
     ]
   },
