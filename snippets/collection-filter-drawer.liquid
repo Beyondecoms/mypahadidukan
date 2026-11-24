@@ -1,4 +1,6 @@
 {% comment %} collection-filter-drawer.liquid {% endcomment %}
+{%- comment -%} Category and Place filters are hidden for now; set this to true to bring them back. {%- endcomment -%}
+{%- assign show_extra_filters = false -%}
 <div class="filter-drawer filterDrawer">
   {% comment %} ===== DESKTOP VIEW ===== {% endcomment %}
   <div class="fd-desktop">
@@ -51,6 +53,7 @@
       </div>
     </div>
 
+    {%- if show_extra_filters -%}
     <div class="filter-group">
       <div class="filter-group-header">
         <h4>Category</h4>
@@ -92,6 +95,7 @@
         {% endfor %}
       </div>
     </div>
+    {%- endif -%}
 
   </div>
 
@@ -109,8 +113,10 @@
       <div class="fd-tabs">
         <button class="fd-tab active" data-panel="avail">Availability</button>
         <button class="fd-tab" data-panel="price">Price</button>
+        {%- if show_extra_filters -%}
         <button class="fd-tab" data-panel="category">Category</button>
         <button class="fd-tab" data-panel="place">Place</button>
+        {%- endif -%}
       </div>
 
       <div class="fd-panels">
@@ -150,6 +156,7 @@
             <input type="range" min="0" max="5000" value="5000" step="1" class="dual-range fd-range-max">
           </div>
         </div>
+        {%- if show_extra_filters -%}
         <div class="fd-panel" id="fd-panel-category">
           <p class="fd-panel-title">Select Category</p>
           {% assign types = collection.products | map: 'type' | uniq %}
@@ -177,6 +184,7 @@
             </label>
           {% endfor %}
         </div>
+        {%- endif -%}
 
       </div>
     </div>
