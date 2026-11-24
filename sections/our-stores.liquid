@@ -46,11 +46,54 @@
     <div class="os-grid">
       {%- assign stores = section.blocks | where: 'type', 'store' -%}
       {%- for block in stores -%}
+        {%- liquid
+          assign destination = block.settings.address | url_encode
+          assign directions_url = block.settings.map_url
+          if directions_url == blank and block.settings.address != blank
+            assign directions_url = 'https://www.google.com/maps/dir/?api=1&destination=' | append: destination
+          endif
+          assign map_embed_url = 'https://www.google.com/maps?q=' | append: destination | append: '&output=embed'
+
+          assign show_map = block.settings.show_map
+          if show_map == nil
+            assign show_map = true
+          endif
+
+          assign phone_raw = block.settings.phone | strip
+          assign phone_clean = phone_raw | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.'
+          assign phone_first = phone_clean | slice: 0, 1
+          assign phone_len = phone_clean | size
+
+          if phone_clean contains '+'
+            assign phone_dial = phone_clean
+          elsif phone_first == '0' and phone_len == 11
+            assign phone_without_zero = phone_clean | slice: 1, 10
+            assign phone_dial = '+91' | append: phone_without_zero
+          elsif phone_len == 10
+            assign phone_dial = '+91' | append: phone_clean
+          else
+            assign phone_dial = phone_clean
+          endif
+
+          assign has_location_map = false
+          if show_map and block.settings.address != blank
+            assign has_location_map = true
+          endif
+        -%}
         <div class="os-card" {{ block.shopify_attributes }}>
 
-          <!-- Image with overlay -->
-          <div class="os-card-img-wrap">
-            {%- if block.settings.image != blank -%}
+          <!-- Image or Location Map -->
+          <div class="os-card-img-wrap{% if has_location_map %} os-card-img-wrap--map{% endif %}">
+            {%- if has_location_map -%}
+              <iframe
+                src="{{ map_embed_url }}"
+                class="os-card-map"
+                loading="lazy"
+                title="{{ block.settings.store_name }} Location Map"
+                aria-label="{{ block.settings.store_name }} Location Map"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            {%- elsif block.settings.image != blank -%}
               <img
                 src="{{ block.settings.image | image_url: width: 900 }}"
                 alt="{{ block.settings.store_name }}"
@@ -74,34 +117,9 @@
               <p class="os-card-type">{{ block.settings.store_type }}</p>
             </div>
 
-            {%- comment -%} A pasted map link wins; otherwise directions go to the address shown on the card. {%- endcomment -%}
-            {%- liquid
-              assign directions_url = block.settings.map_url
-              if directions_url == blank and block.settings.address != blank
-                assign destination = block.settings.address | url_encode
-                assign directions_url = 'https://www.google.com/maps/dir/?api=1&destination=' | append: destination
-              endif
-
-              assign phone_raw = block.settings.phone | strip
-              assign phone_clean = phone_raw | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.'
-              assign phone_first = phone_clean | slice: 0, 1
-              assign phone_len = phone_clean | size
-
-              if phone_clean contains '+'
-                assign phone_dial = phone_clean
-              elsif phone_first == '0' and phone_len == 11
-                assign phone_without_zero = phone_clean | slice: 1, 10
-                assign phone_dial = '+91' | append: phone_without_zero
-              elsif phone_len == 10
-                assign phone_dial = '+91' | append: phone_clean
-              else
-                assign phone_dial = phone_clean
-              endif
-            -%}
-
             <!-- Map pin -->
             {%- if directions_url != blank -%}
-              <a href="{{ directions_url }}" target="_blank" rel="noopener" class="os-card-pin" aria-label="View on map">
+              <a href="{{ directions_url }}" target="_blank" rel="noopener" class="os-card-pin" aria-label="View on Google Maps" title="Open in Google Maps">
                 <svg width="18" height="22" viewBox="0 0 24 30" fill="#0a5246">
                   <path d="M12 0C7.589 0 4 3.589 4 8c0 6 8 16 8 16s8-10 8-16c0-4.411-3.589-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                 </svg>
@@ -295,9 +313,15 @@
       "name": "Store",
       "settings": [
         {
+          "type": "checkbox",
+          "id": "show_map",
+          "label": "Show location map instead of store image",
+          "default": true
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Store image"
+          "label": "Store image (fallback if map disabled)"
         },
         {
           "type": "text",

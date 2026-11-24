@@ -402,21 +402,6 @@
             "calendar_url": "/pages/store-locator"
           }
         },
-        "store_4zWLDY": {
-          "type": "store",
-          "settings": {
-            "image": "shopify://shop_images/deharadun.avif",
-            "state": "Uttarakhand",
-            "city": "Dehradun",
-            "store_type": "Flagship · Tasting · Workshop",
-            "store_name": "Dehradun Flagship",
-            "address": "Rajpur Road, near Astley Hall, Dehradun, Uttarakhand 248001",
-            "hours": "Mon – Sun · 09:30 – 21:30",
-            "phone": "08881999205",
-            "map_url": "https://www.google.com/maps/dir/?api=1&destination=Rajpur%20Road%2C%20near%20Astley%20Hall%2C%20Dehradun%2C%20Uttarakhand%20248001",
-            "calendar_url": "/pages/store-locator"
-          }
-        },
         "store_bahadurgarh": {
           "type": "store",
           "settings": {
@@ -427,7 +412,7 @@
             "store_name": "Shudh Native Organics",
             "address": "Gali No. 2, Jhajjar Rd, near Royal Enfield Showroom, Krishna Colony, Bahadurgarh, Haryana 124507",
             "hours": "Mon – Sun · 10:00 – 21:00",
-            "phone": "08881999204",
+            "phone": "+917027029535",
             "map_url": "https://www.google.com/maps/dir/?api=1&destination=Gali%20No.%202%2C%20Jhajjar%20Rd%2C%20near%20Royal%20Enfield%20Showroom%2C%20Krishna%20Colony%2C%20Bahadurgarh%2C%20Haryana%20124507",
             "calendar_url": "/pages/store-locator"
           }
@@ -474,7 +459,6 @@
       },
       "block_order": [
         "store_LP6nhB",
-        "store_4zWLDY",
         "store_bahadurgarh",
         "store_palampur",
         "store_secunderabad",
@@ -487,8 +471,8 @@
         "title_plain": "Follow the smell of",
         "title_accent": "Honey",
         "intro_text": "Some things you have to taste first. Walk into a Pahadi Dukan, sample what catches your eye, and take home what you love.",
-        "meta_locations": "5 locations",
-        "meta_states": "5 states",
+        "meta_locations": "4 locations",
+        "meta_states": "4 states",
         "meta_soon": "Actively plotting more"
       }
     },
