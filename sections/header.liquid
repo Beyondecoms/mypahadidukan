@@ -8,7 +8,6 @@
 {%- endstyle -%}
 {%- render 'header-mobile' -%}
 <div class="header-wrapper" data-section-id="{{ section.id }}" data-section-type="header-section">
-
   <!-- ── LOGO: now sits outside the flex row so it can overlap both rows ── -->
   <div class="header-logo">
     <a href="{{ routes.root_url }}" class="logo-link">
@@ -30,11 +29,9 @@
   <!-- ── TOP ROW: Nav | Icons ── -->
   <div class="header-top-row">
     <div class="header-container">
-
       <!-- ── BOTTOM ROW: Nav ── -->
       <div class="header-bottom-row">
         <div class="header-container">
-
           <nav class="header-nav" role="navigation" aria-label="Main menu">
             <ul class="nav-list">
               {%- for link in section.settings.menu.links -%}
@@ -47,11 +44,21 @@
                   <a
                     href="{{ link.url }}"
                     class="nav-link {% if link.title == section.settings.highlight_nav_item %}nav-highlight{% endif %}"
-                    {% if has_children %}aria-haspopup="true" aria-expanded="false"{% endif %}
+                    {% if has_children %}
+                      aria-haspopup="true" aria-expanded="false"
+                    {% endif %}
                   >
                     {{ link.title }}
                     {%- if has_children -%}
-                      <svg class="nav-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <svg
+                        class="nav-arrow"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                      >
                         <polyline points="6 9 12 15 18 9"/>
                       </svg>
                     {%- endif -%}
@@ -68,7 +75,15 @@
                           <a href="{{ childlink.url }}" class="dropdown-link">
                             {{ childlink.title }}
                             {%- if child_has_children -%}
-                              <svg class="dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                              <svg
+                                class="dropdown-arrow"
+                                width="10"
+                                height="10"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                              >
                                 <polyline points="9 6 15 12 9 18"/>
                               </svg>
                             {%- endif -%}
@@ -90,7 +105,6 @@
               {%- endfor -%}
             </ul>
           </nav>
-
         </div>
       </div>
 
@@ -143,8 +157,8 @@
       <form action="{{ routes.search_url }}" method="get" role="search">
         <div class="search-input-wrap">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13.125 13.125L16.5 16.5" stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15C11.9779 15 15 11.9779 15 8.25Z" stroke="#323232" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M13.125 13.125L16.5 16.5" stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15C11.9779 15 15 11.9779 15 8.25Z" stroke="#323232" stroke-width="1.5" stroke-linejoin="round"/>
           </svg>
           <input
             type="search"
@@ -156,212 +170,221 @@
             id="headerSearchInput-{{ section.id }}"
           >
           <div class="search-rotating-placeholder" id="searchRotatingPlaceholder-{{ section.id }}" aria-hidden="true">
-              <span class="srp-static">Search for&nbsp;</span>
-              <span class="srp-word-wrap">
-                {%- assign words = section.settings.rotating_words | split: ',' -%}
-                {%- for word in words -%}
-                  <span class="srp-word">{{ word | strip }}</span>
-                {%- endfor -%}
-              </span>
-            </div>
+            <span class="srp-static">Search for&nbsp;</span>
+            <span class="srp-word-wrap">
+              {%- assign words = section.settings.rotating_words | split: ',' -%}
+              {%- for word in words -%}
+                <span class="srp-word">{{ word | strip }}</span>
+              {%- endfor -%}
+            </span>
           </div>
+        </div>
       </form>
       <div class="search-suggestions" id="headerSearchSuggestions-{{ section.id }}"></div>
     </div>
   </div>
-
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  /* ── Click-to-open dropdowns (replaces hover) ── */
-  document.querySelectorAll('.nav-item.has-children').forEach(function (item) {
-    var trigger = item.querySelector(':scope > .nav-link');
-    if (!trigger) return;
+  document.addEventListener('DOMContentLoaded', function () {
+    /* ── Click-to-open dropdowns (replaces hover) ── */
+    document.querySelectorAll('.nav-item.has-children').forEach(function (item) {
+      var trigger = item.querySelector(':scope > .nav-link');
+      if (!trigger) return;
 
-    trigger.addEventListener('click', function (e) {
-      e.preventDefault(); // stop navigation, toggle dropdown instead
-      var isOpen = item.classList.contains('open');
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault(); // stop navigation, toggle dropdown instead
+        var isOpen = item.classList.contains('open');
 
-      // close any other open dropdowns
-      document.querySelectorAll('.nav-item.open').forEach(function (openItem) {
-        if (openItem !== item) openItem.classList.remove('open');
+        // close any other open dropdowns
+        document.querySelectorAll('.nav-item.open').forEach(function (openItem) {
+          if (openItem !== item) openItem.classList.remove('open');
+        });
+
+        item.classList.toggle('open', !isOpen);
       });
-
-      item.classList.toggle('open', !isOpen);
     });
-  });
 
-  // close when clicking outside any nav item
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.nav-item')) {
-      document.querySelectorAll('.nav-item.open').forEach(function (item) {
-        item.classList.remove('open');
-      });
-    }
-  });
-
-  // close on Escape
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.nav-item.open').forEach(function (item) {
-        item.classList.remove('open');
-      });
-    }
-  });
-  /* ── Cart drawer ── */
-  var cartIcon = document.querySelector('.cart-icon');
-  if (cartIcon) {
-    cartIcon.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.dispatchEvent(new CustomEvent('cart:open'));
-      var cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer) { cartDrawer.open(); return; }
-      var themeCartBtn = document.querySelector('[data-cart-icon-bubble], #cart-icon-bubble');
-      if (themeCartBtn) themeCartBtn.click();
+    // close when clicking outside any nav item
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.nav-item')) {
+        document.querySelectorAll('.nav-item.open').forEach(function (item) {
+          item.classList.remove('open');
+        });
+      }
     });
-  }
 
-  /* ── Predictive search ── */
-  var searchInput = document.getElementById('headerSearchInput-{{ section.id }}');
-  var suggestionsBox = document.getElementById('headerSearchSuggestions-{{ section.id }}');
-  if (!searchInput || !suggestionsBox) return;
-
-  var rotatingBox = document.getElementById('searchRotatingPlaceholder-{{ section.id }}');
-  var wordEls = rotatingBox ? rotatingBox.querySelectorAll('.srp-word') : [];
-
-  if (rotatingBox && wordEls.length >= 0) {
-    var wordIndex = 0;
-    wordEls.forEach(function(el, i) { el.classList.toggle('active', i === 0); });
-
-    function rotateWord() {
-      var current = wordEls[wordIndex];
-      var nextIndex = (wordIndex + 1) % wordEls.length;
-      var next = wordEls[nextIndex];
-
-      current.classList.remove('active');
-      current.classList.add('exit');
-      next.classList.add('active');
-
-      setTimeout(function() {
-        current.classList.remove('exit');
-      }, 400);
-
-      wordIndex = nextIndex;
+    // close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.nav-item.open').forEach(function (item) {
+          item.classList.remove('open');
+        });
+      }
+    });
+    /* ── Cart drawer ── */
+    var cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+      cartIcon.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.dispatchEvent(new CustomEvent('cart:open'));
+        var cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer) {
+          cartDrawer.open();
+          return;
+        }
+        var themeCartBtn = document.querySelector('[data-cart-icon-bubble], #cart-icon-bubble');
+        if (themeCartBtn) themeCartBtn.click();
+      });
     }
 
-    var rotateTimer = setInterval(rotateWord, 2200);
+    /* ── Predictive search ── */
+    var searchInput = document.getElementById('headerSearchInput-{{ section.id }}');
+    var suggestionsBox = document.getElementById('headerSearchSuggestions-{{ section.id }}');
+    if (!searchInput || !suggestionsBox) return;
 
-    function toggleRotatingVisibility() {
-      var hasValue = searchInput.value.length > 0;
-      rotatingBox.style.opacity = hasValue ? '0' : '1';
+    var rotatingBox = document.getElementById('searchRotatingPlaceholder-{{ section.id }}');
+    var wordEls = rotatingBox ? rotatingBox.querySelectorAll('.srp-word') : [];
+
+    if (rotatingBox && wordEls.length >= 0) {
+      var wordIndex = 0;
+      wordEls.forEach(function (el, i) {
+        el.classList.toggle('active', i === 0);
+      });
+
+      function rotateWord() {
+        var current = wordEls[wordIndex];
+        var nextIndex = (wordIndex + 1) % wordEls.length;
+        var next = wordEls[nextIndex];
+
+        current.classList.remove('active');
+        current.classList.add('exit');
+        next.classList.add('active');
+
+        setTimeout(function () {
+          current.classList.remove('exit');
+        }, 400);
+
+        wordIndex = nextIndex;
+      }
+
+      var rotateTimer = setInterval(rotateWord, 2200);
+
+      function toggleRotatingVisibility() {
+        var hasValue = searchInput.value.length > 0;
+        rotatingBox.style.opacity = hasValue ? '0' : '1';
+      }
+
+      searchInput.addEventListener('input', toggleRotatingVisibility);
+      searchInput.addEventListener('focus', toggleRotatingVisibility);
+      searchInput.addEventListener('blur', toggleRotatingVisibility);
     }
 
-    searchInput.addEventListener('input', toggleRotatingVisibility);
-    searchInput.addEventListener('focus', toggleRotatingVisibility);
-    searchInput.addEventListener('blur', toggleRotatingVisibility);
-  }
+    var debounceTimer;
+    var currentQuery = '';
 
-  var debounceTimer;
-  var currentQuery = '';
+    function renderSuggestions(results) {
+      suggestionsBox.innerHTML = '';
+      if (!results || results.length === 0) {
+        suggestionsBox.innerHTML = '<div class="search-no-results">No results found</div>';
+        suggestionsBox.classList.add('open');
+        return;
+      }
+      results.forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = 'search-suggestion-item';
+        a.href = item.url;
 
-  function renderSuggestions(results) {
-    suggestionsBox.innerHTML = '';
-    if (!results || results.length === 0) {
-      suggestionsBox.innerHTML = '<div class="search-no-results">No results found</div>';
+        var imgHtml =
+          item.featured_image && item.featured_image.url
+            ? '<img class="search-suggestion-img" src="' + item.featured_image.url + '" alt="' + item.title + '">'
+            : '<div class="search-suggestion-img-placeholder"></div>';
+
+        a.innerHTML = imgHtml + '<span class="search-suggestion-title">' + item.title + '</span>';
+
+        suggestionsBox.appendChild(a);
+      });
       suggestionsBox.classList.add('open');
-      return;
     }
-    results.forEach(function(item) {
-      var a = document.createElement('a');
-      a.className = 'search-suggestion-item';
-      a.href = item.url;
 
-      var imgHtml = item.featured_image && item.featured_image.url
-        ? '<img class="search-suggestion-img" src="' + item.featured_image.url + '" alt="' + item.title + '">'
-        : '<div class="search-suggestion-img-placeholder"></div>';
-
-      a.innerHTML = imgHtml +
-        '<span class="search-suggestion-title">' + item.title + '</span>';
-
-      suggestionsBox.appendChild(a);
-    });
-    suggestionsBox.classList.add('open');
-  }
-
-  function fetchSuggestions(query) {
-    if (query.length < 1) {
-      suggestionsBox.classList.remove('open');
-      return;
-    }
-    fetch('/search/suggest.json?q=' + encodeURIComponent(query) + '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last&resources[options][fields]=title,product_type,variants.title')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var products = data.resources && data.resources.results && data.resources.results.products;
-        renderSuggestions(products || []);
-      })
-      .catch(function() {
+    function fetchSuggestions(query) {
+      if (query.length < 1) {
         suggestionsBox.classList.remove('open');
-      });
-  }
-
-  searchInput.addEventListener('input', function() {
-    currentQuery = this.value.trim();
-    clearTimeout(debounceTimer);
-    if (currentQuery.length < 1) {
-      suggestionsBox.classList.remove('open');
-      return;
+        return;
+      }
+      fetch(
+        '/search/suggest.json?q=' +
+          encodeURIComponent(query) +
+          '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last&resources[options][fields]=title,product_type,variants.title'
+      )
+        .then(function (r) {
+          return r.json();
+        })
+        .then(function (data) {
+          var products = data.resources && data.resources.results && data.resources.results.products;
+          renderSuggestions(products || []);
+        })
+        .catch(function () {
+          suggestionsBox.classList.remove('open');
+        });
     }
-    debounceTimer = setTimeout(function() {
-      fetchSuggestions(currentQuery);
-    }, 250);
-  });
 
-  searchInput.addEventListener('focus', function() {
-    if (currentQuery.length >= 1) suggestionsBox.classList.add('open');
-  });
-
-  document.addEventListener('click', function(e) {
-    if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-      suggestionsBox.classList.remove('open');
-    }
-  });
-
-  searchInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') suggestionsBox.classList.remove('open');
-  });
-
-  /* ── NEW: Scroll behavior — shrink logo, hide search, show toggle ── */
-  var headerWrapperEl = document.querySelector('.header-wrapper');
-  var headermb=document.querySelector('.mob-header');
-  var searchToggleBtn = document.getElementById('headerSearchToggle-{{ section.id }}');
-  var SCROLL_THRESHOLD = 80; // px — change this to trigger sooner/later
-
-  function handleHeaderScroll() {
-    if (window.scrollY > SCROLL_THRESHOLD) {
-      headerWrapperEl.classList.add('is-scrolled');
-      document.body.classList.add('header-is-scrolled');
-      headermb.classList.add('header-is-top');
-      headerWrapperEl.classList.remove('is-top');
-    } else {
-      headerWrapperEl.classList.remove('is-scrolled');
-      headerWrapperEl.classList.remove('search-open');
-      document.body.classList.remove('header-is-scrolled');
-      headermb.classList.remove('header-is-top');
-    }
-  }
-  window.addEventListener('scroll', handleHeaderScroll, { passive: true });
-  handleHeaderScroll();
-
-  if (searchToggleBtn) {
-    searchToggleBtn.addEventListener('click', function () {
-      headerWrapperEl.classList.remove('is-scrolled');
-      headerWrapperEl.classList.add('is-top');
-      headerWrapperEl.classList.remove('search-open');
+    searchInput.addEventListener('input', function () {
+      currentQuery = this.value.trim();
+      clearTimeout(debounceTimer);
+      if (currentQuery.length < 1) {
+        suggestionsBox.classList.remove('open');
+        return;
+      }
+      debounceTimer = setTimeout(function () {
+        fetchSuggestions(currentQuery);
+      }, 250);
     });
-  }
 
-});
+    searchInput.addEventListener('focus', function () {
+      if (currentQuery.length >= 1) suggestionsBox.classList.add('open');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.remove('open');
+      }
+    });
+
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') suggestionsBox.classList.remove('open');
+    });
+
+    /* ── NEW: Scroll behavior — shrink logo, hide search, show toggle ── */
+    var headerWrapperEl = document.querySelector('.header-wrapper');
+    var headermb = document.querySelector('.mob-header');
+    var searchToggleBtn = document.getElementById('headerSearchToggle-{{ section.id }}');
+    var SCROLL_THRESHOLD = 80; // px — change this to trigger sooner/later
+
+    function handleHeaderScroll() {
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        headerWrapperEl.classList.add('is-scrolled');
+        document.body.classList.add('header-is-scrolled');
+        headermb.classList.add('header-is-top');
+        headerWrapperEl.classList.remove('is-top');
+      } else {
+        headerWrapperEl.classList.remove('is-scrolled');
+        headerWrapperEl.classList.remove('search-open');
+        document.body.classList.remove('header-is-scrolled');
+        headermb.classList.remove('header-is-top');
+      }
+    }
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+
+    if (searchToggleBtn) {
+      searchToggleBtn.addEventListener('click', function () {
+        headerWrapperEl.classList.remove('is-scrolled');
+        headerWrapperEl.classList.add('is-top');
+        headerWrapperEl.classList.remove('search-open');
+      });
+    }
+  });
 </script>
 {% schema %}
 {
@@ -370,11 +393,35 @@ document.addEventListener('DOMContentLoaded', function () {
   "class": "section-header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    {"type": "url","id": "track_order_url","label": "Track Link URL"},
-    { "type": "textarea", "id": "rotating_words", "label": "Rotating search words", "default": "Ghee, Seabuckthorn, Honey" },
-    { "type": "range", "id": "logo_width", "min": 50, "max": 300, "step": 10, "unit": "px", "label": "Logo width", "default": 120 },
+    { "type": "url", "id": "track_order_url", "label": "Track Link URL" },
+    {
+      "type": "textarea",
+      "id": "rotating_words",
+      "label": "Rotating search words",
+      "default": "Goodness, Ghee, Seabuckthorn, Honey"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 120
+    },
     { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu" },
-    { "type": "select", "id": "menu_type_desktop", "label": "Desktop menu type", "options": [ { "value": "dropdown", "label": "Dropdown" }, { "value": "mega", "label": "Mega menu" }, { "value": "drawer", "label": "Drawer" } ], "default": "dropdown" },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "label": "Desktop menu type",
+      "options": [
+        { "value": "dropdown", "label": "Dropdown" },
+        { "value": "mega", "label": "Mega menu" },
+        { "value": "drawer", "label": "Drawer" }
+      ],
+      "default": "dropdown"
+    },
     { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search for gift" },
     { "type": "url", "id": "wishlist_url", "label": "Wishlist page URL" },
     { "type": "checkbox", "id": "show_currency", "label": "Show currency selector", "default": true },
@@ -384,6 +431,6 @@ document.addEventListener('DOMContentLoaded', function () {
     { "type": "color", "id": "highlight_bg_color", "label": "Highlight pill background", "default": "#1a6b4a" },
     { "type": "color", "id": "highlight_text_color", "label": "Highlight pill text color", "default": "#ffffff" }
   ],
-  "presets": [ { "name": "Header" } ]
+  "presets": [{ "name": "Header" }]
 }
 {% endschema %}

@@ -1,5 +1,15 @@
 {{ 'section-blog-category-circles.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign active_index = 0
+  for block in section.blocks
+    if block.settings.blog_handle == blog.handle
+      assign active_index = forloop.index0
+      break
+    endif
+  endfor
+-%}
+
 <div class="bcc-section" style="background: {{ section.settings.bg_color }};" id="bcc-{{ section.id }}">
   <div class="bcc-outer">
 
@@ -12,7 +22,7 @@
     <div class="bcc-track" id="bcc-track-{{ section.id }}">
       {%- for block in section.blocks -%}
         <button
-          class="bcc-item {% if forloop.first %}active{% endif %}"
+          class="bcc-item {% if forloop.index0 == active_index %}active{% endif %}"
           data-blog="{{ block.settings.blog_handle }}"
           data-index="{{ forloop.index0 }}"
           {{ block.shopify_attributes }}
@@ -50,10 +60,11 @@
   var prevBtn = document.getElementById('bcc-prev-{{ section.id }}');
   var nextBtn = document.getElementById('bcc-next-{{ section.id }}');
   var items   = Array.from(document.querySelectorAll('#bcc-{{ section.id }} .bcc-item'));
-  var current = 0;
+  var current = {{ active_index }};
 
   function activate(idx) {
     items.forEach(function(i) { i.classList.remove('active'); });
+    var direction = idx > current ? 'right' : 'left';
     current = idx;
     items[current].classList.add('active');
     items[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -63,7 +74,7 @@
       detail: {
         blog: items[current].dataset.blog,
         index: current,
-        direction: idx > current ? 'right' : 'left'
+        direction: direction
       }
     }));
   }

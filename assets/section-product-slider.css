@@ -20,7 +20,7 @@
 .ps-wrapper {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1% 24px 3%;
+  padding: 0% 24px 3%;
   position: relative;
   z-index: 1;
 }
@@ -211,7 +211,7 @@
     height: 248px;
   } */
   .ps-section {
-    padding: 21px;
+    padding: 0px;
   }
 }
 
@@ -468,7 +468,7 @@
     height: 248px;
   } */
   .ps-section{
-      padding: 21px;
+      padding: 0px;
   }
 }
 .ps-stars {

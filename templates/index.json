@@ -15,6 +15,14 @@
         "image_axApfn": {
           "type": "Image",
           "settings": {
+            "image": "shopify://shop_images/Black_Friday_Sale-1_jpg.jpg",
+            "mobile_image": "shopify://shop_images/Black_Friday_Sale_mobile_jpg.jpg",
+            "image_link": "shopify://pages/black-orange-friday-sale"
+          }
+        },
+        "image_kKfAbd": {
+          "type": "Image",
+          "settings": {
             "image": "shopify://shop_images/1_31cab332-22fb-4bf3-83f1-1525b31a0d1b.jpg",
             "mobile_image": "shopify://shop_images/1_e0f4da94-0548-4d34-b76b-60714cdce7f7.jpg",
             "image_link": "shopify://collections/seabuckthorn-by-mpd"
@@ -55,6 +63,7 @@
       },
       "block_order": [
         "image_axApfn",
+        "image_kKfAbd",
         "image_HrAEqe",
         "image_M6yDyN",
         "image_mradqT",
@@ -91,6 +100,7 @@
       ],
       "name": "Marquee Bar",
       "settings": {
+        "style": "default",
         "bg_color": "#8b3a2a",
         "text_color": "#ffffff",
         "diamond_color": "#ffffff",
@@ -587,6 +597,7 @@
         "tab_nDbaaE",
         "tab_JwDWNU"
       ],
+      "disabled": true,
       "name": "Why Choose Us",
       "settings": {
         "title": "Why Choose My Pahadi Dukan ?",
@@ -654,125 +665,100 @@
         "bg_color": "#fdf6e3"
       }
     },
+    "judge_me_testimonial_medals": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_medals": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_medals"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "customer_reviews_HA6E9C": {
       "type": "customer-reviews",
       "blocks": {
         "review_hDNHDH": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Jayant",
+            "initials": "J",
             "avatar_color": "#1a6b4a",
-            "profile_image": "shopify://shop_images/Frame_2147227588.png",
             "verified": true,
             "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "I've been using this product for three months now and the results are incredible.",
-            "product": "organic-arabica-bermiok-farms-coffee"
+            "review_title": "Love it",
+            "review_text": "I've tried Shilajit from multiple brands, but nothing felt as pure and potent as the one from My Pahadi Dukaan. You can literally feel the energy kick in a few days. Love that it’s sourced straight from the mountains",
+            "product": "buy-shilajit-online"
           }
         },
         "review_ahTUqj": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Rohit",
+            "initials": "R",
             "avatar_color": "#1a6b4a",
             "verified": true,
             "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "I've been using this product for three months now and the results are incredible.",
-            "product": "arabica-kanchenjunga-peaberry"
+            "review_title": "Great Products",
+            "review_text": "The Himalayan mushroom blend is now part of my daily routine. My focus and sleep have both improved. Plus, it’s comforting to know it’s 100% natural and traditionally sourced.",
+            "product": "black-fungus-mushrooms-100gms-planet-mushroom"
           }
         },
         "review_z6VpXG": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Divya",
+            "initials": "D",
             "avatar_color": "#1a6b4a",
             "verified": true,
             "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
+            "review_title": "Awesome",
+            "review_text": "I started taking their Moringa capsules for general wellness and it’s made a noticeable difference in my energy levels and digestion. Super fresh and no aftertaste. Highly recommend!",
+            "product": "himalayan-moringa-leaf-powder"
           }
         },
         "review_fH9Qbp": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Aditya",
+            "initials": "A",
             "avatar_color": "#1a6b4a",
             "verified": true,
             "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
+            "review_title": "My fav Store",
+            "review_text": "After a month of using My Pahadi Dukaan’s Ashwagandha, my stress is more manageable and I sleep deeper. The quality is top-notch — you can tell it's not mass-produced",
+            "product": "ashwagandha-root-powder-80gms-ayantara"
           }
         },
-        "review_cxzJ7g": {
+        "review_shruthi_seabuckthorn_oil": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Shruthi Bharadwaj",
+            "initials": "SB",
             "avatar_color": "#1a6b4a",
-            "verified": true,
-            "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
+            "verified": false,
+            "rating": 0,
+            "review_title": "It's light weight and non greasy",
+            "review_text": "It's light weight and non greasy. Easily absorbed and leaves an orange tint of th face, so ideal to use it in the night. I have used it only for two weeks, need to wait for results. Any organic products needs 3-6 months to see results so better to wait patiently for it do work. But so far I am enjoying the product as it literally had no chemicals, metals or any fancy stuffs that's sold in market. Very light, pure and fresh",
+            "product": "seabuckthorn-oil-vitamin-c-serum"
           }
         },
-        "review_eDU97c": {
+        "review_kirit_seabuckthorn_pulp": {
           "type": "review",
           "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
+            "customer_name": "Kirit Premji Dedhia",
+            "initials": "KD",
             "avatar_color": "#1a6b4a",
-            "verified": true,
-            "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
-          }
-        },
-        "review_drRprn": {
-          "type": "review",
-          "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
-            "avatar_color": "#1a6b4a",
-            "verified": true,
-            "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
-          }
-        },
-        "review_LpUKB3": {
-          "type": "review",
-          "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
-            "avatar_color": "#1a6b4a",
-            "verified": true,
-            "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
-          }
-        },
-        "review_FRhHPx": {
-          "type": "review",
-          "settings": {
-            "customer_name": "Sarah Johnson",
-            "initials": "SJ",
-            "avatar_color": "#1a6b4a",
-            "verified": true,
-            "rating": 5,
-            "review_title": "Absolutely Amazing Product!",
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et .",
-            "product": "arabica-kanchenjunga-peaberry"
+            "verified": false,
+            "rating": 0,
+            "review_title": "Miracle Result",
+            "review_text": "I started using Sea Buckthorn pulp for past 30 days and the results are awesome. I think my immunity level has increased significantly.",
+            "product": "sea-buckthorn-juice"
           }
         }
       },
@@ -781,17 +767,15 @@
         "review_ahTUqj",
         "review_z6VpXG",
         "review_fH9Qbp",
-        "review_cxzJ7g",
-        "review_eDU97c",
-        "review_drRprn",
-        "review_LpUKB3",
-        "review_FRhHPx"
+        "review_shruthi_seabuckthorn_oil",
+        "review_kirit_seabuckthorn_pulp"
       ],
       "name": "Customer Reviews",
       "settings": {
-        "title": "Trusted By 50000+ Customers",
+        "title": "Testimonials",
         "bg_image": "shopify://shop_images/Frame_2147227326.png",
         "bg_image_mobile": "shopify://shop_images/Trusted_By_Background.png",
+        "show_rating_summary": true,
         "overall_rating": 5,
         "rating_score": "4.8",
         "review_count": 5,
@@ -802,11 +786,11 @@
       "type": "product-slider",
       "name": "Product Slider",
       "settings": {
-        "title": "New Arrival",
+        "title": "New Arrivals",
         "view_all_label": "",
         "view_all_link": "",
         "show_secondary_image": true,
-        "collection": "best-selling",
+        "collection": "new-arrivals-1",
         "products_to_show": 8,
         "discount_text": "Extra 10% Discount at Checkout",
         "bg_color": "#fffbef"
@@ -919,7 +903,7 @@
         "blog_imqnUi"
       ],
       "settings": {
-        "title": "Latest Blog",
+        "title": "Latest Blogs",
         "bg_color": "#ffffff"
       }
     },
@@ -1024,8 +1008,10 @@
       "settings": {
         "title": "Any Last Questions ?",
         "bg_color": "#fdf6e3",
+        "layout": "default",
         "link_label": "",
-        "link_url": ""
+        "link_url": "",
+        "note": ""
       }
     }
   },
@@ -1039,6 +1025,7 @@
     "why_choose_us_qaByfy",
     "watch_and_buy_n6cKa9",
     "product-slider",
+    "judge_me_testimonial_medals",
     "customer_reviews_HA6E9C",
     "product_slider_LpUPrJ",
     "brand_story_7VrzKH",

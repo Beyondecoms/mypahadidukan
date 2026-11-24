@@ -575,6 +575,34 @@
   color: var(--bf-ink);
 }
 
+.bf-why-section + .tb-section-outer .tb-header {
+  max-width: 1400px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.bf-why-section + .tb-section-outer .tb-heading {
+  font-family: var(--font-heading-family), Georgia, serif;
+  font-size: var(--font-heading-size);
+  font-weight: 400;
+  font-variant: small-caps;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #1a2e1a;
+}
+
+@media (max-width: 990px) {
+  .bf-why-section + .tb-section-outer .tb-header {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bf-why-section + .tb-section-outer .tb-heading {
+    font-size: var(--font-heading-size-mobile);
+  }
+}
+
 .bf-section .bf-why__text {
   font-size: 16px;
   line-height: 1.65;

@@ -22,15 +22,16 @@
     <div class="bag-panels-wrap" id="bag-panels-{{ section.id }}">
       {%- for block in section.blocks -%}
         {%- assign blog_obj = blogs[block.settings.blog_handle] -%}
+        {%- assign panel_articles = block.settings.selected_articles | default: blog_obj.articles -%}
         <div
           class="bag-panel {% if forloop.index0 == active_index %}active{% endif %}"
           data-panel="{{ forloop.index0 }}"
           data-blog="{{ block.settings.blog_handle }}"
           data-label="{{ block.settings.blog_label | default: block.settings.blog_handle }}"
         >
-          {%- if blog_obj != blank and blog_obj.articles.size > 0 -%}
+          {%- if panel_articles != blank -%}
             <div class="bag-grid">
-              {%- for article in blog_obj.articles limit: section.settings.articles_count -%}
+              {%- for article in panel_articles limit: section.settings.articles_count -%}
                 <a href="{{ article.url }}" class="bag-card">
                   <div class="bag-card-img-wrap">
                     {%- if article.image != blank -%}
@@ -277,6 +278,12 @@
           "id": "blog_label",
           "label": "Display label (shown as title)",
           "default": "Info"
+        },
+        {
+          "type": "article_list",
+          "id": "selected_articles",
+          "label": "Selected articles",
+          "info": "Choose posts from any blog. Leave empty to show posts from the blog handle above."
         }
       ]
     }

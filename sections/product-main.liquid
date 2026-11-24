@@ -64,7 +64,7 @@
           </span>
         </div> {% endcomment %}
         <!-- Vendor -->
-        <p class="pm-vendor">Vendor : <a href="/collections/vendor?q={{ product.vendor | url_encode }}">{{ product.vendor }}</a></p>
+        <p class="pm-vendor">Vendor : <a href="{{ product.vendor | url_for_vendor | escape }}">{{ product.vendor | escape }}</a></p>
 
         <!-- Price -->
         <div class="pm-price-row">

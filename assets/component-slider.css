@@ -203,6 +203,7 @@
 @media (max-width: 991px) {
   .bwp-header-topbar .topbar-row {
     flex-wrap: nowrap;
+    align-items: center;
   }
 
   .bwp-header-topbar .topbar-left {
@@ -212,19 +213,39 @@
 
   .bwp-header-topbar .topbar-center {
     flex: 1;
+    min-width: 0;
+    margin-top: 0;
+    gap: 10px;
+    align-items: center;
   }
 
   .bwp-header-topbar .topbar-right {
     flex: 0 0 auto;
+    display: flex;
+    align-items: center;
   }
 
   .bwp-header-topbar {
     padding: 0px !important;
   }
 
-  /* Hide track order on mobile */
+  /* Show track order on mobile */
   .bwp-header-topbar .content-item-track-order {
-    display: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .bwp-header-topbar .content-item-track-order .track-order-text {
+    font-size: 12px;
+    padding: 2px 9px;
+    margin-right: 10px;
+    gap: 5px;
+    line-height: 1.4;
+  }
+
+  .bwp-header-topbar .content-item-track-order .track-order-text svg {
+    width: 11px;
+    height: 11px;
   }
 }
 
@@ -234,15 +255,46 @@
     display: none;
   }
 
+  .bwp-header-topbar .topbar-row {
+    padding: 3px 0;
+  }
+
   .bwp-header-topbar .topbar-center {
     justify-content: center;
-    margin: 6px 2px 2px 2px;
+    margin: 0 2px;
+    gap: 4px;
+    min-width: 0;
+    align-items: center;
   }
-  .bwp-header-topbar .notification-text{
-    font-size: 12px;
-    margin-top: 4px;
+
+  .bwp-header-topbar .topbar-center .notif-prev svg,
+  .bwp-header-topbar .topbar-center .notif-next svg {
+    width: 16px;
+    height: 16px;
   }
+
+  .bwp-header-topbar .notification-text {
+    font-size: 11.5px;
+    margin-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .bwp-header-topbar .notification-item {
     overflow: hidden;
-    }
+  }
+
+  .bwp-header-topbar .content-item-track-order .track-order-text {
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-right: 6px;
+    gap: 4px;
+    line-height: 1.4;
+  }
+
+  .bwp-header-topbar .content-item-track-order .track-order-text svg {
+    width: 10px;
+    height: 10px;
+  }
 }
