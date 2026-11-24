@@ -253,19 +253,6 @@
         "disabled": false,
         "settings": {}
       },
-      "773175526901516413": {
-        "type": "shopify://apps/referrush/blocks/floating-popup/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
-        "disabled": false,
-        "settings": {}
-      },
-      "12676059360672597252": {
-        "type": "shopify://apps/referrush/blocks/contact-form/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
-        "disabled": false,
-        "settings": {
-          "y_position": 20,
-          "position": "left"
-        }
-      },
       "6362728350820064966": {
         "type": "shopify://apps/yourlio-ai/blocks/tracker/c229e2b7-7884-431d-b2a5-5c24c39cbcf1",
         "disabled": false,
@@ -313,6 +300,19 @@
         "type": "shopify://apps/stoq/blocks/main/4bb73be2-b7c2-4870-949f-c528145452a3",
         "disabled": false,
         "settings": {}
+      },
+      "773175526901516413": {
+        "type": "shopify://apps/referrush/blocks/floating-popup/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
+        "disabled": true,
+        "settings": {}
+      },
+      "12676059360672597252": {
+        "type": "shopify://apps/referrush/blocks/contact-form/d0408ea5-16e0-40a7-9589-9fa7ddc4f4ce",
+        "disabled": true,
+        "settings": {
+          "y_position": 20,
+          "position": "left"
+        }
       }
     },
     "color_schemes": {
