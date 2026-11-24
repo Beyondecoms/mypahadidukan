@@ -83,7 +83,7 @@
       ],
       "settings": {
         "show_topbar": true,
-        "track_order_link": "/account",
+        "track_order_link": "https://wa.me/918428611319?text=Track%20Order",
         "track_order": "Track Your Order",
         "max_width": "",
         "fullwidth": false,
@@ -107,7 +107,7 @@
       "type": "header",
       "settings": {
         "logo": "shopify://shop_images/c8552b51f26cb3cb0f998e5455eca889f652c1d6_31f1b910-e133-4692-8447-8a39ffa1844a.png",
-        "track_order_url": "/account",
+        "track_order_url": "https://wa.me/918428611319?text=Track%20Order",
         "rotating_words": "gift, kapiva, flower",
         "logo_width": 120,
         "menu": "new-menu_theme",

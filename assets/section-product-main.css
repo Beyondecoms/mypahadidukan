@@ -622,10 +622,68 @@ For breadcrumbs
   font-weight: inherit;
 }
 
-/* Description tables come with inline widths (e.g. 85%) that leave them short of the text; span the column instead. */
+/* Description & info tables (e.g. variant pricing tables, additional info) */
+.pm-accordion-content {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .pm-accordion-content table {
   width: 100% !important;
   max-width: 100%;
+  height: auto !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  margin: 16px 0 24px !important;
+  table-layout: auto !important;
+  border-top: 1px solid #d0d0d0 !important;
+  border-bottom: 1px solid #d0d0d0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  font-size: 14px;
+}
+
+.pm-accordion-content table colgroup col,
+.pm-accordion-content table col {
+  width: auto !important;
+}
+
+.pm-accordion-content table th,
+.pm-accordion-content table td {
+  padding: 16px 16px !important;
+  vertical-align: middle !important;
+  text-align: left !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid #d0d0d0 !important;
+  color: #333;
+}
+
+/* Remove default browser <p> margins inside table cells that cause awkward blank gaps */
+.pm-accordion-content table td p,
+.pm-accordion-content table th p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Header / First row styling */
+.pm-accordion-content table thead th,
+.pm-accordion-content table thead td,
+.pm-accordion-content table tbody tr:first-child th,
+.pm-accordion-content table tbody tr:first-child td,
+.pm-accordion-content table tbody tr:first-child td strong {
+  font-weight: 600 !important;
+  color: #1a2e1a !important;
+}
+
+@media (max-width: 768px) {
+  .pm-accordion-content table th,
+  .pm-accordion-content table td {
+    padding: 12px 10px !important;
+    font-size: 13.5px;
+  }
 }
 
 /* ══════════════════════

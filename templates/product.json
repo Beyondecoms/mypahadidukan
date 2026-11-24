@@ -223,15 +223,15 @@
         "badge_8rirVA": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/icon-mountain_copy.png",
-            "title": "Pureness",
+            "icon_image": "shopify://shop_images/1_8c5c3819-f1fe-4dc6-bcd3-78501076edd7.jpg",
+            "title": "Pure",
             "subtitle": "Sourced from the Himalayas, unadulterated and untouched — the way nature intended."
           }
         },
         "badge_NE4kM3": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/icon-farmers_copy.png",
+            "icon_image": "shopify://shop_images/4_1_d20d0e18-6e72-46cd-b99e-11821db84a6c.jpg",
             "title": "Authentic",
             "subtitle": "We bring you what the locals use — no shortcuts, no factory imitations."
           }
@@ -239,15 +239,15 @@
         "badge_HHhEKd": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/icon-transparency_copy.png",
+            "icon_image": "shopify://shop_images/6_1_b8486fad-d3b4-4035-9188-a14a0d548b43.jpg",
             "title": "Transparency",
-            "subtitle": "From source to shelf, we show you everything — because trust isn’t built on secrets."
+            "subtitle": "From source to shelf, we show you everything — because trust isn't built on secrets."
           }
         },
         "badge_4jVrya": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Scientific_Exploration_in_Nature_1_copy_590c0157-d067-41de-afeb-274d81b7300a.png",
+            "icon_image": "shopify://shop_images/5_8ea331ef-963b-4926-8d67-12baf8ca7d41.jpg",
             "title": "Lab Tested",
             "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
           }
@@ -261,8 +261,9 @@
       ],
       "name": "Trust Badges",
       "settings": {
-        "section_style": "tb-section-compact",
-        "bg_color": "#ffffff"
+        "heading": "Why Us?",
+        "section_style": "tb-section-border",
+        "bg_color": "#ffeeb7"
       }
     },
     "seabuckthorn_m1": {

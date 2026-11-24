@@ -1,0 +1,67 @@
+<style>
+  body:has(#nc-cart-drawer.is-open)
+    :is(#chat-widget, #refer_and_earn_button_referrush, .wa-float-wrapper) {
+    display: none !important;
+  }
+
+  @media (max-width: 749px) {
+    body {
+      --mobile-chat-top: clamp(120px, 32dvh, 200px);
+    }
+
+    #refer_and_earn_button_referrush {
+      top: calc(var(--mobile-chat-top) - 52px) !important;
+      right: 0 !important;
+      bottom: auto !important;
+      left: auto !important;
+      border-radius: 6px 0 0 6px !important;
+    }
+
+    body:has(#mobDrawer.open)
+      :is(#chat-widget, #refer_and_earn_button_referrush, .wa-float-wrapper) {
+      display: none !important;
+    }
+  }
+</style>
+
+<template id="mobile-chat-positioning">
+  <style>
+    @media (max-width: 749px) {
+      .fixed:has(> button:is([aria-label="Open chat"], [aria-label="Close chat"])) {
+        inset: var(--mobile-chat-top) 0 auto auto !important;
+      }
+
+      .fixed > button:is([aria-label="Open chat"], [aria-label="Close chat"]) {
+        max-width: calc(100vw - 12px);
+        transform: none !important;
+        border-radius: 999px 0 0 999px;
+        padding-inline: 8px;
+      }
+
+      .fixed > button:is([aria-label="Open chat"], [aria-label="Close chat"]) > div {
+        max-width: 100%;
+      }
+    }
+  </style>
+</template>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const widget = document.getElementById('chat-widget');
+    if (!widget) return;
+
+    const template = document.getElementById('mobile-chat-positioning');
+    const deadline = Date.now() + 20000;
+
+    function applyChatStyles() {
+      // YourLio attaches its shadow root after loading the chat bundle.
+      if (widget.shadowRoot) {
+        widget.shadowRoot.append(template.content.cloneNode(true));
+      } else if (Date.now() < deadline) {
+        setTimeout(applyChatStyles, 250);
+      }
+    }
+
+    applyChatStyles();
+  });
+</script>

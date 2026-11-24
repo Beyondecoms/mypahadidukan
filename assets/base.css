@@ -3172,13 +3172,32 @@ details-disclosure > details {
 }
 
 .rte table {
-  table-layout: fixed;
+  table-layout: auto;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.6rem 0;
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.rte table th,
+.rte table td {
+  padding: 1.2rem 1.4rem;
+  border-bottom: 1px solid #d0d0d0;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.rte table td p,
+.rte table th p {
+  margin: 0;
 }
 
 @media screen and (min-width: 750px) {
-  .rte table td {
-    padding-left: 1.2rem;
-    padding-right: 1.2rem;
+  .rte table td,
+  .rte table th {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
   }
 }
 
@@ -3631,6 +3650,11 @@ details-disclosure > details {
 
 
 /* swym-customs */
+/* The theme header already provides its own wishlist links. */
+body :is(#swym-advanced-header-icon, #swym-advanced-header-icon-mobile) {
+  display: none !important;
+}
+
 
 .home-page-content :is(.sbr-header, .cr-header) {
   padding-inline: clamp(24px, 2.5vw, 48px);

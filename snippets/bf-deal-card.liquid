@@ -1,0 +1,113 @@
+{%- comment -%}
+  One Black Friday deal card. black-friday.js swaps the phase text, reveals prices and runs Add to cart.
+  Params: product, name, variant_label, cats, index, phase, eager, plus the label strings passed by bf-deals:
+  badge, strip, btn_label, reveal_label, off_format, mask_price, mask_off.
+{%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign now_str = variant.price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
+  assign was_str = ''
+  assign off_str = ''
+  assign pct = 0
+  if variant.compare_at_price > variant.price
+    assign was_str = variant.compare_at_price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
+    assign pct = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
+    assign off_str = off_format | replace: '[pct]', pct
+  endif
+
+  assign masked = false
+  if phase == 'before'
+    assign masked = true
+  endif
+  assign soldout = false
+  if phase == 'live' and variant.available == false
+    assign soldout = true
+  endif
+  assign disabled = true
+  if phase == 'live' and variant.available
+    assign disabled = false
+  endif
+-%}
+<article
+  class="bf-card{% if masked %} is-masked{% endif %}{% if soldout %} is-soldout{% endif %}"
+  data-bf-card
+  data-phase="{{ phase }}"
+  data-index="{{ index }}"
+  data-pct="{{ pct }}"
+  data-cats="{{ cats | strip }}"
+  data-available="{{ variant.available }}"
+  data-was="{{ was_str | escape }}"
+  data-now="{{ now_str | escape }}"
+  data-off="{{ off_str | escape }}"
+>
+  <div class="bf-card__media">
+    {%- if product.featured_media != blank -%}
+      <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+        {%- if eager -%}
+          {%- assign loading = 'eager' -%}
+        {%- else -%}
+          {%- assign loading = 'lazy' -%}
+        {%- endif -%}
+        {{
+          product.featured_media
+          | image_url: width: 800
+          | image_tag:
+            class: 'bf-card__img',
+            widths: '300, 450, 600, 800',
+            sizes: '(max-width: 900px) 50vw, (max-width: 1100px) 33vw, 320px',
+            alt: name,
+            loading: loading
+        }}
+      </a>
+    {%- else -%}
+      <div class="bf-card__placeholder">
+        <span class="bf-card__placeholder-name">{{ name }}</span>
+        <span class="bf-card__variant">PRODUCT PHOTO</span>
+      </div>
+    {%- endif -%}
+    {%- if badge != blank -%}
+      <span class="bf-card__badge">{{ badge }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="bf-card__strip" data-bf-strip>{{ strip }}</div>
+
+  <div class="bf-card__body">
+    <h3 class="bf-card__name"><a href="{{ product.url }}">{{ name }}</a></h3>
+    <span class="bf-card__variant">{{ variant_label }}</span>
+    <div class="bf-card__price">
+      <div class="bf-card__price-row" aria-hidden="{{ masked }}">
+        {%- if masked -%}
+          <span class="bf-card__was" data-bf-was>{{ mask_price }}</span>
+          <span class="bf-card__now" data-bf-now>{{ mask_price }}</span>
+          <span class="bf-card__off" data-bf-off>{{ mask_off }}</span>
+        {%- else -%}
+          <span class="bf-card__was" data-bf-was>{{ was_str }}</span>
+          <span class="bf-card__now" data-bf-now>{{ now_str }}</span>
+          <span class="bf-card__off" data-bf-off>{{ off_str }}</span>
+        {%- endif -%}
+      </div>
+      <div class="bf-card__reveal">
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+            <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+          </svg>
+          {{- reveal_label -}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="bf-card__btn"
+    data-bf-add
+    data-variant-id="{{ variant.id }}"
+    {% if disabled %}
+      disabled
+    {% endif %}
+  >
+    {{- btn_label -}}
+  </button>
+</article>

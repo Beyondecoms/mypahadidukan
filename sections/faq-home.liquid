@@ -1,6 +1,6 @@
 {{ 'section-faq-pdp.css' | asset_url | stylesheet_tag }}
 
-<div class="pdp-section" style="background: {{ section.settings.bg_color }};">
+<div class="pdp-section{% if section.settings.layout == 'compact' %} pdp-section--compact{% endif %}" style="background: {{ section.settings.bg_color }};">
   <div class="pdp-wrapper">
     <!-- Title -->
     <h2 class="pdp-title-faq title-center">{{ section.settings.title }}</h2>
@@ -27,12 +27,15 @@
               </span>
             </button>
             <div class="pdp-faq-answer">
-              <p class="pdp-faq-answer-text">{{ faq.settings.answer }}</p>
+              <p class="pdp-faq-answer-text">{% if section.settings.layout == 'compact' %}{{ faq.settings.answer | newline_to_br }}{% else %}{{ faq.settings.answer }}{% endif %}</p>
             </div>
           </div>
         {%- endfor -%}
       </div>
     </div>
+    {%- if section.settings.note != blank -%}
+      <div class="pdp-faq-note">{{ section.settings.note }}</div>
+    {%- endif -%}
     {%- if section.settings.link_label != blank -%}
       <div class="pdp-faq-footer">
         <a href="{{ section.settings.link_url | default: routes.root_url }}" class="pdp-faq-link">
@@ -93,6 +96,16 @@
       "default": "#FDF6E3"
     },
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "compact", "label": "Compact (Black Friday)" }
+      ],
+      "default": "default"
+    },
+    {
       "type": "text",
       "id": "link_label",
       "label": "Link below questions",
@@ -102,6 +115,12 @@
       "type": "url",
       "id": "link_url",
       "label": "Link URL"
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Note below questions",
+      "info": "Optional small print, e.g. a link to the full terms."
     }
   ],
 

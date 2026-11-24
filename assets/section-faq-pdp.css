@@ -212,3 +212,105 @@
     height: 220px;
   }
 }
+
+
+/* ── NOTE BELOW QUESTIONS (optional) ── */
+.pdp-faq-note {
+  margin-top: 16px;
+  font-family: var(--font-family-normal);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3e332b;
+  text-align: center;
+}
+
+.pdp-faq-note p {
+  margin: 0;
+}
+
+.pdp-faq-note a {
+  color: #067d69;
+  font-weight: 700;
+}
+
+/* ── COMPACT LAYOUT (Black Friday page) ── */
+.pdp-section--compact {
+  padding: 56px 56px 48px;
+}
+
+.pdp-section--compact .pdp-wrapper {
+  max-width: 1000px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pdp-section--compact .pdp-title-faq {
+  margin: 0;
+  font-family: 'Tinos', 'Times New Roman', serif;
+  font-size: 36px;
+  line-height: normal;
+  letter-spacing: 0.01em;
+  color: #1f1a17;
+}
+
+.pdp-section--compact .pdp-faq-item,
+.pdp-section--compact .pdp-faq-item:last-child {
+  border-bottom: 1px solid #eadfc4;
+}
+
+.pdp-section--compact .pdp-faq-question {
+  min-height: 44px;
+  padding: 12px 0;
+}
+
+.pdp-section--compact .pdp-faq-text {
+  font-family: 'Archivo', var(--font-family-normal), sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: normal;
+  color: #1f1a17;
+}
+
+.pdp-section--compact .pdp-faq-icon,
+.pdp-section--compact .pdp-faq-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.pdp-section--compact .pdp-faq-icon path:first-child,
+.pdp-section--compact .pdp-faq-icon circle {
+  fill: #067d69;
+}
+
+.pdp-section--compact .pdp-faq-answer-text {
+  max-width: 820px;
+  margin: 0 0 14px;
+  padding: 0;
+  font-family: 'Archivo', var(--font-family-normal), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3e332b;
+}
+
+.pdp-section--compact .pdp-faq-note {
+  margin-top: 4px;
+  font-family: 'Archivo', var(--font-family-normal), sans-serif;
+}
+
+@media (max-width: 900px) {
+  .pdp-section--compact {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .pdp-section--compact .pdp-title-faq {
+    font-size: 36px;
+    margin: 0;
+  }
+
+  .pdp-section--compact .pdp-faq-text {
+    font-size: 14.5px;
+  }
+}

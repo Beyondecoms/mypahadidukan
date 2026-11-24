@@ -140,21 +140,13 @@
             "item_name": "Shop All",
             "item_link": "shopify:\/\/collections\/all-products"
           }
-        },
-        "item_8qyHM6": {
-          "type": "item",
-          "settings": {
-            "item_name": "Buy 2 Get 3",
-            "item_link": "shopify:\/\/collections\/buy-2-get-100-off"
-          }
         }
       },
       "block_order": [
         "item_4ByrJe",
         "item_JWGjTD",
         "item_nkVQBL",
-        "item_AVW3qN",
-        "item_8qyHM6"
+        "item_AVW3qN"
       ],
       "settings": {}
     },

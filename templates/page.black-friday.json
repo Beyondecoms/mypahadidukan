@@ -1,0 +1,491 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "bf_hero": {
+      "type": "bf-hero",
+      "settings": {
+        "image_alt": "Sea buckthorn pulp bottle on a wooden stand surrounded by fresh sea buckthorn berries",
+        "eyebrow": "OUR ONE SALE OF THE YEAR",
+        "heading": "We Don't Do Sales. Except This One.",
+        "text": "Up to 60% off pure, lab-tested Himalayan products, straight from our farmers. Four days only, 27 to 30 November.",
+        "label_before": "SALE GOES LIVE IN",
+        "sub_before": "Friday 27 Nov, 12:00 AM IST",
+        "label_live": "SALE ENDS IN",
+        "sub_live": "Monday 30 Nov, 11:59 PM IST",
+        "label_ended": "THIS SALE HAS ENDED",
+        "sub_ended": "Back next November",
+        "unit_days": "DAYS",
+        "unit_hours": "HOURS",
+        "unit_minutes": "MINUTES",
+        "unit_seconds": "SECONDS",
+        "cta_live_label": "Shop Now",
+        "cta_live_link": "",
+        "cta_ended_label": "See you next November",
+        "cta_ended_link": "",
+        "bg_from": "#C48D3D",
+        "bg_mid": "#B47F33",
+        "bg_to": "#9A6824"
+      }
+    },
+    "bf_ticker": {
+      "type": "home-page-marquee",
+      "blocks": {
+        "item_0": {
+          "type": "item",
+          "settings": {
+            "text": "ONCE A YEAR ONLY"
+          }
+        },
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "text": "UP TO 60% OFF"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "text": "27 TO 30 NOVEMBER"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "text": "LAB-TESTED"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "text": "STRAIGHT FROM OUR FARMERS"
+          }
+        }
+      },
+      "block_order": [
+        "item_0",
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "settings": {
+        "bg_color": "#8B3A29",
+        "text_color": "#FFFFFF",
+        "diamond_color": "#FFFFFF",
+        "speed": 25,
+        "font_size": 12,
+        "style": "compact"
+      }
+    },
+    "bf_deals": {
+      "type": "bf-deals",
+      "blocks": {
+        "chip_all": {
+          "type": "chip",
+          "settings": {
+            "label": "All Deals",
+            "image": "shopify://shop_images/Frame_51.png",
+            "collection": "",
+            "products": []
+          }
+        },
+        "chip_sbt": {
+          "type": "chip",
+          "settings": {
+            "label": "Pure Seabuckthorn",
+            "image": "shopify://shop_images/Frame_55.png",
+            "collection": "",
+            "products": [
+              "sea-buckthorn-juice",
+              "sea-buckthorn-berries",
+              "seabuckthorn-oil-vitamin-c-serum",
+              "sea-buckthorn-berry-powder",
+              "pure-seabuckthorn-leaves",
+              "seabuckthorn-oil-capsules"
+            ]
+          }
+        },
+        "chip_well": {
+          "type": "chip",
+          "settings": {
+            "label": "Pahadi Wellness",
+            "image": "shopify://shop_images/Frame_60.png",
+            "collection": "",
+            "products": [
+              "buy-shilajit-online",
+              "rosemary-oil-my-pahadi-dukan",
+              "lavender-oil-my-pahadi-dukan",
+              "lemongrass-oil"
+            ]
+          }
+        },
+        "chip_pan": {
+          "type": "chip",
+          "settings": {
+            "label": "Spices & Pantry",
+            "image": "shopify://shop_images/Collection_Images_8.jpg",
+            "collection": "",
+            "products": [
+              "lakadong-turmeric-100gms-8-10-curcumin",
+              "afghani-pahadi-hing-my-pahadi-dukan",
+              "kashmiri-himalayan-garlic-lehsun-with-single-clove-ek-kali",
+              "ing-makhir-ginger-100gms-my-pahadi-dukan",
+              "kashmir-red-chilli-powder"
+            ]
+          }
+        },
+        "chip_nuts": {
+          "type": "chip",
+          "settings": {
+            "label": "Dry Fruits",
+            "image": "shopify://shop_images/Frame_62.png",
+            "collection": "",
+            "products": [
+              "buy-kashmiri-walnuts-online",
+              "buy-kashmiri-mamra-badam-online"
+            ]
+          }
+        },
+        "chip_bev": {
+          "type": "chip",
+          "settings": {
+            "label": "Natural Beverages",
+            "image": "shopify://shop_images/Collection_Images_7.jpg",
+            "collection": "",
+            "products": [
+              "buy-buransh-squash-online",
+              "strawberry-lime-squash"
+            ]
+          }
+        },
+        "chip_honey": {
+          "type": "chip",
+          "settings": {
+            "label": "Honey & Ghee",
+            "image": "shopify://shop_images/Collection_Images_6.jpg",
+            "collection": "",
+            "products": [
+              "pahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan",
+              "multi-flora-honey-from-lahaul-spiti-my-pahadi-dukan"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "chip_all",
+        "chip_sbt",
+        "chip_well",
+        "chip_pan",
+        "chip_nuts",
+        "chip_bev",
+        "chip_honey"
+      ],
+      "settings": {
+        "collection": "black-friday",
+        "limit": 50,
+        "heading": "Black Friday Deals",
+        "show_chips": true,
+        "card_names": "sea-buckthorn-juice = Sea Buckthorn Pulp (Juice) | 300ml (1 X 300ml Bottle)\nbuy-shilajit-online = Pure Ladakhi Shilajit (Shilajeet) | 10gms\nsea-buckthorn-berries = Premium Sea Buckthorn Berries (Dried) | 80gms Glass Jar\nseabuckthorn-oil-vitamin-c-serum = Wild Sea Buckthorn Oil (CO₂ Extracted) | 10ml\nbuy-buransh-squash-online = Buransh Sanjivni Flower Juice (Rhododendron) | Unsweetened 1 X 300ml Bottle\nlakadong-turmeric-100gms-8-10-curcumin = Lakadong Turmeric Powder (8.58% Curcumin) | 100gms\npahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan = Pahadi Badri Cow Ghee | 500ml\nbuy-kashmiri-walnuts-online = Kashmiri Walnut Kernels (Akhrot) | 500g\nsea-buckthorn-berry-powder = Sea Buckthorn Berry Powder | 100g\nafghani-pahadi-hing-my-pahadi-dukan = Afghani Pahadi Hing (Asafoetida) Crystal Resin | 10g\nbuy-kashmiri-mamra-badam-online = Single-tree Origin Kashmiri Almonds (Badam) | 500g\nkashmiri-himalayan-garlic-lehsun-with-single-clove-ek-kali = Kashmiri Himalayan Garlic (Single-Clove) | 100gms\nmulti-flora-honey-from-lahaul-spiti-my-pahadi-dukan = Raw Multi-flora Honey (Lahaul-Spiti) | 250gms\ning-makhir-ginger-100gms-my-pahadi-dukan = Ing Makhir Ginger | 100gms\nkashmir-red-chilli-powder = Kashmiri Red Chilli Powder | 100g\nrosemary-oil-my-pahadi-dukan = Rosemary Oil (Steam-distilled) | 10ml\npure-seabuckthorn-leaves = Pure Seabuckthorn Leaves | Pack of 1 - 50gms\nseabuckthorn-oil-capsules = Seabuckthorn Oil Capsules (500mg) | 30 Capsules\nstrawberry-lime-squash = Strawberry Lime Squash | 300ml\nlavender-oil-my-pahadi-dukan = Lavender Oil (100% Pure) | 10ml\nlemongrass-oil = Pure Lemongrass Essential Oil | 10ml",
+        "badge": "Black Friday",
+        "reveal_label": "To be revealed",
+        "mask_price": "₹000",
+        "mask_off": "00%off",
+        "off_format": "[pct]%off",
+        "strip_before": "Price reveals 27 Nov, 12 AM",
+        "btn_before": "Opens 27 Nov",
+        "count_before": "[count] products · Prices revealed 27 Nov, 12:00 AM IST",
+        "note_before": "Sale prices go live at midnight on 27 November. Other sizes will carry their own discounts on the product page.",
+        "strip_live": "Black Friday Price · Ends 30 Nov",
+        "btn_live": "Add To Cart",
+        "btn_adding": "Adding...",
+        "btn_soldout": "Sold Out",
+        "count_live": "[count] products · Biggest savings first",
+        "strip_ended": "Sale has ended",
+        "btn_ended": "Sale Ended",
+        "count_ended": "[count] products · Sale has ended",
+        "note_after": "Prices shown are for the first size listed. Other sizes carry their own discounts on the product page.",
+        "empty_text": "No deals in this category yet.",
+        "chips_bg": "#FFFBEF",
+        "grid_bg": "#FFEEB8",
+        "show_bottom_scallop": true,
+        "next_bg": "#FFFBEF"
+      }
+    },
+    "bf_why": {
+      "type": "bf-why",
+      "blocks": {
+        "stat_0": {
+          "type": "stat",
+          "settings": {
+            "number": "11",
+            "unit": "STATES",
+            "caption": "All in one place"
+          }
+        },
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "150+",
+            "unit": "PRODUCTS",
+            "caption": "One standard of purity"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "20,000+",
+            "unit": "FARMERS",
+            "caption": "Empowered and uplifted"
+          }
+        },
+        "day_0": {
+          "type": "day",
+          "settings": {
+            "title": "Tue 24 Nov · Preview",
+            "text": "Browse the edit. Prices stay hidden until the sale starts."
+          }
+        },
+        "day_1": {
+          "type": "day",
+          "settings": {
+            "title": "Fri 27 Nov, 12:00 AM IST · Sale goes live",
+            "text": "Prices are revealed and the timer counts down the time left."
+          }
+        },
+        "day_2": {
+          "type": "day",
+          "settings": {
+            "title": "Mon 30 Nov, 11:59 PM IST · Last call",
+            "text": "Prices go back to normal. See you next November."
+          }
+        }
+      },
+      "block_order": [
+        "stat_0",
+        "stat_1",
+        "stat_2",
+        "day_0",
+        "day_1",
+        "day_2"
+      ],
+      "settings": {
+        "heading": "Why we only do this once a year",
+        "text": "<p>We price fairly all year, so the families who grow and make our products get paid properly every day, not just on sale days. That's why we don't run regular discounts. Black Friday is the one time we pass the savings on to you.</p>",
+        "card_title": "The Four Days",
+        "card_subtitle": "(27 to 30 Nov)",
+        "card_footer": "Once a year • Lab-tested • Farmer-direct",
+        "bg": "#FFFBEF",
+        "card_bg": "#8B4512",
+        "show_bottom_scallop": true,
+        "next_bg": "#ffeeb7"
+      }
+    },
+    "bf_trust": {
+      "type": "section-trust-badges",
+      "blocks": {
+        "badge_0": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/1_8c5c3819-f1fe-4dc6-bcd3-78501076edd7.jpg",
+            "title": "Pure",
+            "subtitle": "Sourced from the Himalayas, unadulterated and untouched — the way nature intended."
+          }
+        },
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/4_1_d20d0e18-6e72-46cd-b99e-11821db84a6c.jpg",
+            "title": "Authentic",
+            "subtitle": "We bring you what the locals use — no shortcuts, no factory imitations."
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/6_1_b8486fad-d3b4-4035-9188-a14a0d548b43.jpg",
+            "title": "Transparency",
+            "subtitle": "From source to shelf, we show you everything — because trust isn't built on secrets."
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon_image": "shopify://shop_images/5_8ea331ef-963b-4926-8d67-12baf8ca7d41.jpg",
+            "title": "Lab Tested",
+            "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
+          }
+        }
+      },
+      "block_order": [
+        "badge_0",
+        "badge_1",
+        "badge_2",
+        "badge_3"
+      ],
+      "settings": {
+        "heading": "Why Us?",
+        "section_style": "tb-section-border",
+        "bg_color": "#ffeeb7"
+      }
+    },
+    "bf_faq": {
+      "type": "faq-home",
+      "blocks": {
+        "faq_0": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this really a once-a-year sale?",
+            "answer": "Yes. We price our products fairly all year, so we do not run regular sales. Black Friday is the one exception."
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "When does the sale start and end?",
+            "answer": "The sale starts at 12:00 AM (midnight) IST on 27 November 2026 and ends at 11:59 PM IST on 30 November 2026, or when stocks run out, whichever is earlier.\nSale prices apply only to orders placed and paid within the sale period. Orders placed before or after it are charged regular prices."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "When will the sale prices be revealed?",
+            "answer": "At 12:00 AM IST on 27 November, when the sale goes live. Until then you can browse the products on this page."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Which products are included?",
+            "answer": "Only these 21 products: Seabuckthorn Pulp, Seabuckthorn Oil, Seabuckthorn Oil Capsules, Pahadi Badri Cow Ghee, Shilajit, Lakadong Turmeric, Buransh, Strawberry Lime Squash, Hing, Walnuts, Almonds, Ing Makhir Ginger, Dried Seabuckthorn Berries, Seabuckthorn Powder, Seabuckthorn Leaves, Honey, Kashmiri Red Chilli, Rosemary Oil, Lavender Oil, Lemongrass Oil and Kashmiri Garlic.\nSale prices apply only to the sizes and packs shown at the sale price on each product page. Everything else on the website is sold at its regular price."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Will a product stay in stock for the whole sale?",
+            "answer": "Not always. Stock is limited and sold first come, first served. A product may go out of stock before the sale ends, and we are not obliged to restock it at the sale price."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do prices include GST?",
+            "answer": "Yes, all prices include applicable GST unless stated otherwise. Your final price, including any shipping charge, is shown at checkout before you pay."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "What are the shipping charges?",
+            "answer": "Orders with a cart value of ₹449 or more ship free. Orders below ₹449 have a ₹50 shipping charge.\nCart value is worked out after sale discounts and before shipping."
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "How long will delivery take?",
+            "answer": "Delivery timelines shown on the website are estimates. Because of high order volumes during the sale, dispatch and delivery may take longer than usual."
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I cancel or change my order?",
+            "answer": "No. Sale orders cannot be cancelled once confirmed, and we cannot change them after confirmation. Please check your cart, product size, quantity, delivery address and contact details before you place your order.\nWe may cancel an order if a product becomes unavailable, there is a pricing or listing error, your pincode is not serviceable, or we suspect fraudulent or bulk/reseller activity. If we do, we will tell you and refund the full amount for the cancelled product(s) to your original payment method."
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I get a refund?",
+            "answer": "Sale products are not eligible for refunds, including for change of mind, taste or personal preference, or choosing the wrong product.\nThis does not limit your rights under the Consumer Protection Act, 2019 and the Consumer Protection (E-Commerce) Rules, 2020. If we cannot provide a replacement, or the law requires a refund, we will refund the amount paid for the affected product(s) to your original payment method."
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my order arrives damaged, wrong, missing or expired?",
+            "answer": "We will replace a product that arrives damaged in transit (for example a broken jar or bottle, leakage, or packaging crushed or torn so the product is damaged), or one that is wrong, missing from your order, or expired on delivery.\nContact us within 48 hours of delivery with your order number and clear photos of the outer package, shipping label and damaged product. An unboxing video is recommended and helps us process your request faster.\nKeep the product and its original packaging until your request is resolved, as we or our courier partner may need to inspect or collect it. Once verified, we send a replacement of the same product at no extra cost. If it is out of stock, we refund the amount paid for it.\nRequests made after 48 hours, or without enough proof, may not be accepted."
+          }
+        },
+        "faq_11": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a limit on how much I can buy?",
+            "answer": "We may limit the quantity of any sale product per customer or per order so more people get a chance to buy. Sale offers cannot be exchanged for cash and are non-transferable."
+          }
+        },
+        "faq_12": {
+          "type": "faq",
+          "settings": {
+            "question": "Why does my product look slightly different from the photo?",
+            "answer": "Product images are for illustration. Natural products such as honey, ghee, spices, dry fruits and oils can vary slightly in colour, texture, aroma and taste between batches. This natural variation is not a defect."
+          }
+        },
+        "faq_13": {
+          "type": "faq",
+          "settings": {
+            "question": "Is product information medical advice?",
+            "answer": "No. Product information on our website is general information only. Please consult a qualified healthcare practitioner before use if you are pregnant, nursing, on medication or have a medical condition."
+          }
+        },
+        "faq_14": {
+          "type": "faq",
+          "settings": {
+            "question": "Can the sale or these terms change?",
+            "answer": "We may modify, extend or withdraw the sale or its terms at any time without prior notice. Changes will not affect orders already confirmed."
+          }
+        },
+        "faq_15": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I contact you?",
+            "answer": "WhatsApp us on +91 84286 11319 or +91 85699 49587, or email support@mypahadidukan.com.\nWe will never ask for your OTP, card details, UPI PIN or passwords. Only contact us through the official numbers and email above, and beware of fraudulent calls, messages or websites offering My Pahadi Dukan deals."
+          }
+        }
+      },
+      "block_order": [
+        "faq_0",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13",
+        "faq_14",
+        "faq_15"
+      ],
+      "settings": {
+        "title": "Any Last Questions ?",
+        "bg_color": "#FDF6E3",
+        "layout": "compact",
+        "link_label": "",
+        "link_url": "",
+        "note": "<p>These answers summarise our Black Friday Sale 2026 Terms &amp; Conditions (last updated 24 Nov 2026), which apply alongside our Terms of Use, Shipping Policy and Privacy Policy. <a href=\"/pages/terms-and-conditions\" title=\"Terms and Conditions\">Read the full terms</a></p>"
+      }
+    }
+  },
+  "order": [
+    "bf_hero",
+    "bf_ticker",
+    "bf_deals",
+    "bf_why",
+    "bf_trust",
+    "bf_faq"
+  ]
+}

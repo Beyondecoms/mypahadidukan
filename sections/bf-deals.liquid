@@ -1,0 +1,441 @@
+{{ 'section-black-friday.css' | asset_url | stylesheet_tag }}
+{%- render 'bf-fonts' -%}
+<script src="{{ 'black-friday.js' | asset_url }}" defer="defer"></script>
+
+{%- capture bf_phase -%}{%- render 'bf-sale-phase' -%}{%- endcapture -%}
+{%- liquid
+  assign bf_phase = bf_phase | strip
+  case bf_phase
+    when 'before'
+      assign strip = section.settings.strip_before
+      assign btn_label = section.settings.btn_before
+      assign count_text = section.settings.count_before
+      assign note_text = section.settings.note_before
+    when 'live'
+      assign strip = section.settings.strip_live
+      assign btn_label = section.settings.btn_live
+      assign count_text = section.settings.count_live
+      assign note_text = section.settings.note_after
+    else
+      assign strip = section.settings.strip_ended
+      assign btn_label = section.settings.btn_ended
+      assign count_text = section.settings.count_ended
+      assign note_text = section.settings.note_after
+  endcase
+
+  assign deal_collection = section.settings.collection
+  assign name_lines = section.settings.card_names | newline_to_br | split: '<br />'
+  assign product_count = 0
+  if deal_collection != blank
+    assign product_count = deal_collection.products_count
+    if product_count > section.settings.limit
+      assign product_count = section.settings.limit
+    endif
+  endif
+-%}
+
+<div
+  class="bf-section"
+  id="bf-deals"
+  data-bf-deals
+  data-bf-sale
+  data-start="{{ settings.bf_sale_start | escape }}"
+  data-end="{{ settings.bf_sale_end | escape }}"
+  data-preview="{{ settings.bf_preview_phase | default: 'auto' }}"
+  data-title="{{ section.settings.heading | escape }}"
+  data-strip-before="{{ section.settings.strip_before | escape }}"
+  data-strip-live="{{ section.settings.strip_live | escape }}"
+  data-strip-ended="{{ section.settings.strip_ended | escape }}"
+  data-btn-before="{{ section.settings.btn_before | escape }}"
+  data-btn-live="{{ section.settings.btn_live | escape }}"
+  data-btn-ended="{{ section.settings.btn_ended | escape }}"
+  data-btn-soldout="{{ section.settings.btn_soldout | escape }}"
+  data-btn-adding="{{ section.settings.btn_adding | escape }}"
+  data-count-before="{{ section.settings.count_before | escape }}"
+  data-count-live="{{ section.settings.count_live | escape }}"
+  data-count-ended="{{ section.settings.count_ended | escape }}"
+  data-note-before="{{ section.settings.note_before | escape }}"
+  data-note-after="{{ section.settings.note_after | escape }}"
+  data-mask-price="{{ section.settings.mask_price | escape }}"
+  data-mask-off="{{ section.settings.mask_off | escape }}"
+>
+  {%- if section.settings.show_chips and section.blocks.size > 0 -%}
+    <div class="bf-cats-wrap" style="background: {{ section.settings.chips_bg }};">
+      <div class="bf-cats" role="group" aria-label="Filter sale products by category">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign chip_id = block.id
+            if block.settings.collection == blank and block.settings.products == blank
+              assign chip_id = 'all'
+            endif
+          -%}
+          <button
+            type="button"
+            class="bf-chip"
+            data-bf-chip="{{ chip_id }}"
+            data-label="{{ block.settings.label | escape }}"
+            aria-pressed="{% if chip_id == 'all' %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <span class="bf-chip__ring">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 200 | image_tag: alt: '', loading: 'lazy', widths: '100, 200' }}
+              {%- else -%}
+                <span class="bf-chip__blank"></span>
+              {%- endif -%}
+            </span>
+            <span class="bf-chip__label bf-sc">{{ block.settings.label }}</span>
+            <span class="bf-chip__bar"></span>
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="bf-scallop" style="--bf-scallop-bg: {{ section.settings.chips_bg }}; --bf-scallop-fg: {{ section.settings.grid_bg }};" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <section class="bf-deals" style="background: {{ section.settings.grid_bg }};" aria-labelledby="bf-deals-title">
+    <div class="bf-deals__inner">
+      <div class="bf-deals__head">
+        <h2 class="bf-deals__title bf-sc" id="bf-deals-title" data-bf-title>{{ section.settings.heading }}</h2>
+        <span class="bf-deals__count" data-bf-count>{{ count_text | replace: '[count]', product_count }}</span>
+      </div>
+
+      {%- if deal_collection != blank -%}
+        <div class="bf-grid" data-bf-grid>
+          {%- for product in deal_collection.products limit: section.settings.limit -%}
+            {%- liquid
+              assign variant = product.selected_or_first_available_variant
+              assign card_name = product.title | split: ' | ' | first
+              assign variant_label = variant.title
+              if variant_label == 'Default Title'
+                assign variant_label = ''
+              endif
+
+              # Optional display names from "Card names": handle = Name | Size label
+              for line in name_lines
+                assign line_clean = line | strip
+                assign line_handle = line_clean | split: '=' | first | strip
+                if line_handle == product.handle
+                  assign line_rest = line_clean | remove_first: line_handle | strip | remove_first: '=' | strip
+                  assign rest_parts = line_rest | split: '|'
+                  assign override_name = rest_parts[0] | strip
+                  if override_name != blank
+                    assign card_name = override_name
+                  endif
+                  if rest_parts.size > 1
+                    assign variant_label = rest_parts[1] | strip
+                  endif
+                  break
+                endif
+              endfor
+
+              # Category chips this product belongs to (by chip collection or chip product list)
+              assign product_collections = product.collections | map: 'handle' | join: ','
+              assign product_collections = ',' | append: product_collections | append: ','
+              assign cats = ''
+              for block in section.blocks
+                assign in_chip = false
+                if block.settings.collection != blank
+                  assign needle = ',' | append: block.settings.collection.handle | append: ','
+                  if product_collections contains needle
+                    assign in_chip = true
+                  endif
+                endif
+                if in_chip == false and block.settings.products != blank
+                  for chip_product in block.settings.products
+                    if chip_product.id == product.id
+                      assign in_chip = true
+                      break
+                    endif
+                  endfor
+                endif
+                if in_chip
+                  assign cats = cats | append: ' ' | append: block.id
+                endif
+              endfor
+
+              assign eager = false
+              if forloop.index <= 4
+                assign eager = true
+              endif
+            -%}
+            {%- render 'bf-deal-card',
+              product: product,
+              name: card_name,
+              variant_label: variant_label,
+              cats: cats,
+              index: forloop.index0,
+              phase: bf_phase,
+              eager: eager,
+              badge: section.settings.badge,
+              strip: strip,
+              btn_label: btn_label,
+              reveal_label: section.settings.reveal_label,
+              off_format: section.settings.off_format,
+              mask_price: section.settings.mask_price,
+              mask_off: section.settings.mask_off
+            -%}
+          {%- endfor -%}
+        </div>
+        <p class="bf-deals__empty" data-bf-empty hidden>{{ section.settings.empty_text }}</p>
+      {%- else -%}
+        <p class="bf-deals__empty">Choose the Black Friday collection in this section's settings.</p>
+      {%- endif -%}
+
+      {%- if note_text != blank -%}
+        <p class="bf-deals__note" data-bf-note>{{ note_text }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- if section.settings.show_bottom_scallop -%}
+    <div class="bf-scallop" style="--bf-scallop-bg: {{ section.settings.grid_bg }}; --bf-scallop-fg: {{ section.settings.next_bg }};" aria-hidden="true"></div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Black Friday deals",
+  "tag": "div",
+  "class": "bf-deals-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Prices stay hidden until the sale opens. Sale dates and the preview switch are in Theme settings → Black Friday sale."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Products",
+      "info": "The collection holding the sale products. Cards show each product's first available size."
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Maximum products",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Black Friday Deals"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chips",
+      "label": "Show category circles",
+      "info": "Add a category block for each circle. A category with no collection or products shows all deals.",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "card_names",
+      "label": "Card names",
+      "info": "Optional. One product per line: handle = Card name | Size label. Products not listed use their own title and first size."
+    },
+    {
+      "type": "header",
+      "content": "Card text"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "Black Friday"
+    },
+    {
+      "type": "text",
+      "id": "reveal_label",
+      "label": "Hidden price label",
+      "default": "To be revealed"
+    },
+    {
+      "type": "text",
+      "id": "mask_price",
+      "label": "Hidden price placeholder",
+      "default": "₹000"
+    },
+    {
+      "type": "text",
+      "id": "mask_off",
+      "label": "Hidden discount placeholder",
+      "default": "00%off"
+    },
+    {
+      "type": "text",
+      "id": "off_format",
+      "label": "Discount label",
+      "info": "[pct] is replaced with the percentage off.",
+      "default": "[pct]%off"
+    },
+    {
+      "type": "header",
+      "content": "Before the sale"
+    },
+    {
+      "type": "text",
+      "id": "strip_before",
+      "label": "Card strip",
+      "default": "Price reveals 27 Nov, 12 AM"
+    },
+    {
+      "type": "text",
+      "id": "btn_before",
+      "label": "Button",
+      "default": "Opens 27 Nov"
+    },
+    {
+      "type": "text",
+      "id": "count_before",
+      "label": "Product count",
+      "info": "[count] is replaced with the number of products shown.",
+      "default": "[count] products · Prices revealed 27 Nov, 12:00 AM IST"
+    },
+    {
+      "type": "textarea",
+      "id": "note_before",
+      "label": "Note under the grid",
+      "default": "Sale prices go live at midnight on 27 November. Other sizes will carry their own discounts on the product page."
+    },
+    {
+      "type": "header",
+      "content": "Sale live"
+    },
+    {
+      "type": "text",
+      "id": "strip_live",
+      "label": "Card strip",
+      "default": "Black Friday Price · Ends 30 Nov"
+    },
+    {
+      "type": "text",
+      "id": "btn_live",
+      "label": "Button",
+      "default": "Add To Cart"
+    },
+    {
+      "type": "text",
+      "id": "btn_adding",
+      "label": "Button while adding",
+      "default": "Adding..."
+    },
+    {
+      "type": "text",
+      "id": "btn_soldout",
+      "label": "Sold out button",
+      "default": "Sold Out"
+    },
+    {
+      "type": "text",
+      "id": "count_live",
+      "label": "Product count",
+      "default": "[count] products · Biggest savings first"
+    },
+    {
+      "type": "header",
+      "content": "Sale ended"
+    },
+    {
+      "type": "text",
+      "id": "strip_ended",
+      "label": "Card strip",
+      "default": "Sale has ended"
+    },
+    {
+      "type": "text",
+      "id": "btn_ended",
+      "label": "Button",
+      "default": "Sale Ended"
+    },
+    {
+      "type": "text",
+      "id": "count_ended",
+      "label": "Product count",
+      "default": "[count] products · Sale has ended"
+    },
+    {
+      "type": "textarea",
+      "id": "note_after",
+      "label": "Note under the grid (live and ended)",
+      "default": "Prices shown are for the first size listed. Other sizes carry their own discounts on the product page."
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty category message",
+      "default": "No deals in this category yet."
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "chips_bg",
+      "label": "Category background",
+      "default": "#FFFBEF"
+    },
+    {
+      "type": "color",
+      "id": "grid_bg",
+      "label": "Deals background",
+      "default": "#FFEEB8"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_scallop",
+      "label": "Scalloped bottom edge",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "next_bg",
+      "label": "Next section background",
+      "info": "Colour of the scallops along the bottom edge.",
+      "default": "#FFFBEF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Category",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "All Deals"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Deals in this collection show under this category."
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Or pick products",
+          "limit": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black Friday deals",
+      "blocks": [{ "type": "chip", "settings": { "label": "All Deals" } }]
+    }
+  ]
+}
+{% endschema %}

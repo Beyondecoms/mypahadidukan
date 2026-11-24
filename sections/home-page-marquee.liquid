@@ -9,7 +9,7 @@
   }
 </style>
 
-<div class="marquee-bar" style="background: {{ section.settings.bg_color }};">
+<div class="marquee-bar{% if section.settings.style == 'compact' %} marquee-bar--compact{% endif %}" style="background: {{ section.settings.bg_color }};">
   <div class="marquee-track">
 
     {%- assign repeat_times = 4 -%}
@@ -17,6 +17,11 @@
       <div class="marquee-content" {% if i > 1 %}aria-hidden="true"{% endif %}>
         {%- for block in section.blocks -%}
           <span class="marquee-item" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>
+          {%- if section.settings.style == 'compact' -%}
+            <span class="marquee-text" style="color: {{ section.settings.text_color }};">
+              <span style="color: {{ section.settings.diamond_color }};" aria-hidden="true">◆</span> &nbsp;{{ block.settings.text }}
+            </span>
+          {%- else -%}
           <svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5.5 0L11 10H0L5.5 0Z" fill="white"/>
               <path d="M5.5 20L11 10H0L5.5 20Z" fill="white"/>
@@ -24,6 +29,7 @@
             <span class="marquee-text" style="color: {{ section.settings.text_color }};">
               {{ block.settings.text }}
             </span>
+          {%- endif -%}
           </span>
         {%- endfor -%}
       </div>
@@ -38,6 +44,16 @@
   "tag": "div",
   "class": "marquee-bar-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "compact", "label": "Compact (Black Friday)" }
+      ],
+      "default": "default"
+    },
     {
       "type": "color",
       "id": "bg_color",

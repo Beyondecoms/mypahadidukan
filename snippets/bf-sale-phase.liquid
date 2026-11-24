@@ -1,0 +1,24 @@
+{%- comment -%}
+  Prints the Black Friday sale phase (before, live or ended) from Theme settings → Black Friday sale,
+  so the page renders in the right state before black-friday.js takes over the clock.
+  Usage: {%- capture bf_phase -%}{%- render 'bf-sale-phase' -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign preview = settings.bf_preview_phase | default: 'auto'
+  if preview != 'auto'
+    echo preview
+  else
+    assign now_s = 'now' | date: '%s' | plus: 0
+    assign start_s = settings.bf_sale_start | date: '%s' | plus: 0
+    assign end_s = settings.bf_sale_end | date: '%s' | plus: 0
+    if start_s == 0 or end_s == 0
+      echo 'live'
+    elsif now_s < start_s
+      echo 'before'
+    elsif now_s < end_s
+      echo 'live'
+    else
+      echo 'ended'
+    endif
+  endif
+-%}

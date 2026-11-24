@@ -134,10 +134,10 @@
     "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": false,
-    "cart_banner_image": "shopify://shop_images/Frame_2147223684.png",
+    "cart_banner_image": "shopify://shop_images/1_38582b7e-2e72-4578-819d-446c73ecf71e.jpg",
     "cart_fbt_collection": "april-re-fill",
     "cart_color_scheme": "scheme-1",
-    "swym_advanced_collections_wishlist_enabled": true,
+    "swym_advanced_collections_wishlist_enabled": false,
     "swym_advanced_collections_wishlist_social_count": false,
     "swym_advanced_collections_wishlist_button_before_html": "<button type=\"button\" class=\"swym-advanced-wishlist-collections\" aria-label=\"{{ADD_TO_WISHLIST}}\" aria-pressed=\"false\" style=\"color:{{ICON_COLOR}}; transform:{{ICON_POSITION}};\">\n  <div class=\"swym-advanced-wishlist-collections-social-count\">\n    {{SOCIAL_COUNT}}\n  </div>\n  <svg width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z\" stroke=\"{{ICON_COLOR}}\" stroke-width=\"{{ICON_WIDTH}}\" fill=\"none\" stroke-linejoin=\"round\"></path>\n  </svg>\n</button>",
     "swym_advanced_collections_wishlist_button_after_html": "<button type=\"button\" class=\"swym-advanced-wishlist-collections\" aria-label=\"{{ADDED_TO_WISHLIST}}\" aria-pressed=\"true\" style=\"color:{{ICON_COLOR}}; transform:{{ICON_POSITION}};\">\n  <div class=\"swym-advanced-wishlist-collections-social-count\">\n    {{SOCIAL_COUNT}}\n  </div>\n  <svg width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M5 6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.07989 3 8.2 3H15.8C16.9201 3 17.4802 3 17.908 3.21799C18.2843 3.40973 18.5903 3.71569 18.782 4.09202C19 4.51984 19 5.07989 19 6.2V21L12 16L5 21V6.2Z\" stroke=\"{{ICON_COLOR}}\" stroke-width=\"{{ICON_WIDTH}}\" fill=\"{{ICON_COLOR}}\" stroke-linejoin=\"round\"></path>\n  </svg>\n</button>",
@@ -147,7 +147,7 @@
     "swym_advanced_collections_wishlist_icon_position": "top-left",
     "swym_advanced_collections_wishlist_icon_color": "#000000",
     "swym_advanced_collections_wishlist_icon_width": 1.7,
-    "swym_header_icon_enabled": true,
+    "swym_header_icon_enabled": false,
     "swym_header_icon_show_count": true,
     "swym_header_icon_custom_html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path></svg>",
     "swym_header_icon_count_bubble_html": "",
@@ -227,11 +227,6 @@
           "swym_variant_selector_create_list_placeholder_text": "Enter wishlist name",
           "swym_variant_selector_create_list_title": "Name Your Wishlist"
         }
-      },
-      "5530246297231961265": {
-        "type": "shopify://apps/yourtoken-loyalty/blocks/app-embed/019b3be8-f559-70af-9e2e-d3b502d6f55f",
-        "disabled": false,
-        "settings": {}
       },
       "11349500561483629931": {
         "type": "shopify://apps/notify-back-in-stock-preorder/blocks/app-embed/b399b727-6c85-44fc-9e21-63114bd72054",
@@ -313,6 +308,11 @@
           "y_position": 20,
           "position": "left"
         }
+      },
+      "5530246297231961265": {
+        "type": "shopify://apps/yourtoken-loyalty/blocks/app-embed/019b3be8-f559-70af-9e2e-d3b502d6f55f",
+        "disabled": true,
+        "settings": {}
       }
     },
     "color_schemes": {

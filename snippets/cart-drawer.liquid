@@ -346,18 +346,19 @@
 
     /* 1. Section targets for onCartUpdate() re-render */
     proto.getSectionsToRender = function () {
-      return [
-        {
-          id:       'CartDrawer',
-          section:  'cart-drawer',
-          selector: '.drawer__inner',
-        },
-        {
+      var sections = [{
+        id:       'CartDrawer',
+        section:  'cart-drawer',
+        selector: '.drawer__inner',
+      }];
+      if (document.getElementById('cart-icon-bubble')) {
+        sections.push({
           id:       'cart-icon-bubble',
           section:  'cart-icon-bubble',
           selector: '.shopify-section',
-        },
-      ];
+        });
+      }
+      return sections;
     };
 
     /* 2a. Safe enableLoading — won't throw on missing spinner elements */
@@ -452,8 +453,7 @@ function registerCartUpdateListener() {
     subscribe(PUB_SUB_EVENTS.cartUpdate, function (event) {
       var cart = event && event.cartData;
       if (!cart) return;
-      updateBadge(cart);
-      updatePriceBreakdown(cart);
+      updateCartSummary(cart);
     });
     return true;
   }
@@ -467,18 +467,22 @@ if (!registerCartUpdateListener()) {
 }
 
   function updateBadge(cart) {
-    /* Header bubble */
-    var badge = document.getElementById('header-cart-count');
-    if (badge) {
+    if (!Number.isInteger(cart.item_count)) return;
+    var hasItems = cart.item_count > 0;
+    document.querySelectorAll('[data-header-cart-count], #header-cart-count').forEach(function (badge) {
       badge.textContent = cart.item_count;
-      badge.style.display = cart.item_count > 0 ? '' : 'none';
-    }
-    /* Drawer header count */
+      badge.style.display = hasItems ? '' : 'none';
+    });
     var countEl = document.getElementById('nc-item-count');
-    if (countEl) countEl.textContent = '(' + cart.item_count + ')';
+    if (countEl) countEl.textContent = hasItems ? '(' + cart.item_count + ')' : '';
   }
 
-  window.ncUpdatePriceBreakdown = function updatePriceBreakdown(cart) {  var totalOrig = 0;
+  function updateCartSummary(cart) {
+    if (!cart) return;
+    updateBadge(cart);
+    if (!Array.isArray(cart.items)) return;
+
+    var totalOrig = 0;
     var totalFinal = 0;
 
     cart.items.forEach(function (item) {
@@ -506,6 +510,8 @@ if (!registerCartUpdateListener()) {
     setText('nc-pb-grand', money(cart.total_price));
     setText('nc-footer-total', money(cart.total_price));
   }
+
+  window.ncUpdatePriceBreakdown = updateCartSummary;
 
   function setText(id, val) {
     var el = document.getElementById(id);
@@ -580,8 +586,7 @@ if (!registerCartUpdateListener()) {
       })
       .then(function (r) { return r.json(); })
       .then(function (cart) {
-        updateBadge(cart);
-        updatePriceBreakdown(cart);
+        updateCartSummary(cart);
         if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
           publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: cart });
         }
@@ -611,44 +616,18 @@ if (!registerCartUpdateListener()) {
     window.location.replace(ret);
   }
 
-}());
-</script>
-<script>
-  (function () {
-    var target = document.querySelector('#CartDrawer');
-    if (!target) return;
-
+  // Keep counts in sync for cart drawer changes made outside the cart events.
+  var drawerContent = document.getElementById('CartDrawer');
+  if (drawerContent) {
     new MutationObserver(function () {
       fetch('/cart.js', {
+        cache: 'no-store',
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
-        .then(function (r) {
-          return r.json();
-        })
-        .then(function (cart) {
-
-          // Drawer Count
-          var drawerCount = document.getElementById('nc-item-count');
-          if (drawerCount) {
-            drawerCount.textContent = '(' + cart.item_count + ')';
-          }
-
-          // Header Count
-          var headerCount = document.getElementById('header-cart-count');
-          if (headerCount) {
-            if (cart.item_count > 0) {
-              headerCount.textContent = cart.item_count;
-              headerCount.style.display = '';
-            } else {
-              headerCount.textContent = '0';
-              headerCount.style.display = 'none';
-            }
-          }
-
-        });
-    }).observe(target, {
-      childList: true,
-      subtree: true
-    });
-  })();
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .then(function (cart) { if (cart) updateBadge(cart); })
+        .catch(function () {});
+    }).observe(drawerContent, { childList: true, subtree: true });
+  }
+}());
 </script>

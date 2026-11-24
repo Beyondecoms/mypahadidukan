@@ -189,6 +189,33 @@
   }
   }
 
+{%- if request.page_type == 'index' %}
+  @media (max-width: 768px) {
+    #TopSlider-{{ section.id }} {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #TopSlider-{{ section.id }} > :is(.slider-wrapper, .button_slider) {
+      grid-area: 1 / 1 / 2 / 2;
+    }
+
+    #TopSlider-{{ section.id }} > .slider-dots_multiple_video {
+      grid-area: 2 / 1;
+      position: static;
+      padding-block: 4px;
+      background: #fffbef;
+    }
+
+    #TopSlider-{{ section.id }} .dot_multiple_video {
+      background-color: #8a7d68;
+    }
+
+    #TopSlider-{{ section.id }} .dot_multiple_video.active {
+      background-color: var(--primary-web-color, #048e79);
+    }
+  }
+{%- endif %}
 </style>
 
 

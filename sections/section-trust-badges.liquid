@@ -5,7 +5,12 @@
   {%- assign section_style = 'tb-section-compact' -%}
 {%- endif -%}
 
-<div class="{{ section_style }}" style="--tb-background: {{ section.settings.bg_color }}; background: var(--tb-background);">
+<div class="{{ section_style }}{% if request.page_type == 'product' and section_style == 'tb-section-border' %} tb-section-border--product{% endif %}" style="--tb-background: {{ section.settings.bg_color }}; background: var(--tb-background);">
+  {%- if section.settings.heading != blank -%}
+    <div class="tb-header">
+      <h2 class="tb-heading">{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
   <div class="tb-inner">
     {%- for block in section.blocks -%}
       <div class="tb-item" {{ block.shopify_attributes }}>
@@ -13,11 +18,11 @@
         <!-- Icon / Image -->
         <div class="tb-icon-wrap">
           {%- if block.settings.icon_image != blank -%}
-            {%- if section_style == 'tb-section-compact' -%}
+            {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
               {{
                 block.settings.icon_image
                 | image_url: width: 320
-                | image_tag: widths: '96, 120, 240, 320', sizes: '(max-width: 600px) 88px, 116px', alt: '', class: 'tb-icon-img', loading: 'lazy'
+                | image_tag: widths: '96, 120, 160, 240, 320', sizes: '(max-width: 600px) 116px, 130px', alt: block.settings.title, class: 'tb-icon-img', loading: 'lazy'
               }}
             {%- else -%}
               {{
@@ -39,7 +44,7 @@
 
         <!-- Text -->
         <div class="tb-text">
-          {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
+          {%- if section_style == 'tb-section-compact' or section_style == 'tb-section-border' or section_style == 'tb-section-tiles' -%}
             <h3 class="tb-title">{{ block.settings.title }}</h3>
           {%- else -%}
             <p class="tb-title">{{ block.settings.title }}</p>
@@ -49,7 +54,7 @@
 
       </div>
 
-      {%- unless forloop.last or section_style == 'tb-section-compact' or section_style == 'tb-section-border' -%}
+      {%- unless forloop.last or section_style == 'tb-section-compact' or section_style == 'tb-section-border' or section_style == 'tb-section-tiles' -%}
         <div class="tb-divider" aria-hidden="true"></div>
       {%- endunless -%}
     {%- endfor -%}
@@ -63,13 +68,20 @@
   "class": "tb-section-outer",
   "settings": [
     {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Us?"
+    },
+    {
       "type": "select",
       "id": "section_style",
       "label": "Section Style",
       "options": [
         { "value": "tb-section", "label": "Default" },
         { "value": "tb-section-compact", "label": "Compact" },
-        { "value": "tb-section-border", "label": "With Border" }
+        { "value": "tb-section-border", "label": "With Border" },
+        { "value": "tb-section-tiles", "label": "Tiles (4 across)" }
       ],
       "default": "tb-section"
     },

@@ -519,65 +519,48 @@
     "section_trust_badges_YJJ6Br": {
       "type": "section-trust-badges",
       "blocks": {
-        "badge_MABeTV": {
+        "badge_pure": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2.png",
-            "title": "100% Natural",
-            "subtitle": "Straight from the hills"
+            "icon_image": "shopify://shop_images/1_8c5c3819-f1fe-4dc6-bcd3-78501076edd7.jpg",
+            "title": "Pure",
+            "subtitle": "Sourced from the Himalayas, unadulterated and untouched — the way nature intended."
           }
         },
-        "badge_pXwm6x": {
+        "badge_authentic": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
-            "title": "100k+",
-            "subtitle": "Across the map"
+            "icon_image": "shopify://shop_images/4_1_d20d0e18-6e72-46cd-b99e-11821db84a6c.jpg",
+            "title": "Authentic",
+            "subtitle": "We bring you what the locals use — no shortcuts, no factory imitations."
           }
         },
-        "badge_MhJwPW": {
+        "badge_transparency": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_1.png",
-            "title": "1,00,000+",
-            "subtitle": "Loyal customers"
+            "icon_image": "shopify://shop_images/6_1_b8486fad-d3b4-4035-9188-a14a0d548b43.jpg",
+            "title": "Transparency",
+            "subtitle": "From source to shelf, we show you everything — because trust isn't built on secrets."
           }
         },
-        "badge_JarVJ3": {
+        "badge_lab_tested": {
           "type": "badge",
           "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
-            "title": "60+ local makers",
-            "subtitle": "Known by name"
-          }
-        },
-        "badge_Ljibec": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_2.png",
-            "title": "FSSAI complaint",
-            "subtitle": "Every maker verified"
-          }
-        },
-        "badge_M86RC6": {
-          "type": "badge",
-          "settings": {
-            "icon_image": "shopify://shop_images/Screenshot_2026-03-12_150103_2_3.png",
-            "title": "SHGs & co-ops",
-            "subtitle": "Directly backed"
+            "icon_image": "shopify://shop_images/5_8ea331ef-963b-4926-8d67-12baf8ca7d41.jpg",
+            "title": "Lab Tested",
+            "subtitle": "Every batch goes through rigorous testing — purity you can verify, not just believe."
           }
         }
       },
       "block_order": [
-        "badge_MABeTV",
-        "badge_pXwm6x",
-        "badge_MhJwPW",
-        "badge_JarVJ3",
-        "badge_Ljibec",
-        "badge_M86RC6"
+        "badge_pure",
+        "badge_authentic",
+        "badge_transparency",
+        "badge_lab_tested"
       ],
       "name": "Trust Badges",
       "settings": {
+        "heading": "Why Us?",
         "section_style": "tb-section-border",
         "bg_color": "#ffeeb7"
       }
@@ -880,7 +863,6 @@
         "media_link_4": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162",
         "media_logo_5": "shopify://shop_images/image_796.png",
         "media_link_5": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024",
-        "media_logo_6": "",
         "media_link_6": "",
         "letter_front_image": "shopify://shop_images/Front.png",
         "letter_back_image": "shopify://shop_images/Letter_4_3.png",

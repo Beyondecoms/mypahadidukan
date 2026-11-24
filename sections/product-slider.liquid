@@ -198,6 +198,7 @@
         }
         // Fetch full cart for pubsub (badge + price breakdown JS update)
         const cartResponse = await fetch('/cart.js', {
+          cache: 'no-store',
           headers: { 'X-Requested-With': 'XMLHttpRequest' }
         });
         const cartData = await cartResponse.json();
