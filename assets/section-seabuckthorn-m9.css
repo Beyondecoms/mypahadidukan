@@ -246,11 +246,12 @@
     align-items: start;
   }
 
+  .sb-m9-heading,
   .sb-m9-storage-card {
     grid-column: 1 / -1;
   }
 
-  .sb-m9-stamp-sheet + .sb-m9-cards-row {
+  .sb-m9-card-wrapper > .sb-m9-stamp-sheet + .sb-m9-cards-row {
     --m9-layout-cols: 1;
   }
 }

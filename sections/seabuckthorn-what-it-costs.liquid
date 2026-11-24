@@ -74,13 +74,13 @@ custom.price_description: {{ product.metafields.custom.price_description.value |
       {%- if m10_desc != blank or m10_harvest != blank or m10_final_highlight != blank -%}
         <div class="sb-m10-body">
           {%- if m10_desc != blank -%}
-            <p>{{ m10_desc | newline_to_br }}</p>
+            <p>{% render 'm10-metafield-text', text: m10_desc %}</p>
           {%- endif -%}
           {%- if m10_harvest != blank -%}
-            <p>{{ m10_harvest | newline_to_br }}</p>
+            <p>{% render 'm10-metafield-text', text: m10_harvest %}</p>
           {%- endif -%}
           {%- if m10_final_highlight != blank -%}
-            <p><strong>{{ m10_final_highlight | newline_to_br }}</strong></p>
+            <p><strong>{% render 'm10-metafield-text', text: m10_final_highlight %}</strong></p>
           {%- endif -%}
         </div>
       {%- endif -%}

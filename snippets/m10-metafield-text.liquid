@@ -1,0 +1,10 @@
+{%- assign lines = text | newline_to_br | replace: '<br />', '<br>' | replace: '<br/>', '<br>' | split: '<br>' -%}
+{%- assign has_line = false -%}
+{%- for line in lines -%}
+  {%- assign clean_line = line | strip -%}
+  {%- if clean_line != blank -%}
+    {%- if has_line -%}<br>{%- endif -%}
+    {{- clean_line -}}
+    {%- assign has_line = true -%}
+  {%- endif -%}
+{%- endfor -%}
