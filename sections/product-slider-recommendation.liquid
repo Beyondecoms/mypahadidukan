@@ -103,7 +103,9 @@
 
                 <div class="ps-info">
                   <a href="{{ rec_product.url }}" class="ps-product-title">{{ rec_product.title | truncate: 35 }}</a>
-                  <p class="ps-variant">{{ rec_product.variants.first.title }}</p>
+                  {%- unless rec_product.has_only_default_variant -%}
+                    <p class="ps-variant">{{ rec_product.variants.first.title }}</p>
+                  {%- endunless -%}
                   {%- assign ps_rating = rec_product.metafields.reviews.rating.value | default: 4.8 -%}
                   {%- assign ps_rating_float = ps_rating | append: '' | plus: 0.0 -%}
                   {%- assign ps_rating_int = ps_rating_float | floor -%}
