@@ -55,7 +55,7 @@
   {%- endif -%}
 
   <div class="ps-info">
-    <a href="{{ product.url }}" class="ps-product-title">{{ product.title | truncate: 35 }}</a>
+    <a href="{{ product.url }}" class="ps-product-title">{{ product.title }}</a>
     {%- unless product.has_only_default_variant -%}
       <p class="ps-variant">{{ product.variants.first.title }}</p>
     {%- endunless -%}
