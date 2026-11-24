@@ -38,6 +38,8 @@
                         src="{{ article.image | image_url: width: 600 }}"
                         alt="{{ article.title }}"
                         class="bag-card-img"
+                        width="{{ article.image.width }}"
+                        height="{{ article.image.height }}"
                         loading="lazy"
                       >
                     {%- else -%}

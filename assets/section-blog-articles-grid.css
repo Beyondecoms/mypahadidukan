@@ -197,6 +197,21 @@
   .bag-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }
 
+@media (max-width: 749px) {
+  .bag-card-img-wrap:has(> .bag-card-img) {
+    aspect-ratio: auto;
+  }
+
+  .bag-card-img {
+    height: auto;
+    object-fit: contain;
+  }
+
+  .bag-card:hover .bag-card-img {
+    transform: none;
+  }
+}
+
 @media (max-width: 600px) {
   .bag-grid { grid-template-columns: 1fr; }
   .bag-wrapper { padding: 0 16px; }
