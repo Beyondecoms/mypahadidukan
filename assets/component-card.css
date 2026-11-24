@@ -3,6 +3,7 @@
 /* ── Drawer shell ── */
 .nc-drawer {
   position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  display: none !important;
 }
 .nc-overlay {
   position: absolute; inset: 0;
