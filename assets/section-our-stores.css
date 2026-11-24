@@ -305,6 +305,20 @@
     font-family: var(--font-family-normal);
 }
 
+.os-info-phone-link {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(15, 107, 92, 0.15);
+}
+
+.os-info-phone-link:hover .os-info-phone {
+  text-decoration: underline;
+}
+
 .os-info-phone {
   font-size: 13px;
   color: #0f6b5c;
@@ -356,11 +370,15 @@
     justify-content: center;
     color: #0a5246;
     text-decoration: none;
-    transition: background .2s ease;
+    transition: background .2s ease, transform .15s ease;
     flex-shrink: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .os-btn-icon:hover { background: #e8e0cc; }
+.os-btn-icon:active { transform: scale(0.95); }
 
 /* ══════════════════
    COMING SOON BANNER
@@ -501,7 +519,21 @@
 
   .os-card-city { font-size: 22px; }
 
+  .os-card-body {
+    padding: 18px 20px 20px;
+  }
+
   .os-card-info { grid-template-columns: 1fr; }
+
+  .os-btn-directions {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .os-btn-icon {
+    width: 48px;
+    height: 42px;
+  }
 
   .os-soon-bar {
     flex-direction: column;

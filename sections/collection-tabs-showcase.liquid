@@ -901,7 +901,32 @@ document.querySelectorAll('#current-collection-tab .add-to-cart[data-variant-id]
 {% schema %}
 {
   "name": "Collection Tabs Showcase",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_availability_filter",
+      "label": "Show Availability filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_filter",
+      "label": "Show Price filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category_filter",
+      "label": "Show Category filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_place_filter",
+      "label": "Show Place filter",
+      "default": true
+    }
+  ],
   "blocks": [
     {
       "type": "collection_tab",
