@@ -545,14 +545,20 @@
 
   .os-card-info { grid-template-columns: 1fr; }
 
+  .os-card-actions {
+    gap: 8px;
+  }
+
   .os-btn-directions {
-    padding: 10px 16px;
+    gap: 6px;
+    min-height: 44px;
+    padding: 10px;
     font-size: 13px;
   }
 
   .os-btn-icon {
-    width: 48px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
   }
 
   .os-soon-bar {
@@ -568,5 +574,13 @@
   .os-card {
     flex: 0 0 85%;
     min-width: 280px;
+  }
+
+  .os-btn-directions {
+    white-space: nowrap;
+  }
+
+  .os-btn-directions svg {
+    flex-shrink: 0;
   }
 }
