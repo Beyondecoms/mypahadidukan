@@ -1,21 +1,6 @@
 {% comment %} collection-filter-drawer.liquid {% endcomment %}
-{%- liquid
-  assign show_availability = section.settings.show_availability_filter
-  assign show_price = section.settings.show_price_filter
-  assign show_category = section.settings.show_category_filter
-  assign show_place = section.settings.show_place_filter
-
-  assign first_tab = ''
-  if show_availability
-    assign first_tab = 'avail'
-  elsif show_price
-    assign first_tab = 'price'
-  elsif show_category
-    assign first_tab = 'category'
-  elsif show_place
-    assign first_tab = 'place'
-  endif
--%}
+{%- comment -%} Category and Place filters are hidden for now; set this to true to bring them back. {%- endcomment -%}
+{%- assign show_extra_filters = false -%}
 <div class="filter-drawer filterDrawer">
   {% comment %} ===== DESKTOP VIEW ===== {% endcomment %}
   <div class="fd-desktop">
@@ -35,7 +20,6 @@
 
     {% comment %} <div class="active-filters" id="activeFilters"></div> {% endcomment %}
 <div class="active-filters" id="drawerActiveFilters"></div>
-    {% if show_availability %}
     <div class="filter-group">
       <div class="filter-group-header">
         <h4>Availability</h4>
@@ -49,9 +33,6 @@
         <label><input type="checkbox" class="filter-availability" value="out"> Out Of Stock</label>
       </div>
     </div>
-    {% endif %}
-
-    {% if show_price %}
     <div class="filter-group">
       <div class="filter-group-header">
         <h4>Price</h4>
@@ -71,9 +52,8 @@
         </div>
       </div>
     </div>
-    {% endif %}
 
-    {% if show_category %}
+    {%- if show_extra_filters -%}
     <div class="filter-group">
       <div class="filter-group-header">
         <h4>Category</h4>
@@ -96,9 +76,7 @@
         {% endfor %}
       </div>
     </div>
-    {% endif %}
 
-    {% if show_place %}
     <div class="filter-group">
       <div class="filter-group-header">
         <h4>Place</h4>
@@ -117,7 +95,7 @@
         {% endfor %}
       </div>
     </div>
-    {% endif %}
+    {%- endif -%}
 
   </div>
 
@@ -133,26 +111,19 @@
     <div class="fd-mobile-body">
 
       <div class="fd-tabs">
-        {% if show_availability %}
-        <button class="fd-tab{% if first_tab == 'avail' %} active{% endif %}" data-panel="avail">Availability</button>
-        {% endif %}
-        {% if show_price %}
-        <button class="fd-tab{% if first_tab == 'price' %} active{% endif %}" data-panel="price">Price</button>
-        {% endif %}
-        {% if show_category %}
-        <button class="fd-tab{% if first_tab == 'category' %} active{% endif %}" data-panel="category">Category</button>
-        {% endif %}
-        {% if show_place %}
-        <button class="fd-tab{% if first_tab == 'place' %} active{% endif %}" data-panel="place">Place</button>
-        {% endif %}
+        <button class="fd-tab active" data-panel="avail">Availability</button>
+        <button class="fd-tab" data-panel="price">Price</button>
+        {%- if show_extra_filters -%}
+        <button class="fd-tab" data-panel="category">Category</button>
+        <button class="fd-tab" data-panel="place">Place</button>
+        {%- endif -%}
       </div>
 
       <div class="fd-panels">
 
         <div class="fd-mobile-chips" id="fdActiveChips"></div>
 
-        {% if show_availability %}
-        <div class="fd-panel{% if first_tab == 'avail' %} active{% endif %}" id="fd-panel-avail">
+        <div class="fd-panel active" id="fd-panel-avail">
           <p class="fd-panel-title">Select Availability</p>
           <label class="fd-row">
             <span>In Stock</span>
@@ -165,7 +136,6 @@
             <span class="fd-box"></span>
           </label>
         </div>
-        {% endif %}
 
         {% comment %} <div class="fd-panel" id="fd-panel-price">
           <p class="fd-panel-title">Select Price</p>
@@ -175,8 +145,7 @@
           </div>
           <input type="range" min="0" max="5000" value="5000" step="1" class="fd-range filter-price-range">
         </div> {% endcomment %}
-        {% if show_price %}
-        <div class="fd-panel{% if first_tab == 'price' %} active{% endif %}" id="fd-panel-price">
+        <div class="fd-panel" id="fd-panel-price">
           <p class="fd-panel-title">Select Price</p>
           <div class="fd-price-labels">
             <span>₹<span id="fdPriceMin">0</span></span>
@@ -187,9 +156,8 @@
             <input type="range" min="0" max="5000" value="5000" step="1" class="dual-range fd-range-max">
           </div>
         </div>
-        {% endif %}
-        {% if show_category %}
-        <div class="fd-panel{% if first_tab == 'category' %} active{% endif %}" id="fd-panel-category">
+        {%- if show_extra_filters -%}
+        <div class="fd-panel" id="fd-panel-category">
           <p class="fd-panel-title">Select Category</p>
           {% assign types = collection.products | map: 'type' | uniq %}
           {% for type in types %}
@@ -204,10 +172,8 @@
 
           {% endfor %}
         </div>
-        {% endif %}
 
-        {% if show_place %}
-        <div class="fd-panel{% if first_tab == 'place' %} active{% endif %}" id="fd-panel-place">
+        <div class="fd-panel" id="fd-panel-place">
           <p class="fd-panel-title">Select Place</p>
           {% assign tags = collection.products | map: 'tags' | join: ',' | split: ',' | uniq %}
           {% for tag in tags %}
@@ -218,7 +184,7 @@
             </label>
           {% endfor %}
         </div>
-        {% endif %}
+        {%- endif -%}
 
       </div>
     </div>
