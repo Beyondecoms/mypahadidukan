@@ -10,18 +10,20 @@
     <!-- Header (unchanged) -->
     <div class="cr-header">
       <h2 class="cr-title">{{ section.settings.title }}</h2>
-      <div class="cr-overall-stars">
-        {%- for i in (1..5) -%}
-          {%- if i <= section.settings.overall_rating -%}
-            <span class="cr-star full">★</span>
-          {%- else -%}
-            <span class="cr-star empty">★</span>
-          {%- endif -%}
-        {%- endfor -%}
-        <span class="cr-overall-text">
-          {{ section.settings.rating_score }} Based On {{ section.settings.review_count }} Reviews
-        </span>
-      </div>
+      {%- if section.settings.show_rating_summary -%}
+        <div class="cr-overall-stars">
+          {%- for i in (1..5) -%}
+            {%- if i <= section.settings.overall_rating -%}
+              <span class="cr-star full">★</span>
+            {%- else -%}
+              <span class="cr-star empty">★</span>
+            {%- endif -%}
+          {%- endfor -%}
+          <span class="cr-overall-text">
+            {{ section.settings.rating_score }} Based On {{ section.settings.review_count }} Reviews
+          </span>
+        </div>
+      {%- endif -%}
     </div>
 
     <!-- CAROUSEL -->
@@ -30,11 +32,13 @@
         <div class="cr-track" id="cr-track-{{ section.id }}">
           {%- for block in section.blocks -%}
             <div class="cr-card" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-              <div class="cr-stars">
-                {%- for i in (1..5) -%}
-                  {%- if i <= block.settings.rating -%}<span class="cr-star full">★</span>{%- else -%}<span class="cr-star empty">★</span>{%- endif -%}
-                {%- endfor -%}
-              </div>
+              {%- if block.settings.rating > 0 -%}
+                <div class="cr-stars">
+                  {%- for i in (1..5) -%}
+                    {%- if i <= block.settings.rating -%}<span class="cr-star full">★</span>{%- else -%}<span class="cr-star empty">★</span>{%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
 
               <div class="cr-quote-icon">&#10077;</div>
 
@@ -66,12 +70,14 @@
                 </div>
 
                 {%- if block.settings.product != blank -%}
-                  {%- assign reviewed_product = all_products[block.settings.product] -%}
+                  {%- assign reviewed_product = block.settings.product -%}
                   {%- if reviewed_product != blank -%}
-                    <div class="cr-product">
-                      <img src="{{ reviewed_product.featured_image | image_url: width: 60 }}" alt="{{ reviewed_product.title }}" width="30" height="30" loading="lazy">
-                      <span>{{ reviewed_product.title | truncate: 22 }}</span>
-                    </div>
+                    <a class="cr-product" href="{{ reviewed_product.url }}">
+                      {%- if reviewed_product.featured_image != blank -%}
+                        <img src="{{ reviewed_product.featured_image | image_url: width: 60 }}" alt="" width="30" height="30" loading="lazy">
+                      {%- endif -%}
+                      <span>{{ reviewed_product.title | escape | truncate: 22 }}</span>
+                    </a>
                   {%- endif -%}
                 {%- endif -%}
               </div>
@@ -199,6 +205,12 @@
       "label": "Background Image (Mobile)"
     },
     {
+      "type": "checkbox",
+      "id": "show_rating_summary",
+      "label": "Show manual rating summary",
+      "default": true
+    },
+    {
       "type": "range",
       "id": "overall_rating",
       "min": 1,
@@ -266,10 +278,10 @@
         {
           "type": "range",
           "id": "rating",
-          "min": 1,
+          "min": 0,
           "max": 5,
           "step": 1,
-          "label": "Rating",
+          "label": "Rating (0 hides stars)",
           "default": 5
         },
         {
