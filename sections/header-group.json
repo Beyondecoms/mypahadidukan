@@ -17,11 +17,11 @@
         "custom_text_7FMKRj": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "10% extra off at checkout",
-            "notification_url": "",
+            "custom_text_content": "Black Friday sale UPTO 60% off!",
+            "notification_url": "shopify://pages/black-orange-friday-sale",
             "color_custom_text": "#ffffff",
-            "color_custom_text_link": "#f11e1e",
-            "color_custom_text_link_hover": "#f11e1e",
+            "color_custom_text_link": "#000000",
+            "color_custom_text_link_hover": "#222121",
             "font_size_desktop": 19,
             "text_align": "center",
             "font_size_mobile": 12,
