@@ -6,7 +6,6 @@
   assign show_amazon = product.metafields.custom.available_on_amazon.value 
   assign amazon_link = product.metafields.custom.amazon_link.value
   assign trusted_count = product.metafields.custom.trusted_customers.value | default: '1M+'
-  assign stock_text = blank 
   if product.handle == 'sea-buckthorn-juice' or product.handle == 'buy-shilajit-online'
     assign disclaimer = product.metafields.custom.disclaimer.value | remove: '(meta)' | strip
   elsif product.handle == 'seabuckthorn-oil-vitamin-c-serum'
@@ -67,6 +66,7 @@
         <p class="pm-vendor">Vendor : <a href="{{ product.vendor | url_for_vendor | escape }}">{{ product.vendor | escape }}</a></p>
 
         <!-- Price -->
+        {%- capture stock_text -%}{% render 'product-main-stock-text', variant: current_variant %}{%- endcapture -%}
         <div class="pm-price-row">
           <span class="pm-price">₹{{ current_variant.price | money_without_currency }}</span>
           {%- if current_variant.compare_at_price > current_variant.price -%}
@@ -74,9 +74,7 @@
             {%- assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
             <span class="pm-discount-badge">{{ disc }}% off</span>
           {%- endif -%}
-            {%- if current_variant.inventory_management == 'shopify' -%}
-                <span class="pm-stock">Last {{ current_variant.inventory_quantity }} stock left</span>
-            {%- endif -%}
+          <span class="pm-stock"{% if stock_text == blank %} hidden{% endif %}>{{ stock_text }}</span>
         </div>
         <p class="pm-tax-note">MRP inclusive of all taxes</p>
 
@@ -114,6 +112,7 @@
                   data-variant-id="{{ variant.id }}"
                   data-price="{{ variant.price }}"
                   data-compare="{{ variant.compare_at_price }}"
+                  data-stock-text="{% render 'product-main-stock-text', variant: variant %}"
                   data-image-id="{{ variant.featured_image.id }}"
                 >
                   {%- if variant.compare_at_price > variant.price -%}
@@ -409,7 +408,7 @@
 </div>
 
 <div class="pm-mobile-only">
-  {% render 'product-main-mobile', capsule_features: capsule_features, disclaimer: disclaimer %}
+  {% render 'product-main-mobile', capsule_features: capsule_features, disclaimer: disclaimer, stock_text: stock_text %}
 </div>
   {%- render 'product-sticky-bar' -%}
 
@@ -460,12 +459,15 @@
   // ── VARIANT SELECTOR ──
   var variantCards = Array.from(sectionEl.querySelectorAll('.pm-variant-card'));
   var selectedVariantId = {{ current_variant.id }};
+  var stockEl = sectionEl.querySelector('.pm-stock');
 
   variantCards.forEach(function(card) {
     card.addEventListener('click', function() {
       variantCards.forEach(function(c) { c.classList.remove('active'); });
       card.classList.add('active');
       selectedVariantId = parseInt(card.dataset.variantId);
+      stockEl.textContent = card.dataset.stockText;
+      stockEl.hidden = !card.dataset.stockText;
 
       // Update price display
       var price    = parseInt(card.dataset.price);

@@ -3,7 +3,6 @@
   assign show_amazon = product.metafields.custom.available_on_amazon.value | default: true
   assign amazon_link = product.metafields.custom.amazon_link.value
   assign trusted_count = product.metafields.custom.trusted_customers.value | default: '1M+'
-  assign stock_text = product.metafields.custom.available.value 
   assign fresh_batch_text = product.metafields.custom.fresh_batch_text.value | default:'Fresh Batch  Under Process'
   assign fresh_batch_dates = product.metafields.custom.fresh_batch_dates.value | default:'Orders placed between Thursday, 23rd April and Wednesday, 29th April will be shipped 30th April onwards'
 -%}
@@ -90,9 +89,7 @@
               {%- assign disc = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
               <span class="pm-discount-badge">{{ disc }}% off</span>
             {%- endif -%}
-            {%- if stock_text != blank -%}
-              <span class="pm-stock">{{ stock_text }}</span>
-            {%- endif -%}
+            <span class="pm-stock"{% if stock_text == blank %} hidden{% endif %}>{{ stock_text }}</span>
           </div>
           <p class="pm-tax-note">MRP inclusive of all taxes</p>
 
@@ -129,6 +126,7 @@
                     data-variant-id="{{ variant.id }}"
                     data-price="{{ variant.price }}"
                     data-compare="{{ variant.compare_at_price }}"
+                    data-stock-text="{% render 'product-main-stock-text', variant: variant %}"
                   >
                     {%- if variant.compare_at_price > variant.price -%}
                       <div style="justify-content: space-between; display: flex; align-items: center;">
@@ -374,12 +372,15 @@ function handleSwipe() {
   // ── VARIANT SELECTOR ──
   var variantCards = Array.from(sectionEl.querySelectorAll('.pm-variant-card'));
   var selectedVariantId = {{ current_variant.id }};
+  var stockEl = sectionEl.querySelector('.pm-stock');
 
   variantCards.forEach(function(card) {
     card.addEventListener('click', function() {
       variantCards.forEach(function(c) { c.classList.remove('active'); });
       card.classList.add('active');
       selectedVariantId = parseInt(card.dataset.variantId);
+      stockEl.textContent = card.dataset.stockText;
+      stockEl.hidden = !card.dataset.stockText;
 
       var price   = parseInt(card.dataset.price);
       var compare = parseInt(card.dataset.compare);
