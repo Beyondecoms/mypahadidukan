@@ -1,0 +1,13 @@
+{%- assign vendor_handle = vendor | handleize -%}
+{%- if vendor_handle == 'my-pahadi-dukan' -%}
+  {%- assign clip_id = 'pm-amazon-' | append: section_id | append: '-' | append: placement -%}
+  <a
+    href="https://www.amazon.in/stores/MyPahadiDukanMPD/page/79708463-0344-4BBE-B2EA-DB3DCE3E6898?lp_asin=B0D2B4VDP5&amp;ref_=ast_bln&amp;store_ref=bl_ast_dp_brandlogo_sto"
+    class="pm-amazon-btn"
+    target="_blank"
+    rel="noopener"
+  >
+    Available at
+    {%- render 'icon-amazon-logo', clip_id: clip_id -%}
+  </a>
+{%- endif -%}
