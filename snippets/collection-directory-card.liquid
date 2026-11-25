@@ -19,7 +19,7 @@
       </div>
     {%- endif -%}
     <div class="collection-directory__caption">
-      <h2 class="collection-directory__name">{{ collection.title | escape }}</h2>
+      <h2 class="collection-directory__name">{{ card_title | default: collection.title | escape }}</h2>
       <span class="collection-directory__arrow" aria-hidden="true">
         {{- 'icon-arrow.svg' | inline_asset_content -}}
       </span>

@@ -10,7 +10,25 @@
     (min-width: 750px) calc(100vw / {{ section.settings.columns_desktop }}),
     calc(100vw / {{ section.settings.columns_mobile }})
   {%- endcapture -%}
-  {%- if section.settings.featured_collections != blank -%}
+  {%- if template.suffix == 'curated-by-mpd' -%}
+    {%- assign curated_entries = 'pure-seabuckthorn:Pure Seabuckthorn|pahadi-wellness:Pahadi Wellness|pahadi-ghee:Pahadi Ghee|natural-beverages:Natural Beverages|dry-fruits:Dry Fruits|spices-herbs:Pure Spices' | split: '|' -%}
+    <ul class="collection-directory__grid" role="list">
+      {%- for entry in curated_entries -%}
+        {%- liquid
+          assign details = entry | split: ':'
+          assign curated_collection = collections[details.first]
+        -%}
+        {%- if curated_collection != blank -%}
+          {%- render 'collection-directory-card',
+            collection: curated_collection,
+            card_title: details.last,
+            media_aspect_ratio: section.settings.image_ratio,
+            image_sizes: image_sizes
+          -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- elsif section.settings.featured_collections != blank -%}
     {%- render 'collection-directory-grid',
       directory_collections: section.settings.featured_collections,
       media_aspect_ratio: section.settings.image_ratio,

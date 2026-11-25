@@ -15,15 +15,7 @@
         "title": "Curated by MPD",
         "columns_desktop": 3,
         "columns_mobile": "2",
-        "image_ratio": "square",
-        "featured_collections": [
-          "pure-seabuckthorn",
-          "pahadi-wellness",
-          "pahadi-ghee",
-          "natural-beverages",
-          "dry-fruits",
-          "spices-herbs"
-        ]
+        "image_ratio": "square"
       }
     }
   },
