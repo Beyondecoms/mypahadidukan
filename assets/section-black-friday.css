@@ -739,8 +739,26 @@
 }
 
 @media (max-width: 520px) {
+  .bf-timer {
+    padding: 12px;
+  }
+
+  .bf-timer__grid {
+    gap: 6px;
+  }
+
+  .bf-timer__cell {
+    padding-inline: 2px;
+  }
+
   .bf-timer__num {
-    font-size: 30px;
+    font-size: clamp(24px, 7.5vw, 30px);
+  }
+
+  .bf-timer__unit {
+    font-size: clamp(8px, 2.6vw, 11px);
+    letter-spacing: 0.06em;
+    overflow-wrap: anywhere;
   }
 }
 
