@@ -113,7 +113,7 @@
   line-height: 1.05;
   font-weight: 800;
   color: #fff;
-  text-shadow: 0 2px 12px rgba(80, 45, 10, 0.25);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
 .bf-section .bf-hero__text {
@@ -124,7 +124,7 @@
 
 .bf-timer {
   margin-top: 6px;
-  background: rgba(60, 32, 8, 0.28);
+  background: rgba(10, 24, 36, 0.45);
   border-radius: 12px;
   padding: 16px 18px;
   display: flex;
