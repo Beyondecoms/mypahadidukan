@@ -36,11 +36,15 @@
       endif
     -%}
     {%- paginate collections by paginate_by -%}
-      {%- render 'collection-directory-grid',
-        directory_collections: collections,
-        media_aspect_ratio: section.settings.image_ratio,
-        image_sizes: image_sizes
-      -%}
+      <ul class="collection-directory__grid" role="list">
+        {%- for collection in collections -%}
+          {%- render 'collection-directory-card',
+            collection: collection,
+            media_aspect_ratio: section.settings.image_ratio,
+            image_sizes: image_sizes
+          -%}
+        {%- endfor -%}
+      </ul>
       {% render 'pagination', paginate: paginate %}
     {%- endpaginate -%}
   {%- endif -%}

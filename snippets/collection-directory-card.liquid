@@ -1,0 +1,28 @@
+{%- liquid
+  assign card_image = collection.featured_image
+  assign image_ratio = 1
+  if media_aspect_ratio == 'portrait'
+    assign image_ratio = 0.8
+  elsif media_aspect_ratio == 'adapt' and card_image
+    assign image_ratio = card_image.aspect_ratio | default: 1
+  endif
+-%}
+<li class="collection-directory__item">
+  <a class="collection-directory__card" href="{{ collection.url | escape }}">
+    {%- if card_image -%}
+      <div class="collection-directory__media{% unless collection.image %} collection-directory__media--product{% endunless %}" style="--collection-image-ratio: {{ image_ratio }};">
+        {{
+          card_image
+          | image_url: width: 1200
+          | image_tag: loading: 'lazy', widths: '180, 320, 480, 640, 800, 1200', sizes: image_sizes, alt: ''
+        }}
+      </div>
+    {%- endif -%}
+    <div class="collection-directory__caption">
+      <h2 class="collection-directory__name">{{ collection.title | escape }}</h2>
+      <span class="collection-directory__arrow" aria-hidden="true">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    </div>
+  </a>
+</li>
