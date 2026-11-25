@@ -76,9 +76,12 @@
                             assign child_url = childlink.url
                             assign child_handle = childlink.title | handleize
                             if child_url == blank or child_url == '#'
-                              if child_handle == 'curated-by-mpd'
-                                assign child_url = routes.collections_url | append: '?view=curated-by-mpd'
-                              endif
+                              case child_handle
+                                when 'shop-by-region'
+                                  assign child_url = routes.collections_url | append: '?view=shop-by-region'
+                                when 'curated-by-mpd'
+                                  assign child_url = routes.collections_url | append: '?view=curated-by-mpd'
+                              endcase
                             endif
                           -%}
                           <a href="{{ child_url | escape }}" class="dropdown-link">
