@@ -72,7 +72,16 @@
                           {%- assign child_has_children = true -%}
                         {%- endif -%}
                         <li class="dropdown-item {% if child_has_children %}has-children{% endif %}">
-                          <a href="{{ childlink.url }}" class="dropdown-link">
+                          {%- liquid
+                            assign child_url = childlink.url
+                            assign child_handle = childlink.title | handleize
+                            if child_url == blank or child_url == '#'
+                              if child_handle == 'curated-by-mpd'
+                                assign child_url = routes.collections_url | append: '?view=curated-by-mpd'
+                              endif
+                            endif
+                          -%}
+                          <a href="{{ child_url | escape }}" class="dropdown-link">
                             {{ childlink.title }}
                             {%- if child_has_children -%}
                               <svg

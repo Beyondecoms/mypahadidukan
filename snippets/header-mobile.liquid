@@ -209,7 +209,16 @@
                 {%- endif -%}
                 <li class="mob-drawer-item mob-drawer-item--l2">
                     <div class="mob-drawer-link-row">
-                    <a href="{{ childlink.url }}" class="mob-drawer-sub-link mob-drawer-sub-link--l2">
+                    {%- liquid
+                      assign child_url = childlink.url
+                      assign child_handle = childlink.title | handleize
+                      if child_url == blank or child_url == '#'
+                        if child_handle == 'curated-by-mpd'
+                          assign child_url = routes.collections_url | append: '?view=curated-by-mpd'
+                        endif
+                      endif
+                    -%}
+                    <a href="{{ child_url | escape }}" class="mob-drawer-sub-link mob-drawer-sub-link--l2">
                         {%- if child_has_children -%}
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a6b4a" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"/>
