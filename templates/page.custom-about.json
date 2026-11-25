@@ -390,6 +390,7 @@
         "store_LP6nhB": {
           "type": "store",
           "settings": {
+            "show_map": true,
             "image": "shopify://shop_images/lucknow.avif",
             "state": "Uttar Pradesh",
             "city": "Lucknow",
@@ -405,6 +406,7 @@
         "store_bahadurgarh": {
           "type": "store",
           "settings": {
+            "show_map": true,
             "image": "shopify://shop_images/lucknow.avif",
             "state": "Haryana",
             "city": "Bahadurgarh",
@@ -420,6 +422,7 @@
         "store_palampur": {
           "type": "store",
           "settings": {
+            "show_map": true,
             "image": "shopify://shop_images/deharadun.avif",
             "state": "Himachal Pradesh",
             "city": "Palampur",
@@ -435,6 +438,7 @@
         "store_secunderabad": {
           "type": "store",
           "settings": {
+            "show_map": true,
             "image": "shopify://shop_images/lucknow.avif",
             "state": "Telangana",
             "city": "Secunderabad",
@@ -484,7 +488,7 @@
         "background_color": "#f0ede4",
         "desktop_background": "shopify://shop_images/next_1.png",
         "mobile_background": "shopify://shop_images/next_mobile.png",
-        "banner_redirect": ""
+        "banner_redirect": "https://mypahadidukan.com/collections/all-products"
       }
     }
   },
