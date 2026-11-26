@@ -5,23 +5,16 @@
 {%- capture bf_phase -%}{%- render 'bf-sale-phase' -%}{%- endcapture -%}
 {%- liquid
   assign bf_phase = bf_phase | strip
-  case bf_phase
-    when 'before'
-      assign strip = section.settings.strip_before
-      assign btn_label = section.settings.btn_before
-      assign count_text = section.settings.count_before
-      assign note_text = section.settings.note_before
-    when 'live'
-      assign strip = section.settings.strip_live
-      assign btn_label = section.settings.btn_live
-      assign count_text = section.settings.count_live
-      assign note_text = section.settings.note_after
-    else
-      assign strip = section.settings.strip_ended
-      assign btn_label = section.settings.btn_ended
-      assign count_text = section.settings.count_ended
-      assign note_text = section.settings.note_after
-  endcase
+  if bf_phase == 'live'
+    assign strip = section.settings.strip_live
+    assign btn_label = section.settings.btn_live
+    assign count_text = section.settings.count_live
+  else
+    assign strip = section.settings.strip_ended
+    assign btn_label = section.settings.btn_ended
+    assign count_text = section.settings.count_ended
+  endif
+  assign note_text = section.settings.note_after
 
   assign deal_collection = section.settings.collection
   assign name_lines = section.settings.card_names | newline_to_br | split: '<br />'
@@ -39,25 +32,17 @@
   id="bf-deals"
   data-bf-deals
   data-bf-sale
-  data-start="{{ settings.bf_sale_start | escape }}"
   data-end="{{ settings.bf_sale_end | escape }}"
   data-preview="{{ settings.bf_preview_phase | default: 'auto' }}"
   data-title="{{ section.settings.heading | escape }}"
-  data-strip-before="{{ section.settings.strip_before | escape }}"
   data-strip-live="{{ section.settings.strip_live | escape }}"
   data-strip-ended="{{ section.settings.strip_ended | escape }}"
-  data-btn-before="{{ section.settings.btn_before | escape }}"
   data-btn-live="{{ section.settings.btn_live | escape }}"
   data-btn-ended="{{ section.settings.btn_ended | escape }}"
   data-btn-soldout="{{ section.settings.btn_soldout | escape }}"
   data-btn-adding="{{ section.settings.btn_adding | escape }}"
-  data-count-before="{{ section.settings.count_before | escape }}"
   data-count-live="{{ section.settings.count_live | escape }}"
   data-count-ended="{{ section.settings.count_ended | escape }}"
-  data-note-before="{{ section.settings.note_before | escape }}"
-  data-note-after="{{ section.settings.note_after | escape }}"
-  data-mask-price="{{ section.settings.mask_price | escape }}"
-  data-mask-off="{{ section.settings.mask_off | escape }}"
 >
   {%- if section.settings.show_chips and section.blocks.size > 0 -%}
     <div class="bf-cats-wrap" style="background: {{ section.settings.chips_bg }};">
@@ -170,10 +155,7 @@
               badge: section.settings.badge,
               strip: strip,
               btn_label: btn_label,
-              reveal_label: section.settings.reveal_label,
-              off_format: section.settings.off_format,
-              mask_price: section.settings.mask_price,
-              mask_off: section.settings.mask_off
+              off_format: section.settings.off_format
             -%}
           {%- endfor -%}
         </div>
@@ -183,7 +165,7 @@
       {%- endif -%}
 
       {%- if note_text != blank -%}
-        <p class="bf-deals__note" data-bf-note>{{ note_text }}</p>
+        <p class="bf-deals__note">{{ note_text }}</p>
       {%- endif -%}
     </div>
   </section>
@@ -201,7 +183,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Prices stay hidden until the sale opens. Sale dates and the preview switch are in Theme settings → Black Friday sale."
+      "content": "The sale end date and the preview switch are in Theme settings → Black Friday sale."
     },
     {
       "type": "collection",
@@ -249,57 +231,10 @@
     },
     {
       "type": "text",
-      "id": "reveal_label",
-      "label": "Hidden price label",
-      "default": "To be revealed"
-    },
-    {
-      "type": "text",
-      "id": "mask_price",
-      "label": "Hidden price placeholder",
-      "default": "₹000"
-    },
-    {
-      "type": "text",
-      "id": "mask_off",
-      "label": "Hidden discount placeholder",
-      "default": "00%off"
-    },
-    {
-      "type": "text",
       "id": "off_format",
       "label": "Discount label",
       "info": "[pct] is replaced with the percentage off.",
       "default": "[pct]%off"
-    },
-    {
-      "type": "header",
-      "content": "Before the sale"
-    },
-    {
-      "type": "text",
-      "id": "strip_before",
-      "label": "Card strip",
-      "default": "Price reveals 27 Nov, 12 AM"
-    },
-    {
-      "type": "text",
-      "id": "btn_before",
-      "label": "Button",
-      "default": "Opens 27 Nov"
-    },
-    {
-      "type": "text",
-      "id": "count_before",
-      "label": "Product count",
-      "info": "[count] is replaced with the number of products shown.",
-      "default": "[count] products · Prices revealed 27 Nov, 12:00 AM IST"
-    },
-    {
-      "type": "textarea",
-      "id": "note_before",
-      "label": "Note under the grid",
-      "default": "Sale prices go live at midnight on 27 November. Other sizes will carry their own discounts on the product page."
     },
     {
       "type": "header",
@@ -333,6 +268,7 @@
       "type": "text",
       "id": "count_live",
       "label": "Product count",
+      "info": "[count] is replaced with the number of products shown.",
       "default": "[count] products · Biggest savings first"
     },
     {
@@ -360,7 +296,7 @@
     {
       "type": "textarea",
       "id": "note_after",
-      "label": "Note under the grid (live and ended)",
+      "label": "Note under the grid",
       "default": "Prices shown are for the first size listed. Other sizes carry their own discounts on the product page."
     },
     {

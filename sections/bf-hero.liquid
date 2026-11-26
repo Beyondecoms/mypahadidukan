@@ -8,19 +8,14 @@
 {%- liquid
   # First paint of the countdown; black-friday.js keeps it ticking.
   assign now_s = 'now' | date: '%s' | plus: 0
-  assign start_s = settings.bf_sale_start | date: '%s' | plus: 0
   assign end_s = settings.bf_sale_end | date: '%s' | plus: 0
   case settings.bf_preview_phase
-    when 'before'
-      assign left = 192730
     when 'live'
       assign left = 112482
     when 'ended'
       assign left = 0
     else
-      if bf_phase == 'before'
-        assign left = start_s | minus: now_s
-      elsif bf_phase == 'live'
+      if bf_phase == 'live'
         assign left = end_s | minus: now_s
       else
         assign left = 0
@@ -34,20 +29,15 @@
   assign mm = left | modulo: 3600 | divided_by: 60
   assign ss = left | modulo: 60
 
-  case bf_phase
-    when 'before'
-      assign label = section.settings.label_before
-      assign sub = section.settings.sub_before
-      assign aria = 'Time until the sale starts'
-    when 'live'
-      assign label = section.settings.label_live
-      assign sub = section.settings.sub_live
-      assign aria = 'Time left in the sale'
-    else
-      assign label = section.settings.label_ended
-      assign sub = section.settings.sub_ended
-      assign aria = 'Sale ended'
-  endcase
+  if bf_phase == 'live'
+    assign label = section.settings.label_live
+    assign sub = section.settings.sub_live
+    assign aria = 'Time left in the sale'
+  else
+    assign label = section.settings.label_ended
+    assign sub = section.settings.sub_ended
+    assign aria = 'Sale ended'
+  endif
 -%}
 
 <section
@@ -56,16 +46,12 @@
   style="background: linear-gradient(90deg, {{ section.settings.bg_from }} 0%, {{ section.settings.bg_mid }} 45%, {{ section.settings.bg_to }} 100%);"
   data-bf-hero
   data-bf-sale
-  data-start="{{ settings.bf_sale_start | escape }}"
   data-end="{{ settings.bf_sale_end | escape }}"
   data-preview="{{ settings.bf_preview_phase | default: 'auto' }}"
-  data-label-before="{{ section.settings.label_before | escape }}"
-  data-sub-before="{{ section.settings.sub_before | escape }}"
   data-label-live="{{ section.settings.label_live | escape }}"
   data-sub-live="{{ section.settings.sub_live | escape }}"
   data-label-ended="{{ section.settings.label_ended | escape }}"
   data-sub-ended="{{ section.settings.sub_ended | escape }}"
-  data-aria-before="Time until the sale starts"
   data-aria-live="Time left in the sale"
   data-aria-ended="Sale ended"
 >
@@ -167,7 +153,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Sale dates and the preview switch are in Theme settings → Black Friday sale."
+      "content": "The sale end date and the preview switch are in Theme settings → Black Friday sale."
     },
     {
       "type": "image_picker",
@@ -212,18 +198,6 @@
     {
       "type": "header",
       "content": "Countdown"
-    },
-    {
-      "type": "text",
-      "id": "label_before",
-      "label": "Before the sale: label",
-      "default": "SALE GOES LIVE IN"
-    },
-    {
-      "type": "text",
-      "id": "sub_before",
-      "label": "Before the sale: date",
-      "default": "Friday 27 Nov, 12:00 AM IST"
     },
     {
       "type": "text",

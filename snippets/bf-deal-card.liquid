@@ -1,7 +1,7 @@
 {%- comment -%}
-  One Black Friday deal card. black-friday.js swaps the phase text, reveals prices and runs Add to cart.
+  One Black Friday deal card. black-friday.js swaps the phase text and runs Add to cart.
   Params: product, name, variant_label, cats, index, phase, eager, plus the label strings passed by bf-deals:
-  badge, strip, btn_label, reveal_label, off_format, mask_price, mask_off.
+  badge, strip, btn_label, off_format.
 {%- endcomment -%}
 {%- liquid
   assign variant = product.selected_or_first_available_variant
@@ -15,10 +15,6 @@
     assign off_str = off_format | replace: '[pct]', pct
   endif
 
-  assign masked = false
-  if phase == 'before'
-    assign masked = true
-  endif
   assign soldout = false
   if phase == 'live' and variant.available == false
     assign soldout = true
@@ -29,16 +25,13 @@
   endif
 -%}
 <article
-  class="bf-card{% if masked %} is-masked{% endif %}{% if soldout %} is-soldout{% endif %}"
+  class="bf-card{% if soldout %} is-soldout{% endif %}"
   data-bf-card
   data-phase="{{ phase }}"
   data-index="{{ index }}"
   data-pct="{{ pct }}"
   data-cats="{{ cats | strip }}"
   data-available="{{ variant.available }}"
-  data-was="{{ was_str | escape }}"
-  data-now="{{ now_str | escape }}"
-  data-off="{{ off_str | escape }}"
 >
   <div class="bf-card__media">
     {%- if product.featured_media != blank -%}
@@ -76,25 +69,10 @@
     <h3 class="bf-card__name"><a href="{{ product.url }}">{{ name }}</a></h3>
     <span class="bf-card__variant">{{ variant_label }}</span>
     <div class="bf-card__price">
-      <div class="bf-card__price-row" aria-hidden="{{ masked }}">
-        {%- if masked -%}
-          <span class="bf-card__was" data-bf-was>{{ mask_price }}</span>
-          <span class="bf-card__now" data-bf-now>{{ mask_price }}</span>
-          <span class="bf-card__off" data-bf-off>{{ mask_off }}</span>
-        {%- else -%}
-          <span class="bf-card__was" data-bf-was>{{ was_str }}</span>
-          <span class="bf-card__now" data-bf-now>{{ now_str }}</span>
-          <span class="bf-card__off" data-bf-off>{{ off_str }}</span>
-        {%- endif -%}
-      </div>
-      <div class="bf-card__reveal">
-        <span>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" aria-hidden="true">
-            <rect x="5" y="11" width="14" height="10" rx="2"></rect>
-            <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
-          </svg>
-          {{- reveal_label -}}
-        </span>
+      <div class="bf-card__price-row">
+        <span class="bf-card__was">{{ was_str }}</span>
+        <span class="bf-card__now">{{ now_str }}</span>
+        <span class="bf-card__off">{{ off_str }}</span>
       </div>
     </div>
   </div>

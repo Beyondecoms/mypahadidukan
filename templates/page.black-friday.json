@@ -18,8 +18,6 @@
         "eyebrow": "OUR ONE SALE OF THE YEAR",
         "heading": "We Don't Do Sales. Except This One.",
         "text": "Up to 60% off pure, lab-tested Himalayan products, straight from our farmers. Four days only, 27 to 30 November.",
-        "label_before": "SALE GOES LIVE IN",
-        "sub_before": "Friday 27 Nov, 12:00 AM IST",
         "label_live": "SALE ENDS IN",
         "sub_live": "Monday 30 Nov, 11:59 PM IST",
         "label_ended": "THIS SALE HAS ENDED",
@@ -197,14 +195,7 @@
         "show_chips": true,
         "card_names": "sea-buckthorn-juice = Sea Buckthorn Pulp (Juice) | 300ml (1 X 300ml Bottle)\nbuy-shilajit-online = Pure Ladakhi Shilajit (Shilajeet) | 10gms\nsea-buckthorn-berries = Premium Sea Buckthorn Berries (Dried) | 80gms Glass Jar\nseabuckthorn-oil-vitamin-c-serum = Wild Sea Buckthorn Oil (CO₂ Extracted) | 10ml\nbuy-buransh-squash-online = Buransh Sanjivni Flower Juice (Rhododendron) | Unsweetened 1 X 300ml Bottle\nlakadong-turmeric-100gms-8-10-curcumin = Lakadong Turmeric Powder (8.58% Curcumin) | 100gms\npahadi-badri-cow-ghee-desi-pahadi-ghee-my-pahadi-dukan = Pahadi Badri Cow Ghee | 500ml\nbuy-kashmiri-walnuts-online = Kashmiri Walnut Kernels (Akhrot) | 500g\nsea-buckthorn-berry-powder = Sea Buckthorn Berry Powder | 100g\nafghani-pahadi-hing-my-pahadi-dukan = Afghani Pahadi Hing (Asafoetida) Crystal Resin | 10g\nbuy-kashmiri-mamra-badam-online = Single-tree Origin Kashmiri Almonds (Badam) | 500g\nkashmiri-himalayan-garlic-lehsun-with-single-clove-ek-kali = Kashmiri Himalayan Garlic (Single-Clove) | 100gms\nmulti-flora-honey-from-lahaul-spiti-my-pahadi-dukan = Raw Multi-flora Honey (Lahaul-Spiti) | 250gms\ning-makhir-ginger-100gms-my-pahadi-dukan = Ing Makhir Ginger | 100gms\nkashmir-red-chilli-powder = Kashmiri Red Chilli Powder | 100g\nrosemary-oil-my-pahadi-dukan = Rosemary Oil (Steam-distilled) | 10ml\npure-seabuckthorn-leaves = Pure Seabuckthorn Leaves | Pack of 1 - 50gms\nseabuckthorn-oil-capsules = Seabuckthorn Oil Capsules (500mg) | 30 Capsules\nstrawberry-lime-squash = Strawberry Lime Squash | 300ml\nlavender-oil-my-pahadi-dukan = Lavender Oil (100% Pure) | 10ml\nlemongrass-oil = Pure Lemongrass Essential Oil | 10ml",
         "badge": "Black Friday",
-        "reveal_label": "To be revealed",
-        "mask_price": "₹000",
-        "mask_off": "00%off",
         "off_format": "[pct]%off",
-        "strip_before": "Price reveals 27 Nov, 12 AM",
-        "btn_before": "Opens 27 Nov",
-        "count_before": "[count] products · Prices revealed 27 Nov, 12:00 AM IST",
-        "note_before": "Sale prices go live at midnight on 27 November. Other sizes will carry their own discounts on the product page.",
         "strip_live": "Black Friday Price · Ends 30 Nov",
         "btn_live": "Add To Cart",
         "btn_adding": "Adding...",
@@ -248,18 +239,11 @@
             "caption": "Empowered and uplifted"
           }
         },
-        "day_0": {
-          "type": "day",
-          "settings": {
-            "title": "Tue 24 Nov · Preview",
-            "text": "Browse the edit. Prices stay hidden until the sale starts."
-          }
-        },
         "day_1": {
           "type": "day",
           "settings": {
             "title": "Fri 27 Nov, 12:00 AM IST · Sale goes live",
-            "text": "Prices are revealed and the timer counts down the time left."
+            "text": "Sale prices are live and the timer counts down the time left."
           }
         },
         "day_2": {
@@ -274,7 +258,6 @@
         "stat_0",
         "stat_1",
         "stat_2",
-        "day_0",
         "day_1",
         "day_2"
       ],
@@ -353,13 +336,6 @@
           "settings": {
             "question": "When does the sale start and end?",
             "answer": "The sale starts at 12:00 AM (midnight) IST on 27 November 2026 and ends at 11:59 PM IST on 30 November 2026, or when stocks run out, whichever is earlier.\nSale prices apply only to orders placed and paid within the sale period. Orders placed before or after it are charged regular prices."
-          }
-        },
-        "faq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "When will the sale prices be revealed?",
-            "answer": "At 12:00 AM IST on 27 November, when the sale goes live. Until then you can browse the products on this page."
           }
         },
         "faq_3": {
@@ -457,7 +433,6 @@
       "block_order": [
         "faq_0",
         "faq_1",
-        "faq_2",
         "faq_3",
         "faq_4",
         "faq_5",

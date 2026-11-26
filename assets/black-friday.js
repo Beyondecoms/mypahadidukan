@@ -1,7 +1,7 @@
 /* Black Friday landing page.
-   One clock drives every Black Friday section on the page: the hero countdown,
-   the price reveal on the deal cards, and the button and label text for each phase
-   (before / live / ended). Sale dates come from Theme settings → Black Friday sale. */
+   One clock drives every Black Friday section on the page: the hero countdown
+   and the button and label text for each phase (live / ended).
+   The sale end date comes from Theme settings → Black Friday sale. */
 (function () {
   'use strict';
 
@@ -14,7 +14,6 @@
     var el = document.querySelector('[data-bf-sale]');
     if (!el) return null;
     return {
-      start: Date.parse(el.dataset.start),
       end: Date.parse(el.dataset.end),
       preview: el.dataset.preview || 'auto'
     };
@@ -24,15 +23,14 @@
   function clockNow(sale) {
     var real = Date.now();
     var elapsed = real - loadedAt;
-    if (sale.preview === 'before') return sale.start - (2 * 86400 + 5 * 3600 + 32 * 60 + 10) * 1000 + elapsed;
     if (sale.preview === 'live') return sale.end - (1 * 86400 + 7 * 3600 + 14 * 60 + 42) * 1000 + elapsed;
     if (sale.preview === 'ended') return sale.end + 3600000;
     return real;
   }
 
   function phaseAt(sale, now) {
-    if (isNaN(sale.start) || isNaN(sale.end)) return 'live';
-    return now < sale.start ? 'before' : now < sale.end ? 'live' : 'ended';
+    if (isNaN(sale.end)) return 'live';
+    return now < sale.end ? 'live' : 'ended';
   }
 
   function pad(n) {
@@ -59,7 +57,7 @@
   }
 
   function tickHero(hero, sale, phase, now) {
-    var diff = phase === 'ended' ? 0 : Math.max(0, (phase === 'before' ? sale.start : sale.end) - now);
+    var diff = phase === 'ended' ? 0 : Math.max(0, sale.end - now);
     var s = Math.floor(diff / 1000);
     var parts = {
       dd: pad(Math.floor(s / 86400)),
@@ -133,8 +131,6 @@
 
     var count = root.querySelector('[data-bf-count]');
     if (count) count.textContent = (d['count' + cap(phase)] || '').replace('[count]', shown);
-    var note = root.querySelector('[data-bf-note]');
-    if (note) note.textContent = phase === 'before' ? d.noteBefore : d.noteAfter;
     var empty = root.querySelector('[data-bf-empty]');
     if (empty) empty.hidden = shown !== 0;
   }
@@ -143,22 +139,14 @@
     state.phase = phase;
     var d = state.root.dataset;
     state.cards.forEach(function (card) {
-      var masked = phase === 'before';
       var available = card.dataset.available === 'true';
       card.dataset.phase = phase;
-      card.classList.toggle('is-masked', masked);
       card.classList.toggle('is-soldout', phase === 'live' && !available);
-
-      var row = card.querySelector('.bf-card__price-row');
-      if (row) row.setAttribute('aria-hidden', masked ? 'true' : 'false');
-      setText(card, '[data-bf-was]', masked ? d.maskPrice : card.dataset.was);
-      setText(card, '[data-bf-now]', masked ? d.maskPrice : card.dataset.now);
-      setText(card, '[data-bf-off]', masked ? d.maskOff : card.dataset.off);
       setText(card, '[data-bf-strip]', d['strip' + cap(phase)]);
 
       var btn = card.querySelector('[data-bf-add]');
       if (btn) {
-        var label = phase === 'live' ? (available ? d.btnLive : d.btnSoldout) : d['btn' + cap(phase)];
+        var label = phase === 'live' ? (available ? d.btnLive : d.btnSoldout) : d.btnEnded;
         btn.textContent = label;
         btn.dataset.label = label;
         btn.disabled = phase !== 'live' || !available;
@@ -253,11 +241,6 @@
       var now = clockNow(sale);
       var phase = phaseAt(sale, now);
       if (phase !== current) {
-        // Prices are set in admin when the sale opens, so reload once to pick them up.
-        if (current === 'before' && phase === 'live' && sale.preview === 'auto') {
-          window.location.reload();
-          return;
-        }
         current = phase;
         heroes.forEach(function (hero) {
           applyHero(hero, phase);

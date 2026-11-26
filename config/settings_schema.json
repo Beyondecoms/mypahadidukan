@@ -1883,13 +1883,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Used by the Black Friday hero countdown and deals grid. Times are in ISO format with the India offset, e.g. 2026-11-27T00:00:00+05:30."
-      },
-      {
-        "type": "text",
-        "id": "bf_sale_start",
-        "label": "Sale starts",
-        "default": "2026-11-27T00:00:00+05:30"
+        "content": "Used by the Black Friday hero countdown and deals grid. Times are in ISO format with the India offset, e.g. 2026-12-01T00:00:00+05:30."
       },
       {
         "type": "text",
@@ -1905,7 +1899,6 @@
         "info": "For checking the page before launch. Set back to Automatic before the sale.",
         "options": [
           { "value": "auto", "label": "Automatic (follow the dates)" },
-          { "value": "before", "label": "Before the sale" },
           { "value": "live", "label": "Sale live" },
           { "value": "ended", "label": "Sale ended" }
         ],
