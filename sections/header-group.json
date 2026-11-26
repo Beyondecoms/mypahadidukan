@@ -17,7 +17,7 @@
         "custom_text_7FMKRj": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "Black Friday sale UPTO 60% off! (27th Nov)",
+            "custom_text_content": "Black Friday sale UPTO 60% off is LIVE!",
             "notification_url": "shopify://pages/black-orange-friday-sale",
             "color_custom_text": "#ffffff",
             "color_custom_text_link": "#000000",
