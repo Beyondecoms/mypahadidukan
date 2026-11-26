@@ -204,7 +204,7 @@
         "strip_ended": "Sale has ended",
         "btn_ended": "Sale Ended",
         "count_ended": "[count] products · Sale has ended",
-        "note_after": "Prices shown are for the first size listed. Other sizes carry their own discounts on the product page.",
+        "note_after": "Prices and discounts are shown for the selected pack.",
         "empty_text": "No deals in this category yet.",
         "chips_bg": "#FFFBEF",
         "grid_bg": "#FFEEB8",

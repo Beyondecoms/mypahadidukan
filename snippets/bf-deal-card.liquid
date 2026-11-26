@@ -5,19 +5,40 @@
 {%- endcomment -%}
 {%- liquid
   assign variant = product.selected_or_first_available_variant
-  assign now_str = variant.price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
-  assign was_str = ''
-  assign off_str = ''
-  assign pct = 0
-  if variant.compare_at_price > variant.price
-    assign was_str = variant.compare_at_price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
-    assign pct = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
-    assign off_str = off_format | replace: '[pct]', pct
+  assign has_pack_choices = false
+  if product.variants.size > 1
+    assign has_pack_choices = true
   endif
+
+  capture pack_options
+    for pack in product.variants
+      assign pack_price = pack.price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
+      assign pack_compare = ''
+      assign pack_discount = ''
+      assign pack_pct = 0
+      if pack.compare_at_price > pack.price
+        assign pack_compare = pack.compare_at_price | money_without_trailing_zeros | strip_html | remove: ' ' | remove: '&nbsp;'
+        assign pack_pct = pack.compare_at_price | minus: pack.price | times: 100.0 | divided_by: pack.compare_at_price | round
+        assign pack_discount = off_format | replace: '[pct]', pack_pct
+      endif
+
+      if pack.id == variant.id
+        assign now_str = pack_price
+        assign was_str = pack_compare
+        assign off_str = pack_discount
+        assign pct = pack_pct
+      endif
+
+      if has_pack_choices
+        render 'bf-deal-pack-option', pack: pack, selected_pack: variant, price: pack_price, compare_price: pack_compare, discount: pack_discount, soldout_label: soldout_label
+      endif
+    endfor
+  endcapture
 
   assign soldout = false
   if phase == 'live' and variant.available == false
     assign soldout = true
+    assign btn_label = soldout_label
   endif
   assign disabled = true
   if phase == 'live' and variant.available
@@ -35,7 +56,7 @@
 >
   <div class="bf-card__media">
     {%- if product.featured_media != blank -%}
-      <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+      <a href="{{ product.url }}" data-bf-product-link tabindex="-1" aria-hidden="true">
         {%- if eager -%}
           {%- assign loading = 'eager' -%}
         {%- else -%}
@@ -66,15 +87,25 @@
   <div class="bf-card__strip" data-bf-strip>{{ strip }}</div>
 
   <div class="bf-card__body">
-    <h3 class="bf-card__name"><a href="{{ product.url }}">{{ name }}</a></h3>
-    <span class="bf-card__variant">{{ variant_label }}</span>
-    <div class="bf-card__price">
+    <h3 class="bf-card__name"><a href="{{ product.url }}" data-bf-product-link>{{ name }}</a></h3>
+    {%- if has_pack_choices -%}
+      <label class="bf-card__pack">
+        <span>Choose pack<span class="visually-hidden"> for {{ name | escape }}</span></span>
+        <select class="bf-card__pack-select" data-bf-pack>
+          {{ pack_options }}
+        </select>
+      </label>
+    {%- elsif variant_label != blank -%}
+      <span class="bf-card__variant">{{ variant_label }}</span>
+    {%- endif -%}
+    <div class="bf-card__price"{% if has_pack_choices %} aria-live="polite" aria-atomic="true"{% endif %}>
       <div class="bf-card__price-row">
-        <span class="bf-card__was">{{ was_str }}</span>
-        <span class="bf-card__now">{{ now_str }}</span>
-        <span class="bf-card__off">{{ off_str }}</span>
+        <span class="bf-card__was" data-bf-price-was>{{ was_str }}</span>
+        <span class="bf-card__now" data-bf-price-now>{{ now_str }}</span>
+        <span class="bf-card__off" data-bf-price-off>{{ off_str }}</span>
       </div>
     </div>
+    <p class="bf-card__error" data-bf-cart-error role="status" hidden></p>
   </div>
 
   <button

@@ -77,7 +77,12 @@
 
   /* ── Deals ────────────────────────────────────────── */
 
+  var dealStates = new WeakMap();
+
   function initDeals(root) {
+    var existing = dealStates.get(root);
+    if (existing) return existing;
+
     var grid = root.querySelector('[data-bf-grid]');
     if (!grid) return null;
     var cards = Array.prototype.slice.call(grid.querySelectorAll('[data-bf-card]'));
@@ -98,9 +103,32 @@
     grid.addEventListener('click', function (event) {
       var btn = event.target.closest('[data-bf-add]');
       if (!btn || btn.disabled) return;
-      addToCart(btn);
+      addToCart(btn, root.dataset);
     });
 
+    grid.addEventListener('change', function (event) {
+      var select = event.target.closest('[data-bf-pack]');
+      if (!select) return;
+      var pack = select.selectedOptions[0];
+      if (!pack) return;
+
+      var card = select.closest('[data-bf-card]');
+      card.dataset.available = pack.dataset.available;
+      card.querySelector('[data-bf-add]').dataset.variantId = pack.value;
+      setText(card, '[data-bf-price-was]', pack.dataset.comparePrice);
+      setText(card, '[data-bf-price-now]', pack.dataset.price);
+      setText(card, '[data-bf-price-off]', pack.dataset.discount);
+      showCartError(card, '');
+      updateDealButton(card, root.dataset);
+
+      card.querySelectorAll('[data-bf-product-link]').forEach(function (link) {
+        var url = new URL(link.href);
+        url.searchParams.set('variant', pack.value);
+        link.href = url.href;
+      });
+    });
+
+    dealStates.set(root, state);
     return state;
   }
 
@@ -139,18 +167,9 @@
     state.phase = phase;
     var d = state.root.dataset;
     state.cards.forEach(function (card) {
-      var available = card.dataset.available === 'true';
       card.dataset.phase = phase;
-      card.classList.toggle('is-soldout', phase === 'live' && !available);
       setText(card, '[data-bf-strip]', d['strip' + cap(phase)]);
-
-      var btn = card.querySelector('[data-bf-add]');
-      if (btn) {
-        var label = phase === 'live' ? (available ? d.btnLive : d.btnSoldout) : d.btnEnded;
-        btn.textContent = label;
-        btn.dataset.label = label;
-        btn.disabled = phase !== 'live' || !available;
-      }
+      updateDealButton(card, d);
     });
     render(state);
   }
@@ -160,11 +179,35 @@
     if (el && value != null && el.textContent !== value) el.textContent = value;
   }
 
+  function updateDealButton(card, labels) {
+    var live = card.dataset.phase === 'live';
+    var available = card.dataset.available === 'true';
+    card.classList.toggle('is-soldout', live && !available);
+
+    var btn = card.querySelector('[data-bf-add]');
+    if (!btn || btn.dataset.adding) return;
+
+    btn.textContent = live ? (available ? labels.btnLive : labels.btnSoldout) : labels.btnEnded;
+    btn.disabled = !live || !available;
+  }
+
+  function showCartError(card, message) {
+    var error = card.querySelector('[data-bf-cart-error]');
+    if (!error) return;
+    error.textContent = message;
+    error.hidden = !message;
+  }
+
   // Same cart flow as the theme's product sliders: add, refresh the drawer, open it.
-  function addToCart(btn) {
-    var label = btn.dataset.label || btn.textContent;
+  function addToCart(btn, labels) {
+    var card = btn.closest('[data-bf-card]');
+    var select = card.querySelector('[data-bf-pack]');
+    var addedToCart = false;
+    showCartError(card, '');
+    btn.dataset.adding = 'true';
     btn.disabled = true;
-    btn.textContent = btn.closest('[data-bf-deals]').dataset.btnAdding || 'Adding...';
+    btn.textContent = labels.btnAdding || 'Adding...';
+    if (select) select.disabled = true;
 
     fetch('/cart/add.js', {
       method: 'POST',
@@ -177,6 +220,8 @@
       })
     })
       .then(function (res) {
+        if (!res.ok) throw new Error('Cart add failed');
+        addedToCart = true;
         return res.json();
       })
       .then(function (added) {
@@ -206,11 +251,13 @@
         if (typeof window.ncUpdatePriceBreakdown === 'function') window.ncUpdatePriceBreakdown(cart);
       })
       .catch(function (error) {
+        if (!addedToCart) showCartError(card, 'Could not add this pack. Please try again.');
         console.error(error);
       })
       .finally(function () {
-        btn.textContent = label;
-        btn.disabled = false;
+        delete btn.dataset.adding;
+        if (select) select.disabled = false;
+        updateDealButton(card, labels);
       });
   }
 
