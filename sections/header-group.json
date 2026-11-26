@@ -32,7 +32,7 @@
         "custom_text_ktRpfD": {
           "type": "custom-text",
           "settings": {
-            "custom_text_content": "2.5% extra off above ₹1,999 (auto-applied)",
+            "custom_text_content": "Due high volume of order, dispatch might take 72 hrs.",
             "notification_url": "",
             "color_custom_text": "#ffffff",
             "color_custom_text_link": "#f11e1e",
@@ -46,6 +46,7 @@
         },
         "custom_text_xRebGV": {
           "type": "custom-text",
+          "disabled": true,
           "settings": {
             "custom_text_content": "5% extra off above ₹4,999 (auto-applied)",
             "notification_url": "",
@@ -61,6 +62,7 @@
         },
         "custom_text_offer_8_percent": {
           "type": "custom-text",
+          "disabled": true,
           "settings": {
             "custom_text_content": "8% extra off above ₹11,999 (auto-applied)",
             "notification_url": "",
