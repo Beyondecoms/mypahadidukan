@@ -91,9 +91,14 @@
     {%- if has_pack_choices -%}
       <label class="bf-card__pack">
         <span>Choose pack<span class="visually-hidden"> for {{ name | escape }}</span></span>
-        <select class="bf-card__pack-select" data-bf-pack>
-          {{ pack_options }}
-        </select>
+        <span class="bf-card__pack-control">
+          <select class="bf-card__pack-select" data-bf-pack>
+            {{ pack_options }}
+          </select>
+          <span class="bf-card__pack-caret" aria-hidden="true">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </span>
       </label>
     {%- elsif variant_label != blank -%}
       <span class="bf-card__variant">{{ variant_label }}</span>
