@@ -480,6 +480,12 @@
   text-overflow: ellipsis;
 }
 
+@media only screen and (max-width: 768px){
+  .bf-card__pack-select{
+      min-height: 24px;
+  }
+}
+
 .bf-card__pack-caret {
   position: absolute;
   inset-inline-end: 15px;
@@ -496,9 +502,20 @@
   height: auto;
 }
 
+.bf-card__pack-select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .bf-card__pack-select:focus-visible {
-  outline: 2px solid var(--bf-green);
-  outline-offset: 2px;
+  background-color: #e2e7e3;
+}
+
+@media (forced-colors: active) {
+  .bf-card__pack-select:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
 }
 
 @media only screen and (max-width: 749px){

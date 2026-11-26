@@ -6,6 +6,6 @@
   data-discount="{{ discount | escape }}"
   {% if pack.id == selected_pack.id %}selected{% endif %}
 >
-  {{- pack.title | escape -}}
+  {{- title | escape -}}
   {%- unless pack.available %} — {{ soldout_label | escape }}{% endunless -%}
 </option>

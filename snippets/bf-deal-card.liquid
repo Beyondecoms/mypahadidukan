@@ -29,9 +29,14 @@
         assign pct = pack_pct
       endif
 
-      if has_pack_choices
-        render 'bf-deal-pack-option', pack: pack, selected_pack: variant, price: pack_price, compare_price: pack_compare, discount: pack_discount, soldout_label: soldout_label
-      endif
+      assign pack_title = pack.title
+      unless has_pack_choices
+        assign pack_title = variant_label | default: pack_title
+        if pack_title == 'Default Title'
+          assign pack_title = 'Standard'
+        endif
+      endunless
+      render 'bf-deal-pack-option', pack: pack, title: pack_title, selected_pack: variant, price: pack_price, compare_price: pack_compare, discount: pack_discount, soldout_label: soldout_label
     endfor
   endcapture
 
@@ -88,21 +93,17 @@
 
   <div class="bf-card__body">
     <h3 class="bf-card__name"><a href="{{ product.url }}" data-bf-product-link>{{ name }}</a></h3>
-    {%- if has_pack_choices -%}
-      <label class="bf-card__pack">
-        <span>Choose pack<span class="visually-hidden"> for {{ name | escape }}</span></span>
-        <span class="bf-card__pack-control">
-          <select class="bf-card__pack-select" data-bf-pack>
-            {{ pack_options }}
-          </select>
-          <span class="bf-card__pack-caret" aria-hidden="true">
-            {{- 'icon-caret.svg' | inline_asset_content -}}
-          </span>
+    <label class="bf-card__pack">
+      <span>Choose pack<span class="visually-hidden"> for {{ name | escape }}</span></span>
+      <span class="bf-card__pack-control">
+        <select class="bf-card__pack-select" data-bf-pack>
+          {{ pack_options }}
+        </select>
+        <span class="bf-card__pack-caret" aria-hidden="true">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
-      </label>
-    {%- elsif variant_label != blank -%}
-      <span class="bf-card__variant">{{ variant_label }}</span>
-    {%- endif -%}
+      </span>
+    </label>
     <div class="bf-card__price"{% if has_pack_choices %} aria-live="polite" aria-atomic="true"{% endif %}>
       <div class="bf-card__price-row">
         <span class="bf-card__was" data-bf-price-was>{{ was_str }}</span>
