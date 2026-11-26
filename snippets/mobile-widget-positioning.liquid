@@ -10,6 +10,10 @@
     display: none !important;
   }
 
+  body.drawer-open:has(#yt-cart-shell-drawer) #chat-widget {
+    z-index: 1000 !important;
+  }
+
   @media (max-width: 749px) {
     body {
       --mobile-chat-top: clamp(120px, 32dvh, 200px);

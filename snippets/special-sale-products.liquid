@@ -1,0 +1,24 @@
+{%- assign sale_collection = collections['mpd'] -%}
+{%- if sale_collection.products_count > 0 -%}
+  {{ 'template-collection.css' | asset_url | stylesheet_tag }}
+  {{ 'card-product.css' | asset_url | stylesheet_tag }}
+
+  <section class="page-width" id="special-sale-products" aria-label="{{ sale_collection.title | escape }}">
+    {%- paginate sale_collection.products by 24 -%}
+      <ul class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop" role="list">
+        {%- for product in sale_collection.products -%}
+          {%- assign lazy_load = true -%}
+          {%- if forloop.index <= 4 -%}
+            {%- assign lazy_load = false -%}
+          {%- endif -%}
+          <li class="grid__item">
+            {% render 'card-product', card_product: product, show_rating: true, lazy_load: lazy_load, skip_styles: true %}
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate, anchor: '#special-sale-products' %}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </section>
+{%- endif -%}
