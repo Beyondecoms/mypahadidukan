@@ -219,7 +219,7 @@
 /* ── DISCOUNT BAR ── */
 .ps-discount-bar {
   background: #AB512A;
-  display: none;
+  display: none !important;
   color: #fff;
   font-size: 12px;
   font-weight: 500;
