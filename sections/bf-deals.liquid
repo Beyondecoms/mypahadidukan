@@ -81,7 +81,12 @@
   <section class="bf-deals" style="background: {{ section.settings.grid_bg }};" aria-labelledby="bf-deals-title">
     <div class="bf-deals__inner">
       <div class="bf-deals__head">
-        <h2 class="bf-deals__title bf-sc" id="bf-deals-title" data-bf-title>{{ section.settings.heading }}</h2>
+        <div class="bf-deals__heading">
+          <h2 class="bf-deals__title bf-sc" id="bf-deals-title" data-bf-title>{{ section.settings.heading }}</h2>
+          <span class="bf-deals__coupon-badge" data-bf-when="live"{% unless bf_phase == 'live' %} hidden{% endunless %}>
+            (No Coupon Required)
+          </span>
+        </div>
         <span class="bf-deals__count" data-bf-count>{{ count_text | replace: '[count]', product_count }}</span>
       </div>
 

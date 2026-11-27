@@ -165,6 +165,7 @@
 
   function applyDeals(state, phase) {
     state.phase = phase;
+    showFor(state.root, phase);
     var d = state.root.dataset;
     state.cards.forEach(function (card) {
       card.dataset.phase = phase;

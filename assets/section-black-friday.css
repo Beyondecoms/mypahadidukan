@@ -312,6 +312,24 @@
   align-items: baseline;
 }
 
+.bf-deals__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  min-width: 0;
+}
+
+.bf-deals__coupon-badge {
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: var(--bf-cream);
+  color: var(--bf-ink);
+  font-size: clamp(14px, 1.85vw, 24px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 .bf-section .bf-deals__title {
   font-size: 40px;
   line-height: 1.1;
