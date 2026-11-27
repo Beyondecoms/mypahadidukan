@@ -217,6 +217,9 @@
 }
 
 /* ── DISCOUNT BAR ── */
+.extra-offer{
+  display: none;
+}
 .ps-discount-bar {
   background: #AB512A;
   display: none !important;
