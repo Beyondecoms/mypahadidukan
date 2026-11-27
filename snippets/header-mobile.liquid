@@ -209,13 +209,13 @@
                 {%- endif -%}
                 {%- liquid
                     assign child_url = childlink.url
-                    if child_url == blank or child_url == '#'
-                        assign child_handle = childlink.title | handleize
+                    assign child_handle = childlink.title | handleize
+                    if child_handle == 'all-collections'
+                        assign child_url = routes.collections_url | append: '/all-products'
+                    elsif child_url == blank or child_url == '#'
                         case child_handle
                             when 'best-sellers'
                                 assign child_url = routes.root_url | append: '/pages/bestseller' | replace: '//', '/'
-                            when 'all-collections'
-                                assign child_url = routes.collections_url
                             when 'shop-by-region'
                                 assign child_url = routes.collections_url | append: '?view=shop-by-region'
                             when 'curated-by-mpd'
