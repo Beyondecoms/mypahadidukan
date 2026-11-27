@@ -217,12 +217,10 @@
 }
 
 /* ── DISCOUNT BAR ── */
-.extra-offer{
-  display: none;
-}
+
 .ps-discount-bar {
   background: #AB512A;
-  display: none !important;
+
   color: #fff;
   font-size: 12px;
   font-weight: 500;
