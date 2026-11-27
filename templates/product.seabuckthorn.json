@@ -180,6 +180,7 @@
         },
         "offer_G48RVH": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "offer_text": "Get a <span>EXTRA 10% Off</span> on a Cart value of Rs2199",
             "coupon_code": "<span>SUMMER10</span>"
@@ -187,6 +188,7 @@
         },
         "offer_eVncRJ": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "offer_text": "Buy <span>2</span> Get <span>1 Free</span> on a Seabuckthorn pulp",
             "coupon_code": "<span>BUY310</span>"
@@ -194,9 +196,10 @@
         },
         "offer_e7gK9e": {
           "type": "offer",
+          "disabled": true,
           "settings": {
             "offer_text": "Get a<span> EXTRA 10% Off </span>on a Cart value of Rs2199",
-            "coupon_code": "<span>SUMMER10</span>"
+            "coupon_code": "SUMMER10"
           }
         }
       },
@@ -308,7 +311,11 @@
     },
     "product_comparison_table": {
       "type": "product-comparison-table",
-      "settings": {}
+      "settings": {
+        "section_heading": "",
+        "heading": "",
+        "description": ""
+      }
     },
     "seabuckthorn_m5": {
       "type": "seabuckthorn-honest-warning",
@@ -569,7 +576,6 @@
         "media_link_4": "https://www.zeebiz.com/hindi/small-business/startup-story-of-my-pahadi-dukaan-know-how-this-company-helping-himalayan-farmers-160162",
         "media_logo_5": "shopify://shop_images/image_796.png",
         "media_link_5": "https://www.outlookindia.com/national/india-news-on-digital-gateways-fresh-shimla-apples-from-farm-to-folks-across-india-news-396024",
-        "media_logo_6": "",
         "media_link_6": "",
         "letter_front_image": "shopify://shop_images/Front.png",
         "letter_back_image": "shopify://shop_images/LETTER.png",
